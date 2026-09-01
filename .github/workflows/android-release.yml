@@ -1,0 +1,81 @@
+name: Android Signed APK
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  build:
+    name: Build and keep last 3 signed APKs
+    runs-on: ubuntu-latest
+    env:
+      FLIPCHECK_KEYSTORE_PATH: ${{ runner.temp }}/flipcheck-release.jks
+      FLIPCHECK_KEYSTORE_PASSWORD: ${{ secrets.FLIPCHECK_KEYSTORE_PASSWORD }}
+      FLIPCHECK_KEY_ALIAS: ${{ secrets.FLIPCHECK_KEY_ALIAS }}
+      FLIPCHECK_KEY_PASSWORD: ${{ secrets.FLIPCHECK_KEY_PASSWORD }}
+      FLIPCHECK_KEYSTORE_BASE64: ${{ secrets.FLIPCHECK_KEYSTORE_BASE64 }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Restore release keystore
+        shell: bash
+        run: |
+          if [ -z "${FLIPCHECK_KEYSTORE_BASE64}" ]; then
+            echo "Manca FLIPCHECK_KEYSTORE_BASE64 nei secrets di GitHub."
+            exit 1
+          fi
+          echo "${FLIPCHECK_KEYSTORE_BASE64}" | tr -d '\n' | base64 -d > "${FLIPCHECK_KEYSTORE_PATH}"
+
+      - name: Run Android release build
+        shell: bash
+        run: |
+          if [ -f ./gradlew ]; then
+            ./gradlew --no-daemon assembleRelease
+          else
+            gradle --no-daemon assembleRelease
+          fi
+
+      - name: Stage APK for upload
+        shell: bash
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE/artifact"
+          cp app/build/outputs/apk/release/*.apk "$GITHUB_WORKSPACE/artifact/"
+
+      - name: Upload signed APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: flipcheck-release-apk-${{ github.run_number }}
+          path: artifact/*.apk
+          retention-days: 30
+
+      - name: Keep only last 3 signed APK artifacts
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          API="https://api.github.com/repos/${{ github.repository }}/actions/artifacts?per_page=100"
+          TO_DELETE=$(curl -fsSL -H "Authorization: Bearer ${GH_TOKEN}" "$API" \
+            | jq -r '.artifacts
+              | map(select(.name | startswith("flipcheck-release-apk-")))
+              | sort_by(.created_at)
+              | reverse
+              | .[3:]
+              | .[].id')
+          for id in $TO_DELETE; do
+            curl -fsSL -X DELETE -H "Authorization: Bearer ${GH_TOKEN}" \
+              "https://api.github.com/repos/${{ github.repository }}/actions/artifacts/$id"
+          done

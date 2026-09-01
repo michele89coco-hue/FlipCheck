@@ -1,0 +1,4 @@
+/keystore/
+/*.jks
+/*.keystore
+/release-signing.properties

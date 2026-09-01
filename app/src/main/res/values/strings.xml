@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">FlipCheck Beta Native</string>
+    <string name="analysis_service_description">Continua l’analisi dell’oggetto anche quando FlipCheck non è in primo piano</string>
+</resources>

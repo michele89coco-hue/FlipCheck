@@ -1,0 +1,10 @@
+<resources>
+    <color name="fc_bg">#0A1020</color>
+    <color name="fc_surface">#121B2D</color>
+    <color name="fc_surface2">#18243A</color>
+    <color name="fc_text">#F5F7FA</color>
+    <color name="fc_muted">#AAB4C8</color>
+    <color name="fc_mint">#62E0BE</color>
+    <color name="fc_warning">#F3D48A</color>
+    <color name="fc_danger">#F29A9A</color>
+</resources>
