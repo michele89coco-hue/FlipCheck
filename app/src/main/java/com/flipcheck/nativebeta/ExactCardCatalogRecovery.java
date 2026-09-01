@@ -17,6 +17,9 @@ final class ExactCardCatalogRecovery {
         if (id == null || usage == null || id.marketReady || usage.requests != 1
                 || usage.webCalls != 1 || usage.costUsd + RESERVED_TEXT_PASS_USD > MAX_TOTAL_COST_USD
                 || OverlayScopePolicy.blocksIdentity(id) || !richPhysicalEvidence(id)) return false;
+        if (physicalTupleLocked(id)) {
+            return false;
+        }
         if (id.candidates.isEmpty()) return true;
         Models.CandidateScore top = id.candidates.get(0);
         return top == null || top.hardRejected || safe(id.model).isEmpty()
@@ -63,6 +66,7 @@ final class ExactCardCatalogRecovery {
         if (id == null || response == null || !response.complete
                 || !safe(response.parseError).isEmpty() || response.payload == null) return false;
         JSONObject p = response.payload;
+        boolean keepPhysicalTuple = physicalTupleLocked(id);
         String manufacturer = safe(p.optString("manufacturer", ""));
         String family = safe(p.optString("set_or_series", ""));
         String subject = safe(p.optString("subject", ""));
@@ -107,6 +111,19 @@ final class ExactCardCatalogRecovery {
         addFact(c, "photo_identity_matched_count=" + matchedCount);
         if (matched != null) for (int i = 0; i < matched.length(); i++)
             addFact(c, "photo_feature=" + safe(matched.optString(i, "")));
+        if (keepPhysicalTuple) {
+            id.candidates.add(c);
+            id.modelProof = empty(id.modelProof) ? "physical_card_tuple" : id.modelProof;
+            id.photoIdentityComplete = !empty(id.photoIdentityName);
+            id.photoIdentityPhysicalBinding = true;
+            id.photoIdentityConfidence = Math.max(id.photoIdentityConfidence, c.layoutScore);
+            id.disproofPassed = true;
+            id.marketReady = true;
+            id.nextPhotoRequest = "";
+            id.nextPhotoReason = "";
+            addFact(c, "physical_tuple_preserved= true");
+            return true;
+        }
         id.candidates.clear(); id.candidates.add(c); id.brand = manufacturer;
         id.brandEvidence = "verified_web"; id.brandRoleConfidence = Math.max(id.brandRoleConfidence, 95);
         id.family = family; id.familyConfidence = Math.max(id.familyConfidence, 95); id.model = identity;
@@ -120,6 +137,11 @@ final class ExactCardCatalogRecovery {
         id.verificationSummary = "Identità esatta recuperata dalla seconda verifica indipendente su tutti i dettagli fisici osservati.";
         id.decisionReason = "CONFIRMED v1.11: secondo passaggio universale obbligatorio entro 0,025 USD.";
         return true;
+    }
+
+    private static boolean physicalTupleLocked(Models.Identification id) {
+        return id != null && !safe(id.model).isEmpty() && id.marketReady
+                && "physical_card_tuple".equalsIgnoreCase(id.modelProof);
     }
 
     private static boolean richPhysicalEvidence(Models.Identification id) {
