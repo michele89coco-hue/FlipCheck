@@ -113,8 +113,8 @@ final class ExactCardCatalogRecovery {
             addFact(c, "photo_feature=" + safe(matched.optString(i, "")));
         if (keepPhysicalTuple) {
             id.candidates.add(c);
-            id.modelProof = empty(id.modelProof) ? "physical_card_tuple" : id.modelProof;
-            id.photoIdentityComplete = !empty(id.photoIdentityName);
+            id.modelProof = safe(id.modelProof).isEmpty() ? "physical_card_tuple" : id.modelProof;
+            id.photoIdentityComplete = !safe(id.photoIdentityName).isEmpty();
             id.photoIdentityPhysicalBinding = true;
             id.photoIdentityConfidence = Math.max(id.photoIdentityConfidence, c.layoutScore);
             id.disproofPassed = true;
