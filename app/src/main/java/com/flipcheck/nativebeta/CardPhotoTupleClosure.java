@@ -42,7 +42,7 @@ final class CardPhotoTupleClosure {
                 || OverlayScopePolicy.blocksIdentity(id) || !knownCommercialCard(id)
                 || hasMaterialStrongConflict(id)) return false;
         PhysicalTuple tuple = extractPhysicalTuple(id);
-        if (!isClosedByPhysicalTuple(id, tuple)) {
+        if (!canCloseByPhysicalTuple(id, tuple)) {
             return false;
         }
         if (CollectibleCardIdentityPolicy.isTradingCardGame(id)) {
@@ -52,8 +52,8 @@ final class CardPhotoTupleClosure {
                 && frontAndBack(id);
     }
 
-    private static boolean isClosedByPhysicalTuple(Models.Identification id,
-                                                  PhysicalTuple tuple) {
+    static boolean canCloseByPhysicalTuple(Models.Identification id,
+                                          PhysicalTuple tuple) {
         if (tuple.brand.isEmpty() || tuple.brandMismatch || tuple.subject.isEmpty()) {
             return false;
         }
@@ -117,7 +117,7 @@ final class CardPhotoTupleClosure {
         String year = year(id);
         String series = series(id);
         String subject = subject(id);
-        String number = CollectibleCardIdentityPolicy.observedCardNumber(id, id.localScan);
+        String number = tuple.cardNumber;
         String parallel = cardVariant(id);
         String edition = field(id, "edition", "printing");
         String rookie = truthyField(id, "rookie_card", "rookie", "rc") ? "RC" : "";
@@ -146,6 +146,7 @@ final class CardPhotoTupleClosure {
         addFact(c, "relationship_only=false");
         addFact(c, "disproof_passed=true");
         addFact(c, "physical_tuple_number=" + tuple.cardNumber);
+        addFact(c, "physical_card_number=" + tuple.cardNumber);
         addFact(c, "physical_tuple_serial=" + tuple.serial);
         addFact(c, "physical_tuple_variant=" + tuple.variant);
         addFact(c, "web_checklist_disposition=verify");
@@ -190,7 +191,10 @@ final class CardPhotoTupleClosure {
         tuple.season = year(id);
         tuple.subject = subject(id);
         tuple.team = field(id, "team", "club");
-        tuple.cardNumber = safe(CollectibleCardIdentityPolicy.observedCardNumber(id, id.localScan));
+        tuple.cardNumber = physicalCardNumber(id);
+        if (tuple.cardNumber.isEmpty()) {
+            tuple.cardNumber = safe(CollectibleCardIdentityPolicy.observedCardNumber(id, id.localScan));
+        }
         tuple.variant = cardVariant(id);
         tuple.serial = physicalSerialBinding(id);
         tuple.hasPhysicalIdentifier = !tuple.cardNumber.isEmpty() || !tuple.variant.isEmpty()
@@ -206,6 +210,53 @@ final class CardPhotoTupleClosure {
         }
         tuple.hasPhysicalConflict = hasConflictingPhysicalSignals(id);
         return tuple;
+    }
+
+    private static String physicalCardNumber(Models.Identification id) {
+        String explicit = firstFieldValue(id, "physical_card_number_marking", "physical_card_number",
+                "card_number_marking", "number_marking", "physical_number_marking");
+        if (!explicit.isEmpty()) {
+            return explicit;
+        }
+        String legacyPhysical = firstFieldValue(id, "physical_card_number");
+        if (!legacyPhysical.isEmpty()) {
+            return legacyPhysical;
+        }
+        return "";
+    }
+
+    private static String firstFieldValue(Models.Identification id, String... keys) {
+        if (id == null || keys.length == 0) {
+            return "";
+        }
+        for (String raw : id.photoIdentityFields) {
+            String x = safe(raw).trim();
+            int split = x.indexOf('=');
+            if (split < 1) {
+                split = x.indexOf(':');
+            }
+            if (split < 1) {
+                continue;
+            }
+            String key = x.substring(0, split).trim().toLowerCase(Locale.ROOT)
+                    .replace('-', '_').replace(' ', '_');
+            String value = x.substring(split + 1).trim();
+            for (String wanted : keys) {
+                if (key.equals(wanted.toLowerCase(Locale.ROOT))) {
+                    return stripPhysicalNumberPrefix(value);
+                }
+            }
+        }
+        return "";
+    }
+
+    private static String stripPhysicalNumberPrefix(String value) {
+        String normalized = safe(value)
+                .replace("№", "")
+                .replace("No.", "")
+                .replace("NO", "")
+                .replace("#", "");
+        return normalized.trim();
     }
 
     private static boolean hasUnresolvableVariantAmbiguity(Models.Identification id) {

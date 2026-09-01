@@ -91,7 +91,8 @@ public class CardPhotoTupleClosureSportCardTest {
         id.photoIdentityFields.add("team=Golden State Warriors");
         id.photoIdentityFields.add("set=Adrenalyn XL");
         id.photoIdentityFields.add("season=2009-10");
-        id.photoIdentityFields.add("card_number=77");
+        id.photoIdentityFields.add("card_number=2");
+        id.photoIdentityFields.add("physical_card_number_marking=77");
         id.photoIdentityFields.add("position=GUARD");
         id.photoIdentityFields.add("def=72");
         id.photoIdentityFields.add("off=90");
@@ -111,6 +112,53 @@ public class CardPhotoTupleClosureSportCardTest {
         assertEquals("CONFIRMED · IDENTITÀ VERIFICATA",
                 EvidencePolicy.publicStatus(id));
         assertEquals("#77", id.model.replaceAll(".*(#[0-9]+).*", "$1"));
+    }
+
+    @Test
+    public void sportsCardShouldCloseWhenPhysicalCardNumberMarkingIsReadableEvenWithChecklistConflict() {
+        Models.Identification id = createBaseSportsIdentity();
+        id.photoIdentityFields.add("player=LeBron James");
+        id.photoIdentityFields.add("team=Los Angeles Lakers");
+        id.photoIdentityFields.add("set=Upper Deck");
+        id.photoIdentityFields.add("season=2003");
+        id.photoIdentityFields.add("card_number=99");
+        id.photoIdentityFields.add("physical_card_number_marking=15/64");
+        id.photoIdentityFields.add("parallel=Holo");
+
+        Models.CandidateScore conflicting = new Models.CandidateScore();
+        conflicting.candidateFacts.add("catalog_card_number=14");
+        conflicting.candidateFacts.add("catalog_card_number=16");
+        conflicting.hardViolations.add("web_checklist_disagreement");
+        id.candidates.add(conflicting);
+
+        assertTrue(CardPhotoTupleClosure.canClose(id));
+        assertTrue(CardPhotoTupleClosure.apply(id));
+        ConfirmationIntegrityPolicy.enforce(id);
+
+        assertEquals("CONFIRMED · IDENTITÀ VERIFICATA",
+                EvidencePolicy.publicStatus(id));
+        assertEquals("#15/64", id.model.replaceAll(".*(#[0-9/]+).*", "$1"));
+    }
+
+    @Test
+    public void physicalSerialMarkingMustBeKeptInTupleFacts() {
+        Models.Identification id = createBaseSportsIdentity();
+        id.photoIdentityFields.add("player=Generic Player");
+        id.photoIdentityFields.add("team=Some Team");
+        id.photoIdentityFields.add("set=Panini Prizm");
+        id.photoIdentityFields.add("season=2024");
+        id.photoIdentityFields.add("card_number=45");
+        id.photoIdentityFields.add("physical_card_number_marking=45");
+        id.photoIdentityFields.add("physical_serial_marking=12/75");
+        id.photoIdentityFields.add("position=FORWARD");
+
+        assertTrue(CardPhotoTupleClosure.canClose(id));
+        assertTrue(CardPhotoTupleClosure.apply(id));
+        ConfirmationIntegrityPolicy.enforce(id);
+
+        assertEquals("#45", id.model.replaceAll(".*(#[0-9]+).*", "$1"));
+        assertTrue(id.candidates.stream().anyMatch(candidate ->
+                candidate.candidateFacts.contains("physical_tuple_serial=12/75")));
     }
 
     @Test

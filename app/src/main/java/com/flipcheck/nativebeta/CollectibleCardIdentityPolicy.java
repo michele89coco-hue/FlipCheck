@@ -725,6 +725,16 @@ final class CollectibleCardIdentityPolicy {
         return "";
     }
 
+    private static String firstNonEmpty(String... values) {
+        for (String value : values) {
+            String safe = safe(value);
+            if (!safe.isEmpty()) {
+                return safe;
+            }
+        }
+        return "";
+    }
+
     private static boolean cue(String normalized, String key, String value) {
         return normalized.startsWith(key + "=")
                 && normalized.substring(key.length() + 1).equals(value);
@@ -739,6 +749,10 @@ final class CollectibleCardIdentityPolicy {
     static String observedCardNumber(Models.Identification id, Models.LocalScan local) {
         if (id == null) {
             return "";
+        }
+        String physicalMarking = observedPhysicalCardNumberMarking(id);
+        if (!physicalMarking.isEmpty()) {
+            return physicalMarking;
         }
         String tcgNumber = observedTcgCollectorNumber(id, local);
         if (!tcgNumber.isEmpty()) {
@@ -783,6 +797,11 @@ final class CollectibleCardIdentityPolicy {
             }
         }
         return "";
+    }
+
+    private static String observedPhysicalCardNumberMarking(Models.Identification id) {
+        return firstNonEmpty(identityField(id.photoIdentityFields, "physical_card_number_marking",
+                "card_number_marking", "physical_card_number", "number_marking"));
     }
 
     /** A short sports-game stat is never promoted to collector number without a physical No./# label. */
