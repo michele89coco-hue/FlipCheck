@@ -9,6 +9,32 @@ import org.junit.Test;
 public class CardPhotoTupleClosureSportCardTest {
 
     @Test
+    public void tcgFrontSideWithCompletePhysicalTupleShouldCloseAsExact() {
+        Models.Identification id = createBaseTcgIdentity();
+        id.photoIdentityFields.add("set=Pokemon Jungle");
+        id.photoIdentityFields.add("subject=Vileplume");
+        id.photoIdentityFields.add("card_number=15/64");
+        id.photoIdentityFields.add("variant=Holo");
+        id.photoIdentityFields.add("edition=1st Edition");
+        id.photoIdentityFields.add("finish=shadowed");
+        id.photoIdentityFields.add("language=English");
+        id.photoIdentityFields.add("serial=15/64");
+        id.photoIdentityFields.add("serial_binding=physical_card_surface");
+        id.photoViews.clear();
+        id.photoViews.add("front");
+
+        assertTrue(CardPhotoTupleClosure.canClose(id));
+        assertTrue(CardPhotoTupleClosure.apply(id));
+        ConfirmationIntegrityPolicy.enforce(id);
+
+        assertTrue(id.marketReady);
+        assertEquals("physical_card_tuple", id.modelProof);
+        assertEquals("CONFIRMED · IDENTITÀ VERIFICATA",
+                EvidencePolicy.publicStatus(id));
+        assertEquals("Pokemon Jungle Vileplume", id.family);
+    }
+
+    @Test
     public void bonifaceWithPhysicalSerialShouldCloseAsExact() {
         Models.Identification id = createBaseSportsIdentity();
         id.photoIdentityFields.add("set=Select Road to FIFA World Cup 2026 Soccer");
@@ -30,6 +56,32 @@ public class CardPhotoTupleClosureSportCardTest {
         assertEquals("CONFIRMED · IDENTITÀ VERIFICATA",
                 EvidencePolicy.publicStatus(id));
         assertTrue(id.model.contains("#21"));
+    }
+
+    @Test
+    public void kobeFrontAndBackWithPhysicalTupleShouldClose() {
+        Models.Identification id = createBaseSportsIdentity();
+        id.photoViews.clear();
+        id.photoViews.add("front");
+        id.photoViews.add("back");
+        id.photoIdentityFields.add("set=1997-98 Metal Universe");
+        id.photoIdentityFields.add("season=1997-98");
+        id.photoIdentityFields.add("player=Kobe Bryant");
+        id.photoIdentityFields.add("team=Los Angeles Lakers");
+        id.photoIdentityFields.add("card_number=81");
+        id.photoIdentityFields.add("parallel=Holo");
+        id.photoIdentityFields.add("variant=Shadowless");
+        id.photoIdentityFields.add("serial=81/100");
+        id.photoIdentityFields.add("serial_binding=physical_card_surface");
+
+        assertTrue(CardPhotoTupleClosure.canClose(id));
+        assertTrue(CardPhotoTupleClosure.apply(id));
+        ConfirmationIntegrityPolicy.enforce(id);
+
+        assertTrue(id.marketReady);
+        assertEquals("physical_card_tuple", id.modelProof);
+        assertEquals("CONFIRMED · IDENTITÀ VERIFICATA",
+                EvidencePolicy.publicStatus(id));
     }
 
     @Test
@@ -62,7 +114,7 @@ public class CardPhotoTupleClosureSportCardTest {
     }
 
     @Test
-    public void missingPhysicalIdentifierMustAskAnotherPhoto() {
+    public void trulyInsufficientCardMustRemainNeedAnotherPhoto() {
         Models.Identification id = createBaseSportsIdentity();
         id.photoIdentityFields.add("set=Panini Select");
         id.photoIdentityFields.add("season=2025");
@@ -82,6 +134,16 @@ public class CardPhotoTupleClosureSportCardTest {
         id.photoViews.add("front");
         id.photoViews.add("back");
         id.photoIdentityFields.add("manufacturer=Panini");
+        return id;
+    }
+
+    private Models.Identification createBaseTcgIdentity() {
+        Models.Identification id = new Models.Identification();
+        id.categoryKey = "trading card game";
+        id.category = "Trading card game";
+        id.localScan = new Models.LocalScan();
+        id.photoViews.add("front");
+        id.photoIdentityFields.add("manufacturer=Pokemon");
         return id;
     }
 }

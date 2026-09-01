@@ -41,25 +41,73 @@ final class CardPhotoTupleClosure {
         if (id == null || id.marketReady || !CollectibleCardIdentityPolicy.isCard(id)
                 || OverlayScopePolicy.blocksIdentity(id) || !knownCommercialCard(id)
                 || hasMaterialStrongConflict(id)) return false;
-        if (!frontAndBack(id)) {
+        PhysicalTuple tuple = extractPhysicalTuple(id);
+        if (!isClosedByPhysicalTuple(id, tuple)) {
             return false;
         }
+        if (CollectibleCardIdentityPolicy.isTradingCardGame(id)) {
+            return hasFront(id) && evidenceCount(id) >= 5 && tuple.hasPhysicalIdentifier;
+        }
+        return evidenceCount(id) >= 5 && tuple.hasPhysicalIdentifier
+                && frontAndBack(id);
+    }
 
-        PhysicalTuple tuple = extractPhysicalTuple(id);
-        if (tuple.brand.isEmpty() || tuple.brandMismatch
-                || tuple.subject.isEmpty() || !tuple.hasSetOrCollectionOrYearOrSeason()) {
+    private static boolean isClosedByPhysicalTuple(Models.Identification id,
+                                                  PhysicalTuple tuple) {
+        if (tuple.brand.isEmpty() || tuple.brandMismatch || tuple.subject.isEmpty()) {
+            return false;
+        }
+        if (!tuple.hasSetOrCollectionOrYearOrSeason()) {
+            return false;
+        }
+        if (tuple.cardNumber.isEmpty()) {
             return false;
         }
         if (tuple.hasPhysicalConflict || tuple.hasUnresolvableVariantAmbiguity) {
             return false;
         }
-
-        if (CollectibleCardIdentityPolicy.isTradingCardGame(id)) {
-            return hasFront(id) && evidenceCount(id) >= 5 && tuple.hasPhysicalIdentifier;
-        }
-
-        return evidenceCount(id) >= 5 && tuple.hasPhysicalIdentifier;
+        return hasDiscriminatingTupleFields(id, tuple.variant, tuple.serial,
+                tuple.team, tuple.hasUnresolvableVariantAmbiguity);
     }
+
+    private static boolean hasDiscriminatingTupleFields(Models.Identification id,
+                                                        String variant,
+                                                        String serial,
+                                                        String team,
+                                                        boolean ambiguousVariantPairs) {
+        String value = safe(variant).toLowerCase(Locale.ROOT);
+        String visibleSerial = safe(serial).toLowerCase(Locale.ROOT);
+        boolean tcg = CollectibleCardIdentityPolicy.isTradingCardGame(id);
+        boolean hasDiscriminatingVariant = !value.isEmpty() && !unresolvedVariant(value)
+                && (hasVariantSignal(value) || hasEditionSignal(value)
+                || hasLanguageSignal(value));
+        if (tcg) {
+            return hasDiscriminatingVariant || !visibleSerial.isEmpty();
+        }
+        if (!team.isEmpty()) {
+            return true;
+        }
+        return hasDiscriminatingVariant || !visibleSerial.isEmpty() || !ambiguousVariantPairs;
+    }
+
+    private static boolean hasVariantSignal(String value) {
+        return value.contains("holo") || value.contains("foil") || value.contains("shadowless")
+                || value.contains("shadow-less") || value.contains("1st") || value.contains("first")
+                || value.contains("edition") || value.contains("parallel") || value.contains("rc")
+                || value.contains("rookie") || value.contains("relic") || value.contains("promotional");
+    }
+
+    private static boolean hasEditionSignal(String value) {
+        return value.contains("unlimited") || value.contains("num") || value.contains("numbered")
+                || value.contains("serial") || value.contains("limited");
+    }
+
+    private static boolean hasLanguageSignal(String value) {
+        return value.contains("english") || value.contains("italian") || value.contains("spanish")
+                || value.contains("french") || value.contains("german") || value.contains("japanese")
+                || value.contains("chinese") || value.contains("russian")
+                || value.contains("en ") || value.contains("it ") || value.contains("es ")
+                || value.contains("de ") || value.contains("ja ") || value.contains("cn ");
 
     static boolean apply(Models.Identification id) {
         if (!canClose(id)) return false;
