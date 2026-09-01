@@ -15,7 +15,7 @@ jobs:
     name: Build and keep last 3 signed APKs
     runs-on: ubuntu-latest
     env:
-      FLIPCHECK_KEYSTORE_PATH: ${{ runner.temp }}/flipcheck-release.jks
+      FLIPCHECK_KEYSTORE_PATH: ${{ github.workspace }}/flipcheck-release.jks
       FLIPCHECK_KEYSTORE_PASSWORD: ${{ secrets.FLIPCHECK_KEYSTORE_PASSWORD }}
       FLIPCHECK_KEY_ALIAS: ${{ secrets.FLIPCHECK_KEY_ALIAS }}
       FLIPCHECK_KEY_PASSWORD: ${{ secrets.FLIPCHECK_KEY_PASSWORD }}
