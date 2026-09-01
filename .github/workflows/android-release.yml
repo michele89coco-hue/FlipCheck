@@ -41,6 +41,11 @@ jobs:
           echo "${FLIPCHECK_KEYSTORE_BASE64}" | tr -d '\n' | base64 -d > "${FLIPCHECK_KEYSTORE_PATH}"
 
       - name: Run Android release build
+        env:
+          FLIPCHECK_KEYSTORE_PATH: ${{ github.workspace }}/flipcheck-release.jks
+          FLIPCHECK_KEYSTORE_PASSWORD: ${{ secrets.FLIPCHECK_KEYSTORE_PASSWORD }}
+          FLIPCHECK_KEY_ALIAS: ${{ secrets.FLIPCHECK_KEY_ALIAS }}
+          FLIPCHECK_KEY_PASSWORD: ${{ secrets.FLIPCHECK_KEY_PASSWORD }}
         shell: bash
         run: |
           if [ -f ./gradlew ]; then
