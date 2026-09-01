@@ -43,7 +43,10 @@ final class CardPhotoTupleClosure {
         String brand = observedBrand(id);
         String subject = subject(id);
         String series = series(id);
-        if (brand.isEmpty() || subject.isEmpty() || series.isEmpty()) return false;
+        String season = year(id);
+        if (brand.isEmpty() || subject.isEmpty() || (series.isEmpty() && season.isEmpty())) {
+            return false;
+        }
 
         if (CollectibleCardIdentityPolicy.isTradingCardGame(id)) {
             // Known Pokémon, Magic and One Piece cards are front-identifiable.
@@ -52,8 +55,12 @@ final class CardPhotoTupleClosure {
             return hasFront(id) && evidenceCount(id) >= 5;
         }
         // Sports cards use the complementary physical tuple: front + back.
-        // A rating such as Curry's 77 is never required as a checklist number.
-        return frontAndBack(id) && evidenceCount(id) >= 5;
+        // Require a complete and non-conflicting physical tuple before exact close.
+        String number = CollectibleCardIdentityPolicy.observedCardNumber(id, id.localScan);
+        String variant = cardVariant(id);
+        return frontAndBack(id) && evidenceCount(id) >= 5
+                && !number.isEmpty() && !variant.isEmpty()
+                && !hasCandidateConflict(id);
     }
 
     static boolean apply(Models.Identification id) {
@@ -125,7 +132,7 @@ final class CardPhotoTupleClosure {
     }
 
     private static String cardVariant(Models.Identification id) {
-        String value = field(id, "parallel", "variant", "finish");
+        String value = field(id, "parallel", "variant", "finish", "tier");
         if (!value.isEmpty() && !unresolvedVariant(value)) return value;
         String printing = field(id, "physical_printing");
         String x = canon(printing);
@@ -241,6 +248,24 @@ final class CardPhotoTupleClosure {
         }
         for (Models.CandidateScore c : id.candidates) {
             if (c != null && (c.hardRejected || !c.hardViolations.isEmpty())) return true;
+        }
+        return false;
+    }
+
+    private static boolean hasCandidateConflict(Models.Identification id) {
+        for (Models.CandidateScore c : id.candidates) {
+            if (c == null) {
+                continue;
+            }
+            if (c.hardRejected || !c.hardViolations.isEmpty()) {
+                return true;
+            }
+            for (String raw : c.contradictions) {
+                String x = safe(raw).toLowerCase(Locale.ROOT);
+                if (x.contains("conflict") || x.contains("contradiction")) {
+                    return true;
+                }
+            }
         }
         return false;
     }
