@@ -108,6 +108,7 @@ final class CardPhotoTupleClosure {
                 || value.contains("chinese") || value.contains("russian")
                 || value.contains("en ") || value.contains("it ") || value.contains("es ")
                 || value.contains("de ") || value.contains("ja ") || value.contains("cn ");
+    }
 
     static boolean apply(Models.Identification id) {
         if (!canClose(id)) return false;
