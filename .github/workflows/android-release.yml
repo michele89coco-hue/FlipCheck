@@ -58,12 +58,18 @@ jobs:
         shell: bash
         run: |
           mkdir -p "$GITHUB_WORKSPACE/artifact"
-          cp app/build/outputs/apk/release/*.apk "$GITHUB_WORKSPACE/artifact/"
+          for apk in app/build/outputs/apk/release/*.apk; do
+            base="$(basename "$apk")"
+            cp "$apk" "$GITHUB_WORKSPACE/artifact/${base%.apk}-${GITHUB_SHA}.apk"
+          done
+          echo "$GITHUB_SHA" > "$GITHUB_WORKSPACE/artifact/build-commit.txt"
+          echo "run_number=${GITHUB_RUN_NUMBER}" >> "$GITHUB_WORKSPACE/artifact/build-commit.txt"
+          echo "run_id=${GITHUB_RUN_ID}" >> "$GITHUB_WORKSPACE/artifact/build-commit.txt"
 
       - name: Upload signed APK
         uses: actions/upload-artifact@v4
         with:
-          name: flipcheck-release-apk-${{ github.run_number }}
+          name: flipcheck-release-apk-${{ github.run_number }}-${{ github.sha }}
           path: artifact/*.apk
           retention-days: 30
 

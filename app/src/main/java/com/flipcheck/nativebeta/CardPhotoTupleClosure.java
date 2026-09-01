@@ -71,10 +71,10 @@ final class CardPhotoTupleClosure {
     }
 
     private static boolean hasDiscriminatingTupleFields(Models.Identification id,
-                                                        String variant,
-                                                        String serial,
-                                                        String team,
-                                                        boolean ambiguousVariantPairs) {
+                                                         String variant,
+                                                         String serial,
+                                                         String team,
+                                                         boolean ambiguousVariantPairs) {
         String value = safe(variant).toLowerCase(Locale.ROOT);
         String visibleSerial = safe(serial).toLowerCase(Locale.ROOT);
         boolean tcg = CollectibleCardIdentityPolicy.isTradingCardGame(id);
@@ -84,10 +84,7 @@ final class CardPhotoTupleClosure {
         if (tcg) {
             return hasDiscriminatingVariant || !visibleSerial.isEmpty();
         }
-        if (!team.isEmpty()) {
-            return true;
-        }
-        return hasDiscriminatingVariant || !visibleSerial.isEmpty() || !ambiguousVariantPairs;
+        return true;
     }
 
     private static boolean hasVariantSignal(String value) {

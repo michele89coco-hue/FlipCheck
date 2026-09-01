@@ -9,6 +9,9 @@ final class ConfirmationIntegrityPolicy {
         if (id == null || !id.marketReady) {
             return;
         }
+        if (CardPhotoTupleClosure.canClose(id)) {
+            return;
+        }
         // Physical card tuple closure has completed the mandatory independent
         // review. Do not reopen it merely because no checklist number was
         // printed/read (or because a visible number is a game statistic).

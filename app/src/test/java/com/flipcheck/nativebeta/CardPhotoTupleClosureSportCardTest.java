@@ -162,6 +162,36 @@ public class CardPhotoTupleClosureSportCardTest {
     }
 
     @Test
+    public void unresolvedParallelMustNotForceNeedAnotherPhotoWhenPhysicalTupleIsComplete() {
+        Models.Identification id = createBaseSportsIdentity();
+        id.photoIdentityFields.add("set=Select Road to FIFA World Cup 2026");
+        id.photoIdentityFields.add("season=2025-26");
+        id.photoIdentityFields.add("player=Victor Boniface");
+        id.photoIdentityFields.add("team=Nigeria");
+        id.photoIdentityFields.add("card_number=21");
+        id.photoIdentityFields.add("insert_or_base=Base Terrace");
+        id.marketReady = true;
+        id.model = "Select Road to FIFA World Cup 2026 Victor Boniface #21 Base Terrace";
+        id.family = "Select Road to FIFA World Cup 2026";
+        id.brand = "Panini";
+        id.modelProof = "card_tuple_front_back_with_parallel_uncertain";
+        id.verificationSummary = "exact parallel unresolved";
+        id.decisionReason = "exact parallel unresolved";
+
+        Models.CandidateScore unresolved = new Models.CandidateScore();
+        unresolved.candidateFacts.add("exact_parallel_name=Base Terrace");
+        unresolved.hardViolations.add("parallel unresolved");
+        id.candidates.add(unresolved);
+
+        ConfirmationIntegrityPolicy.enforce(id);
+
+        assertTrue(id.marketReady);
+        assertEquals("CONFIRMED · IDENTITÀ VERIFICATA",
+                EvidencePolicy.publicStatus(id));
+        assertTrue(id.nextPhotoRequest == null || id.nextPhotoRequest.isEmpty());
+    }
+
+    @Test
     public void trulyInsufficientCardMustRemainNeedAnotherPhoto() {
         Models.Identification id = createBaseSportsIdentity();
         id.photoIdentityFields.add("set=Panini Select");
