@@ -26,7 +26,7 @@ public final class V131UniversalEvidenceClosureRecoveryRegressionTest {
     }
     private static void tcgCompleteTupleHasNoPhantomConflict()throws Exception{
         Models.Identification id=parse("vileplume");FinalIdentityDecisionEngine.freeze(id,"v131_tcg_complete");
-        require("CONFIRMED".equals(id.coreIdentityStatus)&&"PHYSICALLY_VERIFIED".equals(id.exactIdentityStatus),"complete TCG tuple did not close");
+        require("CONFIRMED".equals(id.coreIdentityStatus)&&"PHYSICALLY_VERIFIED".equals(id.exactIdentityStatus),"complete TCG tuple did not close: identity="+id.identityStatus+", core="+id.coreIdentityStatus+", exact="+id.exactIdentityStatus+", identifier="+id.identifierStatus+", conflicts="+id.numberConflicts+", invariants="+id.consistencyInvariantErrors);
         require("CONFIRMED".equals(id.exactEditionStatus)&&"CONFIRMED".equals(id.finishStatus),"edition/finish states were lost");
         require(id.numberConflicts.isEmpty()&&id.documentedConflicts.isEmpty()&&id.blockingReason.isEmpty(),"identical number evidence created a conflict");pass();
     }
