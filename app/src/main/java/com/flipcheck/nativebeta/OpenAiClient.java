@@ -705,27 +705,42 @@ class OpenAiClient {
     }
 
     /** Identity-only retrieval for UniversalIdentityEngineV2; never requests prices. */
-    Response identityWebSearchV2(String prompt) throws Exception {
-        String policy="FLIPCHECK v1.32 IDENTITY RETRIEVAL ONLY. Use exactly one web_search call. "
+    Response identityWebSearchV2(String prompt) throws Exception {return identityWebSearchV2(null,prompt);}
+
+    /** v1.33 keeps the original image in the identity search so layout disproof is real. */
+    Response identityWebSearchV2(List<String> imageDataUrls,String prompt) throws Exception {
+        String policy="FLIPCHECK v1.33 NEUTRAL IDENTITY RETRIEVAL AND DISPROOF. Use exactly one web_search call. "
                 +"Search official manufacturers/publishers, authoritative checklists and structured product pages before retailers. "
                 +"Do not search prices, sold listings or marketplace comparables. OBSERVED means localized photo evidence; INFERRED values are query leads only. "
-                +"An inferred brand may not veto a retrieved candidate. Return several same-level candidates, their source URL and every matched or contradicted observed field. "
-                +"Ambiguous text is unknown, not a conflict. Actively disprove each leading candidate. JSON only.\n\n";
+                +"Unless a brand is literal localized evidence, the first query MUST be brand-neutral and use only LOCALIZED_OBSERVED_FACTS. Never put an inferred brand or model into query[0], including a site filter. "
+                +"After neutral retrieval, generate multiple alternative brands/records and compare them against the supplied photographs. "
+                +"An inferred brand may not veto a retrieved candidate or enter the final title. A checklist or product page containing multiple items MUST yield one isolated candidate per row/model/edition/format. "
+                +"Never combine a number from one row, a set from another row, or a brand from another result. Return source_record_id and page scope for every candidate. "
+                +"Ambiguous text is unknown, not a conflict. Actively disprove every leading candidate using exact number/set/season/configuration or full control-layout differences. JSON only.\n\n";
+        Object input=policy+prompt;
+        if(imageDataUrls!=null&&!imageDataUrls.isEmpty()){JSONArray content=new JSONArray().put(new JSONObject().put("type","input_text").put("text",policy+prompt));for(String image:imageDataUrls)content.put(new JSONObject().put("type","input_image").put("image_url",image).put("detail","high"));input=new JSONArray().put(new JSONObject().put("role","user").put("content",content));}
         JSONObject body=new JSONObject().put("model",MODEL).put("store",false)
-                .put("max_output_tokens",1500).put("reasoning",new JSONObject().put("effort","low"))
+                .put("max_output_tokens",1900).put("reasoning",new JSONObject().put("effort","low"))
                 .put("max_tool_calls",1).put("tools",new JSONArray().put(new JSONObject()
                         .put("type","web_search").put("search_context_size","medium")))
                 .put("include",new JSONArray().put("web_search_call.action.sources").put("web_search_call.results"))
                 .put("text",new JSONObject().put("format",identityWebFormatV2()).put("verbosity","low"))
-                .put("input",policy+prompt);
-        return call(body,false,true);
+                .put("input",input);
+        return call(body,imageDataUrls!=null&&!imageDataUrls.isEmpty(),true);
     }
 
     private static JSONObject identityWebFormatV2() throws Exception {
         JSONObject candidateProps=new JSONObject()
+                .put("candidate_id",new JSONObject().put("type","string"))
+                .put("source_id",new JSONObject().put("type","string"))
+                .put("source_title",new JSONObject().put("type","string"))
+                .put("source_record_id",new JSONObject().put("type","string"))
+                .put("source_page_scope",new JSONObject().put("type","string").put("enum",new JSONArray().put("SINGLE_RECORD").put("CHECKLIST_ROW").put("MULTI_RECORD_PAGE").put("GENERIC_PAGE")))
+                .put("identity_level",new JSONObject().put("type","string").put("enum",new JSONArray().put("FAMILY").put("CORE_IDENTITY").put("CATALOG_IDENTITY").put("VARIANT_OR_FORMAT")))
                 .put("brand",new JSONObject().put("type","string"))
                 .put("product_line",new JSONObject().put("type","string"))
                 .put("set_name",new JSONObject().put("type","string"))
+                .put("sub_series",new JSONObject().put("type","string"))
                 .put("model",new JSONObject().put("type","string"))
                 .put("category",new JSONObject().put("type","string"))
                 .put("year",new JSONObject().put("type","string"))
@@ -733,11 +748,23 @@ class OpenAiClient {
                 .put("card_number",new JSONObject().put("type","string"))
                 .put("language",new JSONObject().put("type","string"))
                 .put("edition",new JSONObject().put("type","string"))
+                .put("card_role",new JSONObject().put("type","string"))
+                .put("printed_total",new JSONObject().put("type","string"))
+                .put("set_symbol",new JSONObject().put("type","string"))
+                .put("copyright_year",new JSONObject().put("type","string"))
+                .put("sport",new JSONObject().put("type","string"))
+                .put("team",new JSONObject().put("type","string"))
                 .put("finish",new JSONObject().put("type","string"))
                 .put("format",new JSONObject().put("type","string"))
                 .put("configuration",new JSONObject().put("type","string"))
                 .put("product_code",new JSONObject().put("type","string"))
                 .put("barcode",new JSONObject().put("type","string"))
+                .put("control_layout",new JSONObject().put("type","string"))
+                .put("shortcut_buttons",new JSONObject().put("type","string"))
+                .put("navigation_layout",new JSONObject().put("type","string"))
+                .put("numeric_keypad",new JSONObject().put("type","string"))
+                .put("voice_control",new JSONObject().put("type","string"))
+                .put("layout_signature",new JSONObject().put("type","string"))
                 .put("source_url",new JSONObject().put("type","string"))
                 .put("source_authority",new JSONObject().put("type","string"))
                 .put("source_quality",integerSchema(0,100))
@@ -747,12 +774,12 @@ class OpenAiClient {
                 .put("matched_observed_fields",stringArraySchema(16))
                 .put("contradicted_observed_fields",stringArraySchema(12))
                 .put("unknown_fields",stringArraySchema(12));
-        JSONObject candidate=strictObject(candidateProps,"brand","product_line","set_name","model","category","year","subject","card_number","language","edition","finish","format","configuration","product_code","barcode","source_url","source_authority","source_quality","exact_reference","disproof_passed","layout_match","matched_observed_fields","contradicted_observed_fields","unknown_fields");
+        JSONObject candidate=strictObject(candidateProps,"candidate_id","source_id","source_title","source_record_id","source_page_scope","identity_level","brand","product_line","set_name","sub_series","model","category","year","subject","card_number","language","edition","card_role","printed_total","set_symbol","copyright_year","sport","team","finish","format","configuration","product_code","barcode","control_layout","shortcut_buttons","navigation_layout","numeric_keypad","voice_control","layout_signature","source_url","source_authority","source_quality","exact_reference","disproof_passed","layout_match","matched_observed_fields","contradicted_observed_fields","unknown_fields");
         JSONObject props=new JSONObject()
                 .put("queries",stringArraySchema(4))
                 .put("candidates",new JSONObject().put("type","array").put("maxItems",6).put("items",candidate))
                 .put("retrieval_reason",new JSONObject().put("type","string"));
-        return jsonFormat("flipcheck_identity_retrieval_v132",strictObject(props,"queries","candidates","retrieval_reason"));
+        return jsonFormat("flipcheck_identity_retrieval_v133",strictObject(props,"queries","candidates","retrieval_reason"));
     }
 
     private static JSONObject webFormat(String stage) throws Exception {

@@ -17,13 +17,16 @@ final class EvidencePolicy {
         id.observedEvidence.clear();
         id.inferredEvidence.clear();
         id.verifiedEvidence.clear();
-        add(id.observedEvidence, nonEmpty(id.category) ? "Tipo osservato: " + id.category : "");
         if(FinalStateReducerV2.VERSION.equals(id.finalStateReducerVersion)){
             for(EvidenceAtom fact:id.evidenceAtomsV2){if(fact==null)continue;String line=fact.field+"="+fact.normalizedValue+" ["+fact.epistemicLevel+", "+fact.source+(fact.boundingBox.isEmpty()?"":", "+fact.boundingBox)+"]";
                 if(fact.epistemicLevel==EvidenceAtom.EpistemicLevel.OBSERVED)add(id.observedEvidence,line);
                 else if(fact.epistemicLevel==EvidenceAtom.EpistemicLevel.INFERRED)add(id.inferredEvidence,line);
                 else add(id.verifiedEvidence,line);}
-        } else for(Models.EvidenceFact fact:id.evidenceLedger){
+            if(nonEmpty(id.candidateWinnerId))add(id.verifiedEvidence,"Candidato vincente isolato: "+id.candidateWinnerId+" · disproof="+id.disproofStatus);
+            return;
+        }
+        add(id.observedEvidence, nonEmpty(id.category) ? "Tipo osservato: " + id.category : "");
+        for(Models.EvidenceFact fact:id.evidenceLedger){
             if(fact!=null&&EvidenceLedger.isPixelOrigin(fact.origin))add(id.observedEvidence,EvidenceLedger.debug(fact));
         }
         if (isObservedBrand(id)) {

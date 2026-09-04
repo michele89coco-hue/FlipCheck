@@ -7,6 +7,7 @@ def compatibleKeystorePassword = System.getenv('FLIPCHECK_KEYSTORE_PASSWORD')
 def compatibleKeyAlias = System.getenv('FLIPCHECK_KEY_ALIAS')
 def compatibleKeyPassword = System.getenv('FLIPCHECK_KEY_PASSWORD')
 def hasCompatibleSigning = compatibleKeystorePath && compatibleKeystorePassword && compatibleKeyAlias && compatibleKeyPassword
+def sourceCommit = (System.getenv('GIT_COMMIT') ?: 'local-uncommitted').replaceAll('[^A-Za-z0-9._-]', '_')
 
 android {
     namespace 'com.flipcheck.nativebeta'
@@ -17,10 +18,11 @@ android {
         applicationId 'com.flipcheck.beta.nativev098.clean'
         minSdk 23
         targetSdk 36
-        versionCode 136
-        versionName '1.32-universal-identity-engine-v2'
+        versionCode 137
+        versionName '1.33-live-validated-global-resolver'
+        buildConfigField 'String', 'SOURCE_COMMIT', '"' + sourceCommit + '"'
         multiDexEnabled true
-        testInstrumentationRunner 'android.app.InstrumentationTestRunner'
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
 
     buildFeatures {
@@ -69,6 +71,7 @@ android {
 
     sourceSets {
         test.java.srcDir rootProject.file('tools/regression')
+        androidTest.assets.srcDir rootProject.file('tools/regression/fixtures/v132-real-images')
     }
 
     lint {
@@ -101,4 +104,5 @@ dependencies {
     implementation libs.jsoup
     testImplementation libs.junit
     testImplementation libs.json
+    androidTestImplementation libs.androidx.test.runner
 }

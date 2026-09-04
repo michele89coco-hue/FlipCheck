@@ -1142,6 +1142,14 @@ public class MainActivity extends Activity {
             panel.addView(text("inferred="+clip(valueOrEmpty(id.v2InferredFacts),350),11,MUTED,false));
             panel.addView(text("retrieved="+clip(valueOrEmpty(id.v2RetrievedFacts),700),11,MUTED,false));
             panel.addView(text("candidates="+clip(valueOrEmpty(id.v2CandidateTrace),700),11,MUTED,false));
+            panel.addView(text("candidate_isolation="+valueOrEmpty(id.candidateIsolationStatus)
+                    +" · winner="+valueOrEmpty(id.candidateWinnerId)
+                    +" · runner_up="+valueOrEmpty(id.candidateRunnerUpId)
+                    +" · winner_source="+valueOrEmpty(id.candidateWinnerSource),11,MUTED,false));
+            panel.addView(text("uploaded_images="+id.uploadedImageCount
+                    +" · evidence_ledger_status="+valueOrEmpty(id.evidenceLedgerStatus)
+                    +" · views="+id.photoViews,11,MUTED,false));
+            if(!id.retrievedRejectedSources.isEmpty())panel.addView(text("retrieved_but_rejected="+clip(id.retrievedRejectedSources,500),11,MUTED,false));
             panel.addView(text("real_conflicts="+clip(valueOrEmpty(id.v2TrueConflicts),500),11,id.v2TrueConflicts.isEmpty()?MUTED:WARN,false));
             panel.addView(text("recovery="+valueOrEmpty(id.v2RecoveryTrace)
                     +" · calls="+valueOrEmpty(id.v2CallReasons),11,MUTED,false));

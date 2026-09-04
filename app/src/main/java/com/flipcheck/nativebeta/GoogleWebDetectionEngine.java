@@ -496,7 +496,7 @@ final class GoogleWebDetectionEngine {
             return false;
         }
         String u = x.toUpperCase(Locale.ROOT);
-        if (u.matches("20\\d{2}[-_/]20\\d{2}") || u.matches("(ANDROID|NETFLIX|AMAZON|GOOGLE|REMOTE|CONTROL|SMARTTV|BLUETOOTH|YOUTUBE|PHILIPS|TOSHIBA|PANASONIC|SAMSUNG|HISENSE|SONY)") || u.matches("\\d{3,4}P") || u.matches("\\d{3,4}HZ")) {
+        if (u.matches("20\\d{2}[-_/]20\\d{2}") || u.matches("(ANDROID|NETFLIX|AMAZON|GOOGLE|REMOTE|CONTROL|SMARTTV|BLUETOOTH|YOUTUBE|TOSHIBA|PANASONIC|SAMSUNG|HISENSE|SONY)") || u.matches("\\d{3,4}P") || u.matches("\\d{3,4}HZ")) {
             return false;
         }
         return true;
@@ -512,7 +512,7 @@ final class GoogleWebDetectionEngine {
 
     private static String guessBrand(String text) {
         String u = safe(text).toUpperCase(Locale.ROOT);
-        String[][] brands = {new String[]{"PHILIPS", "Philips"}, new String[]{"SONY", "Sony"}, new String[]{"TOSHIBA", "Toshiba"}, new String[]{"PANASONIC", "Panasonic"}, new String[]{"SAMSUNG", "Samsung"}, new String[]{"HISENSE", "Hisense"}, new String[]{"SHARP", "Sharp"}, new String[]{"JVC", "JVC"}, new String[]{"TCL", "TCL"}, new String[]{"LG ", "LG"}, new String[]{"LG-", "LG"}, new String[]{"SKY ", "Sky"}, new String[]{"BOSCH", "Bosch"}, new String[]{"MAKITA", "Makita"}, new String[]{"DEWALT", "DeWalt"}, new String[]{"MILWAUKEE", "Milwaukee"}, new String[]{"APPLE", "Apple"}, new String[]{"LENOVO", "Lenovo"}, new String[]{"HP ", "HP"}, new String[]{"DELL", "Dell"}, new String[]{"ASUS", "Asus"}, new String[]{"ACER", "Acer"}, new String[]{"CANON", "Canon"}, new String[]{"NIKON", "Nikon"}};
+        String[][] brands = {new String[]{"SONY", "Sony"}, new String[]{"TOSHIBA", "Toshiba"}, new String[]{"PANASONIC", "Panasonic"}, new String[]{"SAMSUNG", "Samsung"}, new String[]{"HISENSE", "Hisense"}, new String[]{"SHARP", "Sharp"}, new String[]{"JVC", "JVC"}, new String[]{"TCL", "TCL"}, new String[]{"LG ", "LG"}, new String[]{"LG-", "LG"}, new String[]{"SKY ", "Sky"}, new String[]{"BOSCH", "Bosch"}, new String[]{"MAKITA", "Makita"}, new String[]{"DEWALT", "DeWalt"}, new String[]{"MILWAUKEE", "Milwaukee"}, new String[]{"APPLE", "Apple"}, new String[]{"LENOVO", "Lenovo"}, new String[]{"HP ", "HP"}, new String[]{"DELL", "Dell"}, new String[]{"ASUS", "Asus"}, new String[]{"ACER", "Acer"}, new String[]{"CANON", "Canon"}, new String[]{"NIKON", "Nikon"}};
         for (String[] b : brands) {
             if (u.contains(b[0])) {
                 return b[1];

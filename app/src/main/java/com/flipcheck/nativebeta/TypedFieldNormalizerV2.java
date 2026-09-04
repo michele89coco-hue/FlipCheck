@@ -19,6 +19,7 @@ final class TypedFieldNormalizerV2 {
             if(collectorRepair(atom,field,normalized)&&!corroboratedCollector(ledger,atom,normalized))continue;
             if(!normalized.equals(atom.normalizedValue)||!field.equals(atom.field))
                 ledger.appendNormalization(atom,normalized,field,atom.semanticScope);
+            if(field.equals("collectorNumber")){String total=printedTotal(normalized);if(!total.isEmpty())ledger.appendNormalization(atom,total,"printedTotal","collector_number_denominator");}
         }
     }
 
@@ -102,7 +103,7 @@ final class TypedFieldNormalizerV2 {
         put(m,"manufacturer","manufacturer","maker","publisher","producer");put(m,"brand","brand","brand_mark","brand_logo");put(m,"game","game","tcg_game");
         put(m,"productLine","product_line","family","series","set_or_product_line");put(m,"setName","set","set_name","main_set");
         put(m,"cardName","card_name","subject_name","character");put(m,"athlete","athlete","player","subject");
-        put(m,"collectorNumber","collector_number","collector_marking","physical_collector_number");
+        put(m,"collectorNumber","collector_number","collector_marking","physical_collector_number");put(m,"printedTotal","printed_total","set_total","collector_total");
         put(m,"physicalCardNumber","physical_card_number","physical_card_number_marking","card_number");
         put(m,"catalogCardNumber","catalog_card_number","source_confirmed_catalog_number");
         put(m,"physicalSerial","physical_serial","serial_fraction","physical_print_run");put(m,"graphicNumber","graphic_number","jersey_number");
@@ -126,5 +127,6 @@ final class TypedFieldNormalizerV2 {
     private static String words(String raw){return Normalizer.normalize(safe(raw),Normalizer.Form.NFD).replaceAll("\\p{M}+","").toUpperCase(Locale.ROOT).replaceAll("[^A-Z0-9]+"," ").trim().replaceAll("\\s+"," ");}
     private static String tokenSet(String raw){java.util.TreeSet<String>s=new java.util.TreeSet<>();for(String t:words(raw).split(" "))if(t.length()>1&&!t.equals("SERIES"))s.add(t);return s.toString();}
     private static String displayWords(String raw){String v=safe(raw);return v.isEmpty()?v:Character.toUpperCase(v.charAt(0))+v.substring(1);}
+    private static String printedTotal(String collector){String v=safe(collector).toUpperCase(Locale.ROOT);int slash=v.indexOf('/');if(slash<1||slash>=v.length()-1)return "";String total=v.substring(slash+1);return total.matches("\\d{1,5}")?total:"";}
     private static String safe(String value){return value==null?"":value.trim();}
 }

@@ -32,7 +32,7 @@ final class RemoteCandidateGuard {
         id.familyConfidence = 0;
         id.title = "Telecomando TV";
         id.nextPhotoRequest = "Fotografa il retro e il vano batterie, includendo logo, MODEL/P/N e tutte le etichette";
-        id.nextPhotoReason = "NETFLIX, HOME, SOURCES e la forma dei tasti sono condivisi da più produttori e non provano da soli Samsung, Philips o un altro marchio.";
+        id.nextPhotoReason = "NETFLIX, HOME, SOURCES e la forma dei tasti sono condivisi da più produttori e non provano da soli un marchio specifico.";
         id.verificationSummary = "Il marchio ipotizzato è stato escluso dal risultato pubblico perché mancavano logo, codice fisico o confronto diretto con un riferimento visivo esatto.";
     }
 

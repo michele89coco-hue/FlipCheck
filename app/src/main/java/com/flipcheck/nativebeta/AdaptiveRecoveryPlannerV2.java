@@ -11,7 +11,7 @@ final class AdaptiveRecoveryPlannerV2 {
     private AdaptiveRecoveryPlannerV2() {}
 
     static Plan afterPrimary(DomainProfileRouterV2.Profile profile,ImmutableEvidenceLedgerV2 ledger,Models.Usage usage){
-        List<String>missing=criticalMissing(profile,ledger);if(!missing.isEmpty()&&cost(usage)+.0035d<=.025d)return new Plan(Action.FOCUSED_VISION,missing.get(0),"critical_visible_field_missing_after_primary",.82d,.0035d);
+        List<String>missing=criticalMissing(profile,ledger);if(!missing.isEmpty()&&cost(usage)+.0035d<=.025d)return new Plan(Action.FOCUSED_VISION,groupedDiscriminator(profile,missing.get(0)),"critical_visible_field_missing_after_primary",.82d,.0035d);
         if(profile==DomainProfileRouterV2.Profile.TCG_CARD
                 &&ledger.strongest("edition",EvidenceAtom.EpistemicLevel.OBSERVED)==null
                 &&ledger.strongest("firstEditionMark",EvidenceAtom.EpistemicLevel.OBSERVED)==null
@@ -33,6 +33,7 @@ final class AdaptiveRecoveryPlannerV2 {
         return m;}
     static boolean needsWeb(DomainProfileRouterV2.Profile p,ImmutableEvidenceLedgerV2 l){if(p==DomainProfileRouterV2.Profile.GENERIC_OBJECT)return l.all().size()>=2;return !l.all().isEmpty();}
     private static String nextWebDiscriminator(DomainProfileRouterV2.Profile p,ImmutableEvidenceLedgerV2 l){if(p==DomainProfileRouterV2.Profile.TELEVISION_REMOTE_CONTROL)return "brand_and_control_layout";if(DomainProfileRouterV2.cards(p))return "catalog_tuple";if(p==DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT)return "manufacturer_line_configuration";return "brand_model_or_code";}
+    private static String groupedDiscriminator(DomainProfileRouterV2.Profile p,String missing){if(p==DomainProfileRouterV2.Profile.TCG_CARD)return "tcg_number_set_edition_finish";if(p==DomainProfileRouterV2.Profile.SPORTS_CARD)return "sports_number_and_season";if(p==DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT)return "sealed_brand_line_configuration";if(p==DomainProfileRouterV2.Profile.TELEVISION_REMOTE_CONTROL)return "remote_brand_and_layout";return missing;}
     private static void need(List<String>m,ImmutableEvidenceLedgerV2 l,String f){if(l.strongest(f,EvidenceAtom.EpistemicLevel.OBSERVED,EvidenceAtom.EpistemicLevel.RETRIEVED)==null)m.add(f);}
     private static void needEither(List<String>m,ImmutableEvidenceLedgerV2 l,String a,String b){if(l.strongest(a,EvidenceAtom.EpistemicLevel.OBSERVED,EvidenceAtom.EpistemicLevel.RETRIEVED)==null&&l.strongest(b,EvidenceAtom.EpistemicLevel.OBSERVED,EvidenceAtom.EpistemicLevel.RETRIEVED)==null)m.add(a+"_or_"+b);}
     private static double cost(Models.Usage usage){return usage==null?0d:usage.costUsd;}

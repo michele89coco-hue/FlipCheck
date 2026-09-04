@@ -90,8 +90,14 @@ public final class AnalysisForegroundService extends Service {
             }
             Models.Identification id = IdentificationEngine.identify(
                     local, dataUrls, details, new OpenAiClient(key), usage);
-            UniversalRecognitionLadder.apply(id);
-            EvidencePolicy.apply(id);
+            // V2 owns the public identity after its single reducer pass. Legacy
+            // closure ladders remain available only for non-V2 fallback routes.
+            if (FinalStateReducerV2.VERSION.equals(id.finalStateReducerVersion)) {
+                EvidencePolicy.apply(id);
+            } else {
+                UniversalRecognitionLadder.apply(id);
+                EvidencePolicy.apply(id);
+            }
             AnalysisResultStore.saveSuccess(this, id, usage);
             notifyProgress(id.identityConfirmed ? "Identificazione verificata" : "Analisi completata");
         } catch (Throwable error) {

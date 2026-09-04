@@ -466,6 +466,13 @@ final class Models {
         String v2RecoveryTrace = "";
         String v2ImagePreparationTrace = "";
         String v2CallReasons = "";
+        int uploadedImageCount;
+        String evidenceLedgerStatus = "UNSTRUCTURED";
+        String candidateWinnerId = "";
+        String candidateRunnerUpId = "";
+        String candidateWinnerSource = "";
+        String candidateIsolationStatus = "NOT_RUN";
+        String retrievedRejectedSources = "";
         int marketCalls;
         transient NormalizedPhotoIdentity normalizedPhotoIdentity;
         String normalizationStage = "not_run";
