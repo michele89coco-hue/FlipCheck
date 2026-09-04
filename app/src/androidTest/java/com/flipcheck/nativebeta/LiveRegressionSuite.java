@@ -36,7 +36,7 @@ public final class LiveRegressionSuite extends InstrumentationTestCase {
         Instrumentation instrumentation = getInstrumentation();
         Context target = instrumentation.getTargetContext();
         String apiKey = requiredArgument(InstrumentationRegistry.getArguments(), "live_api_key");
-        File output = new File(target.getExternalFilesDir(null), "v133-live");
+        File output = new File(target.getExternalFilesDir(null), "v134-live");
         if (!output.isDirectory() && !output.mkdirs()) throw new IllegalStateException("Cannot create live output directory");
         target.getSharedPreferences("flipcheck_native_beta", 0).edit().putString("api_key", apiKey).putBoolean("ci_mock_mode", false).commit();
 
@@ -82,8 +82,8 @@ public final class LiveRegressionSuite extends InstrumentationTestCase {
                 .put("apkLaunch", screenshotsPresent(output) ? "PASS" : "FAIL")
                 .put("liveRunCount", runs.length()).put("expectedLiveRunCount", 12)
                 .put("completedAt", Instant.now().toString());
-        writeJson(new File(output, "v133-live-results.json"), report);
-        assertTrue("Live installed-APK gate failed; see v133-live-results.json", allPassed && runs.length() == 12 && screenshotsPresent(output));
+        writeJson(new File(output, "v134-live-results.json"), report);
+        assertTrue("Live installed-APK gate failed; see v134-live-results.json", allPassed && runs.length() == 12 && screenshotsPresent(output));
     }
 
     private static RunResult runThroughForegroundService(Instrumentation instrumentation, Context target, Case fixture, String mode) throws Exception {
