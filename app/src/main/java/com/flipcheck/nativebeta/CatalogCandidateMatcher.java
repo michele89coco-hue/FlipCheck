@@ -21,7 +21,7 @@ final class CatalogCandidateMatcher {
         if(array!=null)for(int i=0;i<array.length()&&i<12;i++){JSONObject x=array.optJSONObject(i);if(x!=null)candidates.add(CandidateCanonicalizer.fromJson(x));}
         if(candidates.isEmpty()){Models.CandidateScore legacy=legacyCandidate(payload);if(hasIdentityField(legacy))candidates.add(legacy);}
         IdentityProfileEngine.PhotoTuple photo=IdentityProfileEngine.tuple(id);IdentityProfileEngine.Profile profile=IdentityProfileEngine.profile(id,photo);
-        int best=-1;for(Models.CandidateScore candidate:candidates){compare(candidate,photo,profile);candidate.webScore=webScore(candidate);candidate.totalScore=combined(candidate);
+        int best=-1;for(Models.CandidateScore candidate:candidates){compare(candidate,photo,profile,id);candidate.webScore=webScore(candidate);candidate.totalScore=combined(candidate);
             if(candidate.hardRejected){result.rejected.add(candidate);continue;}if(candidate.webScore>best){result.runnerUp=result.accepted;best=candidate.webScore;result.accepted=candidate;}else if(result.runnerUp==null||candidate.webScore>result.runnerUp.webScore)result.runnerUp=candidate;}
         for(Models.CandidateScore c:result.rejected)result.conflicts.addAll(c.hardViolations);
         if(result.accepted!=null&&result.runnerUp!=null&&materiallyDifferent(result.accepted,result.runnerUp,profile)
@@ -37,10 +37,10 @@ final class CatalogCandidateMatcher {
     private static void copy(JSONObject from,JSONObject to,String source,String target){if(!from.has(source))return;try{to.put(target,from.opt(source));}catch(Exception ignored){}}
     private static void copyFirst(JSONObject from,JSONObject to,String target,String...sources){for(String source:sources)if(from.has(source)){copy(from,to,source,target);return;}}
 
-    private static void compare(Models.CandidateScore c,IdentityProfileEngine.PhotoTuple p,IdentityProfileEngine.Profile profile){
+    private static void compare(Models.CandidateScore c,IdentityProfileEngine.PhotoTuple p,IdentityProfileEngine.Profile profile,Models.Identification id){
         matchText(c,"brand",p.brand,c.brand,true,false);matchHierarchy(c,p,profile);
         matchText(c,"subject",p.subject,c.subject,profile!=IdentityProfileEngine.Profile.SEALED_TRADING_CARD_PRODUCT,false);
-        if(profile==IdentityProfileEngine.Profile.SPORTS_CARD){matchSeason(c,p.year,c.year,true);matchText(c,"team",p.team,c.team,false,false);matchIdentifier(c,p.cardNumber,c.cardNumber,p.cardNumberVerified,false);matchText(c,"layout",p.layout,c.layoutSignature,true,false);}
+        if(profile==IdentityProfileEngine.Profile.SPORTS_CARD){matchSeason(c,p.year,c.year,true);matchText(c,"team",p.team,c.team,false,false);matchIdentifier(c,p.cardNumber,c.cardNumber,p.cardNumberVerified||strongLocalizedIdentifier(id,p.cardNumber),false);matchText(c,"layout",p.layout,c.layoutSignature,true,false);}
         else if(profile==IdentityProfileEngine.Profile.TCG){matchIdentifier(c,p.cardNumber,c.cardNumber,p.cardNumberVerified,true);matchText(c,"language",p.language,c.language,false,false);
             matchText(c,"hp",p.hp,c.hpOrPv,true,false);matchText(c,"evolutionStage",p.evolutionStage,c.evolutionStage,false,false);matchAttacks(c,p.attacks,c.attackNames);
             matchText(c,"layout",p.layout,c.layoutSignature,true,false);matchText(c,"finish",p.finish,c.finish,false,false);matchCopyright(c,p.copyrightYear,c.copyrightYear,c.year);matchSeason(c,p.year,c.year,true);}
@@ -62,6 +62,10 @@ final class CatalogCandidateMatcher {
         matchText(c,"parallelColor",p.color,c.parallelColor,true,false);matchText(c,"printRun",p.printRun,c.printRun,true,false);
     }
     private static void matchIdentifier(Models.CandidateScore c,String photo,String web,boolean verified,boolean alphaCollectorIsHard){if(empty(photo)||empty(web))return;if(identifier(photo).equals(identifier(web)))matched(c,"identifier="+web,24);else if(verified||alphaCollectorIsHard&&photo.matches("(?i).*[A-Z].*"))veto(c,"IDENTIFIER_CONFLICT:"+photo+"<>"+web);else missing(c,"unverified_identifier_alternative="+photo+"<>"+web);}
+    private static boolean strongLocalizedIdentifier(Models.Identification id,String value){if(id==null||empty(value))return false;NormalizedPhotoIdentity n=PhotographicFactNormalizer.require(id);
+        for(CanonicalFieldKey key:new CanonicalFieldKey[]{CanonicalFieldKey.CARD_NUMBER_CANDIDATE,CanonicalFieldKey.COLLECTOR_NUMBER_CANDIDATE})for(NormalizedPhotoIdentity.Fact f:n.facts(key))
+            if(identifier(value).equals(identifier(f.value))&&f.quality==NormalizedPhotoIdentity.Quality.DIRECT_PHOTO_OBSERVATION&&f.confidence>=95&&!empty(f.location))return true;
+        return false;}
     private static void matchSeason(Models.CandidateScore c,String photo,String web,boolean hard){if(empty(photo)||empty(web))return;if(SeasonNormalizer.compatible(photo,web))matched(c,"season="+SeasonNormalizer.normalize(web),12);else if(hard)veto(c,"SEASON_CONFLICT:"+photo+"<>"+web);else missing(c,"season");}
     private static void matchCopyright(Models.CandidateScore c,String photo,String webCopyright,String webRelease){if(empty(photo))return;String candidate=empty(webCopyright)?webRelease:webCopyright;if(empty(candidate))return;
         int a=year(photo),b=year(candidate);if(a>0&&b>0&&Math.abs(a-b)>1)veto(c,"COPYRIGHT_RELEASE_CONFLICT:"+photo+"<>"+candidate);else matched(c,"copyright="+photo,8);}
