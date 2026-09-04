@@ -15,7 +15,7 @@ final class FinalIdentityDecisionEngine {
         boolean documentedIdentifierConflict=DocumentedConflictPolicy.reconcile(id);
         if(documentedIdentifierConflict)critical.add("IDENTIFIER_CONFLICT:"+id.numberConflicts);
         if("REJECTED_HARD_CONFLICT".equals(id.catalogCompatibilityStatus))critical.add("WEB_CANDIDATE_INCOMPATIBLE:"+id.catalogConflicts);
-        if(safe(id.factsRejectedWithReason).contains("relevant_alias_rejected"))id.consistencyInvariantWarnings.add("UNMAPPED_RELEVANT_ALIAS_RETAINED_FOR_TRACE");
+        if(safe(id.factsRejectedWithReason).contains("relevant_alias_rejected"))critical.add("UNKNOWN_IDENTIFYING_ALIAS");
         if(id.catalogVerified&&safe(id.catalogMatchedFields).isEmpty())critical.add("CATALOG_MATCH_WITHOUT_MATCHED_FIELDS");
         if("PASSED".equals(id.disproofStatus)&&("NOT_RUN".equals(id.webStatus)||"FAILED".equals(id.webStatus)))critical.add("DISPROOF_PASSED_WITHOUT_WEB");
         if("CATALOG_MATCHED".equals(id.exactIdentityStatus)&&(!id.catalogVerified||!"PASSED".equals(id.disproofStatus)))critical.add("EXACT_MATCH_WITHOUT_CATALOG_DISPROOF");
