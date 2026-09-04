@@ -94,7 +94,9 @@ final class NormalizedPhotoIdentity implements Serializable {
     private static int rank(Fact f){int q=f.quality==Quality.DIRECT_PHOTO_OBSERVATION?700:f.quality==Quality.USER_HINT?600:
             f.quality==Quality.VISION_STRUCTURED_SUMMARY?500:f.quality==Quality.LOCAL_OCR_HINT?400:
             f.quality==Quality.WEB_CATALOG_EVIDENCE?300:f.quality==Quality.MARKET_EVIDENCE?200:100;return q+f.confidence;}
-    private static boolean sameEvidenceFamily(Fact a,Fact b){return family(a.quality).equals(family(b.quality));}
+    private static boolean sameEvidenceFamily(Fact a,Fact b){if(a.quality==Quality.DIRECT_PHOTO_OBSERVATION&&b.quality==Quality.DIRECT_PHOTO_OBSERVATION)
+        return a.imageIndex==b.imageIndex&&canon(a.location).equals(canon(b.location))&&canon(a.evidenceType).equals(canon(b.evidenceType));
+        return family(a.quality).equals(family(b.quality));}
     private static String family(Quality q){if(q==Quality.DIRECT_PHOTO_OBSERVATION||q==Quality.VISION_STRUCTURED_SUMMARY)return "primary_vision";
         if(q==Quality.LOCAL_OCR_HINT)return "local_ocr";if(q==Quality.USER_HINT)return "user";if(q==Quality.WEB_CATALOG_EVIDENCE)return "catalog";
         if(q==Quality.MARKET_EVIDENCE)return "market";return "inferred";}
