@@ -11,7 +11,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.test.InstrumentationTestCase;
+import org.junit.Test;
+import static org.junit.Assert.assertTrue;
 import androidx.test.platform.app.InstrumentationRegistry;
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,12 +29,12 @@ import org.json.JSONObject;
  * Live release gate. It runs the real foreground service, local OCR, production Vision/Web,
  * tournament and reducer from the installed candidate APK. No response is mocked or replayed.
  */
-public final class LiveRegressionSuite extends InstrumentationTestCase {
+public final class LiveRegressionSuite {
     private static final long ANALYSIS_TIMEOUT_MS = 240_000L;
     private static final String[] MODES = {"original_file", "app_recompressed", "uncached_repeat"};
 
-    public void testFourRealRegressionsThreeTimesThroughInstalledApk() throws Exception {
-        Instrumentation instrumentation = getInstrumentation();
+    @Test public void testFourRealRegressionsThreeTimesThroughInstalledApk() throws Exception {
+        Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
         Context target = instrumentation.getTargetContext();
         String apiKey = requiredArgument(InstrumentationRegistry.getArguments(), "live_api_key");
         File output = new File(target.getExternalFilesDir(null), "v134-live");
