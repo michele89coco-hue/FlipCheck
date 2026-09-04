@@ -115,8 +115,8 @@ public final class V130TcgPhysicalEditionResolutionRegressionTest {
                         .put("edition",first?"FIRST_EDITION":"").put("finish",first?"holo":"").put("format","")
                         .put("material_variant_key",first?"first-edition-holo":"").put("materially_distinct",first).put("confidence",96)))
                 .put("missing_discriminators",new JSONArray());}
-    private static JSONObject fact(String key,String value,String role,int confidence,String location){return new JSONObject().put("key",key).put("value",value).put("image",0).put("side","front").put("location",location).put("role",role).put("confidence",confidence);}
-    private static JSONObject candidate(String edition){return new JSONObject().put("source_url","https://catalog.example/card").put("source_authority","authoritative checklist")
+    private static JSONObject fact(String key,String value,String role,int confidence,String location) throws Exception {return new JSONObject().put("key",key).put("value",value).put("image",0).put("side","front").put("location",location).put("role",role).put("confidence",confidence);}
+    private static JSONObject candidate(String edition) throws Exception {return new JSONObject().put("source_url","https://catalog.example/card").put("source_authority","authoritative checklist")
             .put("brand","Pokémon").put("product_line","Jungle").put("main_set","Jungle").put("insert_subset","").put("design_family","").put("sub_series","").put("distinguishing_tokens",new JSONArray())
             .put("release_year","1999").put("subject","Vileplume").put("team","").put("sport","").put("card_number","15/64").put("language","English")
             .put("hp","80 HP").put("evolution_stage","").put("attacks",new JSONArray().put("Petal Dance")).put("copyright_year","1999")
