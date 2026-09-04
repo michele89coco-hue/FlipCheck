@@ -52,6 +52,7 @@ android {
     }
 
     compileOptions {
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
@@ -88,6 +89,7 @@ tasks.withType(Test).configureEach {
 }
 
 dependencies {
+    coreLibraryDesugaring libs.desugar.jdk.libs
     // Modello OCR latino realmente incluso nell'APK: nessun download del modello al primo uso.
     implementation libs.mlkit.text.recognition
     // Barcode/QR realmente on-device, incluso nell'APK.
