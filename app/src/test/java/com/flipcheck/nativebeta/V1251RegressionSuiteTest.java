@@ -2,7 +2,7 @@ package com.flipcheck.nativebeta;
 
 import org.junit.Test;
 
-/** Runs all 106 preserved and exact-catalog regressions through Gradle's JVM test task. */
+/** Runs all 126 preserved and universal catalog-evidence regressions. */
 public final class V1251RegressionSuiteTest {
     @Test
     public void allDeclaredRegressionsPass() throws Exception {
@@ -13,5 +13,6 @@ public final class V1251RegressionSuiteTest {
         V126SemanticDecisionEndToEndRegressionTest.main(new String[0]);
         V127CatalogCompatibilityEndToEndRegressionTest.main(new String[0]);
         V128ExactCatalogResolutionEndToEndRegressionTest.main(new String[0]);
+        V129UniversalCatalogEvidenceRegressionTest.main(new String[0]);
     }
 }
