@@ -25,7 +25,7 @@ public final class V127CatalogCompatibilityEndToEndRegressionTest {
         require("sports_card".equals(id.canonicalProfile),"sports profile lost: "+id.canonicalProfileVotes);require("81".equals(id.sourceConfirmedCatalogNumber),"catalog number 81 not selected");
         require(!id.title.contains("#18")&&!id.title.contains("23/78")&&!id.title.contains("8/23"),"false identifier entered title: "+id.title);
         require(id.title.startsWith("1997-98")&&"CATALOG_MATCHED".equals(id.identifierStatus),"season/identifier state incoherent: "+id.title+" "+id.identifierStatus);
-        require(id.webContributionScore>0&&"PASS".equals(id.consistencyInvariants),"catalog contribution/invariants missing");trace("sports_reversed_identifier",id);}
+        trace("sports_reversed_identifier",id);require(id.webContributionScore>0&&"PASS".equals(id.consistencyInvariants),"catalog contribution/invariants missing; errors="+id.consistencyInvariantErrors+" numberConflicts="+id.numberConflicts+" catalog="+id.catalogCompatibilityStatus+" source="+id.sourceConfirmedCatalogNumber);}
     private static void currySeparatesGraphicAndCatalogNumber()throws Exception{Models.Identification id=run("sports_graphic_number",true);
         require("77".equals(id.graphicNumber)&&id.physicalCardNumber.isEmpty(),"graphic 77 became physical card number");require("67".equals(id.sourceConfirmedCatalogNumber),"catalog 67 lost");
         require("2009-10".equals(id.sourceConfirmedReleaseYear)&&id.title.startsWith("2009-10"),"commercial season precision lost");
