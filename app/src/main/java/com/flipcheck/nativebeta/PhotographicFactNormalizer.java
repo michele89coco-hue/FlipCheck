@@ -117,7 +117,7 @@ final class PhotographicFactNormalizer {
     private static void add(NormalizedPhotoIdentity out,boolean sourced,NormalizedPhotoIdentity.Fact fact){if(sourced)out.addSource(fact);else out.add(fact);}
     private static boolean relevant(Models.EvidenceFact f){String x=(clean(f.key)+" "+clean(f.semanticRole)).toLowerCase(Locale.ROOT);return x.matches(".*(?:brand|maker|publisher|set|series|product|subject|player|athlete|card|collector|serial|parallel|finish|edition|printing|format|sport|game|model|barcode|attack|move|hp|pv|year|season).*" );}
     private static boolean locatedBrandObservation(Models.EvidenceFact f){String context=(clean(f.semanticRole)+" "+clean(f.evidenceType)+" "+clean(f.key)).toLowerCase(Locale.ROOT);
-        return !clean(f.location).isEmpty()&&context.matches(".*(?:brand|logo|manufacturer|publisher|maker|printed[_ ]text).*" );}
+        return !clean(f.location).isEmpty()&&context.matches(".*(?:brand|logo|manufacturer|publisher|maker|game|printed[_ ]text).*" );}
     private static void addOnce(java.util.List<String> out,String value){if(out.size()<60&&!out.contains(value))out.add(value);}
     private static boolean ambiguousAlternative(String value){String v=clean(value);if(!v.contains("/"))return false;
         if(v.matches(".*\\d\\s*/\\s*\\d.*")||v.matches(".*(?:19|20)\\d{2}\\s*/\\s*\\d{2,4}.*"))return false;
