@@ -7,6 +7,7 @@ mlkit-text-recognition = "16.0.1"
 mlkit-barcode-scanning = "17.3.0"
 mlkit-object-detection = "17.0.2"
 desugar-jdk-libs = "2.1.5"
+androidx-core = "1.15.0"
 
 [libraries]
 junit = { module = "junit:junit", version.ref = "junit" }
@@ -16,6 +17,7 @@ mlkit-text-recognition = { module = "com.google.mlkit:text-recognition", version
 mlkit-barcode-scanning = { module = "com.google.mlkit:barcode-scanning", version.ref = "mlkit-barcode-scanning" }
 mlkit-object-detection = { module = "com.google.mlkit:object-detection", version.ref = "mlkit-object-detection" }
 desugar-jdk-libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar-jdk-libs" }
+androidx-core = { module = "androidx.core:core", version.ref = "androidx-core" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
