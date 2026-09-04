@@ -43,7 +43,10 @@ final class CatalogCandidateMatcher {
         if(profile==IdentityProfileEngine.Profile.SPORTS_CARD){matchSeason(c,p.year,c.year,true);matchText(c,"team",p.team,c.team,false,false);matchIdentifier(c,p.cardNumber,c.cardNumber,!empty(p.cardNumber),false);matchText(c,"layout",p.layout,c.layoutSignature,true,false);}
         else if(profile==IdentityProfileEngine.Profile.TCG){matchIdentifier(c,p.cardNumber,c.cardNumber,p.cardNumberVerified,true);matchText(c,"language",p.language,c.language,false,false);
             matchText(c,"hp",p.hp,c.hpOrPv,true,false);matchText(c,"evolutionStage",p.evolutionStage,c.evolutionStage,false,false);matchAttacks(c,p.attacks,c.attackNames);
-            matchText(c,"layout",p.layout,c.layoutSignature,true,false);matchText(c,"finish",p.finish,c.finish,false,false);matchCopyright(c,p.copyrightYear,c.copyrightYear,c.year);matchSeason(c,p.year,c.year,true);}
+            matchText(c,"layout",p.layout,c.layoutSignature,true,false);matchText(c,"finish",p.finish,c.finish,false,false);
+            String webEdition=first(c.edition,c.printing);if(TcgPhysicalEditionPolicy.webEditionConflicts(id,webEdition))veto(c,"PHYSICAL_EDITION_CONFLICT:"+p.edition+"<>"+webEdition);
+            else matchText(c,"edition",p.edition,webEdition,true,false);
+            matchCopyright(c,p.copyrightYear,c.copyrightYear,c.year);matchSeason(c,p.year,c.year,true);}
         else if(profile==IdentityProfileEngine.Profile.SEALED_TRADING_CARD_PRODUCT){matchSeason(c,p.year,c.year,true);matchText(c,"sport",p.sport,c.sport,true,false);
             matchText(c,"configuration",p.configuration,c.configuration,true,false);matchText(c,"format",p.format,c.format,true,false);
             matchText(c,"packageCount",p.packageCount,c.packageCount,true,false);matchText(c,"cardsPerPack",p.cardsPerPack,c.cardsPerPack,true,false);}

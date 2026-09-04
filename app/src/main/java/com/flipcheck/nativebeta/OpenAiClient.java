@@ -284,6 +284,40 @@ class OpenAiClient {
         return call(body,true,true);
     }
 
+    /** Focused no-Web inspection of TCG edition/printing/finish regions. */
+    Response verifyTcgPhysicalEdition(List<String> imageDataUrls, String prompt) throws Exception {
+        JSONObject props=new JSONObject()
+                .put("same_card",new JSONObject().put("type","boolean"))
+                .put("front_sufficient",new JSONObject().put("type","boolean"))
+                .put("first_edition_present",new JSONObject().put("type","boolean"))
+                .put("observed_text",new JSONObject().put("type","string"))
+                .put("location",new JSONObject().put("type","string"))
+                .put("crop_region",new JSONObject().put("type","string"))
+                .put("image_index",integerSchema(0,20))
+                .put("shadow_status",new JSONObject().put("type","string"))
+                .put("finish",new JSONObject().put("type","string"))
+                .put("confidence",integerSchema(0,100))
+                .put("reason",new JSONObject().put("type","string"));
+        JSONObject format=jsonFormat("flipcheck_tcg_physical_edition_v130",strictObject(props,
+                "same_card","front_sufficient","first_edition_present","observed_text",
+                "location","crop_region","image_index","shadow_status","finish","confidence","reason"));
+        String policy="FLIPCHECK v1.30 FOCUSED TCG PHYSICAL EDITION INSPECTION. NO WEB. "
+                +"Inspect the complete front and every supplied enlarged crop as views of the same physical card. "
+                +"Decide only whether a physical edition logo/mark is visibly present. Search all layout-appropriate areas: left edge below artwork, beside the description box, near the set/collector symbol, and lower card area. "
+                +"Recognize the official graphical 1st Edition mark by text fragments plus logo geometry; perfect OCR is not required. Equivalent visible forms include 1st Edition, 1st Ed., First Edition, EDITION 1 and 1ª Edizione. "
+                +"Do not infer edition from card name, set knowledge, a candidate, filename, user hint, catalog or Web. Do not mark present from ordinary uses of the word edition outside the card surface. "
+                +"Return the exact visible text if legible, precise physical location, which supplied image/crop exposed it, and confidence. "
+                +"Classify shadow_status only from frame/layout cues and finish only from visible reflectivity placement; otherwise return unknown. JSON only.\n\n";
+        JSONArray content=new JSONArray().put(new JSONObject().put("type","input_text").put("text",policy+prompt));
+        if(imageDataUrls!=null)for(String image:imageDataUrls)content.put(new JSONObject()
+                .put("type","input_image").put("image_url",image).put("detail","high"));
+        JSONObject body=new JSONObject().put("model",MODEL).put("store",false)
+                .put("max_output_tokens",420).put("reasoning",new JSONObject().put("effort","medium"))
+                .put("text",new JSONObject().put("format",format).put("verbosity","low"))
+                .put("input",new JSONArray().put(new JSONObject().put("role","user").put("content",content)));
+        return call(body,true,true);
+    }
+
     /** Independent number-only read; catalog/Web values are intentionally not supplied. */
     Response verifyPhysicalCardNumber(List<String> imageDataUrls) throws Exception {
         JSONObject readingProps=new JSONObject()

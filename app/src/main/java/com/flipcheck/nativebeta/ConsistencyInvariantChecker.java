@@ -6,11 +6,16 @@ import java.util.Locale;
 final class ConsistencyInvariantChecker {
     private ConsistencyInvariantChecker() {}
     static boolean enforce(Models.Identification id,String stage){if(id==null)return false;
-        if(id.discriminativeVisionCount>0)fail(id,"NON_TECHNICAL_SECOND_VISION");
+        if(id.discriminativeVisionCount>0&&!safe(id.additionalVisionReason).startsWith("tcg_edition_missing_after_primary"))fail(id,"UNBOUNDED_NON_TECHNICAL_SECOND_VISION");
         NormalizedPhotoIdentity n=PhotographicFactNormalizer.require(id);IdentityProfileEngine.PhotoTuple t=IdentityProfileEngine.prepare(id);
         if(!n.physicalCardNumber.isEmpty()||!n.physicalCollectorNumber.isEmpty())if(id.physicalCardNumber.isEmpty()){PhysicalCardNumberPolicy.normalize(id);repair(id,"physical_number_resynchronized");}
         if(!n.productLine().isEmpty()&&contains(id.missingDiscriminativeFields,"set_or_product_line"))fail(id,"canonical_productLine_marked_missing");
         if(!n.physicalCollectorNumber.isEmpty()&&contains(id.missingDiscriminativeFields,"collector"))fail(id,"canonical_collectorNumber_marked_missing");
+        TcgPhysicalEditionPolicy.normalize(id,"invariant_"+safe(stage));
+        if("PRESENT".equals(id.firstEditionMark)&&!"FIRST_EDITION".equals(id.edition)){
+            id.edition="FIRST_EDITION";repair(id,"physical_first_edition_restored");}
+        if("PRESENT".equals(id.firstEditionMark)&&"UNLIMITED".equalsIgnoreCase(id.sourceConfirmedVariant))fail(id,"PHYSICAL_FIRST_EDITION_WEB_UNLIMITED_CONFLICT");
+        if("PRESENT".equals(id.firstEditionMark)&&!"CONFIRMED".equals(id.exactEditionStatus))fail(id,"PHYSICAL_FIRST_EDITION_NOT_CONFIRMED");
         if(!id.candidates.isEmpty()&&id.canonicalCandidateCount==0){id.canonicalCandidateCount=id.candidates.size();repair(id,"canonical_candidate_count_resynchronized");}
         IdentityProfileEngine.Profile p=IdentityProfileEngine.profile(id,t);String req=(id.nextPhotoRequest+" "+id.requestedPhotoReason).toLowerCase(Locale.ROOT);
         if(p==IdentityProfileEngine.Profile.TCG&&(req.contains("model")||req.contains("p/n")||req.contains("seriale apparecchio")||req.contains("barcode generico"))){

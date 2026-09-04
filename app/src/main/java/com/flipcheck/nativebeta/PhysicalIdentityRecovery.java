@@ -13,7 +13,7 @@ final class PhysicalIdentityRecovery {
     }
 
     static boolean eligible(Models.Identification id, Models.Usage usage) {
-        return false;
+        return TcgPhysicalEditionPolicy.needsFocusedPass(id,usage);
     }
 
     static String prompt(Models.Identification id) {

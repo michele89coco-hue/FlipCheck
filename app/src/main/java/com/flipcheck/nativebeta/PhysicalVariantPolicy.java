@@ -6,7 +6,7 @@ import java.util.Locale;
 final class PhysicalVariantPolicy {
     private PhysicalVariantPolicy() {}
     static void normalize(Models.Identification id){if(id==null)return;NormalizedPhotoIdentity n=PhotographicFactNormalizer.require(id);
-        n.finish=meaningful(n.best(CanonicalFieldKey.FINISH));n.parallelColor=meaningful(n.best(CanonicalFieldKey.PARALLEL_COLOR));
+        n.finish=meaningful(first(n.best(CanonicalFieldKey.FINISH),n.best(CanonicalFieldKey.REVERSE_HOLO_STATUS),n.best(CanonicalFieldKey.HOLO_STATUS)));n.parallelColor=meaningful(n.best(CanonicalFieldKey.PARALLEL_COLOR));
         n.physicalParallel="";n.rareVariantPhysicalProof=!n.physicalSerial.isEmpty();
         NormalizedPhotoIdentity.Fact best=null;for(NormalizedPhotoIdentity.Fact f:n.facts(CanonicalFieldKey.PHYSICAL_PARALLEL_CANDIDATE)){
             String role=canon(f.semanticRole),type=canon(f.evidenceType);boolean semantic=role.contains("PARALLEL")||role.contains("VARIANT");
@@ -24,6 +24,7 @@ final class PhysicalVariantPolicy {
     private static void reject(NormalizedPhotoIdentity n,String x){if(!n.rejectedFacts.contains(x))n.rejectedFacts.add(x);}
     private static String meaningful(String x){String v=clean(x).toLowerCase(Locale.ROOT).replace('_',' ');return v.isEmpty()||v.equals("present")||v.equals("visible")||v.equals("true")||v.equals("unknown")||v.equals("unresolved")?"":clean(x);}
     private static boolean truth(String x){String v=clean(x).toLowerCase(Locale.ROOT);return v.equals("true")||v.equals("yes")||v.equals("present")||v.equals("visible");}
+    private static String first(String...xs){for(String x:xs)if(!clean(x).isEmpty())return clean(x);return "";}
     private static String canon(String x){return clean(x).toUpperCase(Locale.ROOT).replaceAll("[^A-Z0-9]+"," ").trim();}
     private static String clean(String x){return x==null?"":x.trim();}
 }

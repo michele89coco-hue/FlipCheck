@@ -16,9 +16,9 @@ final class ProfileQueryBuilder {
         }
         if(p==IdentityProfileEngine.Profile.TCG){
             String candidate=t.cardNumberVerified?t.verifiedCardNumber:t.cardNumber;
-            id.queryFieldsIncluded="game/publisher,subject,language,attacks,hp,copyrightYear,layout,collectorNumberCandidate";
-            id.queryFieldsExcluded="finish/parallel,deviceModel,partNumber,featuredSubjects,stats,activationCode";
-            return join("trading card",t.brand,t.subject,candidate,t.year,t.copyrightYear,t.language,t.hp,join(t.attacks.toArray(new String[0])),t.layout);
+            id.queryFieldsIncluded="game/publisher,subject,set,language,attacks,hp,copyrightYear,layout,collectorNumberCandidate,physicalEdition,physicalFinish";
+            id.queryFieldsExcluded="deviceModel,partNumber,featuredSubjects,stats,activationCode,webContestedEdition";
+            return join("trading card",t.brand,t.subject,candidate,t.family,t.year,t.copyrightYear,t.language,t.edition,t.finish,t.hp,join(t.attacks.toArray(new String[0])),t.layout);
         }
         if(p==IdentityProfileEngine.Profile.SPORTS_CARD){
             String variant=id.rareVariantPhysicalProof?join(id.physicalParallel,id.parallelColor,id.physicalSerial):"";
@@ -45,7 +45,7 @@ final class ProfileQueryBuilder {
             +" | DISPROVE_ALTERNATIVES="+disproof(id)+" | MARKET_AFTER_IDENTITY_ONLY=true";}
     static java.util.List<String> exactQueries(Models.Identification id){java.util.List<String> q=new java.util.ArrayList<>();IdentityProfileEngine.PhotoTuple t=IdentityProfileEngine.tuple(id);IdentityProfileEngine.Profile p=IdentityProfileEngine.profile(id,t);
         if(p==IdentityProfileEngine.Profile.TCG){String code=firstClean(t.cardNumber,id.collectorNumberCandidate,id.cardNumberCandidate);String attacks=firstAttacks(t.attacks,2);
-            add(q,join(t.brand,t.subject,code));add(q,join(t.subject,code,t.language));add(q,join(t.subject,t.hp,t.copyrightYear,attacks));add(q,join(t.subject,t.family,t.finish));}
+            add(q,join(t.brand,t.subject,code));add(q,join(t.brand,t.subject,code,t.family,t.language));add(q,join(t.brand,t.subject,code,t.family,t.edition));add(q,join(t.brand,t.subject,code,t.family,t.edition,t.finish,t.language,attacks));}
         else if(p==IdentityProfileEngine.Profile.SPORTS_CARD){String code=firstClean(t.cardNumber,id.cardNumberCandidate);
             add(q,join(t.year,t.brand,t.mainSet,t.family,t.insertSubset,t.subject,code,"checklist"));add(q,join(t.year,t.mainSet,t.family,t.subject,t.team,"checklist"));add(q,join(t.brand,t.mainSet,t.family,t.subject,code));if(id.rareVariantPhysicalProof)add(q,join(t.subject,t.parallelFamily,t.color,t.printRun,t.serial));}
         else if(p==IdentityProfileEngine.Profile.SEALED_TRADING_CARD_PRODUCT){String commercial=commercialHierarchy(t);add(q,join(t.year,contains(commercial,t.brand)?"":t.brand,commercial,t.sport,t.configuration));add(q,join(t.year,contains(commercial,t.brand)?"":t.brand,commercial,t.format,"SKU"));add(q,join(t.year,contains(commercial,t.brand)?"":t.brand,commercial,"commercial format configuration"));}

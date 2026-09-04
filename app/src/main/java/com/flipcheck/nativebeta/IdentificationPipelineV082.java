@@ -88,7 +88,26 @@ final class IdentificationPipelineV082 {
             return id;
         }
 
-        if (parsePrimaryObservationAndAttemptClosure(id, observation, local)) {
+        boolean primaryClosed=parsePrimaryObservationAndAttemptClosure(id, observation, local);
+        if (requiresMandatoryCardSecondVision(id,usage)) {
+            id.additionalVisionReason="tcg_edition_missing_after_primary; focused_crop_retry_within_budget";
+            try {
+                OpenAiClient.Response focused=client.verifyTcgPhysicalEdition(TcgEditionCropper.prepare(images),
+                        "PRIMARY_PHYSICAL_FIELDS="+clip(id.canonicalPhysicalFields,1000)
+                                +"\nPRIMARY_PHOTO_FIELDS="+clip(id.canonicalPhotoFields,1200)
+                                +"\nDo not trust candidate or Web edition values.");
+                if(focused!=null)IdentificationEngine.collectStage(id,usage,focused,
+                        "tcg-focused-edition-vision-v130");
+                id.discriminativeVisionCount++;
+                TcgPhysicalEditionPolicy.mergeFocusedResult(id,focused);
+                primaryClosed=PhotographicIdentityClosure.apply(id,"after_tcg_focused_edition_retry")||id.identityConfirmed;
+                ConsistencyInvariantChecker.enforce(id,"after_tcg_focused_edition_retry");
+            } catch(Exception focusedFailure) {
+                id.additionalVisionReason="tcg_focused_edition_retry_failed:"+technicalStatus(focusedFailure);
+                TcgPhysicalEditionPolicy.normalize(id,"focused_retry_failed_evidence_preserved");
+            }
+        }
+        if (primaryClosed||id.identityConfirmed) {
             enrichConfirmedIdentity(id, client, usage,images);
             IdentificationEngine.finalizeOutput(id, null);
             return id;
@@ -155,6 +174,7 @@ final class IdentificationPipelineV082 {
         ObservationSanitizer.apply(id);
         collectSoftOcr(id,local);
         id.criticalCardDetailNeedsSecondVision=false;
+        TcgPhysicalEditionPolicy.normalize(id,"after_primary_observation");
         boolean closed=PhotographicIdentityClosure.apply(id,"production_after_multimodal_parse");
         ProductionClosureCheckpoint.record(id,"production_after_multimodal_parse",closed);
         ConsistencyInvariantChecker.enforce(id,"after_primary_multimodal_parse");
@@ -163,7 +183,7 @@ final class IdentificationPipelineV082 {
 
     static boolean requiresMandatoryCardSecondVision(Models.Identification id,
                                                       Models.Usage usage) {
-        return false;
+        return TcgPhysicalEditionPolicy.needsFocusedPass(id,usage);
     }
 
     private static void mergePhysicalRecovery(Models.Identification id,
@@ -871,7 +891,7 @@ final class IdentificationPipelineV082 {
                 + "CANDIDATE CANONICALIZATION INPUT: return candidates as structured identity axes, not alternative prose titles. Descriptions, language labels, catalog aliases and finish wording for the same object are one candidate. materially_distinct_variant=true only when a different physical object remains after comparing card number, edition, printing, parallel marker or sealed format. "
                 + "Numbers require semantic classification and physical localization. physical_card_number is allowed only for an explicit card/collector/checklist number printed on the card surface, with semantic_role=card_number or collector_number. physical_serial is only a physically localized limited print run x/y. Product codes and barcodes use their own roles. Statistics, ratings, HP/PV, years, dates, activation codes, graphic numbers, UI and watermarks are not card numbers. "
                 + "For sports cards collect manufacturer/publisher, set or product line, insert/edition when visible, athlete/subject, team when visible, localized card number when present, and physical parallel/serial when present. A generic reflective, holo, foil or chrome appearance is finish only: it never proves a rare parallel. Emit physical_parallel only with a localized printed name, serial, or a separately localized distinctive marker. "
-                + "For TCG collect game/publisher, set when readable, card name, language, HP/PV as a statistic, moves or characteristic text, layout/frame, illustration, finish, edition/printing and collector number when visible. Emit evolution stage only as evolution_stage: it is descriptive and never a set/product line. Finish is a physical variant and never part of the card name. A complete composite front can be unique without a readable collector number; a common reverse is non-identifying. "
+                + "For TCG collect game/publisher, set and set code/symbol when readable, card name, language, HP/PV as a statistic, moves, artist, rarity, layout/frame, illustration, finish, edition/printing and collector number when visible. Scan the full front and supplied detail crops for edition marks. Emit first_edition_mark=PRESENT only when the physical 1st Edition logo/text is visible; also emit edition=FIRST_EDITION. Keep edition, shadow_status, finish/holo status, rarity and collector number as independent facts. Emit evolution stage only as evolution_stage: it is descriptive and never a set/product line. Finish is a physical variant and never part of the card name. A complete composite front can be unique without a readable collector number; a common reverse is non-identifying. "
                 + "For sealed products collect manufacturer, product line, season when visible, sport/category, product_type, format and printed configuration. Emit people pictured on the package only as featured_subject or featured_subjects, never as the product subject/model. Do not require a loose-card number from a sealed product. "
                 + "overlay_or_watermark is only a warning. external_watermark=true only for an external mark, and identity_obscured=true only if it covers a discriminator. Generic overlay=true alone never invalidates physical evidence. Preserve complementary facts from different sides when the images show the same object. "
                 + "Candidate hints are hypotheses only. Never invent a manufacturer, model, variant, number, serial, printing or finish. Keep unclear values unresolved rather than filling them from prior knowledge. "

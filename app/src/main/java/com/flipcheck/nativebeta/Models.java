@@ -201,6 +201,9 @@ final class Models {
         final String sourceUrl;
         final long createdAtMillis;
         final String timestampStage;
+        final String rawText;
+        final String normalizedValue;
+        final String cropRegion;
 
         EvidenceFact(String key,String value,String origin,String evidenceType,int confidence,
                      int imageIndex,String side,String location,String semanticRole,String sourceUrl){
@@ -210,6 +213,9 @@ final class Models {
             this.semanticRole=safe(semanticRole);this.sourceUrl=safe(sourceUrl);
             this.createdAtMillis=System.currentTimeMillis();
             this.timestampStage=safe(evidenceType);
+            this.rawText=safe(value);
+            this.normalizedValue=safe(value);
+            this.cropRegion=safe(location);
         }
         private static String safe(String x){return x==null?"":x.trim();}
     }
@@ -310,6 +316,11 @@ final class Models {
         String physicalParallel = "";
         String parallelColor = "";
         String finish = "";
+        String edition = "";
+        String firstEditionMark = "NOT_OBSERVED";
+        String firstEditionSource = "";
+        String shadowStatus = "NOT_EVALUATED";
+        String holoStatus = "NOT_EVALUATED";
         String language = "";
         String evolutionStage = "";
         String hpOrPv = "";
@@ -377,6 +388,8 @@ final class Models {
         String identifierStatus = "NOT_OBSERVED";
         String copyIdentifierStatus = "NOT_OBSERVED";
         String variantStatus = "UNRESOLVED";
+        String exactEditionStatus = "NOT_EVALUATED";
+        String finishStatus = "NOT_EVALUATED";
         String overallStatus = "INSUFFICIENT_EVIDENCE";
         String hierarchicalStatus = "INSUFFICIENT_EVIDENCE";
         /** Failure attribution and call accounting exposed in the technical panel. */
@@ -453,6 +466,7 @@ final class Models {
         final List<String> photoIdentityFields = new ArrayList();
         final List<String> featuredSubjects = new ArrayList();
         final List<EvidenceFact> evidenceLedger = new ArrayList();
+        final List<String> fieldTransitions = new ArrayList();
         final List<MarketComparable> marketComparables = new ArrayList();
 
         Identification() {

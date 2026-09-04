@@ -878,6 +878,9 @@ public class MainActivity extends Activity {
                 &&(valueOrEmpty(id.physicalCardNumber).isEmpty()||!id.sourceConfirmedCatalogNumber.equalsIgnoreCase(id.physicalCardNumber)))
             p.addView(line("Numero catalogo",id.sourceConfirmedCatalogNumber+" · verificato foto + catalogo"));
         if(!valueOrEmpty(id.language).isEmpty())p.addView(line("Lingua",id.language));
+        if(!valueOrEmpty(id.edition).isEmpty())p.addView(line("Edizione",id.edition+("CONFIRMED".equals(id.exactEditionStatus)?" · confermata dalla foto":" · da verificare")));
+        else if(TcgFrontIdentityPolicy.isTcg(id))p.addView(line("Edizione","da verificare"));
+        if(TcgFrontIdentityPolicy.isTcg(id)&&!"NOT_EVALUATED".equals(id.shadowStatus))p.addView(line("Stampa/ombra",humanState(id.shadowStatus)));
         if(!valueOrEmpty(id.evolutionStage).isEmpty())p.addView(line("Stadio evolutivo",id.evolutionStage));
         if(!valueOrEmpty(id.hpOrPv).isEmpty())p.addView(line("HP/PV",id.hpOrPv));
         if(!valueOrEmpty(id.finish).isEmpty())p.addView(line("Finitura",id.finish));
@@ -1141,6 +1144,8 @@ public class MainActivity extends Activity {
                 +" · exact_identity_status="+valueOrEmpty(id.exactIdentityStatus)
                 +" · exact_catalog_status="+valueOrEmpty(id.exactCatalogStatus)
                 +" · variant_status="+valueOrEmpty(id.variantStatus)
+                +" · exact_edition_status="+valueOrEmpty(id.exactEditionStatus)
+                +" · finish_status="+valueOrEmpty(id.finishStatus)
                 +" · copy_identifier_status="+valueOrEmpty(id.copyIdentifierStatus),12,MUTED,false));
         panel.addView(text("blocking_reason="+valueOrEmpty(id.blockingReason)
                 +" · missing_discriminative_fields="+valueOrEmpty(id.missingDiscriminativeFields),
@@ -1217,6 +1222,12 @@ public class MainActivity extends Activity {
                 +" · parallel_color="+valueOrEmpty(id.parallelColor)
                 +" · finish="+valueOrEmpty(id.finish)
                 +" · rare_variant_physical_proof="+id.rareVariantPhysicalProof,12,MUTED,false));
+        panel.addView(text("edition="+valueOrEmpty(id.edition)
+                +" · first_edition_mark="+valueOrEmpty(id.firstEditionMark)
+                +" · first_edition_source="+valueOrEmpty(id.firstEditionSource)
+                +" · shadow_status="+valueOrEmpty(id.shadowStatus)
+                +" · holo_status="+valueOrEmpty(id.holoStatus),12,MUTED,false));
+        panel.addView(text("field_transitions="+id.fieldTransitions,11,MUTED,false));
         panel.addView(text("language="+valueOrEmpty(id.language)
                 +" · query_profile="+valueOrEmpty(id.queryProfile)
                 +" · canonical_candidate_count="+id.canonicalCandidateCount,12,MUTED,false));

@@ -23,6 +23,7 @@ final class FinalIdentityDecisionEngine {
         id.graphicNumber=t.graphicNumber;id.attackDamage=t.attackDamage;id.cardType=t.cardType;id.copyrightYear=t.copyrightYear;
         id.language=t.language;id.evolutionStage=t.evolutionStage;id.hpOrPv=t.hp;id.attackNames=t.attacks.toString();
         id.finish=t.finish;id.sealedFormat=t.format;id.productConfiguration=t.configuration;id.productType=t.productType;
+        TcgPhysicalEditionPolicy.normalize(id,"final_"+safe(stage));
         id.featuredSubjects.clear();id.featuredSubjects.addAll(t.featuredSubjects);
         String title=composeTitle(id,t,p);
         if(p==IdentityProfileEngine.Profile.SEALED_TRADING_CARD_PRODUCT&&(!tokensPreserved(t.family,title)||!tokensPreserved(t.distinctiveTokens,title)))critical.add("DISTINCTIVE_PRODUCT_TOKEN_LOST");
@@ -56,6 +57,7 @@ final class FinalIdentityDecisionEngine {
                 &&(!safe(id.sourceConfirmedParallelFamily).isEmpty()||!safe(id.sourceConfirmedVariant).isEmpty()))id.variantStatus="VARIANT_CONFIRMED";
         else if(id.rareVariantPhysicalProof)id.variantStatus="VARIANT_PENDING";else if(id.catalogVerified&&!safe(t.finish).isEmpty()&&variantCompatible(t.finish,id.sourceConfirmedVariant))id.variantStatus="VARIANT_CONFIRMED";else if(!safe(t.finish).isEmpty())id.variantStatus="FINISH_OBSERVED";
         else if(id.catalogVerified&&!safe(id.sourceConfirmedVariant).isEmpty())id.variantStatus="CATALOG_REPORTED";else id.variantStatus="NOT_OBSERVED";
+        if(p!=IdentityProfileEngine.Profile.TCG){id.exactEditionStatus="NOT_APPLICABLE";id.finishStatus=safe(t.finish).isEmpty()?"NOT_OBSERVED":"CONFIRMED";}
         id.exactCatalogStatus=id.exactIdentityStatus;
         id.copyIdentifierStatus=safe(id.physicalSerial).isEmpty()?"NOT_OBSERVED":"PHYSICALLY_VERIFIED";
         if("VARIANT_CONFIRMED".equals(id.variantStatus))id.closureLevel="VARIANT";
@@ -93,7 +95,8 @@ final class FinalIdentityDecisionEngine {
     private static String composeTitle(Models.Identification id,IdentityProfileEngine.PhotoTuple t,IdentityProfileEngine.Profile p){if(p==IdentityProfileEngine.Profile.SEALED_TRADING_CARD_PRODUCT)return CanonicalIdentityComposer.sealedTitle(id);
         String brand=t.brand,family=displayFamily(id,t),year=id.catalogVerified&&!safe(id.sourceConfirmedReleaseYear).isEmpty()?SeasonNormalizer.normalize(id.sourceConfirmedReleaseYear):SeasonNormalizer.normalize(t.year);
         String number="";if("PHYSICALLY_VERIFIED".equals(id.identifierStatus))number=t.verifiedCardNumber;else if(id.catalogVerified)number=id.sourceConfirmedCatalogNumber;
-        if(p==IdentityProfileEngine.Profile.TCG)return join(startsWith(family,brand)?"":brand,family,t.subject,number.isEmpty()?"":"#"+number);
+        if(p==IdentityProfileEngine.Profile.TCG)return join(startsWith(family,brand)?"":brand,family,t.subject,number.isEmpty()?"":"#"+number,
+                "PRESENT".equals(id.firstEditionMark)?"1st Edition":"");
         String hierarchy=hierarchy(first(id.sourceConfirmedMainSet,t.mainSet,family),first(id.sourceConfirmedSubset,t.insertSubset),first(id.sourceConfirmedSubSeries,t.subSeries));
         return join(year,startsWith(hierarchy,brand)?"":brand,hierarchy,t.subject,number.isEmpty()?"":"#"+number);}
     private static String displayFamily(Models.Identification id,IdentityProfileEngine.PhotoTuple t){return id.catalogVerified&&!safe(id.sourceConfirmedProductLine).isEmpty()?id.sourceConfirmedProductLine:t.family;}

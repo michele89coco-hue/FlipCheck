@@ -16,6 +16,10 @@ enum CanonicalFieldKey {
     PHYSICAL_SERIAL_CANDIDATE("physicalSerialCandidate"), PHYSICAL_PARALLEL_CANDIDATE("physicalParallelCandidate"),
     PARALLEL_FAMILY("parallelFamily"), PARALLEL_COLOR("parallelColor"), PRINT_RUN("printRun"),
     FINISH("finish"), EDITION("edition"), PRINTING("printing"),
+    FIRST_EDITION_MARK("firstEditionMark"), SHADOW_STATUS("shadowStatus"),
+    HOLO_STATUS("holoStatus"), REVERSE_HOLO_STATUS("reverseHoloStatus"),
+    SET_CODE("setCode"), RARITY("rarity"), ARTIST("artist"), PROMO_MARK("promoMark"),
+    VISUAL_SYMBOL("visualSymbol"),
     ROOKIE_MARKER("rookieMarker"), EVOLUTION_STAGE("evolutionStage"), HP_OR_PV("hpOrPv"), ATTACK_NAME("attackNames"),
     ATTACK_TEXT("attackText"), LAYOUT_SIGNATURE("layoutSignature"), ARTWORK_SIGNATURE("artworkSignature"),
     AUTOGRAPH("autograph"), MEMORABILIA("memorabilia"), CONDITION("condition"),
@@ -70,8 +74,15 @@ enum CanonicalFieldKey {
         put(m,PARALLEL_FAMILY,"parallel_family","parallel_series","parallel_type");
         put(m,PARALLEL_COLOR,"parallel_color","variant_color");
         put(m,PRINT_RUN,"print_run","numbered_to","serial_denominator","edition_size");
-        put(m,FINISH,"finish","holo","holofoil","surface_finish");
-        put(m,EDITION,"edition"); put(m,PRINTING,"printing","physical_printing");
+        put(m,FINISH,"finish","surface_finish");
+        put(m,HOLO_STATUS,"holo","holo_status","holo_mark");
+        put(m,REVERSE_HOLO_STATUS,"reverse_holo","reverse_holo_status","reverse_holo_mark");
+        put(m,EDITION,"edition","print_edition"); put(m,PRINTING,"printing","physical_printing","print_variant");
+        put(m,FIRST_EDITION_MARK,"first_edition_mark","first_edition_logo","edition_mark","edition_logo","1st_edition_mark");
+        put(m,SHADOW_STATUS,"shadow_status","shadowless","frame_shadow_status");
+        put(m,SET_CODE,"set_code","expansion_code"); put(m,RARITY,"rarity","rarity_symbol");
+        put(m,ARTIST,"artist","illustrator","illustration_credit");
+        put(m,PROMO_MARK,"promo_mark","promo_symbol"); put(m,VISUAL_SYMBOL,"visual_symbol","visual_symbols","set_symbol");
         put(m,ROOKIE_MARKER,"rookie_marker","rookie","rc_marker");
         put(m,EVOLUTION_STAGE,"evolution_stage","evolution_level","pokemon_stage","creature_stage");
         put(m,HP_OR_PV,"hp","pv","hp_value","hp/stat","hp_pv","hp_or_pv","HP/PV","health_points");
