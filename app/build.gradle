@@ -17,8 +17,8 @@ android {
         applicationId 'com.flipcheck.beta.nativev098.clean'
         minSdk 23
         targetSdk 36
-        versionCode 132
-        versionName '1.28-exact-catalog-resolution'
+        versionCode 133
+        versionName '1.29-universal-catalog-evidence'
         multiDexEnabled true
         testInstrumentationRunner 'android.app.InstrumentationTestRunner'
     }
