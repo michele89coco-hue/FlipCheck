@@ -55,7 +55,8 @@ final class DocumentedConflictPolicy {
         Models.Conflict c=new Models.Conflict(field,a.value,EvidenceLedger.debug(a),b.value,EvidenceLedger.debug(b),severity,attempted);
         if(c.complete())id.documentedConflicts.add(c);
     }
-    private static boolean identifierKey(String k){String x=safe(k).toLowerCase(Locale.ROOT);return x.contains("card_number")||x.contains("collector_number")||x.equals("catalog_number")||x.equals("source_confirmed_catalog_number");}
+    private static boolean identifierKey(String k){CanonicalFieldKey key=CanonicalFieldKey.fromAlias(k);return key==CanonicalFieldKey.CARD_NUMBER_CANDIDATE
+            ||key==CanonicalFieldKey.COLLECTOR_NUMBER_CANDIDATE||key==CanonicalFieldKey.SOURCE_CONFIRMED_CATALOG_NUMBER;}
     private static String canon(String x){return safe(x).toUpperCase(Locale.ROOT).replaceFirst("^#","").replaceAll("[^A-Z0-9]","");}
     private static void removePrefix(Models.Identification id,String prefix){for(int i=id.finalContradictions.size()-1;i>=0;i--)if(id.finalContradictions.get(i).startsWith(prefix))id.finalContradictions.remove(i);}
     private static String safe(String x){return x==null?"":x.trim();}
