@@ -107,7 +107,7 @@ public final class V124ProductionAliasEndToEndRegressionTest {
     private static void localizedNumericCardNumberBindsPhysically() throws Exception {
         Models.Identification id=parse("sports_alias_payload");
         require("81".equals(id.physicalCardNumber),"localized numeric card number missing");
-        require(id.physicalCardNumberOrigin.contains("photo:candidate")&&id.physicalCardNumberOrigin.contains("card_number")&&!id.cardNumberVerified,
+        require(id.physicalCardNumberOrigin.startsWith(EvidenceLedger.PRIMARY_VISION+":candidate")&&id.physicalCardNumberOrigin.contains("card_number")&&!id.cardNumberVerified,
                 "number provenance is not direct/semantic/localized: "+id.physicalCardNumberOrigin);
     }
 
