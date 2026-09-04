@@ -58,7 +58,8 @@ public final class V122PhotographicIdentityArchitectureRegressionTest {
         require(excluded==2,"unretrieved or mismatched-state comparable was not excluded");}
     private static void sourceAudit()throws Exception{String p=new String(Files.readAllBytes(Paths.get("app/src/main/java/com/flipcheck/nativebeta/IdentificationPipelineV082.java")),StandardCharsets.UTF_8);
         require(p.contains("client.observe(new ArrayList<>(images)"),"initial Vision does not receive all images");
-        require(!p.contains("client.recoverPhysicalIdentity(")&&!p.contains("client.verifyPhysicalCardNumber("),"non-technical second Vision remains on production route");
+        require(p.contains("PhysicalIdentityRecovery.eligible(id,usage)")&&p.contains("focused-physical-recovery-v131")
+                &&!p.contains("client.verifyPhysicalCardNumber("),"focused recovery is not bounded to an eligible discriminative field");
         require(p.contains("NonDestructiveWebEnrichment.apply")&&p.contains("ConfirmedIdentityEnrichment.apply"),"source-only Web merge missing");
         require(!p.contains("POKEMON FRONT IDENTITY")&&!p.contains("COMMERCIAL SMARTPHONE IDENTITY"),"named production exception remains");}
     private static Models.Identification parse(String key)throws Exception{Models.Identification id=parseOpen(key);require(id.closureResult,"closure failed "+key+": "+id.closureMissingFields);return id;}
