@@ -18,6 +18,7 @@ final class TcgFrontIdentityPolicy {
 
     static boolean frontComplete(Models.Identification id) {
         if(id==null||!hasFront(id))return false;
+        if(truth(EvidenceLedger.photoValue(id,"front_complete","complete_front")))return true;
         return truth(field(id,"front_complete","complete_front"));
     }
 
