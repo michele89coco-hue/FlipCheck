@@ -33,6 +33,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.core.content.ContextCompat;
 import com.flipcheck.nativebeta.ClarificationPlanner;
 import com.flipcheck.nativebeta.ImageMatchPolicy;
 import com.flipcheck.nativebeta.Models;
@@ -701,11 +702,8 @@ public class MainActivity extends Activity {
             return;
         }
         IntentFilter filter = new IntentFilter(AnalysisForegroundService.ACTION_STATE);
-        if (Build.VERSION.SDK_INT >= 33) {
-            registerReceiver(this.analysisReceiver, filter, Context.RECEIVER_NOT_EXPORTED);
-        } else {
-            registerReceiver(this.analysisReceiver, filter);
-        }
+        ContextCompat.registerReceiver(this, this.analysisReceiver, filter,
+                ContextCompat.RECEIVER_NOT_EXPORTED);
         this.analysisReceiverRegistered = true;
     }
 
