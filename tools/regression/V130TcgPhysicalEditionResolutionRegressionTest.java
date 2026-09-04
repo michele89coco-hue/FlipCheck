@@ -1,7 +1,8 @@
 package com.flipcheck.nativebeta;
 
 import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -86,8 +87,8 @@ public final class V130TcgPhysicalEditionResolutionRegressionTest {
     }
 
     private static void noFixtureSpecificProductionBranch() throws Exception {
-        String roots=Files.readString(Path.of("app/src/main/java/com/flipcheck/nativebeta/TcgPhysicalEditionPolicy.java"))
-                +Files.readString(Path.of("app/src/main/java/com/flipcheck/nativebeta/TcgEditionCropper.java"));
+        String roots=new String(Files.readAllBytes(Paths.get("app/src/main/java/com/flipcheck/nativebeta/TcgPhysicalEditionPolicy.java")),StandardCharsets.UTF_8)
+                +new String(Files.readAllBytes(Paths.get("app/src/main/java/com/flipcheck/nativebeta/TcgEditionCropper.java")),StandardCharsets.UTF_8);
         require(!roots.toLowerCase().contains("vileplume")&&!roots.contains("15/64")&&!roots.toLowerCase().contains("jungle"),"fixture-specific production hardcode detected");pass();
     }
 
