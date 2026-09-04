@@ -7,7 +7,9 @@ import java.util.Locale;
 
 /** Profile and fingerprint engine consuming only NormalizedPhotoIdentity. */
 final class IdentityProfileEngine {
-    enum Profile { SPORTS_CARD, TCG, SEALED_TRADING_CARD_PRODUCT, OTHER_COLLECTIBLE }
+    enum Profile { SPORTS_CARD, TCG, SEALED_TRADING_CARD_PRODUCT, CONSUMER_ELECTRONICS,
+        CONSUMER_ELECTRONICS_ACCESSORY, TELEVISION_REMOTE_CONTROL,
+        AUDIO_VIDEO_REMOTE_CONTROL, APPLIANCE_REMOTE_CONTROL, OTHER_COLLECTIBLE }
     static final class Assessment {
         final Profile profile; final PhotoTuple tuple; final boolean complete;
         final String blockingReason,missingDiscriminative,missingNonblocking;
@@ -18,6 +20,7 @@ final class IdentityProfileEngine {
                 cardNumber="",verifiedCardNumber="",collectorNumber="",serial="",level="",color="",finish="",edition="",printing="",format="",
                 parallelFamily="",printRun="",configuration="",sport="",modelCode="",barcode="",design="",language="",hp="",attackText="",layout="",
                 illustration="",productType="",rookieMarker="",evolutionStage="",graphicNumber="",attackDamage="",cardType="";
+        String controlLayout="",shortcutButtons="",brandMark="",navigationLayout="",numericKeypad="",voiceControl="";
         String packageCount="",cardsPerPack="",autographGuarantee="",memorabiliaGuarantee="",sealedStatus="";
         final List<String> attacks=new ArrayList<>(),featuredSubjects=new ArrayList<>(),distinctiveTokens=new ArrayList<>();
         boolean frontComplete,frontBack,layoutDistinctive,modelPhysical,cardNumberVerified;
@@ -53,6 +56,13 @@ final class IdentityProfileEngine {
                 if(t.year.isEmpty()&&t.productType.isEmpty())missing.add("release_or_product_type");
                 complete=missing.isEmpty()&&(t.frontComplete||id.photoIdentityComplete||t.modelPhysical);
                 if(!complete&&missing.isEmpty())missing.add("complete_identity_bearing_front");break;
+            case TELEVISION_REMOTE_CONTROL: case AUDIO_VIDEO_REMOTE_CONTROL: case APPLIANCE_REMOTE_CONTROL:
+            case CONSUMER_ELECTRONICS: case CONSUMER_ELECTRONICS_ACCESSORY:
+                need(missing,"observed_or_strongly_supported_brand",t.brand);
+                boolean distinctive=!t.controlLayout.isEmpty()||!t.shortcutButtons.isEmpty()
+                        ||!t.navigationLayout.isEmpty()||!t.brandMark.isEmpty();
+                complete=missing.isEmpty()&&(t.modelPhysical||distinctive&&t.layoutDistinctive);
+                if(!complete&&missing.isEmpty())missing.add("distinctive_control_layout_or_model_code");break;
             default:
                 need(missing,"brand_or_publisher",t.brand);boolean named=t.modelPhysical&&!t.modelCode.isEmpty();
                 boolean composite=!t.family.isEmpty()&&!t.design.isEmpty()&&t.layoutDistinctive;complete=missing.isEmpty()&&(named||composite);
@@ -63,7 +73,9 @@ final class IdentityProfileEngine {
 
     static String model(Assessment a){PhotoTuple t=a.tuple;if(a.profile==Profile.SPORTS_CARD||a.profile==Profile.TCG)
         return CanonicalIdentityComposer.cardModel(t.subject,t.verifiedCardNumber,"","","","","");
-        if(a.profile==Profile.SEALED_TRADING_CARD_PRODUCT)return clean(t.format);return join(t.modelPhysical?t.modelCode:"",t.design,t.edition);}
+        if(a.profile==Profile.SEALED_TRADING_CARD_PRODUCT)return clean(t.format);
+        if(electronics(a.profile))return join(t.modelPhysical?t.modelCode:"",t.productType);
+        return join(t.modelPhysical?t.modelCode:"",t.design,t.edition);}
     static String family(Assessment a){PhotoTuple t=a.tuple;if(t.year.isEmpty()||canon(t.family).contains(canon(t.year)))return t.family;return join(t.year,t.family);}
     static boolean concreteResolvableAmbiguity(Models.Identification id){if(id==null)return false;prepare(id);return id.photoIdentityAmbiguous
             &&Math.max(id.photoAlternativeCount,id.canonicalCandidateCount)>=2&&!id.discriminativeFieldVisible&&!clean(id.discriminativeField).isEmpty();}
@@ -86,6 +98,9 @@ final class IdentityProfileEngine {
         t.evolutionStage=n.best(CanonicalFieldKey.EVOLUTION_STAGE);
         t.graphicNumber=n.best(CanonicalFieldKey.GRAPHIC_NUMBER);t.attackDamage=n.best(CanonicalFieldKey.ATTACK_DAMAGE);t.cardType=n.best(CanonicalFieldKey.CARD_TYPE);
         t.attackText=n.best(CanonicalFieldKey.ATTACK_TEXT);t.layout=n.best(CanonicalFieldKey.LAYOUT_SIGNATURE);t.illustration=n.best(CanonicalFieldKey.ARTWORK_SIGNATURE);
+        t.controlLayout=n.best(CanonicalFieldKey.CONTROL_LAYOUT);t.shortcutButtons=n.best(CanonicalFieldKey.SHORTCUT_BUTTONS);
+        t.brandMark=n.best(CanonicalFieldKey.BRAND_MARK);t.navigationLayout=n.best(CanonicalFieldKey.NAVIGATION_LAYOUT);
+        t.numericKeypad=n.best(CanonicalFieldKey.NUMERIC_KEYPAD);t.voiceControl=n.best(CanonicalFieldKey.VOICE_CONTROL);
         t.featuredSubjects.addAll(n.values(CanonicalFieldKey.FEATURED_SUBJECT));
         NormalizedPhotoIdentity.Fact model=n.bestFact(CanonicalFieldKey.MODEL_CODE);t.modelPhysical=model!=null&&model.direct()&&!clean(model.location).isEmpty();
         String views=id.photoViews.toString().toLowerCase(Locale.ROOT);boolean front=views.isEmpty()||views.contains("front")||views.contains("fronte"),back=views.contains("back")||views.contains("retro")||views.contains("rear")||views.contains("reverse");
@@ -93,10 +108,20 @@ final class IdentityProfileEngine {
         t.layoutDistinctive=!t.layout.isEmpty();return t;}
     static Profile profile(Models.Identification id,PhotoTuple t){NormalizedPhotoIdentity n=PhotographicFactNormalizer.require(id);String voted=clean(n.profile);
         if(voted.equals("sealed_trading_card_product"))return Profile.SEALED_TRADING_CARD_PRODUCT;if(voted.equals("sports_card"))return Profile.SPORTS_CARD;if(voted.equals("tcg"))return Profile.TCG;
+        if(voted.equals("television_remote_control"))return Profile.TELEVISION_REMOTE_CONTROL;
+        if(voted.equals("audio_video_remote_control"))return Profile.AUDIO_VIDEO_REMOTE_CONTROL;
+        if(voted.equals("appliance_remote_control"))return Profile.APPLIANCE_REMOTE_CONTROL;
+        if(voted.equals("consumer_electronics_accessory"))return Profile.CONSUMER_ELECTRONICS_ACCESSORY;
+        if(voted.equals("consumer_electronics"))return Profile.CONSUMER_ELECTRONICS;
         String x=clean(n.categoryHint).toLowerCase(Locale.ROOT).replace('-','_');
         if(!t.format.isEmpty()||containsAny(x,"sealed","hobby_box","blaster_box","mega_box")||containsAny(t.productType.toLowerCase(Locale.ROOT),"box","sealed"))return Profile.SEALED_TRADING_CARD_PRODUCT;
         if(containsAny(x,"sports","sport_card")||!t.sport.isEmpty()||!t.team.isEmpty())return Profile.SPORTS_CARD;
         if(containsAny(x,"tcg","trading card game","collectible card game")||!t.hp.isEmpty()||!t.attacks.isEmpty()||!n.values(CanonicalFieldKey.COLLECTOR_NUMBER_CANDIDATE).isEmpty())return Profile.TCG;
+        if(containsAny(x,"television_remote_control","tv_remote","television remote")||containsAny(t.productType.toLowerCase(Locale.ROOT),"television remote","tv remote"))return Profile.TELEVISION_REMOTE_CONTROL;
+        if(containsAny(x,"audio_video_remote_control","av_remote"))return Profile.AUDIO_VIDEO_REMOTE_CONTROL;
+        if(containsAny(x,"appliance_remote_control"))return Profile.APPLIANCE_REMOTE_CONTROL;
+        if(containsAny(x,"remote","consumer_electronics_accessory","electronic accessory"))return Profile.CONSUMER_ELECTRONICS_ACCESSORY;
+        if(containsAny(x,"consumer_electronics","electronics"))return Profile.CONSUMER_ELECTRONICS;
         return Profile.OTHER_COLLECTIBLE;}
 
     private static int fingerprint(Profile p,PhotoTuple t,List<String> components){int score=0;
@@ -109,14 +134,18 @@ final class IdentityProfileEngine {
         else if(p==Profile.SPORTS_CARD){if(!t.family.isEmpty()){score+=25;components.add("set_or_product_line:25");}if(!t.cardNumber.isEmpty()){int pts=t.cardNumberVerified?20:8;score+=pts;components.add((t.cardNumberVerified?"verified":"candidate")+"_card_number:"+pts);}
             if(!t.team.isEmpty()){score+=10;components.add("team:10");}if(!t.layout.isEmpty()){score+=10;components.add("layout:10");}}
         else if(p==Profile.SEALED_TRADING_CARD_PRODUCT){if(!t.family.isEmpty()){score+=30;components.add("product_line:30");}if(!t.year.isEmpty()){score+=15;components.add("release_or_season:15");}if(!t.sport.isEmpty()){score+=10;components.add("sport_or_game:10");}if(!t.format.isEmpty()){score+=20;components.add("format:20");}if(!t.configuration.isEmpty()){score+=15;components.add("configuration:15");}}
+        else if(electronics(p)){if(t.modelPhysical){score+=40;components.add("physical_model_code:40");}if(!t.brandMark.isEmpty()){score+=25;components.add("brand_mark:25");}
+            if(!t.controlLayout.isEmpty()||!t.layout.isEmpty()){score+=20;components.add("control_layout:20");}if(!t.shortcutButtons.isEmpty()){score+=10;components.add("shortcut_buttons:10");}if(!t.navigationLayout.isEmpty()){score+=8;components.add("navigation_layout:8");}}
         else{if(t.modelPhysical){score+=45;components.add("physical_model_code:45");}if(!t.design.isEmpty()){score+=20;components.add("design:20");}}return Math.min(100,score);}
-    private static String nonblocking(Profile p,PhotoTuple t){List<String>x=new ArrayList<>();if(p==Profile.SPORTS_CARD){optional(x,"physical_set_or_release_year",t.year);optional(x,"physical_card_number",t.cardNumber);optional(x,"physical_serial",t.serial);optional(x,"barcode",t.barcode);}else if(p==Profile.TCG){optional(x,"physical_collector_number",t.collectorNumber);optional(x,"set",t.family);optional(x,"finish",t.finish);optional(x,"edition_or_printing",t.edition);}else if(p==Profile.SEALED_TRADING_CARD_PRODUCT){optional(x,"physical_set_or_release_year",t.year);optional(x,"commercial_format",t.format);optional(x,"pack_configuration",t.configuration);optional(x,"barcode_or_product_code",join(t.barcode,t.modelCode));}else{optional(x,"barcode",t.barcode);optional(x,"edition",t.edition);}return join(x);}
+    private static String nonblocking(Profile p,PhotoTuple t){List<String>x=new ArrayList<>();if(p==Profile.SPORTS_CARD){optional(x,"physical_set_or_release_year",t.year);optional(x,"physical_card_number",t.cardNumber);optional(x,"physical_serial",t.serial);optional(x,"barcode",t.barcode);}else if(p==Profile.TCG){optional(x,"physical_collector_number",t.collectorNumber);optional(x,"set",t.family);optional(x,"finish",t.finish);optional(x,"edition_or_printing",t.edition);}else if(p==Profile.SEALED_TRADING_CARD_PRODUCT){optional(x,"physical_set_or_release_year",t.year);optional(x,"commercial_format",t.format);optional(x,"pack_configuration",t.configuration);optional(x,"barcode_or_product_code",join(t.barcode,t.modelCode));}else if(electronics(p)){optional(x,"exact_model",t.modelCode);optional(x,"rear_label",t.modelCode);}else{optional(x,"barcode",t.barcode);optional(x,"edition",t.edition);}return join(x);}
     private static String snapshot(Profile p,PhotoTuple t,int score){return "profile="+p.name().toLowerCase(Locale.ROOT)+"; brand="+t.brand+"; productLine="+t.family+"; mainSet="+t.mainSet+"; subset="+t.insertSubset+"; subSeries="+t.subSeries+"; distinctiveTokens="+t.distinctiveTokens+"; subject="+t.subject+"; season="+t.year+"; cardNumberCandidate="+t.cardNumber+"; cardNumberVerified="+t.cardNumberVerified+"; graphicNumber="+t.graphicNumber+"; physicalSerial="+t.serial+"; parallelFamily="+t.parallelFamily+"; parallelColor="+t.color+"; printRun="+t.printRun+"; evolutionStage="+t.evolutionStage+"; hp="+t.hp+"; attacks="+t.attacks+"; copyright="+t.copyrightYear+"; layout="+t.layout+"; finish="+t.finish+"; format="+t.format+"; configuration="+t.configuration+"; fingerprintScore="+score;}
     private static boolean strongPhotoConflict(Models.Identification id){for(String r:id.finalContradictions){String x=clean(r).toLowerCase(Locale.ROOT);if((x.contains("strong")||x.contains("forte"))&&(x.contains("photo")||x.contains("physical")||x.contains("fotograf")))return true;}return false;}
     private static boolean coreSemanticConflict(NormalizedPhotoIdentity n){for(String x:n.semanticConflicts){String v=clean(x);
         if((v.startsWith("productLineConflict")||v.startsWith("productLineAlternatives"))&&n.productLineConflictResolvedBySource())continue;
         if(v.startsWith("productLineConflict")||v.startsWith("productLineAlternatives")||v.startsWith("setConflict")||v.startsWith("seriesConflict")||v.startsWith("productNameConflict")||v.startsWith("subjectConflict"))return true;}return false;}
     private static boolean containsAny(String x,String...terms){for(String t:terms)if(x.contains(t))return true;return false;}
+    static boolean electronics(Profile p){return p==Profile.CONSUMER_ELECTRONICS||p==Profile.CONSUMER_ELECTRONICS_ACCESSORY
+            ||p==Profile.TELEVISION_REMOTE_CONTROL||p==Profile.AUDIO_VIDEO_REMOTE_CONTROL||p==Profile.APPLIANCE_REMOTE_CONTROL;}
     private static void need(List<String>x,String name,String value){if(clean(value).isEmpty())x.add(name);}private static void optional(List<String>x,String name,String value){if(clean(value).isEmpty())x.add(name);}
     private static boolean truth(String x){String v=clean(x).toLowerCase(Locale.ROOT);return v.equals("true")||v.equals("yes")||v.equals("1")||v.equals("complete")||v.equals("visible");}
     private static String first(String...xs){for(String x:xs)if(!clean(x).isEmpty())return clean(x);return "";}

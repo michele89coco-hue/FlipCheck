@@ -82,6 +82,12 @@ final class Models {
         int textScore;
         int totalScore;
         int webScore;
+        int physicalIdentifierScore;
+        int printedTextScore;
+        int catalogScore;
+        int webEvidenceScore;
+        int conflictPenalty;
+        int missingFieldPenalty;
         int probableReferenceConfidence;
         String brand = "";
         String family = "";
@@ -186,6 +192,22 @@ final class Models {
         }
     }
 
+    /** Two incompatible values with inspectable provenance; absence is not a conflict. */
+    static final class Conflict implements Serializable {
+        private static final long serialVersionUID = 1L;
+        final String field,valueA,evidenceA,valueB,evidenceB,severity;
+        final boolean resolutionAttempted;
+        Conflict(String field,String valueA,String evidenceA,String valueB,String evidenceB,
+                 String severity,boolean resolutionAttempted){
+            this.field=safe(field);this.valueA=safe(valueA);this.evidenceA=safe(evidenceA);
+            this.valueB=safe(valueB);this.evidenceB=safe(evidenceB);this.severity=safe(severity);
+            this.resolutionAttempted=resolutionAttempted;
+        }
+        boolean complete(){return !field.isEmpty()&&!valueA.isEmpty()&&!evidenceA.isEmpty()
+                &&!valueB.isEmpty()&&!evidenceB.isEmpty()&&!valueA.equalsIgnoreCase(valueB);}
+        private static String safe(String x){return x==null?"":x.trim();}
+    }
+
     /** Append-only evidence record. Provenance fields are immutable after creation. */
     static final class EvidenceFact implements Serializable {
         private static final long serialVersionUID = 1L;
@@ -198,6 +220,8 @@ final class Models {
         final String side;
         final String location;
         final String semanticRole;
+        final String textScope;
+        final String pipelineStage;
         final String sourceUrl;
         final long createdAtMillis;
         final String timestampStage;
@@ -216,6 +240,8 @@ final class Models {
             this.rawText=safe(value);
             this.normalizedValue=safe(value);
             this.cropRegion=safe(location);
+            this.textScope=TextScopePolicy.scope(this);
+            this.pipelineStage=safe(evidenceType);
         }
         private static String safe(String x){return x==null?"":x.trim();}
     }
@@ -261,6 +287,10 @@ final class Models {
         String category = "";
         String categoryKey = "other";
         String brand = "";
+        String observedBrand = "";
+        String inferredBrand = "";
+        String catalogBrand = "";
+        String brandStatus = "UNRESOLVED";
         String brandEvidence = "unknown";
         String brandRoleReason = "";
         String brandEntity = "";
@@ -360,6 +390,14 @@ final class Models {
         String catalogConflicts = "";
         boolean catalogVerified;
         String formatStatus = "FORMAT_NOT_OBSERVED";
+        String commercialFormatStatus = "NOT_EVALUATED";
+        String skuStatus = "NOT_EVALUATED";
+        String exactModelStatus = "NOT_EVALUATED";
+        String collectorNumberStatus = "NOT_OBSERVED";
+        boolean numberAgreement;
+        String combinedVerification = "NONE";
+        String physicalReleaseYear = "";
+        String statisticsSeason = "";
         String disproofStatus = "NOT_EXECUTED";
         String exactResolutionReason = "";
         String catalogHierarchy = "";
@@ -376,6 +414,10 @@ final class Models {
         String missingDiscriminativeFields = "";
         String missingNonblockingFields = "";
         String requestedPhotoReason = "";
+        String requestedPhotoMissingField = "";
+        String requestedPhotoSide = "";
+        String requestedPhotoRegion = "";
+        String requestedPhotoExpectedEvidence = "";
         String webStatus = "NOT_RUN";
         String marketStatus = "NOT_AVAILABLE";
         String marketDecisionStatus = "MARKET_UNAVAILABLE";
@@ -466,6 +508,7 @@ final class Models {
         final List<String> photoIdentityFields = new ArrayList();
         final List<String> featuredSubjects = new ArrayList();
         final List<EvidenceFact> evidenceLedger = new ArrayList();
+        final List<Conflict> documentedConflicts = new ArrayList();
         final List<String> fieldTransitions = new ArrayList();
         final List<MarketComparable> marketComparables = new ArrayList();
 

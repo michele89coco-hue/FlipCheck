@@ -107,15 +107,24 @@ final class IdentificationPipelineV082 {
                 TcgPhysicalEditionPolicy.normalize(id,"focused_retry_failed_evidence_preserved");
             }
         }
+        if(!primaryClosed&&PhysicalIdentityRecovery.eligible(id,usage)){
+            id.additionalVisionReason="unresolved_discriminative_electronics_field; focused_recovery_within_budget";
+            try{
+                OpenAiClient.Response recovery=client.recoverPhysicalIdentity(new ArrayList<>(images),PhysicalIdentityRecovery.prompt(id));
+                if(recovery!=null)IdentificationEngine.collectStage(id,usage,recovery,"focused-physical-recovery-v131");
+                id.discriminativeVisionCount++;
+                mergePhysicalRecovery(id,recovery,local);
+                primaryClosed=PhotographicIdentityClosure.apply(id,"after_focused_physical_recovery")||id.identityConfirmed;
+                ConsistencyInvariantChecker.enforce(id,"after_focused_physical_recovery");
+            }catch(Exception recoveryFailure){id.additionalVisionReason="focused_physical_recovery_failed:"+technicalStatus(recoveryFailure);}
+        }
         if (primaryClosed||id.identityConfirmed) {
             enrichConfirmedIdentity(id, client, usage,images);
             IdentificationEngine.finalizeOutput(id, null);
             return id;
         }
 
-        // A second remote Vision call is reserved exclusively for technical recovery
-        // (truncated, invalid or non-parseable output) in the block above. A valid
-        // first observation must not spend another call to reinforce its own hypothesis.
+        // A second Vision is allowed only for a localized discriminative field and remains bounded by budget.
         if (PhotographicIdentityClosure.mayRequestAnotherPhoto(id)) {
             id.additionalVisionReason="no_automatic_discriminative_call; requested_field="
                     +safe(id.discriminativeField);
@@ -884,15 +893,16 @@ final class IdentificationPipelineV082 {
         }
         List<String> localControlCandidates = localDistinctiveControls(local);
         List<String> localWordCandidates = localOcrWordCandidates(local);
-        return "Analyze the foreground collectible across all supplied images in one multimodal observation. Treat a sealed wrapper or box as the object surface when it is the product. Ignore gallery UI, timestamps, listing text, people, reflections and unrelated objects. "
-                + "EVIDENCE LEDGER CONTRACT: every identity fact must be emitted in photo_identity.evidence_facts with key, literal value, evidence_type, confidence, image_index, side, exact location and semantic_role. These facts have photo provenance. Do not copy user hints, OCR from outside the object, or web knowledge into them. photo_identity.fields is compatibility output and must contain the same physically observed facts. "
-                + "Choose the category profile first: sports trading card, TCG, sealed trading-card product, or other collectible. A profile is complete when the available photographed discriminators identify one physical object and no material photographed contradiction exists. Year, reverse, barcode, serial and catalog number are useful but never universally mandatory. A single sharp identity-bearing front may be sufficient, especially for TCG and sealed products. "
+        return "Analyze the foreground physical object across all supplied images in one multimodal observation. Treat a sealed wrapper or box as the object surface when it is the product. Ignore gallery UI, timestamps, listing text, people, reflections and unrelated objects. "
+                + "EVIDENCE LEDGER CONTRACT: every identity fact must be emitted once in facts with key, literal value, confidence, image, side, exact location and semantic role. The application records these as PRIMARY_VISION, not as OCR or direct human observation. Do not copy user hints, OCR from outside the object, or web knowledge into them. "
+                + "Choose the category profile first: sports card, TCG, sealed trading-card product, consumer electronics, television/audio-video/appliance remote control, or other object. A profile is complete when the available photographed discriminators identify one physical object and no material photographed contradiction exists. Year, reverse, barcode, serial and catalog number are useful but never universally mandatory. A single sharp identity-bearing front may be sufficient, especially for TCG and sealed products. "
                 + "Set identity_ambiguous=true only when at least two materially different physical identities fit the photographs. Then report their count, exactly one missing_discriminative_field, and whether that field is already visible. Never manufacture ambiguity from missing catalog or market data. Set complete=true whenever the photographed tuple is unique even if the Web is unavailable. "
                 + "CANDIDATE CANONICALIZATION INPUT: return candidates as structured identity axes, not alternative prose titles. Descriptions, language labels, catalog aliases and finish wording for the same object are one candidate. materially_distinct_variant=true only when a different physical object remains after comparing card number, edition, printing, parallel marker or sealed format. "
                 + "Numbers require semantic classification and physical localization. physical_card_number is allowed only for an explicit card/collector/checklist number printed on the card surface, with semantic_role=card_number or collector_number. physical_serial is only a physically localized limited print run x/y. Product codes and barcodes use their own roles. Statistics, ratings, HP/PV, years, dates, activation codes, graphic numbers, UI and watermarks are not card numbers. "
                 + "For sports cards collect manufacturer/publisher, set or product line, insert/edition when visible, athlete/subject, team when visible, localized card number when present, and physical parallel/serial when present. A generic reflective, holo, foil or chrome appearance is finish only: it never proves a rare parallel. Emit physical_parallel only with a localized printed name, serial, or a separately localized distinctive marker. "
                 + "For TCG collect game/publisher, set and set code/symbol when readable, card name, language, HP/PV as a statistic, moves, artist, rarity, layout/frame, illustration, finish, edition/printing and collector number when visible. Scan the full front and supplied detail crops for edition marks. Emit first_edition_mark=PRESENT only when the physical 1st Edition logo/text is visible; also emit edition=FIRST_EDITION. Keep edition, shadow_status, finish/holo status, rarity and collector number as independent facts. Emit evolution stage only as evolution_stage: it is descriptive and never a set/product line. Finish is a physical variant and never part of the card name. A complete composite front can be unique without a readable collector number; a common reverse is non-identifying. "
                 + "For sealed products collect manufacturer, product line, season when visible, sport/category, product_type, format and printed configuration. Emit people pictured on the package only as featured_subject or featured_subjects, never as the product subject/model. Do not require a loose-card number from a sealed product. "
+                + "For electronics and remote controls collect product_type, a located brand/logo mark, control/button layout, printed labels, shortcut buttons, navigation topology, numeric keypad, voice control and any literal model/part code. A brand inferred only from shape is a candidate hypothesis, never an observed manufacturer. Preserve remote_feature and printed_label as distinctive evidence. "
                 + "overlay_or_watermark is only a warning. external_watermark=true only for an external mark, and identity_obscured=true only if it covers a discriminator. Generic overlay=true alone never invalidates physical evidence. Preserve complementary facts from different sides when the images show the same object. "
                 + "Candidate hints are hypotheses only. Never invent a manufacturer, model, variant, number, serial, printing or finish. Keep unclear values unresolved rather than filling them from prior knowledge. "
                 + "LOCAL_OCR_IDENTIFIER_CANDIDATES_REQUIRE_VISUAL_ENTITY_BINDING=" + (labeled.length() == 0 ? "none" : labeled)

@@ -6,7 +6,8 @@ import java.util.Locale;
 final class ConsistencyInvariantChecker {
     private ConsistencyInvariantChecker() {}
     static boolean enforce(Models.Identification id,String stage){if(id==null)return false;
-        if(id.discriminativeVisionCount>0&&!safe(id.additionalVisionReason).startsWith("tcg_edition_missing_after_primary"))fail(id,"UNBOUNDED_NON_TECHNICAL_SECOND_VISION");
+        if(id.discriminativeVisionCount>0&&!safe(id.additionalVisionReason).startsWith("tcg_edition_missing_after_primary")
+                &&!safe(id.additionalVisionReason).startsWith("unresolved_discriminative_electronics_field"))fail(id,"UNBOUNDED_NON_TECHNICAL_SECOND_VISION");
         NormalizedPhotoIdentity n=PhotographicFactNormalizer.require(id);IdentityProfileEngine.PhotoTuple t=IdentityProfileEngine.prepare(id);
         if(!n.physicalCardNumber.isEmpty()||!n.physicalCollectorNumber.isEmpty())if(id.physicalCardNumber.isEmpty()){PhysicalCardNumberPolicy.normalize(id);repair(id,"physical_number_resynchronized");}
         if(!n.productLine().isEmpty()&&contains(id.missingDiscriminativeFields,"set_or_product_line"))fail(id,"canonical_productLine_marked_missing");
@@ -24,13 +25,13 @@ final class ConsistencyInvariantChecker {
         if(id.photoIdentityComplete&&id.canonicalCandidateCount==1&&!id.identityConfirmed&&!strongConflict(id)){
             IdentityProfileEngine.Assessment a=IdentityProfileEngine.assess(id);if(a.complete&&id.candidates.get(0).totalScore>=85){
                 PhotographicIdentityClosure.apply(id,"invariant_recovery_"+safe(stage));repair(id,"complete_unique_high_confidence_tuple_closed");}}
-        if(!safe(id.physicalCardNumber).isEmpty()&&!safe(id.sourceConfirmedCatalogNumber).isEmpty()
+        if(DocumentedConflictPolicy.hasHardConflict(id)&&!safe(id.physicalCardNumber).isEmpty()&&!safe(id.sourceConfirmedCatalogNumber).isEmpty()
                 &&!same(id.physicalCardNumber,id.sourceConfirmedCatalogNumber)){
             id.exactIdentityStatus="NUMBER_CONFLICT";fail(id,"PHYSICAL_NUMBER_CATALOG_CONFLICT");}
-        if("CONFIRMED".equals(id.exactIdentityStatus)&&!safe(id.numberConflicts).isEmpty())fail(id,"CONFIRMED_NUMBER_CONFLICT");
+        if("CONFIRMED".equals(id.exactIdentityStatus)&&DocumentedConflictPolicy.hasHardConflict(id))fail(id,"CONFIRMED_NUMBER_CONFLICT");
         if(("UNRESOLVED".equals(id.exactIdentityStatus)||"SET_UNRESOLVED".equals(id.exactIdentityStatus)||"NUMBER_UNRESOLVED".equals(id.exactIdentityStatus))&&id.exactIdentityConfidence==100)fail(id,"UNRESOLVED_EXACT_IDENTITY_AT_100");
         if("VARIANT_CONFIRMED".equals(id.variantStatus)&&id.variantConfidence==0)fail(id,"CONFIRMED_VARIANT_WITH_ZERO_CONFIDENCE");
-        if("CONFIRMED".equals(id.identityStatus)&&!safe(id.numberConflicts).isEmpty())fail(id,"GLOBAL_CONFIRMED_WITH_IDENTIFIER_CONFLICT");
+        if("CONFIRMED".equals(id.identityStatus)&&DocumentedConflictPolicy.hasHardConflict(id))fail(id,"GLOBAL_CONFIRMED_WITH_IDENTIFIER_CONFLICT");
         if("CATALOG_MATCHED".equals(id.exactIdentityStatus)&&(!id.catalogVerified||!"PASSED".equals(id.disproofStatus)))fail(id,"EXACT_IDENTITY_WITHOUT_CATALOG_DISPROOF");
         if("PASSED".equals(id.disproofStatus)&&("NOT_RUN".equals(id.webStatus)||"FAILED".equals(id.webStatus)))fail(id,"DISPROOF_PASSED_WITHOUT_WEB");
         if(id.exactIdentityConfidence==100&&("NOT_EVALUATED".equals(id.catalogCompatibilityStatus)||!id.catalogVerified))fail(id,"EXACT_CONFIDENCE_100_WITHOUT_CATALOG");
@@ -46,6 +47,10 @@ final class ConsistencyInvariantChecker {
         String query=safe(id.searchQuery).toLowerCase(Locale.ROOT);for(String featured:id.featuredSubjects)
             if(!safe(featured).isEmpty()&&query.contains(safe(featured).toLowerCase(Locale.ROOT)))fail(id,"FEATURED_SUBJECT_CONTAMINATES_QUERY");
         if(safe(id.factsRejectedWithReason).contains("relevant_alias_rejected"))fail(id,"REJECTED_RELEVANT_ALIAS");
+        if(id.closureResult&&!DocumentedConflictPolicy.hasHardConflict(id)&&"CONFLICTED".equals(id.identityStatus)){id.identityStatus="CONFIRMED";id.blockingReason="";repair(id,"false_conflict_removed_after_closure");}
+        if("CONFIRMED".equals(id.exactEditionStatus)&&contains(id.missingNonblockingFields,"edition_or_printing")){id.missingNonblockingFields=id.missingNonblockingFields.replace("edition_or_printing","").replaceAll("(^,|,$)","");repair(id,"confirmed_edition_removed_from_missing");}
+        if(ProfileQueryBuilder.isSealed(id)&&contains(id.blockingReason,"number")){id.blockingReason="";repair(id,"sealed_card_number_blocker_removed");}
+        if("PHOTO_PLUS_CATALOG".equals(id.combinedVerification)&&(!id.numberAgreement||safe(id.sourceConfirmedCatalogNumber).isEmpty()))fail(id,"PHOTO_PLUS_CATALOG_WITHOUT_BOTH_ORIGINS");
         if(!safe(id.nextPhotoRequest).isEmpty()&&safe(id.requestedPhotoProfile).isEmpty())fail(id,"REQUESTED_PHOTO_PROFILE_EMPTY");
         if("FAILED".equals(id.webStatus)&&"CONFIRMED".equals(id.coreIdentityStatus)&&!id.identityConfirmed)fail(id,"WEB_FAILURE_BLOCKS_PHOTO_IDENTITY");
         for(Models.MarketComparable c:id.marketComparables)if(c.included&&!canon(c.itemState).equals(canon(ProfileQueryBuilder.expectedMarketState(id))))fail(id,"MARKET_COMPARABLE_WRONG_BUCKET");

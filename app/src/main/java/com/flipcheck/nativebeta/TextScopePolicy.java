@@ -5,11 +5,15 @@ import java.util.Locale;
 /** Classifies text scope before semantic normalization. */
 final class TextScopePolicy {
     static final String OBJECT_PRINTED_TEXT="OBJECT_PRINTED_TEXT";
+    static final String OBJECT_IDENTITY="OBJECT_IDENTITY";
+    static final String OBJECT_VARIANT="OBJECT_VARIANT";
+    static final String OBJECT_CONFIGURATION="OBJECT_CONFIGURATION";
     static final String OBJECT_IDENTIFIER="OBJECT_IDENTIFIER";
     static final String OBJECT_STATISTIC="OBJECT_STATISTIC";
     static final String OBJECT_BIOGRAPHICAL_TEXT="OBJECT_BIOGRAPHICAL_TEXT";
     static final String OBJECT_RULES_TEXT="OBJECT_RULES_TEXT";
-    static final String SCREEN_UI_TEXT="SCREEN_UI_TEXT";
+    static final String UI_OVERLAY="UI_OVERLAY";
+    static final String SCREEN_UI_TEXT=UI_OVERLAY;
     static final String MARKETPLACE_LISTING_TEXT="MARKETPLACE_LISTING_TEXT";
     static final String BACKGROUND_OBJECT="BACKGROUND_OBJECT";
     static final String EXTERNAL_OVERLAY="EXTERNAL_OVERLAY";
@@ -26,10 +30,13 @@ final class TextScopePolicy {
         if(matches(meta,"biograph|birth|born|birthplace|height|weight|college|school|career|hometown|position"))return OBJECT_BIOGRAPHICAL_TEXT;
         if(matches(meta,"statistic|stats|rating|jersey|offense|defense|average|season[_ ]table|graphic[_ ]number"))return OBJECT_STATISTIC;
         if(matches(meta,"rules[_ ]text|attack[_ ]text|move[_ ]text|description|effect[_ ]text|instruction"))return OBJECT_RULES_TEXT;
+        if(matches(meta,"finish|edition|printing|parallel|holo|shadow"))return OBJECT_VARIANT;
+        if(matches(meta,"configuration|pack[_ ]count|cards[_ ]per[_ ]pack|autograph[_ ]guarantee"))return OBJECT_CONFIGURATION;
+        if(matches(meta,"brand|manufacturer|publisher|product[_ ]line|set|series|subject|card[_ ]name|model"))return OBJECT_IDENTITY;
         if(matches(meta,"serial|collector|card[_ ]number|barcode|product[_ ]code|physical[_ ]marking|model[_ ]code|sku|part[_ ]number"))return OBJECT_IDENTIFIER;
-        if(EvidenceLedger.PHOTO.equals(f.origin)||EvidenceLedger.LOCAL_OCR.equals(f.origin)||EvidenceLedger.USER_HINT.equals(f.origin))return OBJECT_PRINTED_TEXT;
+        if(EvidenceLedger.isPixelOrigin(f.origin)||EvidenceLedger.LOCAL_OCR.equals(f.origin)||EvidenceLedger.USER_HINT.equals(f.origin))return OBJECT_PRINTED_TEXT;
         return UNKNOWN_SCOPE;}
-    static boolean primaryObjectEvidence(Models.EvidenceFact f){String s=scope(f);return s.equals(OBJECT_PRINTED_TEXT)||s.equals(OBJECT_IDENTIFIER)||s.equals(OBJECT_STATISTIC)||s.equals(OBJECT_BIOGRAPHICAL_TEXT)||s.equals(OBJECT_RULES_TEXT);}
+    static boolean primaryObjectEvidence(Models.EvidenceFact f){String s=scope(f);return s.equals(OBJECT_PRINTED_TEXT)||s.equals(OBJECT_IDENTITY)||s.equals(OBJECT_IDENTIFIER)||s.equals(OBJECT_VARIANT)||s.equals(OBJECT_CONFIGURATION)||s.equals(OBJECT_STATISTIC)||s.equals(OBJECT_BIOGRAPHICAL_TEXT)||s.equals(OBJECT_RULES_TEXT);}
     static boolean fingerprintEligible(Models.EvidenceFact f){String s=scope(f);return s.equals(OBJECT_PRINTED_TEXT)||s.equals(OBJECT_IDENTIFIER)||s.equals(OBJECT_STATISTIC)||s.equals(OBJECT_RULES_TEXT);}
     static boolean identifierEligible(Models.EvidenceFact f){return OBJECT_IDENTIFIER.equals(scope(f));}
     static boolean distinctiveTokenEligible(Models.EvidenceFact f){String s=scope(f);return s.equals(OBJECT_PRINTED_TEXT)||s.equals(OBJECT_IDENTIFIER);}

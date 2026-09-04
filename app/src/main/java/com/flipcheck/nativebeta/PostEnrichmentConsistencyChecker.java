@@ -7,7 +7,7 @@ final class PostEnrichmentConsistencyChecker {
     private PostEnrichmentConsistencyChecker() {}
     static void apply(Models.Identification id){if(id==null)return;
         String physical=clean(id.physicalCardNumber),catalog=clean(id.sourceConfirmedCatalogNumber);
-        boolean resolverConflict=!clean(id.numberConflicts).isEmpty();
+        boolean resolverConflict=DocumentedConflictPolicy.reconcile(id);
         boolean physicalVerified=PhysicalCardNumberPolicy.verifiedNumber(id);
         if((!physical.isEmpty()&&!catalog.isEmpty()&&!same(physical,catalog)&&physicalVerified)||resolverConflict&&physicalVerified){
             add(id,"PHYSICAL_NUMBER_CATALOG_CONFLICT:"+physical+"!="+catalog);

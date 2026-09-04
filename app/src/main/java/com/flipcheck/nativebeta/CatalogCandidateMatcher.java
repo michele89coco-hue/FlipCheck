@@ -21,7 +21,11 @@ final class CatalogCandidateMatcher {
         if(array!=null)for(int i=0;i<array.length()&&i<12;i++){JSONObject x=array.optJSONObject(i);if(x!=null)candidates.add(CandidateCanonicalizer.fromJson(x));}
         if(candidates.isEmpty()){Models.CandidateScore legacy=legacyCandidate(payload);if(hasIdentityField(legacy))candidates.add(legacy);}
         IdentityProfileEngine.PhotoTuple photo=IdentityProfileEngine.tuple(id);IdentityProfileEngine.Profile profile=IdentityProfileEngine.profile(id,photo);
-        int best=-1;for(Models.CandidateScore candidate:candidates){compare(candidate,photo,profile,id);candidate.webScore=webScore(candidate);candidate.totalScore=combined(candidate);
+        int best=-1;for(Models.CandidateScore candidate:candidates){compare(candidate,photo,profile,id);candidate.webScore=webScore(candidate);
+            candidate.physicalIdentifierScore=candidate.identifierScore;candidate.printedTextScore=candidate.textScore;
+            candidate.catalogScore=candidate.webScore;candidate.webEvidenceScore=candidate.webScore;
+            candidate.conflictPenalty=candidate.hardRejected?100:candidate.contradictions.size()*12;
+            candidate.missingFieldPenalty=countMissing(candidate)*4;candidate.totalScore=combined(candidate);
             if(candidate.hardRejected){result.rejected.add(candidate);continue;}if(candidate.webScore>best){result.runnerUp=result.accepted;best=candidate.webScore;result.accepted=candidate;}else if(result.runnerUp==null||candidate.webScore>result.runnerUp.webScore)result.runnerUp=candidate;}
         for(Models.CandidateScore c:result.rejected)result.conflicts.addAll(c.hardViolations);
         if(result.accepted!=null&&result.runnerUp!=null&&materiallyDifferent(result.accepted,result.runnerUp,profile)
@@ -48,7 +52,7 @@ final class CatalogCandidateMatcher {
             else matchText(c,"edition",p.edition,webEdition,true,false);
             matchCopyright(c,p.copyrightYear,c.copyrightYear,c.year);matchSeason(c,p.year,c.year,true);}
         else if(profile==IdentityProfileEngine.Profile.SEALED_TRADING_CARD_PRODUCT){matchSeason(c,p.year,c.year,true);matchText(c,"sport",p.sport,c.sport,true,false);
-            matchText(c,"configuration",p.configuration,c.configuration,true,false);matchText(c,"format",p.format,c.format,true,false);
+            matchText(c,"configuration",p.configuration,c.configuration,true,false);matchText(c,"format",p.format,c.format,false,false);
             matchText(c,"packageCount",p.packageCount,c.packageCount,true,false);matchText(c,"cardsPerPack",p.cardsPerPack,c.cardsPerPack,true,false);}
         requireAnchors(c,profile,p);
     }
@@ -80,7 +84,7 @@ final class CatalogCandidateMatcher {
     }
     private static int webScore(Models.CandidateScore c){if(c.hardRejected)return 0;int authority=authority(c.sourceAuthority),matched=0;for(String x:c.hardMatches)matched+=x.startsWith("weight=")?parse(x.substring(7)):0;
         return clamp((authority*35+Math.min(100,matched)*65)/100);}
-    private static int combined(Models.CandidateScore c){if(c.hardRejected)return 0;return clamp((c.webScore*55+c.textScore*15+c.layoutScore*15+c.identifierScore*15)/100);}
+    private static int combined(Models.CandidateScore c){if(c.hardRejected)return 0;return clamp((c.webEvidenceScore*35+c.catalogScore*20+c.printedTextScore*15+c.layoutScore*15+c.physicalIdentifierScore*15)/100-c.conflictPenalty-c.missingFieldPenalty);}
     private static int authority(String a){String x=canon(a);if(x.contains("OFFICIAL"))return 100;if(x.contains("CHECKLIST")||x.contains("AUTHORITATIVE"))return 92;if(x.contains("DATABASE")||x.contains("SPECIALIST"))return 82;if(x.contains("MARKET"))return 55;if(x.contains("SNIPPET"))return 25;return 70;}
     private static void matched(Models.CandidateScore c,String value,int weight){c.hardMatches.add(value);c.hardMatches.add("weight="+weight);c.hardMatchWeight+=weight;}
     private static void missing(Models.CandidateScore c,String value){c.candidateFacts.add("not_applicable_or_unreported="+value);}
@@ -97,6 +101,7 @@ final class CatalogCandidateMatcher {
     private static String identifier(String x){return canon(x).replace(" ","");}
     private static int year(String x){java.util.regex.Matcher m=java.util.regex.Pattern.compile("(?:19|20)\\d{2}").matcher(clean(x));return m.find()?Integer.parseInt(m.group()):0;}
     private static int parse(String x){try{return Integer.parseInt(x);}catch(Exception e){return 0;}}
+    private static int countMissing(Models.CandidateScore c){int n=0;for(String x:c.candidateFacts)if(x.startsWith("not_applicable_or_unreported="))n++;return Math.min(10,n);}
     private static int clamp(int x){return Math.max(0,Math.min(100,x));}
     private static String canon(String x){return Normalizer.normalize(clean(x),Normalizer.Form.NFD).replaceAll("\\p{M}+","").toUpperCase(Locale.ROOT).replaceAll("[^A-Z0-9]+"," ").trim();}
     private static boolean empty(String x){return clean(x).isEmpty();}private static String clean(String x){return x==null?"":x.trim().replaceAll("\\s+"," ");}

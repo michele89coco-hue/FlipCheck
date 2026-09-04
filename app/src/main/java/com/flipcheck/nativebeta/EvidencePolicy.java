@@ -193,7 +193,7 @@ final class EvidencePolicy {
         }
         if(id.finalState==null)FinalIdentityDecisionEngine.freeze(id,"public_status");
         if("CONFLICTED".equals(id.identityStatus)||"NUMBER_CONFLICT".equals(id.exactIdentityStatus)){
-            return "CONFLICTED · NUMERO DA VERIFICARE";
+            return DocumentedConflictPolicy.hasHardConflict(id)?"CONFLICTED · IDENTIFICATORI INCOMPATIBILI":"PROBABLE · ATTRIBUTO DA VERIFICARE";
         }
         boolean exact="CATALOG_MATCHED".equals(id.exactIdentityStatus)||"PHYSICALLY_VERIFIED".equals(id.exactIdentityStatus);
         if("CONFIRMED".equals(id.coreIdentityStatus)&&!exact){

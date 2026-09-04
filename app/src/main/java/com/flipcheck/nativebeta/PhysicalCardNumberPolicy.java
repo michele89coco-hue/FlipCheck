@@ -80,8 +80,9 @@ final class PhysicalCardNumberPolicy {
             id.cardNumberVerified = n.cardNumberVerified;
             id.cardNumberVerificationStatus = status(verified, competing, conflictResolved);
         }
-        id.physicalCardNumberOrigin = "photo:" + (verified ? "verified" : "candidate") + ":"
-                + (winner.bestDirect==null?"local_ocr_object_text":winner.bestDirect.location) + ":" + (winner.collector ? "collector_number" : "card_number");
+        id.physicalCardNumberOrigin = (winner.bestDirect==null?EvidenceLedger.LOCAL_OCR:winner.bestDirect.origin)
+                + ":" + (verified ? "verified" : "candidate") + ":"
+                + (winner.bestDirect==null?"object_text":winner.bestDirect.location) + ":" + (winner.collector ? "collector_number" : "card_number");
         n.identifierStatus = status(verified, competing, conflictResolved);
         n.identifierAlternatives.clear();
         n.identifierAlternatives.addAll(alternatives);
@@ -93,6 +94,7 @@ final class PhysicalCardNumberPolicy {
             if(catalogSupersedesUnverified)addOnce(id.observedEvidence,"unverified_photo_identifier_not_promoted="+winner.value+"; catalog_matched_alternative_preserved");
         }
         id.numberHypotheses = hypotheses(grouped);
+        DocumentedConflictPolicy.reconcile(id);
         PhotographicFactNormalizer.syncDebug(id, n);
     }
 

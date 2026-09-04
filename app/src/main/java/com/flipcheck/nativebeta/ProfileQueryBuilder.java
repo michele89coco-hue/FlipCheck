@@ -27,6 +27,11 @@ final class ProfileQueryBuilder {
             id.queryFieldsExcluded="ratings,statistics,jerseyNumber,graphicNumber,activationCode,unprovedParallel,featuredSubjects";
             return join("sports card",t.brand,t.mainSet,t.family,t.insertSubset,t.designFamily,t.year,t.subject,candidate,variant,t.parallelFamily,t.printRun);
         }
+        if(IdentityProfileEngine.electronics(p)){
+            id.queryFieldsIncluded="objectType,observedBrand,brandMark,controlLayout,shortcutButtons,navigationLayout,numericKeypad,voiceControl,modelCode";
+            id.queryFieldsExcluded="buttonNumbers,uiOverlay,marketText,unlocalizedBrandHypothesis";
+            return join(t.productType,t.brand,t.brandMark,t.controlLayout,t.shortcutButtons,t.navigationLayout,t.numericKeypad,t.voiceControl,t.modelCode);
+        }
         id.queryFieldsIncluded="brand,modelCode,productFamily,distinctiveDesign";
         id.queryFieldsExcluded="featuredSubjects,stats,hp,activationCode,ocrNoise";
         return join(t.brand,t.family,t.modelCode,t.design);
@@ -49,6 +54,7 @@ final class ProfileQueryBuilder {
         else if(p==IdentityProfileEngine.Profile.SPORTS_CARD){String code=firstClean(t.cardNumber,id.cardNumberCandidate);
             add(q,join(t.year,t.brand,t.mainSet,t.family,t.insertSubset,t.subject,code,"checklist"));add(q,join(t.year,t.mainSet,t.family,t.subject,t.team,"checklist"));add(q,join(t.brand,t.mainSet,t.family,t.subject,code));if(id.rareVariantPhysicalProof)add(q,join(t.subject,t.parallelFamily,t.color,t.printRun,t.serial));}
         else if(p==IdentityProfileEngine.Profile.SEALED_TRADING_CARD_PRODUCT){String commercial=commercialHierarchy(t);add(q,join(t.year,contains(commercial,t.brand)?"":t.brand,commercial,t.sport,t.configuration));add(q,join(t.year,contains(commercial,t.brand)?"":t.brand,commercial,t.format,"SKU"));add(q,join(t.year,contains(commercial,t.brand)?"":t.brand,commercial,"commercial format configuration"));}
+        else if(IdentityProfileEngine.electronics(p)){add(q,seed(id));add(q,join(t.productType,t.shortcutButtons,t.navigationLayout,t.brandMark));add(q,join(t.brand,t.productType,t.modelCode));}
         else {add(q,seed(id));add(q,discovery(id));}
         while(q.size()>4)q.remove(q.size()-1);
         id.exactResolutionQueries.clear();id.exactResolutionQueries.addAll(q);return q;}

@@ -1,9 +1,9 @@
-name: FlipCheck v1.30 canonical APK
+name: FlipCheck v1.31 canonical APK
 
 on:
   push:
     branches:
-      - codex/v1.30-tcg-physical-edition-resolution
+      - codex/v1.31-universal-evidence-closure-recovery
   pull_request:
     branches:
       - codex/v1.29-universal-catalog-evidence
@@ -22,7 +22,7 @@ jobs:
       FLIPCHECK_KEYSTORE_PASSWORD: ${{ secrets.FLIPCHECK_KEYSTORE_PASSWORD }}
       FLIPCHECK_KEY_ALIAS: ${{ secrets.FLIPCHECK_KEY_ALIAS }}
       FLIPCHECK_KEY_PASSWORD: ${{ secrets.FLIPCHECK_KEY_PASSWORD }}
-      # Stable repository key used by v1.28, v1.29 and v1.30.
+      # Stable repository key used by v1.28 through v1.31.
       EXPECTED_CERT_SHA256: d4d02478ea31cb6bd83228047e9accd7dfb191ed991a4c8e8c06a228e54614c7
     steps:
       - uses: actions/checkout@v4
@@ -55,26 +55,26 @@ jobs:
           APK=app/build/outputs/apk/debug/app-debug.apk
           OUT=artifact
           mkdir -p "$OUT"
-          cp "$APK" "$OUT/FlipCheck-v1.30.apk"
-          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose --print-certs "$OUT/FlipCheck-v1.30.apk" | tee "$OUT/apksigner-report.txt"
+          cp "$APK" "$OUT/FlipCheck-v1.31.apk"
+          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose --print-certs "$OUT/FlipCheck-v1.31.apk" | tee "$OUT/apksigner-report.txt"
           CERT=$(sed -n 's/^Signer #1 certificate SHA-256 digest: //p' "$OUT/apksigner-report.txt" | tr -d ':' | tr '[:upper:]' '[:lower:]')
           test "$CERT" = "$EXPECTED_CERT_SHA256"
-          "$ANDROID_HOME/build-tools/36.0.0/aapt" dump badging "$OUT/FlipCheck-v1.30.apk" | tee "$OUT/apk-analyzer-report.txt"
-          grep -q "package: name='com.flipcheck.beta.nativev098.clean.debug' versionCode='134' versionName='1.30-tcg-physical-edition-resolution'" "$OUT/apk-analyzer-report.txt"
-          unzip -l "$OUT/FlipCheck-v1.30.apk" | tee -a "$OUT/apk-analyzer-report.txt"
-          sha256sum "$OUT/FlipCheck-v1.30.apk" | tee "$OUT/FlipCheck-v1.30.sha256"
+          "$ANDROID_HOME/build-tools/36.0.0/aapt" dump badging "$OUT/FlipCheck-v1.31.apk" | tee "$OUT/apk-analyzer-report.txt"
+          grep -q "package: name='com.flipcheck.beta.nativev098.clean.debug' versionCode='135' versionName='1.31-universal-evidence-closure-recovery'" "$OUT/apk-analyzer-report.txt"
+          unzip -l "$OUT/FlipCheck-v1.31.apk" | tee -a "$OUT/apk-analyzer-report.txt"
+          sha256sum "$OUT/FlipCheck-v1.31.apk" | tee "$OUT/FlipCheck-v1.31.sha256"
           printf 'UPDATE_COMPATIBLE_WITH_V1_29=true\nV1_29_AND_V1_30_CERT_SHA256=%s\n' "$CERT" > "$OUT/signing-compatibility.txt"
           cp app/build/test-results/testDebugUnitTest/*.xml "$OUT/"
           java -version 2> "$OUT/build-environment.txt"
           ./gradlew --version >> "$OUT/build-environment.txt"
-          printf 'compileSdk=36\ntargetSdk=36\nbuildTools=36.0.0\nversionCode=134\nversionName=1.30-tcg-physical-edition-resolution\ncommit=%s\n' "$GITHUB_SHA" >> "$OUT/build-environment.txt"
+          printf 'compileSdk=36\ntargetSdk=36\nbuildTools=36.0.0\nversionCode=135\nversionName=1.31-universal-evidence-closure-recovery\ncommit=%s\n' "$GITHUB_SHA" >> "$OUT/build-environment.txt"
           if [ -f app/build/reports/lint-results-debug.html ]; then
             cp app/build/reports/lint-results-debug.html artifact/
           fi
 
       - uses: actions/upload-artifact@v4
         with:
-          name: FlipCheck-v1.30-canonical-${{ github.sha }}
+          name: FlipCheck-v1.31-canonical-${{ github.sha }}
           path: artifact/
           if-no-files-found: error
           retention-days: 30

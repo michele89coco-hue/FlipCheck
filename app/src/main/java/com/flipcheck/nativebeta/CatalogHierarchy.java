@@ -40,10 +40,13 @@ final class CatalogHierarchy {
     }
 
     static List<String> axes(Models.CandidateScore c){List<String>x=new ArrayList<>();add(x,c.family);add(x,c.mainSet);add(x,c.subset);add(x,c.designFamily);add(x,c.subSeries);add(x,c.model);x.addAll(c.distinguishingTokens);return x;}
-    static boolean compatible(String a,String b){String x=canon(a),y=canon(b);return !x.isEmpty()&&!y.isEmpty()&&(x.equals(y)||x.contains(y)||y.contains(x));}
+    static boolean compatible(String a,String b){String x=canon(a),y=canon(b);if(x.isEmpty()||y.isEmpty())return false;
+        if(x.equals(y)||x.contains(y)||y.contains(x))return true;
+        java.util.Set<String> xs=tokens(x),ys=tokens(y);return xs.equals(ys)||xs.containsAll(ys)||ys.containsAll(xs);}
     static boolean conflict(String a,String b){return !empty(a)&&!empty(b)&&!compatible(a,b);}
     private static void add(List<String>x,String v){if(!empty(v))x.add(v);}
-    private static String canon(String x){return Normalizer.normalize(clean(x),Normalizer.Form.NFD).replaceAll("\\p{M}+","").toUpperCase(Locale.ROOT).replaceAll("[^A-Z0-9]+"," ").trim();}
+    private static String canon(String x){return Normalizer.normalize(clean(x),Normalizer.Form.NFD).replaceAll("\\p{M}+","").toUpperCase(Locale.ROOT).replaceAll("202([0-9])[/ ]([0-9]{2})","202$1-$2").replaceAll("[^A-Z0-9]+"," ").trim();}
+    private static java.util.Set<String> tokens(String x){java.util.Set<String>s=new java.util.LinkedHashSet<>();for(String raw:x.split(" ")){String t=raw.equals("UPDATES")?"UPDATE":raw;if(t.equals("SERIES")||t.isEmpty())continue;s.add(t);}return s;}
     private static boolean empty(String x){return clean(x).isEmpty();}
     private static String clean(String x){return x==null?"":x.trim().replaceAll("\\s+"," ");}
 }

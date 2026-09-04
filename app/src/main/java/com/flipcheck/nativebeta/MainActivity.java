@@ -874,9 +874,10 @@ public class MainActivity extends Activity {
         if(!valueOrEmpty(id.variantStatus).isEmpty()&&!"NOT_OBSERVED".equals(id.variantStatus))p.addView(line("Variante fisica",humanState(id.variantStatus)));
         if(!valueOrEmpty(id.physicalCardNumber).isEmpty())p.addView(line(id.physicalCollectorNumber.isEmpty()?"Numero carta":"Collector number",
                 id.physicalCardNumber+(PhysicalCardNumberPolicy.verifiedNumber(id)?" · verificato":" · da verificare")));
-        if(!valueOrEmpty(id.sourceConfirmedCatalogNumber).isEmpty()&&id.catalogVerified
-                &&(valueOrEmpty(id.physicalCardNumber).isEmpty()||!id.sourceConfirmedCatalogNumber.equalsIgnoreCase(id.physicalCardNumber)))
-            p.addView(line("Numero catalogo",id.sourceConfirmedCatalogNumber+" · verificato foto + catalogo"));
+        if(!valueOrEmpty(id.sourceConfirmedCatalogNumber).isEmpty()&&id.catalogVerified){
+            String provenance="PHOTO_PLUS_CATALOG".equals(id.combinedVerification)?" · verificato foto + catalogo":" · verificato catalogo";
+            p.addView(line("Numero catalogo",id.sourceConfirmedCatalogNumber+provenance));
+        }
         if(!valueOrEmpty(id.language).isEmpty())p.addView(line("Lingua",id.language));
         if(!valueOrEmpty(id.edition).isEmpty())p.addView(line("Edizione",id.edition+("CONFIRMED".equals(id.exactEditionStatus)?" · confermata dalla foto":" · da verificare")));
         else if(TcgFrontIdentityPolicy.isTcg(id))p.addView(line("Edizione","da verificare"));
@@ -886,9 +887,11 @@ public class MainActivity extends Activity {
         if(!valueOrEmpty(id.finish).isEmpty())p.addView(line("Finitura",id.finish));
         if(!valueOrEmpty(id.sourceConfirmedVariant).isEmpty()&&id.catalogVerified)p.addView(line("Variante catalogo",id.sourceConfirmedVariant+" · da verificare fisicamente"));
         if(ProfileQueryBuilder.isSealed(id)){
-            if(!valueOrEmpty(id.sourceConfirmedFormat).isEmpty())p.addView(line("Formato del box",id.sourceConfirmedFormat+" · verificato foto + catalogo"));
+            if(!valueOrEmpty(id.sourceConfirmedFormat).isEmpty())p.addView(line("Formato del box",id.sourceConfirmedFormat+(valueOrEmpty(id.sealedFormat).isEmpty()?" · verificato catalogo":" · verificato foto + catalogo")));
             else if(valueOrEmpty(id.sealedFormat).isEmpty())p.addView(line("Formato del box","da verificare"));
         }
+        if(IdentityProfileEngine.electronics(IdentityProfileEngine.profile(id,IdentityProfileEngine.tuple(id)))
+                &&"TO_VERIFY".equals(id.exactModelStatus))p.addView(line("Modello esatto","da verificare"));
         if (id.priceConfidence > 0) {
             p.addView(line("Confidenza prezzo", id.priceConfidence + "%"));
         }
@@ -1213,6 +1216,12 @@ public class MainActivity extends Activity {
                 +" · physical_collector_number="+valueOrEmpty(id.physicalCollectorNumber)
                 +" · physical_serial="+valueOrEmpty(id.physicalSerial)
                 +" · origin="+valueOrEmpty(id.physicalSerialOrigin),12,MUTED,false));
+        panel.addView(text("observed_brand="+valueOrEmpty(id.observedBrand)
+                +" · inferred_brand="+valueOrEmpty(id.inferredBrand)
+                +" · catalog_brand="+valueOrEmpty(id.catalogBrand)
+                +" · brand_status="+valueOrEmpty(id.brandStatus)
+                +" · number_agreement="+id.numberAgreement
+                +" · combined_verification="+valueOrEmpty(id.combinedVerification),11,MUTED,false));
         panel.addView(text("source_confirmed_catalog_number="
                 +valueOrEmpty(id.sourceConfirmedCatalogNumber)
                 +" · origin="+valueOrEmpty(id.sourceConfirmedCatalogNumberOrigin),12,MUTED,false));

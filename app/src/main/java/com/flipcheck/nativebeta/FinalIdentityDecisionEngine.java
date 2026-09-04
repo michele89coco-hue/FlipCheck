@@ -12,14 +12,16 @@ final class FinalIdentityDecisionEngine {
         IdentityProfileEngine.Assessment a=IdentityProfileEngine.assess(id);HierarchicalConfidencePolicy.apply(id,a);
         for(int i=id.consistencyInvariantErrors.size()-1;i>=0;i--)if(id.consistencyInvariantErrors.get(i).startsWith("FAIL:"))id.consistencyInvariantErrors.remove(i);
         id.consistencyInvariantWarnings.clear();List<String> critical=new ArrayList<>();
-        if(!safe(id.numberConflicts).isEmpty())critical.add("IDENTIFIER_CONFLICT:"+id.numberConflicts);
+        boolean documentedIdentifierConflict=DocumentedConflictPolicy.reconcile(id);
+        if(documentedIdentifierConflict)critical.add("IDENTIFIER_CONFLICT:"+id.numberConflicts);
         if("REJECTED_HARD_CONFLICT".equals(id.catalogCompatibilityStatus))critical.add("WEB_CANDIDATE_INCOMPATIBLE:"+id.catalogConflicts);
-        if(safe(id.factsRejectedWithReason).contains("relevant_alias_rejected"))critical.add("UNKNOWN_IDENTIFYING_ALIAS");
+        if(safe(id.factsRejectedWithReason).contains("relevant_alias_rejected"))id.consistencyInvariantWarnings.add("UNMAPPED_RELEVANT_ALIAS_RETAINED_FOR_TRACE");
         if(id.catalogVerified&&safe(id.catalogMatchedFields).isEmpty())critical.add("CATALOG_MATCH_WITHOUT_MATCHED_FIELDS");
         if("PASSED".equals(id.disproofStatus)&&("NOT_RUN".equals(id.webStatus)||"FAILED".equals(id.webStatus)))critical.add("DISPROOF_PASSED_WITHOUT_WEB");
         if("CATALOG_MATCHED".equals(id.exactIdentityStatus)&&(!id.catalogVerified||!"PASSED".equals(id.disproofStatus)))critical.add("EXACT_MATCH_WITHOUT_CATALOG_DISPROOF");
         if(id.closureResult&&safe(id.closureLevel).isEmpty())critical.add("CLOSURE_WITHOUT_LEVEL");
         IdentityProfileEngine.PhotoTuple t=a.tuple;IdentityProfileEngine.Profile p=a.profile;
+        updateProvenanceState(id,t);
         id.graphicNumber=t.graphicNumber;id.attackDamage=t.attackDamage;id.cardType=t.cardType;id.copyrightYear=t.copyrightYear;
         id.language=t.language;id.evolutionStage=t.evolutionStage;id.hpOrPv=t.hp;id.attackNames=t.attacks.toString();
         id.finish=t.finish;id.sealedFormat=t.format;id.productConfiguration=t.configuration;id.productType=t.productType;
@@ -47,6 +49,12 @@ final class FinalIdentityDecisionEngine {
             else if(id.catalogVerified&&!safe(id.sourceConfirmedFormat).isEmpty())id.formatStatus="FORMAT_CATALOG_MATCHED";
             else id.formatStatus="FORMAT_PENDING";
             id.exactIdentityStatus=id.catalogVerified&&"PASSED".equals(id.disproofStatus)&&!"FORMAT_PENDING".equals(id.formatStatus)?"CATALOG_MATCHED":"FORMAT_PENDING";
+            id.commercialFormatStatus="FORMAT_PENDING".equals(id.formatStatus)?"TO_VERIFY":"CONFIRMED";
+            id.skuStatus=safe(t.modelCode).isEmpty()?"TO_VERIFY":"CONFIRMED";
+        }
+        else if(IdentityProfileEngine.electronics(p)){
+            id.exactModelStatus=safe(t.modelCode).isEmpty()?"TO_VERIFY":"CONFIRMED";
+            id.exactIdentityStatus=safe(t.modelCode).isEmpty()?"MODEL_TO_VERIFY":id.catalogVerified?"CATALOG_MATCHED":"PHYSICALLY_VERIFIED";
         }
         else if((p==IdentityProfileEngine.Profile.SPORTS_CARD||p==IdentityProfileEngine.Profile.TCG)&&id.catalogVerified&&"PASSED".equals(id.disproofStatus)&&(!safe(id.sourceConfirmedCatalogNumber).isEmpty()||!safe(id.sourceConfirmedProductLine).isEmpty()))id.exactIdentityStatus=p==IdentityProfileEngine.Profile.TCG&&safe(finalFamily).isEmpty()?"SET_UNRESOLVED":"CATALOG_MATCHED";
         else if((p==IdentityProfileEngine.Profile.SPORTS_CARD||p==IdentityProfileEngine.Profile.TCG)&&"PHYSICALLY_VERIFIED".equals(id.identifierStatus))id.exactIdentityStatus=p==IdentityProfileEngine.Profile.TCG&&safe(finalFamily).isEmpty()?"SET_UNRESOLVED":"PHYSICALLY_VERIFIED";
@@ -58,6 +66,7 @@ final class FinalIdentityDecisionEngine {
         else if(id.rareVariantPhysicalProof)id.variantStatus="VARIANT_PENDING";else if(id.catalogVerified&&!safe(t.finish).isEmpty()&&variantCompatible(t.finish,id.sourceConfirmedVariant))id.variantStatus="VARIANT_CONFIRMED";else if(!safe(t.finish).isEmpty())id.variantStatus="FINISH_OBSERVED";
         else if(id.catalogVerified&&!safe(id.sourceConfirmedVariant).isEmpty())id.variantStatus="CATALOG_REPORTED";else id.variantStatus="NOT_OBSERVED";
         if(p!=IdentityProfileEngine.Profile.TCG){id.exactEditionStatus="NOT_APPLICABLE";id.finishStatus=safe(t.finish).isEmpty()?"NOT_OBSERVED":"CONFIRMED";}
+        id.collectorNumberStatus=id.identifierStatus;
         id.exactCatalogStatus=id.exactIdentityStatus;
         id.copyIdentifierStatus=safe(id.physicalSerial).isEmpty()?"NOT_OBSERVED":"PHYSICALLY_VERIFIED";
         if("VARIANT_CONFIRMED".equals(id.variantStatus))id.closureLevel="VARIANT";
@@ -67,11 +76,11 @@ final class FinalIdentityDecisionEngine {
         id.coreIdentityConfidence=id.mainIdentityConfidence;id.exactIdentityConfidence=exactConfidence(id);
         if(("UNRESOLVED".equals(id.exactIdentityStatus)||id.exactIdentityStatus.endsWith("_UNRESOLVED")||"CORE_IDENTIFIED".equals(id.exactIdentityStatus)||"EXACT_IDENTITY_PENDING_WEB".equals(id.exactIdentityStatus))&&id.exactIdentityConfidence>=100)critical.add("UNRESOLVED_EXACT_IDENTITY_AT_100");
         if("VARIANT_CONFIRMED".equals(id.variantStatus)&&id.variantConfidence<=0)critical.add("CONFIRMED_VARIANT_WITH_ZERO_CONFIDENCE");
-        if("CONFLICTED".equals(id.identityStatus)&&safe(id.numberConflicts).isEmpty()&&safe(id.catalogConflicts).isEmpty())critical.add("CONFLICTED_WITHOUT_HARD_ANCHOR_CONFLICT");
+        if("CONFLICTED".equals(id.identityStatus)&&!documentedIdentifierConflict&&safe(id.catalogConflicts).isEmpty())id.identityStatus="UNRESOLVED";
 
         boolean technical="TECHNICAL_ERROR".equals(id.decision)||"VISION_TECHNICAL".equals(id.pipelineFailureDomain);
         boolean pass=critical.isEmpty();if(technical){id.identityConfirmed=false;id.marketReady=false;id.identityStatus="UNRESOLVED";id.decision="TECHNICAL_ERROR";id.overallStatus="TECHNICAL_ERROR";id.nextPhotoRequest="";id.requestedPhotoReason="";id.finalDecisionReason="technical_failure_preserved; stage="+safe(stage);}
-        else if(!pass){if(!safe(id.numberConflicts).isEmpty()||safe(id.catalogConflicts).contains("IDENTIFIER_CONFLICT")){id.identifierStatus="CONFLICTED";id.exactIdentityStatus="NUMBER_CONFLICT";}
+        else if(!pass){if(documentedIdentifierConflict||safe(id.catalogConflicts).contains("IDENTIFIER_CONFLICT")){id.identifierStatus="CONFLICTED";id.exactIdentityStatus="NUMBER_CONFLICT";}
             id.identityConfirmed=false;id.marketReady=false;id.identityStatus="CONFLICTED";id.decision="CONFLICTED";
             id.overallStatus="CONFLICTED";id.hierarchicalStatus="CONFLICTED";if("CONFIRMED".equals(id.coreIdentityStatus))id.coreIdentityStatus="PROBABLE";
             id.finalDecisionReason="critical_invariants="+critical+"; stage="+safe(stage);}
@@ -93,6 +102,7 @@ final class FinalIdentityDecisionEngine {
         id.postWebConflicts=id.catalogConflicts;id.finalState=new FinalIdentityState(id,title,pass&&id.identityConfirmed);return id.finalState;}
 
     private static String composeTitle(Models.Identification id,IdentityProfileEngine.PhotoTuple t,IdentityProfileEngine.Profile p){if(p==IdentityProfileEngine.Profile.SEALED_TRADING_CARD_PRODUCT)return CanonicalIdentityComposer.sealedTitle(id);
+        if(IdentityProfileEngine.electronics(p))return join(t.brand,t.productType.isEmpty()?"Telecomando per TV":t.productType,t.modelPhysical?t.modelCode:"");
         String brand=t.brand,family=displayFamily(id,t),year=id.catalogVerified&&!safe(id.sourceConfirmedReleaseYear).isEmpty()?SeasonNormalizer.normalize(id.sourceConfirmedReleaseYear):SeasonNormalizer.normalize(t.year);
         String number="";if("PHYSICALLY_VERIFIED".equals(id.identifierStatus))number=t.verifiedCardNumber;else if(id.catalogVerified)number=id.sourceConfirmedCatalogNumber;
         if(p==IdentityProfileEngine.Profile.TCG)return join(startsWith(family,brand)?"":brand,family,t.subject,number.isEmpty()?"":"#"+number,
@@ -108,7 +118,18 @@ final class FinalIdentityDecisionEngine {
     private static boolean hasOcrNumber(NormalizedPhotoIdentity n){for(NormalizedPhotoIdentity.Fact f:n.facts(CanonicalFieldKey.CARD_NUMBER_CANDIDATE))if(f.quality==NormalizedPhotoIdentity.Quality.LOCAL_OCR_HINT)return true;for(NormalizedPhotoIdentity.Fact f:n.facts(CanonicalFieldKey.COLLECTOR_NUMBER_CANDIDATE))if(f.quality==NormalizedPhotoIdentity.Quality.LOCAL_OCR_HINT)return true;return false;}
     private static boolean physicalIndependent(NormalizedPhotoIdentity n){return independent(n,CanonicalFieldKey.CARD_NUMBER_CANDIDATE)||independent(n,CanonicalFieldKey.COLLECTOR_NUMBER_CANDIDATE);}
     private static boolean independent(NormalizedPhotoIdentity n,CanonicalFieldKey key){java.util.Set<String> groups=new java.util.LinkedHashSet<>();boolean ocr=false;for(NormalizedPhotoIdentity.Fact f:n.facts(key)){if(f.quality==NormalizedPhotoIdentity.Quality.LOCAL_OCR_HINT)ocr=true;if(f.quality==NormalizedPhotoIdentity.Quality.DIRECT_PHOTO_OBSERVATION)groups.add(f.evidenceType+"@"+f.imageIndex);}return groups.size()>=2||(groups.size()>=1&&ocr);}
-    private static boolean photoCore(IdentityProfileEngine.Profile p,IdentityProfileEngine.PhotoTuple t){if(p==IdentityProfileEngine.Profile.SEALED_TRADING_CARD_PRODUCT)return !safe(t.brand).isEmpty()&&!safe(t.family).isEmpty()&&(!safe(t.year).isEmpty()||!safe(t.productType).isEmpty());if(p==IdentityProfileEngine.Profile.TCG)return !safe(t.brand).isEmpty()&&!safe(t.subject).isEmpty()&&t.frontComplete;if(p==IdentityProfileEngine.Profile.SPORTS_CARD)return !safe(t.brand).isEmpty()&&!safe(t.family).isEmpty()&&!safe(t.subject).isEmpty();return t.modelPhysical;}
+    private static boolean photoCore(IdentityProfileEngine.Profile p,IdentityProfileEngine.PhotoTuple t){if(p==IdentityProfileEngine.Profile.SEALED_TRADING_CARD_PRODUCT)return !safe(t.brand).isEmpty()&&!safe(t.family).isEmpty()&&(!safe(t.year).isEmpty()||!safe(t.productType).isEmpty());if(p==IdentityProfileEngine.Profile.TCG)return !safe(t.brand).isEmpty()&&!safe(t.subject).isEmpty()&&t.frontComplete;if(p==IdentityProfileEngine.Profile.SPORTS_CARD)return !safe(t.brand).isEmpty()&&!safe(t.family).isEmpty()&&!safe(t.subject).isEmpty();if(IdentityProfileEngine.electronics(p))return !safe(t.brand).isEmpty()&&(t.modelPhysical||t.layoutDistinctive&&(!safe(t.controlLayout).isEmpty()||!safe(t.shortcutButtons).isEmpty()||!safe(t.brandMark).isEmpty()));return t.modelPhysical;}
+    private static void updateProvenanceState(Models.Identification id,IdentityProfileEngine.PhotoTuple t){
+        id.physicalReleaseYear=t.year;id.statisticsSeason=t.statisticalSeason;
+        Models.EvidenceFact brand=EvidenceLedger.bestPhotoFact(id,"brand","manufacturer","publisher","brand_mark");
+        if(brand!=null&&!safe(brand.location).isEmpty()){id.observedBrand=brand.value;id.brandStatus="CONFIRMED";}
+        else if(!safe(t.brand).isEmpty()){id.inferredBrand=t.brand;id.brandStatus="HYPOTHESIS";}
+        String physical=first(t.collectorNumber,t.cardNumber,id.physicalCollectorNumber,id.physicalCardNumber);
+        String catalog=safe(id.sourceConfirmedCatalogNumber);id.numberAgreement=!physical.isEmpty()&&!catalog.isEmpty()&&canon(physical).equals(canon(catalog));
+        boolean photoNumber=false;for(Models.EvidenceFact f:id.evidenceLedger)if(f!=null&&EvidenceLedger.isPixelOrigin(f.origin)
+                &&(f.key.contains("card_number")||f.key.contains("collector_number"))&&canon(f.value).equals(canon(physical))&&!safe(f.location).isEmpty()){photoNumber=true;break;}
+        id.combinedVerification=photoNumber&&id.numberAgreement?"PHOTO_PLUS_CATALOG":photoNumber?"PHOTO_ONLY":!catalog.isEmpty()?"CATALOG_ONLY":"NONE";
+    }
     private static boolean photoPartialCore(IdentityProfileEngine.Profile p,IdentityProfileEngine.PhotoTuple t){return !safe(t.brand).isEmpty()&&(!safe(t.family).isEmpty()||!safe(t.subject).isEmpty());}
     private static boolean tokensPreserved(String source,String title){String hay=" "+canon(title)+" ";for(String token:canon(source).split(" "))if(token.length()>2&&!hay.contains(" "+token+" "))return false;return true;}
     private static boolean tokensPreserved(java.util.List<String> source,String title){for(String value:source)if(!tokensPreserved(value,title))return false;return true;}

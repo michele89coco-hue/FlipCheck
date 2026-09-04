@@ -10,11 +10,11 @@ final class PhotographicFactNormalizer {
         NormalizedPhotoIdentity out=new NormalizedPhotoIdentity();if(id==null)return out;
         out.categoryHint=clean(id.categoryKey)+" "+clean(id.category);out.normalizationStage=clean(stage);
         for(Models.EvidenceFact raw:id.evidenceLedger){if(raw==null||unresolved(raw.value))continue;
-            boolean photographic=EvidenceLedger.PHOTO.equals(raw.origin)||EvidenceLedger.LOCAL_OCR.equals(raw.origin)
+            boolean photographic=EvidenceLedger.isPixelOrigin(raw.origin)||EvidenceLedger.LOCAL_OCR.equals(raw.origin)
                     ||EvidenceLedger.USER_HINT.equals(raw.origin);
             boolean sourced=EvidenceLedger.WEB_CATALOG.equals(raw.origin)||EvidenceLedger.WEB_MARKET.equals(raw.origin);
             if(!photographic&&!sourced)continue;
-            if((EvidenceLedger.PHOTO.equals(raw.origin)||EvidenceLedger.LOCAL_OCR.equals(raw.origin))&&!TextScopePolicy.primaryObjectEvidence(raw)){
+            if((EvidenceLedger.isPixelOrigin(raw.origin)||EvidenceLedger.LOCAL_OCR.equals(raw.origin))&&!TextScopePolicy.primaryObjectEvidence(raw)){
                 addOnce(out.rejectedFacts,"external_text_excluded:"+raw.key+"(scope="+TextScopePolicy.scope(raw)+")");continue;
             }
             CanonicalFieldKey aliasKey=CanonicalFieldKey.fromAlias(raw.key);
@@ -27,6 +27,10 @@ final class PhotographicFactNormalizer {
             }
             CanonicalFieldKey key=contextualKey(aliasKey,raw);
             if(key==CanonicalFieldKey.UNKNOWN)key=contextualKey(CanonicalFieldKey.fromAlias(raw.semanticRole),raw);
+            if((key==CanonicalFieldKey.BRAND||key==CanonicalFieldKey.MANUFACTURER||key==CanonicalFieldKey.PUBLISHER)
+                    &&EvidenceLedger.isPixelOrigin(raw.origin)&&!locatedBrandObservation(raw)){
+                if(id.inferredBrand.isEmpty())id.inferredBrand=raw.value;
+                addOnce(out.rejectedFacts,"unlocalized_brand_hypothesis:"+raw.value+"(role="+raw.semanticRole+")");continue;}
             if(key==CanonicalFieldKey.UNKNOWN){
                 String prefix=aliasKey!=CanonicalFieldKey.UNKNOWN?"recognized_alias_value_rejected:":relevant(raw)?"relevant_alias_rejected:":"alias_not_mapped:";
                 addOnce(out.rejectedFacts,prefix+raw.key+"(role="+raw.semanticRole+")");continue;}
@@ -112,6 +116,8 @@ final class PhotographicFactNormalizer {
     }
     private static void add(NormalizedPhotoIdentity out,boolean sourced,NormalizedPhotoIdentity.Fact fact){if(sourced)out.addSource(fact);else out.add(fact);}
     private static boolean relevant(Models.EvidenceFact f){String x=(clean(f.key)+" "+clean(f.semanticRole)).toLowerCase(Locale.ROOT);return x.matches(".*(?:brand|maker|publisher|set|series|product|subject|player|athlete|card|collector|serial|parallel|finish|edition|printing|format|sport|game|model|barcode|attack|move|hp|pv|year|season).*" );}
+    private static boolean locatedBrandObservation(Models.EvidenceFact f){String context=(clean(f.semanticRole)+" "+clean(f.evidenceType)+" "+clean(f.key)).toLowerCase(Locale.ROOT);
+        return !clean(f.location).isEmpty()&&context.matches(".*(?:brand|logo|manufacturer|publisher|maker|printed[_ ]text).*" );}
     private static void addOnce(java.util.List<String> out,String value){if(out.size()<60&&!out.contains(value))out.add(value);}
     private static boolean ambiguousAlternative(String value){String v=clean(value);if(!v.contains("/"))return false;
         if(v.matches(".*\\d\\s*/\\s*\\d.*")||v.matches(".*(?:19|20)\\d{2}\\s*/\\s*\\d{2,4}.*"))return false;

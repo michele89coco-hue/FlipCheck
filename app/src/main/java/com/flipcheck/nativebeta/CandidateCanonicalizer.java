@@ -104,7 +104,7 @@ final class CandidateCanonicalizer {
                 ((p==IdentityProfileEngine.Profile.SPORTS_CARD||p==IdentityProfileEngine.Profile.TCG)&&
                         (identityTextConflict(t.subject,c.subject)||(t.cardNumberVerified&&conflict(t.verifiedCardNumber,c.cardNumber))||conflict(t.language,c.language)||
                                 conflict(t.edition,first(c.edition,c.printing))||conflict(t.parallelFamily,first(c.parallelFamily,c.parallel))))||
-                (p==IdentityProfileEngine.Profile.SEALED_TRADING_CARD_PRODUCT&&conflict(t.format,c.format));
+                false;
     }
     private static boolean equivalent(Models.CandidateScore a,Models.CandidateScore b,
                                       IdentityProfileEngine.PhotoTuple t,IdentityProfileEngine.Profile p){
@@ -121,7 +121,7 @@ final class CandidateCanonicalizer {
             return true;
         }
         if(p==IdentityProfileEngine.Profile.SEALED_TRADING_CARD_PRODUCT)
-            return !conflict(first(t.format,a.format),first(t.format,b.format));
+            return true;
         return !conflict(first(t.modelCode,a.model),first(t.modelCode,b.model));
     }
     private static boolean materialConflict(String physical,String a,String b,Models.CandidateScore ca,Models.CandidateScore cb){

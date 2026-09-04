@@ -13,7 +13,12 @@ final class PhysicalIdentityRecovery {
     }
 
     static boolean eligible(Models.Identification id, Models.Usage usage) {
-        return TcgPhysicalEditionPolicy.needsFocusedPass(id,usage);
+        if(TcgPhysicalEditionPolicy.needsFocusedPass(id,usage))return true;
+        if(id==null||usage==null||usage.costUsd+RESERVED_VISUAL_PASS_USD>MAX_TOTAL_COST_USD||id.identityConfirmed)return false;
+        IdentityProfileEngine.PhotoTuple t=IdentityProfileEngine.tuple(id);
+        IdentityProfileEngine.Profile p=IdentityProfileEngine.profile(id,t);
+        return IdentityProfileEngine.electronics(p)&&(!id.discriminativeField.isEmpty()
+                ||t.brand.isEmpty()||t.modelCode.isEmpty()||!"CONFIRMED".equals(id.coreIdentityStatus));
     }
 
     static String prompt(Models.Identification id) {
@@ -66,9 +71,7 @@ final class PhysicalIdentityRecovery {
             // string array to direct physical evidence: only structured, localized facts
             // emitted by the focused Vision response are eligible for that strength.
             JSONArray focusedFacts=p.optJSONArray("evidence_facts");
-            EvidenceLedger.ingestPhotoObservation(id,new JSONObject()
-                    .put("evidence_facts",focusedFacts==null?new JSONArray():focusedFacts)
-                    .put("fields",fields));
+            EvidenceLedger.ingestFocusedObservation(id,focusedFacts==null?new JSONArray():focusedFacts);
         } catch (Exception ignored) {
             // Compatibility fields have already been retained above; a malformed
             // optional recovery ledger must never erase the first-pass evidence.

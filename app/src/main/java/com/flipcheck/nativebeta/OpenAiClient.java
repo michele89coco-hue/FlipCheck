@@ -77,9 +77,10 @@ class OpenAiClient {
                         + (retry ? "This is an automatic TECHNICAL retry after a truncated or invalid response. " : "")
                         + "Inspect every supplied image of the same foreground object. Return only the compact JSON schema. "
                         + "Do not repeat facts in narrative fields. Every observed fact belongs exactly once in facts with key, literal value, image, side, location, role and confidence. "
-                        + "Use category values sports_card, tcg, sealed_trading_card_product, smartphone, controller, appliance, tool, other_collectible. "
+                        + "Use category values sports_card, tcg, sealed_trading_card_product, consumer_electronics, consumer_electronics_accessory, television_remote_control, audio_video_remote_control, appliance_remote_control, smartphone, controller, appliance, tool, other_collectible. "
                         + "Keep card number, collector number, serial/print run, HP/PV, ratings, statistics, jersey number, year, activation code, MODEL/P-N and barcode semantically separate. "
                         + "People pictured on sealed packaging are featured_subject, never the product subject. Preserve discriminating product-line tokens. "
+                        + "For remote controls and electronics, emit product_type, brand_mark only for a located visible logo, control_layout, shortcut_buttons, navigation_layout, numeric_keypad and voice_control. Shape-only brand guesses belong only in candidates. "
                         + "Set content_sufficient=false only when the images themselves do not expose usable object evidence. "
                         + "Candidates are photographic hypotheses and must use only the supplied images.\n\n"
                         + prompt));

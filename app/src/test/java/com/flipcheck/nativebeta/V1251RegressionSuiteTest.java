@@ -15,6 +15,7 @@ public final class V1251RegressionSuiteTest {
         run("v128",()->V128ExactCatalogResolutionEndToEndRegressionTest.main(new String[0]));
         run("v129",()->V129UniversalCatalogEvidenceRegressionTest.main(new String[0]));
         run("v130",()->V130TcgPhysicalEditionResolutionRegressionTest.main(new String[0]));
+        run("v131",()->V131UniversalEvidenceClosureRecoveryRegressionTest.main(new String[0]));
     }
     private static void run(String name,Checked task)throws Exception{try{task.run();}catch(Throwable t){
         System.err.println("REGRESSION_SUITE_FAILED="+name+"; reason="+t.getMessage());

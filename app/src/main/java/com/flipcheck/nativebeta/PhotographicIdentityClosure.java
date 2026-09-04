@@ -36,6 +36,8 @@ final class PhotographicIdentityClosure {
         c.probableReference=join(brand,family,model);c.probableReferenceConfidence=id.mainIdentityConfidence;
         c.identifierScore=a.tuple.cardNumberVerified||a.tuple.modelPhysical?Math.min(99,id.modelConfidence+6):Math.min(82,id.modelConfidence);
         c.textScore=id.mainIdentityConfidence;c.layoutScore=Math.min(98,id.mainIdentityConfidence+(a.tuple.frontBack?5:2));c.totalScore=id.mainIdentityConfidence;
+        c.physicalIdentifierScore=c.identifierScore;c.printedTextScore=c.textScore;c.catalogScore=0;c.webEvidenceScore=0;
+        c.conflictPenalty=0;c.missingFieldPenalty=0;
         c.evidence="Identità chiusa esclusivamente dalla tupla fotografica del profilo "+a.profile.name().toLowerCase(Locale.ROOT)+".";
         add(c,"physical_tuple_confirmation=true");add(c,"closure_route="+ROUTE);add(c,"closure_stage="+safe(stage));
         id.candidates.clear();id.candidates.add(c);id.canonicalCandidateCount=1;id.tournamentMargin=95;id.brand=brand;id.family=family;id.model=model;
@@ -70,6 +72,8 @@ final class PhotographicIdentityClosure {
         if(a.profile==IdentityProfileEngine.Profile.SPORTS_CARD)core=!safe(t.brand).isEmpty()&&!safe(t.family).isEmpty()&&!safe(t.subject).isEmpty();
         else if(a.profile==IdentityProfileEngine.Profile.TCG)core=!safe(t.brand).isEmpty()&&!safe(t.subject).isEmpty()&&t.frontComplete;
         else if(a.profile==IdentityProfileEngine.Profile.SEALED_TRADING_CARD_PRODUCT)core=!safe(t.brand).isEmpty()&&!safe(t.family).isEmpty();
+        else if(IdentityProfileEngine.electronics(a.profile))core=!safe(t.brand).isEmpty()
+                &&(t.modelPhysical||t.layoutDistinctive&&(!safe(t.controlLayout).isEmpty()||!safe(t.shortcutButtons).isEmpty()||!safe(t.brandMark).isEmpty()));
         else core=t.modelPhysical||(!safe(t.family).isEmpty()&&!safe(t.design).isEmpty());
         id.coreIdentityStatus=core?(closed?"CONFIRMED":"PROBABLE"):"UNRESOLVED";
         id.hierarchicalStatus=core?(closed?HierarchicalIdentityStatus.MAIN_IDENTITY_CONFIRMED.name():HierarchicalIdentityStatus.MAIN_IDENTITY_PROBABLE.name()):
@@ -81,6 +85,7 @@ final class PhotographicIdentityClosure {
         else if(a.profile==IdentityProfileEngine.Profile.SPORTS_CARD&&safe(t.cardNumber).isEmpty())id.exactIdentityStatus="CORE_CONFIRMED_NUMBER_UNRESOLVED";
         else if(a.profile==IdentityProfileEngine.Profile.TCG&&safe(t.family).isEmpty())id.exactIdentityStatus="SET_UNRESOLVED";
         else if(a.profile==IdentityProfileEngine.Profile.TCG&&safe(t.collectorNumber).isEmpty())id.exactIdentityStatus="FINGERPRINT_CONFIRMED";
+        else if(IdentityProfileEngine.electronics(a.profile)&&safe(t.modelCode).isEmpty())id.exactIdentityStatus="MODEL_TO_VERIFY";
         else id.exactIdentityStatus="CONFIRMED";
         if(!safe(t.serial).isEmpty()||!safe(t.level).isEmpty()||id.rareVariantPhysicalProof){id.variantStatus="CONFIRMED";if(closed)id.hierarchicalStatus=HierarchicalIdentityStatus.VARIANT_CONFIRMED.name();}
         else if(!safe(t.finish).isEmpty()){id.variantStatus="FINISH_CONFIRMED_PARALLEL_UNRESOLVED";if(closed)id.hierarchicalStatus=HierarchicalIdentityStatus.VARIANT_PROBABLE.name();}
@@ -126,6 +131,11 @@ final class PhotographicIdentityClosure {
             if(field.contains("year")||field.contains("season"))return "Fotografa il lato che riporta stagione o anno del prodotto.";
             if(field.contains("configuration"))return "Fotografa il lato con numero di pacchetti, carte per pacchetto o hit guarantee.";
             if(field.contains("seal"))return "Fotografa i sigilli e i lati completi del box.";return "";}
+        if(IdentityProfileEngine.electronics(p)){
+            id.requestedPhotoMissingField="exactModel";id.requestedPhotoSide="PHOTO_BACK";
+            id.requestedPhotoRegion="rear_label";id.requestedPhotoExpectedEvidence="model, part number, barcode";
+            return "Fotografa il retro includendo l’intera etichetta e qualsiasi codice modello o sigla di riferimento.";
+        }
         if(field.contains("model")||field.contains("product_code")||field.contains("reference")||field.contains("barcode")||field.contains("serial"))return "Per identificare il modello, fotografa la targhetta con MODEL, P/N, seriale, barcode o codice prodotto: di solito è sul retro, sotto l’apparecchio o dentro lo sportello.";
         return "";}
     static String webSeed(Models.Identification id){return ProfileQueryBuilder.seed(id);}
@@ -134,5 +144,5 @@ final class PhotographicIdentityClosure {
     private static boolean hasView(Models.Identification id,String...tokens){String x=id==null?"":id.photoViews.toString().toLowerCase(Locale.ROOT);for(String token:tokens)if(x.contains(token))return true;return false;}
     private static String join(String...xs){StringBuilder b=new StringBuilder();for(String x:xs){x=safe(x);if(x.isEmpty())continue;if(b.length()>0)b.append(' ');b.append(x);}return b.toString();}
     private static String safe(String x){return x==null?"":x.trim();}
-    private static boolean hasIdentifierConflict(Models.Identification id){return id!=null&&!safe(id.numberConflicts).isEmpty();}
+    private static boolean hasIdentifierConflict(Models.Identification id){return DocumentedConflictPolicy.hasHardConflict(id);}
 }

@@ -1,0 +1,64 @@
+{
+  "provenance_note": "Production-shaped replay transcribed from Samsung S24 Ultra result screenshots. Original full-resolution photographs were not present in the supplied workspace.",
+  "kobe": {
+    "content_sufficient": true, "category": "sports_card", "views": ["front", "back", "front_detail"],
+    "identity_hint": "1997-98 SkyBox Metal Universe Kobe Bryant #81", "missing_discriminators": [],
+    "facts": [
+      {"key":"manufacturer","value":"SkyBox","image":1,"side":"back","location":"publisher line","role":"manufacturer_text","confidence":96},
+      {"key":"product_line","value":"Metal Universe","image":0,"side":"front","location":"front title design","role":"product_line","confidence":94},
+      {"key":"card_name","value":"Kobe Bryant","image":0,"side":"front","location":"name area","role":"subject","confidence":99},
+      {"key":"release_year","value":"1997-98","image":1,"side":"back","location":"copyright/product line","role":"physical_release_year","confidence":92},
+      {"key":"season","value":"1996-97","image":1,"side":"back","location":"statistics table row","role":"statistics_season","confidence":98},
+      {"key":"card_number","value":"81","image":1,"side":"back","location":"card number circle","role":"card_number","confidence":96},
+      {"key":"card_number","value":"81","image":2,"side":"front","location":"number detail crop","role":"card_number","confidence":98},
+      {"key":"sport","value":"basketball","image":0,"side":"front","location":"object context","role":"sport","confidence":98},
+      {"key":"front_complete","value":"true","image":0,"side":"front","location":"full card bounds","role":"complete_identity_bearing_view","confidence":98}
+    ],
+    "candidates": [{"brand":"SkyBox","product_line":"Metal Universe","subject":"Kobe Bryant","year":"1997-98","card_number":"81","language":"English","edition":"","finish":"foil","format":"","material_variant_key":"","materially_distinct":false,"confidence":98}]
+  },
+  "vileplume": {
+    "content_sufficient": true, "category": "tcg", "views": ["front", "front_crop"],
+    "identity_hint": "1999 Pokémon Jungle Vileplume #15/64", "missing_discriminators": [],
+    "facts": [
+      {"key":"game","value":"Pokémon","image":0,"side":"front","location":"top branding","role":"game_or_publisher","confidence":97},
+      {"key":"set","value":"Jungle","image":0,"side":"front","location":"set symbol","role":"set","confidence":96},
+      {"key":"card_name","value":"Vileplume","image":0,"side":"front","location":"name line","role":"subject","confidence":99},
+      {"key":"collector_number","value":"15/64","image":0,"side":"front","location":"lower right","role":"collector_number","confidence":99},
+      {"key":"collector_number","value":"15/64","image":1,"side":"front","location":"lower-right crop","role":"collector_number","confidence":98},
+      {"key":"first_edition_mark","value":"PRESENT","image":1,"side":"front","location":"left below artwork","role":"edition_mark","confidence":96},
+      {"key":"edition","value":"FIRST_EDITION","image":1,"side":"front","location":"left below artwork","role":"edition","confidence":96},
+      {"key":"finish","value":"holo","image":0,"side":"front","location":"illustration foil area","role":"finish","confidence":94},
+      {"key":"language","value":"English","image":0,"side":"front","location":"rules text","role":"language","confidence":97},
+      {"key":"hp","value":"80 HP","image":0,"side":"front","location":"upper right","role":"hp","confidence":98},
+      {"key":"attack_name","value":"Petal Dance","image":0,"side":"front","location":"attack box","role":"attack_name","confidence":96},
+      {"key":"front_complete","value":"true","image":0,"side":"front","location":"full card bounds","role":"complete_identity_bearing_view","confidence":99}
+    ],
+    "candidates": [{"brand":"Pokémon","product_line":"Jungle","subject":"Vileplume","year":"1999","card_number":"15/64","language":"English","edition":"FIRST_EDITION","finish":"holo","format":"","material_variant_key":"first-edition-holo","materially_distinct":true,"confidence":99}]
+  },
+  "topps": {
+    "content_sufficient": true, "category": "sealed_trading_card_product", "views": ["front"],
+    "identity_hint": "2025-26 Topps Chrome Basketball Update Series", "missing_discriminators": [],
+    "facts": [
+      {"key":"manufacturer","value":"Topps","image":0,"side":"front","location":"top logo","role":"manufacturer_text","confidence":99},
+      {"key":"product_line","value":"Topps Chrome Basketball Update Series","image":0,"side":"front","location":"main title","role":"product_line","confidence":99},
+      {"key":"release_year","value":"2025-26","image":0,"side":"front","location":"main title","role":"physical_release_year","confidence":98},
+      {"key":"product_type","value":"sealed trading-card box","image":0,"side":"front","location":"full package","role":"product_type","confidence":99},
+      {"key":"configuration","value":"1 autograph card in every box","image":0,"side":"front","location":"front configuration callout","role":"configuration","confidence":99},
+      {"key":"sport","value":"basketball","image":0,"side":"front","location":"main title","role":"sport","confidence":99},
+      {"key":"front_complete","value":"true","image":0,"side":"front","location":"full package bounds","role":"complete_identity_bearing_view","confidence":99}
+    ],
+    "candidates": [{"brand":"Topps","product_line":"Topps Chrome Updates Basketball","subject":"","year":"2025/26","card_number":"","language":"","edition":"","finish":"","format":"Hobby","material_variant_key":"hobby","materially_distinct":true,"confidence":100}]
+  },
+  "remote": {
+    "content_sufficient": true, "category": "television_remote_control", "views": ["front"],
+    "identity_hint": "Television remote control", "missing_discriminators": ["brand_mark", "exact_model"],
+    "facts": [
+      {"key":"product_type","value":"television remote control","image":0,"side":"front","location":"full object","role":"product_type","confidence":99},
+      {"key":"control_layout","value":"numeric keypad, directional pad, colored buttons","image":0,"side":"front","location":"front controls","role":"control_layout","confidence":98},
+      {"key":"shortcut_buttons","value":"Netflix, Sources, Info, Home, Back, Voice","image":0,"side":"front","location":"front labeled buttons","role":"printed_label","confidence":98},
+      {"key":"layout_signature","value":"tall black TV remote with central navigation cluster","image":0,"side":"front","location":"full object bounds","role":"layout_signature","confidence":96},
+      {"key":"remote_feature","value":"voice control","image":0,"side":"front","location":"microphone button","role":"remote_feature","confidence":95}
+    ],
+    "candidates": [{"brand":"LG","product_line":"TV remote","subject":"","year":"","card_number":"","language":"","edition":"","finish":"","format":"","material_variant_key":"","materially_distinct":false,"confidence":62}]
+  }
+}

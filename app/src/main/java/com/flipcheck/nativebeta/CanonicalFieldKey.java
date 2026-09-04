@@ -38,6 +38,8 @@ enum CanonicalFieldKey {
     SOURCE_CONFIRMED_PRODUCT_LINE("sourceConfirmedProductLine"),
     SOURCE_CONFIRMED_VARIANT("sourceConfirmedVariant"), SOURCE_CATALOG_TITLE("sourceCatalogTitle"),
     MARKET_COMPARABLE("marketComparable"),
+    CONTROL_LAYOUT("controlLayout"), SHORTCUT_BUTTONS("shortcutButtons"), BRAND_MARK("brandMark"),
+    NAVIGATION_LAYOUT("navigationLayout"), NUMERIC_KEYPAD("numericKeypad"), VOICE_CONTROL("voiceControl"),
     UNKNOWN("unknown");
 
     final String debugName;
@@ -91,7 +93,12 @@ enum CanonicalFieldKey {
         put(m,ATTACK_DAMAGE,"attack_damage","move_damage","damage");
         put(m,GRAPHIC_NUMBER,"graphic_number","game_number","rating_number","front_graphic_number");
         put(m,CARD_TYPE,"card_type","element","energy_type");
-        put(m,DISTINCTIVE_PRINTED_TOKEN,"distinctive_printed_token","distinctive_token","printed_token","product_line_token","title_token","subline_token");
+        put(m,DISTINCTIVE_PRINTED_TOKEN,"distinctive_printed_token","distinctive_token","printed_token","printed_label","remote_feature","product_line_token","title_token","subline_token");
+        put(m,CONTROL_LAYOUT,"control_layout","button_layout","control_topology");
+        put(m,SHORTCUT_BUTTONS,"shortcut_buttons","app_buttons","streaming_shortcuts");
+        put(m,BRAND_MARK,"brand_mark","brand_logo","logo_mark");
+        put(m,NAVIGATION_LAYOUT,"navigation_layout","directional_layout","navigation_pad");
+        put(m,NUMERIC_KEYPAD,"numeric_keypad","number_pad");put(m,VOICE_CONTROL,"voice_control","voice_button");
         put(m,POSITION,"position","player_position"); put(m,HEIGHT,"height","player_height");
         put(m,WEIGHT,"weight","player_weight"); put(m,BIRTHPLACE,"birthplace","birth_place","place_of_birth");
         put(m,LAYOUT_SIGNATURE,"layout","frame","layout_signature","layout_match","distinctive_layout","layout_distinctive");
