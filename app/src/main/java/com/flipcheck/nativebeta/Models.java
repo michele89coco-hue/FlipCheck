@@ -293,6 +293,7 @@ final class Models {
         String confirmedModel = "";
         boolean closureAttempt;
         boolean closureResult;
+        String closureLevel = "NOT_EVALUATED";
         String closureStage = "";
         String closureMissingFields = "";
         String physicalCardNumber = "";
@@ -372,7 +373,9 @@ final class Models {
         String familyStatus = "UNRESOLVED";
         String coreIdentityStatus = "UNRESOLVED";
         String exactIdentityStatus = "UNRESOLVED";
+        String exactCatalogStatus = "NOT_EVALUATED";
         String identifierStatus = "NOT_OBSERVED";
+        String copyIdentifierStatus = "NOT_OBSERVED";
         String variantStatus = "UNRESOLVED";
         String overallStatus = "INSUFFICIENT_EVIDENCE";
         String hierarchicalStatus = "INSUFFICIENT_EVIDENCE";
