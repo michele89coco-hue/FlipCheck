@@ -14,10 +14,12 @@ final class ProductionClosureCheckpoint {
         if(id==null)return;
         id.closureAttempt=true;
         id.closureResult=closed;
+        id.closureLevel=closed?"CORE_IDENTITY":"NOT_CLOSED";
         id.closureStage=stage==null?"":stage.trim();
         id.closureMissingFields=closed?"":UniversalIdentityClosure.missingFields(id);
         add(id,"closure_attempt=true");
         add(id,"closure_result="+closed);
+        add(id,"closure_level="+id.closureLevel);
         add(id,"closure_stage="+id.closureStage);
         if(!closed)add(id,"closure_missing_fields="+id.closureMissingFields);
         add(id,"identity_status="+id.identityStatus);
