@@ -17,7 +17,13 @@ final class PhotographicFactNormalizer {
             if((EvidenceLedger.PHOTO.equals(raw.origin)||EvidenceLedger.LOCAL_OCR.equals(raw.origin))&&!TextScopePolicy.primaryObjectEvidence(raw)){
                 addOnce(out.rejectedFacts,"external_text_excluded:"+raw.key+"(scope="+TextScopePolicy.scope(raw)+")");continue;
             }
-            CanonicalFieldKey key=contextualKey(CanonicalFieldKey.fromAlias(raw.key),raw);
+            CanonicalFieldKey aliasKey=CanonicalFieldKey.fromAlias(raw.key);
+            if(aliasKey==CanonicalFieldKey.CARD_NUMBER_CANDIDATE||aliasKey==CanonicalFieldKey.COLLECTOR_NUMBER_CANDIDATE||aliasKey==CanonicalFieldKey.PHYSICAL_SERIAL_CANDIDATE){
+                NormalizedPhotoIdentity.Fact probe=new NormalizedPhotoIdentity.Fact(aliasKey,raw.value,raw.key,raw.semanticRole,raw.location,raw.side,raw.evidenceType,quality(raw),raw.confidence,raw.imageIndex,raw.origin,raw.createdAtMillis,raw.timestampStage);
+                NumericTokenClassifier.Result classified=NumericTokenClassifier.classify(probe);
+                addOnce(out.numericClassifications,raw.value+"→"+classified.kind.name()+"("+classified.reason+") alternatives="+classified.alternatives);
+            }
+            CanonicalFieldKey key=contextualKey(aliasKey,raw);
             if(key==CanonicalFieldKey.UNKNOWN)key=contextualKey(CanonicalFieldKey.fromAlias(raw.semanticRole),raw);
             if(key==CanonicalFieldKey.UNKNOWN){addOnce(out.rejectedFacts,(relevant(raw)?"relevant_alias_rejected:":"alias_not_mapped:")+raw.key+"(role="+raw.semanticRole+")");continue;}
             NormalizedPhotoIdentity.Quality quality=quality(raw);
@@ -57,6 +63,23 @@ final class PhotographicFactNormalizer {
         int ocr=0;for(Models.EvidenceFact f:id.evidenceLedger)if(f!=null&&EvidenceLedger.LOCAL_OCR.equals(f.origin))ocr++;
         id.localOcrFactCount=ocr;}
     private static CanonicalFieldKey contextualKey(CanonicalFieldKey key,Models.EvidenceFact raw){String context=(clean(raw.key)+" "+clean(raw.semanticRole)+" "+clean(raw.location)+" "+clean(raw.evidenceType)).toLowerCase(Locale.ROOT);
+        if(key==CanonicalFieldKey.CARD_NUMBER_CANDIDATE||key==CanonicalFieldKey.COLLECTOR_NUMBER_CANDIDATE||key==CanonicalFieldKey.PHYSICAL_SERIAL_CANDIDATE){
+            NormalizedPhotoIdentity.Fact probe=new NormalizedPhotoIdentity.Fact(key,raw.value,raw.key,raw.semanticRole,raw.location,raw.side,raw.evidenceType,quality(raw),raw.confidence,raw.imageIndex,raw.origin,raw.createdAtMillis,raw.timestampStage);
+            NumericTokenClassifier.Result numeric=NumericTokenClassifier.classify(probe);
+            switch(numeric.kind){
+                case SEASON:return CanonicalFieldKey.PHYSICAL_SET_OR_RELEASE_YEAR;
+                case COPYRIGHT_YEAR:return CanonicalFieldKey.COPYRIGHT_YEAR;
+                case STATISTICS:case BIRTH_DATE:case JERSEY_NUMBER:return CanonicalFieldKey.STATISTICS;
+                case ATTACK_DAMAGE:return CanonicalFieldKey.ATTACK_DAMAGE;
+                case HP_OR_PV:return CanonicalFieldKey.HP_OR_PV;
+                case PRODUCT_CODE:return CanonicalFieldKey.MODEL_CODE;
+                case BARCODE:return CanonicalFieldKey.BARCODE;
+                case PHYSICAL_SERIAL:return CanonicalFieldKey.PHYSICAL_SERIAL_CANDIDATE;
+                case COLLECTOR_NUMBER:return CanonicalFieldKey.COLLECTOR_NUMBER_CANDIDATE;
+                case CATALOG_CARD_NUMBER:return CanonicalFieldKey.CARD_NUMBER_CANDIDATE;
+                default:return CanonicalFieldKey.UNKNOWN;
+            }
+        }
         if(key==CanonicalFieldKey.PRODUCT_LINE||key==CanonicalFieldKey.SET||key==CanonicalFieldKey.SERIES){
             if(context.contains("insert")||context.contains("subset"))return CanonicalFieldKey.INSERT_SUBSET;
             if(context.contains("design_family")||context.contains("design series"))return CanonicalFieldKey.DESIGN_FAMILY;
