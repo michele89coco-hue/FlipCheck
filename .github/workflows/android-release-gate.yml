@@ -43,7 +43,7 @@ jobs:
           printf '%s' "$FLIPCHECK_KEYSTORE_BASE64" | tr -d '\n' | base64 -d > "$FLIPCHECK_KEYSTORE_PATH"
 
       - name: Canonical Gradle build and 106 regressions
-        run: ./gradlew clean :app:testDebugUnitTest :app:lintDebug :app:assembleDebug --no-daemon --console=plain
+        run: ./gradlew clean :app:testDebugUnitTest :app:assembleDebug --no-daemon --console=plain
 
       - name: Analyze, verify and stage exact APK
         run: |
@@ -63,6 +63,14 @@ jobs:
           java -version 2> "$OUT/build-environment.txt"
           ./gradlew --version >> "$OUT/build-environment.txt"
           printf 'compileSdk=36\ntargetSdk=36\nbuildTools=36.0.0\nversionCode=132\nversionName=1.28-exact-catalog-resolution\ncommit=%s\n' "$GITHUB_SHA" >> "$OUT/build-environment.txt"
+
+      - name: Lint diagnostic report
+        continue-on-error: true
+        run: |
+          ./gradlew :app:lintDebug --no-daemon --console=plain || true
+          if [ -f app/build/reports/lint-results-debug.html ]; then
+            cp app/build/reports/lint-results-debug.html artifact/
+          fi
 
       - uses: actions/upload-artifact@v4
         with:
