@@ -134,7 +134,7 @@ final class PhotographicIdentityClosure {
         if(IdentityProfileEngine.electronics(p)){
             id.requestedPhotoMissingField="exactModel";id.requestedPhotoSide="PHOTO_BACK";
             id.requestedPhotoRegion="rear_label";id.requestedPhotoExpectedEvidence="model, part number, barcode";
-            return "Fotografa il retro includendo l’intera etichetta e qualsiasi codice modello o sigla di riferimento.";
+            return "Fotografa il retro includendo l’intera targhetta o etichetta e qualsiasi codice MODEL, P/N o sigla di riferimento.";
         }
         if(field.contains("model")||field.contains("product_code")||field.contains("reference")||field.contains("barcode")||field.contains("serial"))return "Per identificare il modello, fotografa la targhetta con MODEL, P/N, seriale, barcode o codice prodotto: di solito è sul retro, sotto l’apparecchio o dentro lo sportello.";
         return "";}
