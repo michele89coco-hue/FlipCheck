@@ -1118,6 +1118,7 @@ public class MainActivity extends Activity {
                 + " · VERSION_CODE=" + BuildConfig.VERSION_CODE, 12, MINT, true));
         panel.addView(text("closure_attempt=" + id.closureAttempt
                 + " · closure_result=" + id.closureResult
+                + " · closure_level=" + valueOrEmpty(id.closureLevel)
                 + " · closure_stage=" + id.closureStage, 12,
                 id.closureResult ? MINT : WARN, true));
         if (!id.closureResult && !id.closureMissingFields.isEmpty()) {
@@ -1138,7 +1139,9 @@ public class MainActivity extends Activity {
         panel.addView(text("category_status="+valueOrEmpty(id.categoryStatus)
                 +" · core_identity_status="+valueOrEmpty(id.coreIdentityStatus)
                 +" · exact_identity_status="+valueOrEmpty(id.exactIdentityStatus)
-                +" · variant_status="+valueOrEmpty(id.variantStatus),12,MUTED,false));
+                +" · exact_catalog_status="+valueOrEmpty(id.exactCatalogStatus)
+                +" · variant_status="+valueOrEmpty(id.variantStatus)
+                +" · copy_identifier_status="+valueOrEmpty(id.copyIdentifierStatus),12,MUTED,false));
         panel.addView(text("blocking_reason="+valueOrEmpty(id.blockingReason)
                 +" · missing_discriminative_fields="+valueOrEmpty(id.missingDiscriminativeFields),
                 12,id.blockingReason.isEmpty()?MUTED:WARN,false));
