@@ -90,6 +90,7 @@ tasks.withType(Test).configureEach {
 
 dependencies {
     coreLibraryDesugaring libs.desugar.jdk.libs
+    implementation libs.androidx.core
     // Modello OCR latino realmente incluso nell'APK: nessun download del modello al primo uso.
     implementation libs.mlkit.text.recognition
     // Barcode/QR realmente on-device, incluso nell'APK.
