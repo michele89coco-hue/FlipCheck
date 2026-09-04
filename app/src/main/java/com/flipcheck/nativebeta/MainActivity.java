@@ -94,7 +94,7 @@ public class MainActivity extends Activity {
     @Override
     public void onCreate(Bundle b) {
         super.onCreate(b);
-        this.prefs = getSharedPreferences("flipcheck_native_beta", 0);
+        this.prefs = getSharedPreferences("flipcheck_native_beta", Context.MODE_PRIVATE);
         setContentView(buildUi());
         this.apiKeyInput.setText(this.prefs.getString("api_key", ""));
         if (b != null) {
@@ -1585,7 +1585,7 @@ public class MainActivity extends Activity {
                 resized.recycle();
             }
             src.recycle();
-            return "data:image/jpeg;base64," + Base64.encodeToString(out.toByteArray(), 2);
+            return "data:image/jpeg;base64," + Base64.encodeToString(out.toByteArray(), Base64.NO_WRAP);
         } catch (Throwable th) {
             if (in != null) {
                 try {
@@ -1625,7 +1625,7 @@ public class MainActivity extends Activity {
     }
 
     private void toast(String s) {
-        Toast.makeText(this, s, 0).show();
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
     private String safe(Exception e) {
@@ -1690,7 +1690,7 @@ public class MainActivity extends Activity {
         b.setText(s);
         b.setTextColor(Color.rgb(9, 25, 30));
         b.setTextSize(16.0f);
-        b.setTypeface(Typeface.DEFAULT, 1);
+        b.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
         b.setAllCaps(false);
         b.setBackground(round(MINT, 16, MINT));
         b.setMinHeight(dp(58));
@@ -1713,7 +1713,7 @@ public class MainActivity extends Activity {
         t.setTextSize(sp);
         t.setTextColor(color);
         if (bold) {
-            t.setTypeface(Typeface.DEFAULT, 1);
+            t.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
         }
         t.setLineSpacing(0.0f, 1.12f);
         return t;
