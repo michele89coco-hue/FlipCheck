@@ -18,9 +18,11 @@ final class PhotographicFactNormalizer {
                 addOnce(out.rejectedFacts,"external_text_excluded:"+raw.key+"(scope="+TextScopePolicy.scope(raw)+")");continue;
             }
             CanonicalFieldKey aliasKey=CanonicalFieldKey.fromAlias(raw.key);
+            String normalizedValue=raw.value;
             if(aliasKey==CanonicalFieldKey.CARD_NUMBER_CANDIDATE||aliasKey==CanonicalFieldKey.COLLECTOR_NUMBER_CANDIDATE||aliasKey==CanonicalFieldKey.PHYSICAL_SERIAL_CANDIDATE){
                 NormalizedPhotoIdentity.Fact probe=new NormalizedPhotoIdentity.Fact(aliasKey,raw.value,raw.key,raw.semanticRole,raw.location,raw.side,raw.evidenceType,quality(raw),raw.confidence,raw.imageIndex,raw.origin,raw.createdAtMillis,raw.timestampStage);
                 NumericTokenClassifier.Result classified=NumericTokenClassifier.classify(probe);
+                if(!clean(classified.normalized).isEmpty())normalizedValue=classified.normalized;
                 addOnce(out.numericClassifications,raw.value+"→"+classified.kind.name()+"("+classified.reason+") alternatives="+classified.alternatives);
             }
             CanonicalFieldKey key=contextualKey(aliasKey,raw);
@@ -35,7 +37,7 @@ final class PhotographicFactNormalizer {
                 String[] alternatives=raw.value.split("\\s*/\\s*",3);for(String alternative:alternatives)add(out,sourced,new NormalizedPhotoIdentity.Fact(key,alternative,raw.key,raw.semanticRole,raw.location,raw.side,
                         raw.evidenceType,quality,Math.max(0,raw.confidence-5),raw.imageIndex,raw.origin,raw.createdAtMillis,raw.timestampStage));
                 addOnce(out.semanticConflicts,"productLineAlternatives="+java.util.Arrays.toString(alternatives));
-            }else add(out,sourced,new NormalizedPhotoIdentity.Fact(key,raw.value,raw.key,raw.semanticRole,raw.location,raw.side,
+            }else add(out,sourced,new NormalizedPhotoIdentity.Fact(key,normalizedValue,raw.key,raw.semanticRole,raw.location,raw.side,
                     raw.evidenceType,quality,raw.confidence,raw.imageIndex,raw.origin,raw.createdAtMillis,raw.timestampStage));
             addOnce(out.aliasesConsumed,raw.key+"→"+key.debugName);
         }
