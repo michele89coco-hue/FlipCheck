@@ -25,9 +25,12 @@ final class SemanticRelationV3 {
         if(safe(field).equals("configuration")){if(!numericTokens(x).equals(numericTokens(y)))return Relation.INCOMPATIBLE;Set<String>xs=tokens(x),ys=tokens(y);if(xs.containsAll(ys)||ys.containsAll(xs))return Relation.COMPATIBLE_EXTENSION;return Relation.INCOMPATIBLE;}
         if(hierarchical(field)){
             Set<String> xs=tokens(x),ys=tokens(y);if(xs.isEmpty()||ys.isEmpty())return Relation.AMBIGUOUS;
+            if(field.equals("productType")){xs.remove("PRODUCT");ys.remove("PRODUCT");}
+            if(xs.isEmpty()||ys.isEmpty())return Relation.AMBIGUOUS;
             if(ys.containsAll(xs))return Relation.PARENT;if(xs.containsAll(ys))return Relation.CHILD;
-            Set<String> common=new LinkedHashSet<>(xs);common.retainAll(ys);
-            if(!common.isEmpty()&&common.size()*2>=Math.min(xs.size(),ys.size()))return Relation.COMPATIBLE_EXTENSION;
+            // Shared family words do not establish equivalence between sibling lines.
+            // Only containment above supports a parent/child relation; aliases need
+            // explicit normalization rather than a token-overlap shortcut.
         }
         return Relation.INCOMPATIBLE;
     }

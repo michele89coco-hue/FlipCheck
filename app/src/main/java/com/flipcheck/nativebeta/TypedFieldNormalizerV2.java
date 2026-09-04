@@ -14,6 +14,9 @@ final class TypedFieldNormalizerV2 {
     static void normalize(ImmutableEvidenceLedgerV2 ledger){
         List<EvidenceAtom> snapshot=new ArrayList<>(ledger.all());
         for(EvidenceAtom atom:snapshot){
+            // Derived atoms retain their parent's raw text for audit, not as a new input.
+            // Re-reading it would turn a derived denominator back into the full fraction.
+            if(!atom.parentEvidenceId.isEmpty())continue;
             String normalized=normalizeValue(atom.field,atom.rawValue,atom.semanticScope);
             String field=canonicalField(atom.field,atom.semanticScope);
             if(collectorRepair(atom,field,normalized)&&!corroboratedCollector(ledger,atom,normalized))continue;
@@ -42,9 +45,12 @@ final class TypedFieldNormalizerV2 {
 
     static String canonicalField(String raw,String scope){
         String key=canonKey(raw),s=canonKey(scope);
-        if((key.equals("season")||key.equals("year")||key.equals("release_year"))
-                &&(s.contains("statistic")||s.contains("player_biography")))return "statisticsSeason";
-        Map<String,String> m=aliases();String mapped=m.get(key);return mapped==null?camel(key):mapped;
+        Map<String,String> m=aliases();String mapped=m.get(key);
+        String canonical=mapped==null?camel(key):mapped;
+        if(canonical.equals("cardRole")&&s.contains("evolution"))return "evolutionStage";
+        if((key.equals("season")||key.equals("year")||canonical.equals("productReleaseYear")||canonical.equals("setSeason"))
+                &&s.contains("statistic"))return "statisticsSeason";
+        return canonical;
     }
 
     static String semanticScope(String field,String rawScope){
@@ -68,7 +74,7 @@ final class TypedFieldNormalizerV2 {
         if(f.equals("edition")){String c=words(value);if(c.matches(".*\\b(1ST|FIRST|EDITION 1|1A EDIZIONE)\\b.*")&&!c.contains(" OR "))return "FIRST_EDITION";if(c.equals("UNLIMITED"))return "UNLIMITED";return value;}
         if(f.equals("firstEditionMark")){String c=words(value);return c.contains("PRESENT")||c.contains("1ST")||c.contains("FIRST")?"PRESENT":c.contains("ABSENT")?"ABSENT":value;}
         if(f.equals("productReleaseYear")||f.equals("setSeason")||f.equals("statisticsSeason"))return SeasonNormalizer.normalize(value);
-        if(f.equals("finish")){String c=words(value);if(c.contains("REVERSE")&&c.contains("HOLO"))return "REVERSE_HOLO";if(c.contains("HOLO")||c.contains("HOLOGRAPHIC"))return "HOLO";if(c.equals("NON HOLO")||c.equals("NONHOLO"))return "NON_HOLO";}
+        if(f.equals("finish")){String c=words(value);if(c.equals("NON HOLO")||c.equals("NONHOLO"))return "NON_HOLO";if(c.contains("REVERSE")&&c.contains("HOLO"))return "REVERSE_HOLO";if(c.contains("HOLO")||c.contains("HOLOGRAPHIC"))return "HOLO";}
         if(f.equals("manufacturer")||f.equals("brand"))return displayWords(value);
         if(f.equals("productLine")||f.equals("setName"))return value.replaceAll("(?i)\\bupdates\\b","Update").replaceAll("\\s+"," ").trim();
         return value;
@@ -103,10 +109,12 @@ final class TypedFieldNormalizerV2 {
         put(m,"manufacturer","manufacturer","maker","publisher","producer");put(m,"brand","brand","brand_mark","brand_logo");put(m,"game","game","tcg_game");
         put(m,"productLine","product_line","family","series","set_or_product_line");put(m,"setName","set","set_name","main_set");
         put(m,"cardName","card_name","subject_name","character");put(m,"athlete","athlete","player","subject");
+        put(m,"evolutionStage","stage","evolution_stage");put(m,"cardRole","card_role","cardrole");
+        put(m,"subSeries","sub_series","subseries");put(m,"setSymbol","set_symbol","setsymbol");
         put(m,"collectorNumber","collector_number","collector_marking","physical_collector_number");put(m,"printedTotal","printed_total","set_total","collector_total");
         put(m,"physicalCardNumber","physical_card_number","physical_card_number_marking","card_number");
         put(m,"catalogCardNumber","catalog_card_number","source_confirmed_catalog_number");
-        put(m,"physicalSerial","physical_serial","serial_fraction","physical_print_run");put(m,"graphicNumber","graphic_number","jersey_number");
+        put(m,"physicalSerial","physical_serial","serial_fraction","physical_print_run");put(m,"graphicNumber","graphic_number");put(m,"jerseyNumber","jersey_number");
         put(m,"statisticsNumber","statistics","statistics_number","rating");put(m,"productReleaseYear","release_year","physical_year","product_year","physical_set_or_release_year");
         put(m,"setSeason","set_season");put(m,"statisticsSeason","statistics_season","statistical_season","stats_season");
         put(m,"copyrightYear","copyright_year");put(m,"edition","edition","print_edition");put(m,"firstEditionMark","first_edition_mark","first_edition_logo");
@@ -123,7 +131,7 @@ final class TypedFieldNormalizerV2 {
         put(m,"sport","sport");put(m,"team","team");return m;}
     private static void put(Map<String,String>m,String value,String...keys){m.put(canonKey(value),value);for(String k:keys)m.put(canonKey(k),value);}
     private static String camel(String key){StringBuilder b=new StringBuilder();boolean upper=false;for(char c:key.toCharArray()){if(c=='_'){upper=true;continue;}b.append(upper?Character.toUpperCase(c):c);upper=false;}return b.toString();}
-    private static String canonKey(String raw){return safe(raw).toLowerCase(Locale.ROOT).replace('-','_').replace(' ','_').replaceAll("[^a-z0-9_]+","").replaceAll("_+","_");}
+    private static String canonKey(String raw){return safe(raw).replaceAll("([a-z0-9])([A-Z])","$1_$2").toLowerCase(Locale.ROOT).replace('-','_').replace(' ','_').replaceAll("[^a-z0-9_]+","").replaceAll("_+","_");}
     private static String words(String raw){return Normalizer.normalize(safe(raw),Normalizer.Form.NFD).replaceAll("\\p{M}+","").toUpperCase(Locale.ROOT).replaceAll("[^A-Z0-9]+"," ").trim().replaceAll("\\s+"," ");}
     private static String tokenSet(String raw){java.util.TreeSet<String>s=new java.util.TreeSet<>();for(String t:words(raw).split(" "))if(t.length()>1&&!t.equals("SERIES"))s.add(t);return s.toString();}
     private static String displayWords(String raw){String v=safe(raw);return v.isEmpty()?v:Character.toUpperCase(v.charAt(0))+v.substring(1);}

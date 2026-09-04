@@ -77,7 +77,7 @@ final class ObservationExtractorV2 {
     private static String profileField(String field,String role,DomainProfileRouterV2.Profile profile){String k=safe(field).toLowerCase(Locale.ROOT).replace('-','_');String r=safe(role).toLowerCase(Locale.ROOT);
         if((k.equals("subject")||k.equals("subject_name"))&&profile==DomainProfileRouterV2.Profile.TCG_CARD)return "cardName";
         if((k.equals("subject")||k.equals("subject_name"))&&profile==DomainProfileRouterV2.Profile.SPORTS_CARD)return "athlete";
-        if((k.equals("card_number")||k.contains("collector"))&&profile==DomainProfileRouterV2.Profile.TCG_CARD)return "collectorNumber";
+        if((k.equals("card_number")||TypedFieldNormalizerV2.canonicalField(field,role).equals("collectorNumber"))&&profile==DomainProfileRouterV2.Profile.TCG_CARD)return "collectorNumber";
         if(k.equals("card_number")&&profile==DomainProfileRouterV2.Profile.SPORTS_CARD)return "physicalCardNumber";
         if((k.equals("year")||k.equals("season"))&&r.contains("stat"))return "statisticsSeason";
         if(k.equals("year")||k.equals("season")||k.equals("physical_set_or_release_year"))return "productReleaseYear";
