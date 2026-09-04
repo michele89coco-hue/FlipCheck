@@ -32,7 +32,7 @@ final class PhysicalCardNumberPolicy {
         }
 
         List<Aggregate> viable = new ArrayList<>();
-        for (Aggregate a : grouped.values()) if (a.bestDirect != null) viable.add(a);
+        for (Aggregate a : grouped.values()) if (a.bestDirect != null || a.localOcrConfidence>=70&&looksCollector(a.value)) viable.add(a);
         Aggregate winner = null;
         for (Aggregate a : viable) if (winner == null || a.score() > winner.score()) winner = a;
         if (winner == null) {
@@ -55,7 +55,8 @@ final class PhysicalCardNumberPolicy {
         }
         boolean catalogOpponent = false;
         for (Aggregate a : grouped.values()) if (a != winner && a.catalogConfidence > 0) catalogOpponent = true;
-        boolean conflictResolved = verified && (!competing ||
+        boolean catalogSupersedesUnverified=id.catalogVerified&&catalogOpponent&&!verified;
+        boolean conflictResolved = catalogSupersedesUnverified||verified && (!competing ||
                 ((winner.catalogConfidence > 0 || winner.directGroups.size() >= 2)
                         && winner.score() - runnerUp >= 25
                         && (!catalogOpponent || winner.directGroups.size() >= 2 || winner.catalogConfidence > 0)));
@@ -80,7 +81,7 @@ final class PhysicalCardNumberPolicy {
             id.cardNumberVerificationStatus = status(verified, competing, conflictResolved);
         }
         id.physicalCardNumberOrigin = "photo:" + (verified ? "verified" : "candidate") + ":"
-                + winner.bestDirect.location + ":" + (winner.collector ? "collector_number" : "card_number");
+                + (winner.bestDirect==null?"local_ocr_object_text":winner.bestDirect.location) + ":" + (winner.collector ? "collector_number" : "card_number");
         n.identifierStatus = status(verified, competing, conflictResolved);
         n.identifierAlternatives.clear();
         n.identifierAlternatives.addAll(alternatives);
@@ -89,6 +90,7 @@ final class PhysicalCardNumberPolicy {
             addOnce(n.semanticConflicts, "identifierConflict=" + id.numberConflicts);
         } else {
             id.numberConflicts = "";
+            if(catalogSupersedesUnverified)addOnce(id.observedEvidence,"unverified_photo_identifier_not_promoted="+winner.value+"; catalog_matched_alternative_preserved");
         }
         id.numberHypotheses = hypotheses(grouped);
         PhotographicFactNormalizer.syncDebug(id, n);
@@ -112,7 +114,9 @@ final class PhysicalCardNumberPolicy {
                 reject(n, id, f.originalKey + "=" + f.value + ":" + validation.reason);
                 continue;
             }
-            String value = normalizedIdentifier(f.value);
+            NumericTokenClassifier.Result numeric=NumericTokenClassifier.classify(f);
+            String value = numeric.normalized.isEmpty()?normalizedIdentifier(f.value):numeric.normalized;
+            for(String alternative:numeric.alternatives)if(!n.identifierAlternatives.contains(alternative))n.identifierAlternatives.add(alternative);
             Aggregate a = grouped.computeIfAbsent(canon(value), k -> new Aggregate(value));
             a.collector |= validation.collector;
             if (f.quality == NormalizedPhotoIdentity.Quality.DIRECT_PHOTO_OBSERVATION) {
@@ -121,11 +125,13 @@ final class PhysicalCardNumberPolicy {
                 a.directConfidence = Math.max(a.directConfidence, f.confidence);
             } else if (f.quality == NormalizedPhotoIdentity.Quality.LOCAL_OCR_HINT) {
                 a.localOcrConfidence = Math.max(a.localOcrConfidence, f.confidence);
+                for(String alternative:numeric.alternatives)if(!canon(alternative).equals(canon(value))){Aggregate alt=grouped.computeIfAbsent(canon(alternative),k->new Aggregate(alternative));alt.collector=true;alt.localOcrConfidence=Math.max(alt.localOcrConfidence,Math.max(0,f.confidence-8));}
             }
         }
     }
 
     private static Validation validate(NormalizedPhotoIdentity.Fact f, boolean collectorAlias) {
+        NumericTokenClassifier.Result classified=NumericTokenClassifier.classify(f);
         String role = canonWords(f.semanticRole);
         boolean collector = collectorAlias || role.contains("COLLECTOR");
         boolean semantic = collector || role.equals("CARD NUMBER") || role.equals("CHECKLIST NUMBER")
@@ -136,6 +142,7 @@ final class PhysicalCardNumberPolicy {
         String reason = !acceptedQuality ? "quality_or_confidence_insufficient"
                 : !located ? "missing_physical_location"
                 : !semantic ? "semantic_role_not_card_or_collector_number"
+                : classified.kind!=NumericTokenClassifier.Kind.CATALOG_CARD_NUMBER&&classified.kind!=NumericTokenClassifier.Kind.COLLECTOR_NUMBER ? "contextual_numeric_class="+classified.kind.name().toLowerCase(Locale.ROOT)
                 : !plausible(f.value, collector) ? "number_format_not_plausible"
                 : nonCardContext(f) ? "stat_hp_rating_year_ui_or_external_context" : "";
         return new Validation(reason.isEmpty(), collector, reason);
@@ -227,7 +234,8 @@ final class PhysicalCardNumberPolicy {
         int directConfidence, localOcrConfidence, catalogConfidence;
         final Set<String> directGroups = new LinkedHashSet<>();
         Aggregate(String value) { this.value=value; }
-        boolean verified() { return bestDirect != null && (directGroups.size() >= 2 || localOcrConfidence >= 60 || catalogConfidence >= 70); }
+        boolean verified() { return bestDirect != null && (directGroups.size() >= 2 || localOcrConfidence >= 60 || catalogConfidence >= 70)
+                || bestDirect==null&&localOcrConfidence>=70&&catalogConfidence>=70; }
         int score() { return directConfidence + (directGroups.size() >= 2 ? 35 : 0)
                 + (localOcrConfidence > 0 ? 20 : 0) + (catalogConfidence > 0 ? 30 : 0); }
         String supportSummary() { return "direct=" + directGroups.size() + ", localOcr=" + localOcrConfidence + ", catalog=" + catalogConfidence + ", score=" + score(); }
