@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  */
 final class LocalEvidenceBootstrap {
     private static final Pattern HP = Pattern.compile("(?i)(?:\\bHP\\b|\\bPV\\b)\\s*[:.-]?\\s*(\\d{1,4})|\\b(\\d{1,4})\\s*(?:HP|PV)\\b");
-    private static final Pattern COLLECTOR = Pattern.compile("(?i)\\b([A-Z]{0,4}\\d{1,5}[A-Z]{0,3}/[A-Z]{0,4}\\d{1,5}[A-Z]{0,3})\\b");
+    private static final Pattern COLLECTOR = Pattern.compile("(?i)\\b([A-Z]{0,4}\\d{1,5}[A-Z]{0,3}(?:\\s*[/|]\\s*|(?<=\\d)[I1](?=[A-Z]\\d)|\\s+)[A-Z]{0,4}\\d{1,5}[A-Z]{0,3})\\b");
     private static final Pattern CONFIG = Pattern.compile("(?i)\\b(?:autograph|memorabilia|auto|relic|packs?|cards?)\\b.*\\b(?:box|pack|per)\\b|\\b(?:box|pack)\\b.*\\b(?:autograph|memorabilia|cards?|packs?)\\b");
     private LocalEvidenceBootstrap() {}
 
@@ -26,8 +26,8 @@ final class LocalEvidenceBootstrap {
             int hpLine=-1;
             for(int i=0;i<lines.size();i++){
                 String line=lines.get(i),location="ocr_line_"+(i+1);Matcher hp=HP.matcher(line);
-                if(externalListingText(line)){
-                    EvidenceLedger.addLocalOcrFact(id,"visual_description",line,45,image,location,"marketplace_listing_text");
+                if(externalListingText(line)||screenUiText(line)){
+                    EvidenceLedger.addLocalOcrFact(id,"visual_description",line,45,image,location,externalListingText(line)?"marketplace_listing_text":"screen_ui_text");
                     continue;
                 }
                 EvidenceLedger.addLocalOcrFact(id,"visual_description",line,55,image,location,"raw_ocr_text");
@@ -38,7 +38,7 @@ final class LocalEvidenceBootstrap {
                 }
                 Matcher collector=COLLECTOR.matcher(line);
                 while(collector.find()){
-                    String value=clean(collector.group(1));
+                    String value=NumericTokenClassifier.normalizeCode(collector.group(1));
                     boolean alphanumeric=value.matches("(?i).*[A-Z].*");
                     EvidenceLedger.addLocalOcrFact(id,"collector_marking",value,
                             alphanumeric?78:68,image,location,"collector_number_candidate");
@@ -60,7 +60,7 @@ final class LocalEvidenceBootstrap {
                             "ocr_line_"+(lines.indexOf(subject)+1),"card_name_candidate");tcg+=2;
                 }
                 int attacks=0;
-                for(int i=hpLine+1;i<lines.size()&&attacks<4;i++){
+                for(int i=hpLine+1;i<lines.size()&&attacks<3;i++){
                     String line=lines.get(i);
                     if(attackLike(line)){
                         EvidenceLedger.addLocalOcrFact(id,"attack_name",line,62,image,
@@ -88,13 +88,14 @@ final class LocalEvidenceBootstrap {
             if(i<hpLine&&nameLike(x))return x;}
         return "";
     }
-    private static boolean attackLike(String x){String v=clean(x);if(v.length()<3||v.length()>42||v.matches(".*\\d{3,}.*")||COLLECTOR.matcher(v).find())return false;
+    private static boolean attackLike(String x){String v=clean(x);if(v.length()<3||v.length()>32||v.matches(".*\\d{3,}.*")||COLLECTOR.matcher(v).find()||v.split("\\s+").length>4)return false;
         int letters=0;for(int i=0;i<v.length();i++)if(Character.isLetter(v.charAt(i)))letters++;
-        return letters>=3&&!v.toLowerCase(Locale.ROOT).matches(".*\\b(?:illustrator|copyright|weakness|resistance|ritiro|debolezza|resistenza|stage|fase|phase|livello)\\b.*");}
+        String lower=v.toLowerCase(Locale.ROOT);return letters>=3&&!v.matches(".*[.;:]$")&&!lower.matches(".*\\b(?:illustrator|copyright|weakness|resistance|ritiro|debolezza|resistenza|stage|fase|phase|livello|quando|durante|questo|questa|avversario|pokemon|pokémon|energia per|danno per)\\b.*");}
     private static boolean nameLike(String x){String v=clean(x);if(v.length()<3||v.length()>32||v.matches(".*\\d.*"))return false;
         return v.matches("[\\p{L}][\\p{L} .'-]{2,31}")&&!v.toLowerCase(Locale.ROOT).matches("(?:base|stage|basic|evolves from|livello|carta|pokemon|pokémon|energy|energia)");}
     private static boolean genericCategory(String x){String v=clean(x).toLowerCase(Locale.ROOT);return v.equals("oggetto")||v.equals("object")||v.contains("other collectible");}
     private static boolean externalListingText(String x){String v=clean(x).toLowerCase(Locale.ROOT);return v.matches(".*(?:€|£|\\$|buy it now|venduto|sold|spedizione|shipping|offerta|seller|item number|watchlist|ebay).*" );}
+    private static boolean screenUiText(String x){String v=clean(x).toLowerCase(Locale.ROOT);return v.matches("(?:[01]?\\d|2[0-3]):[0-5]\\d")||v.matches("\\d+\\s+(?:di|of)\\s+\\d+")||v.matches(".*(?:galleria|gallery|condividi|share|modifica|delete|elimina).*" );}
     private static boolean empty(String x){return clean(x).isEmpty();}
     private static String clean(String x){return x==null?"":x.trim().replaceAll("\\s+"," ");}
 }
