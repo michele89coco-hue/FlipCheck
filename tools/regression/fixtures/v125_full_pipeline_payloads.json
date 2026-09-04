@@ -1,0 +1,72 @@
+{
+  "sports_reversed_number": {
+    "content_sufficient": true,
+    "category": "sports_card",
+    "views": ["front", "back"],
+    "facts": [
+      {"key":"manufacturer/publisher","value":"SkyBox","image":1,"side":"back","location":"lower copyright line","role":"publisher","confidence":96},
+      {"key":"set_or_product_line","value":"Metal Universe","image":1,"side":"back","location":"upper title line","role":"product_line","confidence":96},
+      {"key":"subject","value":"Kobe Bryant","image":0,"side":"front","location":"lower nameplate","role":"subject","confidence":98},
+      {"key":"release","value":"1997-98","image":1,"side":"back","location":"copyright and set area","role":"release_season","confidence":91},
+      {"key":"card_number","value":"18","image":1,"side":"back","location":"upper-right card-number area","role":"card_number","confidence":88}
+    ],
+    "identity_hint":"SkyBox Metal Universe Kobe Bryant",
+    "candidates":[{"brand":"SkyBox","product_line":"Metal Universe","subject":"Kobe Bryant","year":"1997-98","card_number":"18","language":"English","edition":"","finish":"foil","format":"","material_variant_key":"","materially_distinct":false,"confidence":95}],
+    "missing_discriminators":[]
+  },
+  "sports_catalog_number": {
+    "content_sufficient": true,
+    "category": "sports_card",
+    "views": ["front", "back"],
+    "facts": [
+      {"key":"manufacturer","value":"Panini","image":1,"side":"back","location":"copyright line","role":"manufacturer","confidence":96},
+      {"key":"product_line","value":"Adrenalyn XL","image":0,"side":"front","location":"top logo","role":"product_line","confidence":96},
+      {"key":"athlete","value":"Stephen Curry","image":0,"side":"front","location":"nameplate","role":"subject","confidence":98},
+      {"key":"team","value":"Golden State Warriors","image":0,"side":"front","location":"team area","role":"team","confidence":95},
+      {"key":"copyright_year","value":"2009","image":1,"side":"back","location":"copyright line","role":"copyright_year","confidence":96},
+      {"key":"rating","value":"72","image":0,"side":"front","location":"DEF stat","role":"defense_rating","confidence":99},
+      {"key":"statistic","value":"90","image":0,"side":"front","location":"OFF stat","role":"offense_rating","confidence":99},
+      {"key":"activation_code","value":"ABCD1234","image":1,"side":"back","location":"activation panel","role":"activation_code","confidence":99}
+    ],
+    "identity_hint":"Panini Adrenalyn XL Stephen Curry",
+    "candidates":[{"brand":"Panini","product_line":"Adrenalyn XL","subject":"Stephen Curry","year":"","card_number":"","language":"English","edition":"","finish":"","format":"","material_variant_key":"","materially_distinct":false,"confidence":94}],
+    "missing_discriminators":[]
+  },
+  "tcg_retry_complete": {
+    "content_sufficient": true,
+    "category": "tcg",
+    "views": ["front"],
+    "facts": [
+      {"key":"game_or_publisher","value":"Pokémon","image":0,"side":"front","location":"card frame and game marks","role":"game_or_publisher","confidence":94},
+      {"key":"card_name","value":"Politoed","image":0,"side":"front","location":"top name line","role":"subject","confidence":99},
+      {"key":"language","value":"Italiano","image":0,"side":"front","location":"rules text","role":"language","confidence":99},
+      {"key":"pv","value":"110","image":0,"side":"front","location":"top-right HP area","role":"hp_or_pv","confidence":99},
+      {"key":"attack_name","value":"Crescita Improvvisa","image":0,"side":"front","location":"first attack row","role":"attack_name","confidence":97},
+      {"key":"attack_name","value":"Ranabalzo","image":0,"side":"front","location":"second attack row","role":"attack_name","confidence":97},
+      {"key":"attack_name","value":"Spruzza Energia","image":0,"side":"front","location":"third attack row","role":"attack_name","confidence":97},
+      {"key":"collector_marking","value":"H23/H32","image":0,"side":"front","location":"bottom collector-number line","role":"collector_number","confidence":97},
+      {"key":"finish","value":"holo","image":0,"side":"front","location":"artwork surface","role":"finish","confidence":88}
+    ],
+    "identity_hint":"Pokémon Politoed",
+    "candidates":[{"brand":"Pokémon","product_line":"","subject":"Politoed","year":"","card_number":"H23/H32","language":"Italiano","edition":"","finish":"holo","format":"","material_variant_key":"","materially_distinct":false,"confidence":97}],
+    "missing_discriminators":[]
+  },
+  "sealed_core_without_format": {
+    "content_sufficient": true,
+    "category": "sealed_trading_card_product",
+    "views": ["front"],
+    "facts": [
+      {"key":"brand","value":"Topps","image":0,"side":"front","location":"top-left logo","role":"brand","confidence":99},
+      {"key":"product_line","value":"Topps Chrome Update Basketball","image":0,"side":"front","location":"central product title","role":"product_line","confidence":97},
+      {"key":"season","value":"2025/26","image":0,"side":"front","location":"upper season line","role":"release_season","confidence":96},
+      {"key":"sport_category","value":"Basketball","image":0,"side":"front","location":"product category line","role":"sport","confidence":95},
+      {"key":"configuration","value":"1 autograph or memorabilia card per box","image":0,"side":"front","location":"lower configuration banner","role":"sealed_configuration","confidence":98},
+      {"key":"featured_subject","value":"Cooper Flagg","image":0,"side":"front","location":"left packaging portrait","role":"featured_subject","confidence":95},
+      {"key":"featured_subject","value":"Victor Wembanyama","image":0,"side":"front","location":"right packaging portrait","role":"featured_subject","confidence":95},
+      {"key":"product_type","value":"sealed box","image":0,"side":"front","location":"full package geometry","role":"product_type","confidence":96}
+    ],
+    "identity_hint":"2025/26 Topps Chrome Update Basketball sealed box",
+    "candidates":[{"brand":"Topps","product_line":"Topps Chrome Update Basketball","subject":"","year":"2025/26","card_number":"","language":"English","edition":"Update","finish":"","format":"","material_variant_key":"format_unresolved","materially_distinct":false,"confidence":96}],
+    "missing_discriminators":["format"]
+  }
+}

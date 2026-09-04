@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
+import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -17,6 +18,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 /** Keeps OCR, the multimodal request and its one Web Search alive off-screen. */
 public final class AnalysisForegroundService extends Service {
+    private static final String SMOKE_TAG = "FlipCheckSmoke";
     static final String ACTION_STATE = "com.flipcheck.nativebeta.ANALYSIS_STATE";
     static final String EXTRA_IMAGES = "images";
     static final String EXTRA_DETAILS = "details";
@@ -39,6 +41,9 @@ public final class AnalysisForegroundService extends Service {
         final ArrayList<Uri> images = intent.getParcelableArrayListExtra(EXTRA_IMAGES);
         final String details = intent.getStringExtra(EXTRA_DETAILS);
         startForeground(NOTIFICATION_ID, notification("Analisi in corso…"));
+        if (BuildConfig.DEBUG) {
+            Log.i(SMOKE_TAG, "foreground_service_started");
+        }
         AnalysisResultStore.markRunning(this);
         broadcastState();
         executor.execute(new Runnable() {
@@ -55,6 +60,15 @@ public final class AnalysisForegroundService extends Service {
         try {
             if (images == null || images.isEmpty()) {
                 throw new IllegalArgumentException("Nessuna foto disponibile");
+            }
+            if (BuildConfig.DEBUG && getSharedPreferences("flipcheck_native_beta", 0)
+                    .getBoolean("ci_mock_mode", false)) {
+                notifyProgress("Verifica pipeline locale…");
+                Models.Identification mock = CiMockPipeline.run(this, images);
+                AnalysisResultStore.saveSuccess(this, mock, usage);
+                Log.i(SMOKE_TAG, "mock_pipeline_complete");
+                notifyProgress("Identificazione mock completata");
+                return;
             }
             String key = getSharedPreferences("flipcheck_native_beta", 0)
                     .getString("api_key", "").trim();

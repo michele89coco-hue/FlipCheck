@@ -1,0 +1,73 @@
+{
+  "sports_reversed_identifier": {
+    "ocr": ["Kobe Bryant", "81", "18", "23/78", "8/23"],
+    "vision": {"content_sufficient":true,"category":"sports_card","views":["front","back"],"identity_hint":"SkyBox Metal Universe Kobe Bryant","missing_discriminators":[],"facts":[
+      {"key":"manufacturer_publisher","value":"SkyBox","image":1,"side":"back","location":"copyright line","role":"manufacturer","confidence":96},
+      {"key":"set/product_line","value":"Metal Universe","image":1,"side":"back","location":"set header","role":"product_line","confidence":96},
+      {"key":"release","value":"1997-98","image":1,"side":"back","location":"set header","role":"season","confidence":92},
+      {"key":"subject_name","value":"Kobe Bryant","image":0,"side":"front","location":"nameplate","role":"subject","confidence":99},
+      {"key":"team","value":"Los Angeles Lakers","image":0,"side":"front","location":"team marks","role":"team","confidence":94},
+      {"key":"sport_category","value":"Basketball","image":0,"side":"front","location":"card context","role":"sport","confidence":95},
+      {"key":"card_number","value":"18","image":1,"side":"back","location":"rotated number box","role":"card_number","confidence":81},
+      {"key":"card_number","value":"81","image":1,"side":"back","location":"number box orientation 180","role":"card_number","confidence":94},
+      {"key":"finish","value":"metallic foil","image":0,"side":"front","location":"card surface","role":"finish","confidence":88}],
+      "candidates":[{"manufacturer":"SkyBox","product_line":"Metal Universe","subject":"Kobe Bryant","release_year":"1997-98","card_number":"81","confidence":94}]},
+    "web": {"source_grounded":true,"physical_tuple_coherent":true,"source_url":"https://catalog.example/metal-81","source_reported_catalog_number":"81","source_reported_release_year":"1997-98","source_reported_product_line":"Metal Universe","source_reported_variant":"Base","source_catalog_title":"1997-98 Metal Universe #81","evidence":"authoritative checklist","comparables":[],"candidates":[
+      {"source_url":"https://catalog.example/metal-18","source_authority":"authoritative checklist","brand":"SkyBox","product_line":"Metal Universe","release_year":"1997-98","subject":"Different Athlete","team":"","sport":"Basketball","card_number":"18","language":"","hp":"","evolution_stage":"","attacks":[],"copyright_year":"","layout_signature":"","finish":"","edition":"","printing":"","parallel":"","format":"","configuration":"","product_type":"sports card","product_name":"#18"},
+      {"source_url":"https://catalog.example/metal-81","source_authority":"authoritative checklist","brand":"SkyBox","product_line":"Metal Universe","release_year":"1997-98","subject":"Kobe Bryant","team":"Los Angeles Lakers","sport":"Basketball","card_number":"81","language":"","hp":"","evolution_stage":"","attacks":[],"copyright_year":"","layout_signature":"","finish":"","edition":"Base","printing":"","parallel":"","format":"","configuration":"","product_type":"sports card","product_name":"#81"}]}
+  },
+  "sports_graphic_number": {
+    "ocr": ["Stephen Curry", "DEF 72", "OFF 90", "77", "activation code"],
+    "vision": {"content_sufficient":true,"category":"sports_card","views":["front","back"],"identity_hint":"Panini Adrenalyn XL Stephen Curry","missing_discriminators":[],"facts":[
+      {"key":"manufacturer/publisher","value":"Panini","image":1,"side":"back","location":"publisher line","role":"manufacturer","confidence":97},
+      {"key":"product_line","value":"Adrenalyn XL","image":0,"side":"front","location":"logo","role":"product_line","confidence":96},
+      {"key":"season","value":"2009/10","image":1,"side":"back","location":"season line","role":"season","confidence":90},
+      {"key":"subject","value":"Stephen Curry","image":0,"side":"front","location":"nameplate","role":"subject","confidence":99},
+      {"key":"team","value":"Golden State Warriors","image":0,"side":"front","location":"team mark","role":"team","confidence":94},
+      {"key":"sport_category","value":"Basketball","image":0,"side":"front","location":"card context","role":"sport","confidence":95},
+      {"key":"graphic_number","value":"77","image":0,"side":"front","location":"game rating panel","role":"graphic_number","confidence":98},
+      {"key":"statistics","value":"DEF 72; OFF 90","image":0,"side":"front","location":"game stats","role":"statistics","confidence":98}],
+      "candidates":[{"manufacturer":"Panini","product_line":"Adrenalyn XL","subject":"Stephen Curry","release_year":"2009-10","confidence":95}]},
+    "web": {"source_grounded":true,"physical_tuple_coherent":true,"source_url":"https://catalog.example/curry-67","source_reported_catalog_number":"67","source_reported_release_year":"2009-10","source_reported_product_line":"Adrenalyn XL","source_reported_variant":"Base RC","source_catalog_title":"2009-10 Adrenalyn XL #67","evidence":"specialist database","comparables":[],"candidates":[
+      {"source_url":"https://catalog.example/curry-67","source_authority":"specialist database","brand":"Panini","product_line":"Adrenalyn XL","release_year":"2009-10","subject":"Stephen Curry","team":"Golden State Warriors","sport":"Basketball","card_number":"67","language":"","hp":"","evolution_stage":"","attacks":[],"copyright_year":"","layout_signature":"","finish":"","edition":"Base RC","printing":"","parallel":"","format":"","configuration":"","product_type":"sports card","product_name":"Stephen Curry #67"}]}
+  },
+  "sealed_distinctive_token": {
+    "ocr": ["TOPPS CHROME", "UPDATE", "2025/26", "1 AUTOGRAPH IN EVERY BOX"],
+    "vision": {"content_sufficient":true,"category":"sealed_trading_card_product","views":["front"],"identity_hint":"Topps Chrome Update Basketball sealed box","missing_discriminators":[],"facts":[
+      {"key":"manufacturer","value":"Topps","image":0,"side":"front","location":"top logo","role":"manufacturer","confidence":99},
+      {"key":"product_line","value":"Topps Chrome","image":0,"side":"front","location":"main title","role":"product_line","confidence":97},
+      {"key":"distinctive_printed_token","value":"Update","image":0,"side":"front","location":"below main title","role":"product_line_token","confidence":96},
+      {"key":"release","value":"2025/26","image":0,"side":"front","location":"season mark","role":"season","confidence":97},
+      {"key":"collector_marking","value":"2025/26","image":0,"side":"front","location":"season mark","role":"season","confidence":76},
+      {"key":"sport_category","value":"Basketball","image":0,"side":"front","location":"product title","role":"sport","confidence":96},
+      {"key":"configuration","value":"1 autograph in every box","image":0,"side":"front","location":"configuration badge","role":"configuration","confidence":98},
+      {"key":"product_type","value":"sealed box","image":0,"side":"front","location":"full package","role":"product_type","confidence":98},
+      {"key":"featured_subjects","value":"Cooper Flagg","image":0,"side":"front","location":"package artwork","role":"featured_subject","confidence":94},
+      {"key":"featured_subjects","value":"Victor Wembanyama","image":0,"side":"front","location":"package artwork","role":"featured_subject","confidence":94},
+      {"key":"featured_subjects","value":"Shai Gilgeous-Alexander","image":0,"side":"front","location":"package artwork","role":"featured_subject","confidence":92}],
+      "candidates":[{"manufacturer":"Topps","product_line":"Topps Chrome Update","release_year":"2025-26","product_type":"sealed box","confidence":98}]},
+    "web": {"source_grounded":true,"physical_tuple_coherent":true,"source_url":"https://catalog.example/topps-update","source_reported_catalog_number":"","source_reported_release_year":"2025-26","source_reported_product_line":"Topps Chrome Update","source_reported_variant":"Hobby Box","source_catalog_title":"Topps Chrome Update Basketball Hobby Box","evidence":"official catalog","comparables":[],"candidates":[
+      {"source_url":"https://catalog.example/topps-update","source_authority":"official catalog","brand":"Topps","product_line":"Topps Chrome Update","release_year":"2025-26","subject":"","team":"","sport":"Basketball","card_number":"","language":"","hp":"","evolution_stage":"","attacks":[],"copyright_year":"","layout_signature":"","finish":"","edition":"Hobby Box","printing":"","parallel":"","format":"Hobby Box","configuration":"1 autograph in every box","product_type":"sealed box","product_name":"Topps Chrome Update Basketball Hobby Box"}]}
+  },
+  "tcg_wrong_first_candidate": {
+    "ocr": ["Politoed 110 PV", "Fase 2", "Crescita Improvvisa", "Ranabalzo", "Spruzza Energia", "H23/H32", "©2003"],
+    "vision": {"content_sufficient":true,"category":"tcg","views":["front"],"identity_hint":"Pokémon Politoed","missing_discriminators":[],"facts":[
+      {"key":"game","value":"Pokémon","image":0,"side":"front","location":"card frame","role":"game","confidence":98},
+      {"key":"card_name","value":"Politoed","image":0,"side":"front","location":"top name","role":"subject","confidence":99},
+      {"key":"language","value":"Italiano","image":0,"side":"front","location":"rules text","role":"language","confidence":98},
+      {"key":"hp_pv","value":"110 PV","image":0,"side":"front","location":"top right","role":"hp","confidence":98},
+      {"key":"evolution_stage","value":"Fase 2","image":0,"side":"front","location":"top left","role":"evolution_stage","confidence":97},
+      {"key":"attack_name","value":"Crescita Improvvisa","image":0,"side":"front","location":"attack box 1","role":"attack_name","confidence":96},
+      {"key":"attack_name","value":"Ranabalzo","image":0,"side":"front","location":"attack box 2","role":"attack_name","confidence":96},
+      {"key":"attack_name","value":"Spruzza Energia","image":0,"side":"front","location":"attack box 3","role":"attack_name","confidence":96},
+      {"key":"attack_damage","value":"30+; 70","image":0,"side":"front","location":"attack boxes","role":"attack_damage","confidence":94},
+      {"key":"copyright_year","value":"2003","image":0,"side":"front","location":"bottom copyright","role":"copyright_year","confidence":96},
+      {"key":"collector_number","value":"H23/H32","image":0,"side":"front","location":"bottom collector mark","role":"collector_number","confidence":98},
+      {"key":"finish","value":"holographic foil","image":0,"side":"front","location":"artwork surface","role":"finish","confidence":91},
+      {"key":"layout_signature","value":"e-reader layout","image":0,"side":"front","location":"full card","role":"layout","confidence":96}],
+      "candidates":[{"game":"Pokémon","card_name":"Politoed","collector_number":"H23/H32","language":"Italiano","confidence":96}]},
+    "web": {"source_grounded":true,"physical_tuple_coherent":false,"source_url":"https://catalog.example/aquapolis-h23","source_reported_catalog_number":"H23/H32","source_reported_release_year":"2003","source_reported_product_line":"Aquapolis","source_reported_variant":"Holo Rare","source_catalog_title":"Politoed H23/H32","evidence":"specialist database","comparables":[],"candidates":[
+      {"source_url":"https://catalog.example/wrong-12","source_authority":"specialist database","brand":"Pokémon","product_line":"Diamante & Perla - Il Risveglio dei Miti","release_year":"2008","subject":"Politoed","team":"","sport":"","card_number":"12/146","language":"Italiano","hp":"110","evolution_stage":"Fase 2","attacks":["Attacco differente"],"copyright_year":"2008","layout_signature":"Diamond and Pearl layout","finish":"Rare Holo","edition":"","printing":"","parallel":"","format":"","configuration":"","product_type":"TCG card","product_name":"Politoed 12/146"},
+      {"source_url":"https://catalog.example/aquapolis-h23","source_authority":"specialist database","brand":"Pokémon","product_line":"Aquapolis","release_year":"2003","subject":"Politoed","team":"","sport":"","card_number":"H23/H32","language":"Italiano","hp":"110 PV","evolution_stage":"Fase 2","attacks":["Crescita Improvvisa","Ranabalzo","Spruzza Energia"],"copyright_year":"2003","layout_signature":"e-reader layout","finish":"Holo Rare","edition":"","printing":"","parallel":"","format":"","configuration":"","product_type":"TCG card","product_name":"Politoed H23/H32"}]}
+  }
+}

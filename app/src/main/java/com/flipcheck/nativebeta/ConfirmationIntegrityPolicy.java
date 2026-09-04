@@ -6,19 +6,24 @@ final class ConfirmationIntegrityPolicy {
     }
 
     static void enforce(Models.Identification id) {
-        if (id == null || !id.marketReady) {
+        if (id == null) {
             return;
         }
-        if (CardPhotoTupleClosure.canClose(id)) {
-            return;
+        if (UniversalIdentityClosure.enforceTerminalState(id)) return;
+        Models.CandidateScore physicalTop = firstAlive(id);
+        if (CollectibleCardIdentityPolicy.isCard(id)) {
+            CollectibleCardIdentityPolicy.normalizeConfirmedIdentity(id, physicalTop);
         }
         // Physical card tuple closure has completed the mandatory independent
         // review. Do not reopen it merely because no checklist number was
         // printed/read (or because a visible number is a game statistic).
-        if ("physical_card_tuple".equals(id.modelProof)) {
+        if (UniversalIdentityClosure.apply(id, "integrity_gate")
+                || "physical_card_tuple".equals(id.modelProof)
+                || UniversalIdentityClosure.ROUTE.equals(id.modelProof)) {
             return;
         }
-        Models.CandidateScore top = firstAlive(id);
+        if (!id.marketReady) return;
+        Models.CandidateScore top = physicalTop;
         CollectibleCardIdentityPolicy.normalizeConfirmedIdentity(id, top);
         boolean missingExactModel = safe(id.model).isEmpty();
         boolean tcgModelIncomplete = CollectibleCardIdentityPolicy.modelIsOnlyCollectorNumber(id);

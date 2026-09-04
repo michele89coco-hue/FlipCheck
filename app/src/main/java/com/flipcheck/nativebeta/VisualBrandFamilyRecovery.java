@@ -49,6 +49,7 @@ final class VisualBrandFamilyRecovery {
     }
 
     static boolean apply(Models.Identification id, OpenAiClient.Response response) {
+        if (UniversalIdentityClosure.enforceTerminalState(id)) return true;
         if (id == null || response == null || !response.complete
                 || !safe(response.parseError).isEmpty() || response.payload == null) {
             return false;

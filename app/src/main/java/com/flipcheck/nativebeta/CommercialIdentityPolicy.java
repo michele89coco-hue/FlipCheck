@@ -9,6 +9,7 @@ final class CommercialIdentityPolicy {
 
     static boolean canConfirmPhoneFamily(Models.Identification id,
                                          Models.CandidateScore c) {
+        if (id != null) return UniversalIdentityClosure.canClose(id);
         if (id == null || c == null || c.hardRejected
                 || UniversalConsistencyGate.strongCandidateConflict(c)) {
             return false;
@@ -35,6 +36,10 @@ final class CommercialIdentityPolicy {
 
     static void confirmPhoneFamily(Models.Identification id,
                                    Models.CandidateScore c) {
+        if (id != null) {
+            UniversalIdentityClosure.apply(id, "legacy_commercial_gate_delegate");
+            return;
+        }
         id.brand = "Samsung";
         id.family = "Galaxy S24 Ultra";
         id.model = "Samsung Galaxy S24 Ultra";

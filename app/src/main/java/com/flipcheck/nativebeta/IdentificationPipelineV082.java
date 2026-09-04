@@ -1,6 +1,5 @@
 package com.flipcheck.nativebeta;
 
-import androidx.core.os.EnvironmentCompat;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +25,7 @@ final class IdentificationPipelineV082 {
                                           OpenAiClient client, Models.Usage usage) throws Exception {
         Models.Identification id = new Models.Identification();
         id.localScan = local;
+        LocalEvidenceBootstrap.apply(id,local);
         if (images == null || images.isEmpty()) {
             stopForPhoto(id, "Aggiungi una foto chiara dell'oggetto intero",
                     "Non è disponibile una vista da analizzare.", "Nessuna immagine disponibile.");
@@ -33,62 +33,73 @@ final class IdentificationPipelineV082 {
         }
         if (!UniversalConsistencyGate.visionBudgetAvailable(usage)
                 || !UniversalConsistencyGate.discoveryBudgetAvailable(usage)) {
-            stopForPhoto(id, fallbackPhoto(id),
-                    "Il budget di una sola richiesta multimodale e una sola Web Search per scansione è già esaurito.",
-                    "BUDGET v0.82: nessun secondo tentativo automatico.");
+            id.visionResponseStatus="BUDGET_EXHAUSTED";
+            finishTechnicalFailure(id,"Budget della scansione già esaurito: nessuna nuova foto richiesta.");
             return id;
         }
 
-        OpenAiClient.Response combined = client.resolveMultimodal(new ArrayList<>(images),
-                buildMultimodalPrompt(local, details));
-        if (combined != null) {
-            IdentificationEngine.collectStage(id, usage, combined, "multimodal-resolve-v082");
+        OpenAiClient.Response firstVision;
+        try {
+            firstVision = client.observe(new ArrayList<>(images), buildMultimodalPrompt(local, details));
+        } catch (Exception failure) {
+            firstVision=null;id.visionResponseStatus=technicalStatus(failure);
+            id.visionFinishReason=safe(failure.getMessage());id.pipelineFailureDomain="PRIMARY_VISION";
         }
-        if (combined == null || !combined.complete || !empty(combined.parseError)
-                || combined.payload == null || combined.payload.length() == 0) {
-            stopForPhoto(id, "Aggiungi una foto più ravvicinata e nitida dell'oggetto, includendo logo ed eventuale etichetta",
-                    "La richiesta multimodale non ha restituito una struttura completa; nessun retry viene eseguito.",
-                    "FAIL-CLOSED v0.82: risposta multimodale incompleta"
-                            + reasonSuffix(combined == null ? "" : combined.incompleteReason,
-                            combined == null ? "" : combined.parseError));
-            return id;
+        if (firstVision != null) {
+            IdentificationEngine.collectStage(id, usage, firstVision,
+                    "production-vision-1-observation-v119-no-web");
+            id.visionResponseStatus=firstVision.technicalStatus;
+            id.visionFinishReason=empty(firstVision.incompleteReason)?firstVision.technicalStatus:firstVision.incompleteReason;
+        }
+        if(technicalFailure(firstVision)){
+            // Keep every complete fact recovered from the truncated response before retrying.
+            if(firstVision!=null&&firstVision.payload!=null&&firstVision.payload.length()>0)
+                ingestPartialTechnicalPayload(id,firstVision.payload,local);
+            if(technicalRetryAllowed(usage)){
+                id.technicalRetryCount++;
+                try{
+                    OpenAiClient.Response retry=client.observeTechnicalRecovery(new ArrayList<>(images),
+                            buildMultimodalPrompt(local,details)+"\nReturn the shortest valid JSON possible; omit no required key.");
+                    if(retry!=null)IdentificationEngine.collectStage(id,usage,retry,
+                            "technical-vision-retry-compact-same-images");
+                    firstVision=retry;id.visionResponseStatus=retry==null?"NETWORK_ERROR":retry.technicalStatus;
+                    id.visionFinishReason=retry==null?"null_retry_response":
+                            (empty(retry.incompleteReason)?retry.technicalStatus:retry.incompleteReason);
+                }catch(Exception retryFailure){firstVision=null;id.visionResponseStatus=technicalStatus(retryFailure);
+                    id.visionFinishReason=safe(retryFailure.getMessage());}
+            }
+            if(technicalFailure(firstVision)){
+                finishTechnicalFailure(id,"Vision non ha completato una risposta valida dopo il recupero tecnico. Le prove OCR locali sono state conservate.");
+                IdentificationEngine.finalizeOutput(id,null);return id;
+            }
         }
 
-        JSONObject root = combined.payload;
-        JSONObject observation = root.optJSONObject("observation");
-        JSONObject resolution = root.optJSONObject("resolution");
-        if (!observationUsable(combined, observation)) {
-            stopForPhoto(id, "Aggiungi una foto più ravvicinata e nitida dell'oggetto, includendo logo ed eventuale etichetta",
+        JSONObject observation = firstVision.payload;
+        if("CONTENT_INSUFFICIENT".equals(firstVision.technicalStatus)){
+            stopForPhoto(id, profileAwarePhotoRequest(id),
+                    "Le immagini non mostrano dati leggibili sufficienti per il profilo rilevato.",
+                    "CONTENT_INSUFFICIENT: richiesta fotografica basata sul contenuto, non su un errore tecnico.");
+            return id;
+        }
+        if (!observationUsable(firstVision, observation)) {
+            stopForPhoto(id, profileAwarePhotoRequest(id),
                     "L'oggetto non è stato osservato con sufficiente affidabilità; eventuali risultati web non vengono utilizzati.",
                     "FAIL-CLOSED v0.82: osservazione multimodale non valida.");
             return id;
         }
 
-        parseObservation(id, observation);
-        OverlayScopePolicy.normalize(id);
-        ObservationSanitizer.apply(id);
-        CategoryFactPolicy.apply(id);
-        PhysicalIdentityConsolidator.apply(id);
-        BrandBlindPolicy.sanitizeBrandEvidence(id, local);
-        collectSoftOcr(id, local);
-        PhotoIdentityPolicy.consolidateObservation(id, local);
-        SealedProductIdentityPolicy.consolidateObservation(id, local);
-        CollectibleCardIdentityPolicy.sanitizeObservation(id, local);
-        if (PhysicalIdentityRecovery.eligible(id, usage)) {
-            OpenAiClient.Response recovery = client.recoverPhysicalIdentity(
-                    new ArrayList<>(images), PhysicalIdentityRecovery.prompt(id));
-            if (recovery != null) {
-                IdentificationEngine.collectStage(id, usage, recovery,
-                        "physical-identity-recovery-v101-no-web");
-                if (PhysicalIdentityRecovery.apply(id, recovery)) {
-                    CategoryFactPolicy.apply(id);
-                    PhysicalIdentityConsolidator.apply(id);
-                    BrandBlindPolicy.sanitizeBrandEvidence(id, local);
-                    PhotoIdentityPolicy.consolidateObservation(id, local);
-                    SealedProductIdentityPolicy.consolidateObservation(id, local);
-                    CollectibleCardIdentityPolicy.sanitizeObservation(id, local);
-                }
-            }
+        if (parsePrimaryObservationAndAttemptClosure(id, observation, local)) {
+            enrichConfirmedIdentity(id, client, usage,images);
+            IdentificationEngine.finalizeOutput(id, null);
+            return id;
+        }
+
+        // A second remote Vision call is reserved exclusively for technical recovery
+        // (truncated, invalid or non-parseable output) in the block above. A valid
+        // first observation must not spend another call to reinforce its own hypothesis.
+        if (PhotographicIdentityClosure.mayRequestAnotherPhoto(id)) {
+            id.additionalVisionReason="no_automatic_discriminative_call; requested_field="
+                    +safe(id.discriminativeField);
         }
         Models.Identifier primary = selectPrimary(local, id);
         if (primary != null) {
@@ -97,104 +108,106 @@ final class IdentificationPipelineV082 {
         }
         HardConstraintEngine.apply(id, primary);
 
-        // Card closure must run before generic fail-closed exits.  Previously
-        // those exits stopped the mandatory second verification before it was
-        // even issued, leaving a complete Curry/Boniface tuple at brand only.
-        if (CardPhotoTupleClosure.requiresMandatoryVerification(id, usage)) {
-            OpenAiClient.Response cardVerification = client.recoverExactCardCatalog(
-                    new ArrayList<>(images), ExactCardCatalogRecovery.prompt(id), false);
-            if (cardVerification != null) {
-                IdentificationEngine.collectStage(id, usage, cardVerification,
-                        "mandatory-card-verification-v112-no-web");
-                ExactCardCatalogRecovery.apply(id, cardVerification);
-            }
-            // The second review may add catalog proof, but it cannot suppress
-            // an already complete commercial tuple read from the photographs.
-            if (CardPhotoTupleClosure.apply(id)) {
-                IdentificationEngine.finalizeOutput(id, primary);
-                return id;
-            }
+        if (ProductionClosureCheckpoint.attempt(id, "before_web_enrichment")) {
+            enrichConfirmedIdentity(id, client, usage,images);
+            IdentificationEngine.finalizeOutput(id, primary);
+            return id;
         }
 
         if (!hasResolutionEvidence(id, primary)) {
-            stopForPhoto(id, fallbackPhoto(id),
-                    "La foto non contiene abbastanza segnali strutturati per sostenere una risoluzione affidabile; l'OCR non etichettato è stato escluso.",
-                    "FAIL-CLOSED v0.82: evidenza visiva insufficiente.");
+            finishUnconfirmed(id,"La foto non contiene abbastanza segnali fisici per una tupla univoca.",
+                    "insufficient_photographic_tuple");
             IdentificationEngine.finalizeOutput(id, primary);
             return id;
         }
 
-        if (combined.usage == null || combined.usage.webCalls != 1 || resolution == null) {
-            stopForPhoto(id, fallbackPhoto(id),
-                    "La richiesta non ha completato l'unica Web Search prevista; nessun candidato viene promosso.",
-                    "FAIL-CLOSED v0.82: Web Search assente o incompleta.");
+        OpenAiClient.Response combined = client.webStage("resolve",
+                buildResolvePrompt(id, primary, details));
+        if (combined != null) {
+            IdentificationEngine.collectStage(id, usage, combined,
+                    "production-web-resolution-v119-after-vision");
+        }
+        if (combined == null || !combined.complete || !empty(combined.parseError)
+                || combined.usage == null || combined.usage.webCalls != 1
+                || combined.payload == null || combined.payload.length() == 0) {
+            id.webStatus="FAILED";id.marketStatus="NOT_AVAILABLE";
+            finishUnconfirmed(id,"La ricerca Web non è disponibile; la decisione resta basata soltanto sulle foto.",
+                    "web_unavailable_nonblocking");
             IdentificationEngine.finalizeOutput(id, primary);
             return id;
         }
 
-        id.searchQuery = searchSeed(id, primary);
-        if (primary == null && !BrandBlindPolicy.trustedObservedBrand(id)
-                && !firstQueryIsBrandNeutral(id, combined.queries)) {
-            stopForPhoto(id, fallbackPhoto(id),
-                    "In assenza di marca o codice visibile, la ricerca non è partita da una query neutrale: i candidati vengono scartati per evitare ancoraggio a un marchio ipotizzato.",
-                    "FAIL-CLOSED v0.82: query iniziale non brand-neutral.");
-            IdentificationEngine.finalizeOutput(id, primary);
-            return id;
-        }
-
-        combined.payload = resolution;
-        applyResolution(id, combined, primary);
-        combined.payload = root;
-        if (ExactCardCatalogRecovery.eligible(id, usage)) {
-            OpenAiClient.Response cardCatalog = client.recoverExactCardCatalog(
-                    ExactCardCatalogRecovery.attachImages(id)
-                            ? firstImageOnly(images) : new ArrayList<>(),
-                    ExactCardCatalogRecovery.prompt(id),
-                    ExactCardCatalogRecovery.useSecondWeb(usage));
-            if (cardCatalog != null) {
-                IdentificationEngine.collectStage(id, usage, cardCatalog,
-                        "universal-exact-identity-recovery-v110");
-                ExactCardCatalogRecovery.apply(id, cardCatalog);
-            }
-        }
-        if (SportsCardParallelRecovery.eligible(id, usage)) {
-            OpenAiClient.Response exactParallel = client.recoverSportsCardParallel(
-                    new ArrayList<>(images), SportsCardParallelRecovery.prompt(id));
-            if (exactParallel != null) {
-                IdentificationEngine.collectStage(id, usage, exactParallel,
-                        "sports-card-parallel-recovery-v104-one-web");
-                SportsCardParallelRecovery.apply(id, exactParallel);
-            }
-        }
-        if (BorderlineIdentityAdjudicator.eligible(id, usage)) {
-            OpenAiClient.Response adjudication = client.adjudicateBorderline(
-                    new ArrayList<>(images), BorderlineIdentityAdjudicator.prompt(id));
-            if (adjudication != null) {
-                IdentificationEngine.collectStage(id, usage, adjudication,
-                        "borderline-adjudication-v099-no-web");
-                BorderlineIdentityAdjudicator.apply(id, adjudication);
-            }
-        }
-        if (VisualBrandFamilyRecovery.eligible(id, usage)) {
-            OpenAiClient.Response visualBrand = client.recoverVisualBrandFamily(
-                    new ArrayList<>(images), VisualBrandFamilyRecovery.prompt(id));
-            boolean visualBrandApplied = false;
-            if (visualBrand != null) {
-                IdentificationEngine.collectStage(id, usage, visualBrand,
-                        "visual-brand-family-recovery-v102-no-web");
-                visualBrandApplied = VisualBrandFamilyRecovery.apply(id, visualBrand);
-            }
-            if (!visualBrandApplied) {
-                VisualBrandFamilyRecovery.applyInconclusiveGuard(id);
-            }
-        }
-        // Card identity is a physical tuple. A missing/poorly indexed catalog
-        // page may reduce corroboration confidence, but must not collapse a
-        // complete front/back tuple to only "Panini card" or a set name.
-        CardPhotoTupleClosure.apply(id);
-        RemoteCandidateGuard.apply(id);
+        id.searchQuery=PhotographicIdentityClosure.webSeed(id);
+        NonDestructiveWebEnrichment.apply(id,combined);
+        if(!id.catalogVerified)finishUnconfirmed(id,"Nessun candidato Web compatibile con l’intera impronta fotografica.",
+                "catalog_candidate_not_compatible");
+        FinalIdentityDecisionEngine.freeze(id,"after_web_resolution");
         IdentificationEngine.finalizeOutput(id, primary);
         return id;
+    }
+
+    /** Exact parser/checkpoint path used by production and replay regression tests. */
+    static boolean parsePrimaryObservationAndAttemptClosure(Models.Identification id,
+                                                             JSONObject observation,
+                                                             Models.LocalScan local) {
+        parseObservation(id, observation);
+        OverlayScopePolicy.normalize(id);
+        ObservationSanitizer.apply(id);
+        collectSoftOcr(id,local);
+        id.criticalCardDetailNeedsSecondVision=false;
+        boolean closed=PhotographicIdentityClosure.apply(id,"production_after_multimodal_parse");
+        ProductionClosureCheckpoint.record(id,"production_after_multimodal_parse",closed);
+        ConsistencyInvariantChecker.enforce(id,"after_primary_multimodal_parse");
+        return closed||id.identityConfirmed;
+    }
+
+    static boolean requiresMandatoryCardSecondVision(Models.Identification id,
+                                                      Models.Usage usage) {
+        return false;
+    }
+
+    private static void mergePhysicalRecovery(Models.Identification id,
+                                              OpenAiClient.Response recovery,
+                                              Models.LocalScan local) {
+        if (!PhysicalIdentityRecovery.apply(id, recovery)) return;
+        OverlayScopePolicy.normalize(id);
+        ObservationSanitizer.apply(id);
+        PhotographicFactNormalizer.normalize(id,"after_focused_vision_merge");
+    }
+
+    private static void enrichConfirmedIdentity(Models.Identification id,
+                                                OpenAiClient client,
+                                                Models.Usage usage,
+                                                List<String> images) {
+        if(id==null||client==null||usage==null)return;
+        id.exactResolutionReason=ExactCatalogResolver.reason(id);
+        ProfileQueryBuilder.exactQueries(id);
+        if(!ExactCatalogResolver.required(id)){id.disproofStatus=id.catalogVerified?"PASSED":"NOT_EXECUTED";FinalIdentityDecisionEngine.freeze(id,"exact_catalog_already_resolved");return;}
+        if(usage.webCalls>=1){id.webStatus="SKIPPED_BUDGET";id.disproofStatus="NOT_EXECUTED";ConfirmedIdentityEnrichment.unavailable(id);return;}
+        try{
+            id.exactWebResolutionAttempts++;
+            OpenAiClient.Response enrichment=client.enrichConfirmedIdentity(
+                    ConfirmedIdentityEnrichment.prompt(id));
+            if(enrichment!=null)IdentificationEngine.collectStage(id,usage,enrichment,
+                    "post-photographic-closure-enrichment-v124");
+            ConfirmedIdentityEnrichment.apply(id,enrichment);
+            if(!id.catalogVerified&&usage.webCalls<2&&usage.costUsd+0.008d<=0.025d
+                    &&("AMBIGUOUS".equals(id.catalogCompatibilityStatus)||"NO_STRUCTURED_CANDIDATE".equals(id.catalogCompatibilityStatus))){
+                id.secondWebResolutionReason="first_batch_"+id.catalogCompatibilityStatus.toLowerCase(Locale.ROOT)+"; projected_total_cost_within_cap";
+                id.exactWebResolutionAttempts++;
+                OpenAiClient.Response second=client.enrichConfirmedIdentity(ConfirmedIdentityEnrichment.prompt(id)
+                        +"\nSECOND_AND_FINAL_RESOLUTION: use unresolved hierarchy="+id.catalogHierarchy
+                        +" conflicts="+id.catalogConflicts+". Return alternative authoritative/checklist candidates; do not repeat rejected URLs.");
+                if(second!=null)IdentificationEngine.collectStage(id,usage,second,"exact-catalog-resolution-second-and-final");
+                ConfirmedIdentityEnrichment.apply(id,second);
+            }
+            // Resolve a post-Web conflict only from the evidence already normalized.
+            // A further Vision call seeded by the disputed tuple would be circular.
+            PostEnrichmentConsistencyChecker.apply(id);
+            CanonicalIdentityComposer.refreshConfirmedCard(id);
+            ConsistencyInvariantChecker.enforce(id,"post_catalog_conflict_check");
+        }catch(Exception ignored){ConfirmedIdentityEnrichment.unavailable(id);}
+        FinalIdentityDecisionEngine.freeze(id,"after_enrichment_route");
     }
 
     private static List<String> firstImageOnly(List<String> images) {
@@ -242,12 +255,16 @@ final class IdentificationPipelineV082 {
                 || response.payload == null || response.payload.length() == 0) {
             return false;
         }
-        return response.payload.optBoolean("observation_valid", false);
+        return response.payload.has("content_sufficient")
+                ? response.payload.optBoolean("content_sufficient",false)
+                : response.payload.optBoolean("observation_valid", false);
     }
 
     static boolean observationUsable(OpenAiClient.Response response, JSONObject observation) {
         return response != null && response.complete && empty(response.parseError)
-                && observation != null && observation.optBoolean("observation_valid", false);
+                && observation != null && (observation.has("content_sufficient")
+                ? observation.optBoolean("content_sufficient",false)
+                : observation.optBoolean("observation_valid", false));
     }
 
     static boolean firstQueryIsBrandNeutral(List<String> queries) {
@@ -269,6 +286,10 @@ final class IdentificationPipelineV082 {
     }
 
     static void parseObservation(Models.Identification id, JSONObject p) {
+        if(p!=null&&p.has("facts")){
+            parseCompactObservation(id,p);
+            return;
+        }
         id.title = clean(p.optString("title", ""));
         id.category = clean(p.optString("category", ""));
         id.categoryKey = clean(p.optString("category_key", "other")).toLowerCase(Locale.ROOT)
@@ -293,13 +314,29 @@ final class IdentificationPipelineV082 {
             id.photoIdentityPhysicalBinding = photoIdentity.optBoolean("physical_binding", false);
             id.photoIdentityOverlayOrWatermark = photoIdentity.optBoolean(
                     "overlay_or_watermark", false);
+            id.photoIdentityExternalWatermark = photoIdentity.optBoolean(
+                    "external_watermark", false);
+            id.photoIdentityIdentityObscured = photoIdentity.optBoolean(
+                    "identity_obscured", false);
+            id.photoIdentityAmbiguous=photoIdentity.optBoolean("identity_ambiguous",false);
+            id.photoAlternativeCount=photoIdentity.optInt("materially_distinct_alternatives",0);
+            id.discriminativeField=clean(photoIdentity.optString("missing_discriminative_field",""));
+            id.discriminativeFieldVisible=photoIdentity.optBoolean("discriminative_field_visible",false);
             id.photoIdentityConfidence = clamp(photoIdentity.optInt("confidence", 0));
-            id.photoIdentityFields.addAll(strings(photoIdentity.optJSONArray("fields"), 12));
+            id.photoIdentityFields.addAll(strings(photoIdentity.optJSONArray("fields"), 24));
             id.photoIdentityComplete = photoIdentity.optBoolean("complete", false)
                     && id.photoIdentityPhysicalBinding
-                    && !id.photoIdentityOverlayOrWatermark
+                    && !UniversalIdentityClosure.externalWatermarkObscuresIdentity(id)
                     && !id.photoIdentityName.isEmpty();
+            EvidenceLedger.ingestPhotoObservation(id,photoIdentity);
+            JSONArray physicalCandidates=photoIdentity.optJSONArray("candidates");
+            if(physicalCandidates!=null)for(int i=0;i<physicalCandidates.length();i++){
+                JSONObject raw=physicalCandidates.optJSONObject(i);if(raw==null)continue;
+                Models.CandidateScore c=CandidateCanonicalizer.fromJson(raw);
+                c.candidateFacts.add("origin=photo_candidate");id.candidates.add(c);
+            }
         }
+        CategoryPresentationPolicy.apply(id);
 
         JSONArray labels = p.optJSONArray("visible_labels");
         if (labels != null) {
@@ -319,6 +356,7 @@ final class IdentificationPipelineV082 {
                 }
                 addOnce(id.visibleLabels, text);
                 if (!foreground) {
+                    addOnce(id.externalLabels, text);
                     continue;
                 }
                 if ("transient_display".equals(type) || SearchEvidenceFilter.isTransientDisplay(text)) {
@@ -359,7 +397,7 @@ final class IdentificationPipelineV082 {
             id.brandEvidence = "visible_brand_text";
         } else {
             id.brand = "";
-            id.brandEvidence = EnvironmentCompat.MEDIA_UNKNOWN;
+            id.brandEvidence = "unknown";
         }
 
         id.visionCandidates.addAll(strings(p.optJSONArray("candidate_hints"), 5));
@@ -388,6 +426,41 @@ final class IdentificationPipelineV082 {
         if (id.title.isEmpty() || genericTitle(id.title)) {
             id.title = id.category.isEmpty() ? "Oggetto" : id.category;
         }
+    }
+
+    private static void parseCompactObservation(Models.Identification id,JSONObject p){
+        id.categoryKey=clean(p.optString("category","other_collectible")).toLowerCase(Locale.ROOT)
+                .replace('-','_').replace(' ','_');
+        id.category=CategoryPresentationPolicy.humanCategory(id.categoryKey);
+        id.categoryConfidence=compactCategoryConfidence(p.optJSONArray("facts"),p.optBoolean("content_sufficient",false));
+        id.categoryStatus=p.optBoolean("content_sufficient",false)?"CONFIRMED":"UNRESOLVED";
+        id.photoViews.addAll(strings(p.optJSONArray("views"),6));
+        EvidenceLedger.ingestCompactPhotoObservation(id,p.optJSONArray("facts"));
+        String viewText=id.photoViews.toString().toLowerCase(Locale.ROOT);
+        if(p.optBoolean("content_sufficient",false)&&(viewText.contains("front")||viewText.contains("fronte")))
+            EvidenceLedger.addPhotoFact(id,"front_complete","true","direct_photo_observation",90,0,"front","full_object_bounds","complete_identity_bearing_view");
+        id.photoIdentityName=clean(p.optString("identity_hint",""));
+        id.photoIdentityKind="compact_evidence_ledger";
+        id.photoIdentityPhysicalBinding=!id.evidenceLedger.isEmpty();
+        JSONArray missing=p.optJSONArray("missing_discriminators");
+        List<String> missingValues=strings(missing,8);
+        id.discriminativeField=missingValues.isEmpty()?"":missingValues.get(0);
+        id.discriminativeFieldVisible=false;
+        JSONArray candidates=p.optJSONArray("candidates");
+        if(candidates!=null)for(int i=0;i<candidates.length();i++){
+            JSONObject raw=candidates.optJSONObject(i);if(raw==null)continue;
+            Models.CandidateScore c=CandidateCanonicalizer.fromJson(raw);
+            c.candidateFacts.add("origin=photo_candidate");id.candidates.add(c);
+        }
+        id.photoAlternativeCount=id.candidates.size();
+        id.photoIdentityAmbiguous=id.photoAlternativeCount>1&&!id.discriminativeField.isEmpty();
+        id.photoIdentityConfidence=id.candidates.size()==1?id.candidates.get(0).totalScore:
+                (id.photoIdentityName.isEmpty()?0:85);
+        id.photoIdentityComplete=p.optBoolean("content_sufficient",false)
+                &&missingValues.isEmpty()&&!id.photoIdentityName.isEmpty()
+                &&id.photoAlternativeCount<=1&&id.photoIdentityPhysicalBinding;
+        id.title=id.photoIdentityName.isEmpty()?id.category:id.photoIdentityName;
+        CategoryPresentationPolicy.apply(id);
     }
 
     private static void applyResolution(Models.Identification id, OpenAiClient.Response response,
@@ -633,8 +706,8 @@ final class IdentificationPipelineV082 {
         }
         if (top == null) {
             SealedProductIdentityPolicy.applyPhotoTupleFallback(id);
-            if (SealedProductIdentityPolicy.canConfirmPhotoTupleWithoutCandidate(id)) {
-                SealedProductIdentityPolicy.confirmPhotoTupleWithoutCandidate(id);
+            if (ProductionClosureCheckpoint.attempt(id, "before_no_candidate_fallback")) {
+                ConfirmedIdentityEnrichment.apply(id,response);
                 return;
             }
             id.marketReady = false;
@@ -652,12 +725,6 @@ final class IdentificationPipelineV082 {
         }
 
         SealedProductIdentityPolicy.applyPhotoTupleFallback(id);
-        if (SealedProductIdentityPolicy.canConfirmPhotoTupleWithoutCandidate(id)
-                && !factTrue(top, "exact_identity_supported")) {
-            SealedProductIdentityPolicy.confirmPhotoTupleWithoutCandidate(id);
-            return;
-        }
-
         if (!top.brand.isEmpty() && (id.brand.isEmpty()
                 || !BrandBlindPolicy.trustedObservedBrand(id))
                 && factTrue(top, "brand_identity_supported")) {
@@ -668,7 +735,8 @@ final class IdentificationPipelineV082 {
         id.model = top.model;
         CollectibleCardIdentityPolicy.prepareForCandidateConfirmation(id, top);
         if (factTrue(top, "family_identity_supported")) {
-            id.familyConfidence = Math.max(id.familyConfidence, Math.min(88, top.totalScore));
+            id.familyConfidence = Math.max(id.familyConfidence,
+                    Math.min(top.totalScore,Math.max(id.familyConfidence,id.mainIdentityConfidence)));
         }
         boolean sourceGrounded = factTrue(top, "source_grounded");
         boolean completeReference = factTrue(top, "exact_reference_complete");
@@ -691,41 +759,18 @@ final class IdentificationPipelineV082 {
                 && ReferenceScopePolicy.allowsExactConfirmation(id, top);
         boolean photoConfirmed = PhotoIdentityPolicy.canConfirm(id, top, primary, margin)
                 && ReferenceScopePolicy.allowsExactConfirmation(id, top);
-        boolean cardConfirmed = CollectibleCardIdentityPolicy.canConfirm(id, top);
-        if (cardConfirmed) {
-            CollectibleCardIdentityPolicy.confirm(id, top);
+        if (ProductionClosureCheckpoint.attempt(id, "after_candidate_selection")) {
+            ConfirmedIdentityEnrichment.apply(id,response);
             return;
         }
-        if (SealedProductIdentityPolicy.canConfirmCommercialSku(id, top)) {
-            SealedProductIdentityPolicy.confirmCommercialSku(id, top);
-            return;
-        }
-        if (CommercialIdentityPolicy.canConfirmPhoneFamily(id, top)) {
-            CommercialIdentityPolicy.confirmPhoneFamily(id, top);
-            return;
-        }
-        if (photoConfirmed) {
-            PhotoIdentityPolicy.confirm(id, top);
-            return;
-        }
-        id.marketReady = confirmed;
-        id.disproofPassed = confirmed;
-        id.modelProof = confirmed ? clean(p.optString("model_proof", "none")) : "none";
-        id.modelConfidence = id.model.isEmpty() ? 0 : confirmed
-                ? Math.min(95, Math.max(85, Math.min(sourceConfidence, top.totalScore + 5)))
-                : Math.min(84, Math.max(35, top.totalScore));
+        id.marketReady = false;
+        id.disproofPassed = false;
+        id.modelProof = "none";
+        id.modelConfidence = id.model.isEmpty() ? 0 : Math.min(84, Math.max(35, top.totalScore));
         id.verificationSummary = clean(p.optString("evidence", ""));
         if (id.verificationSummary.isEmpty()) {
             id.verificationSummary = "Leader " + top.displayName() + " · " + top.totalScore
                     + "/100 · margine " + margin + ".";
-        }
-        if (confirmed) {
-            id.nextPhotoRequest = "";
-            id.nextPhotoReason = "";
-            id.decisionReason = "CONFIRMED v0.82: la richiesta multimodale conserva la foto durante Web Search e converge su riferimento completo, prova identitaria e disproof.";
-            id.categoryConfidence = Math.max(id.categoryConfidence, 92);
-            id.familyConfidence = Math.max(id.familyConfidence, 88);
-            return;
         }
         id.marketReady = false;
         id.disproofPassed = false;
@@ -738,7 +783,10 @@ final class IdentificationPipelineV082 {
             id.nextPhotoReason = "Il modello esatto non supera ancora riferimento completo, fonte diretta e separazione dal miglior concorrente.";
         }
         id.decisionReason = "NEED_ANOTHER_PHOTO v0.82: pipeline fermata dopo una richiesta multimodale con massimo 1 Web; nessun retry o ricerca prezzo.";
+        ProductionClosureCheckpoint.attempt(id, "before_probable_exposure");
         CollectibleCardIdentityPolicy.exposeBestSpecificProbable(id, top);
+        if(ProductionClosureCheckpoint.attempt(id, "after_probable_exposure"))
+            ConfirmedIdentityEnrichment.apply(id,response);
     }
 
     static void applyResolutionForTest(Models.Identification id, OpenAiClient.Response response,
@@ -816,29 +864,17 @@ final class IdentificationPipelineV082 {
         }
         List<String> localControlCandidates = localDistinctiveControls(local);
         List<String> localWordCandidates = localOcrWordCandidates(local);
-        return "Observe and resolve the foreground object in every supplied view and examine it at 0/90/180/270-degree orientations before transcribing text. Ignore people, reflections, walls, furniture, unrelated packaging and nearby objects. If the foreground object is itself a factory-sealed retail/hobby product, its printed box or wrapper is the physical identity-bearing product surface and must not be ignored as packaging. "
-                + "Fill observation.visible_labels only with text physically visible in the image; classify its type, entity_role and identity_binding. "
-                + "Only text visibly paired with MODEL, P/N, PART, SKU, REF, TYPE, ITEM or a barcode may be an identifier, and only when it is on an identity-bearing plate or body marking of the foreground product. "
-                + "A code printed on an instruction card, control legend, manual, removable overlay, packaging, component or nearby object is not an identifier of the foreground product. Unlabelled OCR-like codes are not identifiers. "
-                + "MULTI-PHOTO BRAND CONTINUITY: inspect every supplied photo separately, then establish whether they show the same physical object. A manufacturer logo physically printed on the foreground object in any clear view remains the manufacturer anchor for all complementary views. Generic battery wording (for example alkaline/LR6/AA), compliance text, firmware strings and moulded compartment codes are never brands or remote model references and cannot override that anchor. When the same-object continuity is clear and a manufacturer logo is visually unambiguous, return brand_evidence=visible_logo_cross_photo and confidence at least 92. "
-                + "Fill observation.photo_identity independently from web retrieval. Set complete=true from the physical photos whenever every discriminator needed to name the photographed item is clear, physically bound to it and mutually consistent; do not set it false merely because a web source has not yet been found. A camera watermark, app overlay, filename, caption or text added to the image must set overlay_or_watermark=true and can never close identity. A truncated code ending in ellipsis is incomplete. "
-                + "For a physical identity label, barcode or device identity screen, return the complete model/reference in identity_code and list the bound fields. For a collectible or other multi-field printed item shown in complementary views, evidence_kind=composite_markings may be complete when manufacturer, set/collection, subject/design and the physical item/card number are legible; canonical_name must compose those literal fields without invention. "
-                + "COLLECTIBLE CARD INTEGRITY: never use a biography date, birth date, game/season/championship year, narrative prose date or copyright year as the release/set year unless it is explicitly printed as part of the set/collection identity. Never interpret the first two components of a three-part date (for example 8/23/78) as a serial or print-run fraction. A physical card number such as FC7 is a hard discriminator and must reject an FC2 sibling even when the design is similar. An illustrator credit such as 'Illus. Mitsuhiro Arita' is an artist field, never a brand_logo, manufacturer_text, manufacturer, publisher or product candidate. On Pokemon cards, Pokémon is the commercial brand even when Nintendo/Creatures/GAMEFREAK and an illustrator credit appear in fine print. "
-                + "CARD FRACTION SEMANTICS: first classify the card domain. On sports/non-TCG collectible cards, an isolated short numeric fraction x/y physically printed inside the card boundary is the specimen print run/serial even when no SERIAL word accompanies it; return serial=x/y and serial_binding=physical_card_surface, never card_number=x. On trading-card games such as Pokemon, a fraction such as 10/102 in the collector-number area is the card's checklist/collector number: return card_number=10/102 and never serial. A TCG print run is allowed only when a separate stamped fraction is explicitly identifiable as limited/numbered; return limited_serial_marking=x/y. Inspect all four corners at high visual attention, especially for tiny 1/1 sports-card markings. When a sports-card fraction is visually localized even though OCR missed it, add exactly physical_serial_marking=x/y to variant_facts; never add that structured fact from USER_HINT alone. A four-digit season range such as 2025/26 is a season, not a serial, and the first two components of a three-part date such as 8/23/78 are not a serial. Fractions in an app/gallery/listing overlay are invalid. A checklist print run such as /120 describes a catalog parallel and must never be copied into the photographed specimen identity unless that exact fraction is physically printed on the card. When the physical serial differs from the base checklist print run, keep the photographed serial and leave the exact commercial parallel name unresolved unless the source proves it. Treat an OCR glyph ambiguity as unresolved during observation; the deterministic client may reconcile one repeated B/8, O/0 or I/1 confusion only against a complete grounded source code. POKEMON FRONT IDENTITY: the common card back normally adds no identity information, so a clear front alone may close the card. The final supplied image may be a client-generated diagnostic crop of the first photo, not a new object or independent view; use it only to inspect tiny physical markings. For Base Set inspect the black '1' in a circle with the EDITION ribbon immediately below the lower-left corner of the illustration before deciding the printing, then compare the complete front directly with grounded reference images. A stamp is visual iconography and must be inspected even when OCR does not read its text. Report each cue separately in variant_facts using exactly first_edition_stamp=present|absent|unclear, first_edition_stamp_area_clear=true|false, first_edition_stamp_position=left_below_artwork|other|not_applicable|unclear, illustration_frame_drop_shadow=present|absent|unclear, nintendo_copyright_99=present|absent|unclear and copyright_layout=shadowless|unlimited|unclear. first_edition_stamp=absent is valid only when first_edition_stamp_area_clear=true; otherwise return unclear. nintendo_copyright_99 refers ONLY to the extra 99 inside the Nintendo year sequence (the sequence containing 1995, 96 and 98); the ordinary final Wizards copyright ©1999 is present across printings and is NEVER this cue. If the stamp area is cropped, blurred, covered or reflective, return unclear rather than absent. If the stamp is clearly absent, position must be not_applicable, never other. A stamp is valid only when visibly localized at left_below_artwork; unrelated text or a source title containing '1st Edition' is not physical evidence. EDITION MARK AND PRINT LAYOUT ARE INDEPENDENT AXES: after deciding whether the localized stamp is present, always continue to inspect the frame and Nintendo copyright sequence. A localized genuine stamp establishes 1st Edition but does not by itself establish Shadowless. Report physical_printing=1st Edition Shadowless only when the stamp and independent Shadowless layout cues both converge; report physical_printing=1st Edition Shadowed when the stamp is present and independent shadowed/Unlimited layout cues converge; otherwise report physical_printing=1st Edition without guessing the layout. For an English Base Set card without a 1st Edition stamp, nintendo_copyright_99=present establishes Shadowless and outranks an apparent frame shadow; nintendo_copyright_99=absent together with copyright_layout=unlimited and a genuine right/bottom frame shadow supports Unlimited. Judge the drop shadow only on the narrow right/bottom outer edge of the illustration frame, never from the sleeve, glare, dark holo artwork or yellow card border. Add physical_printing only after the relevant physical cues converge; otherwise state the unresolved axis explicitly. Include subject, holo/non-holo, collector number and the complete combined printing in the commercial identity. "
-                + "SEALED RETAIL PRODUCT INTEGRITY: when the unopened box/wrapper is the foreground product, treat manufacturer, season/year, product line, sport/category, format and pack configuration physically printed on that surface as a bound composite identity tuple. Normalize hyphenated categories such as sealed basketball trading-card product as sealed products, never loose cards. Inspect small front-panel season, format and pack/autograph callouts before requesting another view. Classify the manufacturer word as brand_logo or manufacturer_text and also return manufacturer=<literal> inside photo_identity.fields. Do not require a separate MODEL/P/N code for a uniquely named sealed product. A complete front tuple may close a Hobby Box when its printed line, season, sport and configuration match one grounded commercial SKU; a barcode is optional. A complete tuple may use an observed manufacturer/product line in retrieval; this is physical evidence, not a guessed-brand anchor. "
-                + "COMMERCIAL SMARTPHONE IDENTITY: pricing groups regional suffixes of the same hardware model together. When SAMSUNG and Galaxy S24 Ultra are physically visible and the four-camera S24 Ultra geometry matches a grounded source, resolve the commercial model as Galaxy S24 Ultra even if SM-S928 is truncated or its regional suffix is unreadable. Keep any guessed SM-S928 suffix out of the exact identity; the missing suffix is not a contradiction and must not force another photo. "
-                + "Record geometry and topology in variant_facts, spatial_signature and visual_fingerprint before searching. Candidate hints are hypotheses only and must not steer the first query. "
-                + "The first web query must always be domain-unrestricted. It must be brand-neutral when no manufacturer is physically verified. When a manufacturer or product line is physically printed and independently corroborated by local OCR, including on a foreground sealed retail box, the query may contain that observed literal; never substitute a guessed brand. Build it from category, rare geometry and two to four exact stable labels. "
-                + "Inside the single web_search tool call, run FOUR distinct queries and up to SIX when a complete photo identity needs source/checklist corroboration or a strong family still lacks a probable reference: (1) neutral category plus rare exact label co-occurrence, (2) geometry/topology plus one rare label, (3) exact visible identifier or identity tuple, (4) manufacturer manual/checklist, and when useful (5) probable model/reference topology and (6) an exact physical-discriminator disproof query. This is still one hosted web_search call. "
-                + "No query may contain a guessed manufacturer not physically observed or grounded by the neutral search. In particular, never inject a competing brand merely because it appeared in a Vision hypothesis. "
-                + "When at least two locally recovered distinctive labels are visually confirmed, do not stop after one generic query. Prefer their exact quoted co-occurrence and never replace them with a guessed caption. "
-                + "A stable control label may narrow retrieval only as quoted co-occurrence evidence; generic controls and changing displays must be excluded. "
-                + "A source-backed family or product line is a valid partial candidate even when the exact reference is unavailable. In that case fill family, leave model empty and set exact_reference_complete=false. "
-                + "SOURCE SCOPE: a manual covering several models proves only the shared family unless the photographed object carries a unique model binding or a model-specific diagram matches every discriminating physical count. For irrigation controllers compare the photographed station/zone/slider count with an explicitly stated count or diagram in the exact manual; any count mismatch is a hard contradiction. Never infer a station count from digits inside a model number (for example 57004). "
-                + "If a complete source-printed model/reference is physically plausible but not proven exact, put it only in probable_reference with a calibrated confidence; never promote it to model. For accessories/remotes, search manuals and parts catalogs for these probable references instead of returning only a generic family. "
-                + "When photo_identity.complete=true, compare every field with a grounded product page, catalog or checklist. Set photo_identity_supported=true when the candidate/source supports the base identity tuple and return the matching literals in matched_photo_identity_fields. A source need not print the whole tuple as one title, repeat an individual serial fraction, or contain a listing for the exact physical copy when the supplied views themselves carry those complementary identity fields. "
-                + "Fill model only with a complete source-printed model/reference; never put prose such as 'reference not exposed', 'model unresolved' or any evidence disclaimer into model. Missing proof is an evidence gap, not a contradiction. "
-                + "Resolution candidates must denote the photographed physical entity and survive direct comparison with the supplied photo. Exact-model confirmation still requires a complete reference. "
+        return "Analyze the foreground collectible across all supplied images in one multimodal observation. Treat a sealed wrapper or box as the object surface when it is the product. Ignore gallery UI, timestamps, listing text, people, reflections and unrelated objects. "
+                + "EVIDENCE LEDGER CONTRACT: every identity fact must be emitted in photo_identity.evidence_facts with key, literal value, evidence_type, confidence, image_index, side, exact location and semantic_role. These facts have photo provenance. Do not copy user hints, OCR from outside the object, or web knowledge into them. photo_identity.fields is compatibility output and must contain the same physically observed facts. "
+                + "Choose the category profile first: sports trading card, TCG, sealed trading-card product, or other collectible. A profile is complete when the available photographed discriminators identify one physical object and no material photographed contradiction exists. Year, reverse, barcode, serial and catalog number are useful but never universally mandatory. A single sharp identity-bearing front may be sufficient, especially for TCG and sealed products. "
+                + "Set identity_ambiguous=true only when at least two materially different physical identities fit the photographs. Then report their count, exactly one missing_discriminative_field, and whether that field is already visible. Never manufacture ambiguity from missing catalog or market data. Set complete=true whenever the photographed tuple is unique even if the Web is unavailable. "
+                + "CANDIDATE CANONICALIZATION INPUT: return candidates as structured identity axes, not alternative prose titles. Descriptions, language labels, catalog aliases and finish wording for the same object are one candidate. materially_distinct_variant=true only when a different physical object remains after comparing card number, edition, printing, parallel marker or sealed format. "
+                + "Numbers require semantic classification and physical localization. physical_card_number is allowed only for an explicit card/collector/checklist number printed on the card surface, with semantic_role=card_number or collector_number. physical_serial is only a physically localized limited print run x/y. Product codes and barcodes use their own roles. Statistics, ratings, HP/PV, years, dates, activation codes, graphic numbers, UI and watermarks are not card numbers. "
+                + "For sports cards collect manufacturer/publisher, set or product line, insert/edition when visible, athlete/subject, team when visible, localized card number when present, and physical parallel/serial when present. A generic reflective, holo, foil or chrome appearance is finish only: it never proves a rare parallel. Emit physical_parallel only with a localized printed name, serial, or a separately localized distinctive marker. "
+                + "For TCG collect game/publisher, set when readable, card name, language, HP/PV as a statistic, moves or characteristic text, layout/frame, illustration, finish, edition/printing and collector number when visible. Emit evolution stage only as evolution_stage: it is descriptive and never a set/product line. Finish is a physical variant and never part of the card name. A complete composite front can be unique without a readable collector number; a common reverse is non-identifying. "
+                + "For sealed products collect manufacturer, product line, season when visible, sport/category, product_type, format and printed configuration. Emit people pictured on the package only as featured_subject or featured_subjects, never as the product subject/model. Do not require a loose-card number from a sealed product. "
+                + "overlay_or_watermark is only a warning. external_watermark=true only for an external mark, and identity_obscured=true only if it covers a discriminator. Generic overlay=true alone never invalidates physical evidence. Preserve complementary facts from different sides when the images show the same object. "
+                + "Candidate hints are hypotheses only. Never invent a manufacturer, model, variant, number, serial, printing or finish. Keep unclear values unresolved rather than filling them from prior knowledge. "
                 + "LOCAL_OCR_IDENTIFIER_CANDIDATES_REQUIRE_VISUAL_ENTITY_BINDING=" + (labeled.length() == 0 ? "none" : labeled)
                 + " | LOCAL_OCR_DISTINCTIVE_CONTROL_CANDIDATES_REQUIRE_VISUAL_CHECK=" + localControlCandidates
                 + " | LOCAL_OCR_WORD_CANDIDATES_REQUIRE_VISUAL_CHECK=" + localWordCandidates
@@ -876,9 +912,11 @@ final class IdentificationPipelineV082 {
 
     private static String buildResolvePrompt(Models.Identification id, Models.Identifier primary, String details) {
         List<String> labels = SearchEvidenceFilter.uniqueSearchable(id.searchableLabels, 8);
-        return "Resolve the photographed physical product using one web_search call total. Return up to six concrete same-entity candidates and rank them. "
+        String seed=PhotographicIdentityClosure.webSeed(id);
+        return "Resolve the photographed physical product using one web_search call total. QUERY_PROFILE="+id.queryProfile+". MARKET_ITEM_STATE="+ProfileQueryBuilder.expectedMarketState(id)+". RARE_VARIANT_PHYSICAL_PROOF="+id.rareVariantPhysicalProof+". PHOTO_TUPLE_QUERY_SEED="+seed+". STAGED_CATALOG_PLAN="+ProfileQueryBuilder.stagedPlan(id)+". Discovery must omit contested identifiers; verification and disproof of alternatives happen in this same batch. Build every query from this normalized photographed tuple; do not discard physically read manufacturer, product line, subject, format or code. Return up to six source-only candidates with structured identity axes; descriptions, aliases and already-observed language are not separate candidates. Return every comparable separately with sale status, RAW/GRADED/SEALED state, condition, exact grade, date, source URL, identity_match, variant_specific, variant_key and exclusion reason; never pre-mix buckets. "
                 + "Use manufacturer-owned sources first when VISIBLE_MANUFACTURER is present. Do not use TRANSIENT_OR_CONTROL_TEXT in any query. "
-                + "Do not search price/value. The complete source reference must preserve suffixes after / or -. A family prefix is not a complete model. "
+                + "Identity closure and price availability are independent. The complete source reference must preserve suffixes after / or -. A family prefix is not a complete model. "
+                + "A checklist/catalog number must be returned only as source_confirmed_catalog_number and never as a physical number. Return source_confirmed_variant only as source-only catalog metadata. Never query or price a rare parallel when RARE_VARIANT_PHYSICAL_PROOF=false. For sealed products never query pictured people, raw, graded or card number. "
                 + "Set source_url to a URL actually retrieved in this call. candidate_facts may contain source-backed dynamic attributes, but model_code only when the source prints the complete reference. "
                 + "VISIBLE_MANUFACTURER=" + (BrandBlindPolicy.trustedObservedBrand(id) ? id.brand : "none")
                 + " | CATEGORY=" + id.category + " (" + id.categoryConfidence + "%)"
@@ -886,13 +924,20 @@ final class IdentificationPipelineV082 {
                 + " | SEARCHABLE_VISIBLE_LABELS=" + labels
                 + " | SOFT_OCR_LITERALS_NOT_BRAND_LOCKS=" + id.softOcrLabels
                 + " | TRANSIENT_OR_CONTROL_TEXT_EXCLUDED=" + combine(id.transientLabels, id.controlLabels)
-                + " | STRUCTURE=" + clip(UniversalSearchPlan.structureSeed(id), 1400)
-                + " | HYPOTHESES_NON_BINDING=" + clip(id.visionCandidates.toString(), 700)
-                + " | HARD_CONSTRAINTS=" + id.hardConstraints
-                + " | USER_HINT_SOFT_PRIOR=" + clip(details, 400);
+                + " | CANONICAL_CLOSURE_INPUT=" + clip(id.closureInputSnapshot, 1400)
+                + " | CANONICAL_PHYSICAL_FIELDS=" + clip(id.canonicalPhysicalFields, 900)
+                + " | RAW_VISION_ALIASES_EXCLUDED_FROM_QUERY=true";
     }
 
     private static boolean hasResolutionEvidence(Models.Identification id, Models.Identifier primary) {
+        IdentityProfileEngine.PhotoTuple tuple=IdentityProfileEngine.prepare(id);
+        IdentityProfileEngine.Profile profile=IdentityProfileEngine.profile(id,tuple);
+        boolean canonicalCore=(profile==IdentityProfileEngine.Profile.SEALED_TRADING_CARD_PRODUCT
+                &&(!tuple.brand.isEmpty()||!tuple.family.isEmpty()))
+                ||((profile==IdentityProfileEngine.Profile.SPORTS_CARD||profile==IdentityProfileEngine.Profile.TCG)
+                &&(!tuple.subject.isEmpty()||!tuple.family.isEmpty()||!tuple.brand.isEmpty()))
+                ||(!tuple.modelCode.isEmpty()||!tuple.design.isEmpty());
+        if(canonicalCore)return true;
         if (primary != null || !id.brandLabels.isEmpty()) {
             return true;
         }
@@ -1004,6 +1049,8 @@ final class IdentificationPipelineV082 {
             for (String raw : page.split("[\\r\\n]+")) {
                 String x = clean(raw);
                 if (SearchEvidenceFilter.isSoftOcrLiteral(x)
+                        && !containsCanonical(id.externalLabels, x)
+                        && containsCanonical(id.visibleLabels, x)
                         && !containsCanonical(id.transientLabels, x)
                         && !containsCanonical(id.controlLabels, x)) {
                     addOnce(id.softOcrLabels, x);
@@ -1015,21 +1062,100 @@ final class IdentificationPipelineV082 {
         }
     }
 
+    private static void ingestPartialTechnicalPayload(Models.Identification id,JSONObject payload,
+                                                      Models.LocalScan local){
+        if(id==null||payload==null)return;
+        if(payload.has("facts"))parseCompactObservation(id,payload);
+        else parseObservation(id,payload);
+        collectSoftOcr(id,local);
+        PhotographicFactNormalizer.normalize(id,"partial_technical_response");
+        id.pipelineFailureDomain="PRIMARY_VISION_TECHNICAL";
+    }
+
+    private static boolean technicalFailure(OpenAiClient.Response r){
+        if(r==null)return true;
+        if("CONTENT_INSUFFICIENT".equals(r.technicalStatus))return false;
+        return !r.complete||!empty(r.parseError)||r.payload==null||r.payload.length()==0;
+    }
+
+    private static boolean technicalRetryAllowed(Models.Usage usage){
+        return usage==null||usage.costUsd<0.025d;
+    }
+
+    private static String technicalStatus(Exception failure){String x=safe(failure==null?"":failure.getMessage()).toLowerCase(Locale.ROOT);
+        if(x.contains("timeout")||x.contains("timed out"))return "TIMEOUT";
+        if(x.contains("json"))return "INVALID_JSON";return "NETWORK_ERROR";}
+
+    private static int compactCategoryConfidence(JSONArray facts,boolean sufficient){if(!sufficient)return 40;int sum=0,count=0,roles=0;
+        if(facts!=null)for(int i=0;i<facts.length();i++){JSONObject f=facts.optJSONObject(i);if(f==null)continue;int q=clamp(f.optInt("confidence",0));
+            if(q>0){sum+=q;count++;}String role=clean(f.optString("role","")).toLowerCase(Locale.ROOT);if(role.contains("product")||role.contains("brand")||role.contains("subject")||role.contains("sport")||role.contains("game"))roles++;}
+        int quality=count==0?55:sum/count;return clamp(45+(quality*3/10)+Math.min(25,roles*4));}
+
+    private static void finishTechnicalFailure(Models.Identification id,String reason){
+        CategoryPresentationPolicy.apply(id);PhotographicFactNormalizer.normalize(id,"technical_failure_preserved_evidence");
+        id.pipelineFailureDomain="VISION_TECHNICAL";id.identityStatus="UNRESOLVED";
+        id.categoryStatus=id.categoryKey.equals("other")?"UNRESOLVED":"PROBABLE";
+        id.coreIdentityStatus="TECHNICAL_RETRY_FAILED";id.exactIdentityStatus="NOT_EVALUATED";
+        id.variantStatus="NOT_EVALUATED";id.marketStatus="NOT_AVAILABLE";id.webStatus="SKIPPED_TECHNICAL_FAILURE";
+        id.marketConfidence=0;id.marketDecisionStatus=HierarchicalIdentityStatus.MARKET_UNAVAILABLE.name();
+        id.marketReady=false;id.priceAvailable=false;id.nextPhotoRequest="";id.nextPhotoReason="";
+        id.requestedPhotoReason="";id.requestedPhotoProfile="";id.decision="TECHNICAL_ERROR";
+        id.blockingReason="vision_technical_failure";id.decisionReason=reason;
+        id.finalDecisionReason="technical_failure_not_photo_failure; evidence_preserved=true";
+        ConsistencyInvariantChecker.enforce(id,"technical_failure");
+    }
+
+    private static String profileAwarePhotoRequest(Models.Identification id){
+        String targeted=PhotographicIdentityClosure.targetedPhotoRequest(id);if(!targeted.isEmpty())return targeted;
+        String p=safe(id==null?"":id.categoryKey).toLowerCase(Locale.ROOT);
+        if(p.contains("tcg"))return "Fotografa nuovamente il fronte completo, diritto e nitido, includendo nome, HP/PV, mosse e angolo del collector number.";
+        if(p.contains("sport")&&p.contains("card"))return "Fotografa fronte e retro completi e nitidi, includendo la zona del numero carta.";
+        if(p.contains("sealed"))return "Fotografa il fronte completo e il lato con linea prodotto, stagione, configurazione e formato.";
+        return "Fotografa l’oggetto intero e la targhetta con MODEL, P/N o codice prodotto, se presente.";
+    }
+
     private static void stopForPhoto(Models.Identification id, String request, String reason, String decision) {
+        if (ProductionClosureCheckpoint.attempt(id, "before_stop_for_photo")) return;
+        if(id.evidenceLedger.isEmpty()&&id.photoViews.isEmpty()){
+            id.identityStatus="UNRESOLVED";id.blockingReason="no_photographic_evidence";
+            id.missingDiscriminativeFields="complete_object_photo";id.marketReady=false;
+            id.nextPhotoRequest=clean(request);id.nextPhotoReason=clean(reason);id.requestedPhotoReason=clean(reason);
+            id.requestedPhotoProfile=requestedProfile(id);
+            id.decision="NEED_ANOTHER_PHOTO";id.decisionReason=clean(decision);return;
+        }
+        finishUnconfirmed(id,reason,decision);
+    }
+
+    private static void finishUnconfirmed(Models.Identification id,String reason,String decisionReason){
+        if(ProductionClosureCheckpoint.attempt(id,"before_unconfirmed_result"))return;
+        CategoryPresentationPolicy.apply(id);
         id.marketReady = false;
         id.disproofPassed = false;
-        id.nextPhotoRequest = clean(request);
+        boolean eligible=PhotographicIdentityClosure.mayRequestAnotherPhoto(id);
+        String targeted=eligible?DiscriminativeVisionPolicy.request(id):"";
+        boolean request=!targeted.isEmpty();
+        id.nextPhotoRequest=targeted;
         id.nextPhotoReason = clean(reason);
-        id.decisionReason = clean(decision);
+        id.requestedPhotoReason=request?DiscriminativeVisionPolicy.reason(id):"";
+        id.requestedPhotoProfile=request?requestedProfile(id):"";
+        id.identityStatus=request?"AMBIGUOUS":"UNRESOLVED";
+        id.decision=request?"NEED_ANOTHER_PHOTO":"PROBABLE";
+        id.decisionReason=clean(decisionReason);
+        if(id.blockingReason.isEmpty())id.blockingReason=request?"materially_distinct_photo_candidates":"insufficient_photographic_tuple";
+        id.priceAvailable=false;id.priceConfidence=0;
+        id.priceSummary="mercato non disponibile/non affidabile";
+        if(id.marketStatus.equals("NOT_AVAILABLE"))id.comparablesSummary="comparabili non disponibili";
         if (id.title.isEmpty()) {
             id.title = id.category.isEmpty() ? "Oggetto" : id.category;
         }
         if (id.verificationSummary.isEmpty()) {
-            id.verificationSummary = reason;
+            id.verificationSummary = clean(reason);
         }
+        ConsistencyInvariantChecker.enforce(id,"finish_unconfirmed");
     }
 
     private static String fallbackPhoto(Models.Identification id) {
+        if(TcgFrontIdentityPolicy.isTcg(id))return TcgFrontIdentityPolicy.nextPhotoRequest(id);
         String category = id == null ? "" : (safe(id.categoryKey) + " "
                 + safe(id.category)).toLowerCase(Locale.ROOT);
         if (category.contains("smartphone") || category.contains("mobile phone")
@@ -1041,6 +1167,10 @@ final class IdentificationPipelineV082 {
         }
         return "Aggiungi una seconda vista più ravvicinata includendo logo, etichetta e dettagli distintivi";
     }
+
+    private static String requestedProfile(Models.Identification id){String k=safe(id==null?"":id.categoryKey).toLowerCase(Locale.ROOT);
+        if(k.contains("tcg"))return "tcg";if(k.contains("sport")&&k.contains("card"))return "sports_card";
+        if(k.contains("sealed"))return "sealed_trading_card_product";return "other_collectible";}
 
     static String modelAtSupportedLevel(String rawModel, boolean completeReference) {
         String model = clean(rawModel);
@@ -1115,8 +1245,6 @@ final class IdentificationPipelineV082 {
                 .startsWith(maker.toLowerCase(Locale.ROOT) + " ")) {
             family = clean(family.substring(maker.length()));
         }
-        family = family.replaceAll("(?i)\\bChrome Updates Basketball\\b",
-                "Chrome Update Basketball");
         return family;
     }
 

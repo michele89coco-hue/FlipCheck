@@ -13,11 +13,14 @@ final class EvidencePolicy {
         if (id == null) {
             return;
         }
-        ConfirmationIntegrityPolicy.enforce(id);
+        FinalIdentityDecisionEngine.freeze(id,"evidence_policy");
         id.observedEvidence.clear();
         id.inferredEvidence.clear();
         id.verifiedEvidence.clear();
         add(id.observedEvidence, nonEmpty(id.category) ? "Tipo osservato: " + id.category : "");
+        for(Models.EvidenceFact fact:id.evidenceLedger){
+            if(fact!=null&&"photo".equals(fact.origin))add(id.observedEvidence,EvidenceLedger.debug(fact));
+        }
         if (isObservedBrand(id)) {
             add(id.observedEvidence, "Marca letta: " + id.brand);
         }
@@ -94,7 +97,7 @@ final class EvidencePolicy {
             for (String x3 : id.matchedLayoutTokens) {
                 add(id.verifiedEvidence, "Layout confermato: " + x3);
             }
-            id.brandEvidence = "verified_web";
+            id.brandEvidence = "photographic_evidence_ledger";
         }
     }
 
@@ -102,10 +105,8 @@ final class EvidencePolicy {
         if (id == null) {
             return "Oggetto";
         }
-        if (id.marketReady) {
-            String x = verifiedTitle(id);
-            return nonEmpty(x) ? x : nonEmpty(id.title) ? id.title : fallbackCategory(id);
-        }
+        if(id.finalState==null)FinalIdentityDecisionEngine.freeze(id,"public_title");
+        if(id.finalState!=null&&nonEmpty(id.finalState.title))return id.finalState.title;
         UniversalRecognitionLadder.State s = UniversalRecognitionLadder.assess(id);
         if (s.level >= 4) {
             String x2 = join(s.brand, s.family, s.model);
@@ -129,6 +130,9 @@ final class EvidencePolicy {
     }
 
     private static String verifiedTitle(Models.Identification id) {
+        if (ProfileQueryBuilder.isSealed(id)) {
+            return CanonicalIdentityComposer.sealedTitle(id);
+        }
         String model = id == null ? "" : safe(id.model);
         if (model.isEmpty()) {
             return join(id.brand, id.family);
@@ -178,16 +182,28 @@ final class EvidencePolicy {
     }
 
     static int publicConfidence(Models.Identification id) {
-        return ConfidencePolicy.identity(id);
+        if(id==null)return 0;
+        if(id.finalState==null)FinalIdentityDecisionEngine.freeze(id,"public_confidence");
+        return id.finalState==null?0:id.finalState.coreIdentityConfidence;
     }
 
     static String publicStatus(Models.Identification id) {
         if (id == null) {
             return "NEED_ANOTHER_PHOTO · ANALISI INCOMPLETA";
         }
-        if (id.marketReady) {
+        if(id.finalState==null)FinalIdentityDecisionEngine.freeze(id,"public_status");
+        if("CONFLICTED".equals(id.identityStatus)||"NUMBER_CONFLICT".equals(id.exactIdentityStatus)){
+            return "CONFLICTED · NUMERO DA VERIFICARE";
+        }
+        boolean exact="CATALOG_MATCHED".equals(id.exactIdentityStatus)||"PHYSICALLY_VERIFIED".equals(id.exactIdentityStatus);
+        if("CONFIRMED".equals(id.coreIdentityStatus)&&!exact){
+            return "MAIN_IDENTITY_CONFIRMED · IDENTITÀ PRINCIPALE CONFERMATA";
+        }
+        if (exact&&id.identityConfirmed) {
             return "CONFIRMED · IDENTITÀ VERIFICATA";
         }
+        if("AMBIGUOUS".equals(id.identityStatus))return "NEED_ANOTHER_PHOTO · AMBIGUITÀ FISICA REALE";
+        if("UNRESOLVED".equals(id.identityStatus))return "PROBABLE · MIGLIOR IDENTITÀ FOTOGRAFICA DISPONIBILE";
         UniversalRecognitionLadder.State s = UniversalRecognitionLadder.assess(id);
         if (s.finalWithAvailableEvidence) {
             return s.level >= 2 ? "PROBABLE · MIGLIOR RISULTATO DISPONIBILE"
@@ -201,7 +217,9 @@ final class EvidencePolicy {
         if (id == null) {
             return "";
         }
-        if (id.marketReady) {
+        if(id.finalState==null)FinalIdentityDecisionEngine.freeze(id,"public_explanation");
+        if("CONFLICTED".equals(id.identityStatus))return "L’identità principale resta valida, ma un identificatore è in conflitto e non viene confermato né usato per il prezzo.";
+        if (id.finalState!=null&&id.finalState.publicConfirmed) {
             String summary = nonEmpty(id.verificationSummary) ? id.verificationSummary
                     : "Più prove indipendenti convergono sulla stessa identità senza contraddizioni forti.";
             if ("photo_complete_identity".equalsIgnoreCase(id.modelProof)) {

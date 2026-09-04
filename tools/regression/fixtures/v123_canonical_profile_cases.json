@@ -1,0 +1,112 @@
+{
+  "tcg_equivalent": {
+    "observation_valid": true, "category": "trading card game card", "category_key": "tcg_card", "category_confidence": 97, "photo_views": ["front"], "variant_facts": [], "visible_labels": [],
+    "photo_identity": {"complete": true, "canonical_name": "unique TCG front", "identity_code": "", "evidence_kind": "composite_markings", "physical_binding": true, "overlay_or_watermark": false, "external_watermark": false, "identity_obscured": false, "identity_ambiguous": true, "materially_distinct_alternatives": 2, "missing_discriminative_field": "", "discriminative_field_visible": false, "confidence": 96,
+      "fields": ["game=Publisher One", "set=Expansion One", "subject=Creature One", "language=Italian", "hp=90", "moves=Move Alpha; Move Beta", "layout=distinctive framed layout", "finish=holo", "front_complete=true"],
+      "candidates": [
+        {"category_key":"tcg_card","brand":"Publisher One","family":"Expansion One","model":"Creature One H23","year":"","subject":"Creature One","card_number":"H23","language":"Italian","edition":"","printing":"","parallel":"","parallel_color":"","finish":"holo","format":"","configuration":"","material_variant_key":"","materially_distinct_variant":false,"confidence":94,"evidence":"exact catalog wording"},
+        {"category_key":"tcg_card","brand":"Publisher One","family":"Expansion One","model":"Creature One H23 Italian language printing","year":"","subject":"Creature One","card_number":"H23","language":"Italian","edition":"","printing":"","parallel":"","parallel_color":"","finish":"reflective foil","format":"","configuration":"","material_variant_key":"","materially_distinct_variant":false,"confidence":92,"evidence":"descriptive alias"}
+      ],
+      "evidence_facts": [
+        {"key":"game","value":"Publisher One","evidence_type":"logo","confidence":98,"image_index":0,"side":"front","location":"header","semantic_role":"game"},
+        {"key":"set","value":"Expansion One","evidence_type":"symbol","confidence":94,"image_index":0,"side":"front","location":"lower frame","semantic_role":"set"},
+        {"key":"subject","value":"Creature One","evidence_type":"text","confidence":98,"image_index":0,"side":"front","location":"nameplate","semantic_role":"subject"},
+        {"key":"language","value":"Italian","evidence_type":"text","confidence":96,"image_index":0,"side":"front","location":"rules text","semantic_role":"language"},
+        {"key":"hp","value":"90","evidence_type":"stat","confidence":98,"image_index":0,"side":"front","location":"top","semantic_role":"hp_stat"},
+        {"key":"moves","value":"Move Alpha; Move Beta","evidence_type":"text","confidence":95,"image_index":0,"side":"front","location":"move box","semantic_role":"move_text"},
+        {"key":"layout","value":"distinctive framed layout","evidence_type":"layout","confidence":94,"image_index":0,"side":"front","location":"full front","semantic_role":"layout"},
+        {"key":"finish","value":"holo","evidence_type":"image","confidence":91,"image_index":0,"side":"front","location":"artwork","semantic_role":"finish"},
+        {"key":"front_complete","value":"true","evidence_type":"image","confidence":99,"image_index":0,"side":"front","location":"all edges","semantic_role":"completeness"}
+      ]}
+  },
+  "tcg_no_number": {
+    "observation_valid": true, "category": "collectible card game", "category_key": "tcg_card", "category_confidence": 96, "photo_views": ["front"], "variant_facts": [], "visible_labels": [],
+    "photo_identity": {"complete": true, "canonical_name": "unique composite front", "identity_code": "", "evidence_kind": "composite_markings", "physical_binding": true, "overlay_or_watermark": false, "external_watermark": false, "identity_obscured": false, "identity_ambiguous": false, "materially_distinct_alternatives": 1, "missing_discriminative_field": "", "discriminative_field_visible": false, "confidence": 95,
+      "fields": ["game=Publisher Two", "subject=Creature Two", "language=Italian", "hp=110", "moves=Move Gamma; Move Delta", "layout=distinctive border", "finish=holo", "front_complete=true"], "candidates": [],
+      "evidence_facts": [
+        {"key":"game","value":"Publisher Two","evidence_type":"logo","confidence":98,"image_index":0,"side":"front","location":"header","semantic_role":"game"},
+        {"key":"subject","value":"Creature Two","evidence_type":"text","confidence":98,"image_index":0,"side":"front","location":"nameplate","semantic_role":"subject"},
+        {"key":"language","value":"Italian","evidence_type":"text","confidence":96,"image_index":0,"side":"front","location":"rules text","semantic_role":"language"},
+        {"key":"hp","value":"110","evidence_type":"stat","confidence":98,"image_index":0,"side":"front","location":"top","semantic_role":"hp_stat"},
+        {"key":"moves","value":"Move Gamma; Move Delta","evidence_type":"text","confidence":96,"image_index":0,"side":"front","location":"move box","semantic_role":"move_text"},
+        {"key":"layout","value":"distinctive border","evidence_type":"layout","confidence":95,"image_index":0,"side":"front","location":"full front","semantic_role":"layout"},
+        {"key":"finish","value":"holo","evidence_type":"image","confidence":92,"image_index":0,"side":"front","location":"artwork","semantic_role":"finish"},
+        {"key":"front_complete","value":"true","evidence_type":"image","confidence":99,"image_index":0,"side":"front","location":"all edges","semantic_role":"completeness"}
+      ]}
+  },
+  "tcg_material_ambiguity": {
+    "observation_valid": true, "category": "trading card game card", "category_key": "tcg_card", "category_confidence": 94, "photo_views": ["front"], "variant_facts": [], "visible_labels": [],
+    "photo_identity": {"complete": false, "canonical_name": "TCG front with cropped number", "identity_code": "", "evidence_kind": "composite_markings", "physical_binding": true, "overlay_or_watermark": false, "external_watermark": false, "identity_obscured": false, "identity_ambiguous": true, "materially_distinct_alternatives": 2, "missing_discriminative_field": "collector_number", "discriminative_field_visible": false, "confidence": 84,
+      "fields": ["game=Publisher Three", "set=Expansion Three", "subject=Creature Three", "front_complete=true"],
+      "candidates": [
+        {"category_key":"tcg_card","brand":"Publisher Three","family":"Expansion Three","model":"Creature Three A1","year":"","subject":"Creature Three","card_number":"A1","language":"","edition":"","printing":"","parallel":"","parallel_color":"","finish":"","format":"","configuration":"","material_variant_key":"number-a1","materially_distinct_variant":true,"confidence":90,"evidence":"candidate one"},
+        {"category_key":"tcg_card","brand":"Publisher Three","family":"Expansion Three","model":"Creature Three B2","year":"","subject":"Creature Three","card_number":"B2","language":"","edition":"","printing":"","parallel":"","parallel_color":"","finish":"","format":"","configuration":"","material_variant_key":"number-b2","materially_distinct_variant":true,"confidence":90,"evidence":"candidate two"}
+      ],
+      "evidence_facts": [
+        {"key":"game","value":"Publisher Three","evidence_type":"logo","confidence":98,"image_index":0,"side":"front","location":"header","semantic_role":"game"},
+        {"key":"set","value":"Expansion Three","evidence_type":"symbol","confidence":95,"image_index":0,"side":"front","location":"lower edge","semantic_role":"set"},
+        {"key":"subject","value":"Creature Three","evidence_type":"text","confidence":98,"image_index":0,"side":"front","location":"nameplate","semantic_role":"subject"},
+        {"key":"front_complete","value":"true","evidence_type":"image","confidence":98,"image_index":0,"side":"front","location":"all edges","semantic_role":"completeness"}
+      ]}
+  },
+  "sports_foil_base": {
+    "observation_valid": true, "category": "sports trading card", "category_key": "sports_card", "category_confidence": 98, "photo_views": ["front", "back"], "variant_facts": [], "visible_labels": [],
+    "photo_identity": {"complete": true, "canonical_name": "base sports card", "identity_code": "", "evidence_kind": "composite_markings", "physical_binding": true, "overlay_or_watermark": false, "external_watermark": false, "identity_obscured": false, "identity_ambiguous": false, "materially_distinct_alternatives": 0, "missing_discriminative_field": "", "discriminative_field_visible": false, "confidence": 96,
+      "fields": ["manufacturer=Maker Four", "product_line=Metallic Series", "subject=Athlete Four", "finish=reflective_foil"], "candidates": [],
+      "evidence_facts": [
+        {"key":"manufacturer","value":"Maker Four","evidence_type":"logo","confidence":98,"image_index":1,"side":"back","location":"publisher mark","semantic_role":"manufacturer"},
+        {"key":"product_line","value":"Metallic Series","evidence_type":"text","confidence":97,"image_index":1,"side":"back","location":"header","semantic_role":"product_line"},
+        {"key":"subject","value":"Athlete Four","evidence_type":"text","confidence":98,"image_index":0,"side":"front","location":"nameplate","semantic_role":"subject"},
+        {"key":"finish","value":"reflective_foil","evidence_type":"image","confidence":92,"image_index":0,"side":"front","location":"card surface","semantic_role":"finish"}
+      ]}
+  },
+  "sports_physical_variant": {
+    "observation_valid": true, "category": "sports trading card", "category_key": "sports_card", "category_confidence": 98, "photo_views": ["front", "back"], "variant_facts": [], "visible_labels": [],
+    "photo_identity": {"complete": true, "canonical_name": "numbered sports card", "identity_code": "", "evidence_kind": "composite_markings", "physical_binding": true, "overlay_or_watermark": false, "external_watermark": false, "identity_obscured": false, "identity_ambiguous": false, "materially_distinct_alternatives": 0, "missing_discriminative_field": "", "discriminative_field_visible": false, "confidence": 97,
+      "fields": ["manufacturer=Maker Five", "product_line=Select Line", "subject=Athlete Five"], "candidates": [],
+      "evidence_facts": [
+        {"key":"manufacturer","value":"Maker Five","evidence_type":"logo","confidence":98,"image_index":1,"side":"back","location":"publisher mark","semantic_role":"manufacturer"},
+        {"key":"product_line","value":"Select Line","evidence_type":"text","confidence":97,"image_index":1,"side":"back","location":"header","semantic_role":"product_line"},
+        {"key":"subject","value":"Athlete Five","evidence_type":"text","confidence":98,"image_index":0,"side":"front","location":"nameplate","semantic_role":"subject"},
+        {"key":"physical_card_number_marking","value":"21","evidence_type":"text","confidence":98,"image_index":1,"side":"back","location":"No. label","semantic_role":"card_number"},
+        {"key":"card_number_binding","value":"physical_card_surface","evidence_type":"position","confidence":99,"image_index":1,"side":"back","location":"No. label","semantic_role":"binding"},
+        {"key":"card_number_semantic","value":"card_number","evidence_type":"label","confidence":99,"image_index":1,"side":"back","location":"No. label","semantic_role":"card_number"},
+        {"key":"card_number_location","value":"reverse No. label","evidence_type":"position","confidence":99,"image_index":1,"side":"back","location":"No. label","semantic_role":"location"},
+        {"key":"physical_serial_marking","value":"2/5","evidence_type":"foil_stamp","confidence":98,"image_index":0,"side":"front","location":"lower foil stamp","semantic_role":"specimen_serial"},
+        {"key":"serial_binding","value":"physical_card_surface","evidence_type":"position","confidence":99,"image_index":0,"side":"front","location":"lower foil stamp","semantic_role":"binding"},
+        {"key":"serial_location","value":"front lower foil","evidence_type":"position","confidence":99,"image_index":0,"side":"front","location":"lower foil stamp","semantic_role":"location"},
+        {"key":"physical_parallel","value":"Green Pattern","evidence_type":"printed_marker","confidence":93,"image_index":0,"side":"front","location":"parallel name strip","semantic_role":"parallel_name"},
+        {"key":"parallel_color","value":"Green","evidence_type":"image","confidence":94,"image_index":0,"side":"front","location":"border pattern","semantic_role":"parallel_color"}
+      ]}
+  },
+  "sealed_featured_subjects": {
+    "observation_valid": true, "category": "sealed trading-card product", "category_key": "sealed_products", "category_confidence": 98, "photo_views": ["front"], "variant_facts": [], "visible_labels": [],
+    "photo_identity": {"complete": true, "canonical_name": "sealed hobby product", "identity_code": "", "evidence_kind": "composite_markings", "physical_binding": true, "overlay_or_watermark": false, "external_watermark": false, "identity_obscured": false, "identity_ambiguous": false, "materially_distinct_alternatives": 0, "missing_discriminative_field": "", "discriminative_field_visible": false, "confidence": 97,
+      "fields": ["manufacturer=Maker Six", "season=2027/28", "product_line=Chrome Update", "sport=basketball", "sealed_format=Hobby Box", "configuration=12 packs; 2 hits"], "candidates": [],
+      "evidence_facts": [
+        {"key":"manufacturer","value":"Maker Six","evidence_type":"logo","confidence":98,"image_index":0,"side":"front","location":"logo","semantic_role":"manufacturer"},
+        {"key":"season","value":"2027/28","evidence_type":"text","confidence":97,"image_index":0,"side":"front","location":"upper title","semantic_role":"season"},
+        {"key":"product_line","value":"Chrome Update","evidence_type":"text","confidence":98,"image_index":0,"side":"front","location":"title","semantic_role":"product_line"},
+        {"key":"sport","value":"basketball","evidence_type":"text","confidence":95,"image_index":0,"side":"front","location":"subtitle","semantic_role":"sport"},
+        {"key":"sealed_format","value":"Hobby Box","evidence_type":"text","confidence":98,"image_index":0,"side":"front","location":"format callout","semantic_role":"format"},
+        {"key":"configuration","value":"12 packs; 2 hits","evidence_type":"text","confidence":96,"image_index":0,"side":"front","location":"configuration callout","semantic_role":"configuration"},
+        {"key":"featured_subject","value":"Athlete Six","evidence_type":"image_text","confidence":94,"image_index":0,"side":"front","location":"left portrait","semantic_role":"featured_subject"},
+        {"key":"featured_subject","value":"Athlete Seven","evidence_type":"image_text","confidence":94,"image_index":0,"side":"front","location":"right portrait","semantic_role":"featured_subject"},
+        {"key":"front_complete","value":"true","evidence_type":"image","confidence":99,"image_index":0,"side":"front","location":"all edges","semantic_role":"completeness"}
+      ]}
+  },
+  "generic_ambiguous": {
+    "observation_valid": true, "category": "other collectible", "category_key": "irrigation_controller", "category_confidence": 92, "photo_views": ["front"], "variant_facts": [], "visible_labels": [],
+    "photo_identity": {"complete": false, "canonical_name": "controller family", "identity_code": "", "evidence_kind": "composite_markings", "physical_binding": true, "overlay_or_watermark": false, "external_watermark": false, "identity_obscured": false, "identity_ambiguous": true, "materially_distinct_alternatives": 2, "missing_discriminative_field": "physical_model_code", "discriminative_field_visible": false, "confidence": 80,
+      "fields": ["manufacturer=Maker Seven", "object_type=irrigation controller", "family=Controller Family"],
+      "candidates": [
+        {"category_key":"irrigation_controller","brand":"Maker Seven","family":"Controller Family","model":"Model A","year":"","subject":"","card_number":"","language":"","edition":"","printing":"","parallel":"","parallel_color":"","finish":"","format":"","configuration":"","material_variant_key":"model-a","materially_distinct_variant":true,"confidence":83,"evidence":"family member"},
+        {"category_key":"irrigation_controller","brand":"Maker Seven","family":"Controller Family","model":"Model B","year":"","subject":"","card_number":"","language":"","edition":"","printing":"","parallel":"","parallel_color":"","finish":"","format":"","configuration":"","material_variant_key":"model-b","materially_distinct_variant":true,"confidence":82,"evidence":"family member"}
+      ],
+      "evidence_facts": [
+        {"key":"manufacturer","value":"Maker Seven","evidence_type":"logo","confidence":96,"image_index":0,"side":"front","location":"front logo","semantic_role":"manufacturer"},
+        {"key":"object_type","value":"irrigation controller","evidence_type":"components","confidence":93,"image_index":0,"side":"front","location":"whole device","semantic_role":"human_category"},
+        {"key":"family","value":"Controller Family","evidence_type":"text","confidence":87,"image_index":0,"side":"front","location":"front family label","semantic_role":"family"}
+      ]}
+  }
+}

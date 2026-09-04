@@ -15,7 +15,7 @@ import java.util.Set;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-final class OpenAiClient {
+class OpenAiClient {
     private static final String ENDPOINT = "https://api.openai.com/v1/responses";
     private static final String MODEL = "gpt-5.6-luna";
     private final String apiKey;
@@ -35,6 +35,8 @@ final class OpenAiClient {
         String incompleteReason = "";
         String parseError = "";
         String refusal = "";
+        /** COMPLETED, INCOMPLETE_MAX_TOKENS, INVALID_JSON, TIMEOUT, NETWORK_ERROR or CONTENT_INSUFFICIENT. */
+        String technicalStatus = "COMPLETED";
         final List<Models.Source> sources = new ArrayList();
         final List<String> queries = new ArrayList();
         Models.Usage usage = new Models.Usage();
@@ -59,14 +61,27 @@ final class OpenAiClient {
      * retrieval must never start from a partial or shape-shifted payload.
      */
     Response observe(List<String> imageDataUrls, String prompt) throws Exception {
+        return observeCompact(imageDataUrls, prompt, 1150, false);
+    }
+
+    /** Technical retry: same images, compact schema, larger output allowance, no Web. */
+    Response observeTechnicalRecovery(List<String> imageDataUrls, String prompt) throws Exception {
+        return observeCompact(imageDataUrls, prompt, 2300, true);
+    }
+
+    private Response observeCompact(List<String> imageDataUrls, String prompt,
+                                    int maxOutputTokens, boolean retry) throws Exception {
         JSONArray content = new JSONArray().put(new JSONObject()
                 .put("type", "input_text")
-                .put("text", "FLIPCHECK v0.77 UNIVERSAL EVIDENCE OBSERVER. "
-                        + "Observe an arbitrary physical product. Separate foreground observations from hypotheses. "
-                        + "Never invent brand, model, reference, count or category-specific fields. "
-                        + "A clock, counter, temperature, percentage or changing display value is transient_display. "
-                        + "A button/action caption is control. Neither may become retrieval text. "
-                        + "Return empty strings/arrays and observation_valid=false when the image is insufficient.\n\n"
+                .put("text", "FLIPCHECK COMPACT UNIVERSAL PHOTO OBSERVER. "
+                        + (retry ? "This is an automatic TECHNICAL retry after a truncated or invalid response. " : "")
+                        + "Inspect every supplied image of the same foreground object. Return only the compact JSON schema. "
+                        + "Do not repeat facts in narrative fields. Every observed fact belongs exactly once in facts with key, literal value, image, side, location, role and confidence. "
+                        + "Use category values sports_card, tcg, sealed_trading_card_product, smartphone, controller, appliance, tool, other_collectible. "
+                        + "Keep card number, collector number, serial/print run, HP/PV, ratings, statistics, jersey number, year, activation code, MODEL/P-N and barcode semantically separate. "
+                        + "People pictured on sealed packaging are featured_subject, never the product subject. Preserve discriminating product-line tokens. "
+                        + "Set content_sufficient=false only when the images themselves do not expose usable object evidence. "
+                        + "Candidates are photographic hypotheses and must use only the supplied images.\n\n"
                         + prompt));
         for (String image : imageDataUrls) {
             content.put(new JSONObject().put("type", "input_image")
@@ -74,9 +89,9 @@ final class OpenAiClient {
         }
         JSONArray input = new JSONArray().put(new JSONObject().put("role", "user").put("content", content));
         JSONObject body = new JSONObject().put("model", MODEL).put("store", false)
-                .put("max_output_tokens", 1500)
+                .put("max_output_tokens", maxOutputTokens)
                 .put("reasoning", new JSONObject().put("effort", "low"))
-                .put("text", new JSONObject().put("format", observerFormat()).put("verbosity", "low"))
+                .put("text", new JSONObject().put("format", compactObserverFormat()).put("verbosity", "low"))
                 .put("input", input);
         return call(body, true, true);
     }
@@ -167,28 +182,50 @@ final class OpenAiClient {
 
     /** Selective second visual read for structured fields omitted by the first pass. */
     Response recoverPhysicalIdentity(List<String> imageDataUrls, String prompt) throws Exception {
+        JSONObject recoveryFactProps=new JSONObject()
+                .put("key",new JSONObject().put("type","string"))
+                .put("value",new JSONObject().put("type","string"))
+                .put("evidence_type",new JSONObject().put("type","string"))
+                .put("confidence",integerSchema(0,100))
+                .put("image_index",integerSchema(0,12))
+                .put("side",new JSONObject().put("type","string"))
+                .put("location",new JSONObject().put("type","string"))
+                .put("semantic_role",new JSONObject().put("type","string"));
+        JSONObject recoveryFact=strictObject(recoveryFactProps,"key","value","evidence_type",
+                "confidence","image_index","side","location","semantic_role");
         JSONObject props = new JSONObject()
                 .put("applicable", new JSONObject().put("type", "boolean"))
                 .put("same_foreground_object", new JSONObject().put("type", "boolean"))
                 .put("physical_binding", new JSONObject().put("type", "boolean"))
                 .put("overlay_or_watermark", new JSONObject().put("type", "boolean"))
+                .put("external_watermark", new JSONObject().put("type", "boolean"))
+                .put("identity_obscured", new JSONObject().put("type", "boolean"))
                 .put("complete", new JSONObject().put("type", "boolean"))
+                .put("ambiguity_resolved",new JSONObject().put("type","boolean"))
+                .put("discriminative_field_visible",new JSONObject().put("type","boolean"))
                 .put("category_key", new JSONObject().put("type", "string")
                         .put("enum", new JSONArray().put("loose_card").put("sealed_box").put("other")))
                 .put("canonical_name", new JSONObject().put("type", "string"))
                 .put("confidence", integerSchema(0, 100))
                 .put("fields", stringArraySchema(14))
+                .put("evidence_facts",new JSONObject().put("type","array").put("maxItems",20)
+                        .put("items",recoveryFact))
                 .put("observed_labels", stringArraySchema(12))
                 .put("contradiction", new JSONObject().put("type", "string"));
         JSONObject format = jsonFormat("flipcheck_physical_recovery_v101",
                 strictObject(props, "applicable", "same_foreground_object", "physical_binding",
-                        "overlay_or_watermark", "complete", "category_key", "canonical_name",
-                        "confidence", "fields", "observed_labels", "contradiction"));
+                        "overlay_or_watermark", "external_watermark", "identity_obscured",
+                        "complete", "ambiguity_resolved","discriminative_field_visible", "category_key", "canonical_name",
+                        "confidence", "fields", "evidence_facts", "observed_labels", "contradiction"));
         String policy = "FLIPCHECK v1.01 SELECTIVE PHYSICAL FIELD RECOVERY. NO WEB. "
                 + "Reinspect only the supplied foreground object and transcribe fields physically visible on it. "
+                + "For every recovered field emit evidence_facts with the literal key/value, semantic role, supplied image_index and an exact surface location. An unlocalized summary must not be represented as a physical number or serial. "
                 + "Do not use a candidate name, user hint or prior hypothesis as visual evidence. "
-                + "For a loose card recover manufacturer/publisher, set or season when physically printed, subject/player, card number, parallel, rookie marker, finish and edition/printing cues. "
+                + "For a loose card recover manufacturer/publisher, set or season when physically printed, subject/player, card number, parallel, rookie marker, finish and edition/printing cues. A card number is valid only when explicitly labeled and localized: return physical_card_number_marking plus card_number_binding=physical_card_surface, card_number_semantic=card_number or collector_number, and card_number_location. Ratings, stats, HP/PV, years, activation codes, graphic/star numbers and external UI/OCR are not card numbers. "
                 + "For a sealed box recover manufacturer, season/year, exact product line, sport, Hobby/Blaster/Retail format and printed pack/autograph configuration. "
+                + "For electronics and other products focus on DECISIVE_MISSING_FIELD: physical model/part code, valid EAN/UPC/GTIN, rear label, family, and independent physical attributes. "
+                + "A barcode is usable only when printed on the foreground object or its genuine packaging and visually/category coherent; reject overlays, screens, watermarks and web images. "
+                + "overlay_or_watermark may describe glare, printed graphics, composite markings or UI chrome and is not by itself an identity veto. Set external_watermark=true only for text/graphics added outside the photographed object; set identity_obscured=true only when that external mark covers decisive identity data. "
                 + "Set complete=true only when the photographed surface supplies every commercial discriminator. "
                 + "If a required word is unreadable, leave it absent. JSON only.\n\n";
         JSONArray content = new JSONArray().put(new JSONObject()
@@ -207,6 +244,159 @@ final class OpenAiClient {
                 .put("text", new JSONObject().put("format", format).put("verbosity", "low"))
                 .put("input", input);
         return call(body, true, true);
+    }
+
+    /** Mandatory second physical read for a sports-card serial/parallel axis. No Web. */
+    Response verifySportsCardPhysicalDetails(List<String> imageDataUrls, String prompt) throws Exception {
+        JSONObject props=new JSONObject()
+                .put("same_physical_card",new JSONObject().put("type","boolean"))
+                .put("physical_serial_marking",new JSONObject().put("type","string"))
+                .put("serial_binding",new JSONObject().put("type","string"))
+                .put("serial_area_clear",new JSONObject().put("type","boolean"))
+                .put("serial_location",new JSONObject().put("type","string"))
+                .put("parallel_location",new JSONObject().put("type","string"))
+                .put("image_index",integerSchema(0,12))
+                .put("physical_parallel",new JSONObject().put("type","string"))
+                .put("parallel_color",new JSONObject().put("type","string"))
+                .put("finish",new JSONObject().put("type","string"))
+                .put("reason",new JSONObject().put("type","string"));
+        JSONObject format=jsonFormat("flipcheck_sports_physical_detail_v120",
+                strictObject(props,"same_physical_card","physical_serial_marking",
+                        "serial_binding","serial_area_clear","serial_location",
+                        "parallel_location","image_index","physical_parallel",
+                        "parallel_color","finish","reason"));
+        String policy="FLIPCHECK v1.20 SPORTS PHYSICAL DETAIL VERIFICATION. NO WEB. "
+                +"Inspect only the supplied photos/crops of the same physical sports card. "
+                +"A rating, stat, checklist result or prior OCR guess is never a serial. "
+                +"Copy an x/y serial only from the card surface and set serial_binding=physical_card_surface. "
+                +"Return the supplied image_index and exact serial_location/parallel_location on the card surface. "
+                +"If both digits are not clear, return an empty physical_serial_marking and serial_area_clear=false. "
+                +"Return parallel/color/finish only when physically visible. JSON only.\n\n";
+        JSONArray content=new JSONArray().put(new JSONObject().put("type","input_text")
+                .put("text",policy+prompt));
+        if(imageDataUrls!=null)for(String image:imageDataUrls)content.put(new JSONObject()
+                .put("type","input_image").put("image_url",image).put("detail","high"));
+        JSONArray input=new JSONArray().put(new JSONObject().put("role","user").put("content",content));
+        JSONObject body=new JSONObject().put("model",MODEL).put("store",false)
+                .put("max_output_tokens",450).put("reasoning",new JSONObject().put("effort","medium"))
+                .put("text",new JSONObject().put("format",format).put("verbosity","low"))
+                .put("input",input);
+        return call(body,true,true);
+    }
+
+    /** Independent number-only read; catalog/Web values are intentionally not supplied. */
+    Response verifyPhysicalCardNumber(List<String> imageDataUrls) throws Exception {
+        JSONObject readingProps=new JSONObject()
+                .put("value",new JSONObject().put("type","string"))
+                .put("image",integerSchema(0,20)).put("side",new JSONObject().put("type","string"))
+                .put("location",new JSONObject().put("type","string"))
+                .put("orientation",new JSONObject().put("type","integer").put("enum",new JSONArray().put(0).put(90).put(180).put(270)))
+                .put("confidence",integerSchema(0,100));
+        JSONObject reading=strictObject(readingProps,"value","image","side","location","orientation","confidence");
+        JSONObject props=new JSONObject().put("same_card",new JSONObject().put("type","boolean"))
+                .put("readings",new JSONObject().put("type","array").put("maxItems",8).put("items",reading));
+        JSONObject format=jsonFormat("flipcheck_number_transcription_v125",strictObject(props,"same_card","readings"));
+        JSONArray content=new JSONArray().put(new JSONObject().put("type","input_text").put("text",
+                "TRANSCRIBE ONLY THE PHYSICAL CARD/COLLECTOR NUMBER. No Web and no prior or catalog number is supplied. "
+                +"Inspect number-bearing corners and reverse areas at 0, 90, 180 and 270 degrees. Distinguish card number from serial x/y, HP/PV, rating, stats, jersey number, year and activation code. "
+                +"Return separate literal readings with precise surface location. If uncertain, return alternatives rather than choosing by identity knowledge."));
+        for(String image:imageDataUrls)content.put(new JSONObject().put("type","input_image").put("image_url",image).put("detail","high"));
+        JSONObject body=new JSONObject().put("model",MODEL).put("store",false).put("max_output_tokens",500)
+                .put("reasoning",new JSONObject().put("effort","medium"))
+                .put("text",new JSONObject().put("format",format).put("verbosity","low"))
+                .put("input",new JSONArray().put(new JSONObject().put("role","user").put("content",content)));
+        return call(body,true,true);
+    }
+
+    /** One post-closure Web pass for catalog naming and price/comparable enrichment. */
+    Response enrichConfirmedIdentity(String prompt) throws Exception {
+        JSONObject body=new JSONObject().put("model",MODEL).put("store",false)
+                .put("max_output_tokens",1600)
+                .put("reasoning",new JSONObject().put("effort","low"))
+                .put("max_tool_calls",1)
+                .put("tools",new JSONArray().put(new JSONObject().put("type","web_search")
+                        .put("search_context_size","medium")))
+                .put("include",new JSONArray().put("web_search_call.action.sources")
+                        .put("web_search_call.results"))
+                .put("text",new JSONObject().put("format",confirmedEnrichmentFormat()).put("verbosity","low"))
+                .put("input","FLIPCHECK UNIVERSAL CATALOG MATCHING. The photographic core is a hypothesis until every returned catalog candidate is compared with it. "
+                        +"Use exactly one web_search batch to discover multiple exact catalog/checklist candidates and attempt to disprove the leader. "
+                        +"Never change physical_card_number or physical_serial. A page-reported checklist number belongs in source_reported_catalog_number until local compatibility checks match it. "
+                        +"Do not infer a catalog number from a rating/stat and never put a catalog title into the physical identity. A commercial parallel name is source-only. Never search or price a variant-specific parallel unless RARE_VARIANT_PHYSICAL_PROOF=true. "
+                        +"Use QUERY_PROFILE and QUERY_SEED exactly: SEALED searches only the sealed product and never raw/graded/card-number or pictured people; RAW searches only an ungraded single card; GRADED searches the exact photographed grading state. "
+                        +"Return each comparable separately with sale_status, item_state RAW/GRADED/SEALED, condition, grading company and exact grade, currency, numeric price, date, retrieved URL, identity_match and exclusion_reason. "
+                        +"Never mix listings with sold results or raw with graded items. If comparable evidence is insufficient, return an empty array.\n\n"+prompt);
+        return call(body,false,true);
+    }
+
+    private static JSONObject confirmedEnrichmentFormat() throws Exception {
+        JSONObject candidateProps=new JSONObject()
+                .put("source_url",new JSONObject().put("type","string")).put("source_authority",new JSONObject().put("type","string"))
+                .put("brand",new JSONObject().put("type","string")).put("product_line",new JSONObject().put("type","string"))
+                .put("main_set",new JSONObject().put("type","string")).put("insert_subset",new JSONObject().put("type","string"))
+                .put("design_family",new JSONObject().put("type","string")).put("sub_series",new JSONObject().put("type","string"))
+                .put("distinguishing_tokens",stringArraySchema(12))
+                .put("release_year",new JSONObject().put("type","string")).put("subject",new JSONObject().put("type","string"))
+                .put("team",new JSONObject().put("type","string")).put("sport",new JSONObject().put("type","string"))
+                .put("card_number",new JSONObject().put("type","string")).put("language",new JSONObject().put("type","string"))
+                .put("hp",new JSONObject().put("type","string")).put("evolution_stage",new JSONObject().put("type","string"))
+                .put("attacks",stringArraySchema(6)).put("copyright_year",new JSONObject().put("type","string"))
+                .put("layout_signature",new JSONObject().put("type","string")).put("finish",new JSONObject().put("type","string"))
+                .put("edition",new JSONObject().put("type","string")).put("printing",new JSONObject().put("type","string"))
+                .put("parallel",new JSONObject().put("type","string")).put("parallel_family",new JSONObject().put("type","string"))
+                .put("parallel_color",new JSONObject().put("type","string")).put("print_run",new JSONObject().put("type","string"))
+                .put("serial_number",new JSONObject().put("type","string")).put("format",new JSONObject().put("type","string"))
+                .put("product_code",new JSONObject().put("type","string")).put("package_count",new JSONObject().put("type","string"))
+                .put("cards_per_pack",new JSONObject().put("type","string")).put("autograph_guarantee",new JSONObject().put("type","string"))
+                .put("memorabilia_guarantee",new JSONObject().put("type","string")).put("sealed_status",new JSONObject().put("type","string"))
+                .put("configuration",new JSONObject().put("type","string")).put("product_type",new JSONObject().put("type","string"))
+                .put("product_name",new JSONObject().put("type","string"));
+        JSONObject candidate=strictObject(candidateProps,"source_url","source_authority","brand","product_line","main_set","insert_subset","design_family","sub_series","distinguishing_tokens","release_year","subject","team","sport","card_number","language","hp","evolution_stage","attacks","copyright_year","layout_signature","finish","edition","printing","parallel","parallel_family","parallel_color","print_run","serial_number","format","product_code","package_count","cards_per_pack","autograph_guarantee","memorabilia_guarantee","sealed_status","configuration","product_type","product_name");
+        JSONObject comparableProps=new JSONObject()
+                .put("sale_status",new JSONObject().put("type","string").put("enum",new JSONArray().put("SOLD").put("ACTIVE_LISTING")))
+                .put("item_state",new JSONObject().put("type","string").put("enum",new JSONArray().put("RAW").put("GRADED").put("SEALED")))
+                .put("condition",new JSONObject().put("type","string"))
+                .put("grading_company",new JSONObject().put("type","string"))
+                .put("grade",new JSONObject().put("type","string"))
+                .put("currency",new JSONObject().put("type","string"))
+                .put("price",new JSONObject().put("type","number"))
+                .put("source_url",new JSONObject().put("type","string"))
+                .put("title",new JSONObject().put("type","string"))
+                .put("date",new JSONObject().put("type","string"))
+                .put("identity_match",new JSONObject().put("type","boolean"))
+                .put("variant_specific",new JSONObject().put("type","boolean"))
+                .put("variant_key",new JSONObject().put("type","string"))
+                .put("product_line",new JSONObject().put("type","string"))
+                .put("main_set",new JSONObject().put("type","string"))
+                .put("insert_subset",new JSONObject().put("type","string"))
+                .put("sub_series",new JSONObject().put("type","string"))
+                .put("release_year",new JSONObject().put("type","string"))
+                .put("card_number",new JSONObject().put("type","string"))
+                .put("language",new JSONObject().put("type","string"))
+                .put("parallel_family",new JSONObject().put("type","string"))
+                .put("parallel_color",new JSONObject().put("type","string"))
+                .put("print_run",new JSONObject().put("type","string"))
+                .put("format",new JSONObject().put("type","string"))
+                .put("sealed_status",new JSONObject().put("type","string"))
+                .put("exclusion_reason",new JSONObject().put("type","string"));
+        JSONObject comparable=strictObject(comparableProps,"sale_status","item_state","condition",
+                "grading_company","grade","currency","price","source_url","title","date","identity_match","variant_specific","variant_key","product_line","main_set","insert_subset","sub_series","release_year","card_number","language","parallel_family","parallel_color","print_run","format","sealed_status","exclusion_reason");
+        JSONObject props=new JSONObject()
+                .put("source_grounded",new JSONObject().put("type","boolean"))
+                .put("physical_tuple_coherent",new JSONObject().put("type","boolean"))
+                .put("source_url",new JSONObject().put("type","string"))
+                .put("source_reported_catalog_number",new JSONObject().put("type","string"))
+                .put("source_reported_release_year",new JSONObject().put("type","string"))
+                .put("source_reported_product_line",new JSONObject().put("type","string"))
+                .put("source_reported_variant",new JSONObject().put("type","string"))
+                .put("source_catalog_title",new JSONObject().put("type","string"))
+                .put("candidates",new JSONObject().put("type","array").put("maxItems",6).put("items",candidate))
+                .put("comparables",new JSONObject().put("type","array").put("maxItems",12).put("items",comparable))
+                .put("evidence",new JSONObject().put("type","string"));
+        return jsonFormat("flipcheck_confirmed_enrichment_v124",strictObject(props,
+                "source_grounded","physical_tuple_coherent","source_url",
+                "source_reported_catalog_number","source_reported_release_year","source_reported_product_line","source_reported_variant",
+                "source_catalog_title","candidates","comparables","evidence"));
     }
 
     /** One optional focused Web lookup to name a visually observed sports-card parallel. */
@@ -428,7 +618,7 @@ final class OpenAiClient {
         if ("resolve".equals(s)) {
             policy = "FLIPCHECK v0.82 ONE-PASS PRODUCT RESOLUTION. Use exactly one web_search tool call. "
                     + "Discover, compare and source-check concrete candidates for the same physical entity in that one pass. "
-                    + "Do not search price, resale value or marketplaces. Use only the structured observations supplied by the prompt; "
+                    + "After resolving identity, use the same single web_search call to collect available sold/comparable prices; identity and price remain independent. Use only the structured observations supplied by the prompt; "
                     + "never reconstruct a query from omitted raw OCR. Transient displays and control captions are forbidden query terms. "
                     + "A visible manufacturer mark is a strong namespace anchor, but a same-word retailer/domain is not the manufacturer. "
                     + "Prefer manufacturer-owned product, support, catalog or manual pages. exact_reference_complete=true only when a retrieved "
@@ -474,10 +664,50 @@ final class OpenAiClient {
 
     private static JSONObject webFormat(String stage) throws Exception {
         if ("resolve".equals(stage)) {
+            JSONObject comparableProps=new JSONObject()
+                    .put("sale_status",new JSONObject().put("type","string").put("enum",new JSONArray().put("SOLD").put("ACTIVE_LISTING")))
+                    .put("item_state",new JSONObject().put("type","string").put("enum",new JSONArray().put("RAW").put("GRADED").put("SEALED")))
+                    .put("condition",new JSONObject().put("type","string"))
+                    .put("grading_company",new JSONObject().put("type","string"))
+                    .put("grade",new JSONObject().put("type","string"))
+                    .put("currency",new JSONObject().put("type","string"))
+                    .put("price",new JSONObject().put("type","number"))
+                    .put("source_url",new JSONObject().put("type","string"))
+                    .put("title",new JSONObject().put("type","string"))
+                    .put("date",new JSONObject().put("type","string"))
+                    .put("identity_match",new JSONObject().put("type","boolean"))
+                    .put("variant_specific",new JSONObject().put("type","boolean"))
+                    .put("variant_key",new JSONObject().put("type","string"))
+                    .put("exclusion_reason",new JSONObject().put("type","string"));
+            JSONObject comparable=strictObject(comparableProps,"sale_status","item_state","condition",
+                    "grading_company","grade","currency","price","source_url","title","date","identity_match","variant_specific","variant_key","exclusion_reason");
             JSONObject candidateProps = new JSONObject()
                     .put("brand", new JSONObject().put("type", "string"))
                     .put("family", new JSONObject().put("type", "string"))
                     .put("model", new JSONObject().put("type", "string"))
+                    .put("category_key",new JSONObject().put("type","string"))
+                    .put("year",new JSONObject().put("type","string"))
+                    .put("subject",new JSONObject().put("type","string"))
+                    .put("team",new JSONObject().put("type","string"))
+                    .put("sport",new JSONObject().put("type","string"))
+                    .put("card_number",new JSONObject().put("type","string"))
+                    .put("language",new JSONObject().put("type","string"))
+                    .put("hp",new JSONObject().put("type","string"))
+                    .put("evolution_stage",new JSONObject().put("type","string"))
+                    .put("attacks",stringArraySchema(6))
+                    .put("copyright_year",new JSONObject().put("type","string"))
+                    .put("layout_signature",new JSONObject().put("type","string"))
+                    .put("product_type",new JSONObject().put("type","string"))
+                    .put("source_authority",new JSONObject().put("type","string"))
+                    .put("edition",new JSONObject().put("type","string"))
+                    .put("printing",new JSONObject().put("type","string"))
+                    .put("parallel",new JSONObject().put("type","string"))
+                    .put("parallel_color",new JSONObject().put("type","string"))
+                    .put("finish",new JSONObject().put("type","string"))
+                    .put("format",new JSONObject().put("type","string"))
+                    .put("configuration",new JSONObject().put("type","string"))
+                    .put("material_variant_key",new JSONObject().put("type","string"))
+                    .put("materially_distinct_variant",new JSONObject().put("type","boolean"))
                     .put("probable_reference", new JSONObject().put("type", "string"))
                     .put("probable_reference_confidence", integerSchema(0, 100))
                     .put("source_url", new JSONObject().put("type", "string"))
@@ -502,6 +732,7 @@ final class OpenAiClient {
                     .put("contradictions", stringArraySchema(10))
                     .put("evidence", new JSONObject().put("type", "string"));
             JSONObject candidate = strictObject(candidateProps, "brand", "family", "model",
+                    "category_key","year","subject","team","sport","card_number","language","hp","evolution_stage","attacks","copyright_year","layout_signature","product_type","source_authority","edition","printing","parallel","parallel_color","finish","format","configuration","material_variant_key","materially_distinct_variant",
                     "probable_reference", "probable_reference_confidence", "source_url",
                     "exact_reference_complete", "exact_identity_supported", "source_identity_confidence",
                     "same_entity_role", "relationship_only", "disproof_passed", "identifier_score",
@@ -521,11 +752,23 @@ final class OpenAiClient {
                     .put("candidates", new JSONObject().put("type", "array").put("maxItems", 6).put("items", candidate))
                     .put("strongest_alternative", new JSONObject().put("type", "string"))
                     .put("evidence", new JSONObject().put("type", "string"))
+                    .put("source_grounded",new JSONObject().put("type","boolean"))
+                    .put("physical_tuple_coherent",new JSONObject().put("type","boolean"))
+                    .put("source_url",new JSONObject().put("type","string"))
+                    .put("source_confirmed_catalog_number",new JSONObject().put("type","string"))
+                    .put("source_confirmed_release_year",new JSONObject().put("type","string"))
+                    .put("source_confirmed_variant",new JSONObject().put("type","string"))
+                    .put("source_catalog_title",new JSONObject().put("type","string"))
+                    .put("comparables",new JSONObject().put("type","array").put("maxItems",12).put("items",comparable))
+                    .put("price_evidence",new JSONObject().put("type","string"))
                     .put("next_photo_request", new JSONObject().put("type", "string"))
                     .put("next_photo_reason", new JSONObject().put("type", "string"));
             return jsonFormat("flipcheck_resolve_v082", strictObject(props, "resolved_category",
                     "resolved_brand", "leader_index", "confirmed", "model_proof", "candidates",
-                    "strongest_alternative", "evidence", "next_photo_request", "next_photo_reason"));
+                    "strongest_alternative", "evidence", "source_grounded",
+                    "physical_tuple_coherent", "source_url", "source_confirmed_catalog_number", "source_confirmed_release_year",
+                    "source_confirmed_variant", "source_catalog_title", "comparables", "price_evidence",
+                    "next_photo_request", "next_photo_reason"));
         }
         if ("brand_entity".equals(stage)) {
             JSONObject props = new JSONObject()
@@ -608,7 +851,86 @@ final class OpenAiClient {
                 .put("strict", true).put("schema", schema);
     }
 
+    /**
+     * Deliberately small observer contract. The former schema required the model to
+     * repeat the same identity in labels, summaries, fields, candidates and prose;
+     * that made a valid photo vulnerable to max_output_tokens truncation.
+     */
+    private static JSONObject compactObserverFormat() throws Exception {
+        JSONObject factProps = new JSONObject()
+                .put("key", new JSONObject().put("type", "string"))
+                .put("value", new JSONObject().put("type", "string"))
+                .put("image", integerSchema(-1, 20))
+                .put("side", new JSONObject().put("type", "string"))
+                .put("location", new JSONObject().put("type", "string"))
+                .put("role", new JSONObject().put("type", "string"))
+                .put("confidence", integerSchema(0, 100));
+        JSONObject fact = strictObject(factProps, "key", "value", "image", "side",
+                "location", "role", "confidence");
+        JSONObject candidateProps = new JSONObject()
+                .put("brand", new JSONObject().put("type", "string"))
+                .put("product_line", new JSONObject().put("type", "string"))
+                .put("subject", new JSONObject().put("type", "string"))
+                .put("year", new JSONObject().put("type", "string"))
+                .put("card_number", new JSONObject().put("type", "string"))
+                .put("language", new JSONObject().put("type", "string"))
+                .put("edition", new JSONObject().put("type", "string"))
+                .put("finish", new JSONObject().put("type", "string"))
+                .put("format", new JSONObject().put("type", "string"))
+                .put("material_variant_key", new JSONObject().put("type", "string"))
+                .put("materially_distinct", new JSONObject().put("type", "boolean"))
+                .put("confidence", integerSchema(0, 100));
+        JSONObject candidate = strictObject(candidateProps, "brand", "product_line",
+                "subject", "year", "card_number", "language", "edition", "finish",
+                "format", "material_variant_key", "materially_distinct", "confidence");
+        JSONObject props = new JSONObject()
+                .put("content_sufficient", new JSONObject().put("type", "boolean"))
+                .put("category", new JSONObject().put("type", "string"))
+                .put("views", stringArraySchema(6))
+                .put("facts", new JSONObject().put("type", "array").put("maxItems", 32)
+                        .put("items", fact))
+                .put("identity_hint", new JSONObject().put("type", "string"))
+                .put("candidates", new JSONObject().put("type", "array").put("maxItems", 6)
+                        .put("items", candidate))
+                .put("missing_discriminators", stringArraySchema(8));
+        return jsonFormat("flipcheck_compact_photo_observation_v125",
+                strictObject(props, "content_sufficient", "category", "views", "facts",
+                        "identity_hint", "candidates", "missing_discriminators"));
+    }
+
     private static JSONObject observerFormat() throws Exception {
+        JSONObject physicalCandidateProps=new JSONObject()
+                .put("category_key",new JSONObject().put("type","string"))
+                .put("brand",new JSONObject().put("type","string"))
+                .put("family",new JSONObject().put("type","string"))
+                .put("model",new JSONObject().put("type","string"))
+                .put("year",new JSONObject().put("type","string"))
+                .put("subject",new JSONObject().put("type","string"))
+                .put("card_number",new JSONObject().put("type","string"))
+                .put("language",new JSONObject().put("type","string"))
+                .put("edition",new JSONObject().put("type","string"))
+                .put("printing",new JSONObject().put("type","string"))
+                .put("parallel",new JSONObject().put("type","string"))
+                .put("parallel_color",new JSONObject().put("type","string"))
+                .put("finish",new JSONObject().put("type","string"))
+                .put("format",new JSONObject().put("type","string"))
+                .put("configuration",new JSONObject().put("type","string"))
+                .put("material_variant_key",new JSONObject().put("type","string"))
+                .put("materially_distinct_variant",new JSONObject().put("type","boolean"))
+                .put("confidence",integerSchema(0,100))
+                .put("evidence",new JSONObject().put("type","string"));
+        JSONObject physicalCandidate=strictObject(physicalCandidateProps,"category_key","brand","family","model","year","subject","card_number","language","edition","printing","parallel","parallel_color","finish","format","configuration","material_variant_key","materially_distinct_variant","confidence","evidence");
+        JSONObject evidenceFactProps=new JSONObject()
+                .put("key",new JSONObject().put("type","string"))
+                .put("value",new JSONObject().put("type","string"))
+                .put("evidence_type",new JSONObject().put("type","string"))
+                .put("confidence",integerSchema(0,100))
+                .put("image_index",integerSchema(-1,20))
+                .put("side",new JSONObject().put("type","string"))
+                .put("location",new JSONObject().put("type","string"))
+                .put("semantic_role",new JSONObject().put("type","string"));
+        JSONObject evidenceFact=strictObject(evidenceFactProps,"key","value","evidence_type",
+                "confidence","image_index","side","location","semantic_role");
         JSONObject labelProps = new JSONObject()
                 .put("text", new JSONObject().put("type", "string"))
                 .put("type", new JSONObject().put("type", "string")
@@ -638,11 +960,22 @@ final class OpenAiClient {
                                 .put("composite_markings")))
                 .put("physical_binding", new JSONObject().put("type", "boolean"))
                 .put("overlay_or_watermark", new JSONObject().put("type", "boolean"))
+                .put("external_watermark", new JSONObject().put("type", "boolean"))
+                .put("identity_obscured", new JSONObject().put("type", "boolean"))
+                .put("identity_ambiguous",new JSONObject().put("type","boolean"))
+                .put("materially_distinct_alternatives",integerSchema(0,6))
+                .put("missing_discriminative_field",new JSONObject().put("type","string"))
+                .put("discriminative_field_visible",new JSONObject().put("type","boolean"))
                 .put("confidence", integerSchema(0, 100))
-                .put("fields", stringArraySchema(12));
+                .put("fields", stringArraySchema(24))
+                .put("candidates",new JSONObject().put("type","array").put("maxItems",6).put("items",physicalCandidate))
+                .put("evidence_facts",new JSONObject().put("type","array").put("maxItems",32).put("items",evidenceFact));
         JSONObject photoIdentity = strictObject(photoIdentityProps, "complete", "canonical_name",
                 "identity_code", "evidence_kind", "physical_binding", "overlay_or_watermark",
-                "confidence", "fields");
+                "external_watermark", "identity_obscured",
+                "identity_ambiguous","materially_distinct_alternatives",
+                "missing_discriminative_field","discriminative_field_visible",
+                "confidence", "fields","candidates","evidence_facts");
         JSONObject props = new JSONObject()
                 .put("observation_valid", new JSONObject().put("type", "boolean"))
                 .put("observation_reason", new JSONObject().put("type", "string"))
@@ -668,7 +1001,7 @@ final class OpenAiClient {
                 .put("photo_views", stringArraySchema(5))
                 .put("visual_fingerprint", new JSONObject().put("type", "string"));
         props.put("photo_identity", photoIdentity);
-        return jsonFormat("flipcheck_observer_v082", strictObject(props, "observation_valid",
+        return jsonFormat("flipcheck_photographic_evidence_ledger_v124", strictObject(props, "observation_valid",
                 "observation_reason", "title", "category", "category_key", "brand", "brand_evidence",
                 "brand_role_confidence", "brand_role_reason", "family", "model", "category_confidence",
                 "family_confidence", "identity_confidence", "identity_reason", "distinctive_terms",
@@ -764,7 +1097,9 @@ final class OpenAiClient {
                 r.incompleteReason = details == null ? "response_incomplete"
                         : details.optString("reason", "response_incomplete");
                 r.parseError = r.incompleteReason;
-                r.payload = new JSONObject();
+                r.technicalStatus = r.incompleteReason.toLowerCase(Locale.ROOT).contains("max_output_tokens")
+                        ? "INCOMPLETE_MAX_TOKENS" : "INVALID_JSON";
+                r.payload = salvageCompactObservation(outputText(raw));
                 r.sources.addAll(extractSources(raw));
                 r.queries.addAll(extractQueries(raw));
                 r.usage = usage(raw, vision, System.currentTimeMillis() - started);
@@ -775,6 +1110,7 @@ final class OpenAiClient {
                 r.complete = false;
                 r.incompleteReason = "refusal";
                 r.parseError = "refusal";
+                r.technicalStatus = "CONTENT_INSUFFICIENT";
                 r.payload = new JSONObject();
                 r.sources.addAll(extractSources(raw));
                 r.queries.addAll(extractQueries(raw));
@@ -784,13 +1120,19 @@ final class OpenAiClient {
             String generated = outputText(raw);
             try {
                 r.payload = parseJsonObject(generated);
+                if (r.payload.has("content_sufficient")
+                        && !r.payload.optBoolean("content_sufficient", true)) {
+                    r.technicalStatus = "CONTENT_INSUFFICIENT";
+                }
             } catch (Exception parse) {
                 if (!tolerantJson) {
                     throw parse;
                 }
                 r.parseError = parse.getMessage() == null ? "JSON non valido" : parse.getMessage();
                 JSONObject salvaged = usesStrictFormat(body) ? null : salvageCompleteCandidates(generated);
+                if (salvaged == null) salvaged = salvageCompactObservation(generated);
                 r.payload = salvaged == null ? new JSONObject() : salvaged;
+                r.technicalStatus = "INVALID_JSON";
             }
             r.sources.addAll(extractSources(raw));
             r.queries.addAll(extractQueries(raw));
@@ -805,6 +1147,56 @@ final class OpenAiClient {
         JSONObject format = text == null ? null : text.optJSONObject("format");
         return format != null && "json_schema".equals(format.optString("type"));
     }
+
+    /** Keeps fully emitted compact facts/candidates even when the outer JSON was truncated. */
+    private static JSONObject salvageCompactObservation(String generated) {
+        JSONObject out = new JSONObject();
+        if (generated == null || generated.trim().isEmpty()) return out;
+        try { return parseJsonObject(generated); } catch (Exception ignored) {}
+        try {
+            out.put("content_sufficient", extractBoolean(generated, "content_sufficient", true));
+            out.put("category", extractString(generated, "category"));
+            out.put("identity_hint", extractString(generated, "identity_hint"));
+            out.put("views", salvageStringArray(generated, "views"));
+            out.put("facts", salvageObjectArray(generated, "facts"));
+            out.put("candidates", salvageObjectArray(generated, "candidates"));
+            out.put("missing_discriminators", salvageStringArray(generated,
+                    "missing_discriminators"));
+        } catch (Exception ignored) { return new JSONObject(); }
+        return out;
+    }
+
+    private static JSONArray salvageObjectArray(String text, String key) {
+        JSONArray out = new JSONArray(); int start = arrayStart(text, key);
+        if (start < 0) return out;
+        boolean quoted=false,escaped=false; int depth=0,objectStart=-1;
+        for (int i=start+1;i<text.length();i++) {
+            char ch=text.charAt(i);
+            if (quoted) { if (escaped) escaped=false; else if (ch=='\\') escaped=true;
+                else if (ch=='\"') quoted=false; continue; }
+            if (ch=='\"') { quoted=true; continue; }
+            if (ch=='{') { if (depth==0) objectStart=i; depth++; }
+            else if (ch=='}'&&depth>0) { depth--; if (depth==0&&objectStart>=0) {
+                try { out.put(new JSONObject(text.substring(objectStart,i+1))); } catch(Exception ignored) {}
+                objectStart=-1;
+            }} else if (ch==']'&&depth==0) break;
+        }
+        return out;
+    }
+
+    private static JSONArray salvageStringArray(String text, String key) {
+        JSONArray out=new JSONArray(); int start=arrayStart(text,key); if(start<0)return out;
+        boolean quoted=false,escaped=false;StringBuilder value=new StringBuilder();
+        for(int i=start+1;i<text.length();i++){char ch=text.charAt(i);
+            if(quoted){if(escaped){value.append(ch);escaped=false;}else if(ch=='\\')escaped=true;
+                else if(ch=='\"'){quoted=false;out.put(value.toString());value.setLength(0);}else value.append(ch);}
+            else if(ch=='\"')quoted=true;else if(ch==']')break;}
+        return out;
+    }
+
+    private static int arrayStart(String text,String key){int k=text.indexOf("\""+key+"\"");return k<0?-1:text.indexOf('[',k);}
+    private static String extractString(String text,String key){int k=text.indexOf("\""+key+"\"");if(k<0)return "";int colon=text.indexOf(':',k),q=colon<0?-1:text.indexOf('\"',colon);if(q<0)return "";StringBuilder b=new StringBuilder();boolean escaped=false;for(int i=q+1;i<text.length();i++){char ch=text.charAt(i);if(escaped){b.append(ch);escaped=false;}else if(ch=='\\')escaped=true;else if(ch=='\"')break;else b.append(ch);}return b.toString();}
+    private static boolean extractBoolean(String text,String key,boolean fallback){int k=text.indexOf("\""+key+"\"");if(k<0)return fallback;int colon=text.indexOf(':',k);if(colon<0)return fallback;String tail=text.substring(colon+1).trim();return tail.startsWith("true")||(!tail.startsWith("false")&&fallback);}
 
     private static Models.Usage usage(JSONObject jSONObject, boolean z, long j) {
         Models.Usage usage = new Models.Usage();

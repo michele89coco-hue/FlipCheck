@@ -35,7 +35,6 @@ import com.flipcheck.nativebeta.ClarificationPlanner;
 import com.flipcheck.nativebeta.ImageMatchPolicy;
 import com.flipcheck.nativebeta.Models;
 import com.flipcheck.nativebeta.UniversalRecognitionLadder;
-import com.google.mlkit.common.MlKitException;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -50,6 +49,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class MainActivity extends Activity {
+    static final String ACTION_DEBUG_SMOKE_IMPORT =
+            "com.flipcheck.nativebeta.DEBUG_SMOKE_IMPORT";
+    static final String EXTRA_DEBUG_SMOKE_IMAGES = "smoke_image_uris";
+    static final String EXTRA_DEBUG_SMOKE_MOCK = "smoke_mock_mode";
     private static final int MAX_IMAGES = 3;
     private static final int PICK_IMAGE = 2301;
     private static final int CAPTURE_IMAGE = 2302;
@@ -68,7 +71,8 @@ public class MainActivity extends Activity {
     private static final int BG = Color.rgb(10, 16, 32);
     private static final int PANEL = Color.rgb(18, 27, 45);
     private static final int TEXT = Color.rgb(245, 247, 250);
-    private static final int MUTED = Color.rgb(170, 180, MlKitException.CODE_SCANNER_UNAVAILABLE);
+    // UI constants must not initialize optional ML Kit classes during launcher startup.
+    private static final int MUTED = Color.rgb(170, 180, 190);
     private static final int MINT = Color.rgb(98, 224, 190);
     private static final int WARN = Color.rgb(243, 212, 138);
     private static final int DANGER = Color.rgb(242, 154, 154);
@@ -114,7 +118,8 @@ public class MainActivity extends Activity {
                 this.pendingCameraUri = Uri.parse(pending);
             }
         }
-        renderPhotos();
+        consumeDebugSmokeIntent(getIntent());
+        renderPhotosSafely();
     }
 
     @Override
@@ -176,9 +181,11 @@ public class MainActivity extends Activity {
         LinearLayout settings = panel();
         settings.addView(text("Impostazioni Beta", 17, TEXT, true));
         this.apiKeyInput = input("OpenAI API key");
+        this.apiKeyInput.setContentDescription("flipcheck-api-key");
         this.apiKeyInput.setInputType(129);
         settings.addView(this.apiKeyInput, match());
         Button save = secondary("SALVA CHIAVE");
+        save.setContentDescription("flipcheck-save-key");
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public final void onClick(View view) {
@@ -197,6 +204,7 @@ public class MainActivity extends Activity {
         guide.setPadding(0, dp(6), 0, dp(12));
         scan.addView(guide);
         this.addPhotoButton = primary("+ GALLERIA · PIÙ FOTO");
+        this.addPhotoButton.setContentDescription("flipcheck-gallery");
         this.addPhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public final void onClick(View view) {
@@ -205,6 +213,7 @@ public class MainActivity extends Activity {
         });
         scan.addView(this.addPhotoButton, match());
         this.cameraButton = secondary("SCATTA FOTO");
+        this.cameraButton.setContentDescription("flipcheck-camera");
         this.cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public final void onClick(View view) {
@@ -219,9 +228,11 @@ public class MainActivity extends Activity {
         hsv.addView(this.photosRow);
         scan.addView(hsv, match());
         this.detailsInput = input("Indizio facoltativo: marca, codice o testo");
+        this.detailsInput.setContentDescription("flipcheck-details");
         this.detailsInput.setMinLines(1);
         scan.addView(this.detailsInput, match());
         this.identifyButton = primary("IDENTIFICA");
+        this.identifyButton.setContentDescription("flipcheck-identify");
         this.identifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public final void onClick(View view) {
@@ -232,10 +243,12 @@ public class MainActivity extends Activity {
         linearLayoutVertical.addView(scan, match());
         linearLayoutVertical.addView(space(14));
         this.statusView = text("Pronto.", 15, MUTED, false);
+        this.statusView.setContentDescription("flipcheck-status");
         this.statusView.setPadding(dp(14), dp(14), dp(14), dp(14));
         this.statusView.setBackground(round(PANEL, 16, Color.rgb(39, 53, 82)));
         linearLayoutVertical.addView(this.statusView, match());
         this.resultPanel = vertical();
+        this.resultPanel.setContentDescription("flipcheck-result");
         this.resultPanel.setVisibility(8);
         linearLayoutVertical.addView(this.resultPanel, match());
         linearLayoutVertical.addView(space(14));
@@ -347,7 +360,7 @@ public class MainActivity extends Activity {
         } else if (data.getData() != null) {
             addGalleryUri(data.getData());
         }
-        renderPhotos();
+        renderPhotosSafely();
         this.resultPanel.setVisibility(8);
         int added = this.images.size() - before;
         setStatus(added == 0 ? "Nessuna nuova foto aggiunta."
@@ -366,6 +379,34 @@ public class MainActivity extends Activity {
         } catch (Exception ignored) {
         }
         this.images.add(uri);
+    }
+
+    /**
+     * Debug-only entry used by the emulator smoke test to inject app-private
+     * fixture URIs. It does not bypass preview, service, result-store, receiver,
+     * or rendering; it only avoids automating a vendor-specific document picker.
+     */
+    private void consumeDebugSmokeIntent(Intent intent) {
+        if (!BuildConfig.DEBUG || intent == null
+                || !ACTION_DEBUG_SMOKE_IMPORT.equals(intent.getAction())) {
+            return;
+        }
+        String[] supplied = intent.getStringArrayExtra(EXTRA_DEBUG_SMOKE_IMAGES);
+        if (supplied != null) {
+            for (String raw : supplied) {
+                if (raw != null && !raw.trim().isEmpty() && this.images.size() < MAX_IMAGES) {
+                    Uri uri = Uri.parse(raw.trim());
+                    if (!this.images.contains(uri)) {
+                        this.images.add(uri);
+                    }
+                }
+            }
+        }
+        if (intent.getBooleanExtra(EXTRA_DEBUG_SMOKE_MOCK, false)) {
+            this.prefs.edit().putBoolean("ci_mock_mode", true)
+                    .putString("api_key", "ci-smoke-key-not-sent").apply();
+            this.apiKeyInput.setText("ci-smoke-key-not-sent");
+        }
     }
 
     private void handleCameraResult(int resultCode, Intent data) {
@@ -489,7 +530,7 @@ public class MainActivity extends Activity {
         if (!this.images.contains(captured) && this.images.size() < MAX_IMAGES) {
             this.images.add(captured);
         }
-        renderPhotos();
+        renderPhotosSafely();
         this.resultPanel.setVisibility(8);
         setStatus(this.images.size() == 1 ? "Foto scattata e caricata. Puoi identificare."
                 : this.images.size() + " foto acquisite. Puoi identificare.", MINT);
@@ -557,6 +598,7 @@ public class MainActivity extends Activity {
             LinearLayout card = vertical();
             card.setPadding(dp(4), dp(4), dp(4), dp(4));
             ImageView im = new ImageView(this);
+            im.setContentDescription("flipcheck-photo-" + (i + 1));
             im.setScaleType(ImageView.ScaleType.CENTER_CROP);
             // Never let ImageView decode the original camera file. Modern phones
             // routinely produce 12-200 MP images and setImageURI() may allocate the
@@ -570,11 +612,12 @@ public class MainActivity extends Activity {
                 } else {
                     im.setBackgroundColor(Color.rgb(35, 48, 72));
                 }
-            } catch (Exception ignored) {
+            } catch (Throwable ignored) {
                 im.setBackgroundColor(Color.rgb(35, 48, 72));
             }
             card.addView(im, new LinearLayout.LayoutParams(dp(112), dp(112)));
             Button del = secondary("RIMUOVI");
+            del.setContentDescription("flipcheck-remove-photo-" + (i + 1));
             del.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public final void onClick(View view) {
@@ -588,20 +631,38 @@ public class MainActivity extends Activity {
         this.cameraButton.setEnabled(this.images.size() < 3);
     }
 
+    /** Keeps a faulty OEM thumbnail provider from terminating the Activity. */
+    private void renderPhotosSafely() {
+        try {
+            renderPhotos();
+        } catch (Throwable previewFailure) {
+            if (this.photosRow != null) {
+                this.photosRow.removeAllViews();
+            }
+            if (this.addPhotoButton != null) {
+                this.addPhotoButton.setEnabled(this.images.size() < MAX_IMAGES);
+            }
+            if (this.cameraButton != null) {
+                this.cameraButton.setEnabled(this.images.size() < MAX_IMAGES);
+            }
+            setStatus("Foto acquisita. Anteprima non disponibile; puoi comunque identificarla.", WARN);
+        }
+    }
+
     public void lambda$renderPhotos$3(int index, View v) {
         this.images.remove(index);
         if (this.images.isEmpty()) {
             prepareForNewScanIfEmpty();
             setStatus("Pronto per una nuova identificazione.", MUTED);
         }
-        renderPhotos();
+        renderPhotosSafely();
         this.resultPanel.setVisibility(8);
     }
 
     private void startIdentification() {
         final String key = this.apiKeyInput.getText().toString().trim();
         if (key.isEmpty()) {
-            setStatus("Inserisci la chiave OpenAI: la pipeline v0.84 usa una richiesta multimodale + massimo 1 Web Search.", DANGER);
+            setStatus("Inserisci la chiave OpenAI: la pipeline usa Vision, una seconda verifica fisica quando necessaria e massimo 1 Web Search.", DANGER);
             return;
         }
         if (this.images.isEmpty()) {
@@ -804,12 +865,39 @@ public class MainActivity extends Activity {
             p.addView(line("Confidenza tipo", id.categoryConfidence + "%"));
         }
         if (confidence > 0) {
-            p.addView(line("Confidenza identità", confidence + "%"));
+            p.addView(line("Confidenza identità principale", confidence + "%"));
         } else if (!id.marketReady) {
             p.addView(line("Identità esatta", "da determinare"));
         }
+        if(!valueOrEmpty(id.coreIdentityStatus).isEmpty())p.addView(line("Identità principale",humanState(id.coreIdentityStatus)));
+        if(!valueOrEmpty(id.exactIdentityStatus).isEmpty()&&!"CONFIRMED".equals(id.exactIdentityStatus))p.addView(line("Identità esatta",humanState(id.exactIdentityStatus)));
+        if(!valueOrEmpty(id.variantStatus).isEmpty()&&!"NOT_OBSERVED".equals(id.variantStatus))p.addView(line("Variante fisica",humanState(id.variantStatus)));
+        if(!valueOrEmpty(id.physicalCardNumber).isEmpty())p.addView(line(id.physicalCollectorNumber.isEmpty()?"Numero carta":"Collector number",
+                id.physicalCardNumber+(PhysicalCardNumberPolicy.verifiedNumber(id)?" · verificato":" · da verificare")));
+        if(!valueOrEmpty(id.sourceConfirmedCatalogNumber).isEmpty()&&id.catalogVerified
+                &&(valueOrEmpty(id.physicalCardNumber).isEmpty()||!id.sourceConfirmedCatalogNumber.equalsIgnoreCase(id.physicalCardNumber)))
+            p.addView(line("Numero catalogo",id.sourceConfirmedCatalogNumber+" · verificato foto + catalogo"));
+        if(!valueOrEmpty(id.language).isEmpty())p.addView(line("Lingua",id.language));
+        if(!valueOrEmpty(id.evolutionStage).isEmpty())p.addView(line("Stadio evolutivo",id.evolutionStage));
+        if(!valueOrEmpty(id.hpOrPv).isEmpty())p.addView(line("HP/PV",id.hpOrPv));
+        if(!valueOrEmpty(id.finish).isEmpty())p.addView(line("Finitura",id.finish));
+        if(!valueOrEmpty(id.sourceConfirmedVariant).isEmpty()&&id.catalogVerified)p.addView(line("Variante catalogo",id.sourceConfirmedVariant+" · da verificare fisicamente"));
+        if(ProfileQueryBuilder.isSealed(id)){
+            if(!valueOrEmpty(id.sourceConfirmedFormat).isEmpty())p.addView(line("Formato del box",id.sourceConfirmedFormat+" · verificato foto + catalogo"));
+            else if(valueOrEmpty(id.sealedFormat).isEmpty())p.addView(line("Formato del box","da verificare"));
+        }
         if (id.priceConfidence > 0) {
             p.addView(line("Confidenza prezzo", id.priceConfidence + "%"));
+        }
+        if(id.marketReady){
+            p.addView(line("Prezzo/comparabili", id.priceAvailable?id.priceSummary:"Prezzo non disponibile"));
+            if(id.priceAvailable)p.addView(line("Comparabili", id.comparablesSummary));
+            if(ProfileQueryBuilder.isSealed(id)){
+                if(!id.featuredSubjects.isEmpty())p.addView(line("Soggetti in evidenza",id.featuredSubjects.toString()));
+                if(!id.productConfiguration.isEmpty())p.addView(line("Configurazione",id.productConfiguration));
+            }
+        }else if(!valueOrEmpty(id.comparablesSummary).isEmpty()){
+            p.addView(line("Prezzo/comparabili",id.comparablesSummary));
         }
         final ImageMatchPolicy.Decision imageDecision = ImageMatchPolicy.evaluate(id);
         UniversalRecognitionLadder.State ladder = UniversalRecognitionLadder.assess(id);
@@ -1025,7 +1113,138 @@ public class MainActivity extends Activity {
         LinearLayout panel = vertical();
         panel.setPadding(0, dp(4), 0, 0);
 
+        panel.addView(section("Build installata"));
+        panel.addView(text("BuildConfig.VERSION_NAME=" + BuildConfig.VERSION_NAME
+                + " · VERSION_CODE=" + BuildConfig.VERSION_CODE, 12, MINT, true));
+        panel.addView(text("closure_attempt=" + id.closureAttempt
+                + " · closure_result=" + id.closureResult
+                + " · closure_stage=" + id.closureStage, 12,
+                id.closureResult ? MINT : WARN, true));
+        if (!id.closureResult && !id.closureMissingFields.isEmpty()) {
+            panel.addView(text("closure_missing_fields=" + id.closureMissingFields,
+                    12, WARN, false));
+        }
+        panel.addView(text("visionCalls="+usage.visionCalls+" · webCalls="+usage.webCalls,
+                12,MINT,true));
+        panel.addView(text("pipeline_failure_domain="+valueOrEmpty(id.pipelineFailureDomain)
+                +" · vision_finish_reason="+valueOrEmpty(id.visionFinishReason)
+                +" · vision_response_status="+valueOrEmpty(id.visionResponseStatus),12,MUTED,false));
+        panel.addView(text("technical_retry_count="+id.technicalRetryCount
+                +" · discriminative_vision_count="+id.discriminativeVisionCount
+                +" · local_ocr_fact_count="+id.localOcrFactCount,12,MUTED,false));
+        panel.addView(text("identity_status="+valueOrEmpty(id.identityStatus)
+                +" · closure_basis="+valueOrEmpty(id.closureBasis),12,
+                id.identityConfirmed?MINT:WARN,true));
+        panel.addView(text("category_status="+valueOrEmpty(id.categoryStatus)
+                +" · core_identity_status="+valueOrEmpty(id.coreIdentityStatus)
+                +" · exact_identity_status="+valueOrEmpty(id.exactIdentityStatus)
+                +" · variant_status="+valueOrEmpty(id.variantStatus),12,MUTED,false));
+        panel.addView(text("blocking_reason="+valueOrEmpty(id.blockingReason)
+                +" · missing_discriminative_fields="+valueOrEmpty(id.missingDiscriminativeFields),
+                12,id.blockingReason.isEmpty()?MUTED:WARN,false));
+        panel.addView(text("missing_nonblocking_fields="+valueOrEmpty(id.missingNonblockingFields)
+                +" · requested_photo_reason="+valueOrEmpty(id.requestedPhotoReason),12,MUTED,false));
+        panel.addView(text("web_status="+valueOrEmpty(id.webStatus)
+                +" · market_status="+valueOrEmpty(id.marketStatus)
+                +" · additional_vision_reason="+valueOrEmpty(id.additionalVisionReason),12,MUTED,false));
+        panel.addView(text("normalization_stage="+valueOrEmpty(id.normalizationStage)
+                +" · canonical_profile="+valueOrEmpty(id.canonicalProfile),12,MINT,true));
+        panel.addView(text("canonical_photo_fields="+valueOrEmpty(id.canonicalPhotoFields),
+                11,MUTED,false));
+        panel.addView(text("canonical_physical_fields="+valueOrEmpty(id.canonicalPhysicalFields),
+                11,MUTED,false));
+        panel.addView(text("semantic_conflicts="+valueOrEmpty(id.semanticConflicts)
+                +" · hierarchical_status="+valueOrEmpty(id.hierarchicalStatus),11,MUTED,false));
+        panel.addView(text("category_confidence="+id.categoryConfidence
+                +" · family_confidence="+id.familyConfidence
+                +" · main_identity_confidence="+id.mainIdentityConfidence
+                +" · exact_identity_confidence="+id.exactIdentityConfidence
+                +" · identifier_confidence="+id.identifierConfidence
+                +" · variant_confidence="+id.variantConfidence
+                +" · market_confidence="+id.marketConfidence,11,MUTED,false));
+        panel.addView(text("aliases_consumed="+valueOrEmpty(id.aliasesConsumed),11,MUTED,false));
+        panel.addView(text("facts_rejected_with_reason="+valueOrEmpty(id.factsRejectedWithReason),
+                11,id.factsRejectedWithReason.isEmpty()?MUTED:WARN,false));
+        panel.addView(text("fingerprint_components="+valueOrEmpty(id.fingerprintComponents)
+                +" · fingerprint_score="+id.fingerprintScore,11,MUTED,false));
+        panel.addView(text("closure_input_snapshot="+valueOrEmpty(id.closureInputSnapshot),
+                11,MUTED,false));
+        panel.addView(text("requested_photo_profile="+valueOrEmpty(id.requestedPhotoProfile)
+                +" · consistency_invariants="+valueOrEmpty(id.consistencyInvariants),
+                12,"PASS".equals(id.consistencyInvariants)?MINT:WARN,true));
+        if(!id.consistencyInvariantErrors.isEmpty())panel.addView(text(
+                "consistency_invariant_details="+id.consistencyInvariantErrors,11,WARN,false));
+        panel.addView(text("canonical_profile_votes="+valueOrEmpty(id.canonicalProfileVotes)
+                +" · number_hypotheses="+valueOrEmpty(id.numberHypotheses)
+                +" · number_conflicts="+valueOrEmpty(id.numberConflicts),11,MUTED,false));
+        panel.addView(text("post_web_conflicts="+valueOrEmpty(id.postWebConflicts)
+                +" · web_fields_accepted="+valueOrEmpty(id.webFieldsAccepted)
+                +" · web_fields_rejected="+valueOrEmpty(id.webFieldsRejected),11,MUTED,false));
+        panel.addView(text("catalog_compatibility_status="+valueOrEmpty(id.catalogCompatibilityStatus)
+                +" · catalog_matched_fields="+valueOrEmpty(id.catalogMatchedFields)
+                +" · catalog_conflicts="+valueOrEmpty(id.catalogConflicts)
+                +" · web_contribution_score="+id.webContributionScore,11,MUTED,false));
+        panel.addView(text("disproof_status="+valueOrEmpty(id.disproofStatus)
+                +" · format_status="+valueOrEmpty(id.formatStatus)
+                +" · exact_resolution_reason="+valueOrEmpty(id.exactResolutionReason)
+                +" · exact_web_attempts="+id.exactWebResolutionAttempts,11,MUTED,false));
+        panel.addView(text("exact_resolution_queries="+id.exactResolutionQueries
+                +" · catalog_hierarchy="+valueOrEmpty(id.catalogHierarchy)
+                +" · second_web_reason="+valueOrEmpty(id.secondWebResolutionReason),11,MUTED,false));
+        panel.addView(text("identifier_status="+valueOrEmpty(id.identifierStatus)
+                +" · overall_status="+valueOrEmpty(id.overallStatus)
+                +" · invariant_warnings="+id.consistencyInvariantWarnings,11,MUTED,false));
+        panel.addView(text("query_fields_included="+valueOrEmpty(id.queryFieldsIncluded)
+                +" · query_fields_excluded="+valueOrEmpty(id.queryFieldsExcluded),11,MUTED,false));
+        panel.addView(text("excluded_comparables_with_reason="+valueOrEmpty(id.excludedComparablesWithReason),11,MUTED,false));
+        panel.addView(text("pre_web_invariants="+valueOrEmpty(id.preWebInvariants)
+                +" · post_web_invariants="+valueOrEmpty(id.postWebInvariants)
+                +" · final_decision_reason="+valueOrEmpty(id.finalDecisionReason),11,MUTED,false));
+        panel.addView(text("physical_card_number="+valueOrEmpty(id.physicalCardNumber)
+                +" · origin="+valueOrEmpty(id.physicalCardNumberOrigin)
+                +" · physical_collector_number="+valueOrEmpty(id.physicalCollectorNumber)
+                +" · physical_serial="+valueOrEmpty(id.physicalSerial)
+                +" · origin="+valueOrEmpty(id.physicalSerialOrigin),12,MUTED,false));
+        panel.addView(text("source_confirmed_catalog_number="
+                +valueOrEmpty(id.sourceConfirmedCatalogNumber)
+                +" · origin="+valueOrEmpty(id.sourceConfirmedCatalogNumberOrigin),12,MUTED,false));
+        panel.addView(text("source_catalog_title="+valueOrEmpty(id.sourceCatalogTitle)
+                +" · source_confirmed_variant="+valueOrEmpty(id.sourceConfirmedVariant),12,MUTED,false));
+        panel.addView(text("parallel="+valueOrEmpty(id.physicalParallel)
+                +" · parallel_color="+valueOrEmpty(id.parallelColor)
+                +" · finish="+valueOrEmpty(id.finish)
+                +" · rare_variant_physical_proof="+id.rareVariantPhysicalProof,12,MUTED,false));
+        panel.addView(text("language="+valueOrEmpty(id.language)
+                +" · query_profile="+valueOrEmpty(id.queryProfile)
+                +" · canonical_candidate_count="+id.canonicalCandidateCount,12,MUTED,false));
+        panel.addView(text("candidate_canonicalization="
+                +valueOrEmpty(id.candidateCanonicalizationSummary),12,MUTED,false));
+        if (ProfileQueryBuilder.isSealed(id)) {
+            panel.addView(text("product_identity: type="+valueOrEmpty(id.productType)
+                    +" · format="+valueOrEmpty(id.sealedFormat)
+                    +" · configuration="+valueOrEmpty(id.productConfiguration),12,MUTED,false));
+            panel.addView(text("featured_subjects="+id.featuredSubjects,12,MUTED,false));
+        }
+        panel.addView(text("prezzo/comparabili: "+id.priceSummary+" · "
+                +id.comparablesSummary,12,id.priceAvailable?MINT:MUTED,false));
+        for(Models.MarketComparable comparable:id.marketComparables){
+            panel.addView(text((comparable.included?"INCLUSO":"ESCLUSO")+" · "
+                    +comparable.itemState+" · "+comparable.condition
+                    +(comparable.grade.isEmpty()?"":" · "+comparable.gradingCompany+" "+comparable.grade)
+                    +" · "+comparable.currency+" "+comparable.price+" · "+comparable.date
+                    +" · "+comparable.title+" · "+comparable.reason
+                    +" · "+comparable.sourceUrl,11,comparable.included?MINT:MUTED,false));
+        }
+
         panel.addView(section("Evidence Ledger"));
+        if(id.evidenceLedger.isEmpty()){
+            panel.addView(text("Nessun fatto con provenienza strutturata.",11,MUTED,false));
+        }else{
+            for(Models.EvidenceFact fact:id.evidenceLedger){
+                panel.addView(text(EvidenceLedger.debug(fact),11,
+                        "photo".equals(fact.origin)?MINT:MUTED,false));
+            }
+        }
         addEvidenceGroup(panel, "OSSERVATO", id.observedEvidence, MINT,
                 "Nessuna prova osservata strutturata.");
         addEvidenceGroup(panel, "INFERITO", id.inferredEvidence, WARN,
@@ -1100,7 +1319,9 @@ public class MainActivity extends Activity {
             panel.addView(text("Identità fotografica: complete=" + id.photoIdentityComplete
                     + " · kind=" + id.photoIdentityKind + " · binding="
                     + id.photoIdentityPhysicalBinding + " · overlay="
-                    + id.photoIdentityOverlayOrWatermark + " · conf="
+                    + id.photoIdentityOverlayOrWatermark + " · external_watermark="
+                    + id.photoIdentityExternalWatermark + " · identity_obscured="
+                    + id.photoIdentityIdentityObscured + " · conf="
                     + id.photoIdentityConfidence + "% · nome=" + id.photoIdentityName
                     + " · codice=" + id.photoIdentityCode + " · campi="
                     + id.photoIdentityFields, 11,
@@ -1111,8 +1332,10 @@ public class MainActivity extends Activity {
         }
 
         panel.addView(section("Codici e vincoli"));
-        panel.addView(text(id.primaryIdentifier.isEmpty() ? "Nessun codice prioritario letto"
-                : id.primaryIdentifier, 13, id.primaryIdentifier.isEmpty() ? MUTED : MINT, true));
+        panel.addView(text(id.primaryIdentifier.isEmpty()
+                ? "physical_priority_code=vuoto (campo non bloccante quando non discriminante)"
+                : "physical_priority_code="+id.primaryIdentifier,
+                13, id.primaryIdentifier.isEmpty() ? MUTED : MINT, true));
         if (!id.identifierVariants.isEmpty()) {
             panel.addView(text("Varianti OCR: " + id.identifierVariants, 11, MUTED, false));
         }
@@ -1143,29 +1366,12 @@ public class MainActivity extends Activity {
             panel.addView(text("Tempo locale: " + id.localScan.durationMs + " ms", 11, MUTED, false));
         }
 
-        panel.addView(section("Fonti"));
-        int shown = 0;
-        for (final Models.Source source : id.sources) {
-            if (source.relevance < 15) {
-                continue;
-            }
-            TextView link = text((source.title.isEmpty() ? source.domain() : source.title)
-                    + " · score " + source.relevance, 12, Color.rgb(140, 210, 245), false);
-            link.setPadding(0, dp(5), 0, dp(5));
-            link.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    openUrl(source.url);
-                }
-            });
-            panel.addView(link);
-            if (++shown >= 8) {
-                break;
-            }
-        }
-        if (shown == 0) {
-            panel.addView(text("Nessuna fonte pertinente mostrata.", 11, MUTED, false));
-        }
+        panel.addView(section("Fonti catalografiche"));
+        int catalogShown=addSourceLinks(panel,id,"catalog",8);
+        if(catalogShown==0)panel.addView(text("Nessuna fonte catalografica utilizzata.",11,MUTED,false));
+        panel.addView(section("Fonti/comparabili di mercato"));
+        int marketShown=addSourceLinks(panel,id,"market",8);
+        if(marketShown==0)panel.addView(text("Nessun comparabile verificato.",11,MUTED,false));
 
         panel.addView(section("Telemetria beta"));
         panel.addView(text(String.format(Locale.US,
@@ -1173,6 +1379,19 @@ public class MainActivity extends Activity {
                 usage.costUsd, usage.requests, usage.visionCalls, usage.webCalls,
                 usage.inputTokens + usage.outputTokens, usage.apiMs), 11, MUTED, false));
         return panel;
+    }
+
+    private int addSourceLinks(LinearLayout panel,Models.Identification id,String type,int limit){
+        int shown=0;
+        for(final Models.Source source:id.sources){
+            if(!type.equals(source.sourceType)||source.relevance<15||source.url.isEmpty())continue;
+            TextView link=text((source.title.isEmpty()?source.domain():source.title)
+                    +" · score "+source.relevance,12,Color.rgb(140,210,245),false);
+            link.setPadding(0,dp(5),0,dp(5));
+            link.setOnClickListener(new View.OnClickListener(){@Override public void onClick(View view){openUrl(source.url);}});
+            panel.addView(link);shown++;if(shown>=limit)break;
+        }
+        return shown;
     }
 
     private void addEvidenceGroup(LinearLayout panel, String label, List<String> evidence,
@@ -1408,6 +1627,27 @@ public class MainActivity extends Activity {
         String s = e.getMessage();
         return (s == null || s.trim().isEmpty()) ? e.getClass().getSimpleName() : s;
     }
+
+    private String valueOrEmpty(String value) {
+        return value == null || value.trim().isEmpty() ? "" : value.trim();
+    }
+
+    private String humanState(String value){String v=valueOrEmpty(value);
+        if(v.equals("CONFIRMED"))return "confermata";
+        if(v.equals("FORMAT_UNRESOLVED"))return "formato commerciale da verificare";
+        if(v.equals("FORMAT_PENDING"))return "formato commerciale da verificare";
+        if(v.equals("EXACT_IDENTITY_PENDING_WEB"))return "risoluzione catalografica in attesa";
+        if(v.equals("CATALOG_MATCHED"))return "verificata foto + catalogo";
+        if(v.equals("VARIANT_CONFIRMED"))return "confermata foto + catalogo";
+        if(v.equals("VARIANT_PENDING"))return "da verificare";
+        if(v.equals("NUMBER_CONFLICT"))return "numero in conflitto: verifica mirata necessaria";
+        if(v.equals("NUMBER_UNVERIFIED"))return "numero da verificare";
+        if(v.equals("SET_UNRESOLVED"))return "set da determinare; identità principale confermata";
+        if(v.equals("CATALOG_CONFIRMED"))return "numero catalografico verificato dalla fonte";
+        if(v.equals("PROBABLE"))return "probabile";
+        if(v.equals("FINGERPRINT_CONFIRMED"))return "confermata dalla fingerprint fotografica";
+        if(v.equals("FINISH_CONFIRMED_PARALLEL_UNRESOLVED"))return "finitura confermata; parallel da verificare";
+        return v.toLowerCase(java.util.Locale.ROOT).replace('_',' ');}
 
     private LinearLayout vertical() {
         LinearLayout x = new LinearLayout(this);

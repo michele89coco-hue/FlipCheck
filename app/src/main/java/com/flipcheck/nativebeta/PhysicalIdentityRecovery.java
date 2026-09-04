@@ -13,19 +13,6 @@ final class PhysicalIdentityRecovery {
     }
 
     static boolean eligible(Models.Identification id, Models.Usage usage) {
-        if (id == null || usage == null || usage.requests != 1 || usage.webCalls != 1
-                || usage.costUsd + RESERVED_VISUAL_PASS_USD > MAX_TOTAL_COST_USD
-                || id.photoIdentityOverlayOrWatermark || id.photoIdentityComplete) {
-            return false;
-        }
-        if (CollectibleCardIdentityPolicy.isCard(id)) {
-            if (CardPhotoTupleClosure.shouldReserveCatalogPass(id)) return false;
-            return hasFront(id) && id.visibleLabels.size() >= 4
-                    && (cardFactCount(id) >= 2 || pokemonCardLanguage(id));
-        }
-        if (SealedProductIdentityPolicy.isSealedRetailProduct(id)) {
-            return id.visibleLabels.size() >= 3 && sealedFactCount(id) >= 3;
-        }
         return false;
     }
 
@@ -34,7 +21,8 @@ final class PhysicalIdentityRecovery {
                 + "\nFIRST_LABELS=" + clip(id.visibleLabels.toString(), 1000)
                 + "\nFIRST_PHYSICAL_FACTS=" + clip(id.visualFacts.toString(), 1200)
                 + "\nFIRST_IDENTITY_FIELDS=" + clip(id.photoIdentityFields.toString(), 1000)
-                + "\nPHOTO_VIEWS=" + clip(id.photoViews.toString(), 300);
+                + "\nPHOTO_VIEWS=" + clip(id.photoViews.toString(), 300)
+                + "\nDECISIVE_MISSING_FIELD=" + UniversalIdentityClosure.missingDecisiveField(id);
     }
 
     static boolean apply(Models.Identification id, OpenAiClient.Response response) {
@@ -44,7 +32,8 @@ final class PhysicalIdentityRecovery {
         if (!p.optBoolean("applicable", false)
                 || !p.optBoolean("same_foreground_object", false)
                 || !p.optBoolean("physical_binding", false)
-                || p.optBoolean("overlay_or_watermark", true)
+                || p.optBoolean("external_watermark", false)
+                    && p.optBoolean("identity_obscured", false)
                 || !safe(p.optString("contradiction", "")).isEmpty()
                 || p.optInt("confidence", 0) < 92) return false;
         JSONArray fields = p.optJSONArray("fields");
@@ -58,66 +47,48 @@ final class PhysicalIdentityRecovery {
         if (!name.isEmpty()) id.photoIdentityName = name;
         id.photoIdentityPhysicalBinding = true;
         id.photoIdentityOverlayOrWatermark = false;
+        id.photoIdentityExternalWatermark = p.optBoolean("external_watermark", false);
+        id.photoIdentityIdentityObscured = p.optBoolean("identity_obscured", false);
         id.photoIdentityKind = "composite_markings";
         id.photoIdentityConfidence = Math.max(id.photoIdentityConfidence,
                 p.optInt("confidence", 0));
         id.photoIdentityComplete = p.optBoolean("complete", false);
+        if(p.optBoolean("ambiguity_resolved",false)){
+            id.photoIdentityAmbiguous=false;id.photoAlternativeCount=1;
+            id.discriminativeFieldVisible=p.optBoolean("discriminative_field_visible",true);
+            id.discriminativeField="";
+        }else if(id.photoIdentityAmbiguous){
+            id.discriminativeFieldVisible=p.optBoolean("discriminative_field_visible",false);
+        }
+        try {
+            // The focused pass is useful only if its facts re-enter the same immutable
+            // ledger consumed by the production normalizer.  Never promote the legacy
+            // string array to direct physical evidence: only structured, localized facts
+            // emitted by the focused Vision response are eligible for that strength.
+            JSONArray focusedFacts=p.optJSONArray("evidence_facts");
+            EvidenceLedger.ingestPhotoObservation(id,new JSONObject()
+                    .put("evidence_facts",focusedFacts==null?new JSONArray():focusedFacts)
+                    .put("fields",fields));
+        } catch (Exception ignored) {
+            // Compatibility fields have already been retained above; a malformed
+            // optional recovery ledger must never erase the first-pass evidence.
+        }
+        NormalizedPhotoIdentity normalized=PhotographicFactNormalizer.normalize(id,
+                "focused_vision_recovery_ingested");
         String category = safe(p.optString("category_key", ""));
         if ("loose_card".equals(category)) {
-            id.category = pokemonCardLanguage(id) ? "Pokémon trading card" : "sports collectible card";
-            id.categoryKey = pokemonCardLanguage(id) ? "pokemon_tcg_card" : "sports_collectible_card";
+            boolean sports=!normalized.best(CanonicalFieldKey.TEAM).isEmpty()
+                    ||!normalized.best(CanonicalFieldKey.SPORT).isEmpty();
+            boolean tcg=!sports&&(!normalized.best(CanonicalFieldKey.HP_OR_PV).isEmpty()
+                    ||!normalized.values(CanonicalFieldKey.ATTACK_NAME).isEmpty()
+                    ||!normalized.values(CanonicalFieldKey.COLLECTOR_NUMBER_CANDIDATE).isEmpty());
+            id.category = sports ? "sports trading card" : tcg ? "trading card game card" : "collectible card";
+            id.categoryKey = sports ? "sports_trading_card" : tcg ? "tcg_card" : "collectible_card";
         } else if ("sealed_box".equals(category)) {
             id.category = "sealed trading-card product";
             id.categoryKey = "sealed_products";
         }
         return true;
-    }
-
-    private static int cardFactCount(Models.Identification id) {
-        int count = 0;
-        for (String raw : id.visualFacts) {
-            String key = key(raw);
-            if (key.equals("subject") || key.equals("player") || key.equals("card_number")
-                    || key.equals("collector_number") || key.equals("parallel")
-                    || key.equals("rookie_card") || key.equals("holo")
-                    || key.equals("physical_printing") || key.equals("first_edition_stamp")) count++;
-        }
-        return count;
-    }
-
-    private static int sealedFactCount(Models.Identification id) {
-        int count = 0;
-        for (String raw : id.visualFacts) {
-            String key = key(raw);
-            if (key.equals("season") || key.equals("sport") || key.equals("sealed_format")
-                    || key.equals("format") || key.equals("autograph_callout")
-                    || key.equals("configuration") || key.equals("featured_players")) count++;
-        }
-        return count;
-    }
-
-    private static boolean pokemonCardLanguage(Models.Identification id) {
-        String x = (safe(id.category) + " " + id.visibleLabels + " " + id.visualFacts
-                + " " + id.photoIdentityFields).toLowerCase(Locale.ROOT);
-        return x.contains("pokemon") || x.contains("pokémon")
-                || x.contains("basic pokémon") || x.contains("first_edition_stamp");
-    }
-
-    private static boolean hasFront(Models.Identification id) {
-        if (id.photoViews.isEmpty()) return true;
-        for (String raw : id.photoViews) {
-            String x = safe(raw).toLowerCase(Locale.ROOT);
-            if (x.contains("front") || x.contains("fronte")) return true;
-        }
-        return false;
-    }
-
-    private static String key(String raw) {
-        String x = safe(raw);
-        int split = x.indexOf('=');
-        if (split < 1) split = x.indexOf(':');
-        return split < 1 ? "" : x.substring(0, split).trim().toLowerCase(Locale.ROOT)
-                .replace('-', '_').replace(' ', '_');
     }
 
     private static void addOnce(java.util.List<String> out, String value) {

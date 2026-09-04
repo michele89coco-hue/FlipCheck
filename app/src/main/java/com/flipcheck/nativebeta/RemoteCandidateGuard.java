@@ -7,6 +7,7 @@ final class RemoteCandidateGuard {
     private RemoteCandidateGuard() {}
 
     static void apply(Models.Identification id) {
+        if (UniversalIdentityClosure.enforceTerminalState(id)) return;
         if (!isRemote(id) || id == null || id.marketReady || trustedBrand(id)) return;
         boolean directVisual = false;
         for (Models.CandidateScore c : id.candidates) {

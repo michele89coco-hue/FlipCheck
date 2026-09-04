@@ -121,6 +121,7 @@ final class SealedProductIdentityPolicy {
                 + "linea e formato stampati sulla confezione, coerenti con la fonte.";
         id.decisionReason = "CONFIRMED v0.92: identità commerciale completa del prodotto sigillato.";
         addOnce(c.candidateFacts, "confirmed_by_sealed_commercial_tuple=true");
+        UniversalIdentityClosure.apply(id, "legacy_sealed_candidate_gate_delegate");
     }
 
     static boolean hasBoundManufacturer(Models.Identification id) {
@@ -195,6 +196,7 @@ final class SealedProductIdentityPolicy {
         id.verificationSummary = "Prodotto sigillato identificato dalla tupla commerciale completa "
                 + "stampata sul fronte della confezione.";
         id.decisionReason = "CONFIRMED v0.97: tupla fisica completa del prodotto sigillato; barcode facoltativo.";
+        UniversalIdentityClosure.apply(id, "legacy_sealed_tuple_gate_delegate");
     }
 
     static boolean hasPhotoTupleFamily(Models.Identification id) {

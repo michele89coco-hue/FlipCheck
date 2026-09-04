@@ -73,17 +73,9 @@ final class BorderlineIdentityAdjudicator {
         setFact(c, "photo_identity_supported", "true");
         setFact(c, "photo_identity_matched_count",
                 String.valueOf(id.photoIdentityFields.size()));
-        if (CollectibleCardIdentityPolicy.canConfirm(id, c)) {
-            CollectibleCardIdentityPolicy.confirm(id, c);
-        } else if (SealedProductIdentityPolicy.canConfirmCommercialSku(id, c)) {
-            SealedProductIdentityPolicy.confirmCommercialSku(id, c);
-        } else if (PhotoIdentityPolicy.canConfirm(id, c, null, Math.max(8, id.tournamentMargin))) {
-            PhotoIdentityPolicy.confirm(id, c);
-        } else {
-            return false;
-        }
-        id.decisionReason = "CONFIRMED v1.03: seconda verifica visiva selettiva, senza nuova ricerca web.";
-        return true;
+        setFact(c, "source_confirmed", "true");
+        id.decisionReason = "Seconda verifica acquisita; decisione demandata a UniversalIdentityClosure.";
+        return UniversalIdentityClosure.apply(id, "borderline_adjudicator_delegate");
     }
 
     private static boolean identityCompatible(Models.Identification id,

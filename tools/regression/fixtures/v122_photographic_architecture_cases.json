@@ -1,0 +1,120 @@
+{
+  "sports_numeric": {
+    "observation_valid": true, "title": "sports card", "category": "sports trading card", "category_key": "sports_card", "category_confidence": 98,
+    "brand": "Maker Alpha", "brand_evidence": "visible_logo", "brand_role_confidence": 98, "photo_views": ["front", "back"], "variant_facts": [], "visible_labels": [],
+    "photo_identity": {"complete": true, "canonical_name": "sports identity", "identity_code": "", "evidence_kind": "composite_markings", "physical_binding": true, "overlay_or_watermark": false, "external_watermark": false, "identity_obscured": false, "identity_ambiguous": false, "materially_distinct_alternatives": 0, "missing_discriminative_field": "", "discriminative_field_visible": false, "confidence": 97,
+      "fields": ["manufacturer=Maker Alpha", "product_line=Series Prime", "subject=Athlete One", "team=Club One", "physical_card_number_marking=42", "card_number_binding=physical_card_surface", "card_number_semantic=card_number", "card_number_location=reverse upper label"],
+      "evidence_facts": [
+        {"key":"manufacturer","value":"Maker Alpha","evidence_type":"logo","confidence":99,"image_index":0,"side":"front","location":"front logo","semantic_role":"manufacturer"},
+        {"key":"product_line","value":"Series Prime","evidence_type":"text","confidence":96,"image_index":1,"side":"back","location":"reverse header","semantic_role":"product_line"},
+        {"key":"subject","value":"Athlete One","evidence_type":"text","confidence":98,"image_index":0,"side":"front","location":"front nameplate","semantic_role":"subject"},
+        {"key":"team","value":"Club One","evidence_type":"logo","confidence":95,"image_index":0,"side":"front","location":"front crest","semantic_role":"team"},
+        {"key":"physical_card_number_marking","value":"42","evidence_type":"text","confidence":98,"image_index":1,"side":"back","location":"reverse upper label","semantic_role":"card_number"},
+        {"key":"card_number_binding","value":"physical_card_surface","evidence_type":"position","confidence":99,"image_index":1,"side":"back","location":"reverse upper label","semantic_role":"binding"},
+        {"key":"card_number_semantic","value":"card_number","evidence_type":"label","confidence":99,"image_index":1,"side":"back","location":"reverse upper label","semantic_role":"card_number"},
+        {"key":"card_number_location","value":"reverse upper label","evidence_type":"position","confidence":99,"image_index":1,"side":"back","location":"reverse upper label","semantic_role":"location"}
+      ]}
+  },
+  "tcg_front": {
+    "observation_valid": true, "title": "TCG card", "category": "trading card game card", "category_key": "tcg_card", "category_confidence": 98,
+    "brand": "Game Publisher", "brand_evidence": "visible_logo", "brand_role_confidence": 98, "photo_views": ["front"], "variant_facts": [], "visible_labels": [],
+    "photo_identity": {"complete": true, "canonical_name": "TCG identity", "identity_code": "", "evidence_kind": "composite_markings", "physical_binding": true, "overlay_or_watermark": false, "external_watermark": false, "identity_obscured": false, "identity_ambiguous": false, "materially_distinct_alternatives": 0, "missing_discriminative_field": "", "discriminative_field_visible": false, "confidence": 97,
+      "fields": ["game=Game Publisher", "set=Expansion Delta", "subject=Creature Seven", "front_complete=true", "physical_card_number_marking=H7/H40", "card_number_binding=physical_card_surface", "card_number_semantic=collector_number", "card_number_location=front bottom right", "finish=holo", "edition=first", "printing=foil"],
+      "evidence_facts": [
+        {"key":"game","value":"Game Publisher","evidence_type":"logo","confidence":98,"image_index":0,"side":"front","location":"front header","semantic_role":"game"},
+        {"key":"set","value":"Expansion Delta","evidence_type":"set_symbol","confidence":95,"image_index":0,"side":"front","location":"front lower edge","semantic_role":"set"},
+        {"key":"subject","value":"Creature Seven","evidence_type":"text","confidence":98,"image_index":0,"side":"front","location":"front name","semantic_role":"subject"},
+        {"key":"front_complete","value":"true","evidence_type":"image","confidence":99,"image_index":0,"side":"front","location":"all four edges","semantic_role":"completeness"},
+        {"key":"physical_card_number_marking","value":"H7/H40","evidence_type":"text","confidence":97,"image_index":0,"side":"front","location":"front bottom right","semantic_role":"collector_number"},
+        {"key":"card_number_binding","value":"physical_card_surface","evidence_type":"position","confidence":99,"image_index":0,"side":"front","location":"front bottom right","semantic_role":"binding"},
+        {"key":"card_number_semantic","value":"collector_number","evidence_type":"layout","confidence":98,"image_index":0,"side":"front","location":"front bottom right","semantic_role":"collector_number"},
+        {"key":"card_number_location","value":"front bottom right","evidence_type":"position","confidence":99,"image_index":0,"side":"front","location":"front bottom right","semantic_role":"location"},
+        {"key":"finish","value":"holo","evidence_type":"image","confidence":95,"image_index":0,"side":"front","location":"artwork","semantic_role":"finish"},
+        {"key":"edition","value":"first","evidence_type":"mark","confidence":95,"image_index":0,"side":"front","location":"front edition mark","semantic_role":"edition"},
+        {"key":"printing","value":"foil","evidence_type":"layout","confidence":93,"image_index":0,"side":"front","location":"front","semantic_role":"printing"}
+      ]}
+  },
+  "sports_alphanumeric": {
+    "observation_valid": true, "title":"sports card", "category":"sports trading card", "category_key":"sports_card", "category_confidence":96, "photo_views":["front","back"], "variant_facts":[], "visible_labels":[],
+    "photo_identity":{"complete":true,"canonical_name":"alphanumeric card","identity_code":"","evidence_kind":"composite_markings","physical_binding":true,"overlay_or_watermark":false,"external_watermark":false,"identity_obscured":false,"identity_ambiguous":false,"materially_distinct_alternatives":0,"missing_discriminative_field":"","discriminative_field_visible":false,"confidence":96,
+      "fields":["manufacturer=Maker Beta","set=Insert Line","subject=Athlete Two","physical_card_number_marking=FC-A7","card_number_binding=physical_card_surface","card_number_semantic=card_number","card_number_location=reverse checklist box"],
+      "evidence_facts":[
+        {"key":"manufacturer","value":"Maker Beta","evidence_type":"logo","confidence":98,"image_index":1,"side":"back","location":"reverse logo","semantic_role":"manufacturer"},
+        {"key":"set","value":"Insert Line","evidence_type":"text","confidence":95,"image_index":1,"side":"back","location":"reverse header","semantic_role":"set"},
+        {"key":"subject","value":"Athlete Two","evidence_type":"text","confidence":98,"image_index":0,"side":"front","location":"front name","semantic_role":"subject"},
+        {"key":"physical_card_number_marking","value":"FC-A7","evidence_type":"text","confidence":97,"image_index":1,"side":"back","location":"reverse checklist box","semantic_role":"card_number"},
+        {"key":"card_number_binding","value":"physical_card_surface","evidence_type":"position","confidence":99,"image_index":1,"side":"back","location":"reverse checklist box","semantic_role":"binding"},
+        {"key":"card_number_semantic","value":"card_number","evidence_type":"label","confidence":99,"image_index":1,"side":"back","location":"reverse checklist box","semantic_role":"card_number"},
+        {"key":"card_number_location","value":"reverse checklist box","evidence_type":"position","confidence":99,"image_index":1,"side":"back","location":"reverse checklist box","semantic_role":"location"}
+      ]}
+  },
+  "sealed_box": {
+    "observation_valid":true,"title":"sealed product","category":"sealed trading-card product","category_key":"sealed_products","category_confidence":98,"photo_views":["front"],"variant_facts":[],"visible_labels":[],
+    "photo_identity":{"complete":true,"canonical_name":"sealed box identity","identity_code":"","evidence_kind":"composite_markings","physical_binding":true,"overlay_or_watermark":false,"external_watermark":false,"identity_obscured":false,"identity_ambiguous":false,"materially_distinct_alternatives":0,"missing_discriminative_field":"","discriminative_field_visible":false,"confidence":97,
+      "fields":["manufacturer=Maker Gamma","product_line=Chrome Series","season=2026-27","sport=baseball","sealed_format=Hobby Box","configuration=12 packs"],
+      "evidence_facts":[
+        {"key":"manufacturer","value":"Maker Gamma","evidence_type":"logo","confidence":98,"image_index":0,"side":"front","location":"front logo","semantic_role":"manufacturer"},
+        {"key":"product_line","value":"Chrome Series","evidence_type":"text","confidence":98,"image_index":0,"side":"front","location":"front title","semantic_role":"product_line"},
+        {"key":"season","value":"2026-27","evidence_type":"text","confidence":96,"image_index":0,"side":"front","location":"front upper edge","semantic_role":"season"},
+        {"key":"sport","value":"baseball","evidence_type":"image","confidence":94,"image_index":0,"side":"front","location":"front","semantic_role":"sport"},
+        {"key":"sealed_format","value":"Hobby Box","evidence_type":"text","confidence":98,"image_index":0,"side":"front","location":"front format","semantic_role":"format"},
+        {"key":"configuration","value":"12 packs","evidence_type":"text","confidence":95,"image_index":0,"side":"front","location":"front callout","semantic_role":"configuration"}
+      ]}
+  },
+  "sports_rating_only": {
+    "observation_valid":true,"title":"sports card","category":"sports trading card","category_key":"sports_card","category_confidence":97,"photo_views":["front","back"],"variant_facts":["rating=88","offense=91","defense=74","card_number=88"],"visible_labels":[],
+    "photo_identity":{"complete":true,"canonical_name":"sports tuple without number","identity_code":"","evidence_kind":"composite_markings","physical_binding":true,"overlay_or_watermark":false,"external_watermark":false,"identity_obscured":false,"identity_ambiguous":false,"materially_distinct_alternatives":0,"missing_discriminative_field":"","discriminative_field_visible":false,"confidence":96,
+      "fields":["manufacturer=Maker Delta","product_line=Game Line","subject=Athlete Three","team=Club Three","rating=88","card_number=88"],
+      "evidence_facts":[
+        {"key":"manufacturer","value":"Maker Delta","evidence_type":"logo","confidence":98,"image_index":1,"side":"back","location":"reverse logo","semantic_role":"manufacturer"},
+        {"key":"product_line","value":"Game Line","evidence_type":"text","confidence":96,"image_index":1,"side":"back","location":"reverse title","semantic_role":"product_line"},
+        {"key":"subject","value":"Athlete Three","evidence_type":"text","confidence":98,"image_index":0,"side":"front","location":"front name","semantic_role":"subject"},
+        {"key":"rating","value":"88","evidence_type":"graphic","confidence":99,"image_index":0,"side":"front","location":"front rating star","semantic_role":"rating"}
+      ]}
+  },
+  "sports_serial": {
+    "observation_valid":true,"title":"sports card","category":"sports trading card","category_key":"sports_card","category_confidence":98,"photo_views":["front","back"],"variant_facts":[],"visible_labels":[],
+    "photo_identity":{"complete":true,"canonical_name":"numbered sports identity","identity_code":"","evidence_kind":"composite_markings","physical_binding":true,"overlay_or_watermark":false,"external_watermark":false,"identity_obscured":false,"identity_ambiguous":false,"materially_distinct_alternatives":0,"missing_discriminative_field":"","discriminative_field_visible":false,"confidence":97,
+      "fields":["manufacturer=Maker Epsilon","product_line=Premium Line","subject=Athlete Four","physical_card_number_marking=R-9","card_number_binding=physical_card_surface","card_number_semantic=card_number","card_number_location=reverse label","physical_serial_marking=17/99","serial_binding=physical_card_surface","serial_location=front lower foil"],
+      "evidence_facts":[
+        {"key":"manufacturer","value":"Maker Epsilon","evidence_type":"logo","confidence":98,"image_index":1,"side":"back","location":"reverse logo","semantic_role":"manufacturer"},
+        {"key":"product_line","value":"Premium Line","evidence_type":"text","confidence":97,"image_index":1,"side":"back","location":"reverse title","semantic_role":"product_line"},
+        {"key":"subject","value":"Athlete Four","evidence_type":"text","confidence":98,"image_index":0,"side":"front","location":"front name","semantic_role":"subject"},
+        {"key":"physical_card_number_marking","value":"R-9","evidence_type":"text","confidence":98,"image_index":1,"side":"back","location":"reverse label","semantic_role":"card_number"},
+        {"key":"card_number_binding","value":"physical_card_surface","evidence_type":"position","confidence":99,"image_index":1,"side":"back","location":"reverse label","semantic_role":"binding"},
+        {"key":"card_number_semantic","value":"card_number","evidence_type":"label","confidence":99,"image_index":1,"side":"back","location":"reverse label","semantic_role":"card_number"},
+        {"key":"card_number_location","value":"reverse label","evidence_type":"position","confidence":99,"image_index":1,"side":"back","location":"reverse label","semantic_role":"location"},
+        {"key":"physical_serial_marking","value":"17/99","evidence_type":"foil_stamp","confidence":98,"image_index":0,"side":"front","location":"front lower foil","semantic_role":"specimen_serial"},
+        {"key":"serial_binding","value":"physical_card_surface","evidence_type":"position","confidence":99,"image_index":0,"side":"front","location":"front lower foil","semantic_role":"binding"},
+        {"key":"serial_location","value":"front lower foil","evidence_type":"position","confidence":99,"image_index":0,"side":"front","location":"front lower foil","semantic_role":"location"}
+      ]}
+  },
+  "ambiguous_two": {
+    "observation_valid":true,"title":"collectible card","category":"trading card game card","category_key":"tcg_card","category_confidence":90,"photo_views":["front partial"],"variant_facts":[],"visible_labels":[],
+    "photo_identity":{"complete":false,"canonical_name":"partial card","identity_code":"","evidence_kind":"composite_markings","physical_binding":true,"overlay_or_watermark":false,"external_watermark":false,"identity_obscured":false,"identity_ambiguous":true,"materially_distinct_alternatives":2,"missing_discriminative_field":"collector_number","discriminative_field_visible":false,"confidence":75,
+      "fields":["game=Game Publisher","set=Expansion Omega","subject=Creature Nine","front_complete=false"],
+      "evidence_facts":[
+        {"key":"game","value":"Game Publisher","evidence_type":"logo","confidence":96,"image_index":0,"side":"front","location":"front header","semantic_role":"game"},
+        {"key":"set","value":"Expansion Omega","evidence_type":"symbol","confidence":91,"image_index":0,"side":"front","location":"front symbol","semantic_role":"set"},
+        {"key":"subject","value":"Creature Nine","evidence_type":"text","confidence":96,"image_index":0,"side":"front","location":"front name","semantic_role":"subject"},
+        {"key":"front_complete","value":"false","evidence_type":"image","confidence":99,"image_index":0,"side":"front","location":"bottom edge cropped","semantic_role":"completeness"}
+      ]}
+  },
+  "incomplete_single": {
+    "observation_valid":true,"title":"collectible card","category":"trading card game card","category_key":"tcg_card","category_confidence":80,"photo_views":["front partial"],"variant_facts":[],"visible_labels":[],
+    "photo_identity":{"complete":false,"canonical_name":"partial card","identity_code":"","evidence_kind":"composite_markings","physical_binding":true,"overlay_or_watermark":false,"external_watermark":false,"identity_obscured":false,"identity_ambiguous":false,"materially_distinct_alternatives":1,"missing_discriminative_field":"","discriminative_field_visible":false,"confidence":65,"fields":["game=Game Publisher","subject=Creature Ten","front_complete=false"],"evidence_facts":[]}
+  },
+  "catalog_conflict": {
+    "source_grounded":true,"physical_tuple_coherent":true,"source_url":"https://catalog.example/item","source_confirmed_catalog_number":"91","source_confirmed_variant":"Catalog Variant","source_catalog_title":"Catalog title","comparables":[]
+  },
+  "market": {
+    "source_grounded":true,"physical_tuple_coherent":true,"source_url":"https://catalog.example/item","source_confirmed_catalog_number":"42","source_confirmed_variant":"","source_catalog_title":"Catalog title",
+    "comparables":[
+      {"sale_status":"SOLD","item_state":"RAW","condition":"ungraded","grading_company":"","grade":"","currency":"USD","price":40,"source_url":"https://market.example/raw1","title":"matching sold raw","date":"2026-01-10","identity_match":true,"exclusion_reason":""},
+      {"sale_status":"SOLD","item_state":"RAW","condition":"ungraded","grading_company":"","grade":"","currency":"USD","price":60,"source_url":"https://market.example/raw2","title":"matching sold raw","date":"2026-02-10","identity_match":true,"exclusion_reason":""},
+      {"sale_status":"SOLD","item_state":"GRADED","condition":"graded","grading_company":"GradeCo","grade":"8","currency":"USD","price":300,"source_url":"https://market.example/graded","title":"matching graded sale","date":"2026-02-12","identity_match":true,"exclusion_reason":""},
+      {"sale_status":"ACTIVE_LISTING","item_state":"RAW","condition":"ungraded","grading_company":"","grade":"","currency":"USD","price":75,"source_url":"https://market.example/active","title":"active raw listing","date":"2026-03-01","identity_match":true,"exclusion_reason":""},
+      {"sale_status":"SOLD","item_state":"RAW","condition":"ungraded","grading_company":"","grade":"","currency":"USD","price":10,"source_url":"https://missing.example/not-retrieved","title":"unverifiable sale","date":"2026-01-01","identity_match":true,"exclusion_reason":""}
+    ]
+  }
+}

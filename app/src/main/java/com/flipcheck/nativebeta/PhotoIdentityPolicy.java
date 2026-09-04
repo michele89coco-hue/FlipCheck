@@ -270,6 +270,7 @@ final class PhotoIdentityPolicy {
                 + "i suoi campi compositi sono coerenti con la fonte e non restano contraddizioni forti.";
         id.decisionReason = "CONFIRMED v0.84: identità fotografica completa + fonte coerente + disproof superato.";
         addOnce(c.candidateFacts, "confirmed_by_photo_identity=true");
+        UniversalIdentityClosure.apply(id, "legacy_photo_gate_delegate");
     }
 
     static boolean probableReferenceAllowed(Models.CandidateScore c, Models.Identification id) {

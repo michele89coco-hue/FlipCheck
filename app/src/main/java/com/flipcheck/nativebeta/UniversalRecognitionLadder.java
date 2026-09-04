@@ -37,6 +37,8 @@ final class UniversalRecognitionLadder {
         if (id == null) {
             return;
         }
+        if(id.finalState!=null)return;
+        if (UniversalIdentityClosure.enforceTerminalState(id)) return;
         State s = assess(id);
         if (id.marketReady) {
             id.nextPhotoRequest = "";
@@ -48,10 +50,10 @@ final class UniversalRecognitionLadder {
             id.nextPhotoReason = "Risultato finale limitato alle prove già disponibili; nessuna ulteriore foto richiesta.";
             id.photoProtocolReady = true;
             if (s.level >= 3) {
-                id.familyConfidence = Math.max(id.familyConfidence, Math.min(88, s.confidence));
+                id.familyConfidence = Math.max(id.familyConfidence, derivedConfidence(id, s.confidence));
             }
             if (s.level >= 4) {
-                id.modelConfidence = Math.max(id.modelConfidence, Math.min(88, s.confidence));
+                id.modelConfidence = Math.max(id.modelConfidence, derivedConfidence(id, s.confidence));
                 return;
             }
             return;
@@ -60,10 +62,10 @@ final class UniversalRecognitionLadder {
         id.nextPhotoRequest = nextPhotoRequest(s, id);
         id.nextPhotoReason = nextPhotoReason(s);
         if (s.level >= 3) {
-            id.familyConfidence = Math.max(id.familyConfidence, Math.min(88, s.confidence));
+            id.familyConfidence = Math.max(id.familyConfidence, derivedConfidence(id, s.confidence));
         }
         if (s.level >= 4) {
-            id.modelConfidence = Math.max(id.modelConfidence, Math.min(88, s.confidence));
+            id.modelConfidence = Math.max(id.modelConfidence, derivedConfidence(id, s.confidence));
         }
     }
 
@@ -127,7 +129,7 @@ final class UniversalRecognitionLadder {
                 && !clean(id.family).isEmpty() && id.familyConfidence >= 85) {
             s.level = 3;
             s.family = clean(id.family);
-            s.confidence = Math.max(s.confidence, Math.min(88, id.familyConfidence));
+            s.confidence = Math.max(s.confidence, derivedConfidence(id, id.familyConfidence));
             s.reason = "Famiglia probabile dal design fisico; il modello esatto resta non verificato.";
         }
         if (SealedProductIdentityPolicy.hasPhotoTupleFamily(id)) {
@@ -135,7 +137,7 @@ final class UniversalRecognitionLadder {
             s.family = clean(id.family);
             s.level = Math.max(s.level, 3);
             s.confidence = Math.max(s.confidence,
-                    Math.min(88, id.photoIdentityConfidence));
+                    derivedConfidence(id, id.photoIdentityConfidence));
             s.reason = "Famiglia/serie letta come tupla fisica completa sul prodotto sigillato; manca ancora una fonte esatta superstite.";
         }
         if (top2 != null && !UniversalConsistencyGate.strongCandidateConflict(top2)) {
@@ -149,7 +151,7 @@ final class UniversalRecognitionLadder {
                 }
                 s.family = tf;
                 s.level = Math.max(s.level, 3);
-                s.confidence = Math.max(s.confidence, Math.min(88, top2.totalScore));
+                s.confidence = Math.max(s.confidence, derivedConfidence(id, top2.totalScore));
                 s.reason = "Marca/famiglia sostenute da più segnali indipendenti e dalla struttura osservata.";
             }
             if (brandCompatible && modelSupported(top2, second, margin, visual, id)) {
@@ -161,13 +163,13 @@ final class UniversalRecognitionLadder {
                 }
                 s.model = tm;
                 s.level = Math.max(s.level, 4);
-                s.confidence = Math.max(s.confidence, Math.min(88, top2.totalScore));
+                s.confidence = Math.max(s.confidence, derivedConfidence(id, top2.totalScore));
                 s.reason = "Candidato modello forte, ma non ancora verificato definitivamente.";
                 String v = variantFact(top2);
                 if (!v.isEmpty() && top2.totalScore >= 92 && margin >= 15 && supportChannels(top2, visual) >= 3) {
                     s.variant = v;
                     s.level = 5;
-                    s.confidence = Math.max(s.confidence, Math.min(88, top2.totalScore));
+                    s.confidence = Math.max(s.confidence, derivedConfidence(id, top2.totalScore));
                     s.reason = "Modello e versione/variante sono fortemente sostenuti, ma restano preliminari finché non verificati.";
                 }
             }
@@ -187,10 +189,10 @@ final class UniversalRecognitionLadder {
         id.photoProtocolReady = true;
         State s = assess(id);
         if (s.level >= 3) {
-            id.familyConfidence = Math.max(id.familyConfidence, Math.min(88, s.confidence));
+            id.familyConfidence = Math.max(id.familyConfidence, derivedConfidence(id, s.confidence));
         }
         if (s.level >= 4) {
-            id.modelConfidence = Math.max(id.modelConfidence, Math.min(88, s.confidence));
+            id.modelConfidence = Math.max(id.modelConfidence, derivedConfidence(id, s.confidence));
         }
     }
 
@@ -204,6 +206,14 @@ final class UniversalRecognitionLadder {
             }
         }
         return false;
+    }
+
+    /** Confidence remains evidence-derived; this ladder never injects a stock percentage. */
+    private static int derivedConfidence(Models.Identification id,int source){
+        int evidence=id==null?0:Math.max(id.categoryConfidence,Math.max(id.familyConfidence,id.mainIdentityConfidence));
+        int value=evidence>0?Math.min(clamp(source),clamp(evidence)):clamp(source);
+        if(id!=null&&!clean(id.numberConflicts).isEmpty())value=Math.max(0,value-25);
+        return value;
     }
 
     static String levelLabel(State s) {

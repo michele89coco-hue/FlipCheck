@@ -1,66 +1,53 @@
 plugins {
-    id 'com.android.application'
+    alias(libs.plugins.android.application)
 }
 
-import java.util.Properties
-
-def releaseSigningProps = new Properties()
-def releaseSigningPropsFile = rootProject.file("release-signing.properties")
-if (releaseSigningPropsFile.exists()) {
-    releaseSigningProps.load(new FileInputStream(releaseSigningPropsFile))
-}
-
-def releaseKeystorePath = System.getenv("FLIPCHECK_KEYSTORE_PATH") ?: releaseSigningProps.getProperty("FLIPCHECK_KEYSTORE_PATH")
-def releaseKeystorePassword = System.getenv("FLIPCHECK_KEYSTORE_PASSWORD") ?: releaseSigningProps.getProperty("FLIPCHECK_KEYSTORE_PASSWORD")
-def releaseKeyAlias = System.getenv("FLIPCHECK_KEY_ALIAS") ?: releaseSigningProps.getProperty("FLIPCHECK_KEY_ALIAS")
-def releaseKeyPassword = System.getenv("FLIPCHECK_KEY_PASSWORD") ?: releaseSigningProps.getProperty("FLIPCHECK_KEY_PASSWORD")
-def isReleaseTask = gradle.startParameter.taskNames.any { it.toLowerCase().contains("release") }
-def hasReleaseSigning = releaseKeystorePath && releaseKeystorePassword && releaseKeyAlias && releaseKeyPassword
+def compatibleKeystorePath = System.getenv('FLIPCHECK_KEYSTORE_PATH')
+def compatibleKeystorePassword = System.getenv('FLIPCHECK_KEYSTORE_PASSWORD')
+def compatibleKeyAlias = System.getenv('FLIPCHECK_KEY_ALIAS')
+def compatibleKeyPassword = System.getenv('FLIPCHECK_KEY_PASSWORD')
+def hasCompatibleSigning = compatibleKeystorePath && compatibleKeystorePassword && compatibleKeyAlias && compatibleKeyPassword
 
 android {
     namespace 'com.flipcheck.nativebeta'
     compileSdk 36
+    buildToolsVersion '36.0.0'
 
     defaultConfig {
         applicationId 'com.flipcheck.beta.nativev098.clean'
         minSdk 23
         targetSdk 36
-        versionCode 112
-        versionName '1.12-forced-card-verification'
-    }
-
-    signingConfigs {
-        release {
-            if (!hasReleaseSigning && isReleaseTask) {
-                throw new GradleException(
-                    "Signing config per release mancante: impostare FLIPCHECK_KEYSTORE_PATH/FLIPCHECK_KEYSTORE_PASSWORD/FLIPCHECK_KEY_ALIAS/FLIPCHECK_KEY_PASSWORD " +
-                    "o un file release-signing.properties valido prima di eseguire una build release."
-                )
-            }
-            if (hasReleaseSigning) {
-                storeFile file(releaseKeystorePath)
-                storePassword releaseKeystorePassword
-                keyAlias releaseKeyAlias
-                keyPassword releaseKeyPassword
-            }
-        }
+        versionCode 132
+        versionName '1.28-exact-catalog-resolution'
+        multiDexEnabled true
+        testInstrumentationRunner 'android.app.InstrumentationTestRunner'
     }
 
     buildFeatures {
         buildConfig true
     }
 
+    signingConfigs {
+        compatibleDebug {
+            if (hasCompatibleSigning) {
+                storeFile file(compatibleKeystorePath)
+                storePassword compatibleKeystorePassword
+                keyAlias compatibleKeyAlias
+                keyPassword compatibleKeyPassword
+            }
+        }
+    }
+
     buildTypes {
         debug {
             applicationIdSuffix '.debug'
-            versionNameSuffix '-debug'
+            if (hasCompatibleSigning) {
+                signingConfig signingConfigs.compatibleDebug
+            }
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            if (hasReleaseSigning) {
-                signingConfig signingConfigs.release
-            }
         }
     }
 
@@ -74,16 +61,38 @@ android {
             excludes += ['META-INF/DEPENDENCIES', 'META-INF/LICENSE*', 'META-INF/NOTICE*']
         }
     }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
+    sourceSets {
+        test.java.srcDir rootProject.file('tools/regression')
+    }
+
+    lint {
+        abortOnError true
+        checkReleaseBuilds true
+    }
+}
+
+tasks.withType(Test).configureEach {
+    workingDir rootProject.projectDir
+    testLogging {
+        events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
+        showStandardStreams true
+    }
 }
 
 dependencies {
     // Modello OCR latino realmente incluso nell'APK: nessun download del modello al primo uso.
-    implementation 'com.google.mlkit:text-recognition:16.0.1'
+    implementation libs.mlkit.text.recognition
     // Barcode/QR realmente on-device, incluso nell'APK.
-    implementation 'com.google.mlkit:barcode-scanning:17.3.0'
+    implementation libs.mlkit.barcode.scanning
     // Ritaglio foreground on-device, usato solo come vista aggiuntiva e mai come unica prova.
-    implementation 'com.google.mlkit:object-detection:17.0.2'
+    implementation libs.mlkit.object.detection
     // Estrazione conservativa delle immagini prodotto dalle pagine realmente recuperate.
-    implementation 'org.jsoup:jsoup:1.18.3'
-    testImplementation 'junit:junit:4.13.2'
+    implementation libs.jsoup
+    testImplementation libs.junit
+    testImplementation libs.json
 }

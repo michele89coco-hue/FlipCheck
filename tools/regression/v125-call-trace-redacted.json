@@ -1,0 +1,49 @@
+{
+  "kind": "deterministic_replay_call_trace",
+  "contains_images": false,
+  "contains_credentials": false,
+  "contains_full_prompts": false,
+  "cases": [
+    {
+      "fixture": "sports_number_orientation_conflict",
+      "primary_vision": 1,
+      "technical_retry": 0,
+      "catalog_enrichment": 1,
+      "discriminative_vision": 1,
+      "reason": "physical/catalog number conflict",
+      "paid_calls_executed": 0,
+      "measured_cost_usd": 0.0
+    },
+    {
+      "fixture": "sports_catalog_number_and_season",
+      "primary_vision": 1,
+      "technical_retry": 0,
+      "catalog_enrichment": 1,
+      "discriminative_vision": 0,
+      "reason": "source-attributed catalog completion",
+      "paid_calls_executed": 0,
+      "measured_cost_usd": 0.0
+    },
+    {
+      "fixture": "tcg_incomplete_max_tokens",
+      "primary_vision": 1,
+      "technical_retry": 1,
+      "catalog_enrichment": 1,
+      "discriminative_vision": 0,
+      "reason": "technical retry on same images; local OCR retained",
+      "paid_calls_executed": 0,
+      "measured_cost_usd": 0.0
+    },
+    {
+      "fixture": "sealed_core_without_format",
+      "primary_vision": 1,
+      "technical_retry": 0,
+      "catalog_enrichment": 1,
+      "discriminative_vision": 0,
+      "reason": "core confirmation with format unresolved",
+      "paid_calls_executed": 0,
+      "measured_cost_usd": 0.0
+    }
+  ],
+  "note": "Counts describe the replayed production route. No network calls were executed by the regression harness."
+}

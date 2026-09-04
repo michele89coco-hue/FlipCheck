@@ -85,6 +85,12 @@ final class CollectibleCardIdentityPolicy {
         }
         normalizeTradingCardBrand(id);
         removeLikelyGameplayNumber(id, local);
+        if (!isTradingCardGame(id)) {
+            // A sports rating/stat or remote checklist value must never survive
+            // as a photographed card number. Only dedicated physical keys are valid.
+            id.visualFacts.removeIf(CollectibleCardIdentityPolicy::isGenericCardNumberFact);
+            id.photoIdentityFields.removeIf(CollectibleCardIdentityPolicy::isGenericCardNumberFact);
+        }
         String localText = local == null ? "" : safe(local.joinedText());
         Set<String> dateFractions = dateFractions(localText);
         List<String> narrativeYears = narrativeYears(localText);
@@ -160,9 +166,11 @@ final class CollectibleCardIdentityPolicy {
                 id.photoIdentityName = removeToken(id.photoIdentityName, year);
             }
         }
-        String cardNumber = observedCardNumber(id, local);
+        String cardNumber = isTradingCardGame(id)
+                ? observedCardNumber(id, local) : physicalCardNumberMarking(id);
         if (!cardNumber.isEmpty()) {
-            addOnce(id.photoIdentityFields, "card_number=" + cardNumber);
+            addOnce(id.photoIdentityFields, isTradingCardGame(id)
+                    ? "card_number=" + cardNumber : "physical_card_number=" + cardNumber);
         }
         int stable = stableFieldCount(id);
         if (id.photoIdentityPhysicalBinding && !id.photoIdentityOverlayOrWatermark
@@ -184,7 +192,8 @@ final class CollectibleCardIdentityPolicy {
                 || !factTrue(candidate, "disproof_passed")) {
             return;
         }
-        String observed = observedCardNumber(id, id.localScan);
+        String observed = isTradingCardGame(id)
+                ? observedCardNumber(id, id.localScan) : physicalCardNumberMarking(id);
         String proposed = candidateCardNumber(id, candidate);
         boolean exact = factTrue(candidate, "source_exact_reference")
                 || factTrue(candidate, "exact_reference_complete");
@@ -194,7 +203,8 @@ final class CollectibleCardIdentityPolicy {
                 "manufacturer=" + candidate.brand);
         if (!safe(candidate.family).isEmpty()) addOnce(id.photoIdentityFields,
                 "set=" + candidate.family);
-        addOnce(id.photoIdentityFields, "card_number=" + observed);
+        addOnce(id.photoIdentityFields, isTradingCardGame(id)
+                ? "card_number=" + observed : "physical_card_number=" + observed);
         if (identityViewsSufficient(id) && stableFieldCount(id) >= 4) {
             id.photoIdentityComplete = true;
             id.photoIdentityKind = "composite_markings";
@@ -253,7 +263,7 @@ final class CollectibleCardIdentityPolicy {
             addOnce(candidate.candidateFacts, "physical_serial=" + physicalSerial);
             addOnce(candidate.candidateFacts, "physical_serial_binding=true");
         }
-        String observed = observedCardNumber(id, id.localScan);
+        String observed = identityCardNumber(id);
         String proposed = candidateCardNumber(id, candidate);
         if (!observed.isEmpty() && !proposed.isEmpty()
                 && samePrefix(observed, proposed) && !observed.equalsIgnoreCase(proposed)) {
@@ -348,7 +358,7 @@ final class CollectibleCardIdentityPolicy {
         if (reference.isEmpty() && factTrue(candidate, "exact_reference_complete")) {
             reference = safe(candidate.displayName());
         }
-        String observed = observedCardNumber(id, id.localScan);
+        String observed = identityCardNumber(id);
         String proposed = candidateCardNumber(id, candidate);
         boolean numberCoherent = observed.isEmpty() || proposed.isEmpty()
                 || observed.equalsIgnoreCase(proposed);
@@ -373,7 +383,7 @@ final class CollectibleCardIdentityPolicy {
                 || factTrue(c, "relationship_only") || !factTrue(c, "same_entity_role")) {
             return false;
         }
-        String observed = observedCardNumber(id, id.localScan);
+        String observed = identityCardNumber(id);
         String proposed = candidateCardNumber(id, c);
         boolean numberMatches = !observed.isEmpty() && observed.equalsIgnoreCase(proposed);
         boolean exactVisualTuple = factTrue(c, "exact_card_visual_tuple")
@@ -390,7 +400,7 @@ final class CollectibleCardIdentityPolicy {
         if (id == null || !isCard(id)) {
             return;
         }
-        String collector = observedCardNumber(id, id.localScan);
+        String collector = identityCardNumber(id);
         String current = safe(id.model);
         if (current.equalsIgnoreCase(collector) || current.length() < 8) {
             String replacement = candidate == null ? "" : safe(candidate.probableReference);
@@ -410,7 +420,7 @@ final class CollectibleCardIdentityPolicy {
         } else {
             String subject = identityField(id.photoIdentityFields, "subject", "player", "athlete");
             if (!subject.isEmpty() && !containsToken(id.model, subject)) {
-                String number = observedCardNumber(id, id.localScan);
+                String number = identityCardNumber(id);
                 String parallel = physicalParallel(id);
                 StringBuilder rebuilt = new StringBuilder(subject);
                 if (!parallel.isEmpty()) rebuilt.append(' ').append(parallel);
@@ -466,7 +476,7 @@ final class CollectibleCardIdentityPolicy {
         if (id == null || !isTradingCardGame(id)) {
             return false;
         }
-        String number = observedCardNumber(id, id.localScan);
+        String number = identityCardNumber(id);
         return !number.isEmpty() && safe(id.model).replace("#", "")
                 .trim().equalsIgnoreCase(number);
     }
@@ -725,16 +735,6 @@ final class CollectibleCardIdentityPolicy {
         return "";
     }
 
-    private static String firstNonEmpty(String... values) {
-        for (String value : values) {
-            String safe = safe(value);
-            if (!safe.isEmpty()) {
-                return safe;
-            }
-        }
-        return "";
-    }
-
     private static boolean cue(String normalized, String key, String value) {
         return normalized.startsWith(key + "=")
                 && normalized.substring(key.length() + 1).equals(value);
@@ -750,14 +750,16 @@ final class CollectibleCardIdentityPolicy {
         if (id == null) {
             return "";
         }
-        String physicalMarking = observedPhysicalCardNumberMarking(id);
-        if (!physicalMarking.isEmpty()) {
-            return physicalMarking;
-        }
         String tcgNumber = observedTcgCollectorNumber(id, local);
         if (!tcgNumber.isEmpty()) {
             return tcgNumber;
         }
+        // A marked number physically seen on the card always wins over an
+        // inferred/remote card_number.  The latter can be a checklist mismatch
+        // (or a player/stat number) and must never rewrite the specimen.
+        String physical = physicalCardNumberMarking(id);
+        if (!physical.isEmpty()) return physical;
+        if (!isTradingCardGame(id)) return "";
         List<String> sources = new ArrayList<>();
         // Structured visual facts are the most reliable location for a TCG
         // checklist fraction. They must outrank unrelated narrative numbers
@@ -799,9 +801,37 @@ final class CollectibleCardIdentityPolicy {
         return "";
     }
 
-    private static String observedPhysicalCardNumberMarking(Models.Identification id) {
-        return firstNonEmpty(identityField(id.photoIdentityFields, "physical_card_number_marking",
-                "card_number_marking", "physical_card_number", "number_marking"));
+    private static String identityCardNumber(Models.Identification id) {
+        return isTradingCardGame(id) ? observedCardNumber(id,id.localScan)
+                : physicalCardNumberMarking(id);
+    }
+
+    private static String physicalCardNumberMarking(Models.Identification id) {
+        List<String> sources = new ArrayList<>();
+        sources.addAll(id.visualFacts);
+        sources.addAll(id.photoIdentityFields);
+        String[] keys = {"physical_card_number_marking", "physical_card_number"};
+        for (String raw : sources) {
+            String x = safe(raw);
+            int p = x.indexOf('=');
+            if (p < 1) p = x.indexOf(':');
+            if (p < 1) continue;
+            String key = x.substring(0, p).trim().toLowerCase(Locale.ROOT)
+                    .replace('-', '_').replace(' ', '_');
+            for (String expected : keys) {
+                if (!key.equals(expected)) continue;
+                String value = fieldValue(x.substring(p + 1)).trim().toUpperCase(Locale.ROOT);
+                if (!value.isEmpty() && !value.equals("NONE VISIBLE")
+                        && !value.equals("NONE IDENTIFIED")) return value;
+            }
+        }
+        return "";
+    }
+
+    private static boolean isGenericCardNumberFact(String raw) {
+        String x=safe(raw).toLowerCase(Locale.ROOT).replace('-', '_').trim();
+        return x.startsWith("card_number=") || x.startsWith("card_number:")
+                || x.startsWith("collector_number=") || x.startsWith("collector_number:");
     }
 
     /** A short sports-game stat is never promoted to collector number without a physical No./# label. */

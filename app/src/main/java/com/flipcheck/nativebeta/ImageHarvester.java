@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 import com.flipcheck.nativebeta.ImageHarvester;
-import com.google.mlkit.common.MlKitException;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -84,7 +83,10 @@ final class ImageHarvester {
                     out.method = "direct-image";
                     out.width = direct.width;
                     out.height = direct.height;
-                    out.score = MlKitException.CODE_SCANNER_UNAVAILABLE;
+                    // A ranking score is domain data, not an ML Kit error code. Keeping the
+                    // literal here prevents this optional Web helper from loading ML Kit only
+                    // to obtain an unrelated integer constant.
+                    out.score = 190;
                 }
                 return out;
             }

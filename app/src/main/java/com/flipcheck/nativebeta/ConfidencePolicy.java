@@ -13,6 +13,7 @@ final class ConfidencePolicy {
         if (id == null) {
             return 0;
         }
+        if(id.mainIdentityConfidence>0){int main=clamp(id.mainIdentityConfidence);return "CONFLICTED".equals(id.identityStatus)?Math.min(main,79):main;}
         if (id.marketReady) {
             return clamp(id.modelConfidence);
         }

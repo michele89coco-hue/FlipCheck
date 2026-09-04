@@ -1,0 +1,59 @@
+{
+  "sealed_exact_format": {
+    "ocr": ["TOPPS CHROME", "UP", "DATE", "2025/26", "1 AUTOGRAPH IN EVERY BOX"],
+    "vision": {"content_sufficient":true,"category":"sealed_trading_card_product","views":["front"],"identity_hint":"sealed basketball box","missing_discriminators":["commercial format"],"facts":[
+      {"key":"manufacturer","value":"Topps","image":0,"side":"front","location":"logo","role":"manufacturer","confidence":99},
+      {"key":"product_line","value":"Topps Chrome Basketball","image":0,"side":"front","location":"title","role":"main_product_line","confidence":97},
+      {"key":"distinctive_printed_token","value":"Update Series","image":0,"side":"front","location":"subtitle","role":"product_line_qualifier","confidence":91},
+      {"key":"release","value":"2025-26","image":0,"side":"front","location":"season","role":"season","confidence":97},
+      {"key":"sport_category","value":"Basketball","image":0,"side":"front","location":"title","role":"sport","confidence":96},
+      {"key":"configuration","value":"1 autograph in every box","image":0,"side":"front","location":"guarantee badge","role":"sealed_configuration","confidence":98},
+      {"key":"product_type","value":"sealed box","image":0,"side":"front","location":"package","role":"product_type","confidence":98},
+      {"key":"featured_subjects","value":"Promotional Athlete A","image":0,"side":"front","location":"artwork","role":"featured_subject","confidence":90},
+      {"key":"featured_subjects","value":"Promotional Athlete B","image":0,"side":"front","location":"artwork","role":"featured_subject","confidence":90}
+    ],"candidates":[{"manufacturer":"Topps","product_line":"Topps Chrome Basketball","sub_series":"Update Series","release_year":"2025-26","product_type":"sealed box","confidence":97}]},
+    "web": {"source_url":"https://catalog.example/sealed-hobby","source_reported_release_year":"2025-26","source_reported_product_line":"Topps Chrome Basketball Update Series","candidates":[
+      {"source_url":"https://catalog.example/sealed-mega","source_authority":"official catalog","brand":"Topps","product_line":"Topps Chrome Basketball","main_set":"Topps Chrome Basketball","sub_series":"Update Series","distinguishing_tokens":["Update"],"release_year":"2025-26","subject":"","team":"","sport":"Basketball","card_number":"","language":"","hp":"","evolution_stage":"","attacks":[],"copyright_year":"","layout_signature":"retail compact box","finish":"","edition":"","printing":"","parallel":"","parallel_family":"","parallel_color":"","print_run":"","serial_number":"","format":"Mega Box","product_code":"MEGA-001","package_count":"10","cards_per_pack":"4","autograph_guarantee":"not guaranteed","memorabilia_guarantee":"","sealed_status":"factory sealed","configuration":"10 packs; autograph not guaranteed","product_type":"sealed box","product_name":"Topps Chrome Basketball Update Series Mega Box"},
+      {"source_url":"https://catalog.example/sealed-hobby","source_authority":"official catalog","brand":"Topps","product_line":"Topps Chrome Basketball","main_set":"Topps Chrome Basketball","sub_series":"Update Series","distinguishing_tokens":["Update"],"release_year":"2025-26","subject":"","team":"","sport":"Basketball","card_number":"","language":"","hp":"","evolution_stage":"","attacks":[],"copyright_year":"","layout_signature":"full size hobby box","finish":"","edition":"Hobby Box","printing":"","parallel":"","parallel_family":"","parallel_color":"","print_run":"","serial_number":"","format":"Hobby Box","product_code":"HOBBY-001","package_count":"12","cards_per_pack":"8","autograph_guarantee":"1 autograph in every box","memorabilia_guarantee":"","sealed_status":"factory sealed","configuration":"1 autograph in every box","product_type":"sealed box","product_name":"Topps Chrome Basketball Update Series Hobby Box"}
+    ],"comparables":[]}
+  },
+  "sports_parent_subset_parallel": {
+    "ocr": ["BILL SHARMAN", "FLEER RETRO", "METAL UNIVERSE", "PRECIOUS METAL GEMS", "RED", "PM-36", "004/100", "$299 listing"],
+    "vision": {"content_sufficient":true,"category":"sports_card","views":["front","back","serial detail"],"identity_hint":"vintage-design basketball parallel","missing_discriminators":[],"facts":[
+      {"key":"manufacturer_publisher","value":"Fleer","image":1,"side":"back","location":"copyright","role":"manufacturer","confidence":96},
+      {"key":"main_set","value":"Fleer Retro","image":1,"side":"back","location":"release title","role":"main_set","confidence":94},
+      {"key":"insert_subset","value":"Metal Universe","image":0,"side":"front","location":"design title","role":"insert_subset","confidence":95},
+      {"key":"subject_name","value":"Bill Sharman","image":0,"side":"front","location":"nameplate","role":"subject","confidence":99},
+      {"key":"team","value":"USC Trojans","image":0,"side":"front","location":"team line","role":"team","confidence":92},
+      {"key":"release","value":"2011-12","image":1,"side":"back","location":"copyright line","role":"season","confidence":94},
+      {"key":"physical_parallel","value":"Precious Metal Gems","image":0,"side":"front","location":"parallel design","role":"parallel_name_marking","confidence":91},
+      {"key":"parallel_color","value":"Red","image":0,"side":"front","location":"card field","role":"parallel_color","confidence":95},
+      {"key":"physical_serial","value":"004/100","image":2,"side":"back","location":"stamped serial","role":"physical_serial","confidence":99},
+      {"key":"card_number","value":"PM-36","image":1,"side":"back","location":"lower card code","role":"card_number","confidence":86}
+    ],"candidates":[{"manufacturer":"Fleer","main_set":"Fleer Retro","insert_subset":"Metal Universe","subject":"Bill Sharman","release_year":"2011-12","parallel_family":"Precious Metal Gems","parallel_color":"Red","serial_number":"004/100","card_number":"PM-36","confidence":97}]},
+    "web": {"source_url":"https://checklist.example/fleer-pm36","source_reported_catalog_number":"PM-36","source_reported_release_year":"2011-12","source_reported_product_line":"Fleer Retro","source_reported_variant":"Precious Metal Gems Red /100","candidates":[
+      {"source_url":"https://checklist.example/fleer-pm36","source_authority":"authoritative checklist","brand":"Fleer","product_line":"Fleer Retro","main_set":"Fleer Retro","insert_subset":"Metal Universe","design_family":"Metal Universe","sub_series":"","distinguishing_tokens":["Precious Metal Gems"],"release_year":"2011-12","subject":"Bill Sharman","team":"USC Trojans","sport":"Basketball","card_number":"PM-36","language":"English","hp":"","evolution_stage":"","attacks":[],"copyright_year":"2011","layout_signature":"Metal Universe insert layout","finish":"metallic","edition":"","printing":"","parallel":"Precious Metal Gems","parallel_family":"Precious Metal Gems","parallel_color":"Red","print_run":"/100","serial_number":"","format":"","product_code":"","package_count":"","cards_per_pack":"","autograph_guarantee":"","memorabilia_guarantee":"","sealed_status":"","configuration":"","product_type":"sports card","product_name":"Fleer Retro Metal Universe Precious Metal Gems Red Bill Sharman PM-36 /100"}
+    ],"comparables":[]}
+  },
+  "tcg_exact_set": {
+    "ocr": ["Politoed 110 PV", "Fase 2", "Ranabalzo", "Spruzza Energia", "H23/H32", "©2003"],
+    "vision": {"content_sufficient":true,"category":"tcg","views":["front"],"identity_hint":"Politoed Italian holographic card","missing_discriminators":["set"],"facts":[
+      {"key":"game","value":"Pokémon","image":0,"side":"front","location":"game logo","role":"game","confidence":99},
+      {"key":"card_name","value":"Politoed","image":0,"side":"front","location":"name","role":"subject","confidence":99},
+      {"key":"language","value":"Italiano","image":0,"side":"front","location":"card text","role":"language","confidence":98},
+      {"key":"hp_pv","value":"110 PV","image":0,"side":"front","location":"top right","role":"hp","confidence":97},
+      {"key":"evolution_stage","value":"Fase 2","image":0,"side":"front","location":"upper left","role":"evolution_stage","confidence":95},
+      {"key":"attack_name","value":"Ranabalzo","image":0,"side":"front","location":"attack area","role":"attack_name","confidence":96},
+      {"key":"attack_name","value":"Spruzza Energia","image":0,"side":"front","location":"attack area","role":"attack_name","confidence":96},
+      {"key":"collector_marking","value":"H23/H32","image":0,"side":"front","location":"lower corner","role":"collector_number","confidence":91},
+      {"key":"copyright_year","value":"2003","image":0,"side":"front","location":"copyright","role":"copyright_year","confidence":93},
+      {"key":"layout_signature","value":"e-reader layout","image":0,"side":"front","location":"full card","role":"layout","confidence":94},
+      {"key":"finish","value":"holographic","image":0,"side":"front","location":"surface","role":"finish","confidence":90},
+      {"key":"front_complete","value":"true","image":0,"side":"front","location":"full card","role":"front_complete","confidence":99}
+    ],"candidates":[{"game":"Pokémon","card_name":"Politoed","collector_number":"H23/H32","language":"Italiano","confidence":94}]},
+    "web": {"source_url":"https://catalog.example/aquapolis-h23","source_reported_catalog_number":"H23/H32","source_reported_release_year":"2003","source_reported_product_line":"Aquapolis","candidates":[
+      {"source_url":"https://catalog.example/wrong","source_authority":"marketplace","brand":"Pokémon","product_line":"Diamante & Perla - Il Risveglio dei Miti","main_set":"Diamante & Perla - Il Risveglio dei Miti","insert_subset":"","design_family":"","sub_series":"","distinguishing_tokens":[],"release_year":"2008","subject":"Politoed","team":"","sport":"","card_number":"12/146","language":"Italiano","hp":"110","evolution_stage":"Fase 2","attacks":["Attacco differente"],"copyright_year":"2008","layout_signature":"Diamond and Pearl layout","finish":"Rare Holo","edition":"","printing":"","parallel":"","parallel_family":"","parallel_color":"","print_run":"","serial_number":"","format":"","product_code":"","package_count":"","cards_per_pack":"","autograph_guarantee":"","memorabilia_guarantee":"","sealed_status":"","configuration":"","product_type":"TCG card","product_name":"Politoed 12/146"},
+      {"source_url":"https://catalog.example/aquapolis-h23","source_authority":"specialist database","brand":"Pokémon","product_line":"Aquapolis","main_set":"Aquapolis","insert_subset":"","design_family":"e-reader","sub_series":"","distinguishing_tokens":[],"release_year":"2003","subject":"Politoed","team":"","sport":"","card_number":"H23/H32","language":"Italiano","hp":"110 PV","evolution_stage":"Fase 2","attacks":["Ranabalzo","Spruzza Energia"],"copyright_year":"2003","layout_signature":"e-reader layout","finish":"Holo Rare","edition":"","printing":"","parallel":"","parallel_family":"","parallel_color":"","print_run":"","serial_number":"","format":"","product_code":"","package_count":"","cards_per_pack":"","autograph_guarantee":"","memorabilia_guarantee":"","sealed_status":"","configuration":"","product_type":"TCG card","product_name":"Aquapolis Politoed H23/H32"}
+    ],"comparables":[]}
+  }
+}

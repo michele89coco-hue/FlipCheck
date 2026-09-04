@@ -14,7 +14,6 @@ import java.util.regex.Pattern;
 final class CardPhotoTupleClosure {
     private static final Pattern YEAR = Pattern.compile("(?<![0-9])((?:19|20)[0-9]{2}(?:[-/][0-9]{2,4})?)(?![0-9])");
     private static final Pattern RATING = Pattern.compile("(?i)^(?:OFF|DEF|OVR|ATT|SPD|RATING|POWER|HP)\\s*[:=]?\\s*[0-9]{1,4}$");
-    private static final Pattern SERIAL_FRACTION = Pattern.compile("(?<![0-9])([0-9]{1,4})\\s*/\\s*([0-9]{1,4})(?![0-9])");
 
     private CardPhotoTupleClosure() {}
 
@@ -38,83 +37,39 @@ final class CardPhotoTupleClosure {
     }
 
     static boolean canClose(Models.Identification id) {
+        if (id != null) return UniversalIdentityClosure.canClose(id);
         if (id == null || id.marketReady || !CollectibleCardIdentityPolicy.isCard(id)
                 || OverlayScopePolicy.blocksIdentity(id) || !knownCommercialCard(id)
                 || hasMaterialStrongConflict(id)) return false;
-        PhysicalTuple tuple = extractPhysicalTuple(id);
-        if (!canCloseByPhysicalTuple(id, tuple)) {
-            return false;
-        }
+        String brand = observedBrand(id);
+        String subject = subject(id);
+        String series = series(id);
+        if (brand.isEmpty() || subject.isEmpty() || series.isEmpty()) return false;
+
         if (CollectibleCardIdentityPolicy.isTradingCardGame(id)) {
-            return hasFront(id) && evidenceCount(id) >= 5 && tuple.hasPhysicalIdentifier;
+            // Known Pokémon, Magic and One Piece cards are front-identifiable.
+            // Collector number and finish enrich the identity when visible but
+            // do not block closure of a readable complete front.
+            return hasFront(id) && evidenceCount(id) >= 5;
         }
-        return evidenceCount(id) >= 5 && tuple.hasPhysicalIdentifier
-                && frontAndBack(id);
-    }
-
-    static boolean canCloseByPhysicalTuple(Models.Identification id,
-                                          PhysicalTuple tuple) {
-        if (tuple.brand.isEmpty() || tuple.brandMismatch || tuple.subject.isEmpty()) {
-            return false;
-        }
-        if (!tuple.hasSetOrCollectionOrYearOrSeason()) {
-            return false;
-        }
-        if (tuple.cardNumber.isEmpty()) {
-            return false;
-        }
-        if (tuple.hasPhysicalConflict || tuple.hasUnresolvableVariantAmbiguity) {
-            return false;
-        }
-        return hasDiscriminatingTupleFields(id, tuple.variant, tuple.serial,
-                tuple.team, tuple.hasUnresolvableVariantAmbiguity);
-    }
-
-    private static boolean hasDiscriminatingTupleFields(Models.Identification id,
-                                                         String variant,
-                                                         String serial,
-                                                         String team,
-                                                         boolean ambiguousVariantPairs) {
-        String value = safe(variant).toLowerCase(Locale.ROOT);
-        String visibleSerial = safe(serial).toLowerCase(Locale.ROOT);
-        boolean tcg = CollectibleCardIdentityPolicy.isTradingCardGame(id);
-        boolean hasDiscriminatingVariant = !value.isEmpty() && !unresolvedVariant(value)
-                && (hasVariantSignal(value) || hasEditionSignal(value)
-                || hasLanguageSignal(value));
-        if (tcg) {
-            return hasDiscriminatingVariant || !visibleSerial.isEmpty();
-        }
-        return true;
-    }
-
-    private static boolean hasVariantSignal(String value) {
-        return value.contains("holo") || value.contains("foil") || value.contains("shadowless")
-                || value.contains("shadow-less") || value.contains("1st") || value.contains("first")
-                || value.contains("edition") || value.contains("parallel") || value.contains("rc")
-                || value.contains("rookie") || value.contains("relic") || value.contains("promotional");
-    }
-
-    private static boolean hasEditionSignal(String value) {
-        return value.contains("unlimited") || value.contains("num") || value.contains("numbered")
-                || value.contains("serial") || value.contains("limited");
-    }
-
-    private static boolean hasLanguageSignal(String value) {
-        return value.contains("english") || value.contains("italian") || value.contains("spanish")
-                || value.contains("french") || value.contains("german") || value.contains("japanese")
-                || value.contains("chinese") || value.contains("russian")
-                || value.contains("en ") || value.contains("it ") || value.contains("es ")
-                || value.contains("de ") || value.contains("ja ") || value.contains("cn ");
+        // Sports cards use the complementary physical tuple: front + back.
+        // A gameplay rating is never required as a checklist number.
+        return frontAndBack(id) && evidenceCount(id) >= 5;
     }
 
     static boolean apply(Models.Identification id) {
+        if (id != null) return UniversalIdentityClosure.apply(id, "legacy_card_gate_delegate");
         if (!canClose(id)) return false;
-        PhysicalTuple tuple = extractPhysicalTuple(id);
         String brand = observedBrand(id);
         String year = year(id);
         String series = series(id);
         String subject = subject(id);
-        String number = tuple.cardNumber;
+        // Never let a number inferred by a checklist/source replace a number
+        // actually localized on the photographed card.  In particular this
+        // keeps a printed specimen number from being replaced by an unrelated remote value.
+        String number = physicalCardNumber(id);
+        if (number.isEmpty()) number = CollectibleCardIdentityPolicy.observedCardNumber(id, id.localScan);
+        String serial = physicalSerial(id);
         String parallel = cardVariant(id);
         String edition = field(id, "edition", "printing");
         String rookie = truthyField(id, "rookie_card", "rookie", "rc") ? "RC" : "";
@@ -122,7 +77,7 @@ final class CardPhotoTupleClosure {
         String family = compact(join(year, series));
         if (canon(family).contains(canon(brand))) family = removeWords(family, brand);
         String model = compact(join(subject, number.isEmpty() ? "" : "#" + number,
-                parallel, edition, rookie));
+                parallel, serial.isEmpty() ? "" : "serial " + serial, edition, rookie));
 
         Models.CandidateScore c = new Models.CandidateScore();
         c.brand = brand;
@@ -137,16 +92,14 @@ final class CardPhotoTupleClosure {
         c.totalScore = 94;
         c.evidence = "Tupla identitaria composta esclusivamente da campi fisici coerenti letti sulla carta fotografata.";
         addFact(c, "physical_tuple_confirmation=true");
+        if (!number.isEmpty()) addFact(c, "physical_card_number=" + number);
+        if (!serial.isEmpty()) addFact(c, "physical_serial=" + serial);
+        if (!serial.isEmpty()) addFact(c, "physical_serial_binding=true");
         addFact(c, "exact_card_visual_tuple=true");
         addFact(c, "photo_identity_supported=true");
         addFact(c, "same_entity_role=true");
         addFact(c, "relationship_only=false");
         addFact(c, "disproof_passed=true");
-        addFact(c, "physical_tuple_number=" + tuple.cardNumber);
-        addFact(c, "physical_card_number=" + tuple.cardNumber);
-        addFact(c, "physical_tuple_serial=" + tuple.serial);
-        addFact(c, "physical_tuple_variant=" + tuple.variant);
-        addFact(c, "web_checklist_disposition=verify");
         addFact(c, "source_grounded=" + hasExactWebSupport(id));
         addFact(c, "source_exact_reference=" + hasExactWebSupport(id));
         addFact(c, "exact_reference_complete=" + hasExactWebSupport(id));
@@ -181,170 +134,50 @@ final class CardPhotoTupleClosure {
         return true;
     }
 
-    private static PhysicalTuple extractPhysicalTuple(Models.Identification id) {
-        PhysicalTuple tuple = new PhysicalTuple();
-        tuple.brand = observedBrand(id);
-        tuple.productLine = series(id);
-        tuple.season = year(id);
-        tuple.subject = subject(id);
-        tuple.team = field(id, "team", "club");
-        tuple.cardNumber = physicalCardNumber(id);
-        if (tuple.cardNumber.isEmpty()) {
-            tuple.cardNumber = safe(CollectibleCardIdentityPolicy.observedCardNumber(id, id.localScan));
-        }
-        tuple.variant = cardVariant(id);
-        tuple.serial = physicalSerialBinding(id);
-        tuple.hasPhysicalIdentifier = !tuple.cardNumber.isEmpty() || !tuple.variant.isEmpty()
-                || !tuple.serial.isEmpty();
-        tuple.hasSetOrCollectionOrYearOrSeason = !tuple.productLine.isEmpty() || !tuple.season.isEmpty();
-        tuple.hasUnresolvableVariantAmbiguity = hasUnresolvableVariantAmbiguity(id);
-
-        String brandA = tuple.brand;
-        String brandB = field(id, "manufacturer", "publisher", "brand");
-        if (!safe(brandA).isEmpty() && !safe(brandB).isEmpty()
-                && !canon(brandA).equals(canon(brandB))) {
-            tuple.brandMismatch = true;
-        }
-        tuple.hasPhysicalConflict = hasConflictingPhysicalSignals(id);
-        return tuple;
-    }
-
-    private static String physicalCardNumber(Models.Identification id) {
-        String explicit = firstFieldValue(id, "physical_card_number_marking", "physical_card_number",
-                "card_number_marking", "number_marking", "physical_number_marking");
-        if (!explicit.isEmpty()) {
-            return explicit;
-        }
-        String legacyPhysical = firstFieldValue(id, "physical_card_number");
-        if (!legacyPhysical.isEmpty()) {
-            return legacyPhysical;
-        }
-        return "";
-    }
-
-    private static String firstFieldValue(Models.Identification id, String... keys) {
-        if (id == null || keys.length == 0) {
-            return "";
-        }
-        for (String raw : id.photoIdentityFields) {
-            String x = safe(raw).trim();
-            int split = x.indexOf('=');
-            if (split < 1) {
-                split = x.indexOf(':');
-            }
-            if (split < 1) {
-                continue;
-            }
-            String key = x.substring(0, split).trim().toLowerCase(Locale.ROOT)
-                    .replace('-', '_').replace(' ', '_');
-            String value = x.substring(split + 1).trim();
-            for (String wanted : keys) {
-                if (key.equals(wanted.toLowerCase(Locale.ROOT))) {
-                    return stripPhysicalNumberPrefix(value);
-                }
-            }
-        }
-        return "";
-    }
-
-    private static String stripPhysicalNumberPrefix(String value) {
-        String normalized = safe(value)
-                .replace("№", "")
-                .replace("No.", "")
-                .replace("NO", "")
-                .replace("#", "");
-        return normalized.trim();
-    }
-
-    private static boolean hasUnresolvableVariantAmbiguity(Models.Identification id) {
-        String first = chooseVariantValue(id, "parallel", "variant", "finish", "tier");
-        if (first.isEmpty()) {
-            return false;
-        }
-        String second = chooseVariantValue(id, "front_variant", "back_variant", "physical_variant");
-        return !second.isEmpty() && !same(first, second);
-    }
-
-    private static String chooseVariantValue(Models.Identification id, String... keys) {
-        String best = "";
-        for (String raw : id.photoIdentityFields) {
-            String x = safe(raw);
-            int p = x.indexOf('=');
-            if (p < 1) continue;
-            String key = x.substring(0, p).trim().toLowerCase(Locale.ROOT).replace('-', '_').replace(' ', '_');
-            String value = x.substring(p + 1).trim();
-            if (value.isEmpty() || unresolvedVariant(value)) {
-                continue;
-            }
-            for (String expected : keys) {
-                if (expected.equals(key)) {
-                    if (best.isEmpty()) {
-                        best = value;
-                    } else if (!same(best, value)) {
-                        return value;
-                    }
-                }
-            }
-        }
-        return best;
-    }
-
-    private static boolean hasConflictingPhysicalSignals(Models.Identification id) {
-        for (String raw : id.finalContradictions) {
-            String x = safe(raw).toLowerCase(Locale.ROOT);
-            if ((x.contains("front") && x.contains("back")
-                    && (x.contains("mismatch") || x.contains("discord") || x.contains("diverg")))
-                    || (x.contains("serial") && x.contains("card")
-                    && (x.contains("conflict") || x.contains("contradiction")))
-                    || (x.contains("card number") && x.contains("conflict"))) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private static String physicalSerialBinding(Models.Identification id) {
-        String explicit = explicitSerialFromFields(id);
-        if (!explicit.isEmpty()) return explicit;
-        return explicitSerialFromText(id.photoIdentityCode);
-    }
-
-    private static String explicitSerialFromFields(Models.Identification id) {
-        for (String raw : id.photoIdentityFields) {
-            String x = safe(raw);
-            int p = x.indexOf('=');
-            if (p < 1) {
-                continue;
-            }
-            String key = x.substring(0, p).trim().toLowerCase(Locale.ROOT).replace('-', '_').replace(' ', '_');
-            String value = x.substring(p + 1).trim();
-            if (!(key.equals("serial") || key.equals("serial_fraction")
-                    || key.equals("physical_print_run") || key.equals("card_surface_serial")
-                    || key.equals("physical_serial_marking") || key.equals("print_run"))) {
-                continue;
-            }
-            String serial = parseSerialFraction(value);
-            if (!serial.isEmpty()) return serial;
-        }
-        return "";
-    }
-
-    private static String explicitSerialFromText(String source) {
-        return parseSerialFraction(source);
-    }
-
-    private static String parseSerialFraction(String value) {
-        Matcher matcher = SERIAL_FRACTION.matcher(safe(value));
-        return matcher.find() ? Integer.parseInt(matcher.group(1)) + "/" + Integer.parseInt(matcher.group(2)) : "";
-    }
-
     private static String cardVariant(Models.Identification id) {
-        String value = field(id, "parallel", "variant", "finish", "tier");
+        String value = field(id, "parallel", "variant", "finish");
         if (!value.isEmpty() && !unresolvedVariant(value)) return value;
         String printing = field(id, "physical_printing");
         String x = canon(printing);
         if (x.contains("BASE CARD") || x.endsWith(" BASE") || x.equals("BASE")) return "";
         return unresolvedVariant(printing) ? "" : printing;
+    }
+
+    /**
+     * A physical number/serial is evidence from the photographed specimen.
+     * Read it before generic fields, because generic card_number values may
+     * come from an ambiguous checklist, OCR or a game-stat inference.
+     */
+    private static String physicalCardNumber(Models.Identification id) {
+        return physicalMarkedValue(id, "physical_card_number_marking", "physical_card_number");
+    }
+
+    private static String physicalSerial(Models.Identification id) {
+        return physicalMarkedValue(id, "physical_serial_marking", "physical_print_run",
+                "card_surface_serial", "serial");
+    }
+
+    private static String physicalMarkedValue(Models.Identification id, String... keys) {
+        List<String> sources = new ArrayList<>();
+        // visualFacts are emitted directly by the image pass and therefore
+        // outrank post-retrieval candidate fields.
+        sources.addAll(id.visualFacts);
+        sources.addAll(id.photoIdentityFields);
+        for (String raw : sources) {
+            String x = safe(raw);
+            int p = x.indexOf('=');
+            if (p < 1) p = x.indexOf(':');
+            if (p < 1) continue;
+            String key = x.substring(0, p).trim().toLowerCase(Locale.ROOT)
+                    .replace('-', '_').replace(' ', '_');
+            for (String expected : keys) {
+                if (!key.equals(expected)) continue;
+                String value = safe(x.substring(p + 1));
+                if (!value.isEmpty() && !value.equalsIgnoreCase("none visible")
+                        && !value.equalsIgnoreCase("none identified")) return value;
+            }
+        }
+        return "";
     }
 
     private static boolean unresolvedVariant(String value) {
@@ -369,10 +202,8 @@ final class CardPhotoTupleClosure {
             boolean falseStatNumber = (x.contains("card number") || x.contains("collector number"))
                     && (x.contains("rating") || x.contains("game attribute")
                     || x.contains("def ") || x.contains("off "));
-            boolean sourceChecklist = x.contains("catalog") || x.contains("source")
-                    || x.contains("checklist") || x.contains("web");
             if (!falseStatNumber && (x.contains("strong") || x.contains("conflict")
-                    || x.contains("contradiction")) && !sourceChecklist) return true;
+                    || x.contains("contradiction"))) return true;
         }
         return false;
     }
@@ -450,6 +281,17 @@ final class CardPhotoTupleClosure {
         return id.visibleLabels.size() + id.visualFacts.size() + id.photoIdentityFields.size();
     }
 
+    private static boolean hasStrongConflict(Models.Identification id) {
+        for (String raw : id.finalContradictions) {
+            String x = safe(raw).toLowerCase(Locale.ROOT);
+            if (x.contains("strong") || x.contains("conflict") || x.contains("contradiction")) return true;
+        }
+        for (Models.CandidateScore c : id.candidates) {
+            if (c != null && (c.hardRejected || !c.hardViolations.isEmpty())) return true;
+        }
+        return false;
+    }
+
     private static boolean hasFront(Models.Identification id) {
         if (id.photoViews.isEmpty()) return true;
         String x = id.photoViews.toString().toLowerCase(Locale.ROOT);
@@ -485,8 +327,7 @@ final class CardPhotoTupleClosure {
 
     private static boolean generic(String value) {
         String x = canon(value);
-        return x.isEmpty() || x.equals("PANINI") || x.equals("TOPPS") || x.equals("POKEMON")
-                || x.equals("TRADING CARD GAME") || x.equals("SPORTS TRADING CARD")
+        return x.isEmpty() || x.equals("TRADING CARD GAME") || x.equals("SPORTS TRADING CARD")
                 || x.equals("COLLECTIBLE TRADING CARD") || x.equals("BASKETBALL TRADING CARD")
                 || x.equals("GUARD") || x.equals("FORWARD") || x.equals("CENTER");
     }
@@ -498,25 +339,5 @@ final class CardPhotoTupleClosure {
     private static String canon(String value) { return safe(value).toUpperCase(Locale.ROOT).replaceAll("[^A-Z0-9]+", " ").trim().replaceAll("\\s+", " "); }
     private static void addFact(Models.CandidateScore c, String value) { if (!c.candidateFacts.contains(value)) c.candidateFacts.add(value); }
     private static boolean factTrue(Models.CandidateScore c, String key) { String p = key.toLowerCase(Locale.ROOT) + "="; for (String raw : c.candidateFacts) { String x = safe(raw).toLowerCase(Locale.ROOT); if (x.startsWith(p)) return "true".equals(x.substring(p.length()).trim()); } return false; }
-    private static final class PhysicalTuple {
-        String brand;
-        String productLine;
-        String season;
-        String subject;
-        String team;
-        String cardNumber;
-        String variant;
-        String serial;
-        boolean hasPhysicalIdentifier;
-        boolean hasSetOrCollectionOrYearOrSeason;
-        boolean hasUnresolvableVariantAmbiguity;
-        boolean hasPhysicalConflict;
-        boolean brandMismatch;
-
-        boolean hasSetOrCollectionOrYearOrSeason() {
-            return hasSetOrCollectionOrYearOrSeason;
-        }
-    }
-
     private static String safe(String value) { return value == null ? "" : value.trim(); }
 }

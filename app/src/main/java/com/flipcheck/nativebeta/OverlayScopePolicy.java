@@ -7,8 +7,13 @@ final class OverlayScopePolicy {
     private OverlayScopePolicy() {}
 
     static void normalize(Models.Identification id) {
-        if (id == null || !id.photoIdentityOverlayOrWatermark || !peripheralOnly(id)) return;
+        if (id == null || !id.photoIdentityOverlayOrWatermark
+                || UniversalIdentityClosure.externalWatermarkObscuresIdentity(id)) return;
+        // Vision may use overlay=true for reflections, printed/composite card graphics
+        // or gallery chrome.  It is only a warning unless an explicitly external
+        // watermark also obscures identity-bearing data.
         id.photoIdentityOverlayOrWatermark = false;
+        addWarning(id, "non_blocking_overlay_warning=true");
         if (id.photoIdentityPhysicalBinding && id.photoIdentityConfidence >= 88
                 && !safe(id.photoIdentityName).isEmpty()
                 && id.photoIdentityFields.size() >= 4) {
@@ -17,7 +22,12 @@ final class OverlayScopePolicy {
     }
 
     static boolean blocksIdentity(Models.Identification id) {
-        return id != null && id.photoIdentityOverlayOrWatermark && !peripheralOnly(id);
+        return UniversalIdentityClosure.externalWatermarkObscuresIdentity(id);
+    }
+
+    private static void addWarning(Models.Identification id, String value) {
+        for (String old : id.observedEvidence) if (value.equals(old)) return;
+        id.observedEvidence.add(value);
     }
 
     private static boolean peripheralOnly(Models.Identification id) {

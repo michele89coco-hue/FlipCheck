@@ -1,0 +1,222 @@
+{
+  "sports_alias_payload": {
+    "observation_valid": true,
+    "title": "photographed sports card",
+    "category": "sports trading card",
+    "category_key": "sports_card",
+    "category_confidence": 98,
+    "brand_role_confidence": 97,
+    "photo_views": ["front", "back"],
+    "variant_facts": [],
+    "visible_labels": [],
+    "photo_identity": {
+      "complete": true,
+      "canonical_name": "Athlete Alpha card",
+      "identity_code": "",
+      "evidence_kind": "composite_markings",
+      "physical_binding": true,
+      "overlay_or_watermark": false,
+      "external_watermark": false,
+      "identity_obscured": false,
+      "identity_ambiguous": false,
+      "materially_distinct_alternatives": 1,
+      "missing_discriminative_field": "",
+      "discriminative_field_visible": false,
+      "confidence": 97,
+      "fields": ["manufacturer/publisher=Maker Alpha", "set_or_product_line=Metal Series", "subject=Athlete Alpha", "card_number=81"],
+      "candidates": [
+        {"category_key":"sports_card","brand":"Maker Alpha","family":"Metal Series","model":"Athlete Alpha 81","year":"","subject":"Athlete Alpha","card_number":"81","language":"","edition":"","printing":"","parallel":"","parallel_color":"","finish":"","format":"","configuration":"","material_variant_key":"","materially_distinct_variant":false,"confidence":96,"evidence":"same physical tuple"}
+      ],
+      "evidence_facts": [
+        {"key":"manufacturer/publisher","value":"Maker Alpha","evidence_type":"logo_and_text","confidence":98,"image_index":1,"side":"back","location":"publisher line","semantic_role":"manufacturer_publisher"},
+        {"key":"set_or_product_line","value":"Metal Series","evidence_type":"printed_text","confidence":97,"image_index":1,"side":"back","location":"set title","semantic_role":"product_line"},
+        {"key":"subject","value":"Athlete Alpha","evidence_type":"printed_text","confidence":99,"image_index":0,"side":"front","location":"nameplate","semantic_role":"subject"},
+        {"key":"card_number","value":"81","evidence_type":"printed_label","confidence":98,"image_index":1,"side":"back","location":"No. 81 label","semantic_role":"card_number"},
+        {"key":"rating","value":"77","evidence_type":"graphic_stat","confidence":99,"image_index":0,"side":"front","location":"rating star","semantic_role":"rating"},
+        {"key":"copyright_year","value":"1998","evidence_type":"printed_text","confidence":94,"image_index":1,"side":"back","location":"copyright line","semantic_role":"copyright_year"},
+        {"key":"statistical_season","value":"1997-98","evidence_type":"statistics_table","confidence":92,"image_index":1,"side":"back","location":"career statistics row","semantic_role":"statistical_season"}
+      ]
+    }
+  },
+  "tcg_alias_payload": {
+    "observation_valid": true,
+    "title": "photographed TCG card",
+    "category": "trading card game card",
+    "category_key": "tcg_card",
+    "category_confidence": 98,
+    "photo_views": ["front"],
+    "variant_facts": [],
+    "visible_labels": [],
+    "photo_identity": {
+      "complete": true,
+      "canonical_name": "Creature Beta",
+      "identity_code": "H23/H32",
+      "evidence_kind": "composite_markings",
+      "physical_binding": true,
+      "overlay_or_watermark": false,
+      "external_watermark": false,
+      "identity_obscured": false,
+      "identity_ambiguous": false,
+      "materially_distinct_alternatives": 1,
+      "missing_discriminative_field": "",
+      "discriminative_field_visible": true,
+      "confidence": 97,
+      "fields": ["game_or_publisher=Game Publisher", "card_name=Creature Beta", "language=Italian", "hp/stat=110", "attack_name=Move One", "move_name=Move Two", "attacks=Move Three", "collector_number=H23/H32", "finish=holo", "front_complete=true"],
+      "candidates": [
+        {"category_key":"tcg_card","brand":"Game Publisher","family":"Expansion Beta","model":"Creature Beta H23/H32","year":"","subject":"Creature Beta","card_number":"H23/H32","language":"Italian","edition":"","printing":"","parallel":"","parallel_color":"","finish":"holo","format":"","configuration":"","material_variant_key":"","materially_distinct_variant":false,"confidence":94,"evidence":"single canonical candidate"}
+      ],
+      "evidence_facts": [
+        {"key":"game_or_publisher","value":"Game Publisher","evidence_type":"logo","confidence":98,"image_index":0,"side":"front","location":"header logo","semantic_role":"game_publisher"},
+        {"key":"card_name","value":"Creature Beta","evidence_type":"printed_text","confidence":99,"image_index":0,"side":"front","location":"nameplate","semantic_role":"subject"},
+        {"key":"language","value":"Italian","evidence_type":"rules_text","confidence":98,"image_index":0,"side":"front","location":"attack text box","semantic_role":"language"},
+        {"key":"hp/stat","value":"110","evidence_type":"printed_stat","confidence":98,"image_index":0,"side":"front","location":"top right HP","semantic_role":"hp_stat"},
+        {"key":"attack_name","value":"Move One","evidence_type":"printed_text","confidence":97,"image_index":0,"side":"front","location":"attack row 1","semantic_role":"attack_name"},
+        {"key":"move_name","value":"Move Two","evidence_type":"printed_text","confidence":96,"image_index":0,"side":"front","location":"attack row 2","semantic_role":"attack_name"},
+        {"key":"attacks","value":"Move Three","evidence_type":"printed_text","confidence":95,"image_index":0,"side":"front","location":"attack row 3","semantic_role":"attack_name"},
+        {"key":"collector_number","value":"H23/H32","evidence_type":"printed_label","confidence":98,"image_index":0,"side":"front","location":"bottom right collector field","semantic_role":"collector_number"},
+        {"key":"finish","value":"holo","evidence_type":"surface_image","confidence":91,"image_index":0,"side":"front","location":"illustration foil area","semantic_role":"finish"},
+        {"key":"front_complete","value":"true","evidence_type":"image","confidence":99,"image_index":0,"side":"front","location":"all four card edges","semantic_role":"completeness"}
+      ]
+    }
+  },
+  "tcg_no_literal_set": {
+    "observation_valid": true,
+    "category": "collectible card game",
+    "category_key": "tcg_card",
+    "category_confidence": 97,
+    "photo_views": ["front"],
+    "variant_facts": [],
+    "visible_labels": [],
+    "photo_identity": {
+      "complete": true,
+      "canonical_name": "Creature Gamma",
+      "identity_code": "",
+      "evidence_kind": "composite_markings",
+      "physical_binding": true,
+      "overlay_or_watermark": false,
+      "external_watermark": false,
+      "identity_obscured": false,
+      "identity_ambiguous": false,
+      "materially_distinct_alternatives": 1,
+      "missing_discriminative_field": "",
+      "discriminative_field_visible": false,
+      "confidence": 95,
+      "fields": ["game=Game Publisher", "card_name=Creature Gamma", "language=Italian", "pv=90", "moves=Move Red; Move Blue; Move Green", "layout_signature=distinctive frame", "front_complete=true"],
+      "candidates": [
+        {"category_key":"tcg_card","brand":"Game Publisher","family":"Catalog Expansion","model":"Creature Gamma","year":"","subject":"Creature Gamma","card_number":"","language":"Italian","edition":"","printing":"","parallel":"","parallel_color":"","finish":"","format":"","configuration":"","material_variant_key":"","materially_distinct_variant":false,"confidence":94,"evidence":"unique composite front"}
+      ],
+      "evidence_facts": [
+        {"key":"game","value":"Game Publisher","evidence_type":"logo","confidence":98,"image_index":0,"side":"front","location":"header logo","semantic_role":"game"},
+        {"key":"card_name","value":"Creature Gamma","evidence_type":"text","confidence":99,"image_index":0,"side":"front","location":"nameplate","semantic_role":"subject"},
+        {"key":"language","value":"Italian","evidence_type":"text","confidence":98,"image_index":0,"side":"front","location":"rules box","semantic_role":"language"},
+        {"key":"pv","value":"90","evidence_type":"stat","confidence":98,"image_index":0,"side":"front","location":"top stat","semantic_role":"hp_stat"},
+        {"key":"moves","value":"Move Red; Move Blue; Move Green","evidence_type":"text","confidence":96,"image_index":0,"side":"front","location":"move box","semantic_role":"attack_names"},
+        {"key":"layout_signature","value":"distinctive frame","evidence_type":"layout","confidence":96,"image_index":0,"side":"front","location":"whole front","semantic_role":"layout"},
+        {"key":"front_complete","value":"true","evidence_type":"image","confidence":99,"image_index":0,"side":"front","location":"all four card edges","semantic_role":"completeness"}
+      ]
+    }
+  },
+  "tcg_material_variants": {
+    "observation_valid": true,
+    "category": "trading card game card",
+    "category_key": "tcg_card",
+    "category_confidence": 95,
+    "photo_views": ["front"],
+    "variant_facts": [],
+    "visible_labels": [],
+    "photo_identity": {
+      "complete": false,
+      "canonical_name": "Creature Delta",
+      "identity_code": "",
+      "evidence_kind": "composite_markings",
+      "physical_binding": true,
+      "overlay_or_watermark": false,
+      "external_watermark": false,
+      "identity_obscured": false,
+      "identity_ambiguous": true,
+      "materially_distinct_alternatives": 2,
+      "missing_discriminative_field": "collector_number",
+      "discriminative_field_visible": false,
+      "confidence": 88,
+      "fields": ["game=Game Publisher", "card_name=Creature Delta", "front_complete=true"],
+      "candidates": [
+        {"category_key":"tcg_card","brand":"Game Publisher","family":"Expansion Delta","model":"Creature Delta A1","year":"","subject":"Creature Delta","card_number":"A1","language":"","edition":"First","printing":"","parallel":"","parallel_color":"","finish":"","format":"","configuration":"","material_variant_key":"a1-first","materially_distinct_variant":true,"confidence":91,"evidence":"candidate A"},
+        {"category_key":"tcg_card","brand":"Game Publisher","family":"Expansion Delta","model":"Creature Delta B2","year":"","subject":"Creature Delta","card_number":"B2","language":"","edition":"Second","printing":"","parallel":"","parallel_color":"","finish":"","format":"","configuration":"","material_variant_key":"b2-second","materially_distinct_variant":true,"confidence":90,"evidence":"candidate B"}
+      ],
+      "evidence_facts": [
+        {"key":"game","value":"Game Publisher","evidence_type":"logo","confidence":98,"image_index":0,"side":"front","location":"header","semantic_role":"game"},
+        {"key":"card_name","value":"Creature Delta","evidence_type":"text","confidence":99,"image_index":0,"side":"front","location":"nameplate","semantic_role":"subject"},
+        {"key":"front_complete","value":"true","evidence_type":"image","confidence":99,"image_index":0,"side":"front","location":"all edges","semantic_role":"completeness"}
+      ]
+    }
+  },
+  "sealed_alias_payload": {
+    "observation_valid": true,
+    "category": "sealed trading-card product",
+    "category_key": "sealed_products",
+    "category_confidence": 98,
+    "photo_views": ["front"],
+    "variant_facts": [],
+    "visible_labels": [],
+    "photo_identity": {
+      "complete": true,
+      "canonical_name": "sealed hobby box",
+      "identity_code": "",
+      "evidence_kind": "composite_markings",
+      "physical_binding": true,
+      "overlay_or_watermark": false,
+      "external_watermark": false,
+      "identity_obscured": false,
+      "identity_ambiguous": false,
+      "materially_distinct_alternatives": 0,
+      "missing_discriminative_field": "",
+      "discriminative_field_visible": false,
+      "confidence": 97,
+      "fields": ["manufacturer=Maker Box", "set/product_line=Chrome Series", "season=2028/29", "sealed_format=Hobby Box", "featured_subject=Athlete One", "featured_subject=Athlete Two", "front_complete=true"],
+      "candidates": [],
+      "evidence_facts": [
+        {"key":"manufacturer","value":"Maker Box","evidence_type":"logo","confidence":98,"image_index":0,"side":"front","location":"brand mark","semantic_role":"manufacturer"},
+        {"key":"set/product_line","value":"Chrome Series","evidence_type":"text","confidence":98,"image_index":0,"side":"front","location":"product title","semantic_role":"product_line"},
+        {"key":"season","value":"2028/29","evidence_type":"text","confidence":97,"image_index":0,"side":"front","location":"season title","semantic_role":"release_season"},
+        {"key":"sealed_format","value":"Hobby Box","evidence_type":"text","confidence":98,"image_index":0,"side":"front","location":"format callout","semantic_role":"format"},
+        {"key":"featured_subject","value":"Athlete One","evidence_type":"packaging_image","confidence":92,"image_index":0,"side":"front","location":"left portrait","semantic_role":"featured_subject"},
+        {"key":"featured_subject","value":"Athlete Two","evidence_type":"packaging_image","confidence":92,"image_index":0,"side":"front","location":"right portrait","semantic_role":"featured_subject"},
+        {"key":"front_complete","value":"true","evidence_type":"image","confidence":99,"image_index":0,"side":"front","location":"all package edges","semantic_role":"completeness"}
+      ]
+    }
+  },
+  "generic_alias_payload": {
+    "observation_valid": true,
+    "category": "other collectible",
+    "category_key": "irrigation_controller",
+    "category_confidence": 91,
+    "photo_views": ["front"],
+    "variant_facts": [],
+    "visible_labels": [],
+    "photo_identity": {
+      "complete": false,
+      "canonical_name": "controller family",
+      "identity_code": "",
+      "evidence_kind": "composite_markings",
+      "physical_binding": true,
+      "overlay_or_watermark": false,
+      "external_watermark": false,
+      "identity_obscured": false,
+      "identity_ambiguous": true,
+      "materially_distinct_alternatives": 2,
+      "missing_discriminative_field": "physical_model_code",
+      "discriminative_field_visible": false,
+      "confidence": 82,
+      "fields": ["brand=Maker Generic", "object_type=irrigation controller", "family=Controller Family"],
+      "candidates": [
+        {"category_key":"irrigation_controller","brand":"Maker Generic","family":"Controller Family","model":"Model A","year":"","subject":"","card_number":"","language":"","edition":"","printing":"","parallel":"","parallel_color":"","finish":"","format":"","configuration":"","material_variant_key":"model-a","materially_distinct_variant":true,"confidence":84,"evidence":"family member"},
+        {"category_key":"irrigation_controller","brand":"Maker Generic","family":"Controller Family","model":"Model B","year":"","subject":"","card_number":"","language":"","edition":"","printing":"","parallel":"","parallel_color":"","finish":"","format":"","configuration":"","material_variant_key":"model-b","materially_distinct_variant":true,"confidence":83,"evidence":"family member"}
+      ],
+      "evidence_facts": [
+        {"key":"brand","value":"Maker Generic","evidence_type":"logo","confidence":96,"image_index":0,"side":"front","location":"front logo","semantic_role":"brand"},
+        {"key":"object_type","value":"irrigation controller","evidence_type":"components","confidence":94,"image_index":0,"side":"front","location":"whole object","semantic_role":"human_category"},
+        {"key":"family","value":"Controller Family","evidence_type":"text","confidence":88,"image_index":0,"side":"front","location":"front label","semantic_role":"family"}
+      ]
+    }
+  }
+}

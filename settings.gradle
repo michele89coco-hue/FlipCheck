@@ -8,6 +8,9 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
+        // Small, checksum-pinned JVM test dependencies are mirrored so the
+        // Historical and current regressions remain runnable in restricted/offline CI workers.
+        maven { url = uri("${rootDir}/third_party/maven") }
         google()
         mavenCentral()
     }

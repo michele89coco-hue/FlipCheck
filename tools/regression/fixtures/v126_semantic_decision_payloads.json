@@ -1,0 +1,87 @@
+{
+  "tcg_semantic": {
+    "content_sufficient": true,
+    "category": "tcg_card",
+    "views": ["front"],
+    "facts": [
+      {"key":"game_or_publisher","value":"Pokémon","image":0,"side":"front","location":"card frame and game marks","role":"game_or_publisher","confidence":96},
+      {"key":"card_name","value":"Politoed","image":0,"side":"front","location":"top name line","role":"subject","confidence":99},
+      {"key":"language","value":"Italiano","image":0,"side":"front","location":"rules text","role":"language","confidence":99},
+      {"key":"pv","value":"110","image":0,"side":"front","location":"top-right HP area","role":"hp_or_pv","confidence":99},
+      {"key":"evolution_stage","value":"Fase 2","image":0,"side":"front","location":"upper evolution line","role":"evolution_stage","confidence":97},
+      {"key":"attack_name","value":"Crescita Improvvisa","image":0,"side":"front","location":"first attack row","role":"attack_name","confidence":97},
+      {"key":"attack_name","value":"Ranabalzo","image":0,"side":"front","location":"second attack row","role":"attack_name","confidence":97},
+      {"key":"attack_name","value":"Spruzza Energia","image":0,"side":"front","location":"third attack row","role":"attack_name","confidence":97},
+      {"key":"collector_marking","value":"H23/H32","image":0,"side":"front","location":"bottom collector-number line","role":"collector_number","confidence":97},
+      {"key":"finish","value":"holographic reflective foil","image":0,"side":"front","location":"artwork surface","role":"finish","confidence":90},
+      {"key":"layout_signature","value":"complete identity-bearing TCG front","image":0,"side":"front","location":"full card bounds","role":"layout","confidence":96}
+    ],
+    "identity_hint":"Pokémon di Fase 2 Politoed holographic reflective foil",
+    "candidates":[{"brand":"Pokémon","subject":"Politoed","card_number":"H23/H32","language":"Italiano","finish":"holographic reflective foil","confidence":98}],
+    "missing_discriminators":[]
+  },
+  "sealed_alias_core": {
+    "content_sufficient": true,
+    "category": "sealed_trading_card_product",
+    "views": ["front"],
+    "facts": [
+      {"key":"manufacturer/publisher","value":"Topps","image":0,"side":"front","location":"top-left logo","role":"manufacturer","confidence":99},
+      {"key":"set/product_line","value":"Topps Chrome Update Basketball","image":0,"side":"front","location":"central product title","role":"product_line","confidence":98},
+      {"key":"season","value":"2025/26","image":0,"side":"front","location":"upper season line","role":"release_season","confidence":96},
+      {"key":"sport_category","value":"Basketball","image":0,"side":"front","location":"category line","role":"sport","confidence":95},
+      {"key":"configuration","value":"1 autograph per box","image":0,"side":"front","location":"lower configuration banner","role":"sealed_configuration","confidence":98},
+      {"key":"featured_subjects","value":"Cooper Flagg","image":0,"side":"front","location":"left portrait","role":"featured_subject","confidence":95},
+      {"key":"featured_subjects","value":"Victor Wembanyama","image":0,"side":"front","location":"right portrait","role":"featured_subject","confidence":95},
+      {"key":"product_type","value":"sealed box","image":0,"side":"front","location":"full package geometry","role":"product_type","confidence":96}
+    ],
+    "identity_hint":"Prodotto sigillato da collezione",
+    "candidates":[{"brand":"Topps","product_line":"Topps Chrome Update Basketball","year":"2025/26","confidence":98}],
+    "missing_discriminators":["format"]
+  },
+  "sports_single_identifier": {
+    "content_sufficient": true,
+    "category": "sports_card",
+    "views": ["front", "back"],
+    "facts": [
+      {"key":"manufacturer","value":"Maker Alpha","image":1,"side":"back","location":"copyright line","role":"manufacturer","confidence":98},
+      {"key":"product_line","value":"Series Delta","image":1,"side":"back","location":"set title","role":"product_line","confidence":97},
+      {"key":"release","value":"2024-25","image":1,"side":"back","location":"release line","role":"release_season","confidence":95},
+      {"key":"subject","value":"Athlete One","image":0,"side":"front","location":"nameplate","role":"subject","confidence":99},
+      {"key":"card_number","value":"18","image":1,"side":"back","location":"number box","role":"card_number","confidence":99}
+    ],
+    "identity_hint":"Maker Alpha Series Delta Athlete One No. 18",
+    "candidates":[{"brand":"Maker Alpha","product_line":"Series Delta","subject":"Athlete One","year":"2024-25","card_number":"18","confidence":99}],
+    "missing_discriminators":[]
+  },
+  "sports_inverted_candidates": {
+    "content_sufficient": true,
+    "category": "sports_card",
+    "views": ["front", "back"],
+    "facts": [
+      {"key":"manufacturer","value":"Maker Beta","image":1,"side":"back","location":"copyright line","role":"manufacturer","confidence":96},
+      {"key":"set_or_product_line","value":"Series Gamma","image":1,"side":"back","location":"set title","role":"product_line","confidence":96},
+      {"key":"subject","value":"Athlete Two","image":0,"side":"front","location":"nameplate","role":"subject","confidence":98},
+      {"key":"card_number","value":"12","image":1,"side":"back","location":"rotated number box","role":"card_number","confidence":84}
+    ],
+    "identity_hint":"Maker Beta Series Gamma Athlete Two",
+    "candidates":[
+      {"brand":"Maker Beta","product_line":"Series Gamma","subject":"Athlete Two","card_number":"12","confidence":91,"materially_distinct":true,"material_variant_key":"number-12"},
+      {"brand":"Maker Beta","product_line":"Series Gamma","subject":"Athlete Two","card_number":"21","confidence":90,"materially_distinct":true,"material_variant_key":"number-21"}
+    ],
+    "missing_discriminators":["card_number"]
+  },
+  "sealed_hybrid_line": {
+    "content_sufficient": true,
+    "category": "sealed_trading_card_product",
+    "views": ["front"],
+    "facts": [
+      {"key":"brand","value":"Maker Cards","image":0,"side":"front","location":"logo","role":"brand","confidence":98},
+      {"key":"product_line","value":"Hoops/Maker Cards Chrome Update","image":0,"side":"front","location":"title region","role":"product_line","confidence":84},
+      {"key":"season","value":"2025/26","image":0,"side":"front","location":"season line","role":"release_season","confidence":94},
+      {"key":"product_type","value":"sealed box","image":0,"side":"front","location":"package bounds","role":"product_type","confidence":96}
+    ],
+    "identity_hint":"sealed product",
+    "candidates":[],
+    "missing_discriminators":[]
+  }
+}

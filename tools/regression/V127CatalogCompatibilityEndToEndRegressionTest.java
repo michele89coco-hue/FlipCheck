@@ -1,0 +1,78 @@
+package com.flipcheck.nativebeta;
+
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+/** Full Vision -> OCR -> normalized fingerprint -> Web candidates -> final state replays. */
+public final class V127CatalogCompatibilityEndToEndRegressionTest {
+    private static JSONObject cases;
+    public static void main(String[] args)throws Exception{cases=load();
+        kobeRejectsWrongNumbersAndMatchesCatalog();currySeparatesGraphicAndCatalogNumber();sealedKeepsDistinctiveToken();
+        tcgRejectsWrongFirstCandidate();sameSubjectDifferentSetIsRejected();sameNumberDifferentSetIsRejected();
+        invertedNumberConflictBlocksConfirmation();photoYearAgainstWebYearVetoes();differentVariantComparableExcluded();
+        layoutMismatchVetoesReprint();distinctiveTokenLossVetoesSealedCandidate();featuredSubjectsStayOutOfQuery();
+        uncertainSealedFormatDoesNotEraseCore();incompatibleWebFieldIsNotPromoted();criticalFailureBlocksPublicConfirmation();
+        webUnavailablePreservesPhotoEvidence();truncatedVisionRetriesOnlyOnce();ocrRecoversIncompleteVision();
+        descriptiveUnknownAliasIsNonBlocking();identifyingUnknownAliasIsCritical();
+        System.out.println("V127CatalogCompatibilityEndToEndRegressionTest: PASS (20/20)");}
+
+    private static void kobeRejectsWrongNumbersAndMatchesCatalog()throws Exception{Models.Identification id=run("sports_reversed_identifier",true);
+        require("sports_card".equals(id.canonicalProfile),"sports profile lost: "+id.canonicalProfileVotes);require("81".equals(id.sourceConfirmedCatalogNumber),"catalog number 81 not selected");
+        require(!id.title.contains("#18")&&!id.title.contains("23/78")&&!id.title.contains("8/23"),"false identifier entered title: "+id.title);
+        require(id.title.startsWith("1997-98")&&"CATALOG_MATCHED".equals(id.identifierStatus),"season/identifier state incoherent: "+id.title+" "+id.identifierStatus);
+        require(id.webContributionScore>0&&"PASS".equals(id.consistencyInvariants),"catalog contribution/invariants missing");trace("sports_reversed_identifier",id);}
+    private static void currySeparatesGraphicAndCatalogNumber()throws Exception{Models.Identification id=run("sports_graphic_number",true);
+        require("77".equals(id.graphicNumber)&&id.physicalCardNumber.isEmpty(),"graphic 77 became physical card number");require("67".equals(id.sourceConfirmedCatalogNumber),"catalog 67 lost");
+        require("2009-10".equals(id.sourceConfirmedReleaseYear)&&id.title.startsWith("2009-10"),"commercial season precision lost");
+        require("Base RC".equals(id.sourceConfirmedVariant)&&"CATALOG_REPORTED".equals(id.variantStatus),"catalog variant provenance/state lost");
+        require("CATALOG_MATCHED".equals(id.identifierStatus)&&id.localOcrFactCount>0&&id.webContributionScore>0,"final identifier/OCR/Web state contradicted UI");trace("sports_graphic_number",id);}
+    private static void sealedKeepsDistinctiveToken()throws Exception{Models.Identification id=run("sealed_distinctive_token",true);
+        require("sealed_trading_card_product".equals(id.canonicalProfile),"sealed votes wrong: "+id.canonicalProfileVotes);
+        require(id.title.contains("2025-26 Topps Chrome Update")&&id.title.contains("Hobby Box sigillato"),"sealed exact title wrong: "+id.title);
+        require(id.collectorNumberCandidate.isEmpty()&&!id.searchQuery.contains("2024-25"),"season became collector or query drifted");
+        require("CONFIRMED".equals(id.coreIdentityStatus)&&"CATALOG_MATCHED".equals(id.exactIdentityStatus)&&"FORMAT_CATALOG_MATCHED".equals(id.formatStatus),"catalog-matched format/core state incoherent");
+        require(!id.searchQuery.contains("Cooper")&&!id.searchQuery.contains("Victor")&&!id.searchQuery.contains("Shai"),"featured subjects contaminated query");trace("sealed_distinctive_token",id);}
+    private static void tcgRejectsWrongFirstCandidate()throws Exception{Models.Identification id=run("tcg_wrong_first_candidate",true);
+        require("tcg".equals(id.canonicalProfile)&&id.title.contains("Politoed")&&!id.title.contains("Fase 2")&&!id.title.toLowerCase().contains("foil"),"TCG semantic title/profile wrong");
+        require("H23/H32".equals(id.sourceConfirmedCatalogNumber)&&!id.title.contains("12/146"),"wrong first same-subject page was accepted: confirmed="+id.sourceConfirmedCatalogNumber+" reported="+id.sourceReportedCatalogNumber+" conflicts="+id.catalogConflicts+" status="+id.catalogCompatibilityStatus+" title="+id.title);
+        require(id.catalogConflicts.contains("IDENTIFIER_CONFLICT")&&id.rejectedCandidates.size()>0,"hard-veto trace missing");
+        require("CATALOG_MATCHED".equals(id.familyStatus)&&"CATALOG_MATCHED".equals(id.exactIdentityStatus),"compatible catalog set did not update final state");
+        require("Fase 2".equals(id.evolutionStage)&&"110 PV".equals(id.hpOrPv)&&id.attackNames.contains("Ranabalzo"),"context fingerprint lost");trace("tcg_wrong_first_candidate",id);}
+    private static void sameSubjectDifferentSetIsRejected()throws Exception{Models.Identification id=runWithOnlyCandidate("tcg_wrong_first_candidate",0);require(!id.catalogVerified&&"FAIL".equals(id.consistencyInvariants),"same subject bypassed incompatible set");}
+    private static void sameNumberDifferentSetIsRejected()throws Exception{JSONObject c=copyCandidate("sports_reversed_identifier",1);c.put("product_line","Unrelated Set");Models.Identification id=runWithCandidate("sports_reversed_identifier",c);require(!id.catalogVerified,"same number bypassed set conflict: "+id.catalogCompatibilityStatus+" "+id.catalogConflicts+" hierarchy="+id.catalogHierarchy+" title="+id.title);}
+    private static void invertedNumberConflictBlocksConfirmation()throws Exception{JSONObject c=copyCandidate("sports_reversed_identifier",1);c.put("card_number","18");Models.Identification id=runWithCandidate("sports_reversed_identifier",c);require(!id.catalogVerified&&!id.identityConfirmed,"inverted identifier was confirmed");}
+    private static void photoYearAgainstWebYearVetoes()throws Exception{JSONObject c=copyCandidate("sports_reversed_identifier",1);c.put("release_year","2001-02");Models.Identification id=runWithCandidate("sports_reversed_identifier",c);require(id.catalogConflicts.contains("SEASON_CONFLICT"),"year conflict did not veto");}
+    private static void differentVariantComparableExcluded()throws Exception{Models.Identification id=run("sports_graphic_number",true);require(!id.priceAvailable,"no verified sold bucket unexpectedly priced");}
+    private static void layoutMismatchVetoesReprint()throws Exception{JSONObject c=copyCandidate("tcg_wrong_first_candidate",1);c.put("layout_signature","modern borderless layout");Models.Identification id=runWithCandidate("tcg_wrong_first_candidate",c);require(id.catalogConflicts.contains("LAYOUT_CONFLICT"),"reprint layout mismatch not vetoed");}
+    private static void distinctiveTokenLossVetoesSealedCandidate()throws Exception{JSONObject c=copyCandidate("sealed_distinctive_token",0);c.put("product_line","Topps Chrome");c.put("product_name","Topps Chrome Basketball Hobby Box");Models.Identification id=runWithCandidate("sealed_distinctive_token",c);require(!id.catalogVerified&&id.catalogConflicts.contains("DISTINCTIVE_TOKEN_LOST"),"distinctive token loss accepted");}
+    private static void featuredSubjectsStayOutOfQuery()throws Exception{Models.Identification id=run("sealed_distinctive_token",false);String q=ProfileQueryBuilder.seed(id);require(!q.contains("Cooper")&&!q.contains("Victor")&&!q.contains("Shai"),"featured subject entered query");}
+    private static void uncertainSealedFormatDoesNotEraseCore()throws Exception{Models.Identification id=run("sealed_distinctive_token",true);require(id.identityConfirmed&&id.sealedFormat.isEmpty(),"catalog format impersonated photographed format");}
+    private static void incompatibleWebFieldIsNotPromoted()throws Exception{Models.Identification id=runWithOnlyCandidate("tcg_wrong_first_candidate",0);require(id.sourceConfirmedCatalogNumber.isEmpty()&&"12/146".equals(id.sourceReportedCatalogNumber),"incompatible reported number was promoted");}
+    private static void criticalFailureBlocksPublicConfirmation()throws Exception{Models.Identification id=runWithOnlyCandidate("tcg_wrong_first_candidate",0);require("CONFLICTED".equals(id.overallStatus)&&!id.marketReady&&!EvidencePolicy.publicStatus(id).contains("IDENTITÀ VERIFICATA"),"critical failure leaked CONFIRMED UI");}
+    private static void webUnavailablePreservesPhotoEvidence()throws Exception{Models.Identification id=run("sealed_distinctive_token",false);require(id.title.contains("Chrome Update")&&("NOT_AVAILABLE".equals(id.marketStatus)||"IDENTITY_OR_SKU_PENDING".equals(id.marketStatus)),"Web failure erased photo core");}
+    private static void truncatedVisionRetriesOnlyOnce()throws Exception{JSONObject x=cases.getJSONObject("tcg_wrong_first_candidate");OpenAiClient.Response first=vision(x.getJSONObject("vision"));first.complete=false;first.parseError="max_output_tokens";first.technicalStatus="INCOMPLETE_MAX_TOKENS";first.incompleteReason="max_output_tokens";
+        ScriptedClient c=new ScriptedClient(first,vision(x.getJSONObject("vision")),webResponse(x.getJSONObject("web")));Models.Identification id=IdentificationPipelineV082.identify(local(x),Arrays.asList("data:image/jpeg;base64,AA"),"",c,new Models.Usage());require(c.retries==1&&id.technicalRetryCount==1,"technical response did not retry exactly once");}
+    private static void ocrRecoversIncompleteVision()throws Exception{Models.Identification id=run("tcg_wrong_first_candidate",false);require(id.localOcrFactCount>0&&id.fingerprintComponents.contains("attack_names"),"OCR did not enter fingerprint");}
+    private static void descriptiveUnknownAliasIsNonBlocking(){Models.Identification id=new Models.Identification();EvidenceLedger.addPhotoFact(id,"unknown_biography_note","x","vision",80,0,"back","bio","biographical_note");PhotographicFactNormalizer.normalize(id,"test");FinalIdentityDecisionEngine.freeze(id,"test");require(!id.factsRejectedWithReason.contains("relevant_alias_rejected"),"optional description became critical");}
+    private static void identifyingUnknownAliasIsCritical(){Models.Identification id=new Models.Identification();EvidenceLedger.addPhotoFact(id,"unknown_catalog_identity_axis","x","vision",90,0,"front","title","product_identity");PhotographicFactNormalizer.normalize(id,"test");FinalIdentityDecisionEngine.freeze(id,"test");require("FAIL".equals(id.consistencyInvariants),"unknown identity alias was silently discarded");}
+
+    private static Models.Identification run(String key,boolean web)throws Exception{JSONObject x=cases.getJSONObject(key);ScriptedClient client=new ScriptedClient(vision(x.getJSONObject("vision")),null,web?webResponse(x.getJSONObject("web")):unavailable());return IdentificationPipelineV082.identify(local(x),Arrays.asList("data:image/jpeg;base64,AA"),"",client,new Models.Usage());}
+    private static Models.Identification runWithOnlyCandidate(String key,int index)throws Exception{JSONObject x=cases.getJSONObject(key);JSONObject web=new JSONObject(x.getJSONObject("web").toString());JSONObject c=copyCandidate(key,index);web.put("candidates",new JSONArray().put(c));web.put("source_url",c.optString("source_url"));web.put("source_reported_catalog_number",c.optString("card_number"));web.put("source_reported_release_year",c.optString("release_year"));web.put("source_reported_product_line",c.optString("product_line"));return runCustom(x,web);}
+    private static Models.Identification runWithCandidate(String key,JSONObject candidate)throws Exception{JSONObject x=cases.getJSONObject(key);JSONObject web=new JSONObject(x.getJSONObject("web").toString());web.put("candidates",new JSONArray().put(candidate));return runCustom(x,web);}
+    private static Models.Identification runCustom(JSONObject x,JSONObject web)throws Exception{return IdentificationPipelineV082.identify(local(x),Arrays.asList("data:image/jpeg;base64,AA"),"",new ScriptedClient(vision(x.getJSONObject("vision")),null,webResponse(web)),new Models.Usage());}
+    private static JSONObject copyCandidate(String key,int i)throws Exception{return new JSONObject(cases.getJSONObject(key).getJSONObject("web").getJSONArray("candidates").getJSONObject(i).toString());}
+    private static Models.LocalScan local(JSONObject x){Models.LocalScan l=new Models.LocalScan();JSONArray a=x.optJSONArray("ocr");StringBuilder b=new StringBuilder();for(int i=0;a!=null&&i<a.length();i++){if(b.length()>0)b.append('\n');b.append(a.optString(i));}l.textByImage.add(b.toString());return l;}
+    private static OpenAiClient.Response vision(JSONObject p){OpenAiClient.Response r=new OpenAiClient.Response();r.payload=p;r.complete=true;r.technicalStatus="COMPLETED";r.usage.visionCalls=1;r.usage.requests=1;r.usage.costUsd=.006;return r;}
+    private static OpenAiClient.Response unavailable(){OpenAiClient.Response r=new OpenAiClient.Response();r.complete=false;r.parseError="network";r.technicalStatus="NETWORK_ERROR";return r;}
+    private static OpenAiClient.Response webResponse(JSONObject p){OpenAiClient.Response r=new OpenAiClient.Response();r.payload=p;r.complete=true;r.technicalStatus="COMPLETED";r.usage.webCalls=1;r.usage.requests=1;r.usage.costUsd=.012;addSource(r,p.optString("source_url"));JSONArray a=p.optJSONArray("candidates");for(int i=0;a!=null&&i<a.length();i++)addSource(r,a.optJSONObject(i).optString("source_url"));return r;}
+    private static void addSource(OpenAiClient.Response r,String u){if(u==null||u.isEmpty())return;Models.Source s=new Models.Source();s.url=u;s.title="retrieved";r.sources.add(s);}
+    private static void trace(String fixture,Models.Identification id){System.out.println("TRACE fixture="+fixture+" profile="+id.canonicalProfile+" votes="+id.canonicalProfileVotes+" title=\""+id.title+"\" category="+id.categoryStatus+" family="+id.familyStatus+" core="+id.coreIdentityStatus+" exact="+id.exactIdentityStatus+" identifier="+id.identifierStatus+" variant="+id.variantStatus+" market="+id.marketStatus+" overall="+id.overallStatus+" confidence=["+id.categoryConfidence+","+id.familyConfidence+","+id.coreIdentityConfidence+","+id.exactIdentityConfidence+","+id.identifierConfidence+","+id.variantConfidence+","+id.marketConfidence+"] catalog="+id.catalogCompatibilityStatus+" matched="+id.catalogMatchedFields+" conflicts="+id.catalogConflicts+" webScore="+id.webContributionScore+" invariants="+id.consistencyInvariants);}
+    private static JSONObject load()throws Exception{return new JSONObject(new String(Files.readAllBytes(Paths.get("tools/regression/fixtures/v127_catalog_compatibility_replays.json")),StandardCharsets.UTF_8));}
+    private static void require(boolean ok,String message){if(!ok)throw new AssertionError(message);}
+    private static final class ScriptedClient extends OpenAiClient{final Response first,retry,web;int retries;ScriptedClient(Response first,Response retry,Response web){super("test");this.first=first;this.retry=retry;this.web=web;}@Override Response observe(List<String>x,String p){return first;}@Override Response observeTechnicalRecovery(List<String>x,String p){retries++;return retry;}@Override Response enrichConfirmedIdentity(String p){return web;}@Override Response webStage(String s,String p){return web;}}
+}

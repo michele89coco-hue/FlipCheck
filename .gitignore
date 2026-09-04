@@ -1,5 +1,9 @@
-/keystore/
-/*.jks
-/*.keystore
-/release-signing.properties
-/repo_push_*/
+.gradle/
+build/
+**/build/
+local.properties
+*.jks
+*.keystore
+captures/
+__pycache__/
+*.pyc

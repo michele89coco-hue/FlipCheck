@@ -781,13 +781,11 @@ final class IdentificationEngine {
         if (o.verificationSummary.isEmpty()) {
             o.verificationSummary = tournamentSummary(o, o.decisionReason);
         }
-        if (o.marketReady) {
-            return;
-        }
-        if (o.nextPhotoRequest == null || o.nextPhotoRequest.trim().isEmpty()) {
-            o.nextPhotoRequest = fallbackNextPhoto(o);
-            o.nextPhotoReason = "Serve una prova visiva aggiuntiva per ridurre l'incertezza residua.";
-        }
+        if (!o.marketReady&&PhotographicIdentityClosure.mayRequestAnotherPhoto(o)) {
+            o.nextPhotoRequest=PhotographicIdentityClosure.targetedPhotoRequest(o);
+            o.nextPhotoReason=o.nextPhotoRequest.isEmpty()?"":DiscriminativeVisionPolicy.reason(o);
+        } else { o.nextPhotoRequest=""; }
+        FinalIdentityDecisionEngine.freeze(o,"before_renderer");
     }
 
     private static void scoreSources(Models.Identification o, Models.Identifier primary) {

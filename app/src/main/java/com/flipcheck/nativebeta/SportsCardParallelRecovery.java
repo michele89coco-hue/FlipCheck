@@ -3,7 +3,7 @@ package com.flipcheck.nativebeta;
 import java.util.Locale;
 import org.json.JSONObject;
 
-/** Bounded second Web pass for a front/back sports card with one unresolved parallel axis. */
+/** Legacy parallel lookup; disabled once the scan's single Web pass was consumed. */
 final class SportsCardParallelRecovery {
     private static final double MAX_TOTAL_COST_USD = 0.0250d;
     private static final double RESERVED_WEB_PASS_USD = 0.0125d;
@@ -11,15 +11,12 @@ final class SportsCardParallelRecovery {
     private SportsCardParallelRecovery() {}
 
     static boolean eligible(Models.Identification id, Models.Usage usage) {
-        if (id == null || usage == null || usage.requests != 1 || usage.webCalls != 1
+        if (id == null || usage == null || usage.webCalls >= 1
                 || usage.costUsd + RESERVED_WEB_PASS_USD > MAX_TOTAL_COST_USD
                 || !CollectibleCardIdentityPolicy.isCard(id)
                 || CollectibleCardIdentityPolicy.isTradingCardGame(id)
                 || id.photoIdentityOverlayOrWatermark || !frontAndBack(id)
                 || id.candidates.isEmpty()) return false;
-        if ("physical_card_tuple".equalsIgnoreCase(safe(id.modelProof))) {
-            return false;
-        }
         Models.CandidateScore top = id.candidates.get(0);
         return top != null && !top.hardRejected
                 && factTrue(top, "source_grounded")
@@ -74,18 +71,13 @@ final class SportsCardParallelRecovery {
         setFact(c, "visual_match_confidence", String.valueOf(p.optInt("identity_confidence", 0)));
         setFact(c, "photo_identity_supported", "true");
         setFact(c, "exact_parallel_recovered", parallel);
-        if (!"physical_card_tuple".equalsIgnoreCase(safe(id.modelProof))) {
-            id.model = identity;
-            id.modelConfidence = Math.min(97, Math.max(92, p.optInt("identity_confidence", 0)));
-            id.modelProof = "exact_catalog_front_back_parallel";
-        }
-        id.marketReady = true;
+        id.model = identity;
+        id.modelConfidence = Math.min(97, Math.max(92, p.optInt("identity_confidence", 0)));
+        id.marketReady = false;
         id.disproofPassed = true;
-        id.nextPhotoRequest = "";
-        id.nextPhotoReason = "";
-        id.verificationSummary = "Carta sportiva verificata su fronte e retro; checklist, numero carta e pattern fisico confermano il parallel " + parallel + ".";
-        id.decisionReason = "CONFIRMED v1.04: seconda ricerca mirata entro budget per il parallel sportivo esatto.";
-        return true;
+        id.modelProof = "pending_universal_identity_closure";
+        id.decisionReason = "Parallel source-confirmed acquisito; decisione demandata a UniversalIdentityClosure.";
+        return UniversalIdentityClosure.apply(id, "sports_parallel_recovery_delegate");
     }
 
     private static boolean hasIdentityTuple(Models.Identification id) {

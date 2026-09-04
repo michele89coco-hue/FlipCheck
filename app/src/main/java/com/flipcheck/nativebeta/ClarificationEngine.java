@@ -11,6 +11,7 @@ final class ClarificationEngine {
 
     static void refine(Models.Identification id, ClarificationPlanner.Plan plan, String selected,
                        String details, OpenAiClient client, Models.Usage usage) throws Exception {
+        if (UniversalIdentityClosure.enforceTerminalState(id)) return;
         if (id == null || plan == null || client == null) {
             throw new IllegalArgumentException("Chiarimento non valido");
         }
