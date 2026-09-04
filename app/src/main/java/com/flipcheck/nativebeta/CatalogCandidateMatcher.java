@@ -38,7 +38,7 @@ final class CatalogCandidateMatcher {
     private static void copyFirst(JSONObject from,JSONObject to,String target,String...sources){for(String source:sources)if(from.has(source)){copy(from,to,source,target);return;}}
 
     private static void compare(Models.CandidateScore c,IdentityProfileEngine.PhotoTuple p,IdentityProfileEngine.Profile profile){
-        matchText(c,"brand",p.brand,c.brand,true,false);matchHierarchy(c,p);
+        matchText(c,"brand",p.brand,c.brand,true,false);matchHierarchy(c,p,profile);
         matchText(c,"subject",p.subject,c.subject,profile!=IdentityProfileEngine.Profile.SEALED_TRADING_CARD_PRODUCT,false);
         if(profile==IdentityProfileEngine.Profile.SPORTS_CARD){matchSeason(c,p.year,c.year,true);matchText(c,"team",p.team,c.team,false,false);matchIdentifier(c,p.cardNumber,c.cardNumber,p.cardNumberVerified,false);matchText(c,"layout",p.layout,c.layoutSignature,true,false);}
         else if(profile==IdentityProfileEngine.Profile.TCG){matchIdentifier(c,p.cardNumber,c.cardNumber,p.cardNumberVerified,true);matchText(c,"language",p.language,c.language,false,false);
@@ -49,14 +49,14 @@ final class CatalogCandidateMatcher {
             matchText(c,"packageCount",p.packageCount,c.packageCount,true,false);matchText(c,"cardsPerPack",p.cardsPerPack,c.cardsPerPack,true,false);}
         requireAnchors(c,profile,p);
     }
-    private static void matchHierarchy(Models.CandidateScore c,IdentityProfileEngine.PhotoTuple p){
+    private static void matchHierarchy(Models.CandidateScore c,IdentityProfileEngine.PhotoTuple p,IdentityProfileEngine.Profile profile){
         if(CatalogHierarchy.sameLevelConflict(p,c)){veto(c,"PRODUCT_HIERARCHY_CONFLICT:"+p.family+"<>"+CatalogHierarchy.describe(c));return;}
         if(!empty(p.mainSet)&&(!empty(c.mainSet)||!empty(c.family))){String w=empty(c.mainSet)?c.family:c.mainSet;if(CatalogHierarchy.compatible(p.mainSet,w))matched(c,"mainSet="+w,12);}
         if(!empty(p.insertSubset)&&!empty(c.subset)){if(CatalogHierarchy.compatible(p.insertSubset,c.subset))matched(c,"subset="+c.subset,12);else veto(c,"SUBSET_CONFLICT:"+p.insertSubset+"<>"+c.subset);}
         if(!empty(p.designFamily)&&!empty(c.designFamily)){if(CatalogHierarchy.compatible(p.designFamily,c.designFamily))matched(c,"designFamily="+c.designFamily,8);else veto(c,"DESIGN_FAMILY_CONFLICT:"+p.designFamily+"<>"+c.designFamily);}
         if(!empty(p.subSeries)&&!empty(c.subSeries)){if(CatalogHierarchy.compatible(p.subSeries,c.subSeries))matched(c,"subSeries="+c.subSeries,12);else veto(c,"SUBSERIES_CONFLICT:"+p.subSeries+"<>"+c.subSeries);}
         if(!empty(p.family)&&CatalogHierarchy.candidateContainsObservedHierarchy(p,c))matched(c,"productHierarchy="+first(c.family,c.mainSet,c.subset,c.subSeries),14);
-        else if(!p.distinctiveTokens.isEmpty()&&ProfileQueryBuilder.isSealedProfile(p))veto(c,"DISTINCTIVE_TOKEN_LOST:"+p.distinctiveTokens);
+        else if(!p.distinctiveTokens.isEmpty()&&ProfileQueryBuilder.isSealedProfile(profile))veto(c,"DISTINCTIVE_TOKEN_LOST:"+p.distinctiveTokens);
         else if(!p.distinctiveTokens.isEmpty())missing(c,"catalog_did_not_report_all_distinctive_tokens="+p.distinctiveTokens);
         matchText(c,"parallelFamily",p.parallelFamily,first(c.parallelFamily,c.parallel),true,false);
         matchText(c,"parallelColor",p.color,c.parallelColor,true,false);matchText(c,"printRun",p.printRun,c.printRun,true,false);
