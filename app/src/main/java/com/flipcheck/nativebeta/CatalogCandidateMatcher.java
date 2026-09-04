@@ -40,10 +40,10 @@ final class CatalogCandidateMatcher {
     private static void compare(Models.CandidateScore c,IdentityProfileEngine.PhotoTuple p,IdentityProfileEngine.Profile profile){
         matchText(c,"brand",p.brand,c.brand,true,false);matchHierarchy(c,p);
         matchText(c,"subject",p.subject,c.subject,profile!=IdentityProfileEngine.Profile.SEALED_TRADING_CARD_PRODUCT,false);
-        if(profile==IdentityProfileEngine.Profile.SPORTS_CARD){matchSeason(c,p.year,c.year,true);matchText(c,"team",p.team,c.team,false,false);matchIdentifier(c,p.cardNumber,c.cardNumber);matchText(c,"layout",p.layout,c.layoutSignature,true,false);}
-        else if(profile==IdentityProfileEngine.Profile.TCG){matchIdentifier(c,p.cardNumber,c.cardNumber);matchText(c,"language",p.language,c.language,true,false);
+        if(profile==IdentityProfileEngine.Profile.SPORTS_CARD){matchSeason(c,p.year,c.year,true);matchText(c,"team",p.team,c.team,false,false);matchIdentifier(c,p.cardNumber,c.cardNumber,p.cardNumberVerified,false);matchText(c,"layout",p.layout,c.layoutSignature,true,false);}
+        else if(profile==IdentityProfileEngine.Profile.TCG){matchIdentifier(c,p.cardNumber,c.cardNumber,p.cardNumberVerified,true);matchText(c,"language",p.language,c.language,false,false);
             matchText(c,"hp",p.hp,c.hpOrPv,true,false);matchText(c,"evolutionStage",p.evolutionStage,c.evolutionStage,false,false);matchAttacks(c,p.attacks,c.attackNames);
-            matchText(c,"layout",p.layout,c.layoutSignature,true,false);matchCopyright(c,p.copyrightYear,c.copyrightYear,c.year);matchSeason(c,p.year,c.year,true);}
+            matchText(c,"layout",p.layout,c.layoutSignature,true,false);matchText(c,"finish",p.finish,c.finish,false,false);matchCopyright(c,p.copyrightYear,c.copyrightYear,c.year);matchSeason(c,p.year,c.year,true);}
         else if(profile==IdentityProfileEngine.Profile.SEALED_TRADING_CARD_PRODUCT){matchSeason(c,p.year,c.year,true);matchText(c,"sport",p.sport,c.sport,true,false);
             matchText(c,"configuration",p.configuration,c.configuration,true,false);matchText(c,"format",p.format,c.format,true,false);
             matchText(c,"packageCount",p.packageCount,c.packageCount,true,false);matchText(c,"cardsPerPack",p.cardsPerPack,c.cardsPerPack,true,false);}
@@ -56,16 +56,18 @@ final class CatalogCandidateMatcher {
         if(!empty(p.designFamily)&&!empty(c.designFamily)){if(CatalogHierarchy.compatible(p.designFamily,c.designFamily))matched(c,"designFamily="+c.designFamily,8);else veto(c,"DESIGN_FAMILY_CONFLICT:"+p.designFamily+"<>"+c.designFamily);}
         if(!empty(p.subSeries)&&!empty(c.subSeries)){if(CatalogHierarchy.compatible(p.subSeries,c.subSeries))matched(c,"subSeries="+c.subSeries,12);else veto(c,"SUBSERIES_CONFLICT:"+p.subSeries+"<>"+c.subSeries);}
         if(!empty(p.family)&&CatalogHierarchy.candidateContainsObservedHierarchy(p,c))matched(c,"productHierarchy="+first(c.family,c.mainSet,c.subset,c.subSeries),14);
-        else if(!p.distinctiveTokens.isEmpty()&&!CatalogHierarchy.candidateContainsObservedHierarchy(p,c))veto(c,"DISTINCTIVE_TOKEN_LOST:"+p.distinctiveTokens);
+        else if(!p.distinctiveTokens.isEmpty()&&ProfileQueryBuilder.isSealedProfile(p))veto(c,"DISTINCTIVE_TOKEN_LOST:"+p.distinctiveTokens);
+        else if(!p.distinctiveTokens.isEmpty())missing(c,"catalog_did_not_report_all_distinctive_tokens="+p.distinctiveTokens);
         matchText(c,"parallelFamily",p.parallelFamily,first(c.parallelFamily,c.parallel),true,false);
         matchText(c,"parallelColor",p.color,c.parallelColor,true,false);matchText(c,"printRun",p.printRun,c.printRun,true,false);
     }
-    private static void matchIdentifier(Models.CandidateScore c,String photo,String web){if(empty(photo)||empty(web))return;if(identifier(photo).equals(identifier(web)))matched(c,"identifier="+web,24);else veto(c,"IDENTIFIER_CONFLICT:"+photo+"<>"+web);}
+    private static void matchIdentifier(Models.CandidateScore c,String photo,String web,boolean verified,boolean alphaCollectorIsHard){if(empty(photo)||empty(web))return;if(identifier(photo).equals(identifier(web)))matched(c,"identifier="+web,24);else if(verified||alphaCollectorIsHard&&photo.matches("(?i).*[A-Z].*"))veto(c,"IDENTIFIER_CONFLICT:"+photo+"<>"+web);else missing(c,"unverified_identifier_alternative="+photo+"<>"+web);}
     private static void matchSeason(Models.CandidateScore c,String photo,String web,boolean hard){if(empty(photo)||empty(web))return;if(SeasonNormalizer.compatible(photo,web))matched(c,"season="+SeasonNormalizer.normalize(web),12);else if(hard)veto(c,"SEASON_CONFLICT:"+photo+"<>"+web);else missing(c,"season");}
     private static void matchCopyright(Models.CandidateScore c,String photo,String webCopyright,String webRelease){if(empty(photo))return;String candidate=empty(webCopyright)?webRelease:webCopyright;if(empty(candidate))return;
         int a=year(photo),b=year(candidate);if(a>0&&b>0&&Math.abs(a-b)>1)veto(c,"COPYRIGHT_RELEASE_CONFLICT:"+photo+"<>"+candidate);else matched(c,"copyright="+photo,8);}
-    private static void matchAttacks(Models.CandidateScore c,List<String> photo,List<String> web){if(photo.isEmpty()||web.isEmpty())return;int matched=0;for(String a:photo)for(String b:web)if(textCompatible(a,b,false)){matched++;break;}
-        if(matched==photo.size())matched(c,"attacks="+matched,18);else if(matched==0)veto(c,"ATTACKS_CONFLICT:"+photo+"<>"+web);else veto(c,"ATTACKS_PARTIAL_CONFLICT:"+matched+"/"+photo.size());}
+    private static void matchAttacks(Models.CandidateScore c,List<String> photo,List<String> web){if(photo.isEmpty()||web.isEmpty()){missing(c,"attacks_unreported");return;}int matched=0;for(String a:photo)for(String b:web)if(semanticAttackCompatible(a,b)){matched++;break;}
+        if(matched>0)matched(c,"attacks="+matched+"/"+photo.size(),Math.min(18,6+matched*4));
+        if(matched<photo.size())missing(c,"attacks_partial_or_translated="+matched+"/"+photo.size());}
     private static void matchText(Models.CandidateScore c,String field,String photo,String web,boolean hard,boolean requirePhotoTokens){if(empty(photo)||empty(web))return;
         boolean ok=requirePhotoTokens?tokenCoverage(web,photo)>=.84d:textCompatible(photo,web,false);if(ok)matched(c,field+"="+web,field.equals("subject")?18:10);else if(hard)veto(c,field.toUpperCase(Locale.ROOT)+"_CONFLICT:"+photo+"<>"+web);else missing(c,field+"_different");}
     private static void requireAnchors(Models.CandidateScore c,IdentityProfileEngine.Profile profile,IdentityProfileEngine.PhotoTuple p){int matches=0;for(String value:c.hardMatches)if(value!=null&&!value.startsWith("weight="))matches++;
@@ -84,7 +86,10 @@ final class CatalogCandidateMatcher {
     private static boolean materiallyDifferent(Models.CandidateScore a,Models.CandidateScore b,IdentityProfileEngine.Profile p){if(p==IdentityProfileEngine.Profile.SEALED_TRADING_CARD_PRODUCT)return different(a.format,b.format)||different(a.productCode,b.productCode)||different(a.subSeries,b.subSeries);return different(a.cardNumber,b.cardNumber)||different(a.subset,b.subset)||different(a.parallelFamily,b.parallelFamily)||different(a.parallelColor,b.parallelColor)||different(a.printing,b.printing);}
     private static boolean different(String a,String b){return !empty(a)&&!empty(b)&&!canon(a).equals(canon(b));}
     private static String first(String...x){for(String v:x)if(!empty(v))return clean(v);return "";}
-    private static boolean textCompatible(String a,String b,boolean exact){String x=canon(a),y=canon(b);if(x.isEmpty()||y.isEmpty())return true;if(exact)return x.equals(y);return x.equals(y)||x.contains(y)||y.contains(x);}
+    private static boolean textCompatible(String a,String b,boolean exact){String x=semanticCanon(a),y=semanticCanon(b);if(x.isEmpty()||y.isEmpty())return true;if(exact)return x.equals(y);return x.equals(y)||x.contains(y)||y.contains(x);}
+    private static String semanticCanon(String x){return canon(x).replace("HOLOGRAPHIC","HOLO").replace("HOLOFOIL","HOLO").replace("FOIL HOLO","HOLO");}
+    private static boolean semanticAttackCompatible(String a,String b){String x=canon(a),y=canon(b);if(x.isEmpty()||y.isEmpty())return false;if(x.equals(y)||x.contains(y)||y.contains(x))return true;
+        java.util.Set<String> xs=new java.util.LinkedHashSet<>(),ys=new java.util.LinkedHashSet<>();for(String t:x.split(" "))if(t.length()>3)xs.add(t);for(String t:y.split(" "))if(t.length()>3)ys.add(t);int common=0;for(String t:xs)if(ys.contains(t))common++;return common>=Math.min(2,Math.min(xs.size(),ys.size()));}
     private static double tokenCoverage(String hay,String needle){String h=" "+canon(hay)+" ",n=canon(needle);if(n.isEmpty())return 1;int total=0,found=0;for(String t:n.split(" "))if(t.length()>1){total++;if(h.contains(" "+t+" "))found++;}return total==0?1:(double)found/total;}
     private static String identifier(String x){return canon(x).replace(" ","");}
     private static int year(String x){java.util.regex.Matcher m=java.util.regex.Pattern.compile("(?:19|20)\\d{2}").matcher(clean(x));return m.find()?Integer.parseInt(m.group()):0;}
