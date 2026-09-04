@@ -40,7 +40,7 @@ final class CatalogCandidateMatcher {
     private static void compare(Models.CandidateScore c,IdentityProfileEngine.PhotoTuple p,IdentityProfileEngine.Profile profile,Models.Identification id){
         matchText(c,"brand",p.brand,c.brand,true,false);matchHierarchy(c,p,profile);
         matchText(c,"subject",p.subject,c.subject,profile!=IdentityProfileEngine.Profile.SEALED_TRADING_CARD_PRODUCT,false);
-        if(profile==IdentityProfileEngine.Profile.SPORTS_CARD){matchSeason(c,p.year,c.year,true);matchText(c,"team",p.team,c.team,false,false);matchIdentifier(c,p.cardNumber,c.cardNumber,p.cardNumberVerified||strongLocalizedIdentifier(id,p.cardNumber),false);matchText(c,"layout",p.layout,c.layoutSignature,true,false);}
+        if(profile==IdentityProfileEngine.Profile.SPORTS_CARD){matchSeason(c,p.year,c.year,true);matchText(c,"team",p.team,c.team,false,false);matchIdentifier(c,p.cardNumber,c.cardNumber,p.cardNumberVerified||strongLocalizedIdentifier(id,p.cardNumber)||!observedIdentifierAlternative(id,c.cardNumber),false);matchText(c,"layout",p.layout,c.layoutSignature,true,false);}
         else if(profile==IdentityProfileEngine.Profile.TCG){matchIdentifier(c,p.cardNumber,c.cardNumber,p.cardNumberVerified,true);matchText(c,"language",p.language,c.language,false,false);
             matchText(c,"hp",p.hp,c.hpOrPv,true,false);matchText(c,"evolutionStage",p.evolutionStage,c.evolutionStage,false,false);matchAttacks(c,p.attacks,c.attackNames);
             matchText(c,"layout",p.layout,c.layoutSignature,true,false);matchText(c,"finish",p.finish,c.finish,false,false);matchCopyright(c,p.copyrightYear,c.copyrightYear,c.year);matchSeason(c,p.year,c.year,true);}
@@ -65,6 +65,11 @@ final class CatalogCandidateMatcher {
     private static boolean strongLocalizedIdentifier(Models.Identification id,String value){if(id==null||empty(value))return false;NormalizedPhotoIdentity n=PhotographicFactNormalizer.require(id);
         for(CanonicalFieldKey key:new CanonicalFieldKey[]{CanonicalFieldKey.CARD_NUMBER_CANDIDATE,CanonicalFieldKey.COLLECTOR_NUMBER_CANDIDATE})for(NormalizedPhotoIdentity.Fact f:n.facts(key))
             if(identifier(value).equals(identifier(f.value))&&f.quality==NormalizedPhotoIdentity.Quality.DIRECT_PHOTO_OBSERVATION&&f.confidence>=95&&!empty(f.location))return true;
+        return false;}
+    private static boolean observedIdentifierAlternative(Models.Identification id,String value){if(id==null||empty(value))return false;NormalizedPhotoIdentity n=PhotographicFactNormalizer.require(id);
+        for(CanonicalFieldKey key:new CanonicalFieldKey[]{CanonicalFieldKey.CARD_NUMBER_CANDIDATE,CanonicalFieldKey.COLLECTOR_NUMBER_CANDIDATE})for(NormalizedPhotoIdentity.Fact f:n.facts(key))
+            if(identifier(value).equals(identifier(f.value))&&(f.quality==NormalizedPhotoIdentity.Quality.DIRECT_PHOTO_OBSERVATION||f.quality==NormalizedPhotoIdentity.Quality.LOCAL_OCR_HINT))return true;
+        for(String alternative:n.identifierAlternatives)if(identifier(value).equals(identifier(alternative)))return true;
         return false;}
     private static void matchSeason(Models.CandidateScore c,String photo,String web,boolean hard){if(empty(photo)||empty(web))return;if(SeasonNormalizer.compatible(photo,web))matched(c,"season="+SeasonNormalizer.normalize(web),12);else if(hard)veto(c,"SEASON_CONFLICT:"+photo+"<>"+web);else missing(c,"season");}
     private static void matchCopyright(Models.CandidateScore c,String photo,String webCopyright,String webRelease){if(empty(photo))return;String candidate=empty(webCopyright)?webRelease:webCopyright;if(empty(candidate))return;
