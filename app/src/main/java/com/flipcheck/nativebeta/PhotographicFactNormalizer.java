@@ -25,7 +25,9 @@ final class PhotographicFactNormalizer {
             }
             CanonicalFieldKey key=contextualKey(aliasKey,raw);
             if(key==CanonicalFieldKey.UNKNOWN)key=contextualKey(CanonicalFieldKey.fromAlias(raw.semanticRole),raw);
-            if(key==CanonicalFieldKey.UNKNOWN){addOnce(out.rejectedFacts,(relevant(raw)?"relevant_alias_rejected:":"alias_not_mapped:")+raw.key+"(role="+raw.semanticRole+")");continue;}
+            if(key==CanonicalFieldKey.UNKNOWN){
+                String prefix=aliasKey!=CanonicalFieldKey.UNKNOWN?"recognized_alias_value_rejected:":relevant(raw)?"relevant_alias_rejected:":"alias_not_mapped:";
+                addOnce(out.rejectedFacts,prefix+raw.key+"(role="+raw.semanticRole+")");continue;}
             NormalizedPhotoIdentity.Quality quality=quality(raw);
             if(key==CanonicalFieldKey.ATTACK_NAME){for(String attack:raw.value.split("[;|\\n]+"))add(out,sourced,new NormalizedPhotoIdentity.Fact(key,attack,raw.key,raw.semanticRole,raw.location,raw.side,
                     raw.evidenceType,quality,raw.confidence,raw.imageIndex,raw.origin,raw.createdAtMillis,raw.timestampStage));}
