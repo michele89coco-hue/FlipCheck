@@ -18,6 +18,7 @@ final class FinalIdentityDecisionEngine {
         if(id.catalogVerified&&safe(id.catalogMatchedFields).isEmpty())critical.add("CATALOG_MATCH_WITHOUT_MATCHED_FIELDS");
         if("PASSED".equals(id.disproofStatus)&&("NOT_RUN".equals(id.webStatus)||"FAILED".equals(id.webStatus)))critical.add("DISPROOF_PASSED_WITHOUT_WEB");
         if("CATALOG_MATCHED".equals(id.exactIdentityStatus)&&(!id.catalogVerified||!"PASSED".equals(id.disproofStatus)))critical.add("EXACT_MATCH_WITHOUT_CATALOG_DISPROOF");
+        if(id.closureResult&&safe(id.closureLevel).isEmpty())critical.add("CLOSURE_WITHOUT_LEVEL");
         IdentityProfileEngine.PhotoTuple t=a.tuple;IdentityProfileEngine.Profile p=a.profile;
         id.graphicNumber=t.graphicNumber;id.attackDamage=t.attackDamage;id.cardType=t.cardType;id.copyrightYear=t.copyrightYear;
         id.language=t.language;id.evolutionStage=t.evolutionStage;id.hpOrPv=t.hp;id.attackNames=t.attacks.toString();
@@ -53,8 +54,18 @@ final class FinalIdentityDecisionEngine {
         else id.exactIdentityStatus=core?("NOT_RUN".equals(id.webStatus)?"EXACT_IDENTITY_PENDING_WEB":"CORE_IDENTIFIED"):"UNRESOLVED";
         if(id.rareVariantPhysicalProof&&id.catalogVerified&&"PASSED".equals(id.disproofStatus)
                 &&(!safe(id.sourceConfirmedParallelFamily).isEmpty()||!safe(id.sourceConfirmedVariant).isEmpty()))id.variantStatus="VARIANT_CONFIRMED";
-        else if(id.rareVariantPhysicalProof)id.variantStatus="VARIANT_PENDING";else if(!safe(t.finish).isEmpty())id.variantStatus="FINISH_OBSERVED";
+        else if(id.rareVariantPhysicalProof)id.variantStatus="VARIANT_PENDING";else if(id.catalogVerified&&!safe(t.finish).isEmpty()&&variantCompatible(t.finish,id.sourceConfirmedVariant))id.variantStatus="VARIANT_CONFIRMED";else if(!safe(t.finish).isEmpty())id.variantStatus="FINISH_OBSERVED";
         else if(id.catalogVerified&&!safe(id.sourceConfirmedVariant).isEmpty())id.variantStatus="CATALOG_REPORTED";else id.variantStatus="NOT_OBSERVED";
+        id.exactCatalogStatus=id.exactIdentityStatus;
+        id.copyIdentifierStatus=safe(id.physicalSerial).isEmpty()?"NOT_OBSERVED":"PHYSICALLY_VERIFIED";
+        if("VARIANT_CONFIRMED".equals(id.variantStatus))id.closureLevel="VARIANT";
+        else if("CATALOG_MATCHED".equals(id.exactIdentityStatus))id.closureLevel="EXACT_CATALOG";
+        else if("CONFIRMED".equals(id.coreIdentityStatus))id.closureLevel="CORE_IDENTITY";
+
+        id.coreIdentityConfidence=id.mainIdentityConfidence;id.exactIdentityConfidence=exactConfidence(id);
+        if(("UNRESOLVED".equals(id.exactIdentityStatus)||id.exactIdentityStatus.endsWith("_UNRESOLVED")||"CORE_IDENTIFIED".equals(id.exactIdentityStatus)||"EXACT_IDENTITY_PENDING_WEB".equals(id.exactIdentityStatus))&&id.exactIdentityConfidence>=100)critical.add("UNRESOLVED_EXACT_IDENTITY_AT_100");
+        if("VARIANT_CONFIRMED".equals(id.variantStatus)&&id.variantConfidence<=0)critical.add("CONFIRMED_VARIANT_WITH_ZERO_CONFIDENCE");
+        if("CONFLICTED".equals(id.identityStatus)&&safe(id.numberConflicts).isEmpty()&&safe(id.catalogConflicts).isEmpty())critical.add("CONFLICTED_WITHOUT_HARD_ANCHOR_CONFLICT");
 
         boolean technical="TECHNICAL_ERROR".equals(id.decision)||"VISION_TECHNICAL".equals(id.pipelineFailureDomain);
         boolean pass=critical.isEmpty();if(technical){id.identityConfirmed=false;id.marketReady=false;id.identityStatus="UNRESOLVED";id.decision="TECHNICAL_ERROR";id.overallStatus="TECHNICAL_ERROR";id.nextPhotoRequest="";id.requestedPhotoReason="";id.finalDecisionReason="technical_failure_preserved; stage="+safe(stage);}
@@ -74,7 +85,8 @@ final class FinalIdentityDecisionEngine {
         if("CATALOG_MATCHED".equals(id.identifierStatus))id.identifierConfidence=Math.max(id.identifierConfidence,id.webContributionScore);
         else if("PHYSICALLY_VERIFIED".equals(id.identifierStatus))id.identifierConfidence=Math.max(id.identifierConfidence,Math.min(98,id.mainIdentityConfidence+4));
         else if(id.identifierStatus.endsWith("CANDIDATE"))id.identifierConfidence=Math.min(69,Math.max(35,id.identifierConfidence));else id.identifierConfidence=0;
-        if("CATALOG_REPORTED".equals(id.variantStatus))id.variantConfidence=Math.max(id.variantConfidence,Math.min(85,(id.webContributionScore*3+id.mainIdentityConfidence)/4));
+        if("VARIANT_CONFIRMED".equals(id.variantStatus))id.variantConfidence=Math.max(id.variantConfidence,Math.min(97,(id.webContributionScore+id.mainIdentityConfidence)/2));
+        else if("CATALOG_REPORTED".equals(id.variantStatus))id.variantConfidence=Math.max(id.variantConfidence,Math.min(85,(id.webContributionScore*3+id.mainIdentityConfidence)/4));
         else if("NOT_OBSERVED".equals(id.variantStatus))id.variantConfidence=0;
         id.postWebConflicts=id.catalogConflicts;id.finalState=new FinalIdentityState(id,title,pass&&id.identityConfirmed);return id.finalState;}
 
@@ -87,7 +99,7 @@ final class FinalIdentityDecisionEngine {
     private static String displayFamily(Models.Identification id,IdentityProfileEngine.PhotoTuple t){return id.catalogVerified&&!safe(id.sourceConfirmedProductLine).isEmpty()?id.sourceConfirmedProductLine:t.family;}
     private static String displayModel(Models.Identification id,IdentityProfileEngine.PhotoTuple t,IdentityProfileEngine.Profile p){String n=id.catalogVerified?id.sourceConfirmedCatalogNumber:t.verifiedCardNumber;return join(t.subject,n.isEmpty()?"":"#"+n);}
     private static int exactConfidence(Models.Identification id){int c=id.mainIdentityConfidence;if("CATALOG_MATCHED".equals(id.exactIdentityStatus))c=(c*65+id.webContributionScore*35)/100;
-        else c=Math.min(c,69);if("NOT_EVALUATED".equals(id.catalogCompatibilityStatus)||"NOT_EXECUTED".equals(id.disproofStatus))c=Math.min(c,69);if("FAIL".equals(id.consistencyInvariants))c=Math.min(c,39);return clamp(c);}
+        else c=Math.min(c,69);if("NOT_EVALUATED".equals(id.catalogCompatibilityStatus)||"NOT_EXECUTED".equals(id.disproofStatus))c=Math.min(c,69);return clamp(c);}
     private static void addWarnings(Models.Identification id){String rejected=safe(id.factsRejectedWithReason).toLowerCase(Locale.ROOT);if(rejected.contains("position")||rejected.contains("height")||rejected.contains("weight")||rejected.contains("birth"))id.consistencyInvariantWarnings.add("OPTIONAL_BIOGRAPHIC_FIELD_NOT_USED");
         IdentityProfileEngine.PhotoTuple t=IdentityProfileEngine.tuple(id);if(safe(t.barcode).isEmpty())id.consistencyInvariantWarnings.add("BARCODE_NOT_OBSERVED");if(ProfileQueryBuilder.isSealed(id)&&safe(t.format).isEmpty())id.consistencyInvariantWarnings.add("COMMERCIAL_FORMAT_UNRESOLVED");}
     private static boolean hasOcrNumber(NormalizedPhotoIdentity n){for(NormalizedPhotoIdentity.Fact f:n.facts(CanonicalFieldKey.CARD_NUMBER_CANDIDATE))if(f.quality==NormalizedPhotoIdentity.Quality.LOCAL_OCR_HINT)return true;for(NormalizedPhotoIdentity.Fact f:n.facts(CanonicalFieldKey.COLLECTOR_NUMBER_CANDIDATE))if(f.quality==NormalizedPhotoIdentity.Quality.LOCAL_OCR_HINT)return true;return false;}
@@ -104,5 +116,6 @@ final class FinalIdentityDecisionEngine {
     private static String first(String...x){for(String v:x)if(!safe(v).isEmpty())return safe(v);return "";}
     private static String hierarchy(String...x){String out="";for(String v:x)if(!safe(v).isEmpty()&&!canon(out).contains(canon(v)))out=join(out,v);return out;}
     private static boolean startsWith(String text,String prefix){String t=canon(text),p=canon(prefix);return !p.isEmpty()&&(t.equals(p)||t.startsWith(p+" "));}
+    private static boolean variantCompatible(String a,String b){String x=canon(a).replace("HOLOGRAPHIC","HOLO"),y=canon(b).replace("HOLOGRAPHIC","HOLO");return !x.isEmpty()&&!y.isEmpty()&&(x.contains(y)||y.contains(x)||x.contains("HOLO")&&y.contains("HOLO"));}
     private static String safe(String x){return x==null?"":x.trim();}
 }
