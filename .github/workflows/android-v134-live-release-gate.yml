@@ -32,7 +32,7 @@ jobs:
       - uses: android-actions/setup-android@v3
 
       - name: Install declared Android SDK
-        run: sdkmanager 'platforms;android-36' 'build-tools;36.0.0' 'platform-tools' 'emulator' 'system-images;android-35;google_apis;x86_64'
+        run: sdkmanager 'platforms;android-36' 'build-tools;36.0.0' 'platform-tools' 'emulator' 'system-images;android-30;google_apis;x86_64'
 
       - name: Check live credentials
         id: live
@@ -73,14 +73,24 @@ jobs:
           grep -q "package: name='$PACKAGE' versionCode='138' versionName='1.34-evidence-integrity'" artifact/apk-analyzer-report.txt
           ! unzip -l artifact/FlipCheck-v1.34.apk | grep -Eq 'topps-front|kobe-(front|back)|vileplume-front|philips-front'
 
+      - name: Enable runner virtualization
+        run: |
+          test -e /dev/kvm
+          sudo chmod 666 /dev/kvm
+          "$ANDROID_HOME/emulator/emulator" -accel-check
+
       - name: Install exact APK and execute 12 uncached live runs
+        timeout-minutes: 65
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 35
+          api-level: 30
           target: google_apis
           arch: x86_64
-          profile: pixel_7
-          emulator-options: -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect -no-snapshot
+          profile: pixel_2
+          ram-size: 2048M
+          cores: 2
+          emulator-boot-timeout: 600
+          emulator-options: -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect -no-snapshot -no-snapshot-save
           disable-animations: true
           script: |
             set -euo pipefail
