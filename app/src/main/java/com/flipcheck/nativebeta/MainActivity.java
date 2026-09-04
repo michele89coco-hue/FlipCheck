@@ -1106,8 +1106,8 @@ public class MainActivity extends Activity {
     }
 
     static void lambda$renderResult$19(LinearLayout technical, Button toggle, View v) {
-        boolean show = technical.getVisibility() != 0;
-        technical.setVisibility(show ? 0 : 8);
+        boolean show = technical.getVisibility() != View.VISIBLE;
+        technical.setVisibility(show ? View.VISIBLE : View.GONE);
         toggle.setText(show ? "NASCONDI DETTAGLI TECNICI" : "MOSTRA DETTAGLI TECNICI");
     }
 
