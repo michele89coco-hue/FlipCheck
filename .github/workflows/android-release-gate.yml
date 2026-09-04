@@ -6,7 +6,7 @@ on:
       - codex/v1.31-universal-evidence-closure-recovery
   pull_request:
     branches:
-      - codex/v1.29-universal-catalog-evidence
+      - codex/v1.31-universal-evidence-closure-recovery
   workflow_dispatch:
 
 permissions:
