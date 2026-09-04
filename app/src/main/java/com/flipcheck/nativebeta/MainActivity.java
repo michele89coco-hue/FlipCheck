@@ -21,6 +21,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.text.InputType;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -182,7 +184,7 @@ public class MainActivity extends Activity {
         settings.addView(text("Impostazioni Beta", 17, TEXT, true));
         this.apiKeyInput = input("OpenAI API key");
         this.apiKeyInput.setContentDescription("flipcheck-api-key");
-        this.apiKeyInput.setInputType(129);
+        this.apiKeyInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         settings.addView(this.apiKeyInput, match());
         Button save = secondary("SALVA CHIAVE");
         save.setContentDescription("flipcheck-save-key");
@@ -249,7 +251,7 @@ public class MainActivity extends Activity {
         linearLayoutVertical.addView(this.statusView, match());
         this.resultPanel = vertical();
         this.resultPanel.setContentDescription("flipcheck-result");
-        this.resultPanel.setVisibility(8);
+        this.resultPanel.setVisibility(View.GONE);
         linearLayoutVertical.addView(this.resultPanel, match());
         linearLayoutVertical.addView(space(14));
         LinearLayout marketPreview = panel();
@@ -285,7 +287,7 @@ public class MainActivity extends Activity {
         i.addCategory("android.intent.category.OPENABLE");
         i.setType("image/*");
         i.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        i.addFlags(65);
+        i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
         startActivityForResult(i, PICK_IMAGE);
     }
 
@@ -361,7 +363,7 @@ public class MainActivity extends Activity {
             addGalleryUri(data.getData());
         }
         renderPhotosSafely();
-        this.resultPanel.setVisibility(8);
+        this.resultPanel.setVisibility(View.GONE);
         int added = this.images.size() - before;
         setStatus(added == 0 ? "Nessuna nuova foto aggiunta."
                 : this.images.size() == 1 ? "Foto acquisita. Puoi identificare."
@@ -531,7 +533,7 @@ public class MainActivity extends Activity {
             this.images.add(captured);
         }
         renderPhotosSafely();
-        this.resultPanel.setVisibility(8);
+        this.resultPanel.setVisibility(View.GONE);
         setStatus(this.images.size() == 1 ? "Foto scattata e caricata. Puoi identificare."
                 : this.images.size() + " foto acquisite. Puoi identificare.", MINT);
     }
@@ -583,7 +585,7 @@ public class MainActivity extends Activity {
             this.detailsInput.setText("");
         }
         if (this.resultPanel != null) {
-            this.resultPanel.setVisibility(8);
+            this.resultPanel.setVisibility(View.GONE);
         }
         AnalysisResultStore.reset(this);
     }
@@ -656,7 +658,7 @@ public class MainActivity extends Activity {
             setStatus("Pronto per una nuova identificazione.", MUTED);
         }
         renderPhotosSafely();
-        this.resultPanel.setVisibility(8);
+        this.resultPanel.setVisibility(View.GONE);
     }
 
     private void startIdentification() {
@@ -673,7 +675,7 @@ public class MainActivity extends Activity {
         this.identifyButton.setEnabled(false);
         this.addPhotoButton.setEnabled(false);
         this.cameraButton.setEnabled(false);
-        this.resultPanel.setVisibility(8);
+        this.resultPanel.setVisibility(View.GONE);
         setStatus("Analizzo le foto...", MINT);
         ArrayList<Uri> snapshot = new ArrayList<>(this.images);
         String details = this.detailsInput.getText().toString().trim();
@@ -852,7 +854,7 @@ public class MainActivity extends Activity {
 
     private void renderResult(final Models.Identification id, final Models.Usage usage) {
         this.resultPanel.removeAllViews();
-        this.resultPanel.setVisibility(0);
+        this.resultPanel.setVisibility(View.VISIBLE);
         LinearLayout p = panel();
         p.addView(text("Risultato", 14, MUTED, false));
         p.addView(text(EvidencePolicy.publicTitle(id), 26, TEXT, true));
@@ -1057,7 +1059,7 @@ public class MainActivity extends Activity {
             }
         }
         final LinearLayout technical = buildTechnicalDetails(id, usage);
-        technical.setVisibility(8);
+        technical.setVisibility(View.GONE);
         final Button toggle = secondary("MOSTRA DETTAGLI TECNICI");
         toggle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1654,14 +1656,14 @@ public class MainActivity extends Activity {
 
     private LinearLayout vertical() {
         LinearLayout x = new LinearLayout(this);
-        x.setOrientation(1);
+        x.setOrientation(LinearLayout.VERTICAL);
         return x;
     }
 
     private LinearLayout horizontal() {
         LinearLayout x = new LinearLayout(this);
-        x.setOrientation(0);
-        x.setGravity(16);
+        x.setOrientation(LinearLayout.HORIZONTAL);
+        x.setGravity(Gravity.CENTER_VERTICAL);
         return x;
     }
 
