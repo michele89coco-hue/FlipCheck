@@ -766,7 +766,7 @@ public class MainActivity extends Activity {
     private void showIdentificationResult(Models.Identification id, Models.Usage usage) {
         renderResult(id, usage);
         ClarificationPlanner.Plan quick = ClarificationPlanner.plan(id);
-        if (id.marketReady) {
+        if (id.identityConfirmed) {
             setStatus("Identificazione verificata.", MINT);
             return;
         }
@@ -857,7 +857,7 @@ public class MainActivity extends Activity {
         p.addView(text("Risultato", 14, MUTED, false));
         p.addView(text(EvidencePolicy.publicTitle(id), 26, TEXT, true));
         String state = EvidencePolicy.publicStatus(id);
-        TextView chip = text(state, 13, id.marketReady ? MINT : WARN, true);
+        TextView chip = text(state, 13, id.identityConfirmed ? MINT : WARN, true);
         chip.setPadding(0, dp(6), 0, dp(8));
         p.addView(chip);
         int confidence = EvidencePolicy.publicConfidence(id);
@@ -873,7 +873,9 @@ public class MainActivity extends Activity {
         if(!valueOrEmpty(id.exactIdentityStatus).isEmpty()&&!"CONFIRMED".equals(id.exactIdentityStatus))p.addView(line("Identità esatta",humanState(id.exactIdentityStatus)));
         if(!valueOrEmpty(id.variantStatus).isEmpty()&&!"NOT_OBSERVED".equals(id.variantStatus))p.addView(line("Variante fisica",humanState(id.variantStatus)));
         if(!valueOrEmpty(id.physicalCardNumber).isEmpty())p.addView(line(id.physicalCollectorNumber.isEmpty()?"Numero carta":"Collector number",
-                id.physicalCardNumber+(PhysicalCardNumberPolicy.verifiedNumber(id)?" · verificato":" · da verificare")));
+                id.physicalCardNumber+((FinalStateReducerV2.VERSION.equals(id.finalStateReducerVersion)
+                        &&("PHYSICALLY_VERIFIED".equals(id.identifierStatus)||"PHOTO_PLUS_CATALOG".equals(id.identifierStatus)))
+                        ||PhysicalCardNumberPolicy.verifiedNumber(id)?" · verificato":" · da verificare")));
         if(!valueOrEmpty(id.sourceConfirmedCatalogNumber).isEmpty()&&id.catalogVerified){
             String provenance="PHOTO_PLUS_CATALOG".equals(id.combinedVerification)?" · verificato foto + catalogo":" · verificato catalogo";
             p.addView(line("Numero catalogo",id.sourceConfirmedCatalogNumber+provenance));
@@ -1133,6 +1135,17 @@ public class MainActivity extends Activity {
         }
         panel.addView(text("visionCalls="+usage.visionCalls+" · webCalls="+usage.webCalls,
                 12,MINT,true));
+        if(FinalStateReducerV2.VERSION.equals(id.finalStateReducerVersion)){
+            panel.addView(text("engine=UniversalIdentityEngineV2 · profile="+valueOrEmpty(id.v2Profile)
+                    +" · reducer="+valueOrEmpty(id.finalStateReducerVersion),12,MINT,true));
+            panel.addView(text("observed="+clip(valueOrEmpty(id.v2ObservedFacts),700),11,MUTED,false));
+            panel.addView(text("inferred="+clip(valueOrEmpty(id.v2InferredFacts),350),11,MUTED,false));
+            panel.addView(text("retrieved="+clip(valueOrEmpty(id.v2RetrievedFacts),700),11,MUTED,false));
+            panel.addView(text("candidates="+clip(valueOrEmpty(id.v2CandidateTrace),700),11,MUTED,false));
+            panel.addView(text("real_conflicts="+clip(valueOrEmpty(id.v2TrueConflicts),500),11,id.v2TrueConflicts.isEmpty()?MUTED:WARN,false));
+            panel.addView(text("recovery="+valueOrEmpty(id.v2RecoveryTrace)
+                    +" · calls="+valueOrEmpty(id.v2CallReasons),11,MUTED,false));
+        }
         panel.addView(text("pipeline_failure_domain="+valueOrEmpty(id.pipelineFailureDomain)
                 +" · vision_finish_reason="+valueOrEmpty(id.visionFinishReason)
                 +" · vision_response_status="+valueOrEmpty(id.visionResponseStatus),12,MUTED,false));

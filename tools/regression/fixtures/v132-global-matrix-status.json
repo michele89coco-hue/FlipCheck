@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "requirement": "real_object_images_only",
+  "target_counts": {
+    "tcg_card": 10,
+    "sports_card": 10,
+    "sealed_trading_card_product": 5,
+    "television_remote_control": 5,
+    "consumer_electronics": 5,
+    "barcode_product": 5,
+    "generic_object": 5
+  },
+  "available_unique_objects": [
+    {
+      "case": "topps_sealed_box",
+      "profile": "sealed_trading_card_product",
+      "images": ["v132-real-images/topps-front.jpg"],
+      "replay_status": "PASS"
+    },
+    {
+      "case": "kobe_sports_card",
+      "profile": "sports_card",
+      "images": ["v132-real-images/kobe-front.jpg", "v132-real-images/kobe-back.jpg"],
+      "replay_status": "PASS"
+    },
+    {
+      "case": "vileplume_tcg_card",
+      "profile": "tcg_card",
+      "images": ["v132-real-images/vileplume-front.jpg"],
+      "replay_status": "PASS"
+    },
+    {
+      "case": "philips_tv_remote",
+      "profile": "television_remote_control",
+      "images": ["v132-real-images/philips-front.jpg"],
+      "replay_status": "PASS"
+    }
+  ],
+  "matrix_status": "INCOMPLETE_REAL_FIXTURES_REQUIRED",
+  "missing_unique_object_count": 41,
+  "note": "Only the five original files supplied for the four primary regressions are available. UI screenshots, duplicated images, synthetic JSON, and unrelated files are not counted as real-object fixtures."
+}

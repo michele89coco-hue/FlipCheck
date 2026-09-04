@@ -1,0 +1,111 @@
+{
+  "topps": {
+    "primary": {
+      "content_sufficient": true,
+      "category": "sealed_trading_card_product",
+      "views": ["front"],
+      "facts": [
+        {"key":"manufacturer","value":"Topps","image":0,"side":"front","location":"center lower Topps Chrome logo","role":"brand_logo","confidence":99},
+        {"key":"product_line","value":"Topps Chrome Basketball Update Series","image":0,"side":"front","location":"center product title panel","role":"product_line","confidence":99},
+        {"key":"release_year","value":"2025-26","image":0,"side":"front","location":"left vertical season text","role":"product_release_year","confidence":98},
+        {"key":"configuration","value":"1 autograph card in every box","image":0,"side":"front","location":"bottom configuration banner","role":"sealed_configuration","confidence":99},
+        {"key":"product_type","value":"sealed trading-card box","image":0,"side":"front","location":"complete sealed package bounds","role":"object_type","confidence":99}
+      ],
+      "identity_hint":"2025-26 basketball chrome update sealed box",
+      "candidates":[
+        {"brand":"Upper Deck","product_line":"Chrome Series basketball","subject":"","year":"2025-26","card_number":"","language":"","edition":"","finish":"","format":"","material_variant_key":"","materially_distinct":false,"confidence":99}
+      ],
+      "missing_discriminators":["commercial_format","sku"]
+    },
+    "web": {
+      "queries":["2025-26 Topps Chrome Basketball Update Series 1 autograph every box"],
+      "retrieval_reason":"manufacturer and product title matched",
+      "candidates":[
+        {"brand":"Topps","product_line":"Topps Chrome Basketball Update Series","set_name":"","model":"","category":"sealed trading-card product","year":"2025-26","subject":"","card_number":"","language":"","edition":"","finish":"","format":"","configuration":"1 autograph card in every box","source_url":"https://www.topps.com/example-update","source_authority":"official manufacturer","source_quality":96,"exact_reference":true,"disproof_passed":true,"layout_match":94,"matched_observed_fields":["manufacturer","productLine","productReleaseYear","configuration"],"contradicted_observed_fields":[],"unknown_fields":["commercialFormat","sku"]},
+        {"brand":"Upper Deck","product_line":"Chrome Series basketball","set_name":"","model":"","category":"sealed trading-card product","year":"2025-26","subject":"","card_number":"","language":"","edition":"","finish":"","format":"","configuration":"1 autograph card in every 3 boxes","source_url":"https://example.invalid/upper-deck","source_authority":"retailer","source_quality":45,"exact_reference":false,"disproof_passed":false,"layout_match":20,"matched_observed_fields":[],"contradicted_observed_fields":["manufacturer","productLine","configuration"],"unknown_fields":["sku"]}
+      ]
+    }
+  },
+  "kobe": {
+    "primary": {
+      "content_sufficient": true,
+      "category": "sports_card",
+      "views": ["front","back"],
+      "facts": [
+        {"key":"manufacturer","value":"SkyBox","image":1,"side":"back","location":"bottom center SkyBox wordmark","role":"manufacturer_text","confidence":96},
+        {"key":"product_line","value":"Metal Universe","image":0,"side":"front","location":"lower right Metal Universe emblem","role":"product_line","confidence":98},
+        {"key":"athlete","value":"Kobe Bryant","image":0,"side":"front","location":"lower left player name","role":"athlete_name","confidence":99},
+        {"key":"release_year","value":"1997-98","image":0,"side":"front","location":"inside Metal Universe emblem","role":"product_release_year","confidence":96},
+        {"key":"physical_card_number","value":"81","image":1,"side":"back","location":"upper left purple number circle","role":"card_number","confidence":99},
+        {"key":"season","value":"1996-97","image":1,"side":"back","location":"bottom player statistics table row","role":"statistics_season","confidence":99},
+        {"key":"graphic_number","value":"8","image":0,"side":"front","location":"player jersey chest","role":"jersey_number","confidence":98}
+      ],
+      "identity_hint":"SkyBox Metal Universe Kobe Bryant",
+      "candidates":[{"brand":"SkyBox","product_line":"Metal Universe","subject":"Kobe Bryant","year":"","card_number":"","language":"","edition":"","finish":"","format":"","material_variant_key":"","materially_distinct":false,"confidence":96}],
+      "missing_discriminators":[]
+    },
+    "web": {
+      "queries":["1997-98 SkyBox Metal Universe Kobe Bryant 81 checklist"],
+      "retrieval_reason":"checklist tuple match",
+      "candidates":[{"brand":"SkyBox","product_line":"Metal Universe","set_name":"","model":"","category":"sports card","year":"1997-98","subject":"Kobe Bryant","card_number":"81","language":"English","edition":"","finish":"","format":"","configuration":"","source_url":"https://catalog.example/metal-universe-81","source_authority":"specialist checklist","source_quality":94,"exact_reference":true,"disproof_passed":true,"layout_match":96,"matched_observed_fields":["manufacturer","productLine","productReleaseYear","athlete","physicalCardNumber"],"contradicted_observed_fields":[],"unknown_fields":["parallel"]}]
+    }
+  },
+  "vileplume": {
+    "primary": {
+      "content_sufficient": true,
+      "category": "tcg_card",
+      "views": ["front"],
+      "facts": [
+        {"key":"brand","value":"Pokémon","image":0,"side":"front","location":"rules text Pokemon wording","role":"game_brand","confidence":95},
+        {"key":"set_name","value":"Jungle","image":0,"side":"front","location":"right artwork leaf set symbol","role":"set_symbol","confidence":96},
+        {"key":"card_name","value":"Vileplume","image":0,"side":"front","location":"top title line","role":"card_name","confidence":99},
+        {"key":"collector_number","value":"I5/64","image":0,"side":"front","location":"bottom right collector number","role":"collector_number","confidence":91},
+        {"key":"collector_number","value":"15/64","image":0,"side":"front","location":"enlarged bottom right collector crop","role":"collector_number","confidence":99},
+        {"key":"first_edition_mark","value":"PRESENT","image":0,"side":"front","location":"left below illustration Edition 1 logo","role":"edition_mark","confidence":99},
+        {"key":"edition","value":"1st Edition","image":0,"side":"front","location":"left below illustration Edition 1 logo","role":"edition","confidence":99},
+        {"key":"finish","value":"Holographic foil","image":0,"side":"front","location":"illustration foil star field","role":"finish","confidence":98},
+        {"key":"language","value":"English","image":0,"side":"front","location":"complete front printed text","role":"language","confidence":99},
+        {"key":"hp","value":"80","image":0,"side":"front","location":"top right HP field","role":"hp","confidence":99},
+        {"key":"copyright_year","value":"1999","image":0,"side":"front","location":"bottom copyright line","role":"copyright_year","confidence":99},
+        {"key":"front_complete","value":"true","image":0,"side":"front","location":"complete card boundary including all edges","role":"complete_front","confidence":99}
+      ],
+      "identity_hint":"Pokémon Jungle Vileplume 15/64",
+      "candidates":[{"brand":"Pokémon","product_line":"Jungle","subject":"Vileplume","year":"1999","card_number":"I5/64","language":"English","edition":"FIRST_EDITION","finish":"Holo","format":"","material_variant_key":"FIRST_EDITION_HOLO","materially_distinct":true,"confidence":99}],
+      "missing_discriminators":[]
+    },
+    "web": {
+      "queries":["Pokemon Jungle Vileplume 15/64 English 1st Edition holo"],
+      "retrieval_reason":"TCG checklist tuple",
+      "candidates":[{"brand":"Pokémon","product_line":"","set_name":"Jungle","model":"","category":"TCG card","year":"1999","subject":"Vileplume","card_number":"15/64","language":"English","edition":"1st Edition or Unlimited","finish":"Holo","format":"","configuration":"","source_url":"https://catalog.example/jungle-15","source_authority":"TCG checklist","source_quality":92,"exact_reference":true,"disproof_passed":true,"layout_match":98,"matched_observed_fields":["setName","cardName","collectorNumber","language","finish"],"contradicted_observed_fields":[],"unknown_fields":["edition"]}]
+    }
+  },
+  "philips": {
+    "primary": {
+      "content_sufficient": true,
+      "category": "television_remote_control",
+      "views": ["front"],
+      "facts": [
+        {"key":"product_type","value":"television remote control","image":0,"side":"front","location":"complete elongated remote body","role":"object_type","confidence":99},
+        {"key":"control_layout","value":"diamond OK navigation pad with Back and Home below","image":0,"side":"front","location":"upper-middle navigation cluster","role":"control_layout","confidence":98},
+        {"key":"shortcut_buttons","value":"Netflix, Sources, Info, Options, Subtitle, Text","image":0,"side":"front","location":"front button labels across upper and middle rows","role":"stable_printed_controls","confidence":99},
+        {"key":"numeric_keypad","value":"0-9 keypad below volume and channel controls","image":0,"side":"front","location":"lower-middle numeric grid","role":"numeric_keypad","confidence":99},
+        {"key":"voice_control","value":"Voice button with four-color dots","image":0,"side":"front","location":"upper button row center","role":"voice_control","confidence":96},
+        {"key":"navigation_layout","value":"Sources left and TV Exit right above Info and Options","image":0,"side":"front","location":"upper navigation rows","role":"navigation_layout","confidence":98}
+      ],
+      "identity_hint":"television remote control",
+      "candidates":[
+        {"brand":"LG","product_line":"TV remote","subject":"","year":"","card_number":"","language":"","edition":"","finish":"","format":"","material_variant_key":"","materially_distinct":false,"confidence":82},
+        {"brand":"Philips","product_line":"TV remote","subject":"","year":"","card_number":"","language":"","edition":"","finish":"","format":"","material_variant_key":"","materially_distinct":false,"confidence":76}
+      ],
+      "missing_discriminators":["brand","model"]
+    },
+    "web": {
+      "queries":["television remote Netflix Sources Info Back Home Text Subtitle button layout Philips"],
+      "retrieval_reason":"distinctive control topology match",
+      "candidates":[
+        {"brand":"Philips","product_line":"Philips TV remote","set_name":"","model":"","category":"television remote control","year":"","subject":"","card_number":"","language":"","edition":"","finish":"","format":"","configuration":"","source_url":"https://www.philips.example/support/remote-layout","source_authority":"manufacturer support","source_quality":94,"exact_reference":false,"disproof_passed":true,"layout_match":98,"matched_observed_fields":["controlLayout","shortcutButtons","numericKeypad","navigationLayout","voiceControl"],"contradicted_observed_fields":[],"unknown_fields":["model"]},
+        {"brand":"LG","product_line":"LG TV remote","set_name":"","model":"","category":"television remote control","year":"","subject":"","card_number":"","language":"","edition":"","finish":"","format":"","configuration":"","source_url":"https://www.lg.example/remote","source_authority":"manufacturer support","source_quality":85,"exact_reference":false,"disproof_passed":false,"layout_match":31,"matched_observed_fields":["Netflix"],"contradicted_observed_fields":["controlLayout","navigationLayout","shortcutButtons"],"unknown_fields":["model"]}
+      ]
+    }
+  }
+}

@@ -93,7 +93,7 @@ public final class AnalysisForegroundService extends Service {
             UniversalRecognitionLadder.apply(id);
             EvidencePolicy.apply(id);
             AnalysisResultStore.saveSuccess(this, id, usage);
-            notifyProgress(id.marketReady ? "Identificazione verificata" : "Analisi completata");
+            notifyProgress(id.identityConfirmed ? "Identificazione verificata" : "Analisi completata");
         } catch (Throwable error) {
             String message = error.getMessage();
             if (message == null || message.trim().isEmpty()) {

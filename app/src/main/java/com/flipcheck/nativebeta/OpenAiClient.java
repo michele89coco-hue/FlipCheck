@@ -69,6 +69,13 @@ class OpenAiClient {
         return observeCompact(imageDataUrls, prompt, 2300, true);
     }
 
+    /** One discriminator-only visual pass over profile-specific crops. */
+    Response observeFocusedV2(List<String> imageDataUrls, String prompt) throws Exception {
+        return observeCompact(imageDataUrls, "FOCUSED DISCRIMINATOR ONLY. Do not restate the whole identity. "
+                +"Transcribe a value as a fact only when you can provide its exact supplied image/crop and location. "
+                +"A brand guessed from shape belongs only in candidates. "+prompt, 900, false);
+    }
+
     private Response observeCompact(List<String> imageDataUrls, String prompt,
                                     int maxOutputTokens, boolean retry) throws Exception {
         JSONArray content = new JSONArray().put(new JSONObject()
@@ -695,6 +702,57 @@ class OpenAiClient {
                 .put("text", new JSONObject().put("format", webFormat(s)).put("verbosity", "low"))
                 .put("input", policy + "\n\n" + prompt);
         return call(body, false, true);
+    }
+
+    /** Identity-only retrieval for UniversalIdentityEngineV2; never requests prices. */
+    Response identityWebSearchV2(String prompt) throws Exception {
+        String policy="FLIPCHECK v1.32 IDENTITY RETRIEVAL ONLY. Use exactly one web_search call. "
+                +"Search official manufacturers/publishers, authoritative checklists and structured product pages before retailers. "
+                +"Do not search prices, sold listings or marketplace comparables. OBSERVED means localized photo evidence; INFERRED values are query leads only. "
+                +"An inferred brand may not veto a retrieved candidate. Return several same-level candidates, their source URL and every matched or contradicted observed field. "
+                +"Ambiguous text is unknown, not a conflict. Actively disprove each leading candidate. JSON only.\n\n";
+        JSONObject body=new JSONObject().put("model",MODEL).put("store",false)
+                .put("max_output_tokens",1500).put("reasoning",new JSONObject().put("effort","low"))
+                .put("max_tool_calls",1).put("tools",new JSONArray().put(new JSONObject()
+                        .put("type","web_search").put("search_context_size","medium")))
+                .put("include",new JSONArray().put("web_search_call.action.sources").put("web_search_call.results"))
+                .put("text",new JSONObject().put("format",identityWebFormatV2()).put("verbosity","low"))
+                .put("input",policy+prompt);
+        return call(body,false,true);
+    }
+
+    private static JSONObject identityWebFormatV2() throws Exception {
+        JSONObject candidateProps=new JSONObject()
+                .put("brand",new JSONObject().put("type","string"))
+                .put("product_line",new JSONObject().put("type","string"))
+                .put("set_name",new JSONObject().put("type","string"))
+                .put("model",new JSONObject().put("type","string"))
+                .put("category",new JSONObject().put("type","string"))
+                .put("year",new JSONObject().put("type","string"))
+                .put("subject",new JSONObject().put("type","string"))
+                .put("card_number",new JSONObject().put("type","string"))
+                .put("language",new JSONObject().put("type","string"))
+                .put("edition",new JSONObject().put("type","string"))
+                .put("finish",new JSONObject().put("type","string"))
+                .put("format",new JSONObject().put("type","string"))
+                .put("configuration",new JSONObject().put("type","string"))
+                .put("product_code",new JSONObject().put("type","string"))
+                .put("barcode",new JSONObject().put("type","string"))
+                .put("source_url",new JSONObject().put("type","string"))
+                .put("source_authority",new JSONObject().put("type","string"))
+                .put("source_quality",integerSchema(0,100))
+                .put("exact_reference",new JSONObject().put("type","boolean"))
+                .put("disproof_passed",new JSONObject().put("type","boolean"))
+                .put("layout_match",integerSchema(0,100))
+                .put("matched_observed_fields",stringArraySchema(16))
+                .put("contradicted_observed_fields",stringArraySchema(12))
+                .put("unknown_fields",stringArraySchema(12));
+        JSONObject candidate=strictObject(candidateProps,"brand","product_line","set_name","model","category","year","subject","card_number","language","edition","finish","format","configuration","product_code","barcode","source_url","source_authority","source_quality","exact_reference","disproof_passed","layout_match","matched_observed_fields","contradicted_observed_fields","unknown_fields");
+        JSONObject props=new JSONObject()
+                .put("queries",stringArraySchema(4))
+                .put("candidates",new JSONObject().put("type","array").put("maxItems",6).put("items",candidate))
+                .put("retrieval_reason",new JSONObject().put("type","string"));
+        return jsonFormat("flipcheck_identity_retrieval_v132",strictObject(props,"queries","candidates","retrieval_reason"));
     }
 
     private static JSONObject webFormat(String stage) throws Exception {

@@ -286,6 +286,7 @@ final class Models {
         String title = "";
         String category = "";
         String categoryKey = "other";
+        String game = "";
         String brand = "";
         String observedBrand = "";
         String inferredBrand = "";
@@ -454,6 +455,18 @@ final class Models {
         String postWebInvariants = "NOT_RUN";
         String finalDecisionReason = "";
         String additionalVisionReason = "";
+        String finalStateReducerVersion = "legacy";
+        String v2Profile = "";
+        String v2ObservedFacts = "";
+        String v2InferredFacts = "";
+        String v2RetrievedFacts = "";
+        String v2DiscardedFacts = "";
+        String v2TrueConflicts = "";
+        String v2CandidateTrace = "";
+        String v2RecoveryTrace = "";
+        String v2ImagePreparationTrace = "";
+        String v2CallReasons = "";
+        int marketCalls;
         transient NormalizedPhotoIdentity normalizedPhotoIdentity;
         String normalizationStage = "not_run";
         String canonicalProfile = "";
@@ -508,6 +521,7 @@ final class Models {
         final List<String> photoIdentityFields = new ArrayList();
         final List<String> featuredSubjects = new ArrayList();
         final List<EvidenceFact> evidenceLedger = new ArrayList();
+        final List<EvidenceAtom> evidenceAtomsV2 = new ArrayList();
         final List<Conflict> documentedConflicts = new ArrayList();
         final List<String> fieldTransitions = new ArrayList();
         final List<MarketComparable> marketComparables = new ArrayList();

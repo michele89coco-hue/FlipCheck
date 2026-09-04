@@ -27,6 +27,9 @@ final class IdentificationEngine {
 
     /* JADX WARN: Multi-variable type inference failed */
     static Models.Identification identify(Models.LocalScan localScan, List<String> list, String str, OpenAiClient openAiClient, Models.Usage usage) throws Exception {
+        if (UniversalIdentityEngineV2.enabled()) {
+            return UniversalIdentityEngineV2.identify(localScan, list, str, openAiClient, usage);
+        }
         if (IdentificationPipelineV082.enabled()) {
             return IdentificationPipelineV082.identify(localScan, list, str, openAiClient, usage);
         }

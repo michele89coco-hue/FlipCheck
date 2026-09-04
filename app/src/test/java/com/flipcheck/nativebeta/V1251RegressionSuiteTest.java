@@ -2,7 +2,7 @@ package com.flipcheck.nativebeta;
 
 import org.junit.Test;
 
-/** Runs all 126 preserved and universal catalog-evidence regressions. */
+/** Runs every preserved regression plus the UniversalIdentityEngineV2 suite. */
 public final class V1251RegressionSuiteTest {
     @Test
     public void allDeclaredRegressionsPass() throws Exception {
@@ -16,6 +16,7 @@ public final class V1251RegressionSuiteTest {
         run("v129",()->V129UniversalCatalogEvidenceRegressionTest.main(new String[0]));
         run("v130",()->V130TcgPhysicalEditionResolutionRegressionTest.main(new String[0]));
         run("v131",()->V131UniversalEvidenceClosureRecoveryRegressionTest.main(new String[0]));
+        run("v132",()->V132UniversalIdentityEngineV2RegressionTest.main(new String[0]));
     }
     private static void run(String name,Checked task)throws Exception{try{task.run();}catch(Throwable t){
         System.err.println("REGRESSION_SUITE_FAILED="+name+"; reason="+t.getMessage());

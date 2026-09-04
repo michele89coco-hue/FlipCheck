@@ -13,13 +13,18 @@ final class EvidencePolicy {
         if (id == null) {
             return;
         }
-        FinalIdentityDecisionEngine.freeze(id,"evidence_policy");
+        if(id.finalState==null)FinalIdentityDecisionEngine.freeze(id,"evidence_policy");
         id.observedEvidence.clear();
         id.inferredEvidence.clear();
         id.verifiedEvidence.clear();
         add(id.observedEvidence, nonEmpty(id.category) ? "Tipo osservato: " + id.category : "");
-        for(Models.EvidenceFact fact:id.evidenceLedger){
-            if(fact!=null&&"photo".equals(fact.origin))add(id.observedEvidence,EvidenceLedger.debug(fact));
+        if(FinalStateReducerV2.VERSION.equals(id.finalStateReducerVersion)){
+            for(EvidenceAtom fact:id.evidenceAtomsV2){if(fact==null)continue;String line=fact.field+"="+fact.normalizedValue+" ["+fact.epistemicLevel+", "+fact.source+(fact.boundingBox.isEmpty()?"":", "+fact.boundingBox)+"]";
+                if(fact.epistemicLevel==EvidenceAtom.EpistemicLevel.OBSERVED)add(id.observedEvidence,line);
+                else if(fact.epistemicLevel==EvidenceAtom.EpistemicLevel.INFERRED)add(id.inferredEvidence,line);
+                else add(id.verifiedEvidence,line);}
+        } else for(Models.EvidenceFact fact:id.evidenceLedger){
+            if(fact!=null&&EvidenceLedger.isPixelOrigin(fact.origin))add(id.observedEvidence,EvidenceLedger.debug(fact));
         }
         if (isObservedBrand(id)) {
             add(id.observedEvidence, "Marca letta: " + id.brand);
@@ -195,6 +200,9 @@ final class EvidencePolicy {
         if("CONFLICTED".equals(id.identityStatus)||"NUMBER_CONFLICT".equals(id.exactIdentityStatus)){
             return DocumentedConflictPolicy.hasHardConflict(id)?"CONFLICTED · IDENTIFICATORI INCOMPATIBILI":"PROBABLE · ATTRIBUTO DA VERIFICARE";
         }
+        if("TECHNICAL_FAILURE".equals(id.identityStatus))return "TECHNICAL_FAILURE · ANALISI NON COMPLETATA";
+        if("NEEDS_SPECIFIC_PHOTO".equals(id.identityStatus))return "NEEDS_SPECIFIC_PHOTO · SERVE IL DETTAGLIO INDICATO";
+        if("CONFIRMED_WITH_ATTRIBUTE_PENDING".equals(id.identityStatus))return "CONFIRMED_WITH_ATTRIBUTE_PENDING · IDENTITÀ PRINCIPALE VERIFICATA";
         boolean exact="CATALOG_MATCHED".equals(id.exactIdentityStatus)||"PHYSICALLY_VERIFIED".equals(id.exactIdentityStatus);
         if("CONFIRMED".equals(id.coreIdentityStatus)&&!exact){
             return "MAIN_IDENTITY_CONFIRMED · IDENTITÀ PRINCIPALE CONFERMATA";

@@ -1,8 +1,8 @@
-# FlipCheck v1.28
+# FlipCheck v1.32
 
-Build canonica: `versionCode=132`, `versionName=1.28-exact-catalog-resolution`.
+Build canonica: `versionCode=136`, `versionName=1.32-universal-identity-engine-v2`.
 
-La v1.28 conserva la build Android Gradle funzionante della v1.27 e completa la risoluzione catalografica con token OCR ricostruiti, gerarchia set/subset/parallel/formato, disproof esplicito e blocco dei comparabili finché identità esatta o SKU non sono verificati.
+La v1.32 instrada tutte le categorie attraverso `UniversalIdentityEngineV2`: registro immutabile delle prove, separazione `OBSERVED`/`INFERRED`/`RETRIEVED`, normalizzazione tipizzata, recupero adattivo, verifica con disproof e un solo riduttore finale gerarchico. I comparabili restano indipendenti dall'identità.
 
 This directory is the complete, self-contained Android Gradle project for
 FlipCheck. Production artifacts are built from source; no previous APK,
@@ -34,11 +34,16 @@ The Gradle Wrapper pins Gradle 9.1.0 and verifies the distribution SHA-256.
 `gradle/libs.versions.toml` centralizes Android Gradle Plugin and application
 dependency versions. D8 performs all DEX generation and multidex placement.
 
-The production identification route normalizes Vision and local OCR evidence
-into typed canonical fields before profile selection, identifier verification,
-candidate canonicalization, catalog enrichment, market filtering and UI
-rendering. A second Vision request is permitted only as recovery from a
-truncated, invalid or non-parseable technical response.
+The production identification route records Vision and local OCR output as
+immutable evidence atoms, routes a domain profile, applies field-aware
+normalization, selects the cheapest useful focused recovery, retrieves
+identity-only Web candidates, performs disproof, and reduces public state once.
+Vision hypotheses cannot masquerade as localized photo observations.
+
+Architecture and validation details:
+
+- `docs/v1.32-universal-identity-engine-v2.md`
+- `docs/v1.32-validation-status.md`
 
 ## Verification
 
