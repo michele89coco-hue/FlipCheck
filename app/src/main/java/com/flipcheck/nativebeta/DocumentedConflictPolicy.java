@@ -25,8 +25,10 @@ final class DocumentedConflictPolicy {
         }
         Models.EvidenceFact first=null,second=null;
         for(Models.EvidenceFact f:physical.values()){if(first==null)first=f;else {second=f;break;}}
-        if(first!=null&&second!=null)add(id,"collectorNumber",first,second,"HARD",true);
         Models.EvidenceFact selected=bestFor(id,physical);
+        boolean selectedCatalogAgreement=selected!=null&&catalog!=null&&canon(selected.value).equals(canon(catalog.value));
+        if(first!=null&&second!=null&&(!selectedCatalogAgreement||Math.abs(first.confidence-second.confidence)<10))
+            add(id,"collectorNumber",first,second,"HARD",selectedCatalogAgreement);
         if(selected!=null&&catalog!=null&&!canon(selected.value).equals(canon(catalog.value)))
             add(id,"collectorNumber",selected,catalog,"HARD",true);
         if(id.documentedConflicts.isEmpty()) {
