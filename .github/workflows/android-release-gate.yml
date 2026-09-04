@@ -22,7 +22,7 @@ jobs:
       FLIPCHECK_KEYSTORE_PASSWORD: ${{ secrets.FLIPCHECK_KEYSTORE_PASSWORD }}
       FLIPCHECK_KEY_ALIAS: ${{ secrets.FLIPCHECK_KEY_ALIAS }}
       FLIPCHECK_KEY_PASSWORD: ${{ secrets.FLIPCHECK_KEY_PASSWORD }}
-      # Stable repository key used by v1.28 through v1.31.
+      # Stable repository key used by v1.28 through v1.31; canonical branch build.
       EXPECTED_CERT_SHA256: d4d02478ea31cb6bd83228047e9accd7dfb191ed991a4c8e8c06a228e54614c7
     steps:
       - uses: actions/checkout@v4
