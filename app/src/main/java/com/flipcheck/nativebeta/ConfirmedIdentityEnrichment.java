@@ -89,7 +89,7 @@ final class ConfirmedIdentityEnrichment {
         id.sourceReportedVariant=clean(p.optString("source_reported_variant",p.optString("source_confirmed_variant","")));}
     private static void accept(Models.Identification id,OpenAiClient.Response response,Models.CandidateScore c,CatalogCandidateMatcher.Result result){
         id.catalogVerified=true;id.catalogCompatibilityStatus="MATCHED";id.catalogMatchedFields=result.matched.toString();id.webContributionScore=c.webScore;
-        String source=clean(c.sourceUrl),catalog=cleanCatalog(c.cardNumber),year=SeasonNormalizer.normalize(c.year),line=clean(first(c.family,c.mainSet)),variant=clean(first(c.edition,c.printing,c.parallelFamily,c.parallel));
+        String source=clean(c.sourceUrl),catalog=cleanCatalog(c.cardNumber),year=SeasonNormalizer.normalize(c.year),line=clean(first(c.family,c.mainSet)),variant=clean(first(c.edition,c.printing,c.parallelFamily,c.parallel,c.finish));
         if(!catalog.isEmpty()){id.sourceConfirmedCatalogNumber=catalog;id.sourceConfirmedCatalogNumberOrigin="web:catalog_matched";EvidenceLedger.addWebCatalogFact(id,"source_confirmed_catalog_number",catalog,c.webScore,source);}
         if(!year.isEmpty()){id.sourceConfirmedReleaseYear=year;EvidenceLedger.addWebCatalogFact(id,"source_confirmed_release_year",year,c.webScore,source);}
         if(!line.isEmpty()){id.sourceConfirmedProductLine=line;EvidenceLedger.addWebCatalogFact(id,"source_confirmed_product_line",line,c.webScore,source);}

@@ -8,7 +8,8 @@ final class PostEnrichmentConsistencyChecker {
     static void apply(Models.Identification id){if(id==null)return;
         String physical=clean(id.physicalCardNumber),catalog=clean(id.sourceConfirmedCatalogNumber);
         boolean resolverConflict=!clean(id.numberConflicts).isEmpty();
-        if((!physical.isEmpty()&&!catalog.isEmpty()&&!same(physical,catalog))||resolverConflict){
+        boolean physicalVerified=PhysicalCardNumberPolicy.verifiedNumber(id);
+        if((!physical.isEmpty()&&!catalog.isEmpty()&&!same(physical,catalog)&&physicalVerified)||resolverConflict&&physicalVerified){
             add(id,"PHYSICAL_NUMBER_CATALOG_CONFLICT:"+physical+"!="+catalog);
             if(id.numberConflicts.isEmpty())id.numberConflicts="physicalCardNumber="+physical+"; sourceConfirmedCatalogNumber="+catalog;
             id.exactIdentityStatus="NUMBER_CONFLICT";
@@ -16,7 +17,7 @@ final class PostEnrichmentConsistencyChecker {
             id.blockingReason="exact_attribute_number_conflict";
             id.identityStatus="CONFLICTED";id.decision="CONFLICTED";id.hierarchicalStatus=HierarchicalIdentityStatus.CONFLICTED.name();
             id.marketReady=false;id.disproofPassed=false;
-        }else if(!physical.isEmpty()&&!catalog.isEmpty()&&PhysicalCardNumberPolicy.verifiedNumber(id)){
+        }else if(!physical.isEmpty()&&!catalog.isEmpty()&&physicalVerified){
             id.numberConflicts="";
             IdentityProfileEngine.PhotoTuple tuple=IdentityProfileEngine.tuple(id);
             IdentityProfileEngine.Profile profile=IdentityProfileEngine.profile(id,tuple);
@@ -25,6 +26,10 @@ final class PostEnrichmentConsistencyChecker {
             id.hierarchicalStatus=HierarchicalIdentityStatus.MAIN_IDENTITY_CONFIRMED.name();
             removePrefix(id,"PHYSICAL_NUMBER_CATALOG_CONFLICT:");
         }else if(!catalog.isEmpty()&&id.catalogVerified){
+            if(!physical.isEmpty()&&!same(physical,catalog)){
+                id.numberConflicts="";
+                id.observedEvidence.add("rejected_unverified_identifier_candidate="+physical+"; catalog_matched="+catalog);
+            }
             id.exactIdentityStatus="CATALOG_MATCHED";id.identifierStatus="CATALOG_MATCHED";
             id.cardNumberVerificationStatus="CATALOG_MATCHED";id.collectorNumberVerificationStatus="CATALOG_MATCHED";
             id.identifierConfidence=Math.max(id.identifierConfidence,id.webContributionScore);

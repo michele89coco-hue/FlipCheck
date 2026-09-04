@@ -44,16 +44,23 @@ final class ProfileQueryBuilder {
     static String stagedPlan(Models.Identification id){return "DISCOVERY_WITHOUT_CONTESTED="+discovery(id)+" | PRECISE_DISCOVERY="+seed(id)+" | VERIFY_OBSERVED="+verification(id)
             +" | DISPROVE_ALTERNATIVES="+disproof(id)+" | MARKET_AFTER_IDENTITY_ONLY=true";}
     static java.util.List<String> exactQueries(Models.Identification id){java.util.List<String> q=new java.util.ArrayList<>();IdentityProfileEngine.PhotoTuple t=IdentityProfileEngine.tuple(id);IdentityProfileEngine.Profile p=IdentityProfileEngine.profile(id,t);
-        add(q,discovery(id));add(q,seed(id));
-        if(p==IdentityProfileEngine.Profile.TCG){add(q,join(t.subject,t.cardNumber,t.language,t.copyrightYear));add(q,join(t.subject,t.hp,join(t.attacks.toArray(new String[0]))));}
-        else if(p==IdentityProfileEngine.Profile.SPORTS_CARD){add(q,join(t.year,t.mainSet,t.family,t.insertSubset,t.subject,"checklist"));if(id.rareVariantPhysicalProof)add(q,join(t.subject,t.parallelFamily,t.color,t.printRun,t.serial));}
-        else if(p==IdentityProfileEngine.Profile.SEALED_TRADING_CARD_PRODUCT){String commercial=commercialHierarchy(t);add(q,join(t.year,contains(commercial,t.brand)?"":t.brand,commercial,t.sport,t.configuration,"format SKU"));add(q,join(t.year,contains(commercial,t.brand)?"":t.brand,commercial,"Hobby Mega Blaster Value configuration"));}
+        if(p==IdentityProfileEngine.Profile.TCG){String code=firstClean(t.cardNumber,id.collectorNumberCandidate,id.cardNumberCandidate);String attacks=firstAttacks(t.attacks,2);
+            add(q,join(t.brand,t.subject,code));add(q,join(t.subject,code,t.language));add(q,join(t.subject,t.hp,t.copyrightYear,attacks));add(q,join(t.subject,t.family,t.finish));}
+        else if(p==IdentityProfileEngine.Profile.SPORTS_CARD){String code=firstClean(t.cardNumber,id.cardNumberCandidate);
+            add(q,join(t.year,t.brand,t.mainSet,t.family,t.insertSubset,t.subject,code,"checklist"));add(q,join(t.year,t.mainSet,t.family,t.subject,t.team,"checklist"));add(q,join(t.brand,t.mainSet,t.family,t.subject,code));if(id.rareVariantPhysicalProof)add(q,join(t.subject,t.parallelFamily,t.color,t.printRun,t.serial));}
+        else if(p==IdentityProfileEngine.Profile.SEALED_TRADING_CARD_PRODUCT){String commercial=commercialHierarchy(t);add(q,join(t.year,contains(commercial,t.brand)?"":t.brand,commercial,t.sport,t.configuration));add(q,join(t.year,contains(commercial,t.brand)?"":t.brand,commercial,t.format,"SKU"));add(q,join(t.year,contains(commercial,t.brand)?"":t.brand,commercial,"commercial format configuration"));}
+        else {add(q,seed(id));add(q,discovery(id));}
+        while(q.size()>4)q.remove(q.size()-1);
         id.exactResolutionQueries.clear();id.exactResolutionQueries.addAll(q);return q;}
     static boolean isSealed(Models.Identification id){return IdentityProfileEngine.profile(id,IdentityProfileEngine.tuple(id))==IdentityProfileEngine.Profile.SEALED_TRADING_CARD_PRODUCT;}
-    private static void add(java.util.List<String>x,String v){v=v==null?"":v.trim();if(!v.isEmpty()&&!x.contains(v))x.add(v);}
+    static boolean isSealedProfile(IdentityProfileEngine.Profile p){return p==IdentityProfileEngine.Profile.SEALED_TRADING_CARD_PRODUCT;}
+    private static void add(java.util.List<String>x,String v){v=sanitize(v);if(!v.isEmpty()&&!x.contains(v)&&x.size()<4)x.add(v);}
+    private static String firstAttacks(java.util.List<String>x,int max){StringBuilder b=new StringBuilder();for(String v:x){v=sanitize(v);if(v.isEmpty())continue;if(b.length()>0)b.append(' ');b.append('"').append(v).append('"');if(--max==0)break;}return b.toString();}
+    private static String firstClean(String...x){for(String v:x){v=sanitize(v);if(!v.isEmpty())return v;}return "";}
+    private static String sanitize(String x){String v=x==null?"":x.trim().replaceAll("\\s+"," ");String low=v.toLowerCase(java.util.Locale.ROOT);return low.equals("null")||low.equals("empty")||low.equals("unknown")||low.equals("unresolved")||low.contains("not visibly specified")?"":v;}
     private static String commercialHierarchy(IdentityProfileEngine.PhotoTuple t){String out=hierarchy(t.family,t.subSeries);for(String token:t.distinctiveTokens)out=hierarchy(out,token);return out;}
     private static String hierarchy(String...xs){String out="";for(String x:xs){String c=canon(x);if(c.isEmpty()||contains(out,x))continue;out=join(out,x);}return out;}
     private static boolean contains(String text,String part){String p=canon(part);return !p.isEmpty()&&(" "+canon(text)+" ").contains(" "+p+" ");}
-    private static String join(String...xs){StringBuilder b=new StringBuilder();for(String x:xs){x=x==null?"":x.trim();if(x.isEmpty())continue;String have=" "+canon(b.toString())+" ",next=canon(x);if(!next.isEmpty()&&have.contains(" "+next+" "))continue;if(b.length()>0)b.append(' ');b.append(x);}return b.toString().replaceAll("\\s+"," ").trim();}
+    private static String join(String...xs){StringBuilder b=new StringBuilder();for(String x:xs){x=sanitize(x);if(x.isEmpty())continue;String have=" "+canon(b.toString())+" ",next=canon(x);if(!next.isEmpty()&&have.contains(" "+next+" "))continue;if(b.length()>0)b.append(' ');b.append(x);}return b.toString().replaceAll("\\s+"," ").trim();}
     private static String canon(String x){return x==null?"":x.toUpperCase(java.util.Locale.ROOT).replaceAll("[^A-Z0-9]+"," ").trim();}
 }

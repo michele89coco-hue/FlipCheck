@@ -17,8 +17,8 @@ android {
         applicationId 'com.flipcheck.beta.nativev098.clean'
         minSdk 23
         targetSdk 36
-        versionCode 132
-        versionName '1.28-exact-catalog-resolution'
+        versionCode 133
+        versionName '1.29-universal-catalog-evidence'
         multiDexEnabled true
         testInstrumentationRunner 'android.app.InstrumentationTestRunner'
     }
@@ -52,6 +52,7 @@ android {
     }
 
     compileOptions {
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
@@ -81,10 +82,15 @@ tasks.withType(Test).configureEach {
     testLogging {
         events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
         showStandardStreams true
+        showCauses true
+        showStackTraces true
+        exceptionFormat 'full'
     }
 }
 
 dependencies {
+    coreLibraryDesugaring libs.desugar.jdk.libs
+    implementation libs.androidx.core
     // Modello OCR latino realmente incluso nell'APK: nessun download del modello al primo uso.
     implementation libs.mlkit.text.recognition
     // Barcode/QR realmente on-device, incluso nell'APK.

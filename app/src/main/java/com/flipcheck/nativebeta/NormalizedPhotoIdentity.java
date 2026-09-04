@@ -36,7 +36,9 @@ final class NormalizedPhotoIdentity implements Serializable {
     boolean cardNumberVerified,collectorNumberVerified,physicallyGraded,rareVariantPhysicalProof;
     int fingerprintScore;
     final List<String> fingerprintComponents=new ArrayList<>(),aliasesConsumed=new ArrayList<>(),rejectedFacts=new ArrayList<>(),
-            semanticConflicts=new ArrayList<>(),identifierAlternatives=new ArrayList<>();
+            semanticConflicts=new ArrayList<>(),identifierAlternatives=new ArrayList<>(),
+            hardIdentityTokens=new ArrayList<>(),softSupportingTokens=new ArrayList<>(),
+            descriptiveTokens=new ArrayList<>(),excludedExternalTokens=new ArrayList<>(),numericClassifications=new ArrayList<>();
     final List<Fact> sourceEvidence=new ArrayList<>();
 
     void add(Fact incoming){if(incoming==null||incoming.key==CanonicalFieldKey.UNKNOWN||clean(incoming.value).isEmpty())return;
@@ -77,7 +79,7 @@ final class NormalizedPhotoIdentity implements Serializable {
     String subSeries(){return best(CanonicalFieldKey.SUB_SERIES);}
     String parallelFamily(){return first(best(CanonicalFieldKey.PARALLEL_FAMILY),best(CanonicalFieldKey.PHYSICAL_PARALLEL_CANDIDATE));}
     String printRun(){return best(CanonicalFieldKey.PRINT_RUN);}
-    List<String> distinctiveTokens(){return values(CanonicalFieldKey.DISTINCTIVE_PRINTED_TOKEN);}
+    List<String> distinctiveTokens(){List<String> out=new ArrayList<>();out.addAll(hardIdentityTokens);for(String x:values(CanonicalFieldKey.DISTINCTIVE_PRINTED_TOKEN))if(!out.contains(x))out.add(x);return out;}
     String subject(){return best(CanonicalFieldKey.SUBJECT);}
     String language(){return best(CanonicalFieldKey.LANGUAGE);}
     String physicalYear(){return best(CanonicalFieldKey.PHYSICAL_SET_OR_RELEASE_YEAR);}
@@ -87,7 +89,8 @@ final class NormalizedPhotoIdentity implements Serializable {
             +", physicalCardNumber="+physicalCardNumber+", cardNumberVerified="+cardNumberVerified
             +", physicalCollectorNumber="+physicalCollectorNumber+", collectorNumberVerified="+collectorNumberVerified
             +", identifierStatus="+identifierStatus+", alternatives="+identifierAlternatives
-            +", physicalSerial="+physicalSerial+", physicalParallel="+physicalParallel+", parallelColor="+parallelColor+", finish="+finish;}
+            +", numericClassifications="+numericClassifications+", physicalSerial="+physicalSerial+", physicalParallel="+physicalParallel+", parallelColor="+parallelColor+", finish="+finish
+            +", tokenClasses={hard="+hardIdentityTokens+", soft="+softSupportingTokens+", descriptive="+descriptiveTokens+", excluded="+excludedExternalTokens+"}";}
     private static int rank(Fact f){int q=f.quality==Quality.DIRECT_PHOTO_OBSERVATION?700:f.quality==Quality.USER_HINT?600:
             f.quality==Quality.VISION_STRUCTURED_SUMMARY?500:f.quality==Quality.LOCAL_OCR_HINT?400:
             f.quality==Quality.WEB_CATALOG_EVIDENCE?300:f.quality==Quality.MARKET_EVIDENCE?200:100;return q+f.confidence;}

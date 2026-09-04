@@ -21,6 +21,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.text.InputType;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,6 +33,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.core.content.ContextCompat;
 import com.flipcheck.nativebeta.ClarificationPlanner;
 import com.flipcheck.nativebeta.ImageMatchPolicy;
 import com.flipcheck.nativebeta.Models;
@@ -92,7 +95,7 @@ public class MainActivity extends Activity {
     @Override
     public void onCreate(Bundle b) {
         super.onCreate(b);
-        this.prefs = getSharedPreferences("flipcheck_native_beta", 0);
+        this.prefs = getSharedPreferences("flipcheck_native_beta", Context.MODE_PRIVATE);
         setContentView(buildUi());
         this.apiKeyInput.setText(this.prefs.getString("api_key", ""));
         if (b != null) {
@@ -182,7 +185,7 @@ public class MainActivity extends Activity {
         settings.addView(text("Impostazioni Beta", 17, TEXT, true));
         this.apiKeyInput = input("OpenAI API key");
         this.apiKeyInput.setContentDescription("flipcheck-api-key");
-        this.apiKeyInput.setInputType(129);
+        this.apiKeyInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         settings.addView(this.apiKeyInput, match());
         Button save = secondary("SALVA CHIAVE");
         save.setContentDescription("flipcheck-save-key");
@@ -249,7 +252,7 @@ public class MainActivity extends Activity {
         linearLayoutVertical.addView(this.statusView, match());
         this.resultPanel = vertical();
         this.resultPanel.setContentDescription("flipcheck-result");
-        this.resultPanel.setVisibility(8);
+        this.resultPanel.setVisibility(View.GONE);
         linearLayoutVertical.addView(this.resultPanel, match());
         linearLayoutVertical.addView(space(14));
         LinearLayout marketPreview = panel();
@@ -285,7 +288,7 @@ public class MainActivity extends Activity {
         i.addCategory("android.intent.category.OPENABLE");
         i.setType("image/*");
         i.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        i.addFlags(65);
+        i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
         startActivityForResult(i, PICK_IMAGE);
     }
 
@@ -361,7 +364,7 @@ public class MainActivity extends Activity {
             addGalleryUri(data.getData());
         }
         renderPhotosSafely();
-        this.resultPanel.setVisibility(8);
+        this.resultPanel.setVisibility(View.GONE);
         int added = this.images.size() - before;
         setStatus(added == 0 ? "Nessuna nuova foto aggiunta."
                 : this.images.size() == 1 ? "Foto acquisita. Puoi identificare."
@@ -531,7 +534,7 @@ public class MainActivity extends Activity {
             this.images.add(captured);
         }
         renderPhotosSafely();
-        this.resultPanel.setVisibility(8);
+        this.resultPanel.setVisibility(View.GONE);
         setStatus(this.images.size() == 1 ? "Foto scattata e caricata. Puoi identificare."
                 : this.images.size() + " foto acquisite. Puoi identificare.", MINT);
     }
@@ -583,7 +586,7 @@ public class MainActivity extends Activity {
             this.detailsInput.setText("");
         }
         if (this.resultPanel != null) {
-            this.resultPanel.setVisibility(8);
+            this.resultPanel.setVisibility(View.GONE);
         }
         AnalysisResultStore.reset(this);
     }
@@ -656,7 +659,7 @@ public class MainActivity extends Activity {
             setStatus("Pronto per una nuova identificazione.", MUTED);
         }
         renderPhotosSafely();
-        this.resultPanel.setVisibility(8);
+        this.resultPanel.setVisibility(View.GONE);
     }
 
     private void startIdentification() {
@@ -673,7 +676,7 @@ public class MainActivity extends Activity {
         this.identifyButton.setEnabled(false);
         this.addPhotoButton.setEnabled(false);
         this.cameraButton.setEnabled(false);
-        this.resultPanel.setVisibility(8);
+        this.resultPanel.setVisibility(View.GONE);
         setStatus("Analizzo le foto...", MINT);
         ArrayList<Uri> snapshot = new ArrayList<>(this.images);
         String details = this.detailsInput.getText().toString().trim();
@@ -699,11 +702,8 @@ public class MainActivity extends Activity {
             return;
         }
         IntentFilter filter = new IntentFilter(AnalysisForegroundService.ACTION_STATE);
-        if (Build.VERSION.SDK_INT >= 33) {
-            registerReceiver(this.analysisReceiver, filter, Context.RECEIVER_NOT_EXPORTED);
-        } else {
-            registerReceiver(this.analysisReceiver, filter);
-        }
+        ContextCompat.registerReceiver(this, this.analysisReceiver, filter,
+                ContextCompat.RECEIVER_NOT_EXPORTED);
         this.analysisReceiverRegistered = true;
     }
 
@@ -852,7 +852,7 @@ public class MainActivity extends Activity {
 
     private void renderResult(final Models.Identification id, final Models.Usage usage) {
         this.resultPanel.removeAllViews();
-        this.resultPanel.setVisibility(0);
+        this.resultPanel.setVisibility(View.VISIBLE);
         LinearLayout p = panel();
         p.addView(text("Risultato", 14, MUTED, false));
         p.addView(text(EvidencePolicy.publicTitle(id), 26, TEXT, true));
@@ -1057,7 +1057,7 @@ public class MainActivity extends Activity {
             }
         }
         final LinearLayout technical = buildTechnicalDetails(id, usage);
-        technical.setVisibility(8);
+        technical.setVisibility(View.GONE);
         final Button toggle = secondary("MOSTRA DETTAGLI TECNICI");
         toggle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1104,8 +1104,8 @@ public class MainActivity extends Activity {
     }
 
     static void lambda$renderResult$19(LinearLayout technical, Button toggle, View v) {
-        boolean show = technical.getVisibility() != 0;
-        technical.setVisibility(show ? 0 : 8);
+        boolean show = technical.getVisibility() != View.VISIBLE;
+        technical.setVisibility(show ? View.VISIBLE : View.GONE);
         toggle.setText(show ? "NASCONDI DETTAGLI TECNICI" : "MOSTRA DETTAGLI TECNICI");
     }
 
@@ -1118,6 +1118,7 @@ public class MainActivity extends Activity {
                 + " · VERSION_CODE=" + BuildConfig.VERSION_CODE, 12, MINT, true));
         panel.addView(text("closure_attempt=" + id.closureAttempt
                 + " · closure_result=" + id.closureResult
+                + " · closure_level=" + valueOrEmpty(id.closureLevel)
                 + " · closure_stage=" + id.closureStage, 12,
                 id.closureResult ? MINT : WARN, true));
         if (!id.closureResult && !id.closureMissingFields.isEmpty()) {
@@ -1138,7 +1139,9 @@ public class MainActivity extends Activity {
         panel.addView(text("category_status="+valueOrEmpty(id.categoryStatus)
                 +" · core_identity_status="+valueOrEmpty(id.coreIdentityStatus)
                 +" · exact_identity_status="+valueOrEmpty(id.exactIdentityStatus)
-                +" · variant_status="+valueOrEmpty(id.variantStatus),12,MUTED,false));
+                +" · exact_catalog_status="+valueOrEmpty(id.exactCatalogStatus)
+                +" · variant_status="+valueOrEmpty(id.variantStatus)
+                +" · copy_identifier_status="+valueOrEmpty(id.copyIdentifierStatus),12,MUTED,false));
         panel.addView(text("blocking_reason="+valueOrEmpty(id.blockingReason)
                 +" · missing_discriminative_fields="+valueOrEmpty(id.missingDiscriminativeFields),
                 12,id.blockingReason.isEmpty()?MUTED:WARN,false));
@@ -1580,7 +1583,7 @@ public class MainActivity extends Activity {
                 resized.recycle();
             }
             src.recycle();
-            return "data:image/jpeg;base64," + Base64.encodeToString(out.toByteArray(), 2);
+            return "data:image/jpeg;base64," + Base64.encodeToString(out.toByteArray(), Base64.NO_WRAP);
         } catch (Throwable th) {
             if (in != null) {
                 try {
@@ -1620,7 +1623,7 @@ public class MainActivity extends Activity {
     }
 
     private void toast(String s) {
-        Toast.makeText(this, s, 0).show();
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
     private String safe(Exception e) {
@@ -1651,14 +1654,14 @@ public class MainActivity extends Activity {
 
     private LinearLayout vertical() {
         LinearLayout x = new LinearLayout(this);
-        x.setOrientation(1);
+        x.setOrientation(LinearLayout.VERTICAL);
         return x;
     }
 
     private LinearLayout horizontal() {
         LinearLayout x = new LinearLayout(this);
-        x.setOrientation(0);
-        x.setGravity(16);
+        x.setOrientation(LinearLayout.HORIZONTAL);
+        x.setGravity(Gravity.CENTER_VERTICAL);
         return x;
     }
 
@@ -1685,7 +1688,7 @@ public class MainActivity extends Activity {
         b.setText(s);
         b.setTextColor(Color.rgb(9, 25, 30));
         b.setTextSize(16.0f);
-        b.setTypeface(Typeface.DEFAULT, 1);
+        b.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
         b.setAllCaps(false);
         b.setBackground(round(MINT, 16, MINT));
         b.setMinHeight(dp(58));
@@ -1708,7 +1711,7 @@ public class MainActivity extends Activity {
         t.setTextSize(sp);
         t.setTextColor(color);
         if (bold) {
-            t.setTypeface(Typeface.DEFAULT, 1);
+            t.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
         }
         t.setLineSpacing(0.0f, 1.12f);
         return t;
