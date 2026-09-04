@@ -19,7 +19,11 @@ jobs:
       FLIPCHECK_KEYSTORE_PASSWORD: ${{ secrets.FLIPCHECK_KEYSTORE_PASSWORD }}
       FLIPCHECK_KEY_ALIAS: ${{ secrets.FLIPCHECK_KEY_ALIAS }}
       FLIPCHECK_KEY_PASSWORD: ${{ secrets.FLIPCHECK_KEY_PASSWORD }}
-      EXPECTED_CERT_SHA256: 69700a48170cf495f8622bfa668501230c739b86264e10c8cb900d1683162fed
+      # The historical v1.27 private key is not present in this repository or
+      # in the retained source bundle.  This is the stable repository key and
+      # therefore produces a clean-install artifact, not an in-place update.
+      EXPECTED_CERT_SHA256: d4d02478ea31cb6bd83228047e9accd7dfb191ed991a4c8e8c06a228e54614c7
+      V127_CERT_SHA256: 69700a48170cf495f8622bfa668501230c739b86264e10c8cb900d1683162fed
     steps:
       - uses: actions/checkout@v4
       - uses: gradle/actions/wrapper-validation@v4
@@ -32,7 +36,7 @@ jobs:
       - name: Install declared Android SDK
         run: sdkmanager 'platforms;android-36' 'build-tools;36.0.0' 'platform-tools'
 
-      - name: Restore update-compatible signing key
+      - name: Restore stable repository signing key
         env:
           FLIPCHECK_KEYSTORE_BASE64: ${{ secrets.FLIPCHECK_KEYSTORE_BASE64 }}
         run: |
@@ -51,14 +55,15 @@ jobs:
           APK=app/build/outputs/apk/debug/app-debug.apk
           OUT=artifact
           mkdir -p "$OUT"
-          cp "$APK" "$OUT/FlipCheck-v1.28.apk"
-          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose --print-certs "$OUT/FlipCheck-v1.28.apk" | tee "$OUT/apksigner-report.txt"
+          cp "$APK" "$OUT/FlipCheck-v1.28-clean-install.apk"
+          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose --print-certs "$OUT/FlipCheck-v1.28-clean-install.apk" | tee "$OUT/apksigner-report.txt"
           CERT=$(sed -n 's/^Signer #1 certificate SHA-256 digest: //p' "$OUT/apksigner-report.txt" | tr -d ':' | tr '[:upper:]' '[:lower:]')
           test "$CERT" = "$EXPECTED_CERT_SHA256"
-          "$ANDROID_HOME/build-tools/36.0.0/aapt" dump badging "$OUT/FlipCheck-v1.28.apk" | tee "$OUT/apk-analyzer-report.txt"
+          "$ANDROID_HOME/build-tools/36.0.0/aapt" dump badging "$OUT/FlipCheck-v1.28-clean-install.apk" | tee "$OUT/apk-analyzer-report.txt"
           grep -q "package: name='com.flipcheck.beta.nativev098.clean.debug' versionCode='132'" "$OUT/apk-analyzer-report.txt"
-          unzip -l "$OUT/FlipCheck-v1.28.apk" | tee -a "$OUT/apk-analyzer-report.txt"
-          sha256sum "$OUT/FlipCheck-v1.28.apk" | tee "$OUT/FlipCheck-v1.28.sha256"
+          unzip -l "$OUT/FlipCheck-v1.28-clean-install.apk" | tee -a "$OUT/apk-analyzer-report.txt"
+          sha256sum "$OUT/FlipCheck-v1.28-clean-install.apk" | tee "$OUT/FlipCheck-v1.28.sha256"
+          printf 'UPDATE_COMPATIBLE_WITH_V1_27=false\nV1_27_CERT_SHA256=%s\nV1_28_CERT_SHA256=%s\nREASON=historical_private_key_unavailable\n' "$V127_CERT_SHA256" "$CERT" > "$OUT/signing-compatibility.txt"
           cp app/build/test-results/testDebugUnitTest/*.xml "$OUT/"
           java -version 2> "$OUT/build-environment.txt"
           ./gradlew --version >> "$OUT/build-environment.txt"
