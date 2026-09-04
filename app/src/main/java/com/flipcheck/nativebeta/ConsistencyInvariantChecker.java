@@ -23,6 +23,8 @@ final class ConsistencyInvariantChecker {
                 &&!same(id.physicalCardNumber,id.sourceConfirmedCatalogNumber)){
             id.exactIdentityStatus="NUMBER_CONFLICT";fail(id,"PHYSICAL_NUMBER_CATALOG_CONFLICT");}
         if("CONFIRMED".equals(id.exactIdentityStatus)&&!safe(id.numberConflicts).isEmpty())fail(id,"CONFIRMED_NUMBER_CONFLICT");
+        if(("UNRESOLVED".equals(id.exactIdentityStatus)||"SET_UNRESOLVED".equals(id.exactIdentityStatus)||"NUMBER_UNRESOLVED".equals(id.exactIdentityStatus))&&id.exactIdentityConfidence==100)fail(id,"UNRESOLVED_EXACT_IDENTITY_AT_100");
+        if("VARIANT_CONFIRMED".equals(id.variantStatus)&&id.variantConfidence==0)fail(id,"CONFIRMED_VARIANT_WITH_ZERO_CONFIDENCE");
         if("CONFIRMED".equals(id.identityStatus)&&!safe(id.numberConflicts).isEmpty())fail(id,"GLOBAL_CONFIRMED_WITH_IDENTIFIER_CONFLICT");
         if("CATALOG_MATCHED".equals(id.exactIdentityStatus)&&(!id.catalogVerified||!"PASSED".equals(id.disproofStatus)))fail(id,"EXACT_IDENTITY_WITHOUT_CATALOG_DISPROOF");
         if("PASSED".equals(id.disproofStatus)&&("NOT_RUN".equals(id.webStatus)||"FAILED".equals(id.webStatus)))fail(id,"DISPROOF_PASSED_WITHOUT_WEB");
@@ -44,6 +46,9 @@ final class ConsistencyInvariantChecker {
         for(Models.MarketComparable c:id.marketComparables)if(c.included&&!canon(c.itemState).equals(canon(ProfileQueryBuilder.expectedMarketState(id))))fail(id,"MARKET_COMPARABLE_WRONG_BUCKET");
         for(Models.MarketComparable c:id.marketComparables)if(c.included&&!ExactCatalogResolver.marketReady(id))fail(id,"MARKET_COMPARABLE_BEFORE_EXACT_IDENTITY");
         if(!id.candidates.isEmpty()&&id.canonicalCandidateCount==0)fail(id,"CANDIDATE_EXISTS_BUT_COUNT_ZERO");
+        if(id.closureResult&&safe(id.closureLevel).isEmpty())fail(id,"CLOSURE_RESULT_WITHOUT_LEVEL");
+        for(Models.EvidenceFact f:id.evidenceLedger)if(f!=null&&TextScopePolicy.external(TextScopePolicy.scope(f))&&queryContains(id,f.value))fail(id,"EXTERNAL_TEXT_CONTAMINATES_QUERY:"+TextScopePolicy.scope(f));
+        for(String q:id.exactResolutionQueries){String x=safe(q).toLowerCase(Locale.ROOT);if(x.matches(".*\\b(?:null|empty|not visibly specified)\\b.*"))fail(id,"INVALID_EMPTY_VALUE_IN_QUERY");}
         if(id.canonicalCandidateCount==1&&!id.candidates.isEmpty()&&id.candidates.get(0).totalScore>=90
                 &&id.familyConfidence==0&&!safe(t.family).isEmpty())fail(id,"STRONG_CANDIDATE_FAMILY_ZERO");
         String family=canon(t.family),stageValue=canon(t.evolutionStage),title=canon(id.title),finish=canon(t.finish);
@@ -63,6 +68,7 @@ final class ConsistencyInvariantChecker {
     private static boolean strongConflict(Models.Identification id){for(String x:id.finalContradictions)if(x.toLowerCase(Locale.ROOT).contains("strong"))return true;return false;}
     private static boolean contains(String source,String token){return safe(source).toLowerCase(Locale.ROOT).contains(token);}
     private static boolean same(String a,String b){return canon(a).equals(canon(b));}
+    private static boolean queryContains(Models.Identification id,String value){String needle=safe(value).toLowerCase(Locale.ROOT);if(needle.length()<3)return false;for(String q:id.exactResolutionQueries)if(safe(q).toLowerCase(Locale.ROOT).contains(needle))return true;return safe(id.searchQuery).toLowerCase(Locale.ROOT).contains(needle);}
     private static String canon(String x){return safe(x).toUpperCase(Locale.ROOT).replaceFirst("^#","").replaceAll("[^A-Z0-9]","");}
     private static void repair(Models.Identification id,String x){String v="REPAIRED:"+x;if(!id.consistencyInvariantErrors.contains(v))id.consistencyInvariantErrors.add(v);}
     private static void fail(Models.Identification id,String x){String v="FAIL:"+x;if(!id.consistencyInvariantErrors.contains(v))id.consistencyInvariantErrors.add(v);}
