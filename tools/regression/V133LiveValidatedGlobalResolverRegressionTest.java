@@ -61,7 +61,7 @@ public final class V133LiveValidatedGlobalResolverRegressionTest {
         pass();
     }
 
-    private static void multiRecordPagesCannotMasqueradeAsExactRecords() {
+    private static void multiRecordPagesCannotMasqueradeAsExactRecords() throws Exception {
         IdentityCandidateV2 candidate = candidate(DomainProfileRouterV2.Profile.TCG_CARD);
         candidate.exactReference = true;
         candidate.sourceRecordId = "page-summary";
@@ -98,7 +98,7 @@ public final class V133LiveValidatedGlobalResolverRegressionTest {
         pass();
     }
 
-    private static void groundedBrandRequiresLiteralCorroboration() {
+    private static void groundedBrandRequiresLiteralCorroboration() throws Exception {
         ImmutableEvidenceLedgerV2 withoutOcr = new ImmutableEvidenceLedgerV2();
         ObservationExtractorV2.ingestPrimary(primaryWithFact("manufacturer", "Upper Deck", "manufacturer_text"), withoutOcr);
         require(!withoutOcr.hasObserved("manufacturer"), "uncorroborated Vision brand became observed");
@@ -111,7 +111,7 @@ public final class V133LiveValidatedGlobalResolverRegressionTest {
         pass();
     }
 
-    private static void catalogSymbolClassificationRemainsInference() {
+    private static void catalogSymbolClassificationRemainsInference() throws Exception {
         ImmutableEvidenceLedgerV2 ledger = new ImmutableEvidenceLedgerV2();
         ObservationExtractorV2.ingestPrimary(primaryWithFact("set_name", "Base Set", "set_symbol"), ledger);
         require(!ledger.hasObserved("setName") && ledger.strongest("setName", EvidenceAtom.EpistemicLevel.INFERRED) != null,
@@ -195,7 +195,7 @@ public final class V133LiveValidatedGlobalResolverRegressionTest {
         pass();
     }
 
-    private static void sportsBaseRoleIsNotAnEdition() {
+    private static void sportsBaseRoleIsNotAnEdition() throws Exception {
         JSONObject payload = webPayload("sports_card", "Example Player", "81").put("queries", new JSONArray().put("neutral checklist query"));
         payload.getJSONArray("candidates").getJSONObject(0).put("edition", "Base Set");
         IdentityCandidateV2 candidate = CandidateRetrieverV2.parse(payload, DomainProfileRouterV2.Profile.SPORTS_CARD, new ImmutableEvidenceLedgerV2()).get(0);
@@ -243,7 +243,7 @@ public final class V133LiveValidatedGlobalResolverRegressionTest {
         return candidate;
     }
 
-    private static JSONObject primaryWithFact(String key, String value, String role) {
+    private static JSONObject primaryWithFact(String key, String value, String role) throws Exception {
         return new JSONObject().put("content_sufficient", true).put("category", key.contains("set") ? "tcg_card" : "sealed_trading_card_product")
                 .put("views", new JSONArray().put("front"))
                 .put("facts", new JSONArray().put(new JSONObject().put("key", key).put("value", value).put("image", 0)
@@ -251,7 +251,7 @@ public final class V133LiveValidatedGlobalResolverRegressionTest {
                 .put("candidates", new JSONArray());
     }
 
-    private static JSONObject webPayload(String category, String subject, String number) {
+    private static JSONObject webPayload(String category, String subject, String number) throws Exception {
         JSONObject candidate = new JSONObject().put("candidate_id", "row-1").put("source_id", "source-1").put("source_title", "Checklist")
                 .put("source_record_id", "row-1").put("source_page_scope", "CHECKLIST_ROW").put("identity_level", "CATALOG_IDENTITY")
                 .put("brand", "Example").put("product_line", "Example Series").put("set_name", "").put("sub_series", "")
