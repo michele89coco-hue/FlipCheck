@@ -5,7 +5,9 @@ grep -q Success artifact/install-exact-apk.txt
 touch artifact/apk-installation.pass
 adb install -t app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk | tee artifact/install-test-apk.txt
 grep -q Success artifact/install-test-apk.txt
-adb shell pm grant "$PACKAGE" android.permission.POST_NOTIFICATIONS || true
+if [[ "$(adb shell getprop ro.build.version.sdk | tr -d '\r')" -ge 33 ]]; then
+  adb shell pm grant "$PACKAGE" android.permission.POST_NOTIFICATIONS
+fi
 adb shell am force-stop "$PACKAGE"
 adb shell monkey -p "$PACKAGE" -c android.intent.category.LAUNCHER 1 | tee artifact/launch.txt
 sleep 5
@@ -14,8 +16,11 @@ adb exec-out screencap -p > artifact/installed-candidate-launch.png
 touch artifact/apk-launch.pass
 if [[ -z "$FLIPCHECK_LIVE_API_KEY" ]]; then exit 0; fi
 adb shell am force-stop "$PACKAGE"
+# adb joins separate arguments into a remote shell command. Quote for that
+# second shell too, so whitespace/newlines in a secret cannot split arguments.
+instrumentation_command=$(python3 tools/ci/instrumentation_command.py)
 set +e
-adb shell am instrument -w -r -e live_api_key "$FLIPCHECK_LIVE_API_KEY" -e class com.flipcheck.nativebeta.LiveRegressionSuite "$TEST_PACKAGE/androidx.test.runner.AndroidJUnitRunner" | tee artifact/live-instrumentation.txt
+adb shell "$instrumentation_command" | tee artifact/live-instrumentation.txt
 instrumentation_status=${PIPESTATUS[0]}
 set -e
 adb pull "/sdcard/Android/data/$PACKAGE/files/v134-live" artifact/live || true
