@@ -31,7 +31,7 @@ final class CandidateVerifierV2 {
                 else if(coreField(field,profile))coreMatches++;
             }else if(relation==SemanticRelationV3.Relation.INCOMPATIBLE){
                 c.unmatchedEvidence.add(field+":"+observed.normalizedValue+"<>"+candidate);
-                if(coreField(field,profile)&&observed.reliable()){
+                if((coreField(field,profile)||exclusiveVariantConflict(field,observed.normalizedValue,candidate,profile))&&observed.reliable()){
                     c.trueConflicts.add(field+":"+observed.normalizedValue+"!="+candidate+"@"+observed.id);coreConflicts++;
                 }
             }
@@ -51,8 +51,35 @@ final class CandidateVerifierV2 {
         if(c.rejected){c.totalScore=0;return;}
 
         boolean enough=disproofEvidence(profile,c,coreMatches);
-        c.disproofPassed=c.retrieved&&consistency.coherent&&coreConflicts==0&&enough;c.disproofResult=c.disproofPassed?"PASSED":"INSUFFICIENT";c.disproofReason=c.disproofPassed?"isolated_record_matches_grounded_evidence":"insufficient_independent_grounding";
+        c.disproofPassed=c.retrieved&&consistency.coherent&&coreConflicts==0&&enough;c.disproofResult=c.disproofPassed?"PASSED":"INSUFFICIENT";c.disproofReason=c.disproofPassed?"isolated_record_matches_grounded_evidence":insufficientReason(profile,c,coreMatches);
         if(c.disproofPassed)c.totalScore=Math.min(100,c.totalScore+5);if(c.totalScore==100&&(!c.trueConflicts.isEmpty()||!c.unknownFields.isEmpty()&&!c.exactReference))c.totalScore=99;
+    }
+
+    private static boolean exclusiveVariantConflict(String field,String observed,String candidate,DomainProfileRouterV2.Profile p){
+        if(!DomainProfileRouterV2.cards(p))return false;
+        String a=TypedFieldNormalizerV2.normalizeValue(field,observed,""),b=TypedFieldNormalizerV2.normalizeValue(field,candidate,"");
+        if(field.equals("edition"))return a.matches("FIRST_EDITION|UNLIMITED")&&b.matches("FIRST_EDITION|UNLIMITED")&&!a.equals(b);
+        if(field.equals("finish"))return a.matches("HOLO|NON_HOLO|REVERSE_HOLO")&&b.matches("HOLO|NON_HOLO|REVERSE_HOLO")&&!a.equals(b);
+        return false;
+    }
+
+    private static String insufficientReason(DomainProfileRouterV2.Profile p,IdentityCandidateV2 c,int coreMatches){
+        List<String> reasons=new ArrayList<>();
+        if(!c.retrieved)reasons.add("candidate_is_inference_only");
+        boolean card=p==DomainProfileRouterV2.Profile.TCG_CARD||p==DomainProfileRouterV2.Profile.SPORTS_CARD;
+        int minimumQuality=DomainProfileRouterV2.electronics(p)?65:60;
+        if(c.webSourceQuality<minimumQuality)reasons.add("source_quality="+c.webSourceQuality+"<"+minimumQuality+" (scale=0..100)");
+        int minimumMatches=p==DomainProfileRouterV2.Profile.TELEVISION_REMOTE_CONTROL?3:2;
+        if(coreMatches<minimumMatches)reasons.add("grounded_core_matches="+coreMatches+"<"+minimumMatches);
+        if(card){
+            if(!c.exactReference)reasons.add("exact_catalog_reference_missing");
+            if(c.sourceRecordId.isEmpty())reasons.add("isolated_record_id_missing");
+            if(c.observedIdentifierMatch<82)reasons.add("physical_identifier_match="+c.observedIdentifierMatch+"<82");
+        }else if(p==DomainProfileRouterV2.Profile.TELEVISION_REMOTE_CONTROL){
+            if(c.layoutMatch<70)reasons.add("distinctive_layout_match="+c.layoutMatch+"<70");
+        }else if(DomainProfileRouterV2.electronics(p)&&c.observedIdentifierMatch<82&&c.layoutMatch<75)
+            reasons.add("model_identifier_or_distinctive_layout_missing");
+        return reasons.isEmpty()?"insufficient_independent_grounding":join(reasons);
     }
 
     private static boolean disproofEvidence(DomainProfileRouterV2.Profile p,IdentityCandidateV2 c,int coreMatches){

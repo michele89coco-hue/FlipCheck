@@ -58,7 +58,7 @@ final class ProfileQueryBuilder {
         else {add(q,seed(id));add(q,discovery(id));}
         while(q.size()>4)q.remove(q.size()-1);
         id.exactResolutionQueries.clear();id.exactResolutionQueries.addAll(q);return q;}
-    static boolean isSealed(Models.Identification id){return IdentityProfileEngine.profile(id,IdentityProfileEngine.tuple(id))==IdentityProfileEngine.Profile.SEALED_TRADING_CARD_PRODUCT;}
+    static boolean isSealed(Models.Identification id){if(IdentityPresentationV2.owns(id))return IdentityPresentationV2.sealed(id);return IdentityProfileEngine.profile(id,IdentityProfileEngine.tuple(id))==IdentityProfileEngine.Profile.SEALED_TRADING_CARD_PRODUCT;}
     static boolean isSealedProfile(IdentityProfileEngine.Profile p){return p==IdentityProfileEngine.Profile.SEALED_TRADING_CARD_PRODUCT;}
     private static void add(java.util.List<String>x,String v){v=sanitize(v);if(!v.isEmpty()&&!x.contains(v)&&x.size()<4)x.add(v);}
     private static String firstAttacks(java.util.List<String>x,int max){StringBuilder b=new StringBuilder();for(String v:x){v=sanitize(v);if(v.isEmpty())continue;if(b.length()>0)b.append(' ');b.append('"').append(v).append('"');if(--max==0)break;}return b.toString();}

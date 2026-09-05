@@ -767,14 +767,14 @@ class OpenAiClient {
                 .put("layout_signature",new JSONObject().put("type","string"))
                 .put("source_url",new JSONObject().put("type","string"))
                 .put("source_authority",new JSONObject().put("type","string"))
-                .put("source_quality",integerSchema(0,100))
+                .put("source_quality_percent",integerSchema(0,100).put("description","Source reliability on a 0 to 100 scale, NOT a 1 to 5 star rating. Assess authority and support for this isolated record, independently of visual similarity."))
                 .put("exact_reference",new JSONObject().put("type","boolean"))
                 .put("disproof_passed",new JSONObject().put("type","boolean"))
                 .put("layout_match",integerSchema(0,100))
                 .put("matched_observed_fields",stringArraySchema(16))
                 .put("contradicted_observed_fields",stringArraySchema(12))
                 .put("unknown_fields",stringArraySchema(12));
-        JSONObject candidate=strictObject(candidateProps,"candidate_id","source_id","source_title","source_record_id","source_page_scope","identity_level","brand","product_line","set_name","sub_series","model","category","year","subject","card_number","language","edition","card_role","printed_total","set_symbol","copyright_year","sport","team","finish","format","configuration","product_code","barcode","control_layout","shortcut_buttons","navigation_layout","numeric_keypad","voice_control","layout_signature","source_url","source_authority","source_quality","exact_reference","disproof_passed","layout_match","matched_observed_fields","contradicted_observed_fields","unknown_fields");
+        JSONObject candidate=strictObject(candidateProps,"candidate_id","source_id","source_title","source_record_id","source_page_scope","identity_level","brand","product_line","set_name","sub_series","model","category","year","subject","card_number","language","edition","card_role","printed_total","set_symbol","copyright_year","sport","team","finish","format","configuration","product_code","barcode","control_layout","shortcut_buttons","navigation_layout","numeric_keypad","voice_control","layout_signature","source_url","source_authority","source_quality_percent","exact_reference","disproof_passed","layout_match","matched_observed_fields","contradicted_observed_fields","unknown_fields");
         JSONObject props=new JSONObject()
                 .put("queries",stringArraySchema(4))
                 .put("candidates",new JSONObject().put("type","array").put("maxItems",6).put("items",candidate))

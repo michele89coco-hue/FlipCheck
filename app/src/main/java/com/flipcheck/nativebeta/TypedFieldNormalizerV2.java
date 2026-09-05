@@ -22,6 +22,7 @@ final class TypedFieldNormalizerV2 {
             if(collectorRepair(atom,field,normalized)&&!corroboratedCollector(ledger,atom,normalized))continue;
             if(!normalized.equals(atom.normalizedValue)||!field.equals(atom.field))
                 ledger.appendNormalization(atom,normalized,field,atom.semanticScope);
+            if(field.equals("firstEditionMark")&&normalized.equals("PRESENT"))ledger.appendNormalization(atom,"FIRST_EDITION","edition","edition");
             if(field.equals("collectorNumber")){String total=printedTotal(normalized);if(!total.isEmpty())ledger.appendNormalization(atom,total,"printedTotal","collector_number_denominator");}
         }
     }
@@ -46,6 +47,7 @@ final class TypedFieldNormalizerV2 {
     static String canonicalField(String raw,String scope){
         String key=canonKey(raw),s=canonKey(scope);
         Map<String,String> m=aliases();String mapped=m.get(key);
+        if(mapped==null&&(key.endsWith("_text")||key.endsWith("_token")))mapped=m.get(key.replaceFirst("_(text|token)$",""));
         String canonical=mapped==null?camel(key):mapped;
         if(canonical.equals("cardRole")&&s.contains("evolution"))return "evolutionStage";
         if((key.equals("season")||key.equals("year")||canonical.equals("productReleaseYear")||canonical.equals("setSeason"))
@@ -75,7 +77,7 @@ final class TypedFieldNormalizerV2 {
         if(f.equals("firstEditionMark")){
             String c=words(value);
             if(c.contains("ABSENT")||c.contains("NOT PRESENT"))return "ABSENT";
-            if(c.equals("PRESENT")||c.equals("1ST EDITION")||c.equals("FIRST EDITION")||c.equals("EDITION 1"))return "PRESENT";
+            if(c.equals("PRESENT")||c.equals("1ST EDITION")||c.equals("FIRST EDITION")||c.equals("EDITION 1")||c.equals("EDITION 1 LOGO")||c.equals("FIRST EDITION LOGO")||c.equals("1ST EDITION LOGO"))return "PRESENT";
             return value;
         }
         if(f.equals("productReleaseYear")||f.equals("setSeason")||f.equals("statisticsSeason"))return SeasonNormalizer.normalize(value);
@@ -115,14 +117,14 @@ final class TypedFieldNormalizerV2 {
         put(m,"productLine","product_line","family","series","set_or_product_line");put(m,"setName","set","set_name","main_set");
         put(m,"cardName","card_name","subject_name","character");put(m,"athlete","athlete","player","subject");
         put(m,"evolutionStage","stage","evolution_stage");put(m,"cardRole","card_role","cardrole");
-        put(m,"subSeries","sub_series","subseries");put(m,"setSymbol","set_symbol","setsymbol");
-        put(m,"collectorNumber","collector_number","collector_marking","physical_collector_number");put(m,"printedTotal","printed_total","set_total","collector_total");
+        put(m,"subSeries","sub_series","subseries","series_text");put(m,"setSymbol","set_symbol","setsymbol");put(m,"visualSymbol","set_symbol_appearance","symbol_appearance","raw_set_symbol_appearance","visual_symbol");
+        put(m,"collectorNumber","collector_number","collector_marking","physical_collector_number","tcg_number");put(m,"printedTotal","printed_total","set_total","collector_total");
         put(m,"physicalCardNumber","physical_card_number","physical_card_number_marking","card_number");
         put(m,"catalogCardNumber","catalog_card_number","source_confirmed_catalog_number");
         put(m,"physicalSerial","physical_serial","serial_fraction","physical_print_run");put(m,"graphicNumber","graphic_number");put(m,"jerseyNumber","jersey_number");
-        put(m,"statisticsNumber","statistics","statistics_number","rating");put(m,"productReleaseYear","release_year","physical_year","product_year","physical_set_or_release_year");
+        put(m,"statisticsNumber","statistics","statistics_number","rating");put(m,"productReleaseYear","release_year","physical_year","product_year","physical_set_or_release_year","release_season");
         put(m,"setSeason","set_season");put(m,"statisticsSeason","statistics_season","statistical_season","stats_season");
-        put(m,"copyrightYear","copyright_year");put(m,"edition","edition","print_edition");put(m,"firstEditionMark","first_edition_mark","first_edition_logo");
+        put(m,"copyrightYear","copyright_year");put(m,"edition","edition","print_edition");put(m,"firstEditionMark","first_edition_mark","first_edition_logo","edition_mark");
         put(m,"finish","finish","holo_status","holo");put(m,"printVariant","printing","print_variant","shadow_status");
         put(m,"language","language");put(m,"hp","hp","hp_or_pv","pv");put(m,"attacks","attack","attack_name","attacks");
         put(m,"attackDamage","attack_damage","damage");put(m,"rarity","rarity");put(m,"artist","artist","illustrator");

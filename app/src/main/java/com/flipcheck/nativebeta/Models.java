@@ -529,6 +529,7 @@ final class Models {
         final List<String> featuredSubjects = new ArrayList();
         final List<EvidenceFact> evidenceLedger = new ArrayList();
         final List<EvidenceAtom> evidenceAtomsV2 = new ArrayList();
+        final List<String> v2StagePayloads = new ArrayList();
         final List<Conflict> documentedConflicts = new ArrayList();
         final List<String> fieldTransitions = new ArrayList();
         final List<MarketComparable> marketComparables = new ArrayList();

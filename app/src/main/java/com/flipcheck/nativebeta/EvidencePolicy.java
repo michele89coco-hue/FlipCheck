@@ -225,6 +225,7 @@ final class EvidencePolicy {
     }
 
     static String publicExplanation(Models.Identification id) {
+        if(IdentityPresentationV2.owns(id))return IdentityPresentationV2.explanation(id);
         if (id == null) {
             return "";
         }

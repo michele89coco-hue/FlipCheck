@@ -11,6 +11,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import android.graphics.Rect;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -66,6 +70,7 @@ public final class LiveRegressionSuite {
                             .put("visionCalls", result.usage.visionCalls).put("webCalls", result.usage.webCalls)
                             .put("marketCalls", result.id.marketCalls).put("requests", result.usage.requests)
                             .put("costUsd", result.usage.costUsd).put("queries", new JSONArray(result.id.webQueries))
+                            .put("stagePayloads", new JSONArray(result.id.v2StagePayloads))
                             .put("observedTrace", result.id.v2ObservedFacts).put("inferredTrace", result.id.v2InferredFacts)
                             .put("retrievedTrace", result.id.v2RetrievedFacts).put("imagePreparationTrace", result.id.v2ImagePreparationTrace)
                             .put("rejectedSources", result.id.retrievedRejectedSources)
@@ -122,7 +127,40 @@ public final class LiveRegressionSuite {
         if (!AnalysisResultStore.COMPLETE.equals(snapshot.state) || snapshot.identification == null)
             throw new AssertionError("Foreground pipeline did not complete: " + snapshot.state + " " + snapshot.error);
         if (activity == null || activity.isFinishing()) throw new AssertionError("Candidate APK Activity is not running");
+        run.put("computedTitle", snapshot.identification.title)
+                .put("computedCoreStatus", snapshot.identification.coreIdentityStatus)
+                .put("candidateTrace", snapshot.identification.v2CandidateTrace)
+                .put("observedTrace", snapshot.identification.v2ObservedFacts)
+                .put("inferredTrace", snapshot.identification.v2InferredFacts);
+        if(snapshot.usage!=null)run.put("costUsd", snapshot.usage.costUsd);
+        awaitRenderedResult(instrumentation, activity, snapshot.identification.title);
+        run.put("resultRenderedInActivity", true);
         return new RunResult(snapshot.identification, snapshot.usage == null ? new Models.Usage() : snapshot.usage);
+    }
+
+    private static void awaitRenderedResult(Instrumentation instrumentation, Activity activity, String title) {
+        long deadline = SystemClock.elapsedRealtime() + 10_000L;
+        boolean[] found = {false};
+        do {
+            instrumentation.runOnMainSync(() -> {
+                TextView result = findText(activity.getWindow().getDecorView(), title);
+                if (result != null) {
+                    result.requestRectangleOnScreen(new Rect(0, 0, result.getWidth(), result.getHeight()), true);
+                    found[0] = true;
+                }
+            });
+            if (found[0]) { instrumentation.waitForIdleSync(); return; }
+            SystemClock.sleep(100L);
+        } while (SystemClock.elapsedRealtime() < deadline);
+        throw new AssertionError("Computed result was not rendered in the installed Activity");
+    }
+    private static TextView findText(View view, String title) {
+        if (view instanceof TextView && !title.isEmpty() && title.contentEquals(((TextView)view).getText())) return (TextView)view;
+        if (view instanceof ViewGroup) {
+            ViewGroup group = (ViewGroup)view;
+            for (int i=0;i<group.getChildCount();i++) { TextView found=findText(group.getChildAt(i),title); if(found!=null)return found; }
+        }
+        return null;
     }
 
     private static File materialize(Instrumentation instrumentation, Context target, String asset, String mode) throws Exception {

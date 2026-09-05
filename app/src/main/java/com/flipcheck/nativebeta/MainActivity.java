@@ -765,6 +765,11 @@ public class MainActivity extends Activity {
 
     private void showIdentificationResult(Models.Identification id, Models.Usage usage) {
         renderResult(id, usage);
+        if (IdentityPresentationV2.owns(id)) {
+            setStatus(id.identityConfirmed ? "Identificazione verificata." : IdentityPresentationV2.explanation(id),
+                    id.identityConfirmed ? MINT : WARN);
+            return;
+        }
         ClarificationPlanner.Plan quick = ClarificationPlanner.plan(id);
         if (id.identityConfirmed) {
             setStatus("Identificazione verificata.", MINT);
@@ -892,7 +897,7 @@ public class MainActivity extends Activity {
             if(!valueOrEmpty(id.sourceConfirmedFormat).isEmpty())p.addView(line("Formato del box",id.sourceConfirmedFormat+(valueOrEmpty(id.sealedFormat).isEmpty()?" · verificato catalogo":" · verificato foto + catalogo")));
             else if(valueOrEmpty(id.sealedFormat).isEmpty())p.addView(line("Formato del box","da verificare"));
         }
-        if(IdentityProfileEngine.electronics(IdentityProfileEngine.profile(id,IdentityProfileEngine.tuple(id)))
+        if((IdentityPresentationV2.owns(id)?IdentityPresentationV2.electronics(id):IdentityProfileEngine.electronics(IdentityProfileEngine.profile(id,IdentityProfileEngine.tuple(id))))
                 &&"TO_VERIFY".equals(id.exactModelStatus))p.addView(line("Modello esatto","da verificare"));
         if (id.priceConfidence > 0) {
             p.addView(line("Confidenza prezzo", id.priceConfidence + "%"));

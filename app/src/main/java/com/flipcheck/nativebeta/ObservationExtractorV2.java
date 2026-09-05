@@ -45,7 +45,7 @@ final class ObservationExtractorV2 {
             String rawField=safe(first(f,"key","field")),raw=safe(first(f,"value","rawTextOrSymbol","raw_value"));
             int image=f.has("image")?f.optInt("image",-1):f.optInt("image_index",-1);String location=safe(first(f,"location","region","boundingBox"));
             String side=safe(f.optString("side","unknown")),role=safe(first(f,"role","semantic_role","semanticScope"));
-            String field=TypedFieldNormalizerV2.canonicalField(profileField(rawField,role,profile),role);int confidence=f.optInt("confidence",0);
+            String field=TypedFieldNormalizerV2.canonicalField(profileField(rawField,role,profile),role+" "+location);int confidence=f.optInt("confidence",0);
             EvidenceAtom.EpistemicLevel requested=groundingLevel(field,raw,role,modality,ledger,confidence);
             EvidenceAtom atom=ledger.append(field,raw,requested,modality,source,image,side,location,cropId,role,confidence,quality(location,raw),modality==EvidenceAtom.Modality.PRIMARY_VISION?"primary_observation":"focused_observation","");
             if(atom!=null&&atom.epistemicLevel==EvidenceAtom.EpistemicLevel.INFERRED){/* intentionally demoted */}
@@ -61,6 +61,8 @@ final class ObservationExtractorV2 {
 
     private static EvidenceAtom.EpistemicLevel groundingLevel(String field,String raw,String role,EvidenceAtom.Modality modality,ImmutableEvidenceLedgerV2 ledger,int confidence){
         String f=safe(field),r=safe(role).toLowerCase(Locale.ROOT);
+        // Catalog symbol names are classifications, unlike the raw visualSymbol appearance.
+        if(f.equals("setSymbol"))return EvidenceAtom.EpistemicLevel.INFERRED;
         boolean identityLabel=f.equals("manufacturer")||f.equals("brand")||f.equals("game")||f.equals("setName")||f.equals("productLine")||f.equals("subSeries");
         if(!identityLabel)return EvidenceAtom.EpistemicLevel.OBSERVED;
         boolean literalRole=r.contains("printed")||r.contains("ocr")||r.contains("brand_mark")||r.contains("visible_text")||r.contains("logo")||r.endsWith("_text")||r.equals("product_line")||r.equals("set_name")||r.equals("game_brand");
@@ -83,8 +85,8 @@ final class ObservationExtractorV2 {
             // Composite branding text stays a transcription: do not invent a brand split.
             if(r.equals("product_branding"))return "printedLabel";
         }
-        if((k.equals("subject")||k.equals("subject_name"))&&profile==DomainProfileRouterV2.Profile.TCG_CARD)return "cardName";
-        if((k.equals("subject")||k.equals("subject_name"))&&profile==DomainProfileRouterV2.Profile.SPORTS_CARD)return "athlete";
+        if((k.equals("name")||k.equals("subject")||k.equals("subject_name"))&&profile==DomainProfileRouterV2.Profile.TCG_CARD)return "cardName";
+        if((k.equals("subject")||k.equals("subject_name")||k.equals("featured_subject")||k.equals("featuredsubject"))&&profile==DomainProfileRouterV2.Profile.SPORTS_CARD)return "athlete";
         if((k.equals("card_number")||TypedFieldNormalizerV2.canonicalField(field,role).equals("collectorNumber"))&&profile==DomainProfileRouterV2.Profile.TCG_CARD)return "collectorNumber";
         if(k.equals("card_number")&&profile==DomainProfileRouterV2.Profile.SPORTS_CARD)return "physicalCardNumber";
         if((k.equals("year")||k.equals("season"))&&r.contains("stat"))return "statisticsSeason";

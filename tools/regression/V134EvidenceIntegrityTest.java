@@ -127,4 +127,79 @@ public class V134EvidenceIntegrityTest {
         c.fields.put("manufacturer", "Example OR Alternative");
         assertFalse(CatalogConsistencyV3.check(c, c.domain).coherent);
     }
+    @Test public void insufficientCatalogQualityHasInspectableReason() {
+        ImmutableEvidenceLedgerV2 ledger = new ImmutableEvidenceLedgerV2();
+        for (String[] pair : new String[][]{{"cardName", "Example creature"}, {"collectorNumber", "12/80"}})
+            ledger.append(pair[0], pair[1], EvidenceAtom.EpistemicLevel.OBSERVED,
+                EvidenceAtom.Modality.PRIMARY_VISION, "test", 0, "front", "identity label", "", "identity", 95, 90, "test", "");
+        IdentityCandidateV2 c = new IdentityCandidateV2("catalog-row", DomainProfileRouterV2.Profile.TCG_CARD, "test");
+        c.retrieved = true; c.exactReference = true; c.sourceUrl = "https://catalog.example/row";
+        c.sourceRecordId = "row"; c.sourcePageScope = "CHECKLIST_ROW"; c.webSourceQuality = 4;
+        c.fields.put("cardName", "Example creature"); c.fields.put("catalogCardNumber", "12/80"); c.fields.put("setName", "Example set");
+        CandidateVerifierV2.verify(java.util.Collections.singletonList(c), ledger, c.domain);
+        assertFalse(c.disproofPassed);
+        assertTrue(c.disproofReason, c.disproofReason.contains("source_quality=4<60"));
+    }
+    @Test public void presentationDoesNotInventMissingPhotoOrReclassifyProfile() {
+        Models.Identification id = new Models.Identification();
+        id.finalStateReducerVersion = FinalStateReducerV2.VERSION;
+        id.v2Profile = "sealed_trading_card_product"; id.identityStatus = "UNRESOLVED";
+        id.canonicalProfile = "authoritative_snapshot";
+        assertTrue(IdentityPresentationV2.sealed(id));
+        assertFalse(IdentityPresentationV2.electronics(id));
+        assertFalse(IdentityPresentationV2.explanation(id).contains("foto"));
+        assertEquals("authoritative_snapshot", id.canonicalProfile);
+        assertNull(id.normalizedPhotoIdentity);
+        id.identityStatus = "CONFLICTED";
+        assertFalse(IdentityPresentationV2.explanation(id).contains("resta valida"));
+        id.v2Profile = "television_remote_control";
+        assertTrue(IdentityPresentationV2.electronics(id));
+    }
+    @Test public void catalogSymbolLabelAndVisibleAppearanceAreDifferentEvidence() throws Exception {
+        ImmutableEvidenceLedgerV2 ledger = new ImmutableEvidenceLedgerV2();
+        JSONArray facts = new JSONArray();
+        for (String[] pair : new String[][]{{"setSymbol", "Example Set", "SET_IDENTIFIER"},
+                {"setSymbolAppearance", "three black leaves", "VISIBLE_SYMBOL"}})
+            facts.put(new JSONObject().put("key", pair[0]).put("value", pair[1]).put("role", pair[2])
+                    .put("image", 0).put("side", "front").put("location", "right of illustration").put("confidence", 95));
+        ObservationExtractorV2.ingestPrimary(new JSONObject().put("category", "tcg_card").put("facts", facts), ledger);
+        assertFalse(ledger.hasObserved("setSymbol"));
+        assertTrue(ledger.hasObserved("visualSymbol"));
+        assertNotNull(ledger.strongest("setSymbol", EvidenceAtom.EpistemicLevel.INFERRED));
+    }
+    @Test public void configurationPrepositionsDoNotChangeAutographCount() {
+        assertTrue(SemanticRelationV3.compatible(SemanticRelationV3.relate("configuration", "1 autograph in every box", "1 autograph per box")));
+        assertEquals(SemanticRelationV3.Relation.INCOMPATIBLE, SemanticRelationV3.relate("configuration", "1 autograph in every box", "1 autograph per 3 boxes"));
+    }
+    @Test public void statisticsLocationOverridesMislabelledReleaseYear() throws Exception {
+        ImmutableEvidenceLedgerV2 l = new ImmutableEvidenceLedgerV2();
+        JSONObject f = new JSONObject().put("key", "productReleaseYear").put("value", "2001-02").put("role", "release_season")
+            .put("image", 0).put("side", "back").put("location", "statistics table, YR row").put("confidence", 99);
+        ObservationExtractorV2.ingestFocused(new JSONObject().put("facts", new JSONArray().put(f)), l, DomainProfileRouterV2.Profile.SPORTS_CARD, "crop");
+        assertFalse(l.hasObserved("productReleaseYear")); assertTrue(l.hasObserved("statisticsSeason"));
+    }
+    @Test public void transcriptionAliasesPreserveIdentityAxes() {
+        String[][] pairs={{"productLineText","productLine"},{"productLineToken","productLine"},
+                {"releaseSeasonText","productReleaseYear"},{"configurationText","configuration"},{"seriesText","subSeries"},
+                {"editionMark","firstEditionMark"},{"tcgNumber","collectorNumber"}};
+        for(String[] p:pairs)assertEquals(p[0],p[1],TypedFieldNormalizerV2.canonicalField(p[0],""));
+        assertEquals("PRESENT",TypedFieldNormalizerV2.normalizeValue("firstEditionMark","Edition 1 logo",""));
+    }
+    @Test public void observedToolQueryIsNotLostWhenGeneratedQueriesAreEmpty() throws Exception {
+        JSONObject payload = new JSONObject().put("queries",new JSONArray());
+        java.util.List<String> actual = java.util.Collections.singletonList("remote control sources back numeric keypad");
+        assertEquals("",CandidateRetrieverV2.neutralQueryViolation(payload,DomainProfileRouterV2.Profile.TELEVISION_REMOTE_CONTROL,
+                new java.util.ArrayList<>(),new ImmutableEvidenceLedgerV2(),actual));
+    }
+    @Test public void observedFirstEditionMarkParticipatesInCandidateComparison() {
+        ImmutableEvidenceLedgerV2 l = new ImmutableEvidenceLedgerV2();
+        l.append("firstEditionMark","Edition 1 logo",EvidenceAtom.EpistemicLevel.OBSERVED,
+            EvidenceAtom.Modality.PRIMARY_VISION,"test",0,"front","left edition mark","","edition",95,90,"test","");
+        TypedFieldNormalizerV2.normalize(l);
+        assertTrue(l.hasObserved("edition"));
+        IdentityCandidateV2 c = new IdentityCandidateV2("wrong-edition",DomainProfileRouterV2.Profile.TCG_CARD,"test");
+        c.retrieved=true;c.sourceUrl="https://catalog.example/row";c.webSourceQuality=90;c.fields.put("edition","UNLIMITED");
+        CandidateVerifierV2.verify(java.util.Collections.singletonList(c),l,c.domain);
+        assertTrue(c.rejected);assertFalse(c.trueConflicts.isEmpty());
+    }
 }

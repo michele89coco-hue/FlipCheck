@@ -22,7 +22,7 @@ final class SemanticRelationV3 {
             Set<String>common=new LinkedHashSet<>(xs);common.retainAll(ys);double coverage=(double)common.size()/Math.min(xs.size(),ys.size());
             if(coverage>=.85d)return Relation.CANONICAL_EQUIVALENT;if(coverage>=.55d)return Relation.COMPATIBLE_EXTENSION;if(coverage>=.30d)return Relation.AMBIGUOUS;return Relation.INCOMPATIBLE;
         }
-        if(safe(field).equals("configuration")){if(!numericTokens(x).equals(numericTokens(y)))return Relation.INCOMPATIBLE;Set<String>xs=tokens(x),ys=tokens(y);if(xs.containsAll(ys)||ys.containsAll(xs))return Relation.COMPATIBLE_EXTENSION;return Relation.INCOMPATIBLE;}
+        if(safe(field).equals("configuration")){if(!numericTokens(x).equals(numericTokens(y)))return Relation.INCOMPATIBLE;Set<String>xs=configurationTokens(x),ys=configurationTokens(y);if(xs.containsAll(ys)||ys.containsAll(xs))return Relation.COMPATIBLE_EXTENSION;return Relation.INCOMPATIBLE;}
         if(hierarchical(field)){
             Set<String> xs=tokens(x),ys=tokens(y);if(xs.isEmpty()||ys.isEmpty())return Relation.AMBIGUOUS;
             if(field.equals("productType")){xs.remove("PRODUCT");ys.remove("PRODUCT");}
@@ -43,6 +43,10 @@ final class SemanticRelationV3 {
     private static boolean seasonContains(String a,String b){String x=digits(a),y=digits(b);return x.length()==4&&y.startsWith(x)||y.length()==4&&x.startsWith(y);}
     private static String digits(String x){return safe(x).replaceAll("[^0-9]","");}
     private static Set<String> tokens(String raw){Set<String>out=new LinkedHashSet<>();for(String t:words(raw).split(" "))if(t.length()>1&&!t.equals("SERIES")&&!t.equals("THE"))out.add(t);return out;}
+    private static Set<String> configurationTokens(String value){
+        String normalized=words(value).replace("IN EVERY", "PER").replace("IN EACH", "PER").replace("BOXES", "BOX");
+        return tokens(normalized);
+    }
     private static Set<String> numericTokens(String raw){Set<String>out=new LinkedHashSet<>();for(String t:words(raw).split(" "))if(t.matches("\\d+"))out.add(t);return out;}
     private static String words(String raw){return Normalizer.normalize(safe(raw),Normalizer.Form.NFD).replaceAll("\\p{M}+","").toUpperCase(Locale.ROOT).replaceAll("[^A-Z0-9]+"," ").trim().replaceAll("\\s+"," ");}
     private static String safe(String v){return v==null?"":v.trim();}
