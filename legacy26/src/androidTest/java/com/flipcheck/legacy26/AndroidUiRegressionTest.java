@@ -53,6 +53,11 @@ public final class AndroidUiRegressionTest {
             tap("tabScan"); waitForJs("!$('scanPage').classList.contains('hide')", 5000);
             tap("tabSettings");
             eval("$('apiKey').scrollIntoView({block:'center'});true"); tap("apiKey");
+            waitForJs("document.activeElement === $('apiKey')", 5000);
+            instrumentation.runOnMainSync(() -> {
+                assertTrue("WebView must have native input focus", web.hasFocus());
+                assertTrue("WebView window must have input focus", web.hasWindowFocus());
+            });
             waitForKeyboard(true);
             assertTrue("Keyboard must shrink actual WebView viewport", webHeight() < fullHeight);
             instrumentation.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK); waitForKeyboard(false);
@@ -158,6 +163,13 @@ public final class AndroidUiRegressionTest {
         fail("Keyboard visibility did not become "+visible);
     }
     private void tap(String id) throws Exception {
+        // DOM evaluation can finish before a cold emulator has drawn the new tab/scroll.
+        // Synchronize with WebView's compositor before injecting physical coordinates.
+        CountDownLatch rendered = new CountDownLatch(1);
+        instrumentation.runOnMainSync(() -> web.postVisualStateCallback(0, new WebView.VisualStateCallback() {
+            @Override public void onComplete(long requestId) { web.postOnAnimation(rendered::countDown); }
+        }));
+        assertTrue("WebView visual state timeout", rendered.await(30, TimeUnit.SECONDS));
         JSONObject p=new JSONObject(eval("(()=>{let r=$('"+id+"').getBoundingClientRect();return {x:r.x+r.width/2,y:r.y+r.height/2,w:innerWidth}})()"));
         int[] location=new int[2];int[] width={0};instrumentation.runOnMainSync(()->{web.getLocationOnScreen(location);width[0]=web.getWidth();});
         float scale=(float)(width[0]/p.getDouble("w"));float x=location[0]+(float)p.getDouble("x")*scale,y=location[1]+(float)p.getDouble("y")*scale;

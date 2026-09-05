@@ -51,6 +51,8 @@ public final class MainActivity extends Activity {
                 | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
         }
         web = new WebView(this);
+        web.setFocusable(true);
+        web.setFocusableInTouchMode(true);
         web.setBackgroundColor(0xff0b1020);
         web.getSettings().setJavaScriptEnabled(true);
         web.getSettings().setDomStorageEnabled(true);
