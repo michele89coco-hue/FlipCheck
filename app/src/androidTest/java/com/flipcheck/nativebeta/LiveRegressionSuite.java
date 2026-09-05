@@ -137,6 +137,12 @@ public final class LiveRegressionSuite {
                 .put("observedTrace", snapshot.identification.v2ObservedFacts)
                 .put("inferredTrace", snapshot.identification.v2InferredFacts);
         if(snapshot.usage!=null)run.put("costUsd", snapshot.usage.costUsd);
+        run.put("pipelineFailureDomain",snapshot.identification.pipelineFailureDomain)
+                .put("callReasons",snapshot.identification.v2CallReasons)
+                .put("recoveryTrace",snapshot.identification.v2RecoveryTrace)
+                .put("stagePayloads",new JSONArray(snapshot.identification.v2StagePayloads));
+        if(snapshot.identification.title==null||snapshot.identification.title.isEmpty())
+            throw new AssertionError("Pipeline returned empty identity before rendering: "+snapshot.identification.pipelineFailureDomain+" "+snapshot.identification.v2CallReasons);
         awaitRenderedResult(instrumentation, activity, snapshot.identification.title);
         run.put("resultRenderedInActivity", true);
         return new RunResult(snapshot.identification, snapshot.usage == null ? new Models.Usage() : snapshot.usage);
@@ -195,7 +201,7 @@ public final class LiveRegressionSuite {
         require(usage.visionCalls >= 1 && usage.webCalls >= 1 && id.marketCalls == 0, key + " call ladder was skipped or market search leaked");
         require(usage.costUsd <= .0250001d, key + " exceeded USD 0.025: " + usage.costUsd);
         if ("topps".equals(key)) {
-            require("Topps".equalsIgnoreCase(id.brand) && contains(id.family, "Chrome") && (contains(id.family, "Update") || contains(id.sourceConfirmedSubSeries, "Update")), "sealed hierarchy wrong: " + id.title);
+            require("Topps".equalsIgnoreCase(id.brand) && contains(id.family, "Chrome") && (contains(id.family, "Update") || contains(id.observedSubSeries, "Update") || contains(id.sourceConfirmedSubSeries, "Update")), "sealed hierarchy wrong: " + id.title);
             require("2025-26".equals(id.physicalReleaseYear) || "2025-26".equals(id.sourceConfirmedReleaseYear), "sealed season wrong");
             require(contains(id.sealedFormat, "Hobby") && "CONFIRMED".equals(id.commercialFormatStatus), "Hobby configuration unresolved: " + id.sealedFormat);
             require(!contains(id.title, "Upper Deck") && ("FORMAT_PENDING".equals(id.exactIdentityStatus) || "CATALOG_MATCHED".equals(id.exactIdentityStatus)), "sealed result contaminated");

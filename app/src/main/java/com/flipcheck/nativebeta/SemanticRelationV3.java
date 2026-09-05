@@ -13,6 +13,10 @@ final class SemanticRelationV3 {
     static Relation relate(String field,String left,String right){
         String a=safe(left),b=safe(right);if(a.isEmpty()||b.isEmpty())return Relation.AMBIGUOUS;
         if(a.equalsIgnoreCase(b))return Relation.EXACT;
+        if(field.equals("manufacturer")||field.equals("brand")){
+            String corporateA=corporateRoot(a),corporateB=corporateRoot(b);
+            if(!corporateA.isEmpty()&&corporateA.equals(corporateB))return Relation.CANONICAL_EQUIVALENT;
+        }
         if(TypedFieldNormalizerV2.ambiguous(a)||TypedFieldNormalizerV2.ambiguous(b))return Relation.AMBIGUOUS;
         String x=TypedFieldNormalizerV2.normalizeValue(field,a,""),y=TypedFieldNormalizerV2.normalizeValue(field,b,"");
         if(words(x).equals(words(y))||TypedFieldNormalizerV2.equivalent(field,x,y))return Relation.CANONICAL_EQUIVALENT;
@@ -41,6 +45,7 @@ final class SemanticRelationV3 {
         return Relation.INCOMPATIBLE;
     }
 
+    private static String corporateRoot(String value){return words(value).replaceFirst("(?: (?:INCORPORATED|INC|LIMITED|LTD|LLC|CORPORATION|CORP|INTERNATIONAL))+$","").trim();}
     private static boolean genericContainer(String value){return words(value).matches("(?:SEALED |UNOPENED |PACKAGED )?(?:BOX|PACKAGE|PACK|PRODUCT)");}
     private static boolean unspecifiedDesign(String value){
         String s=words(value);

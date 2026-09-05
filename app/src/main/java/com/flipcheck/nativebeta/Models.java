@@ -377,6 +377,7 @@ final class Models {
         String sourceConfirmedMainSet = "";
         String sourceConfirmedSubset = "";
         String sourceConfirmedSubSeries = "";
+        String observedSubSeries = "";
         String sourceConfirmedParallelFamily = "";
         String sourceConfirmedParallelColor = "";
         String sourceConfirmedPrintRun = "";

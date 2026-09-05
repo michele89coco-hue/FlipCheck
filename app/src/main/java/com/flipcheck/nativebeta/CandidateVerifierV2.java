@@ -12,8 +12,24 @@ final class CandidateVerifierV2 {
         List<IdentityCandidateV2>out=new ArrayList<>();if(candidates==null)return out;
         for(IdentityCandidateV2 c:candidates){score(c,ledger,profile);out.add(c);}
         out.sort(Comparator.comparingInt((IdentityCandidateV2 x)->x.totalScore).reversed());
+        // Prefer the complete seasonal record of the same verified card. Keep the
+        // entire record isolated; never borrow just its year for another winner.
+        IdentityCandidateV2 leaderRecord=null;
+        for(IdentityCandidateV2 c:out)if(!c.rejected&&c.disproofPassed&&c.totalScore>=45){leaderRecord=c;break;}
+        if(leaderRecord!=null)for(IdentityCandidateV2 c:new ArrayList<>(out))if(seasonRefines(c,leaderRecord)){out.remove(c);out.add(0,c);break;}
         boolean leader=false;for(IdentityCandidateV2 c:out){if(c.rejected)c.status="INCOMPATIBLE";else if(c.disproofPassed&&c.totalScore>=45&&!leader){c.status="WINNER";leader=true;}else if(c.totalScore>=55)c.status="AMBIGUOUS";else c.status="LOW_SUPPORT";}
         return out;
+    }
+
+    static boolean seasonRefines(IdentityCandidateV2 specific,IdentityCandidateV2 parent){
+        if(specific==parent||specific.domain!=DomainProfileRouterV2.Profile.SPORTS_CARD||specific.rejected||!specific.retrieved||!specific.disproofPassed||specific.webSourceQuality<60)return false;
+        if(!parent.value("productReleaseYear").matches("[0-9]{4}")||!specific.value("productReleaseYear").matches("[0-9]{4}-[0-9]{2,4}"))return false;
+        if(!SemanticRelationV3.compatible(SemanticRelationV3.relate("productReleaseYear",parent.value("productReleaseYear"),specific.value("productReleaseYear"))))return false;
+        for(String f:new String[]{"manufacturer","productLine","athlete","catalogCardNumber"})
+            if(specific.value(f).isEmpty()||!SemanticRelationV3.compatible(SemanticRelationV3.relate(f,parent.value(f),specific.value(f))))return false;
+        for(String f:new String[]{"cardRole","subSeries","edition","finish"})
+            if(!specific.value(f).equalsIgnoreCase(parent.value(f)))return false;
+        return true;
     }
 
     private static void score(IdentityCandidateV2 c,ImmutableEvidenceLedgerV2 ledger,DomainProfileRouterV2.Profile profile){
@@ -50,9 +66,18 @@ final class CandidateVerifierV2 {
         if(!c.retrieved)c.totalScore=Math.min(c.totalScore,74);if(observedCompared==0&&c.retrieved)c.totalScore=Math.min(c.totalScore,54);
         if(c.rejected){c.totalScore=0;return;}
 
-        boolean enough=disproofEvidence(profile,c,coreMatches);
+        boolean subseriesSupported=profile!=DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT||supportsObservedSubseries(c,ledger);
+        boolean enough=disproofEvidence(profile,c,coreMatches)&&subseriesSupported;
         c.disproofPassed=c.retrieved&&consistency.coherent&&coreConflicts==0&&enough;c.disproofResult=c.disproofPassed?"PASSED":"INSUFFICIENT";c.disproofReason=c.disproofPassed?"isolated_record_matches_grounded_evidence":insufficientReason(profile,c,coreMatches);
         if(c.disproofPassed)c.totalScore=Math.min(100,c.totalScore+5);if(c.totalScore==100&&(!c.trueConflicts.isEmpty()||!c.unknownFields.isEmpty()&&!c.exactReference))c.totalScore=99;
+        if(!subseriesSupported)c.disproofReason="observed_subseries_not_supported_by_record";
+    }
+
+    private static boolean supportsObservedSubseries(IdentityCandidateV2 c,ImmutableEvidenceLedgerV2 ledger){
+        EvidenceAtom a=ledger.strongest("subSeries",EvidenceAtom.EpistemicLevel.OBSERVED);
+        if(a==null||!a.localized())return true;
+        String hierarchy=c.value("productLine")+" "+c.value("setName")+" "+c.value("subSeries");
+        return SemanticRelationV3.compatible(SemanticRelationV3.relate("subSeries",a.normalizedValue,hierarchy));
     }
 
     private static boolean exclusiveVariantConflict(String field,String observed,String candidate,DomainProfileRouterV2.Profile p){

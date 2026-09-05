@@ -25,6 +25,20 @@ final class TypedFieldNormalizerV2 {
             if(field.equals("firstEditionMark")&&normalized.equals("PRESENT"))ledger.appendNormalization(atom,"FIRST_EDITION","edition","edition");
             if(field.equals("collectorNumber")){String total=printedTotal(normalized);if(!total.isEmpty())ledger.appendNormalization(atom,total,"printedTotal","collector_number_denominator");}
         }
+        composeCollectorParts(ledger);
+    }
+
+    private static void composeCollectorParts(ImmutableEvidenceLedgerV2 ledger){
+        for(EvidenceAtom number:new ArrayList<>(ledger.current("collectorNumber"))){
+            if(number.epistemicLevel!=EvidenceAtom.EpistemicLevel.OBSERVED||!number.reliable()||!number.localized()||!number.normalizedValue.matches("[A-Z]*[0-9]{1,5}"))continue;
+            EvidenceAtom match=null;boolean ambiguous=false;
+            for(EvidenceAtom total:ledger.current("printedTotal")){
+                if(total.epistemicLevel!=EvidenceAtom.EpistemicLevel.OBSERVED||!total.reliable()||!total.normalizedValue.matches("[0-9]{1,5}"))continue;
+                if(number.imageIndex!=total.imageIndex||number.modality!=total.modality||!number.cropId.equals(total.cropId)||!number.boundingBox.equalsIgnoreCase(total.boundingBox))continue;
+                if(match!=null&&!match.normalizedValue.equals(total.normalizedValue)){ambiguous=true;break;}match=total;
+            }
+            if(match!=null&&!ambiguous)ledger.appendNormalization(number,number.normalizedValue+"/"+match.normalizedValue,"collectorNumber","collector_number denominator_evidence="+match.id);
+        }
     }
 
     private static boolean collectorRepair(EvidenceAtom atom,String field,String normalized){
