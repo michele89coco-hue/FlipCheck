@@ -238,7 +238,9 @@ public class MainActivity extends Activity {
         scan.addView(this.detailsInput, match());
         this.readPhotoButton = primary("LEGGI FOTO");
         this.readPhotoButton.setContentDescription("flipcheck-read-photo");
-        this.readPhotoButton.setOnClickListener(v -> startIdentification(true));
+        this.readPhotoButton.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) { startIdentification(true); }
+        });
         scan.addView(this.readPhotoButton, match());
         scan.addView(text("Lettura rapida di carta, slab o oggetto. La verifica web è facoltativa.", 12, MUTED, false), match());
         this.identifyButton = secondary("VERIFICA COMPLETA");
@@ -888,10 +890,14 @@ public class MainActivity extends Activity {
                 reading.addView(text("Il voto è trascritto dall’etichetta; autenticità non verificata.", 12, MUTED, false));
             reading.addView(text(String.format(Locale.ROOT,"Costo lettura: $%.4f · ricerche web: %d",usage.costUsd,usage.webCalls),12,MUTED,false));
             Button verify = primary("VERIFICA QUESTI DATI SUL WEB");
-            verify.setOnClickListener(v -> startIdentification(false));
+            verify.setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View view) { startIdentification(false); }
+            });
             reading.addView(verify,match());
             Button export = secondary("ESPORTA DIAGNOSTICA");
-            export.setOnClickListener(v -> prepareDiagnosticDocument(id,usage));
+            export.setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View view) { prepareDiagnosticDocument(id,usage); }
+            });
             reading.addView(export,match());
             this.resultPanel.addView(reading,match());
             return;

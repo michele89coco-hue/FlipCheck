@@ -124,6 +124,14 @@ public class V156PhotoReadingTest {
             CandidateVerifierV2.verify(candidates,l,DomainProfileRouterV2.Profile.TCG_CARD);assertTrue(Arrays.toString(mutation),candidates.get(0).rejected);
         }
     }
+    @Test public void splittingSetYearCannotHideConflictingLabelYears()throws Exception{
+        JSONObject r=recording();
+        JSONArray facts=r.getJSONObject("v154_vision2_physical_review").getJSONArray("facts");
+        for(int i=0;i<facts.length();i++)if(facts.getJSONObject(i).getString("key").equals("slabYear"))facts.getJSONObject(i).put("value","2001");
+        RecordedClient client=new RecordedClient(r);
+        Models.Identification id=UniversalIdentityEngineV2.identify(local(),images(),"",client,new Models.Usage());
+        assertEquals("CONFLICTED",id.identityStatus);assertFalse(id.identityConfirmed);
+    }
     @Test public void fullReplayStillRequiresBoundWebSources()throws Exception{
         RecordedClient client=new RecordedClient(recording());client.omitSources=true;
         Models.Identification id=UniversalIdentityEngineV2.identify(local(),images(),"",client,new Models.Usage());
