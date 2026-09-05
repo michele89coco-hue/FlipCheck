@@ -37,6 +37,27 @@ final class UniversalIdentityEngineV2 {
             catch(Exception failure){id.v2RecoveryTrace=append(id.v2RecoveryTrace,"focused_failed="+technicalStatus(failure));}
             plan=AdaptiveRecoveryPlannerV2.afterFocused(profile,ledger,usage);id.v2RecoveryTrace=append(id.v2RecoveryTrace,trace(plan));
         }
+        if(AdaptiveRecoveryPlannerV2.needsEditionInspection(profile,ledger)){
+            if(AdaptiveRecoveryPlannerV2.canInspectEditionBeforeWeb(usage)){
+                ImagePreparationV2.Prepared editionImages=ImagePreparationV2.focused(images,profile,"physical_edition_inspection");
+                try{
+                    OpenAiClient.Response check=client.observeFocusedV2(editionImages.images,
+                            "PHYSICAL EDITION INSPECTION ONLY. Inspect the original card and edition-band crops. "
+                            +"Transcribe the literal lettering and numeral of any edition stamp, its precise location, "
+                            +"and emit firstEditionMark only when the edition inscription is actually legible. "
+                            +"STAGE/evolution level is evolutionStage, never edition. A numeral in a circle alone is not proof of edition. "
+                            +"Keep expansion, rarity and edition symbols separate. If no stamp is present after inspection, "
+                            +"emit firstEditionMark=ABSENT with the inspected region; if unreadable, list the missing discriminator. "
+                            +"Do not guess Unlimited from an unreadable stamp. Do not restate card name, set, brand or candidates.");
+                    collect(id,usage,check,"v149_focused_physical_edition_inspection");id.discriminativeVisionCount++;
+                    if(check!=null&&check.complete&&check.payload!=null){
+                        ObservationExtractorV2.Result inspected=ObservationExtractorV2.ingestEditionInspection(check.payload,ledger,editionImages.cropId);
+                        TypedFieldNormalizerV2.normalize(ledger);recordViews(id,inspected.views,ledger,id.uploadedImageCount);
+                    }
+                    id.v2RecoveryTrace=append(id.v2RecoveryTrace,"edition_inspection:missing_physical_edition_after_focused");
+                }catch(Exception failure){id.v2RecoveryTrace=append(id.v2RecoveryTrace,"edition_inspection_failed="+technicalStatus(failure));}
+            }else id.v2RecoveryTrace=append(id.v2RecoveryTrace,"edition_inspection_skipped=reserved_catalog_budget");
+        }
         List<IdentityCandidateV2>hypotheses=HypothesisGeneratorV2.merge(primary.hypotheses,focusedHypotheses);List<IdentityCandidateV2>all=new ArrayList<>(hypotheses);
         if(plan.action==AdaptiveRecoveryPlannerV2.Action.IDENTITY_WEB||AdaptiveRecoveryPlannerV2.needsWeb(profile,ledger)&&usage!=null&&usage.webCalls==0&&usage.costUsd+.008d<=.025d){
             id.v2CallReasons=append(id.v2CallReasons,"identity_web:"+plan.reason+":"+plan.discriminator);try{String retrievalPrompt=CandidateRetrieverV2.prompt(profile,ledger,hypotheses);OpenAiClient.Response web=client.identityWebSearchV2(images,retrievalPrompt);collect(id,usage,web,"v133_identity_web_multimodal");id.webStatus=web==null?"FAILED":"COMPLETED";if(web!=null&&web.payload!=null){for(String q:CandidateRetrieverV2.queries(web.payload))if(!contains(id.webQueries,q))id.webQueries.add(q);String neutralViolation=CandidateRetrieverV2.neutralQueryViolation(web.payload,profile,hypotheses,ledger,web.queries);List<IdentityCandidateV2>parsed=CandidateRetrieverV2.parse(web.payload,profile,ledger);CandidateRetrieverV2.bindToolSources(parsed,web.sources);if(!empty(neutralViolation)){rejectBatch(parsed,"neutral_query_policy:"+neutralViolation);id.v2RecoveryTrace=append(id.v2RecoveryTrace,"identity_web_rejected="+neutralViolation);if(usage!=null&&usage.costUsd+.008d<=.025d){OpenAiClient.Response retry=client.identityWebSearchV2(images,retrievalPrompt+"\nNEUTRAL_QUERY_RETRY: query[0] must contain no brand, model or site filter.");collect(id,usage,retry,"v133_identity_web_neutral_retry");if(retry!=null&&retry.payload!=null){for(String q:CandidateRetrieverV2.queries(retry.payload))if(!contains(id.webQueries,q))id.webQueries.add(q);List<IdentityCandidateV2>retryParsed=CandidateRetrieverV2.parse(retry.payload,profile,ledger);CandidateRetrieverV2.bindToolSources(retryParsed,retry.sources);String retryViolation=CandidateRetrieverV2.neutralQueryViolation(retry.payload,profile,hypotheses,ledger,retry.queries);if(!empty(retryViolation))rejectBatch(retryParsed,"neutral_query_policy:"+retryViolation);parsed.addAll(retryParsed);}}}all.addAll(parsed);}}

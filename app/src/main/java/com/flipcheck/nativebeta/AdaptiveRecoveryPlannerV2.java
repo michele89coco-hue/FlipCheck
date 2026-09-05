@@ -24,6 +24,19 @@ final class AdaptiveRecoveryPlannerV2 {
         List<String>missing=criticalMissing(profile,ledger);if(!missing.isEmpty())return new Plan(Action.REQUEST_PHOTO,missing.get(0),"remaining_field_not_recoverable_from_current_views",.90d,0d);
         return new Plan(Action.CLOSE,"","focused_physical_level_ready",.20d,0d);
     }
+    static boolean needsEditionInspection(DomainProfileRouterV2.Profile profile,ImmutableEvidenceLedgerV2 ledger){
+        if(profile!=DomainProfileRouterV2.Profile.TCG_CARD)return false;
+        EvidenceAtom edition=ledger.strongest("edition",EvidenceAtom.EpistemicLevel.OBSERVED);
+        if(edition!=null&&edition.reliable()&&edition.localized()
+                &&edition.normalizedValue.matches("FIRST_EDITION|UNLIMITED"))return false;
+        EvidenceAtom mark=ledger.strongest("firstEditionMark",EvidenceAtom.EpistemicLevel.OBSERVED);
+        return mark==null||!mark.reliable()||!mark.localized()||!mark.normalizedValue.matches("PRESENT|ABSENT");
+    }
+    static boolean canInspectEditionBeforeWeb(Models.Usage usage){
+        // Reserve the $0.01 tool fee plus search/output tokens, separately from
+        // this small physical check. Never spend the catalog budget on recovery.
+        return usage!=null&&cost(usage)+.0035d+.014d<=.025d;
+    }
     static List<String> criticalMissing(DomainProfileRouterV2.Profile p,ImmutableEvidenceLedgerV2 l){List<String>m=new ArrayList<>();
         if(p==DomainProfileRouterV2.Profile.TCG_CARD){need(m,l,"cardName");need(m,l,"collectorNumber");needEither(m,l,"setName","productLine");}
         else if(p==DomainProfileRouterV2.Profile.SPORTS_CARD){need(m,l,"athlete");needEither(m,l,"physicalCardNumber","collectorNumber");need(m,l,"productLine");need(m,l,"productReleaseYear");}

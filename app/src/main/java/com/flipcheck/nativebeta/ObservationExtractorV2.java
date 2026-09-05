@@ -39,6 +39,22 @@ final class ObservationExtractorV2 {
             ledger.append(item.label,item.value,EvidenceAtom.EpistemicLevel.OBSERVED,m,"on_device",item.imageIndex,"unknown",region,"",item.label,confidence(item,m),75,"local_scan","");}
     }
 
+    static Result ingestEditionInspection(JSONObject payload,ImmutableEvidenceLedgerV2 ledger,String cropId){
+        Result out=new Result();if(payload==null)return out;
+        strings(payload.optJSONArray("views"),out.views);
+        JSONArray facts=payload.optJSONArray("facts");if(facts==null)return out;
+        JSONArray marks=new JSONArray();
+        for(int i=0;i<facts.length();i++){
+            JSONObject f=facts.optJSONObject(i);if(f==null)continue;
+            String field=TypedFieldNormalizerV2.canonicalField(first(f,"key","field"),first(f,"role","semantic_role"));
+            if(field.equals("firstEditionMark"))marks.put(f);
+        }
+        // The recovery may repair only the requested attribute, never overwrite
+        // an already established name, number, set, or finish.
+        ingestFacts(marks,ledger,EvidenceAtom.Modality.FOCUSED_VISION,"edition_inspection",DomainProfileRouterV2.Profile.TCG_CARD,cropId);
+        return out;
+    }
+
     private static void ingestFacts(JSONArray facts,ImmutableEvidenceLedgerV2 ledger,EvidenceAtom.Modality modality,String source,DomainProfileRouterV2.Profile profile){ingestFacts(facts,ledger,modality,source,profile,"");}
     private static void ingestFacts(JSONArray facts,ImmutableEvidenceLedgerV2 ledger,EvidenceAtom.Modality modality,String source,DomainProfileRouterV2.Profile profile,String cropId){
         if(facts==null)return;for(int i=0;i<facts.length();i++){JSONObject f=facts.optJSONObject(i);if(f==null)continue;
@@ -51,6 +67,12 @@ final class ObservationExtractorV2 {
             if(profile==DomainProfileRouterV2.Profile.TCG_CARD&&field.equals("cardName")
                     &&raw.matches("#?\\s*[0-9]+(?:/[0-9]+)?")&&role.toLowerCase(Locale.ROOT).contains("number"))field="printedLabel";
             if(profile==DomainProfileRouterV2.Profile.TCG_CARD){
+                String semanticRole=role.toLowerCase(Locale.ROOT).replace('-', ' ');
+                if(field.equals("edition")&&semanticRole.contains("evolution"))field="evolutionStage";
+                // Preserve the appearance for a separate physical inspection. A
+                // guessed expansion label must not swallow an edition-shaped mark.
+                if((field.equals("setName")||field.equals("setSymbol"))
+                        &&semanticRole.matches(".*(?:raw|appearance).*symbol.*|.*symbol.*appearance.*"))field="visualSymbol";
                 String descriptiveContext=(role+" "+location).toLowerCase(Locale.ROOT).replace('-', ' ');
                 // Species/flavour classifications printed below the artwork are
                 // descriptors, not a second card identity. Keep the literal text,
@@ -68,6 +90,9 @@ final class ObservationExtractorV2 {
             if(profile==DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT&&field.equals("commercialFormat")
                     &&raw.toLowerCase(Locale.ROOT).replaceAll("[*!]", "").trim().matches(
                         "[0-9]+ (?:autographs?(?: cards?)?|cards?|packs?) (?:in every|in each|per) (?:box|pack|case)"))field="configuration";
+            if(profile==DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT&&field.equals("productType")
+                    &&raw.toLowerCase(Locale.ROOT).matches(".+\\bseries\\b")
+                    &&(role+" "+location).toLowerCase(Locale.ROOT).matches(".*(?:text|title|logo|label).*"))field="subSeries";
             String groundingRole=role;
             if(profile==DomainProfileRouterV2.Profile.SPORTS_CARD){
                 String labelRole=role.toLowerCase(Locale.ROOT).replace('-', ' ');
@@ -123,6 +148,14 @@ final class ObservationExtractorV2 {
         if(f.equals("setSymbol"))return EvidenceAtom.EpistemicLevel.INFERRED;
         boolean identityLabel=f.equals("manufacturer")||f.equals("brand")||f.equals("game")||f.equals("setName")||f.equals("productLine")||f.equals("subSeries");
         if(!identityLabel)return EvidenceAtom.EpistemicLevel.OBSERVED;
+        // A weaker, uncorroborated focused classification cannot become a hard
+        // fact merely because it was returned later. Retain both hypotheses for
+        // independent catalog disproof against the physical subject and number.
+        if(modality==EvidenceAtom.Modality.FOCUSED_VISION&&!localTextSupports(ledger,raw))
+            for(EvidenceAtom prior:ledger.current(f))
+                if(prior.modality==EvidenceAtom.Modality.PRIMARY_VISION&&prior.confidence>confidence
+                        &&SemanticRelationV3.relate(f,prior.normalizedValue,raw)==SemanticRelationV3.Relation.INCOMPATIBLE)
+                    return EvidenceAtom.EpistemicLevel.INFERRED;
         boolean literalRole=r.contains("printed")||r.contains("ocr")||r.contains("brand_mark")||r.contains("visible_text")||r.contains("logo")||r.endsWith("_text")||r.equals("product_line")||r.startsWith("product line")||r.equals("subseries")||r.equals("sub-series")||r.equals("set_name")||r.equals("game_brand")||r.equals("manufacturer_brand")||r.equals("manufacturer mark")||r.equals("manufacturer")||r.startsWith("sealed_brand_line");
         // A set-name inferred from a symbol classification is a hypothesis; the observed item is the symbol's appearance, not the catalog set label.
         if((f.equals("setName")||f.equals("productLine"))&&r.contains("symbol"))return EvidenceAtom.EpistemicLevel.INFERRED;

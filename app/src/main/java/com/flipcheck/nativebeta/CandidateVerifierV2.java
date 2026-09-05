@@ -83,9 +83,16 @@ final class CandidateVerifierV2 {
     }
 
     private static boolean supportsObservedSubseries(IdentityCandidateV2 c,ImmutableEvidenceLedgerV2 ledger){
+        // The complete line may carry the subseries even when no separate field
+        // was emitted. A broad parent record must not erase these printed tokens.
+        EvidenceAtom line=ledger.strongest("productLine",EvidenceAtom.EpistemicLevel.OBSERVED);
+        String hierarchy=c.value("productLine")+" "+c.value("setName")+" "+c.value("subSeries");
+        if(line!=null&&line.localized()){
+            SemanticRelationV3.Relation relation=SemanticRelationV3.relate("productLine",line.normalizedValue,hierarchy);
+            if(!SemanticRelationV3.compatible(relation)||relation==SemanticRelationV3.Relation.CHILD)return false;
+        }
         EvidenceAtom a=ledger.strongest("subSeries",EvidenceAtom.EpistemicLevel.OBSERVED);
         if(a==null||!a.localized())return true;
-        String hierarchy=c.value("productLine")+" "+c.value("setName")+" "+c.value("subSeries");
         return SemanticRelationV3.compatible(SemanticRelationV3.relate("subSeries",a.normalizedValue,hierarchy));
     }
 

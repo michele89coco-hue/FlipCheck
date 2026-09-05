@@ -22,7 +22,9 @@ public class V145RecordedGreenTest {
             if(!r.getString("remotePrompt").isEmpty()){
                 ImmutableEvidenceLedgerV2 l=new ImmutableEvidenceLedgerV2();ObservationExtractorV2.Result a=ObservationExtractorV2.ingestPrimary(v.getJSONObject("primary"),l);TypedFieldNormalizerV2.normalize(l);
                 DomainProfileRouterV2.Profile profile=DomainProfileRouterV2.route(a.category,l);ObservationExtractorV2.Result b=ObservationExtractorV2.ingestFocused(v.optJSONObject("focused"),l,profile,"recorded");TypedFieldNormalizerV2.normalize(l);
-                assertEquals(r.getString("remotePrompt"),CandidateRetrieverV2.prompt(profile,l,HypothesisGeneratorV2.merge(a.hypotheses,b.hypotheses)));
+                // Preserve the recorded query/evidence bytes; only the documented source-selection policy is appended.
+                String expectedPrompt=r.getString("remotePrompt").replace("separate from format/SKU.","separate from format/SKU."+CandidateRetrieverV2.REMOTE_ACCESSORY_CONTRACT);
+                assertEquals(expectedPrompt,CandidateRetrieverV2.prompt(profile,l,HypothesisGeneratorV2.merge(a.hypotheses,b.hypotheses)));
             }
         }
     }

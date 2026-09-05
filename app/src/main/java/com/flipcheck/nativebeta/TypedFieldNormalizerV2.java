@@ -99,7 +99,7 @@ final class TypedFieldNormalizerV2 {
         if(f.equals("productReleaseYear")||f.equals("setSeason")||f.equals("statisticsSeason"))return SeasonNormalizer.normalize(value);
         if(f.equals("finish")){String c=words(value);if(c.equals("NON HOLO")||c.equals("NONHOLO"))return "NON_HOLO";if(c.contains("REVERSE")&&c.contains("HOLO"))return "REVERSE_HOLO";if(c.contains("HOLO")||c.contains("HOLOGRAPHIC"))return "HOLO";}
         if(f.equals("manufacturer")||f.equals("brand"))return displayWords(value);
-        if(f.equals("productLine")||f.equals("setName"))return value.replaceAll("(?i)\\bupdates\\b","Update").replaceAll("\\s+"," ").trim();
+        if(f.equals("productLine")||f.equals("setName")||f.equals("subSeries"))return value.replaceAll("(?i)\\bupdates\\b","Update").replaceAll("\\s+"," ").trim();
         return value;
     }
 
