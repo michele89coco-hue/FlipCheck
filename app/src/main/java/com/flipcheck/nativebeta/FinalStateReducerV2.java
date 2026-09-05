@@ -125,7 +125,7 @@ final class FinalStateReducerV2 {
                     // The printed label can be invisible while a complete, isolated
                     // configuration record independently resolves the format.
                     boolean missingLabel=unknown.toLowerCase(Locale.ROOT).matches(
-                        "(?:packaging |printed |physical |box )?format (?:label|badge|marking)(?: is)? not (?:fully )?(?:visible|readable)[.!]?");
+                        "(?:packaging |printed |physical |box )?format (?:label|badge|marking)(?:(?: is)? not (?:fully )?(?:visible|readable)[.!]?)?");
                     if(!missingLabel||!groundedBoxConfiguration(candidate,ledger))return "";
                 }
         return first(physical,candidate==null?"":candidate.value("commercialFormat"));

@@ -12,9 +12,11 @@ final class CandidateRetrieverV2 {
 
     static String prompt(DomainProfileRouterV2.Profile profile,ImmutableEvidenceLedgerV2 ledger,List<IdentityCandidateV2> hypotheses){
         StringBuilder observed=new StringBuilder(),inferred=new StringBuilder();
+        boolean recoverRemoteLabels=needsRemoteControlLabelRecovery(profile,ledger);
         for(EvidenceAtom a:queryEvidence(profile,ledger)){
             if(a.parentEvidenceId.isEmpty()&&hasNormalizedChild(ledger,a))continue;
-            if(!queryField(a.field)||a.semanticScope.equals("OBJECT_STATISTIC")||a.semanticScope.equals("UI_OVERLAY")||a.semanticScope.equals("MARKET_TEXT")||(a.modality==EvidenceAtom.Modality.LOCAL_OCR&&a.field.equals("printedLabel")&&a.rawValue.length()>80))continue;
+            boolean remoteControlLabel=recoverRemoteLabels&&a.field.equals("controlLabel");
+            if(!(queryField(a.field)||remoteControlLabel)||a.semanticScope.equals("OBJECT_STATISTIC")||a.semanticScope.equals("UI_OVERLAY")||a.semanticScope.equals("MARKET_TEXT")||(a.modality==EvidenceAtom.Modality.LOCAL_OCR&&a.field.equals("printedLabel")&&a.rawValue.length()>80))continue;
             String item=a.field+"="+a.normalizedValue;
             if((DomainProfileRouterV2.cards(profile)||profile==DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT)
                     &&observed.indexOf(item+" | ")>=0)continue;
@@ -37,6 +39,8 @@ final class CandidateRetrieverV2 {
                     ?" For TCG, search the observed card name plus the complete collector fraction as the primary identifier. Include a targeted dedicated-card-catalog or grading-checklist query for this exact fraction in the single search batch; marketplace titles alone are not catalog proof. Compare edition and finish separately."
                     :profile==DomainProfileRouterV2.Profile.SPORTS_CARD
                     ?" For sports cards, verify the complete release season on the exact base/parallel record matching the physical number and product line. A copyright year or player statistics season is not the release season. Include a full-season parent-set-checklist query in the single search batch and return a complete matching record; never borrow a season from another parallel. Preserve the printed brand as brand and report a parent company in source metadata."
+                    :recoverRemoteLabels
+                    ?" For remote controls, query[0] must preserve the distinctive combination of localized control labels as well as the button topology. Rare co-occurring labels are stronger retrieval keys than generic shape words; they do not establish a brand by themselves."
                     :"");
     }
 
@@ -47,10 +51,14 @@ final class CandidateRetrieverV2 {
             if(legacyReplay&&c.exactReference&&c.sourceRecordId.isEmpty())c.sourceRecordId="record-"+(i+1);if(legacyReplay&&c.exactReference&&c.sourcePageScope.isEmpty())c.sourcePageScope="CHECKLIST_ROW";
             put(c,"manufacturer",x.optString("brand",""));put(c,"productLine",x.optString("product_line",""));put(c,"setName",x.optString("set_name",""));put(c,"model",x.optString("model",""));put(c,"productReleaseYear",x.optString("year",""));
             if(profile==DomainProfileRouterV2.Profile.TCG_CARD)put(c,"cardName",x.optString("subject",""));else if(profile==DomainProfileRouterV2.Profile.SPORTS_CARD)put(c,"athlete",x.optString("subject",""));put(c,"catalogCardNumber",x.optString("card_number",""));put(c,"language",x.optString("language",""));
-            String edition=x.optString("edition","");
-            if(profile==DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT&&edition.toLowerCase(Locale.ROOT).matches(".*\\b(?:box|case|pack|bundle|tin)\\b.*"))put(c,"commercialFormat",edition);
+            String edition=x.optString("edition","");String rawFormat=x.optString("format","");
+            String composedSealedFormat=profile==DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT
+                    &&SemanticRelationV3.completeBoxConfiguration(x.optString("configuration",""))
+                    ?sealedEditionContainer(edition,rawFormat):"";
+            if(!composedSealedFormat.isEmpty())put(c,"commercialFormat",composedSealedFormat);
+            else if(profile==DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT&&edition.toLowerCase(Locale.ROOT).matches(".*\\b(?:box|case|pack|bundle|tin)\\b.*"))put(c,"commercialFormat",edition);
             else if(profile==DomainProfileRouterV2.Profile.SPORTS_CARD&&isBaseRole(edition))put(c,"cardRole","BASE");else put(c,"edition",edition);
-            put(c,"cardRole",x.optString("card_role",""));put(c,"subSeries",x.optString("sub_series",""));put(c,"printedTotal",x.optString("printed_total",""));put(c,"setSymbol",x.optString("set_symbol",""));put(c,"copyrightYear",x.optString("copyright_year",""));put(c,"sport",x.optString("sport",""));put(c,"team",x.optString("team",""));put(c,"finish",x.optString("finish",""));put(c,"commercialFormat",x.optString("format",""));put(c,"configuration",x.optString("configuration",""));put(c,"productCode",x.optString("product_code",""));put(c,"barcode",x.optString("barcode",""));put(c,"productType",x.optString("category",""));
+            put(c,"cardRole",x.optString("card_role",""));put(c,"subSeries",x.optString("sub_series",""));put(c,"printedTotal",x.optString("printed_total",""));put(c,"setSymbol",x.optString("set_symbol",""));put(c,"copyrightYear",x.optString("copyright_year",""));put(c,"sport",x.optString("sport",""));put(c,"team",x.optString("team",""));put(c,"finish",x.optString("finish",""));if(composedSealedFormat.isEmpty())put(c,"commercialFormat",rawFormat);put(c,"configuration",x.optString("configuration",""));put(c,"productCode",x.optString("product_code",""));put(c,"barcode",x.optString("barcode",""));put(c,"productType",x.optString("category",""));
             put(c,"controlLayout",x.optString("control_layout",""));put(c,"shortcutButtons",x.optString("shortcut_buttons",""));put(c,"navigationLayout",x.optString("navigation_layout",""));put(c,"numericKeypad",x.optString("numeric_keypad",""));put(c,"voiceControl",x.optString("voice_control",""));put(c,"layoutSignature",x.optString("layout_signature",""));
             if(c.value("printedTotal").isEmpty()){String number=c.value("catalogCardNumber");int slash=number.indexOf('/');if(slash>0&&number.substring(slash+1).matches("\\d{1,5}"))c.fields.put("printedTotal",number.substring(slash+1));}
             strings(x.optJSONArray("matched_observed_fields"),c.reportedMatchedFields);strings(x.optJSONArray("contradicted_observed_fields"),c.reportedContradictedFields);strings(x.optJSONArray("unknown_fields"),c.unknownFields);
@@ -92,8 +100,18 @@ final class CandidateRetrieverV2 {
         return 2;
     }
     private static boolean queryField(String f){String x=safe(f);return x.matches("manufacturer|brand|game|productLine|subSeries|setName|cardName|athlete|physicalCardNumber|collectorNumber|productReleaseYear|language|edition|finish|configuration|commercialFormat|model|productCode|sku|barcode|controlLayout|shortcutButtons|printedLabel|navigationLayout|numericKeypad|voiceControl|layoutSignature|sport|visualSymbol|physicalFeature");}
+    private static boolean needsRemoteControlLabelRecovery(DomainProfileRouterV2.Profile profile,ImmutableEvidenceLedgerV2 ledger){
+        if(profile!=DomainProfileRouterV2.Profile.TELEVISION_REMOTE_CONTROL)return false;int shortcutWords=0,labels=0;boolean focusedDesign=false;
+        for(EvidenceAtom a:ledger.byLevel(EvidenceAtom.EpistemicLevel.OBSERVED))if(a.localized()){
+            if(a.field.equals("shortcutButtons"))shortcutWords=Math.max(shortcutWords,canon(a.normalizedValue).split(" ").length);
+            else if(a.field.equals("controlLabel")&&!safe(a.normalizedValue).isEmpty())labels++;
+            if(a.modality==EvidenceAtom.Modality.FOCUSED_VISION&&a.field.matches("controlLabel|controlLayout|shortcutButtons|navigationLayout|numericKeypad|voiceControl|layoutSignature"))focusedDesign=true;
+        }
+        return shortcutWords<8&&labels>=3&&!focusedDesign;
+    }
     private static void put(IdentityCandidateV2 c,String field,String value){String v=safe(value);if(field.equals("commercialFormat")&&(v.toLowerCase(Locale.ROOT).matches(".*(unspecified|multiple|not determined|not specified).*|(?:sealed |standard )?(box|package|product)")||v.contains(" / "))){if(!v.isEmpty())c.unknownFields.add("commercialFormat:unresolved_source_value="+v);return;}if(!v.isEmpty()&&!TypedFieldNormalizerV2.ambiguous(v))c.fields.put(field,TypedFieldNormalizerV2.normalizeValue(field,v,""));}
     private static boolean isBaseRole(String value){String x=safe(value).toUpperCase(Locale.ROOT).replaceAll("[^A-Z0-9]+"," ").trim();return x.equals("BASE")||x.equals("BASE SET")||x.equals("BASE CARD");}
+    private static String sealedEditionContainer(String edition,String format){String e=canon(edition),f=canon(format);if(!e.matches("HOBBY|JUMBO|BLASTER|MEGA|VALUE|RETAIL")||!f.matches("BOX|CASE|PACK|BUNDLE|TIN"))return "";return safe(edition)+" "+safe(format);}
     private static void strings(JSONArray a,List<String>out){if(a==null)return;for(int i=0;i<a.length();i++){String v=safe(a.optString(i,""));if(!v.isEmpty())out.add(v);}}
     private static void addUnique(List<String>out,String value){String v=safe(value);if(!v.isEmpty()&&!out.contains(v))out.add(v);}
     private static String canon(String value){return safe(value).toUpperCase(Locale.ROOT).replaceAll("[^A-Z0-9]+"," ").trim().replaceAll("\\s+"," ");}

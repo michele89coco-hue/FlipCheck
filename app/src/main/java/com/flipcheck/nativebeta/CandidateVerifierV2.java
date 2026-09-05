@@ -33,6 +33,7 @@ final class CandidateVerifierV2 {
     }
 
     private static void score(IdentityCandidateV2 c,ImmutableEvidenceLedgerV2 ledger,DomainProfileRouterV2.Profile profile){
+        int retrievedLayoutMatch=c.layoutMatch;
         c.matchedEvidence.clear();c.unmatchedEvidence.clear();c.trueConflicts.clear();c.fieldRelations.clear();c.disproofPassed=false;c.disproofResult="NOT_EXECUTED";c.disproofReason="";if(c.rejected){c.totalScore=0;c.disproofResult="FAILED";c.disproofReason=c.rejectionReason;return;}
         int identifiers=0,identifierComparisons=0,text=0,textComparisons=0,logos=0,config=0,design=0,designComparisons=0,coreMatches=0,coreConflicts=0,observedCompared=0;
         for(String field:c.fields.keySet()){
@@ -61,7 +62,7 @@ final class CandidateVerifierV2 {
             }
         }
         validateReportedMatches(c,ledger);
-        c.observedIdentifierMatch=average(identifiers,identifierComparisons);c.observedTextMatch=average(text,textComparisons);c.logoMatch=logos;c.configurationMatch=config;c.layoutMatch=designComparisons==0?0:average(design,designComparisons);
+        c.observedIdentifierMatch=average(identifiers,identifierComparisons);c.observedTextMatch=average(text,textComparisons);c.logoMatch=logos;c.configurationMatch=config;c.layoutMatch=designComparisons==0&&c.retrieved&&c.exactReference&&!c.value("layoutSignature").isEmpty()?retrievedLayoutMatch:designComparisons==0?0:average(design,designComparisons);
         c.catalogMatch=c.retrieved&&c.exactReference?Math.max(70,c.webSourceQuality):c.retrieved?Math.min(72,c.webSourceQuality):0;
         c.contradictionPenalty=Math.min(100,coreConflicts*45);c.inferenceOnlyPenalty=c.retrieved?0:Math.max(c.inferenceOnlyPenalty,25);
 

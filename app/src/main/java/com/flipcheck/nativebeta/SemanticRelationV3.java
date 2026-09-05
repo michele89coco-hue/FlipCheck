@@ -100,23 +100,30 @@ final class SemanticRelationV3 {
         StringBuilder known=new StringBuilder();
         for(String clause:value.split("[;\\n]"))if(!uncertainQuantityClause(clause))known.append(clause).append("; ");
         String normalized=words(known.toString()).replace("IN EVERY","PER").replace("IN EACH","PER");
+        java.util.regex.Matcher compact=java.util.regex.Pattern.compile("\\b([0-9]{1,6}) PACKS? X ([0-9]{1,6}) CARDS?\\b").matcher(normalized);
+        while(compact.find()){
+            if(!putQuantity(out,"PACK/BOX",Long.parseLong(compact.group(1)),1)||!putQuantity(out,"CARD/PACK",Long.parseLong(compact.group(2)),1))return new java.util.LinkedHashMap<>();
+        }
+        normalized=compact.replaceAll(" ");
+        compact=java.util.regex.Pattern.compile("\\b([0-9]{1,6}) CARDS? X ([0-9]{1,6}) PACKS?\\b").matcher(normalized);
+        while(compact.find()){
+            if(!putQuantity(out,"CARD/PACK",Long.parseLong(compact.group(1)),1)||!putQuantity(out,"PACK/BOX",Long.parseLong(compact.group(2)),1))return new java.util.LinkedHashMap<>();
+        }
+        normalized=compact.replaceAll(" ");
         java.util.regex.Matcher m=java.util.regex.Pattern.compile(
-                "\\b([0-9]{1,6}) (AUTOGRAPHS?(?: CARDS?)?|CARDS?|PACKS?) PER (?:([0-9]{1,6}) )?(BOXES|BOX|PACKS?|CASES?)\\b").matcher(normalized);
+                "\\b([0-9]{1,6}) (AUTOGRAPHS?(?: CARDS?)?(?: GUARANTEED)?|CARDS?|PACKS?) PER (?:([0-9]{1,6}) )?(BOXES|BOX|PACKS?|CASES?)\\b").matcher(normalized);
         while(m.find()){
             String item=m.group(2).startsWith("AUTOGRAPH")?"AUTOGRAPH":m.group(2).replaceAll("S$","");
             String container=m.group(4).equals("BOXES")?"BOX":m.group(4).replaceAll("S$","");
             long denominator=m.group(3)==null?1:Long.parseLong(m.group(3));
             if(denominator==0)return new java.util.LinkedHashMap<>();
             String key=item+"/"+container;long[] quantity={Long.parseLong(m.group(1)),denominator};
-            if(out.containsKey(key)){
-                long[] old=out.get(key);
-                if(old[0]*quantity[1]!=quantity[0]*old[1])return new java.util.LinkedHashMap<>();
-            }
-            out.put(key,quantity);
+            if(!putQuantity(out,key,quantity[0],quantity[1]))return new java.util.LinkedHashMap<>();
         }
         if(java.util.regex.Pattern.compile("[0-9]").matcher(m.reset().replaceAll("")).find())return new java.util.LinkedHashMap<>();
         return out;
     }
+    private static boolean putQuantity(java.util.Map<String,long[]> out,String key,long numerator,long denominator){if(denominator==0)return false;if(out.containsKey(key)){long[] old=out.get(key);return old[0]*denominator==numerator*old[1];}out.put(key,new long[]{numerator,denominator});return true;}
     private static boolean uncertainQuantityClause(String value){
         return words(value).matches(".*\\b(?:NOT ESTABLISHED|NOT SHOWN|NOT SPECIFIED|NOT CONFIRMED|UNKNOWN|UNVERIFIED)\\b.*");
     }
