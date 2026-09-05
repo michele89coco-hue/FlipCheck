@@ -67,4 +67,49 @@ public class V150TargetedTraceTest {
         FinalStateReducerV2.reduce(id,l,DomainProfileRouterV2.Profile.SPORTS_CARD,ranked,new ArrayList<>(),"");
         assertEquals("ExampleBox",id.brand);assertEquals("Parent Group / ExampleBox",id.catalogBrand);
     }
+    @Test public void sealedFormatMisplacedInEditionIsCanonicalizedWithoutChangingCardEditions(){
+        assertEquals("Hobby Box",CandidateRetrieverV2.sealedEditionContainer("Hobby",""));
+        assertEquals("Jumbo Box",CandidateRetrieverV2.sealedEditionContainer("Jumbo","Box"));
+        assertEquals("",CandidateRetrieverV2.sealedEditionContainer("First Edition",""));
+    }
+    @Test public void explicitSealedConfigurationContradictionCannotWin(){
+        ImmutableEvidenceLedgerV2 l=sealedLedger();IdentityCandidateV2 c=sealed("j","SINGLE_RECORD",true,"Jumbo Box","11 cards per pack; packs per box not shown");
+        c.reportedContradictedFields.add("configuration=observed one autograph per box is not established by this record");
+        IdentityCandidateV2 ranked=CandidateVerifierV2.verify(new ArrayList<>(Arrays.asList(c)),l,DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT).get(0);
+        assertTrue(ranked.rejected);assertEquals("reported_observed_field_conflict",ranked.rejectionReason);
+    }
+    @Test public void exactHighLayoutFormatMarkCannotReplaceCompletePackCounts(){
+        ImmutableEvidenceLedgerV2 l=sealedLedger();observed(l,"visualSymbol","H inside a circular sunburst badge","upper badge");
+        IdentityCandidateV2 c=sealed("h","SINGLE_RECORD",true,"Hobby Box","1 autograph per box");c.layoutMatch=88;c.fields.put("setSymbol","H in circular sunburst badge");
+        c.unknownFields.add("whether the H badge is format-specific");
+        List<IdentityCandidateV2> ranked=CandidateVerifierV2.verify(new ArrayList<>(Arrays.asList(c)),l,DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT);
+        Models.Identification id=new Models.Identification();id.uploadedImageCount=1;
+        FinalStateReducerV2.reduce(id,l,DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT,ranked,new ArrayList<>(),"");
+        assertEquals("",id.sealedFormat);
+    }
+    @Test public void genericLayoutWithoutMatchingFormatMarkRemainsPending(){
+        ImmutableEvidenceLedgerV2 l=sealedLedger();IdentityCandidateV2 c=sealed("h","SINGLE_RECORD",true,"Hobby Box","1 autograph per box");c.layoutMatch=92;c.fields.put("setSymbol","H badge");
+        c.unknownFields.add("whether the H badge is format-specific");
+        List<IdentityCandidateV2> ranked=CandidateVerifierV2.verify(new ArrayList<>(Arrays.asList(c)),l,DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT);
+        Models.Identification id=new Models.Identification();id.uploadedImageCount=1;
+        FinalStateReducerV2.reduce(id,l,DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT,ranked,new ArrayList<>(),"");
+        assertEquals("",id.sealedFormat);
+    }
+    @Test public void completeConfigurationSurvivesAFormatAppearanceQuestion(){
+        ImmutableEvidenceLedgerV2 l=sealedLedger();IdentityCandidateV2 c=sealed("h","CHECKLIST_ROW",true,"Hobby Box","4 cards per pack; 20 packs per box; 1 autograph per box");
+        c.unknownFields.add("Whether the pictured physical box is Hobby rather than another format");
+        List<IdentityCandidateV2> ranked=CandidateVerifierV2.verify(new ArrayList<>(Arrays.asList(c)),l,DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT);
+        Models.Identification id=new Models.Identification();id.uploadedImageCount=1;
+        FinalStateReducerV2.reduce(id,l,DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT,ranked,new ArrayList<>(),"");
+        assertEquals("Hobby Box",id.sealedFormat);
+    }
+    @Test public void hobbySectionWinsWhenJumboAdmitsObservedConfigurationConflict(){
+        ImmutableEvidenceLedgerV2 l=sealedLedger();IdentityCandidateV2 hobby=sealed("h","MULTI_RECORD_PAGE",false,CandidateRetrieverV2.sealedEditionContainer("Hobby",""),"1 autograph per box; pack and card quantities not isolated in retrieved record");
+        hobby.unknownFields.add("exact packaging badge meaning");IdentityCandidateV2 jumbo=sealed("j","SINGLE_RECORD",true,"Jumbo Box","11 cards per pack; packs per box not shown");
+        jumbo.reportedContradictedFields.add("configuration=observed one autograph per box is not established by this record");
+        List<IdentityCandidateV2> ranked=CandidateVerifierV2.verify(new ArrayList<>(Arrays.asList(jumbo,hobby)),l,DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT);
+        Models.Identification id=new Models.Identification();id.uploadedImageCount=1;
+        FinalStateReducerV2.reduce(id,l,DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT,ranked,new ArrayList<>(),"");
+        assertEquals("h",id.candidateWinnerId);assertEquals("Hobby Box",id.sealedFormat);
+    }
 }

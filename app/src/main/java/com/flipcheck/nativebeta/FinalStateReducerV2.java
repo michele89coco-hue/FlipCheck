@@ -122,11 +122,9 @@ final class FinalStateReducerV2 {
         if(physical.isEmpty()&&candidate!=null&&candidate.domain==DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT)
             for(String unknown:candidate.unknownFields)
                 if(unknown.toLowerCase(Locale.ROOT).matches(".*(format|hobby|jumbo|blaster|box configuration).*")){
-                    // The printed label can be invisible while a complete, isolated
-                    // configuration record independently resolves the format.
-                    boolean missingLabel=unknown.toLowerCase(Locale.ROOT).matches(
-                        "(?:packaging |printed |physical |box )?format (?:label|badge|marking)(?:(?: is)? not (?:fully )?(?:visible|readable)[.!]?)?");
-                    if(!missingLabel||!groundedBoxConfiguration(candidate,ledger))return "";
+                    // Only uncertainty about the photographed label may be
+                    // superseded by an independently complete catalog configuration.
+                    if(!physicalFormatObservationUnknown(unknown)||!groundedBoxConfiguration(candidate,ledger))return "";
                 }
         return first(physical,candidate==null?"":candidate.value("commercialFormat"));
     }
@@ -138,6 +136,13 @@ final class FinalStateReducerV2 {
                 &&SemanticRelationV3.compatible(SemanticRelationV3.relate("productLine",line,c.value("productLine")+" "+c.value("setName")+" "+c.value("subSeries")))
                 &&SemanticRelationV3.compatible(SemanticRelationV3.relate("productReleaseYear",year,c.value("productReleaseYear")))
                 &&SemanticRelationV3.compatible(SemanticRelationV3.relate("configuration",configuration,c.value("configuration")));
+    }
+    private static boolean physicalFormatObservationUnknown(String value){
+        String unknown=safe(value).toLowerCase(Locale.ROOT).replace('_',' ').replaceAll("\\s+"," ").trim();
+        if(unknown.matches("(?:packaging |printed |physical |box )?format (?:label|badge|marking)(?:(?: is)? not (?:fully )?(?:visible|readable)[.!]?)?"))return true;
+        // The Web response may phrase the same absent photographed label as a
+        // question; source-level uncertainty is intentionally excluded.
+        return unknown.matches(".*\\b(?:observed|pictured|physical|photographed)\\b.*\\b(?:format|hobby|jumbo|blaster|mega|retail|badge|marking)\\b.*");
     }
     private static String titleYear(Models.Identification id){
         String physical=safe(id.physicalReleaseYear),catalog=safe(id.sourceConfirmedReleaseYear);

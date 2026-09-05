@@ -68,6 +68,8 @@ final class CandidateVerifierV2 {
 
         CatalogConsistencyV3.Result consistency=CatalogConsistencyV3.check(c,profile);
         if(!consistency.coherent){c.rejected=true;c.rejectionReason=consistency.reason;c.disproofResult="FAILED";c.disproofReason=consistency.reason;}
+        String reportedConflict=reportedCoreConflict(c,ledger,profile);
+        if(!reportedConflict.isEmpty()){c.rejected=true;c.rejectionReason="reported_observed_field_conflict";c.disproofResult="FAILED";c.disproofReason=reportedConflict;}
         if(coreConflicts>0){c.rejected=true;c.rejectionReason="strong_observed_field_conflict";c.disproofResult="FAILED";c.disproofReason=join(c.trueConflicts);}
 
         int components=c.observedIdentifierMatch*25+c.observedTextMatch*20+c.logoMatch*10+c.layoutMatch*15+c.catalogMatch*15+c.webSourceQuality*10+c.configurationMatch*5;
@@ -141,6 +143,20 @@ final class CandidateVerifierV2 {
     }
 
     private static int validateReportedMatches(IdentityCandidateV2 c,ImmutableEvidenceLedgerV2 ledger){int count=0;for(String raw:c.reportedMatchedFields){String field=reportedField(raw),candidate=c.value(field);if(candidate.isEmpty())continue;EvidenceAtom observed=ledger.strongest(field,EvidenceAtom.EpistemicLevel.OBSERVED);if(observed!=null&&observed.localized()&&SemanticRelationV3.compatible(SemanticRelationV3.relate(field,observed.normalizedValue,candidate))){addUnique(c.matchedEvidence,observed.id);count++;}}return count;}
+    private static String reportedCoreConflict(IdentityCandidateV2 c,ImmutableEvidenceLedgerV2 ledger,DomainProfileRouterV2.Profile profile){
+        if(profile!=DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT)return "";
+        for(String raw:c.reportedContradictedFields){
+            String lower=raw==null?"":raw.toLowerCase(java.util.Locale.ROOT);
+            String field=lower.contains("configuration")||lower.contains("autograph")||lower.contains("cards per pack")||lower.contains("packs per box")?"configuration"
+                    :lower.contains("subseries")||lower.contains("sub-series")?"subSeries"
+                    :lower.contains("product line")?"productLine"
+                    :lower.contains("season")||lower.contains("release year")?"productReleaseYear"
+                    :lower.contains("sport")||lower.contains("basketball")||lower.contains("baseball")?"sport":"";
+            EvidenceAtom observed=field.isEmpty()?null:ledger.strongest(field,EvidenceAtom.EpistemicLevel.OBSERVED);
+            if(observed!=null&&observed.localized()&&observed.reliable())return raw;
+        }
+        return "";
+    }
     private static String reportedField(String raw){String x=raw==null?"":raw.trim();int cut=x.indexOf('=');if(cut<0)cut=x.indexOf(':');if(cut>0)x=x.substring(0,cut);return TypedFieldNormalizerV2.canonicalField(x,"");}
     private static EvidenceAtom observedFor(ImmutableEvidenceLedgerV2 ledger,String field,DomainProfileRouterV2.Profile profile){EvidenceAtom observed=ledger.strongest(photoField(field,profile),EvidenceAtom.EpistemicLevel.OBSERVED);if(observed==null&&field.equals("manufacturer"))observed=ledger.strongest("brand",EvidenceAtom.EpistemicLevel.OBSERVED);return observed!=null&&observed.localized()?observed:null;}
     private static String photoField(String field,DomainProfileRouterV2.Profile p){if(field.equals("catalogCardNumber"))return p==DomainProfileRouterV2.Profile.TCG_CARD?"collectorNumber":"physicalCardNumber";return field;}

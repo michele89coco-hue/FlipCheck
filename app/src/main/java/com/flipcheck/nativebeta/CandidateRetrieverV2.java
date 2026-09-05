@@ -37,7 +37,7 @@ final class CandidateRetrieverV2 {
                     ?" For sealed products, prioritize the manufacturer's exact packaging/configuration record, not card checklist rows. Use the complete observed product line and subseries in the configuration query. Retrieve actual cards per pack, packs per box and guarantees for each plausible format; preserve each unit. Compare visible packaging badges and configuration with that record. A shared autograph count alone cannot identify the format. If format is still unknown, leave format empty and explain the missing discriminator in unknown_fields; do not claim a format match while also marking it unknown. Within the single web_search call, include targeted queries for exact manufacturer + complete line + season + box configuration using observed fields above. Prioritize results from actual product pages with pack quantities and packaging descriptions for each plausible format. A category page, checklist, shared autograph count or different format with an incompatible guarantee is insufficient for format proof. For a multi-format guide, use CHECKLIST_ROW only when one independently labelled section attributes all quantities to that format; otherwise use MULTI_RECORD_PAGE and exact_reference=false. Never set disproof_passed=true for a claimed format while its cards-per-pack or packs-per-box are unconfirmed; continue the targeted search for an isolated exact product record."
                     :"")
                 +(profile==DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT
-                    ?" QUERY CONTRACT: the first configuration query must include the COMPLETE observed line (including every subseries token), release season, literal guarantee and pack/box units. Include the observed format-badge description in the same search batch. A broad base-line page is not a substitute for the observed subseries. If a guide contains several formats, extract each labelled section separately, with its actual pack counts and badge meaning. Never attach a Jumbo page's URL to a Hobby record or invent missing counts."
+                    ?" QUERY CONTRACT: the first configuration query must include the COMPLETE observed line (including every subseries token), release season, literal guarantee and pack/box units. Include the observed format-badge description in the same search batch. A broad base-line page is not a substitute for the observed subseries. If a guide contains several formats, extract each labelled section separately, with its actual pack counts and badge meaning. Never attach a Jumbo page's URL to a Hobby record or invent missing counts. Do not spend a VARIANT_OR_FORMAT candidate on a format whose cards-per-pack and packs-per-box are absent: continue searching inside this same web call, or return it only as CORE_IDENTITY with format empty. A competing format with missing quantities cannot disprove a complete configuration record and must be reported as unresolved rather than as an equally supported format."
                     :profile==DomainProfileRouterV2.Profile.TELEVISION_REMOTE_CONTROL
                     ?REMOTE_ACCESSORY_CONTRACT
                     :"")
@@ -59,7 +59,6 @@ final class CandidateRetrieverV2 {
             if(profile==DomainProfileRouterV2.Profile.TCG_CARD)put(c,"cardName",x.optString("subject",""));else if(profile==DomainProfileRouterV2.Profile.SPORTS_CARD)put(c,"athlete",x.optString("subject",""));put(c,"catalogCardNumber",x.optString("card_number",""));put(c,"language",x.optString("language",""));
             String edition=x.optString("edition","");String rawFormat=x.optString("format","");
             String composedSealedFormat=profile==DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT
-                    &&SemanticRelationV3.completeBoxConfiguration(x.optString("configuration",""))
                     ?sealedEditionContainer(edition,rawFormat):"";
             if(!composedSealedFormat.isEmpty())put(c,"commercialFormat",composedSealedFormat);
             else if(profile==DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT&&edition.toLowerCase(Locale.ROOT).matches(".*\\b(?:box|case|pack|bundle|tin)\\b.*"))put(c,"commercialFormat",edition);
@@ -68,8 +67,21 @@ final class CandidateRetrieverV2 {
             put(c,"controlLayout",x.optString("control_layout",""));put(c,"shortcutButtons",x.optString("shortcut_buttons",""));put(c,"navigationLayout",x.optString("navigation_layout",""));put(c,"numericKeypad",x.optString("numeric_keypad",""));put(c,"voiceControl",x.optString("voice_control",""));put(c,"layoutSignature",x.optString("layout_signature",""));
             if(c.value("printedTotal").isEmpty()){String number=c.value("catalogCardNumber");int slash=number.indexOf('/');if(slash>0&&number.substring(slash+1).matches("\\d{1,5}"))c.fields.put("printedTotal",number.substring(slash+1));}
             strings(x.optJSONArray("matched_observed_fields"),c.reportedMatchedFields);strings(x.optJSONArray("contradicted_observed_fields"),c.reportedContradictedFields);strings(x.optJSONArray("unknown_fields"),c.unknownFields);
+            demoteUnprovedSealedFormat(c,profile);
             out.add(c);}
         return out;}
+
+    private static void demoteUnprovedSealedFormat(IdentityCandidateV2 c,DomainProfileRouterV2.Profile profile){
+        if(profile!=DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT||c.value("commercialFormat").isEmpty()
+                ||SemanticRelationV3.completeBoxConfiguration(c.value("configuration")))return;
+        // A named format without both pack units remains a product-family lead,
+        // but cannot compete with a complete isolated format record.
+        c.unknownFields.add("commercialFormat:configuration_incomplete");
+        c.fields.remove("commercialFormat");
+        if("VARIANT_OR_FORMAT".equals(c.identityLevel))c.identityLevel="CORE_IDENTITY";
+        c.exactReference=false;
+        c.reportedDisproofPassed=false;
+    }
 
     /** Only the selected candidate may enter the shared retrieved-evidence ledger. */
     static void commitWinner(IdentityCandidateV2 winner,ImmutableEvidenceLedgerV2 ledger){if(winner==null||winner.rejected||!winner.retrieved||!winner.disproofPassed)return;for(String field:winner.fields.keySet()){String value=winner.value(field);if(value.isEmpty()||winner.sourceUrl.isEmpty())continue;ledger.append(field,value,EvidenceAtom.EpistemicLevel.RETRIEVED,EvidenceAtom.Modality.WEB_CATALOG,winner.sourceAuthority,-1,"","","",field,winner.webSourceQuality,winner.webSourceQuality,"winning_candidate_commit",winner.sourceUrl);}}
@@ -117,7 +129,7 @@ final class CandidateRetrieverV2 {
     }
     private static void put(IdentityCandidateV2 c,String field,String value){String v=safe(value);if(field.equals("commercialFormat")&&(v.toLowerCase(Locale.ROOT).matches(".*(unspecified|multiple|not determined|not specified).*|(?:sealed |standard )?(box|package|product)")||v.contains(" / "))){if(!v.isEmpty())c.unknownFields.add("commercialFormat:unresolved_source_value="+v);return;}if(!v.isEmpty()&&!TypedFieldNormalizerV2.ambiguous(v))c.fields.put(field,TypedFieldNormalizerV2.normalizeValue(field,v,""));}
     private static boolean isBaseRole(String value){String x=safe(value).toUpperCase(Locale.ROOT).replaceAll("[^A-Z0-9]+"," ").trim();return x.equals("BASE")||x.equals("BASE SET")||x.equals("BASE CARD");}
-    private static String sealedEditionContainer(String edition,String format){String e=canon(edition),f=canon(format);if(!e.matches("HOBBY|JUMBO|BLASTER|MEGA|VALUE|RETAIL")||!f.matches("BOX|CASE|PACK|BUNDLE|TIN"))return "";return safe(edition)+" "+safe(format);}
+    static String sealedEditionContainer(String edition,String format){String e=canon(edition),f=canon(format);if(!e.matches("HOBBY|JUMBO|BLASTER|MEGA|VALUE|RETAIL"))return "";if(f.isEmpty())return safe(edition)+" Box";if(!f.matches("BOX|CASE|PACK|BUNDLE|TIN"))return "";return safe(edition)+" "+safe(format);}
     private static void strings(JSONArray a,List<String>out){if(a==null)return;for(int i=0;i<a.length();i++){String v=safe(a.optString(i,""));if(!v.isEmpty())out.add(v);}}
     private static void addUnique(List<String>out,String value){String v=safe(value);if(!v.isEmpty()&&!out.contains(v))out.add(v);}
     private static String canon(String value){return safe(value).toUpperCase(Locale.ROOT).replaceAll("[^A-Z0-9]+"," ").trim().replaceAll("\\s+"," ");}
