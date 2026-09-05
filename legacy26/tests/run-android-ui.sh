@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
+trap 'adb logcat -d > artifact/android-logcat.txt' EXIT
 adb shell cmd overlay enable-exclusive --category com.android.internal.systemui.navbar.threebutton
 adb shell settings put secure show_ime_with_hard_keyboard 1
 adb install -t -r artifact/FlipCheck-v0.26.2-fix.apk

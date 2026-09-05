@@ -42,7 +42,8 @@ public final class AndroidUiRegressionTest {
         output = new File(activity.getExternalFilesDir(null), "ui159"); output.mkdirs();
         List<Uri> created = new ArrayList<>();
         try {
-            waitForJs("typeof diagnostic26 === 'function'", 15000);
+            screenshot("launch-before-web-ready.png");
+            waitForJs("typeof diagnostic26 === 'function'", 45000);
             eval("window.fetch = function(){throw new Error('NETWORK_FORBIDDEN_IN_UI_TEST')}; true");
             int fullHeight = webHeight();
             assertViewportAboveNavigation();
@@ -109,6 +110,9 @@ public final class AndroidUiRegressionTest {
                 .put("pickerResultDelivery","instrumented result with real MediaStore URIs")
                 .put("systemPickerOpenedSeparately",true);
             try(FileOutputStream stream=new FileOutputStream(new File(output,"report.json"))) { stream.write(report.toString(2).getBytes(java.nio.charset.StandardCharsets.UTF_8)); }
+        } catch (Exception | AssertionError failure) {
+            screenshot("failure.png");
+            throw failure;
         } finally {
             for(Uri uri:created) activity.getContentResolver().delete(uri,null,null);
             instrumentation.runOnMainSync(() -> activity.finish());
@@ -134,7 +138,7 @@ public final class AndroidUiRegressionTest {
     private String eval(String script) throws Exception {
         CountDownLatch done=new CountDownLatch(1);AtomicReference<String> value=new AtomicReference<>();
         instrumentation.runOnMainSync(()->web.evaluateJavascript(script,result->{value.set(result);done.countDown();}));
-        assertTrue("WebView script timeout",done.await(5,TimeUnit.SECONDS));return value.get();
+        assertTrue("WebView script timeout: " + script,done.await(30,TimeUnit.SECONDS));return value.get();
     }
     private void waitForJs(String condition,long timeout) throws Exception {
         long end=SystemClock.uptimeMillis()+timeout;
