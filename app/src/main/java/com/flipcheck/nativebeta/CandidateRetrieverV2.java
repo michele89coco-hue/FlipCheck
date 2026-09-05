@@ -33,6 +33,11 @@ final class CandidateRetrieverV2 {
                 +"\nLOCALIZED_OBSERVED_FACTS="+clip(observed.toString(),1500)
                 +"\nINFERRED_LEADS_NON_BINDING="+(neutralBrand?"WITHHELD_FROM_FIRST_QUERY":clip(inferred.toString(),500))
                 +"\nALTERNATIVE_HYPOTHESES_TO_PROVE_OR_DISPROVE="+(neutralBrand?"GENERATE_ONLY_AFTER_NEUTRAL_RETRIEVAL":clip(alternatives.toString(),500))
+                +"\nSLAB CONTRACT: slab* fields are literal descriptions on the grading label, not card-surface print. "
+                +"Use their set/year/number/language to retrieve the enclosed card and compare it to the visible card. "
+                +"A grading company is not the card manufacturer; gradingCertification is not card serial/print run. "
+                +"A label number without a denominator is partial, not different from the catalog number with the same numerator and matching set. "
+                +"Keep certification authenticity separate from card identification. Never invent certification verification. "
                 +"\nMANDATORY: query[0] must contain only localized observed facts and must exclude every inferred brand/model. A later query may test brands independently discovered by that neutral search. "
                 +"Create separate candidate records for every checklist row, edition, card number, product format or device model found on the same page. Never merge fields across records or pages. "
                 +"Do not include statistics, UI text, prices or marketplace wording. For remote controls return the candidate's own control_layout, shortcut_buttons, navigation_layout, numeric_keypad, voice_control and layout_signature so the app can recompute the match locally; for cards require checklist number agreement; for sealed products keep manufacturer, line, season and printed configuration separate from format/SKU."
@@ -122,7 +127,7 @@ final class CandidateRetrieverV2 {
         if(f.matches("edition|firstEditionMark|language|finish|configuration|commercialFormat|visualSymbol|sport"))return 1;
         return 2;
     }
-    private static boolean queryField(String f){String x=safe(f);return x.matches("manufacturer|brand|game|productLine|subSeries|setName|cardName|athlete|physicalCardNumber|collectorNumber|productReleaseYear|language|edition|finish|configuration|commercialFormat|model|productCode|sku|barcode|controlLayout|shortcutButtons|printedLabel|navigationLayout|numericKeypad|voiceControl|layoutSignature|sport|visualSymbol|physicalFeature");}
+    private static boolean queryField(String f){String x=safe(f);return x.matches("slabSetName|slabCardNumber|slabYear|slabLanguage|slabEdition|slabFinish|gradingCompany|gradingCertification|manufacturer|brand|game|productLine|subSeries|setName|cardName|athlete|physicalCardNumber|collectorNumber|productReleaseYear|language|edition|finish|configuration|commercialFormat|model|productCode|sku|barcode|controlLayout|shortcutButtons|printedLabel|navigationLayout|numericKeypad|voiceControl|layoutSignature|sport|visualSymbol|physicalFeature");}
     private static boolean needsRemoteControlLabelRecovery(DomainProfileRouterV2.Profile profile,ImmutableEvidenceLedgerV2 ledger){
         if(profile!=DomainProfileRouterV2.Profile.TELEVISION_REMOTE_CONTROL)return false;int shortcutWords=0,labels=0;
         for(EvidenceAtom a:ledger.byLevel(EvidenceAtom.EpistemicLevel.OBSERVED))if(a.localized()){

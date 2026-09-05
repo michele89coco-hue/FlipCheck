@@ -1289,6 +1289,9 @@ public class MainActivity extends Activity {
         panel.addView(text("pre_web_invariants="+valueOrEmpty(id.preWebInvariants)
                 +" · post_web_invariants="+valueOrEmpty(id.postWebInvariants)
                 +" · final_decision_reason="+valueOrEmpty(id.finalDecisionReason),11,MUTED,false));
+        if(!valueOrEmpty(id.gradingCompany).isEmpty()||!valueOrEmpty(id.gradingCertification).isEmpty())
+            panel.addView(text("Etichetta slab: "+valueOrEmpty(id.gradingCompany)+" "+valueOrEmpty(id.gradingGrade)
+                    +" · Certificato "+valueOrEmpty(id.gradingCertification)+" · autenticità non verificata",12,MUTED,false));
         panel.addView(text("physical_card_number="+valueOrEmpty(id.physicalCardNumber)
                 +" · origin="+valueOrEmpty(id.physicalCardNumberOrigin)
                 +" · physical_collector_number="+valueOrEmpty(id.physicalCollectorNumber)

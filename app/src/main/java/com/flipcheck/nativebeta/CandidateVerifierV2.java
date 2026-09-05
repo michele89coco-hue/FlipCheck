@@ -38,7 +38,8 @@ final class CandidateVerifierV2 {
         int identifiers=0,identifierComparisons=0,text=0,textComparisons=0,logos=0,config=0,design=0,designComparisons=0,coreMatches=0,coreConflicts=0,observedCompared=0;
         for(String field:c.fields.keySet()){
             String candidate=c.value(field);EvidenceAtom observed=observedFor(ledger,field,profile);if(observed==null)continue;observedCompared++;
-            SemanticRelationV3.Relation relation=SemanticRelationV3.relate(photoField(field,profile),observed.normalizedValue,candidate);if(profile==DomainProfileRouterV2.Profile.SPORTS_CARD&&field.equals("manufacturer")
+            SemanticRelationV3.Relation relation=SemanticRelationV3.relate(photoField(field,profile),observed.normalizedValue,candidate);if(profile==DomainProfileRouterV2.Profile.TCG_CARD&&field.equals("catalogCardNumber"))
+                relation=SlabEvidenceV155.numberRelation(observed,c,ledger);if(profile==DomainProfileRouterV2.Profile.SPORTS_CARD&&field.equals("manufacturer")
                     &&relation==SemanticRelationV3.Relation.INCOMPATIBLE&&candidate.contains("/")){
                 // Catalogs may list a publisher and its printed brand together.
                 // Only an exact component corroborates the photographed label.
@@ -57,7 +58,7 @@ final class CandidateVerifierV2 {
                 else if(coreField(field,profile))coreMatches++;
             }else if(relation==SemanticRelationV3.Relation.INCOMPATIBLE){
                 c.unmatchedEvidence.add(field+":"+observed.normalizedValue+"<>"+candidate);
-                boolean independentIdentifier=!identifier(field)||EvidenceProofPolicyV3.independentlyCorroborated(
+                boolean independentIdentifier=observed.field.equals("slabCardNumber")||!identifier(field)||EvidenceProofPolicyV3.independentlyCorroborated(
                         ledger,photoField(field,profile),observed.normalizedValue);
                 if((coreField(field,profile)||exclusiveVariantConflict(field,observed.normalizedValue,candidate,profile))
                         &&observed.reliable()&&independentIdentifier){
@@ -170,7 +171,7 @@ final class CandidateVerifierV2 {
         return "";
     }
     private static String reportedField(String raw){String x=raw==null?"":raw.trim();int cut=x.indexOf('=');if(cut<0)cut=x.indexOf(':');if(cut>0)x=x.substring(0,cut);return TypedFieldNormalizerV2.canonicalField(x,"");}
-    private static EvidenceAtom observedFor(ImmutableEvidenceLedgerV2 ledger,String field,DomainProfileRouterV2.Profile profile){EvidenceAtom observed=ledger.strongest(photoField(field,profile),EvidenceAtom.EpistemicLevel.OBSERVED);if(observed==null&&field.equals("manufacturer"))observed=ledger.strongest("brand",EvidenceAtom.EpistemicLevel.OBSERVED);return observed!=null&&observed.localized()?observed:null;}
+    private static EvidenceAtom observedFor(ImmutableEvidenceLedgerV2 ledger,String field,DomainProfileRouterV2.Profile profile){EvidenceAtom observed=ledger.strongest(photoField(field,profile),EvidenceAtom.EpistemicLevel.OBSERVED);if(observed==null&&field.equals("manufacturer"))observed=ledger.strongest("brand",EvidenceAtom.EpistemicLevel.OBSERVED);if(observed==null&&DomainProfileRouterV2.cards(profile))observed=SlabEvidenceV155.observed(ledger,SlabEvidenceV155.fallbackField(field));return observed!=null&&observed.localized()?observed:null;}
     private static String photoField(String field,DomainProfileRouterV2.Profile p){if(field.equals("catalogCardNumber"))return p==DomainProfileRouterV2.Profile.TCG_CARD?"collectorNumber":"physicalCardNumber";return field;}
     private static boolean identifier(String f){return f.endsWith("Number")||f.endsWith("Code")||f.equals("model")||f.equals("barcode");}
     private static boolean coreField(String f,DomainProfileRouterV2.Profile p){if(f.equals("manufacturer")||f.equals("productLine")||f.equals("setName")||f.equals("productReleaseYear"))return true;if(p==DomainProfileRouterV2.Profile.TCG_CARD)return f.equals("cardName")||f.equals("catalogCardNumber");if(p==DomainProfileRouterV2.Profile.SPORTS_CARD)return f.equals("athlete")||f.equals("catalogCardNumber");if(p==DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT)return f.equals("configuration")||f.equals("productType")||f.equals("subSeries");if(p==DomainProfileRouterV2.Profile.TELEVISION_REMOTE_CONTROL)return f.equals("model")||designField(f);return f.equals("model");}

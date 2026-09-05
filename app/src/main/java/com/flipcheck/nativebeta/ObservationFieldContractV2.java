@@ -4,6 +4,8 @@ package com.flipcheck.nativebeta;
 final class ObservationFieldContractV2 {
     private ObservationFieldContractV2() {}
     static final String[] FIELDS = {
+        "gradingCompany", "gradingGrade", "gradingCondition", "gradingSubgrades", "gradingCertification",
+        "slabSetName", "slabCardNumber", "slabYear", "slabLanguage", "slabEdition", "slabFinish",
         "printedLabel", "visualSymbol", "physicalFeature", "controlLabel",
         "brand", "manufacturer", "game", "productLine", "setName", "subSeries",
         "productType", "productReleaseYear", "copyrightYear", "statisticsSeason",

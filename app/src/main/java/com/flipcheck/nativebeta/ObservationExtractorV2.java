@@ -97,6 +97,9 @@ final class ObservationExtractorV2 {
             if(profile==DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT&&field.equals("productType")
                     &&raw.toLowerCase(Locale.ROOT).matches(".+\\bseries\\b")
                     &&(role+" "+location).toLowerCase(Locale.ROOT).matches(".*(?:text|title|logo|label).*"))field="subSeries";
+            if(DomainProfileRouterV2.cards(profile))field=SlabEvidenceV155.field(field,role,location);
+            if(field.equals("statisticsSeason")&&SlabEvidenceV155.labelContext(role,location)
+                    &&raw.toLowerCase(Locale.ROOT).matches(".*(?:centering|corners|surface|edges).*"))field="gradingSubgrades";
             String groundingRole=role;
             if(profile==DomainProfileRouterV2.Profile.SPORTS_CARD){
                 String labelRole=role.toLowerCase(Locale.ROOT).replace('-', ' ');

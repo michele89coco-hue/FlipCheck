@@ -438,6 +438,8 @@ final class Models {
         String hierarchicalStatus = "INSUFFICIENT_EVIDENCE";
         /** Failure attribution and call accounting exposed in the technical panel. */
         String pipelineFailureDomain = "NONE";
+        String gradingCompany="",gradingGrade="",gradingCondition="",gradingSubgrades="",gradingCertification="";
+        String gradingStatus="NOT_APPLICABLE",slabSetName="",slabCardNumber="",slabYear="",slabLanguage="";
         String visionFinishReason = "not_run";
         String visionResponseStatus = "NOT_RUN";
         int technicalRetryCount;
