@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Locale;
 import org.json.JSONObject;
 
-/** v1.33 production route: ground -> normalize -> recover -> isolate -> disprove -> reduce once. */
+/** v1.35 production route: Vision -> discovery Web -> physical review -> verification Web -> reduce once. */
 final class UniversalIdentityEngineV2 {
     private UniversalIdentityEngineV2() {}
     static boolean enabled(){return true;}
@@ -16,7 +16,7 @@ final class UniversalIdentityEngineV2 {
         String technical="";ObservationExtractorV2.Result primary=new ObservationExtractorV2.Result();List<IdentityCandidateV2>focusedHypotheses=new ArrayList<>();
         if(images==null||images.isEmpty()){id.missingDiscriminativeFields="complete_object_photo";id.pipelineFailureDomain="NO_IMAGE";return finish(id,ledger,DomainProfileRouterV2.Profile.GENERIC_OBJECT,new ArrayList<>(),"",usage);}
         OpenAiClient.Response first=null;boolean retryAllowed=true;long retryDelayMillis=0;
-        try{first=client.observe(new ArrayList<>(images),primaryPrompt(local,details));collect(id,usage,first,"v132_primary_observation");}
+        try{first=client.observeFullV154(new ArrayList<>(images),primaryPrompt(local,details));collect(id,usage,first,"v154_vision1_observation");}
         catch(Exception failure){technical=technicalStatus(failure);retryAllowed=!(failure instanceof ApiCallFailure)||((ApiCallFailure)failure).retryable();retryDelayMillis=failure instanceof ApiCallFailure?((ApiCallFailure)failure).retryAfterMillis:0;id.v2CallReasons=append(id.v2CallReasons,"primary_vision:"+technicalDetail(failure));}
         if(needsTechnicalRetry(first)&&first!=null&&first.payload!=null&&first.payload.length()>0){primary=ObservationExtractorV2.ingestPrimary(first.payload,ledger);TypedFieldNormalizerV2.normalize(ledger);id.v2RecoveryTrace=append(id.v2RecoveryTrace,"partial_primary_facts_salvaged");}
         if(retryAllowed&&needsTechnicalRetry(first)&&usage!=null&&usage.costUsd+.004d<=.025d){
@@ -30,47 +30,146 @@ final class UniversalIdentityEngineV2 {
         TypedFieldNormalizerV2.normalize(ledger);DomainProfileRouterV2.Profile profile=DomainProfileRouterV2.route(primary.category,ledger);id.v2Profile=DomainProfileRouterV2.categoryKey(profile);id.categoryKey=id.v2Profile;
         if(!primary.contentSufficient){id.missingDiscriminativeFields="identity_bearing_surface";return finish(id,ledger,profile,primary.hypotheses,"",usage);}
 
-        AdaptiveRecoveryPlannerV2.Plan plan=AdaptiveRecoveryPlannerV2.afterPrimary(profile,ledger,usage);id.v2RecoveryTrace=trace(plan);
-        if(plan.action==AdaptiveRecoveryPlannerV2.Action.FOCUSED_VISION){
-            ImagePreparationV2.Prepared prepared=ImagePreparationV2.focused(images,profile,plan.discriminator);id.v2ImagePreparationTrace=prepared.trace.toString();id.additionalVisionReason=plan.reason+":"+plan.discriminator;id.v2CallReasons=append(id.v2CallReasons,"focused_vision:"+plan.reason+":"+plan.discriminator);
-            if(!prepared.images.isEmpty())try{OpenAiClient.Response focused=client.observeFocusedV2(prepared.images,focusedPrompt(profile,plan.discriminator,ledger));collect(id,usage,focused,"v133_focused_"+plan.discriminator);id.discriminativeVisionCount++;if(focused!=null&&focused.payload!=null){ObservationExtractorV2.Result f=ObservationExtractorV2.ingestFocused(focused.payload,ledger,profile,prepared.cropId);focusedHypotheses.addAll(f.hypotheses);TypedFieldNormalizerV2.normalize(ledger);recordViews(id,f.views,ledger,id.uploadedImageCount);}}
-            catch(Exception failure){id.v2RecoveryTrace=append(id.v2RecoveryTrace,"focused_failed="+technicalStatus(failure));}
-            plan=AdaptiveRecoveryPlannerV2.afterFocused(profile,ledger,usage);id.v2RecoveryTrace=append(id.v2RecoveryTrace,trace(plan));
+        // Four logical stages, each called once. A failed search does not prevent
+        // a fresh physical review and the independent final retrieval attempt.
+        List<IdentityCandidateV2> hypotheses=HypothesisGeneratorV2.merge(primary.hypotheses,focusedHypotheses);
+        OpenAiClient.Response discovery=webPass(client,images,
+                CandidateRetrieverV2.prompt(profile,ledger,hypotheses)
+                + "\nDISCOVERY PASS: retrieve plausible isolated records. Start from robust observed text. "
+                + "If an identifier or season is uncertain, also search without that constraint. "
+                + "Return competing editions/variants and the fields that distinguish them; do not force a winner.",
+                id,usage,"v154_web1_discovery");
+        List<IdentityCandidateV2> discovered=parseWeb(discovery,profile,ledger,hypotheses,id,"web1");
+        List<IdentityCandidateV2> preliminary=CandidateVerifierV2.verify(discovered,ledger,profile);
+        String fields=reviewFields(profile,ledger,preliminary);
+        ImagePreparationV2.Prepared prepared=ImagePreparationV2.reviewAll(images,profile);
+        id.v2ImagePreparationTrace=prepared.trace.toString();
+        id.additionalVisionReason="post_discovery_physical_review:"+fields;
+        try{
+            OpenAiClient.Response reviewed=client.observeReviewV154(prepared.images,
+                    reviewPrompt(profile,fields,prepared.trace));
+            collect(id,usage,reviewed,"v154_vision2_physical_review");id.discriminativeVisionCount++;
+            if(needsTechnicalRetry(reviewed)){
+                id.pipelineFailureDomain="SECOND_VISION_INVALID";
+                id.v2RecoveryTrace=append(id.v2RecoveryTrace,"vision2_invalid:preserved_primary_evidence");
+            }else{
+                ObservationExtractorV2.Result f=ObservationExtractorV2.ingestFocused(reviewed.payload,ledger,profile,prepared.cropId);
+                focusedHypotheses.addAll(f.hypotheses);TypedFieldNormalizerV2.normalize(ledger);
+                recordViews(id,f.views,ledger,id.uploadedImageCount);
+            }
+        }catch(Exception failure){
+            id.pipelineFailureDomain="SECOND_VISION_"+technicalStatus(failure);
+            id.v2RecoveryTrace=append(id.v2RecoveryTrace,"vision2_failed="+technicalStatus(failure));
         }
-        if(AdaptiveRecoveryPlannerV2.needsEditionInspection(profile,ledger)){
-            if(AdaptiveRecoveryPlannerV2.canInspectEditionBeforeWeb(usage)){
-                ImagePreparationV2.Prepared editionImages=ImagePreparationV2.focused(images,profile,"physical_edition_inspection");
-                try{
-                    OpenAiClient.Response check=client.observeFocusedV2(editionImages.images,
-                            "PHYSICAL EDITION INSPECTION ONLY. Inspect the original card and edition-band crops. "
-                            +"Transcribe the literal lettering and numeral of any edition stamp, its precise location, "
-                            +"and emit firstEditionMark only when the edition inscription is actually legible. "
-                            +"STAGE/evolution level is evolutionStage, never edition. A numeral in a circle alone is not proof of edition. "
-                            +"Keep expansion, rarity and edition symbols separate. If no stamp is present after inspection, "
-                            +"emit firstEditionMark=ABSENT with the inspected region; if unreadable, list the missing discriminator. "
-                            +"Do not guess Unlimited from an unreadable stamp. Do not restate card name, set, brand or candidates.");
-                    collect(id,usage,check,"v149_focused_physical_edition_inspection");id.discriminativeVisionCount++;
-                    if(check!=null&&check.complete&&check.payload!=null){
-                        ObservationExtractorV2.Result inspected=ObservationExtractorV2.ingestEditionInspection(check.payload,ledger,editionImages.cropId);
-                        TypedFieldNormalizerV2.normalize(ledger);recordViews(id,inspected.views,ledger,id.uploadedImageCount);
-                    }
-                    id.v2RecoveryTrace=append(id.v2RecoveryTrace,"edition_inspection:missing_physical_edition_after_focused");
-                }catch(Exception failure){id.v2RecoveryTrace=append(id.v2RecoveryTrace,"edition_inspection_failed="+technicalStatus(failure));}
-            }else id.v2RecoveryTrace=append(id.v2RecoveryTrace,"edition_inspection_skipped=reserved_catalog_budget");
+        hypotheses=HypothesisGeneratorV2.merge(primary.hypotheses,focusedHypotheses);
+        // Reparse discovery against the new evidence. Verifier rejection flags are
+        // intentionally not reused after a corrected physical reading.
+        discovered=parseWeb(discovery,profile,ledger,hypotheses,id,"web1_recheck");
+        OpenAiClient.Response confirmation=webPass(client,images,
+                CandidateRetrieverV2.prompt(profile,ledger,hypotheses)
+                + "\nFINAL VERIFICATION PASS after a fresh physical inspection. Actively test the leading records "
+                + "against alternatives using the newly observed fields. Retrieve the exact checklist row/product reference "
+                + "and variant/edition/print-run documentation where relevant. Prefer an independent authoritative source "
+                + "when available. Reusing a page is not independent corroboration. A previous candidate is a lead, never proof. "
+                + "Do not repeat only the broad discovery search. Missing evidence must remain unknown. "
+                + "Never treat a serial fraction as a collector fraction, a copyright as a release season, or foil as an exact parallel. "
+                + "Never invent an image comparison: layout_match requires a real documented reference. "
+                + "Return every still plausible record, including alternatives that contradict the initial hypothesis."
+                + "\nDISCOVERY_LEADS_NON_BINDING="+candidateSummary(discovered)
+                + "\nPHYSICAL_CONFLICTS="+conflictSummary(ledger,profile),
+                id,usage,"v154_web2_verification");
+        List<IdentityCandidateV2> finalRecords=parseWeb(confirmation,profile,ledger,hypotheses,id,"web2");
+        List<IdentityCandidateV2> all=new ArrayList<>(hypotheses);
+        // Last-pass records take precedence for the same catalog identity. Never
+        // combine fields from two responses or stack confidence for duplicated pages.
+        all.addAll(mergeWebRecords(discovered,finalRecords));
+        List<IdentityCandidateV2> ranked=CandidateVerifierV2.verify(all,ledger,profile);
+        id.v2RecoveryTrace=append(id.v2RecoveryTrace,"protocol=VISION_WEB_VISION_WEB;logical_stages=4");
+        return finish(id,ledger,profile,ranked,"",usage);
+    }
+
+    private static OpenAiClient.Response webPass(OpenAiClient client,List<String> images,String prompt,
+            Models.Identification id,Models.Usage usage,String stage){
+        id.v2CallReasons=append(id.v2CallReasons,stage);
+        try{
+            OpenAiClient.Response r=client.identityWebSearchV2(images,prompt);collect(id,usage,r,stage);
+            if(needsTechnicalRetry(r)||r.usage==null||r.usage.webCalls<1){
+                id.webStatus="RETRYABLE_TECHNICAL";id.pipelineFailureDomain=stage+"_INVALID_OR_NO_SEARCH";
+                id.v2RecoveryTrace=append(id.v2RecoveryTrace,stage+"=INVALID_OR_NO_SEARCH");return null;
+            }
+            id.webStatus="COMPLETED";
+            if(id.pipelineFailureDomain.startsWith("v154_web"))id.pipelineFailureDomain="NONE";
+            id.v2RecoveryTrace=append(id.v2RecoveryTrace,stage+"=COMPLETED");return r;
+        }catch(Exception failure){
+            id.webStatus="RETRYABLE_TECHNICAL";id.pipelineFailureDomain=stage+"_"+technicalStatus(failure);
+            id.v2RecoveryTrace=append(id.v2RecoveryTrace,stage+"="+technicalStatus(failure));return null;
         }
-        List<IdentityCandidateV2>hypotheses=HypothesisGeneratorV2.merge(primary.hypotheses,focusedHypotheses);List<IdentityCandidateV2>all=new ArrayList<>(hypotheses);
-        if(plan.action==AdaptiveRecoveryPlannerV2.Action.IDENTITY_WEB||AdaptiveRecoveryPlannerV2.needsWeb(profile,ledger)&&usage!=null&&usage.webCalls==0&&usage.costUsd+.008d<=.025d){
-            id.v2CallReasons=append(id.v2CallReasons,"identity_web:"+plan.reason+":"+plan.discriminator);try{String retrievalPrompt=CandidateRetrieverV2.prompt(profile,ledger,hypotheses);OpenAiClient.Response web=client.identityWebSearchV2(images,retrievalPrompt);collect(id,usage,web,"v133_identity_web_multimodal");id.webStatus=web==null?"FAILED":"COMPLETED";if(web!=null&&web.payload!=null){for(String q:CandidateRetrieverV2.queries(web.payload))if(!contains(id.webQueries,q))id.webQueries.add(q);String neutralViolation=CandidateRetrieverV2.neutralQueryViolation(web.payload,profile,hypotheses,ledger,web.queries);List<IdentityCandidateV2>parsed=CandidateRetrieverV2.parse(web.payload,profile,ledger);CandidateRetrieverV2.bindToolSources(parsed,web.sources);if(!empty(neutralViolation)){rejectBatch(parsed,"neutral_query_policy:"+neutralViolation);id.v2RecoveryTrace=append(id.v2RecoveryTrace,"identity_web_rejected="+neutralViolation);if(usage!=null&&usage.costUsd+.008d<=.025d){OpenAiClient.Response retry=client.identityWebSearchV2(images,retrievalPrompt+"\nNEUTRAL_QUERY_RETRY: query[0] must contain no brand, model or site filter.");collect(id,usage,retry,"v133_identity_web_neutral_retry");if(retry!=null&&retry.payload!=null){for(String q:CandidateRetrieverV2.queries(retry.payload))if(!contains(id.webQueries,q))id.webQueries.add(q);List<IdentityCandidateV2>retryParsed=CandidateRetrieverV2.parse(retry.payload,profile,ledger);CandidateRetrieverV2.bindToolSources(retryParsed,retry.sources);String retryViolation=CandidateRetrieverV2.neutralQueryViolation(retry.payload,profile,hypotheses,ledger,retry.queries);if(!empty(retryViolation))rejectBatch(retryParsed,"neutral_query_policy:"+retryViolation);parsed.addAll(retryParsed);}}}all.addAll(parsed);}}
-            catch(Exception failure){String status=technicalStatus(failure);id.webStatus="RETRYABLE_TECHNICAL";id.pipelineFailureDomain="IDENTITY_WEB_"+status;id.v2RecoveryTrace=append(id.v2RecoveryTrace,"identity_web_failed="+status);}
-        }else if(AdaptiveRecoveryPlannerV2.needsWeb(profile,ledger)&&usage!=null&&usage.webCalls==0){id.webStatus="SKIPPED_BUDGET";id.v2RecoveryTrace=append(id.v2RecoveryTrace,"identity_web_skipped=budget_cap");}
-        List<IdentityCandidateV2>ranked=CandidateVerifierV2.verify(all,ledger,profile);return finish(id,ledger,profile,ranked,"",usage);
+    }
+
+    private static List<IdentityCandidateV2> parseWeb(OpenAiClient.Response r,DomainProfileRouterV2.Profile profile,
+            ImmutableEvidenceLedgerV2 ledger,List<IdentityCandidateV2> hypotheses,Models.Identification id,String stage){
+        if(r==null||r.payload==null)return new ArrayList<>();
+        for(String q:CandidateRetrieverV2.queries(r.payload))if(!contains(id.webQueries,q))id.webQueries.add(q);
+        List<IdentityCandidateV2> parsed=CandidateRetrieverV2.parse(r.payload,profile,ledger);
+        CandidateRetrieverV2.bindToolSources(parsed,r.sources);
+        String violation=CandidateRetrieverV2.neutralQueryViolation(r.payload,profile,hypotheses,ledger,r.queries);
+        if(!empty(violation)){rejectBatch(parsed,"neutral_query_policy:"+violation);id.v2RecoveryTrace=append(id.v2RecoveryTrace,stage+"_rejected="+violation);}
+        return parsed;
+    }
+
+    static List<IdentityCandidateV2> mergeWebRecords(List<IdentityCandidateV2> first,List<IdentityCandidateV2> last){
+        java.util.LinkedHashMap<String,IdentityCandidateV2> records=new java.util.LinkedHashMap<>();
+        for(IdentityCandidateV2 c:first)records.put(recordKey(c),c);
+        for(IdentityCandidateV2 c:last){String key=recordKey(c);IdentityCandidateV2 old=records.get(key);
+            if(old==null||!c.rejected||old.rejected)records.put(key,c);}
+        return new ArrayList<>(records.values());
+    }
+    private static String recordKey(IdentityCandidateV2 c){
+        StringBuilder b=new StringBuilder(c.domain.name());
+        for(String f:new String[]{"manufacturer","productLine","setName","subSeries","athlete","cardName","model",
+                "catalogCardNumber","productReleaseYear","edition","finish","commercialFormat","configuration","productCode","language"})
+            b.append('|').append(TypedFieldNormalizerV2.normalizeValue(f,c.value(f),"").toUpperCase(Locale.ROOT));
+        return b.toString();
+    }
+    static String reviewFields(DomainProfileRouterV2.Profile profile,ImmutableEvidenceLedgerV2 ledger,List<IdentityCandidateV2> records){
+        java.util.LinkedHashSet<String> fields=new java.util.LinkedHashSet<>(AdaptiveRecoveryPlannerV2.criticalMissing(profile,ledger));
+        for(IdentityCandidateV2 c:records)for(java.util.Map.Entry<String,SemanticRelationV3.Relation> e:c.fieldRelations.entrySet())
+            if(!SemanticRelationV3.compatible(e.getValue()))fields.add(e.getKey());
+        for(IdentityCandidateV2 c:records)for(String f:c.fields.keySet())for(IdentityCandidateV2 other:records)
+            if(!c.value(f).isEmpty()&&!other.value(f).isEmpty()&&!TypedFieldNormalizerV2.equivalent(f,c.value(f),other.value(f)))fields.add(f);
+        if(DomainProfileRouterV2.cards(profile))java.util.Collections.addAll(fields,"physicalSerial","edition","firstEditionMark","finish","subSeries","productReleaseYear","manufacturer");
+        return String.join(",",fields);
+    }
+    static String reviewPrompt(DomainProfileRouterV2.Profile profile,String fields,List<String> imageMap){
+        return "PHYSICAL REVIEW after catalog discovery. Re-read the original object independently; no catalog values are provided. "
+                + "Priority fields identified by the comparison: "+fields+". "
+                + "Inspect all supplied originals, then details. Transcribe all identity-bearing text including brand, complete product line, "
+                + "set/subseries, name, card/collector number, serial, product release season, copyright, language, edition and finish. "
+                + "For comics inspect title, publisher, issue/volume, printing and indicia; for electronics inspect full model/part number and revision. "
+                + "Use productReleaseYear for a season in the product identification line, never statisticsSeason. "
+                + "Separate manufacturer from copyright licensor, serial from card number, jersey number from identifier. "
+                + "For TCG inspect First Edition lettering and location separately from expansion, rarity and evolution symbols. "
+                + "Report ABSENT only after inspecting a readable edition region. For sports inspect both faces including every edge serial. "
+                + "If a character is unreadable, report the uncertainty; do not choose the expected catalog value. "
+                + "A reflective finish or PRIZM mark does not prove a named parallel. Preserve the literal full legal/product line as printedLabel "
+                + "and also emit its separately observed fields with locations. No Web information may become a photographic fact. "
+                + "PROFILE="+DomainProfileRouterV2.categoryKey(profile)+" IMAGE_MAP="+imageMap;
+    }
+    private static String candidateSummary(List<IdentityCandidateV2> records){
+        StringBuilder b=new StringBuilder();for(IdentityCandidateV2 c:records){
+            b.append(c.display()).append(" source=").append(c.sourceUrl).append(" unknown=").append(c.unknownFields).append("; ");
+            if(b.length()>2600)break;}return clip(b.toString(),3000);
+    }
+    private static String conflictSummary(ImmutableEvidenceLedgerV2 ledger,DomainProfileRouterV2.Profile profile){
+        StringBuilder b=new StringBuilder();for(ConflictResolverV2.Conflict c:ConflictResolverV2.resolve(ledger,profile))b.append(c.field).append('=').append(c.valueA).append(" versus ").append(c.valueB).append(';');
+        return clip(b.toString(),1000);
     }
 
     static Models.Identification replay(Models.LocalScan local,JSONObject primaryPayload,JSONObject focusedPayload,JSONObject webPayload,Models.Usage usage){Models.Identification id=new Models.Identification();id.localScan=local;ImmutableEvidenceLedgerV2 ledger=new ImmutableEvidenceLedgerV2();ObservationExtractorV2.ingestLocal(local,ledger);ObservationExtractorV2.Result p=ObservationExtractorV2.ingestPrimary(primaryPayload,ledger);id.uploadedImageCount=Math.max(1,p.views.size());recordViews(id,p.views,ledger,id.uploadedImageCount);TypedFieldNormalizerV2.normalize(ledger);DomainProfileRouterV2.Profile profile=DomainProfileRouterV2.route(p.category,ledger);List<IdentityCandidateV2>focus=new ArrayList<>();if(focusedPayload!=null){ObservationExtractorV2.Result f=ObservationExtractorV2.ingestFocused(focusedPayload,ledger,profile,"replay-focused");focus.addAll(f.hypotheses);recordViews(id,f.views,ledger,id.uploadedImageCount);TypedFieldNormalizerV2.normalize(ledger);}List<IdentityCandidateV2>all=HypothesisGeneratorV2.merge(p.hypotheses,focus);if(webPayload!=null)all.addAll(CandidateRetrieverV2.parseReplay(webPayload,profile,ledger));return finish(id,ledger,profile,CandidateVerifierV2.verify(all,ledger,profile),"",usage);}
 
     private static Models.Identification finish(Models.Identification id,ImmutableEvidenceLedgerV2 ledger,DomainProfileRouterV2.Profile profile,List<IdentityCandidateV2>ranked,String technical,Models.Usage usage){List<ConflictResolverV2.Conflict>conflicts=ConflictResolverV2.resolve(ledger,profile);id.estimatedAnalysisCostUsd=usage==null?0d:usage.costUsd;FinalStateReducerV2.reduce(id,ledger,profile,ranked,conflicts,technical);return id;}
     private static void collect(Models.Identification id,Models.Usage usage,OpenAiClient.Response r,String stage){if(r==null)return;if(r.payload!=null)id.v2StagePayloads.add(stage+"\n"+r.payload.toString());if(usage!=null&&r.usage!=null)usage.add(r.usage);if(!contains(id.webStages,stage))id.webStages.add(stage);for(String q:r.queries)if(!contains(id.webQueries,q))id.webQueries.add(q);for(Models.Source incoming:r.sources){if(incoming==null)continue;boolean duplicate=false;for(Models.Source existing:id.sources)if(!empty(incoming.url)&&incoming.url.equals(existing.url)){duplicate=true;break;}if(!duplicate)id.sources.add(incoming);}id.v2CallReasons=append(id.v2CallReasons,stage);}
-    private static String primaryPrompt(Models.LocalScan local,String details){return "UNIVERSAL IDENTITY ENGINE V3 evidence contract. First group only coherent views of the same physical subject; ignore screenshots, app/browser UI, conversations and external documents. Section A contains only literal localized observations. A catalog label inferred from a symbol (set name, brand or product family) belongs in candidates unless the literal text/logo is actually visible. Never describe a symbol as a catalog set name in facts. Each fact must include image, side, exact region and raw visible value. Section B candidates are isolated hypotheses and never become facts. Separate copyright owner/licensor from manufacturer; product release season from release year and statistics season; card/collector number from jersey/statistics/decorative numbers/serial; card role BASE from edition; sealed configuration from card number. Preserve stable remote-control labels and topology. USER_HINT_SOFT="+clip(details,300)+" LOCAL_OCR_SIZE="+(local==null?0:local.joinedText().length());}
+    private static String primaryPrompt(Models.LocalScan local,String details){return "UNIVERSAL IDENTITY ENGINE V3 evidence contract. First group only coherent views of the same physical subject; ignore app/browser UI, conversations and external documents, but inspect the physical object shown inside a screenshot. Section A contains only literal localized observations. A catalog label inferred from a symbol (set name, brand or product family) belongs in candidates unless the literal text/logo is actually visible. Never describe a symbol as a catalog set name in facts. Each fact must include image, side, exact region and raw visible value. Section B candidates are isolated hypotheses and never become facts. Separate copyright owner/licensor from manufacturer; product release season from release year and statistics season; card/collector number from jersey/statistics/decorative numbers/serial; card role BASE from edition; sealed configuration from card number. Preserve stable remote-control labels and topology. USER_HINT_SOFT="+clip(details,300)+" LOCAL_OCR_HINT_UNTRUSTED="+clip(local==null?"":local.joinedText(),2500);}
     private static String focusedPrompt(DomainProfileRouterV2.Profile profile,String field,ImmutableEvidenceLedgerV2 ledger){String task="Inspect only the named discriminator";if(profile==DomainProfileRouterV2.Profile.TCG_CARD)task="Transcribe card name, exact collector number, raw set-symbol appearance, First Edition mark, finish, language and copyright from the supplied crops. Inspect the whole original and each crop before deciding a mark is missing. Return an explicit firstEditionMark fact with raw lettering and location when visible; if unreadable, report that in missing_discriminators. Inventory edition, expansion, rarity and energy symbols separately by location; a star beside the collector number is a rarity mark, not automatically the expansion symbol. Do not omit the edition inspection because the collector number is already legible";else if(profile==DomainProfileRouterV2.Profile.SPORTS_CARD)task="Transcribe an exact card number only from a printed card-identifier label; keep jersey, graphic, copyright, decorative-circle and statistics numbers separate. Inspect both coherent subject views and transcribe the full set season";else if(profile==DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT)task="Transcribe literal manufacturer logo/text, full product line including subseries, season, printed configuration and the raw letters/shapes of packaging format badges; keep badge appearance separate from inferred commercial format";else if(profile==DomainProfileRouterV2.Profile.TELEVISION_REMOTE_CONTROL)task="Transcribe visible brand text only if present and record the complete distinctive button topology; shape-only brands remain candidates";return "PROFILE="+DomainProfileRouterV2.categoryKey(profile)+" DECISIVE_FIELD="+field+". "+task+". Never turn a catalog interpretation into an observed fact. EXISTING_OBSERVED="+clip(observedSummary(ledger),900);}
     private static String observedSummary(ImmutableEvidenceLedgerV2 l){StringBuilder b=new StringBuilder();for(EvidenceAtom a:l.byLevel(EvidenceAtom.EpistemicLevel.OBSERVED))if(a.localized()){if(b.length()>0)b.append(" | ");b.append(a.field).append('=').append(a.normalizedValue);}return b.toString();}
     private static boolean needsTechnicalRetry(OpenAiClient.Response r){return r==null||!r.complete||!empty(r.parseError)||r.payload==null||r.payload.length()==0;}

@@ -43,6 +43,8 @@ final class TypedFieldNormalizerV2 {
 
     private static boolean collectorRepair(EvidenceAtom atom,String field,String normalized){
         if(!(field.equals("collectorNumber")||field.equals("physicalCardNumber")||field.equals("catalogCardNumber")))return false;
+        // Removing a printed number label is deterministic syntax, not an OCR repair.
+        if(stripNumberLabel(atom.rawValue).replaceAll("\\s+", "").equalsIgnoreCase(normalized))return false;
         return !safe(atom.rawValue).replaceAll("\\s+","").equalsIgnoreCase(normalized)
                 &&safe(atom.rawValue).toUpperCase(Locale.ROOT).matches(".*[ILOSBZ].*");
     }
@@ -113,8 +115,12 @@ final class TypedFieldNormalizerV2 {
 
     static boolean ambiguous(String value){String c=words(value);return c.contains(" OR ")||(c.contains("POSSIBLE")||c.contains("POSSIBLY"))||c.contains("MAY BE")||c.contains("UNKNOWN")||c.contains("UNRESOLVED");}
 
+    private static String stripNumberLabel(String value){
+        return safe(value).toUpperCase(Locale.ROOT).replaceFirst("^(?:NO\\.\\s*|NO\\s+|N[°º]\\s*|#\\s*)", "");
+    }
+
     private static String normalizeCollector(String input){
-        String compact=safe(input).toUpperCase(Locale.ROOT).replaceAll("\\s+","").replace('|','/');
+        String compact=stripNumberLabel(input).replaceAll("\\s+","").replace('|','/');
         if(compact.matches("[A-Z0-9]{1,8}/[A-Z0-9]{1,8}[★☆*]"))compact=compact.substring(0,compact.length()-1);
         if(compact.matches("[A-Z]{1,5}\\d+[A-Z]?(?:/[A-Z0-9]+)?")&&!compact.matches("[ILOSBZ0-9]+/[ILOSBZ0-9]+"))return compact;
         if(compact.matches("[ILOSBZ0-9]+/[ILOSBZ0-9]+")){

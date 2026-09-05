@@ -38,6 +38,27 @@ final class ImagePreparationV2 {
         return out;
     }
 
+    static Prepared reviewAll(List<String> originals,DomainProfileRouterV2.Profile profile){
+        Prepared out=new Prepared();out.cropId="review154-originals-and-details";
+        if(originals==null)return out;
+        for(int i=0;i<originals.size();i++){
+            out.images.add(originals.get(i));out.trace.add("input="+out.images.size()+":original_source="+i+":full_view");
+        }
+        for(int i=0;i<originals.size()&&out.images.size()<8;i++){
+            Bitmap bitmap=decode(originals.get(i));if(bitmap==null)continue;
+            try{
+                reviewCrop(out,bitmap,i,0,0,1,.40f,"upper_identifiers");
+                reviewCrop(out,bitmap,i,0,.60f,1,1,"lower_product_edition_text");
+                if(DomainProfileRouterV2.cards(profile))reviewCrop(out,bitmap,i,.65f,0,1,1,"right_edge_serial");
+            }finally{bitmap.recycle();}
+        }
+        return out;
+    }
+    private static void reviewCrop(Prepared out,Bitmap bitmap,int source,float l,float t,float r,float b,String name){
+        if(out.images.size()>=8)return;String data=crop(bitmap,l,t,r,b);if(data.isEmpty())return;
+        out.images.add(data);out.trace.add("input="+out.images.size()+":original_source="+source+":crop="+name+":rect="+l+","+t+","+r+","+b);
+    }
+
     private static int preferredSource(List<String> originals,DomainProfileRouterV2.Profile profile,String discriminator){
         if(profile==DomainProfileRouterV2.Profile.SPORTS_CARD&&originals.size()>1&&(safe(discriminator).contains("number")||safe(discriminator).contains("year")))return 0;
         return 0;

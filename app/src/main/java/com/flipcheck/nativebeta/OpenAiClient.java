@@ -76,6 +76,16 @@ class OpenAiClient {
                 +"A brand guessed from shape belongs only in candidates. "+prompt, 900, false);
     }
 
+    /** Complete inventory for the four-stage protocol, without Web tools. */
+    Response observeFullV154(List<String> images,String prompt) throws Exception {
+        return observeCompact(images,prompt,3000,false);
+    }
+
+    /** Reinspection includes all identity fields; not the old discriminator-only wrapper. */
+    Response observeReviewV154(List<String> images,String prompt) throws Exception {
+        return observeCompact(images,prompt,2800,false);
+    }
+
     private Response observeCompact(List<String> imageDataUrls, String prompt,
                                     int maxOutputTokens, boolean retry) throws Exception {
         JSONArray content = new JSONArray().put(new JSONObject()
@@ -720,8 +730,8 @@ class OpenAiClient {
         Object input=policy+prompt;
         if(imageDataUrls!=null&&!imageDataUrls.isEmpty()){JSONArray content=new JSONArray().put(new JSONObject().put("type","input_text").put("text",policy+prompt));for(String image:imageDataUrls)content.put(new JSONObject().put("type","input_image").put("image_url",image).put("detail","high"));input=new JSONArray().put(new JSONObject().put("role","user").put("content",content));}
         JSONObject body=new JSONObject().put("model",MODEL).put("store",false)
-                .put("max_output_tokens",1900).put("reasoning",new JSONObject().put("effort","low"))
-                .put("max_tool_calls",1).put("tools",new JSONArray().put(new JSONObject()
+                .put("max_output_tokens",2800).put("reasoning",new JSONObject().put("effort","low"))
+                .put("tool_choice","required").put("max_tool_calls",1).put("tools",new JSONArray().put(new JSONObject()
                         .put("type","web_search").put("search_context_size","medium")))
                 .put("include",new JSONArray().put("web_search_call.action.sources").put("web_search_call.results"))
                 .put("text",new JSONObject().put("format",identityWebFormatV2()).put("verbosity","low"))

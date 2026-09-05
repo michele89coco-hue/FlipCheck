@@ -12,6 +12,9 @@ final class ImagePreparationV2 {
     }
 
     private ImagePreparationV2() {}
+    static Prepared reviewAll(List<String> originals,DomainProfileRouterV2.Profile profile){
+        return focused(originals,profile,"review154");
+    }
 
     static Prepared focused(List<String> originals, DomainProfileRouterV2.Profile profile, String discriminator) {
         Prepared prepared = new Prepared();

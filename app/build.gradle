@@ -18,8 +18,8 @@ android {
         applicationId 'com.flipcheck.beta.nativev098.clean'
         minSdk 23
         targetSdk 36
-        versionCode 153
-        versionName '1.34-evidence-integrity'
+        versionCode 154
+        versionName '1.35-vision-web-review'
         buildConfigField 'String', 'SOURCE_COMMIT', '"' + sourceCommit + '"'
         multiDexEnabled true
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'

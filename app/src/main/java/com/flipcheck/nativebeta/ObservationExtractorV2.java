@@ -181,6 +181,10 @@ final class ObservationExtractorV2 {
                     &&EvidenceProofPolicyV3.legalOwnershipContext(role,location))return "rightsHolder";
             if(semantic.matches("(?:printed )?(?:card|collector) number")||canonical.equals("collectorNumber"))return "physicalCardNumber";
             if(semantic.startsWith("product line"))return "productLine";
+            if(canonical.equals("printedLabel")&&semantic.matches("(?:printed )?(?:release )?season(?: mark)?"))return "productReleaseYear";
+            if(canonical.equals("statisticsSeason")&&semantic.contains("season")
+                    &&context.matches(".*(?:set line|product line|product identification).*" )
+                    &&!context.matches(".*(?:statistic|career|table|biograph).*"))return "productReleaseYear";
             if(canonical.equals("cardName"))return "athlete";
         }
         if(profile==DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT){
