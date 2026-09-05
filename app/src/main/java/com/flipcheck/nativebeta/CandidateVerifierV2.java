@@ -47,16 +47,20 @@ final class CandidateVerifierV2 {
                 }
             }
             c.fieldRelations.put(field,relation);
+            if(designField(field))designComparisons++;
             if(SemanticRelationV3.compatible(relation)){
                 addUnique(c.matchedEvidence,observed.id);int weight=SemanticRelationV3.matchWeight(relation);
                 if(identifier(field)){identifiers+=weight;identifierComparisons++;}else {text+=weight;textComparisons++;}
-                if(designField(field)){design+=weight;designComparisons++;}
+                if(designField(field))design+=weight;
                 if(field.equals("manufacturer")){logos=Math.max(logos,weight);coreMatches++;}
                 else if(field.equals("configuration")){config=Math.max(config,weight);coreMatches++;}
                 else if(coreField(field,profile))coreMatches++;
             }else if(relation==SemanticRelationV3.Relation.INCOMPATIBLE){
                 c.unmatchedEvidence.add(field+":"+observed.normalizedValue+"<>"+candidate);
-                if((coreField(field,profile)||exclusiveVariantConflict(field,observed.normalizedValue,candidate,profile))&&observed.reliable()){
+                boolean independentIdentifier=!identifier(field)||EvidenceProofPolicyV3.independentlyCorroborated(
+                        ledger,photoField(field,profile),observed.normalizedValue);
+                if((coreField(field,profile)||exclusiveVariantConflict(field,observed.normalizedValue,candidate,profile))
+                        &&observed.reliable()&&independentIdentifier){
                     c.trueConflicts.add(field+":"+observed.normalizedValue+"!="+candidate+"@"+observed.id);coreConflicts++;
                 }
             }
@@ -78,8 +82,8 @@ final class CandidateVerifierV2 {
         if(c.rejected){c.totalScore=0;return;}
 
         boolean subseriesSupported=profile!=DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT||supportsObservedSubseries(c,ledger);
-        boolean enough=disproofEvidence(profile,c,coreMatches)&&subseriesSupported;
-        c.disproofPassed=c.retrieved&&consistency.coherent&&coreConflicts==0&&enough;c.disproofResult=c.disproofPassed?"PASSED":"INSUFFICIENT";c.disproofReason=c.disproofPassed?"isolated_record_matches_grounded_evidence":insufficientReason(profile,c,coreMatches);
+        boolean enough=disproofEvidence(profile,c,coreMatches,ledger)&&subseriesSupported;
+        c.disproofPassed=c.retrieved&&consistency.coherent&&coreConflicts==0&&enough;c.disproofResult=c.disproofPassed?"PASSED":"INSUFFICIENT";c.disproofReason=c.disproofPassed?"isolated_record_matches_grounded_evidence":insufficientReason(profile,c,coreMatches,ledger);
         if(c.disproofPassed)c.totalScore=Math.min(100,c.totalScore+5);if(c.totalScore==100&&(!c.trueConflicts.isEmpty()||!c.unknownFields.isEmpty()&&!c.exactReference))c.totalScore=99;
         if(!subseriesSupported)c.disproofReason="observed_subseries_not_supported_by_record";
     }
@@ -106,7 +110,7 @@ final class CandidateVerifierV2 {
         return false;
     }
 
-    private static String insufficientReason(DomainProfileRouterV2.Profile p,IdentityCandidateV2 c,int coreMatches){
+    private static String insufficientReason(DomainProfileRouterV2.Profile p,IdentityCandidateV2 c,int coreMatches,ImmutableEvidenceLedgerV2 ledger){
         List<String> reasons=new ArrayList<>();
         if(!c.retrieved)reasons.add("candidate_is_inference_only");
         boolean card=p==DomainProfileRouterV2.Profile.TCG_CARD||p==DomainProfileRouterV2.Profile.SPORTS_CARD;
@@ -121,15 +125,16 @@ final class CandidateVerifierV2 {
             if(c.observedIdentifierMatch<82)reasons.add("physical_identifier_match="+c.observedIdentifierMatch+"<82");
         }else if(p==DomainProfileRouterV2.Profile.TELEVISION_REMOTE_CONTROL){
             if(c.layoutMatch<70)reasons.add("distinctive_layout_match="+c.layoutMatch+"<70");
+            if(!remoteLabelConstellationMatches(c,ledger))reasons.add("distinctive_control_labels_not_supported");
         }else if(DomainProfileRouterV2.electronics(p)&&c.observedIdentifierMatch<82&&c.layoutMatch<75)
             reasons.add("model_identifier_or_distinctive_layout_missing");
         return reasons.isEmpty()?"insufficient_independent_grounding":join(reasons);
     }
 
-    private static boolean disproofEvidence(DomainProfileRouterV2.Profile p,IdentityCandidateV2 c,int coreMatches){
+    private static boolean disproofEvidence(DomainProfileRouterV2.Profile p,IdentityCandidateV2 c,int coreMatches,ImmutableEvidenceLedgerV2 ledger){
         if(p==DomainProfileRouterV2.Profile.TCG_CARD||p==DomainProfileRouterV2.Profile.SPORTS_CARD)return c.exactReference&&!c.sourceRecordId.isEmpty()&&c.observedIdentifierMatch>=82&&coreMatches>=2&&c.webSourceQuality>=60;
         if(p==DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT)return coreMatches>=2&&c.webSourceQuality>=60&&hasFamilyMatch(c);
-        if(p==DomainProfileRouterV2.Profile.TELEVISION_REMOTE_CONTROL)return c.layoutMatch>=70&&coreMatches>=3&&c.webSourceQuality>=65;
+        if(p==DomainProfileRouterV2.Profile.TELEVISION_REMOTE_CONTROL)return c.layoutMatch>=70&&coreMatches>=3&&c.webSourceQuality>=65&&remoteLabelConstellationMatches(c,ledger);
         if(DomainProfileRouterV2.electronics(p))return (c.observedIdentifierMatch>=82||c.layoutMatch>=75)&&coreMatches>=2&&c.webSourceQuality>=65;
         return coreMatches>=2&&c.webSourceQuality>=60;
     }
@@ -140,6 +145,13 @@ final class CandidateVerifierV2 {
             if(r!=null&&SemanticRelationV3.compatible(r))return true;
         }
         return false;
+    }
+
+    private static boolean remoteLabelConstellationMatches(IdentityCandidateV2 c,ImmutableEvidenceLedgerV2 ledger){
+        List<String> observed=EvidenceProofPolicyV3.stableRemoteControlLabels(ledger);if(observed.size()<3)return true;
+        String candidate=(c.value("controlLayout")+" "+c.value("shortcutButtons")+" "+c.value("navigationLayout")+" "+c.value("numericKeypad")+" "+c.value("voiceControl")+" "+c.value("layoutSignature")).toUpperCase(java.util.Locale.ROOT).replaceAll("[^A-Z0-9]+"," ");
+        int matched=0;for(String label:observed)if((" "+candidate+" ").contains(" "+label+" "))matched++;
+        return matched>=2;
     }
 
     private static int validateReportedMatches(IdentityCandidateV2 c,ImmutableEvidenceLedgerV2 ledger){int count=0;for(String raw:c.reportedMatchedFields){String field=reportedField(raw),candidate=c.value(field);if(candidate.isEmpty())continue;EvidenceAtom observed=ledger.strongest(field,EvidenceAtom.EpistemicLevel.OBSERVED);if(observed!=null&&observed.localized()&&SemanticRelationV3.compatible(SemanticRelationV3.relate(field,observed.normalizedValue,candidate))){addUnique(c.matchedEvidence,observed.id);count++;}}return count;}

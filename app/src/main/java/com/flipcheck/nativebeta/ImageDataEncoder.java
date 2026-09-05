@@ -22,6 +22,7 @@ final class ImageDataEncoder {
         if (bitmap == null) {
             throw new IllegalArgumentException("Immagine non leggibile");
         }
+        bitmap = orientFromExif(context, uri, bitmap);
         Bitmap scaled = scaleDown(bitmap, MAX_SIDE);
         if (scaled != bitmap) {
             bitmap.recycle();
@@ -140,7 +141,7 @@ final class ImageDataEncoder {
                 Math.max(1, Math.round(src.getHeight() * scale)), true);
     }
 
-    private static Bitmap orientFromExif(Context context, Uri uri, Bitmap src) {
+    static Bitmap orientFromExif(Context context, Uri uri, Bitmap src) {
         if (Build.VERSION.SDK_INT < 24) {
             return src;
         }
@@ -150,15 +151,17 @@ final class ImageDataEncoder {
             android.media.ExifInterface exif = new android.media.ExifInterface(in);
             int orientation = exif.getAttributeInt(android.media.ExifInterface.TAG_ORIENTATION,
                     android.media.ExifInterface.ORIENTATION_NORMAL);
-            float degrees = 0f;
-            if (orientation == android.media.ExifInterface.ORIENTATION_ROTATE_90) degrees = 90f;
-            if (orientation == android.media.ExifInterface.ORIENTATION_ROTATE_180) degrees = 180f;
-            if (orientation == android.media.ExifInterface.ORIENTATION_ROTATE_270) degrees = 270f;
-            if (degrees == 0f) {
+            Matrix matrix = new Matrix();
+            if (orientation == android.media.ExifInterface.ORIENTATION_FLIP_HORIZONTAL) matrix.postScale(-1f,1f);
+            else if (orientation == android.media.ExifInterface.ORIENTATION_ROTATE_180) matrix.postRotate(180f);
+            else if (orientation == android.media.ExifInterface.ORIENTATION_FLIP_VERTICAL) matrix.postScale(1f,-1f);
+            else if (orientation == android.media.ExifInterface.ORIENTATION_TRANSPOSE) { matrix.postRotate(90f);matrix.postScale(-1f,1f); }
+            else if (orientation == android.media.ExifInterface.ORIENTATION_ROTATE_90) matrix.postRotate(90f);
+            else if (orientation == android.media.ExifInterface.ORIENTATION_TRANSVERSE) { matrix.postRotate(270f);matrix.postScale(-1f,1f); }
+            else if (orientation == android.media.ExifInterface.ORIENTATION_ROTATE_270) matrix.postRotate(270f);
+            else {
                 return src;
             }
-            Matrix matrix = new Matrix();
-            matrix.postRotate(degrees);
             Bitmap rotated = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(),
                     matrix, true);
             if (rotated != src) {

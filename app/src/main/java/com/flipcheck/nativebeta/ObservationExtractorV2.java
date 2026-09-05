@@ -32,7 +32,11 @@ final class ObservationExtractorV2 {
     }
 
     static void ingestLocal(Models.LocalScan local,ImmutableEvidenceLedgerV2 ledger){if(local==null)return;
-        for(int image=0;image<local.textByImage.size();image++){String block=safe(local.textByImage.get(image));if(!block.isEmpty())ledger.append("printedLabel",block,EvidenceAtom.EpistemicLevel.OBSERVED,EvidenceAtom.Modality.LOCAL_OCR,"on_device",image,"unknown","local_ocr_text_block","","object_printed_text",78,72,"local_scan","");}
+        for(int image=0;image<local.textByImage.size();image++){String block=safe(local.textByImage.get(image));if(!block.isEmpty()){
+            boolean externalUi=EvidenceProofPolicyV3.likelyExternalUiBlock(block);
+            ledger.append("printedLabel",block,externalUi?EvidenceAtom.EpistemicLevel.INFERRED:EvidenceAtom.EpistemicLevel.OBSERVED,
+                    EvidenceAtom.Modality.LOCAL_OCR,"on_device",image,"unknown","local_ocr_text_block","",
+                    externalUi?"UI_OVERLAY":"object_printed_text",externalUi?25:78,externalUi?20:72,"local_scan","");}}
         for(Models.Identifier item:local.identifiers){if(item==null)continue;String modality=safe(item.origin).toLowerCase(Locale.ROOT);
             EvidenceAtom.Modality m=modality.contains("barcode")?EvidenceAtom.Modality.BARCODE_SCAN:EvidenceAtom.Modality.LOCAL_OCR;
             String region=modality.isEmpty()?"":"local_ocr:"+modality;
@@ -173,6 +177,8 @@ final class ObservationExtractorV2 {
         String canonical=TypedFieldNormalizerV2.canonicalField(field,role);
         String semantic=r.replace('_',' ').replace('-',' ').replaceAll("\\s+"," ").trim();
         if(profile==DomainProfileRouterV2.Profile.SPORTS_CARD){
+            if((canonical.equals("brand")||canonical.equals("manufacturer"))
+                    &&EvidenceProofPolicyV3.legalOwnershipContext(role,location))return "rightsHolder";
             if(semantic.matches("(?:printed )?(?:card|collector) number")||canonical.equals("collectorNumber"))return "physicalCardNumber";
             if(semantic.startsWith("product line"))return "productLine";
             if(canonical.equals("cardName"))return "athlete";

@@ -231,7 +231,8 @@ final class LocalVisionEngine {
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
         InputStream second = this.context.getContentResolver().openInputStream(uri);
         try {
-            return BitmapFactory.decodeStream(second, null, options);
+            Bitmap decoded=BitmapFactory.decodeStream(second, null, options);
+            return decoded==null?null:ImageDataEncoder.orientFromExif(this.context,uri,decoded);
         } finally {
             if (second != null) {
                 second.close();

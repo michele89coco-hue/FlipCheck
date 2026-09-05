@@ -77,14 +77,18 @@ public final class AnalysisForegroundService extends Service {
             }
             notifyProgress("OCR e lettura dei dettagli…");
             Models.LocalScan local = new LocalVisionEngine(this).scan(images);
+            List<Integer> subjectIndexes = EvidenceProofPolicyV3.subjectImageIndexes(local, images.size());
+            List<Uri> subjectImages = new ArrayList<>();
+            for (Integer index : subjectIndexes) subjectImages.add(images.get(index));
+            local = EvidenceProofPolicyV3.retainImages(local, subjectIndexes);
             notifyProgress("Confronto identità e fonti…");
             List<String> dataUrls = new ArrayList<>();
-            for (Uri uri : images) {
+            for (Uri uri : subjectImages) {
                 dataUrls.add(ImageDataEncoder.toDataUrl(this, uri));
             }
             // One non-authoritative zoom from the first photo makes tiny card
             // printing cues inspectable without issuing a second AI request.
-            String stampDetail = ImageDataEncoder.toCardStampDetailDataUrl(this, images.get(0));
+            String stampDetail = ImageDataEncoder.toCardStampDetailDataUrl(this, subjectImages.get(0));
             if (!stampDetail.isEmpty()) {
                 dataUrls.add(stampDetail);
             }

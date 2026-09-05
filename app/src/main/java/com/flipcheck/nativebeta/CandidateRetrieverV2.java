@@ -14,6 +14,9 @@ final class CandidateRetrieverV2 {
     static String prompt(DomainProfileRouterV2.Profile profile,ImmutableEvidenceLedgerV2 ledger,List<IdentityCandidateV2> hypotheses){
         StringBuilder observed=new StringBuilder(),inferred=new StringBuilder();
         boolean recoverRemoteLabels=needsRemoteControlLabelRecovery(profile,ledger);
+        List<String> stableRemoteLabels=EvidenceProofPolicyV3.stableRemoteControlLabels(ledger);
+        if(profile==DomainProfileRouterV2.Profile.TELEVISION_REMOTE_CONTROL&&stableRemoteLabels.size()>=3)
+            append(observed,"controlLabelSet="+String.join(",",stableRemoteLabels));
         for(EvidenceAtom a:queryEvidence(profile,ledger)){
             if(a.parentEvidenceId.isEmpty()&&hasNormalizedChild(ledger,a))continue;
             boolean remoteControlLabel=recoverRemoteLabels&&a.field.equals("controlLabel");
@@ -121,13 +124,12 @@ final class CandidateRetrieverV2 {
     }
     private static boolean queryField(String f){String x=safe(f);return x.matches("manufacturer|brand|game|productLine|subSeries|setName|cardName|athlete|physicalCardNumber|collectorNumber|productReleaseYear|language|edition|finish|configuration|commercialFormat|model|productCode|sku|barcode|controlLayout|shortcutButtons|printedLabel|navigationLayout|numericKeypad|voiceControl|layoutSignature|sport|visualSymbol|physicalFeature");}
     private static boolean needsRemoteControlLabelRecovery(DomainProfileRouterV2.Profile profile,ImmutableEvidenceLedgerV2 ledger){
-        if(profile!=DomainProfileRouterV2.Profile.TELEVISION_REMOTE_CONTROL)return false;int shortcutWords=0,labels=0;boolean focusedDesign=false;
+        if(profile!=DomainProfileRouterV2.Profile.TELEVISION_REMOTE_CONTROL)return false;int shortcutWords=0,labels=0;
         for(EvidenceAtom a:ledger.byLevel(EvidenceAtom.EpistemicLevel.OBSERVED))if(a.localized()){
             if(a.field.equals("shortcutButtons"))shortcutWords=Math.max(shortcutWords,canon(a.normalizedValue).split(" ").length);
             else if(a.field.equals("controlLabel")&&!safe(a.normalizedValue).isEmpty())labels++;
-            if(a.modality==EvidenceAtom.Modality.FOCUSED_VISION&&a.field.matches("controlLabel|controlLayout|shortcutButtons|navigationLayout|numericKeypad|voiceControl|layoutSignature"))focusedDesign=true;
         }
-        return shortcutWords<8&&labels>=3&&!focusedDesign;
+        return shortcutWords<8&&(labels>=3||EvidenceProofPolicyV3.stableRemoteControlLabels(ledger).size()>=3);
     }
     private static void put(IdentityCandidateV2 c,String field,String value){String v=safe(value);if(field.equals("commercialFormat")&&(v.toLowerCase(Locale.ROOT).matches(".*(unspecified|multiple|not determined|not specified).*|(?:sealed |standard )?(box|package|product)")||v.contains(" / "))){if(!v.isEmpty())c.unknownFields.add("commercialFormat:unresolved_source_value="+v);return;}if(!v.isEmpty()&&!TypedFieldNormalizerV2.ambiguous(v))c.fields.put(field,TypedFieldNormalizerV2.normalizeValue(field,v,""));}
     private static boolean isBaseRole(String value){String x=safe(value).toUpperCase(Locale.ROOT).replaceAll("[^A-Z0-9]+"," ").trim();return x.equals("BASE")||x.equals("BASE SET")||x.equals("BASE CARD");}

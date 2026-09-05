@@ -74,6 +74,7 @@ final class TypedFieldNormalizerV2 {
         if(s.contains("ui")||s.contains("screen"))return "UI_OVERLAY";
         if(s.contains("watermark"))return "EXTERNAL_WATERMARK";
         if(s.contains("market")||s.contains("listing"))return "MARKET_TEXT";
+        if(f.equals("rightsHolder"))return "OBJECT_LEGAL";
         if(f.equals("statisticsSeason")||f.equals("statisticsNumber"))return "OBJECT_STATISTIC";
         if(f.equals("hp")||f.equals("attackDamage")||f.equals("attacks"))return "OBJECT_RULES_TEXT";
         if(f.equals("edition")||f.equals("finish")||f.equals("printVariant")||f.equals("commercialFormat"))return "OBJECT_VARIANT";
@@ -130,7 +131,7 @@ final class TypedFieldNormalizerV2 {
     }
 
     private static Map<String,String> aliases(){Map<String,String>m=new LinkedHashMap<>();
-        put(m,"manufacturer","manufacturer","maker","publisher","producer");put(m,"brand","brand","brand_mark","brand_logo");put(m,"game","game","tcg_game");
+        put(m,"manufacturer","manufacturer","maker","publisher","producer");put(m,"brand","brand","brand_mark","brand_logo");put(m,"rightsHolder","rights_holder","copyright_owner","licensor");put(m,"game","game","tcg_game");
         put(m,"productLine","product_line","family","series","set_or_product_line");put(m,"setName","set","set_name","main_set");
         put(m,"cardName","card_name","subject_name","character");put(m,"athlete","athlete","player","subject");
         put(m,"evolutionStage","stage","evolution_stage");put(m,"cardRole","card_role","cardrole");

@@ -39,7 +39,7 @@ final class ImagePreparationV2 {
     }
 
     private static int preferredSource(List<String> originals,DomainProfileRouterV2.Profile profile,String discriminator){
-        if(profile==DomainProfileRouterV2.Profile.SPORTS_CARD&&originals.size()>1&&(safe(discriminator).contains("number")||safe(discriminator).contains("year")))return 1;
+        if(profile==DomainProfileRouterV2.Profile.SPORTS_CARD&&originals.size()>1&&(safe(discriminator).contains("number")||safe(discriminator).contains("year")))return 0;
         return 0;
     }
     private static void add(Prepared out,Bitmap source,int sourceIndex,float l,float t,float r,float b,String name){String data=crop(source,l,t,r,b);if(data.isEmpty()||out.images.size()>=4)return;out.images.add(data);out.trace.add("crop="+name+":source="+sourceIndex+":rect="+l+","+t+","+r+","+b+":contrast=1.08");}

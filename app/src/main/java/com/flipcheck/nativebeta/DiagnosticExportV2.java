@@ -10,6 +10,7 @@ final class DiagnosticExportV2 {
         JSONObject out = new JSONObject().put("schema", "flipcheck-diagnostic-v1")
                 .put("title", id.title).put("profile", id.v2Profile)
                 .put("reducer", id.finalStateReducerVersion).put("identityStatus", id.identityStatus)
+                .put("webStatus",id.webStatus).put("pipelineFailureDomain",id.pipelineFailureDomain)
                 .put("coreIdentityStatus", id.coreIdentityStatus).put("exactIdentityStatus", id.exactIdentityStatus)
                 .put("variantStatus", id.variantStatus).put("editionStatus", id.exactEditionStatus)
                 .put("finishStatus", id.finishStatus).put("formatStatus", id.commercialFormatStatus)
