@@ -22,7 +22,8 @@ test('a visible shadow and absent visible stamp produce Unlimited',()=>{
 });
 test('a stamped shadowed card is not forced to Shadowless',()=>{
   const out=editions.evaluate({...base,artwork_shadow:'present'},1);
-  assert.deepEqual(out.labels,['1st Edition']); assert.equal(out.shadow,'present');
+  assert.deepEqual(out.labels,['1st Edition','Shadowed']); assert.equal(out.shadow,'present');
+  assert.match(editions.apply(identity,{...base,artwork_shadow:'present'},1).normalized_query,/1st Edition Shadowed/);
 });
 test('an unreadable stamp is not absence and preserves core identity',()=>{
   const out=editions.apply(identity,{...base,first_edition_stamp:'unclear',stamp_text:''},1);

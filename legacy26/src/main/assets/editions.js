@@ -50,6 +50,7 @@ First Edition e Shadowless sono due attributi separati: il timbro non dimostra d
     const labels = [];
     if (stamp === 'present') labels.push('1st Edition');
     if (shadow === 'absent') labels.push('Shadowless');
+    if (shadow === 'present' && stamp === 'present') labels.push('Shadowed');
     if (applicable && shadow === 'present' && stamp === 'absent') labels.push('Unlimited');
     const missing = [];
     if (stamp === 'unclear') missing.push('zona del timbro di edizione sul fronte');
