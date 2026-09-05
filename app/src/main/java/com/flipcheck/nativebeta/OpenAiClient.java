@@ -1173,8 +1173,6 @@ class OpenAiClient {
     }
 
     private Response call(JSONObject body, boolean vision, boolean tolerantJson) throws Exception {
-        StringBuilder sb;
-        String strOptString;
         if (this.apiKey.isEmpty()) {
             throw new IllegalStateException("Chiave API mancante");
         }
@@ -1198,18 +1196,10 @@ class OpenAiClient {
             InputStream stream = (code < 200 || code >= 300) ? c.getErrorStream() : c.getInputStream();
             String text = readAll(stream);
             c.disconnect();
-            JSONObject raw = new JSONObject(text);
             if (code < 200 || code >= 300) {
-                JSONObject e = raw.optJSONObject("error");
-                if (e == null) {
-                    sb = new StringBuilder();
-                    strOptString = sb.append("HTTP ").append(code).toString();
-                } else {
-                    sb = new StringBuilder();
-                    strOptString = e.optString("message", sb.append("HTTP ").append(code).toString());
-                }
-                throw new IllegalStateException(strOptString);
+                throw ApiCallFailure.fromResponse(code, text);
             }
+            JSONObject raw = new JSONObject(text);
             Response r = new Response();
             r.raw = raw;
             if ("incomplete".equalsIgnoreCase(raw.optString("status", ""))) {

@@ -15,13 +15,14 @@ final class UniversalIdentityEngineV2 {
         ImmutableEvidenceLedgerV2 ledger=new ImmutableEvidenceLedgerV2();ObservationExtractorV2.ingestLocal(local,ledger);id.localOcrFactCount=modalityCount(ledger,EvidenceAtom.Modality.LOCAL_OCR);
         String technical="";ObservationExtractorV2.Result primary=new ObservationExtractorV2.Result();List<IdentityCandidateV2>focusedHypotheses=new ArrayList<>();
         if(images==null||images.isEmpty()){id.missingDiscriminativeFields="complete_object_photo";id.pipelineFailureDomain="NO_IMAGE";return finish(id,ledger,DomainProfileRouterV2.Profile.GENERIC_OBJECT,new ArrayList<>(),"",usage);}
-        OpenAiClient.Response first=null;
+        OpenAiClient.Response first=null;boolean retryAllowed=true;
         try{first=client.observe(new ArrayList<>(images),primaryPrompt(local,details));collect(id,usage,first,"v132_primary_observation");}
-        catch(Exception failure){technical=technicalStatus(failure);id.v2CallReasons=append(id.v2CallReasons,"primary_vision:"+technical);}
+        catch(Exception failure){technical=technicalStatus(failure);retryAllowed=!(failure instanceof ApiCallFailure)||((ApiCallFailure)failure).retryable();id.v2CallReasons=append(id.v2CallReasons,"primary_vision:"+technicalDetail(failure));}
         if(needsTechnicalRetry(first)&&first!=null&&first.payload!=null&&first.payload.length()>0){primary=ObservationExtractorV2.ingestPrimary(first.payload,ledger);TypedFieldNormalizerV2.normalize(ledger);id.v2RecoveryTrace=append(id.v2RecoveryTrace,"partial_primary_facts_salvaged");}
-        if(needsTechnicalRetry(first)&&usage!=null&&usage.costUsd+.004d<=.025d){
-            try{OpenAiClient.Response retry=client.observeTechnicalRecovery(new ArrayList<>(images),primaryPrompt(local,details)+"\nTECHNICAL_RETRY=compact_valid_json");collect(id,usage,retry,"v132_primary_technical_retry");id.technicalRetryCount++;first=retry;technical="";}
-            catch(Exception failure){technical=technicalStatus(failure);}
+        if(retryAllowed&&needsTechnicalRetry(first)&&usage!=null&&usage.costUsd+.004d<=.025d){
+            id.technicalRetryCount++;
+            try{OpenAiClient.Response retry=client.observeTechnicalRecovery(new ArrayList<>(images),primaryPrompt(local,details)+"\nTECHNICAL_RETRY=compact_valid_json");collect(id,usage,retry,"v132_primary_technical_retry");first=retry;technical="";}
+            catch(Exception failure){technical=technicalStatus(failure);id.v2CallReasons=append(id.v2CallReasons,"technical_retry:"+technicalDetail(failure));}
         }
         if(first!=null&&first.payload!=null){primary=ObservationExtractorV2.ingestPrimary(first.payload,ledger);id.visionResponseStatus=first.technicalStatus;id.visionFinishReason=first.incompleteReason;recordViews(id,primary.views,ledger,id.uploadedImageCount);}
         if(first==null||needsTechnicalRetry(first)){id.pipelineFailureDomain=empty(technical)?"PRIMARY_VISION_INVALID":technical;return finish(id,ledger,DomainProfileRouterV2.route(primary.category,ledger),primary.hypotheses,id.pipelineFailureDomain,usage);}
@@ -52,7 +53,8 @@ final class UniversalIdentityEngineV2 {
     private static String observedSummary(ImmutableEvidenceLedgerV2 l){StringBuilder b=new StringBuilder();for(EvidenceAtom a:l.byLevel(EvidenceAtom.EpistemicLevel.OBSERVED))if(a.localized()){if(b.length()>0)b.append(" | ");b.append(a.field).append('=').append(a.normalizedValue);}return b.toString();}
     private static boolean needsTechnicalRetry(OpenAiClient.Response r){return r==null||!r.complete||!empty(r.parseError)||r.payload==null||r.payload.length()==0;}
     private static String trace(AdaptiveRecoveryPlannerV2.Plan p){return p.action+":"+p.discriminator+":"+p.reason+":gain="+p.expectedInformationGain+":cost="+p.estimatedCost;}
-    private static String technicalStatus(Exception x){String m=safe(x.getMessage()).toLowerCase(Locale.ROOT);return m.contains("timeout")?"TIMEOUT":m.contains("json")?"INVALID_JSON":m.contains("network")||m.contains("connect")?"NETWORK_ERROR":"VISION_TECHNICAL";}
+    private static String technicalDetail(Exception x){return technicalStatus(x)+(x instanceof ApiCallFailure?":"+x.getMessage():":"+x.getClass().getSimpleName());}
+    private static String technicalStatus(Exception x){if(x instanceof ApiCallFailure)return ((ApiCallFailure)x).domain();if(x instanceof java.net.SocketTimeoutException)return "TIMEOUT";String m=safe(x.getMessage()).toLowerCase(Locale.ROOT);return m.contains("timeout")?"TIMEOUT":m.contains("json")?"INVALID_JSON":m.contains("network")||m.contains("connect")?"NETWORK_ERROR":"VISION_TECHNICAL";}
     private static boolean contains(List<String>values,String v){for(String x:values)if(x.equalsIgnoreCase(v))return true;return false;}
     private static int originalImageCount(Models.LocalScan local,List<String>images){if(local!=null&&!local.textByImage.isEmpty())return local.textByImage.size();return images==null?0:images.size();}
     private static void recordViews(Models.Identification id,List<String>reported,ImmutableEvidenceLedgerV2 ledger,int count){if(reported!=null)for(String v:reported)if(!empty(v)&&!contains(id.photoViews,v))id.photoViews.add(v);if(id.photoViews.isEmpty()&&count>0){boolean observed=false;for(EvidenceAtom a:ledger.byLevel(EvidenceAtom.EpistemicLevel.OBSERVED))if(a.localized()){observed=true;break;}if(observed)for(int i=0;i<count;i++)id.photoViews.add("image="+i+":uploaded");}id.evidenceLedgerStatus=id.photoViews.isEmpty()?"UNSTRUCTURED":"STRUCTURED";}
