@@ -25,7 +25,7 @@ final class ImagePreparationV2 {
         try{
             if(profile==DomainProfileRouterV2.Profile.TCG_CARD){add(out,bitmap,sourceIndex,.00f,.42f,1f,1f,"tcg_lower_identity_band");add(out,bitmap,sourceIndex,.00f,.16f,.58f,.78f,"tcg_edition_band");}
             else if(profile==DomainProfileRouterV2.Profile.SPORTS_CARD){add(out,bitmap,sourceIndex,.00f,.00f,.38f,.48f,"sports_number_corner");add(out,bitmap,sourceIndex,.00f,.65f,1f,1f,"sports_footer_stats_set");}
-            else if(profile==DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT){add(out,bitmap,sourceIndex,.10f,.40f,.95f,.96f,"sealed_brand_line_configuration");add(out,bitmap,sourceIndex,.00f,.00f,.55f,.75f,"sealed_year_product_line");}
+            else if(profile==DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT){add(out,bitmap,sourceIndex,.10f,.40f,.95f,.96f,"sealed_brand_line_configuration");add(out,bitmap,sourceIndex,.00f,.00f,.55f,.75f,"sealed_year_product_line");add(out,bitmap,sourceIndex,.55f,.00f,1f,.40f,"sealed_format_badges");}
             else if(profile==DomainProfileRouterV2.Profile.TELEVISION_REMOTE_CONTROL){add(out,bitmap,sourceIndex,.25f,.00f,.75f,.38f,"remote_top_brand_controls");add(out,bitmap,sourceIndex,.22f,.18f,.78f,.78f,"remote_control_topology");}
             else {add(out,bitmap,sourceIndex,.05f,.00f,.95f,.45f,"upper_logo_code");add(out,bitmap,sourceIndex,.05f,.55f,.95f,1f,"lower_label_code");}
         }finally{bitmap.recycle();}

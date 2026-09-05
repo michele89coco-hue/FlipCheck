@@ -80,6 +80,11 @@ final class ObservationExtractorV2 {
         // A service logo on a control is not the maker of the physical accessory.
         String context=(r+" "+safe(location)).toLowerCase(Locale.ROOT);
         String canonical=TypedFieldNormalizerV2.canonicalField(field,role);
+        if((context.contains("set branding")||context.contains("set_branding"))
+                &&(canonical.equals("brand")||canonical.equals("manufacturer")))
+            return profile==DomainProfileRouterV2.Profile.TCG_CARD?"setName":"productLine";
+        if(profile==DomainProfileRouterV2.Profile.TCG_CARD&&(k.equals("edition_mark_appearance")||r.equals("edition mark")))return "firstEditionMark";
+
         if(profile==DomainProfileRouterV2.Profile.TELEVISION_REMOTE_CONTROL
                 &&(canonical.equals("brand")||canonical.equals("manufacturer"))
                 &&context.matches(".*(button|shortcut|streaming|keycap|app key).*"))return "controlLabel";

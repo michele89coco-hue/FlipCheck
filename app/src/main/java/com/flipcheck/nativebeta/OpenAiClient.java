@@ -978,7 +978,8 @@ class OpenAiClient {
      */
     private static JSONObject compactObserverFormat() throws Exception {
         JSONObject factProps = new JSONObject()
-                .put("key", new JSONObject().put("type", "string"))
+                .put("key", new JSONObject().put("type", "string").put("enum", new JSONArray(java.util.Arrays.asList(ObservationFieldContractV2.FIELDS)))
+                        .put("description", "Use the canonical semantic field. A product/set logo is productLine/setName, not manufacturer. A button/service logo is controlLabel, not accessory brand. Unknown properties stay physicalFeature or printedLabel with their original role."))
                 .put("value", new JSONObject().put("type", "string"))
                 .put("image", integerSchema(-1, 20))
                 .put("side", new JSONObject().put("type", "string"))

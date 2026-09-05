@@ -27,8 +27,9 @@ final class SemanticRelationV3 {
             Set<String>common=new LinkedHashSet<>(xs);common.retainAll(ys);double coverage=(double)common.size()/Math.min(xs.size(),ys.size());
             if(coverage>=.85d)return Relation.CANONICAL_EQUIVALENT;if(coverage>=.55d)return Relation.COMPATIBLE_EXTENSION;if(coverage>=.30d)return Relation.AMBIGUOUS;return Relation.INCOMPATIBLE;
         }
-        if(safe(field).equals("configuration")){Relation quantities=configurationQuantities(x,y);if(quantities!=null)return quantities;if(!numericTokens(x).equals(numericTokens(y)))return Relation.INCOMPATIBLE;Set<String>xs=configurationTokens(x),ys=configurationTokens(y);if(xs.containsAll(ys)||ys.containsAll(xs))return Relation.COMPATIBLE_EXTENSION;return Relation.INCOMPATIBLE;}
+        if(safe(field).equals("configuration")){Relation quantities=configurationQuantities(x,y);if(quantities!=null)return quantities;if(numericTokens(x).isEmpty()!=numericTokens(y).isEmpty())return Relation.AMBIGUOUS;if(!numericTokens(x).equals(numericTokens(y)))return Relation.INCOMPATIBLE;Set<String>xs=configurationTokens(x),ys=configurationTokens(y);if(xs.containsAll(ys)||ys.containsAll(xs))return Relation.COMPATIBLE_EXTENSION;return Relation.INCOMPATIBLE;}
         if(hierarchical(field)){
+            if(field.equals("productType")&&(genericContainer(x)||genericContainer(y)))return Relation.AMBIGUOUS;
             Set<String> xs=tokens(x),ys=tokens(y);if(xs.isEmpty()||ys.isEmpty())return Relation.AMBIGUOUS;
             if(field.equals("productType")){xs.remove("PRODUCT");ys.remove("PRODUCT");}
             if(xs.isEmpty()||ys.isEmpty())return Relation.AMBIGUOUS;
@@ -40,6 +41,7 @@ final class SemanticRelationV3 {
         return Relation.INCOMPATIBLE;
     }
 
+    private static boolean genericContainer(String value){return words(value).matches("(?:SEALED |UNOPENED |PACKAGED )?(?:BOX|PACKAGE|PACK|PRODUCT)");}
     private static boolean unspecifiedDesign(String value){
         String s=words(value);
         return s.contains("NOT DOCUMENTED")||s.contains("NOT SPECIFIED")||s.contains("NOT ESTABLISHED")||s.equals("N A");

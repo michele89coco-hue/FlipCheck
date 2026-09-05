@@ -377,4 +377,50 @@ public class V134EvidenceIntegrityTest {
         assertEquals("rear_label_or_model_code",id.requestedPhotoReason);
     }
 
+    @Test public void genericContainerIsNotAnIncompatibleProductIdentity() {
+        assertEquals(SemanticRelationV3.Relation.AMBIGUOUS,SemanticRelationV3.relate("productType","sealed box","sealed trading card product"));
+        assertEquals(SemanticRelationV3.Relation.AMBIGUOUS,SemanticRelationV3.relate("configuration","1 autograph in every box","Autograph content listed for the product"));
+    }
+    @Test public void semanticSetBrandingDoesNotBecomeManufacturer() throws Exception {
+        ImmutableEvidenceLedgerV2 l=new ImmutableEvidenceLedgerV2();
+        JSONObject f=new JSONObject().put("key","brand_mark").put("value","Example Series").put("role","set branding")
+            .put("image",0).put("side","front").put("location","lower emblem").put("confidence",98);
+        ObservationExtractorV2.ingestPrimary(new JSONObject().put("category","sports_card").put("facts",new JSONArray().put(f)),l);
+        assertNull(l.strongest("brand"));assertNotNull(l.strongest("productLine"));
+    }
+    @Test public void localizedEditionAppearanceIsNormalized() throws Exception {
+        ImmutableEvidenceLedgerV2 l=new ImmutableEvidenceLedgerV2();
+        JSONObject f=new JSONObject().put("key","edition_mark_appearance").put("value","black circular EDITION 1 mark").put("role","edition mark")
+            .put("image",0).put("side","front").put("location","left of description").put("confidence",100);
+        ObservationExtractorV2.ingestFocused(new JSONObject().put("facts",new JSONArray().put(f)),l,DomainProfileRouterV2.Profile.TCG_CARD,"detail");
+        TypedFieldNormalizerV2.normalize(l);assertEquals("FIRST_EDITION",l.strongest("edition").normalizedValue);
+    }
+    @Test public void catalogEditionDoesNotDescribeAnUnverifiedPhysicalCopy() {
+        ImmutableEvidenceLedgerV2 l=new ImmutableEvidenceLedgerV2();
+        IdentityCandidateV2 c=new IdentityCandidateV2("row",DomainProfileRouterV2.Profile.TCG_CARD,"test");
+        c.retrieved=true;c.disproofPassed=true;c.totalScore=90;c.webSourceQuality=95;c.sourceUrl="https://catalog.example/card";
+        c.fields.put("edition","UNLIMITED");
+        Models.Identification id=new Models.Identification();id.uploadedImageCount=1;
+        FinalStateReducerV2.reduce(id,l,c.domain,java.util.Collections.singletonList(c),new java.util.ArrayList<>(),"");
+        assertEquals("",id.edition);assertEquals("TO_VERIFY",id.exactEditionStatus);
+    }
+
+    @Test public void transportVocabularyKeepsCriticalRolesDistinct() throws Exception {
+        java.util.Set<String> keys=new java.util.HashSet<>(java.util.Arrays.asList(ObservationFieldContractV2.FIELDS));
+        for(String key:new String[]{"cardName","collectorNumber","printedTotal","firstEditionMark","brand","manufacturer","productLine","statisticsSeason","productReleaseYear","compatibleDevice","physicalFeature"})assertTrue(key,keys.contains(key));
+        ImmutableEvidenceLedgerV2 l=new ImmutableEvidenceLedgerV2();
+        JSONObject f=new JSONObject().put("key","physicalFeature").put("value","three triangular vents")
+            .put("image",0).put("side","back").put("location","upper panel").put("role","vent topology").put("confidence",90);
+        ObservationExtractorV2.ingestPrimary(new JSONObject().put("category","generic_object").put("facts",new JSONArray().put(f)),l);
+        TypedFieldNormalizerV2.normalize(l);assertEquals("three triangular vents",l.strongest("physicalFeature").rawValue);
+    }
+
+    @Test public void unspecifiedAndMultipleCommercialFormatsRemainUnknown() throws Exception {
+        for(String format:new String[]{"Unspecified sealed box","Hobby box / Jumbo box / Value box","sealed box"}){
+            JSONObject row=new JSONObject().put("candidate_id","format-record").put("brand","Example").put("product_line","Prism").put("format",format);
+            IdentityCandidateV2 c=CandidateRetrieverV2.parse(new JSONObject().put("candidates",new JSONArray().put(row)),DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT,new ImmutableEvidenceLedgerV2()).get(0);
+            assertEquals("",c.value("commercialFormat"));
+        }
+    }
+
 }
