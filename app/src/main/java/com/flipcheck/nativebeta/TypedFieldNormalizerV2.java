@@ -76,7 +76,9 @@ final class TypedFieldNormalizerV2 {
         if(f.equals("edition")){String c=words(value);if(c.matches(".*\\b(1ST|FIRST|EDITION 1|1A EDIZIONE)\\b.*")&&!c.contains(" OR "))return "FIRST_EDITION";if(c.equals("UNLIMITED"))return "UNLIMITED";return value;}
         if(f.equals("firstEditionMark")){
             String c=words(value);
-            if(c.contains("ABSENT")||c.contains("NOT PRESENT"))return "ABSENT";
+            if(c.contains("ABSENT")||c.contains("NOT PRESENT")||c.matches("NO .*EDITION.*")||c.matches(".*EDITION.*NOT VISIBLE.*"))return "ABSENT";
+            if(ambiguous(value)||c.contains("UNCLEAR")||c.contains("ILLEGIBLE"))return value;
+            if(c.matches(".*\\b(?:EDITIONS? 1|1ST EDITION|FIRST EDITION)\\b.*"))return "PRESENT";
             if(c.equals("PRESENT")||c.equals("1ST EDITION")||c.equals("FIRST EDITION")||c.equals("EDITION 1")||c.equals("EDITION 1 SYMBOL")||c.equals("EDITION 1 LOGO")||c.equals("FIRST EDITION LOGO")||c.equals("1ST EDITION LOGO"))return "PRESENT";
             return value;
         }
@@ -94,7 +96,7 @@ final class TypedFieldNormalizerV2 {
         return false;
     }
 
-    static boolean ambiguous(String value){String c=words(value);return c.contains(" OR ")||c.contains("POSSIBLE")||c.contains("MAY BE")||c.contains("UNKNOWN")||c.contains("UNRESOLVED");}
+    static boolean ambiguous(String value){String c=words(value);return c.contains(" OR ")||(c.contains("POSSIBLE")||c.contains("POSSIBLY"))||c.contains("MAY BE")||c.contains("UNKNOWN")||c.contains("UNRESOLVED");}
 
     private static String normalizeCollector(String input){
         String compact=safe(input).toUpperCase(Locale.ROOT).replaceAll("\\s+","").replace('|','/');

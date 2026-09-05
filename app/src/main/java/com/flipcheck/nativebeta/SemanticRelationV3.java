@@ -18,6 +18,11 @@ final class SemanticRelationV3 {
         if(words(x).equals(words(y))||TypedFieldNormalizerV2.equivalent(field,x,y))return Relation.CANONICAL_EQUIVALENT;
         if(season(field)){if(seasonContains(x,y))return x.length()<y.length()?Relation.PARENT:Relation.CHILD;return Relation.INCOMPATIBLE;}
         if(design(field)){
+            if(unspecifiedDesign(x)||unspecifiedDesign(y))return Relation.AMBIGUOUS;
+            if(field.equals("voiceControl")){
+                int aVoice=voicePresence(x),bVoice=voicePresence(y);
+                if(aVoice!=0&&bVoice!=0)return aVoice==bVoice?Relation.COMPATIBLE_EXTENSION:Relation.INCOMPATIBLE;
+            }
             Set<String>xs=tokens(x),ys=tokens(y);if(xs.isEmpty()||ys.isEmpty())return Relation.AMBIGUOUS;
             Set<String>common=new LinkedHashSet<>(xs);common.retainAll(ys);double coverage=(double)common.size()/Math.min(xs.size(),ys.size());
             if(coverage>=.85d)return Relation.CANONICAL_EQUIVALENT;if(coverage>=.55d)return Relation.COMPATIBLE_EXTENSION;if(coverage>=.30d)return Relation.AMBIGUOUS;return Relation.INCOMPATIBLE;
@@ -33,6 +38,17 @@ final class SemanticRelationV3 {
             // explicit normalization rather than a token-overlap shortcut.
         }
         return Relation.INCOMPATIBLE;
+    }
+
+    private static boolean unspecifiedDesign(String value){
+        String s=words(value);
+        return s.contains("NOT DOCUMENTED")||s.contains("NOT SPECIFIED")||s.contains("NOT ESTABLISHED")||s.equals("N A");
+    }
+    private static int voicePresence(String value){
+        String s=words(value);
+        if(!s.contains("VOICE")&&!s.contains("MICROPHONE"))return 0;
+        if(s.matches(".*\\b(NO|WITHOUT|ABSENT)\\b.*"))return -1;
+        return 1;
     }
 
     static boolean compatible(Relation relation){return relation==Relation.EXACT||relation==Relation.CANONICAL_EQUIVALENT||relation==Relation.PARENT||relation==Relation.CHILD||relation==Relation.COMPATIBLE_EXTENSION;}

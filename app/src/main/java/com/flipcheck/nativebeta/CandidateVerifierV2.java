@@ -71,6 +71,7 @@ final class CandidateVerifierV2 {
         if(c.webSourceQuality<minimumQuality)reasons.add("source_quality="+c.webSourceQuality+"<"+minimumQuality+" (scale=0..100)");
         int minimumMatches=p==DomainProfileRouterV2.Profile.TELEVISION_REMOTE_CONTROL?3:2;
         if(coreMatches<minimumMatches)reasons.add("grounded_core_matches="+coreMatches+"<"+minimumMatches);
+        if(p==DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT&&!hasFamilyMatch(c))reasons.add("manufacturer_or_product_line_grounding_missing");
         if(card){
             if(!c.exactReference)reasons.add("exact_catalog_reference_missing");
             if(c.sourceRecordId.isEmpty())reasons.add("isolated_record_id_missing");
@@ -84,10 +85,18 @@ final class CandidateVerifierV2 {
 
     private static boolean disproofEvidence(DomainProfileRouterV2.Profile p,IdentityCandidateV2 c,int coreMatches){
         if(p==DomainProfileRouterV2.Profile.TCG_CARD||p==DomainProfileRouterV2.Profile.SPORTS_CARD)return c.exactReference&&!c.sourceRecordId.isEmpty()&&c.observedIdentifierMatch>=82&&coreMatches>=2&&c.webSourceQuality>=60;
-        if(p==DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT)return coreMatches>=2&&c.webSourceQuality>=60;
+        if(p==DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT)return coreMatches>=2&&c.webSourceQuality>=60&&hasFamilyMatch(c);
         if(p==DomainProfileRouterV2.Profile.TELEVISION_REMOTE_CONTROL)return c.layoutMatch>=70&&coreMatches>=3&&c.webSourceQuality>=65;
         if(DomainProfileRouterV2.electronics(p))return (c.observedIdentifierMatch>=82||c.layoutMatch>=75)&&coreMatches>=2&&c.webSourceQuality>=65;
         return coreMatches>=2&&c.webSourceQuality>=60;
+    }
+
+    private static boolean hasFamilyMatch(IdentityCandidateV2 c){
+        for(String field:new String[]{"manufacturer","productLine","setName","subSeries"}){
+            SemanticRelationV3.Relation r=c.fieldRelations.get(field);
+            if(r!=null&&SemanticRelationV3.compatible(r))return true;
+        }
+        return false;
     }
 
     private static int validateReportedMatches(IdentityCandidateV2 c,ImmutableEvidenceLedgerV2 ledger){int count=0;for(String raw:c.reportedMatchedFields){String field=reportedField(raw),candidate=c.value(field);if(candidate.isEmpty())continue;EvidenceAtom observed=ledger.strongest(field,EvidenceAtom.EpistemicLevel.OBSERVED);if(observed!=null&&observed.localized()&&SemanticRelationV3.compatible(SemanticRelationV3.relate(field,observed.normalizedValue,candidate))){addUnique(c.matchedEvidence,observed.id);count++;}}return count;}

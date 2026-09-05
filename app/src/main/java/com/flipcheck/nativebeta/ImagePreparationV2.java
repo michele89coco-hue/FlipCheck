@@ -28,7 +28,14 @@ final class ImagePreparationV2 {
             else if(profile==DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT){add(out,bitmap,sourceIndex,.10f,.40f,.95f,.96f,"sealed_brand_line_configuration");add(out,bitmap,sourceIndex,.00f,.00f,.55f,.75f,"sealed_year_product_line");}
             else if(profile==DomainProfileRouterV2.Profile.TELEVISION_REMOTE_CONTROL){add(out,bitmap,sourceIndex,.25f,.00f,.75f,.38f,"remote_top_brand_controls");add(out,bitmap,sourceIndex,.22f,.18f,.78f,.78f,"remote_control_topology");}
             else {add(out,bitmap,sourceIndex,.05f,.00f,.95f,.45f,"upper_logo_code");add(out,bitmap,sourceIndex,.05f,.55f,.95f,1f,"lower_label_code");}
-        }finally{bitmap.recycle();}return out;
+        }finally{bitmap.recycle();}
+        // Set season can be printed on the opposite face from the card number.
+        // Include its lower identity area instead of repeatedly sending only one face.
+        if(profile==DomainProfileRouterV2.Profile.SPORTS_CARD&&originals.size()>1){
+            int otherIndex=sourceIndex==0?1:0;Bitmap other=decode(originals.get(otherIndex));
+            if(other!=null)try{add(out,other,otherIndex,.00f,.50f,1f,1f,"sports_other_face_set_season");}finally{other.recycle();}
+        }
+        return out;
     }
 
     private static int preferredSource(List<String> originals,DomainProfileRouterV2.Profile profile,String discriminator){

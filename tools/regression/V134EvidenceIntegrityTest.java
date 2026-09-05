@@ -307,4 +307,74 @@ public class V134EvidenceIntegrityTest {
         assertFalse("franchise must not be compared with manufacturer",c.fieldRelations.containsKey("manufacturer"));
     }
 
+    @Test public void descriptiveEditionMarkPreservesNegationAndUncertainty() {
+        assertEquals("PRESENT",TypedFieldNormalizerV2.normalizeValue("firstEditionMark","EDITIONS 1 circular mark",""));
+        assertEquals("ABSENT",TypedFieldNormalizerV2.normalizeValue("firstEditionMark","no first edition mark visible",""));
+        assertNotEquals("PRESENT",TypedFieldNormalizerV2.normalizeValue("firstEditionMark","possibly a first edition mark",""));
+    }
+    @Test public void remoteShortcutLogoIsNotDeviceManufacturer() throws Exception {
+        Models.LocalScan scan=new Models.LocalScan();scan.textByImage.add("STREAMAPP");
+        ImmutableEvidenceLedgerV2 l=new ImmutableEvidenceLedgerV2();ObservationExtractorV2.ingestLocal(scan,l);
+        JSONObject f=new JSONObject().put("key","brand_mark").put("value","STREAMAPP").put("role","visible_logo")
+            .put("image",0).put("side","front").put("location","below colored shortcut keys").put("confidence",99);
+        ObservationExtractorV2.ingestPrimary(new JSONObject().put("category","television_remote_control").put("facts",new JSONArray().put(f)),l);
+        assertFalse(l.hasObserved("brand"));assertFalse(l.hasObserved("manufacturer"));
+        assertNotNull(l.strongest("controlLabel"));
+    }
+    @Test public void missingDesignDescriptionIsNotContradiction() {
+        assertEquals(SemanticRelationV3.Relation.AMBIGUOUS,SemanticRelationV3.relate("numericKeypad",
+            "digits 1-9 and 0 in three columns", "not documented"));
+        assertEquals(SemanticRelationV3.Relation.AMBIGUOUS,SemanticRelationV3.relate("numericKeypad",
+            "digits 1-9 and 0 in three columns", "physical numeric keypad documented; exact arrangement not specified"));
+    }
+    @Test public void voiceCapabilityIsSeparateFromWording() {
+        assertTrue(SemanticRelationV3.compatible(SemanticRelationV3.relate("voiceControl",
+            "button visibly labeled VOICE", "Dedicated VOICE control/microphone")));
+        assertEquals(SemanticRelationV3.Relation.INCOMPATIBLE,SemanticRelationV3.relate("voiceControl",
+            "VOICE button", "no voice control"));
+    }
+    @Test public void scopedPackagingTranscriptionsReachCanonicalFields() throws Exception {
+        ImmutableEvidenceLedgerV2 l=new ImmutableEvidenceLedgerV2();
+        JSONArray fs=new JSONArray();
+        for(String[] p:new String[][]{{"sealed_configuration_text","1 autograph in every box","configuration"},
+            {"sealed_brand_line_configuration","Example Prism Update Series","product line"}})
+            fs.put(new JSONObject().put("key",p[0]).put("value",p[1]).put("role",p[2]).put("image",0)
+                .put("side","front").put("location","center product title").put("confidence",99));
+        ObservationExtractorV2.ingestPrimary(new JSONObject().put("category","sealed_trading_card_product").put("facts",fs),l);
+        assertNotNull(l.strongest("configuration"));assertNotNull(l.strongest("productLine"));
+    }
+
+    @Test public void focusedLiteralLogoDoesNotRequireSuccessfulOcr() throws Exception {
+        ImmutableEvidenceLedgerV2 l=new ImmutableEvidenceLedgerV2();
+        JSONObject f=new JSONObject().put("key","brand_mark").put("value","ExampleMaker").put("role","manufacturer_brand")
+            .put("image",0).put("side","front").put("location","center manufacturer logo").put("confidence",99);
+        ObservationExtractorV2.ingestFocused(new JSONObject().put("facts",new JSONArray().put(f)),l,
+            DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT,"detail");
+        assertTrue(l.hasObserved("brand"));
+    }
+    @Test public void sealedYearAndGenericBoxDoNotProveManufacturerOrLine() {
+        ImmutableEvidenceLedgerV2 l=new ImmutableEvidenceLedgerV2();
+        for(String[] p:new String[][]{{"productReleaseYear","2025-26"},{"productType","sealed trading card box"}})
+            l.append(p[0],p[1],EvidenceAtom.EpistemicLevel.OBSERVED,EvidenceAtom.Modality.PRIMARY_VISION,"test",0,"front","panel","","printed_text",99,90,"test","");
+        IdentityCandidateV2 c=new IdentityCandidateV2("generic",DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT,"test");
+        c.retrieved=true;c.sourceUrl="https://catalog.example/box";c.webSourceQuality=95;
+        c.fields.put("manufacturer","Example");c.fields.put("productLine","Prism");c.fields.put("productReleaseYear","2025-26");
+        c.fields.put("productType","sealed trading card box");
+        CandidateVerifierV2.verify(java.util.Collections.singletonList(c),l,c.domain);
+        assertFalse(c.disproofPassed);
+    }
+
+    @Test public void remoteLayoutDoesNotProveCatalogModelCode() {
+        ImmutableEvidenceLedgerV2 l=new ImmutableEvidenceLedgerV2();
+        l.append("controlLayout","diamond navigation with numeric keypad",EvidenceAtom.EpistemicLevel.OBSERVED,
+            EvidenceAtom.Modality.PRIMARY_VISION,"test",0,"front","controls","","layout",99,90,"test","");
+        IdentityCandidateV2 c=new IdentityCandidateV2("manual",DomainProfileRouterV2.Profile.TELEVISION_REMOTE_CONTROL,"test");
+        c.retrieved=true;c.disproofPassed=true;c.totalScore=90;c.webSourceQuality=95;c.sourceUrl="https://catalog.example/manual";
+        c.fields.put("manufacturer","Example");c.fields.put("model","TV55ABC");
+        Models.Identification id=new Models.Identification();id.uploadedImageCount=1;
+        FinalStateReducerV2.reduce(id,l,c.domain,java.util.Collections.singletonList(c),new java.util.ArrayList<>(),"");
+        assertEquals("",id.model);assertEquals("TO_VERIFY",id.exactModelStatus);
+        assertEquals("rear_label_or_model_code",id.requestedPhotoReason);
+    }
+
 }

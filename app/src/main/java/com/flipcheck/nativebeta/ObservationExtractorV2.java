@@ -45,8 +45,8 @@ final class ObservationExtractorV2 {
             String rawField=safe(first(f,"key","field")),raw=safe(first(f,"value","rawTextOrSymbol","raw_value"));
             int image=f.has("image")?f.optInt("image",-1):f.optInt("image_index",-1);String location=safe(first(f,"location","region","boundingBox"));
             String side=safe(f.optString("side","unknown")),role=safe(first(f,"role","semantic_role","semanticScope"));
-            String field=TypedFieldNormalizerV2.canonicalField(profileField(rawField,role,profile),role+" "+location);int confidence=f.optInt("confidence",0);
-            EvidenceAtom.EpistemicLevel requested=groundingLevel(field,raw,role,modality,ledger,confidence);
+            String field=TypedFieldNormalizerV2.canonicalField(profileField(rawField,role,location,profile),role+" "+location);int confidence=f.optInt("confidence",0);
+            EvidenceAtom.EpistemicLevel requested=groundingLevel(field,raw,role+(rawField.equalsIgnoreCase("brand_mark")?" brand_mark":""),modality,ledger,confidence);
             EvidenceAtom atom=ledger.append(field,raw,requested,modality,source,image,side,location,cropId,role,confidence,quality(location,raw),modality==EvidenceAtom.Modality.PRIMARY_VISION?"primary_observation":"focused_observation","");
             if(atom!=null&&atom.epistemicLevel==EvidenceAtom.EpistemicLevel.INFERRED){/* intentionally demoted */}
         }}
@@ -65,10 +65,10 @@ final class ObservationExtractorV2 {
         if(f.equals("setSymbol"))return EvidenceAtom.EpistemicLevel.INFERRED;
         boolean identityLabel=f.equals("manufacturer")||f.equals("brand")||f.equals("game")||f.equals("setName")||f.equals("productLine")||f.equals("subSeries");
         if(!identityLabel)return EvidenceAtom.EpistemicLevel.OBSERVED;
-        boolean literalRole=r.contains("printed")||r.contains("ocr")||r.contains("brand_mark")||r.contains("visible_text")||r.contains("logo")||r.endsWith("_text")||r.equals("product_line")||r.equals("set_name")||r.equals("game_brand");
+        boolean literalRole=r.contains("printed")||r.contains("ocr")||r.contains("brand_mark")||r.contains("visible_text")||r.contains("logo")||r.endsWith("_text")||r.equals("product_line")||r.equals("set_name")||r.equals("game_brand")||r.equals("manufacturer_brand")||r.equals("manufacturer mark")||r.equals("manufacturer")||r.startsWith("sealed_brand_line");
         // A set-name inferred from a symbol classification is a hypothesis; the observed item is the symbol's appearance, not the catalog set label.
         if((f.equals("setName")||f.equals("productLine"))&&r.contains("symbol"))return EvidenceAtom.EpistemicLevel.INFERRED;
-        return literalRole&&confidence>=72&&localTextSupports(ledger,raw)?EvidenceAtom.EpistemicLevel.OBSERVED:EvidenceAtom.EpistemicLevel.INFERRED;
+        return literalRole&&!TypedFieldNormalizerV2.ambiguous(raw)&&confidence>=72&&(localTextSupports(ledger,raw)||modality==EvidenceAtom.Modality.FOCUSED_VISION||r.equals("brand_logo")||r.contains("brand_mark"))?EvidenceAtom.EpistemicLevel.OBSERVED:EvidenceAtom.EpistemicLevel.INFERRED;
     }
 
     private static boolean localTextSupports(ImmutableEvidenceLedgerV2 ledger,String value){String target=canon(value);if(target.isEmpty())return false;for(EvidenceAtom a:ledger.current("printedLabel")){String hay=canon(a.rawValue);if(hay.contains(target)||tokenCoverage(hay,target)>=.75d)return true;}return false;}
@@ -76,7 +76,17 @@ final class ObservationExtractorV2 {
     private static String canon(String v){return safe(v).toUpperCase(Locale.ROOT).replaceAll("[^A-Z0-9]+"," ").trim().replaceAll("\\s+"," ");}
     private static void strings(JSONArray a,List<String>out){if(a==null)return;for(int i=0;i<a.length();i++){String v=safe(a.optString(i,""));if(!v.isEmpty()&&!out.contains(v))out.add(v);}}
 
-    private static String profileField(String field,String role,DomainProfileRouterV2.Profile profile){String k=safe(field).toLowerCase(Locale.ROOT).replace('-','_');String r=safe(role).toLowerCase(Locale.ROOT);
+    private static String profileField(String field,String role,String location,DomainProfileRouterV2.Profile profile){String k=safe(field).toLowerCase(Locale.ROOT).replace('-','_');String r=safe(role).toLowerCase(Locale.ROOT);
+        // A service logo on a control is not the maker of the physical accessory.
+        String context=(r+" "+safe(location)).toLowerCase(Locale.ROOT);
+        String canonical=TypedFieldNormalizerV2.canonicalField(field,role);
+        if(profile==DomainProfileRouterV2.Profile.TELEVISION_REMOTE_CONTROL
+                &&(canonical.equals("brand")||canonical.equals("manufacturer"))
+                &&context.matches(".*(button|shortcut|streaming|keycap|app key).*"))return "controlLabel";
+        if(profile==DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT){
+            if(k.equals("sealed_configuration_text"))return "configuration";
+            if(k.equals("sealed_brand_line_configuration"))return "productLine";
+        }
         if(profile==DomainProfileRouterV2.Profile.TCG_CARD&&(r.equals("franchise_text")||r.equals("game_title")))return "game";
         if(k.equals("text")||k.equals("raw_text")||k.equals("printed_text")){
             if(r.equals("product_line"))return profile==DomainProfileRouterV2.Profile.TCG_CARD?"setName":"productLine";
