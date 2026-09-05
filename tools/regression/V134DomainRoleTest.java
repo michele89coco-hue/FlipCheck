@@ -34,4 +34,15 @@ public class V134DomainRoleTest {
     @Test public void sealedSeasonTranscriptionIsPreserved() throws Exception {
         assertNotNull(extract("sealed_trading_card_product","printedLabel","2024/25","season label").strongest("productReleaseYear"));
     }
+    @Test public void localizedBrandAndManufacturerSupportSameSealedCore() {
+        for(String brandField:new String[]{"brand","manufacturer"}) {
+            ImmutableEvidenceLedgerV2 l=new ImmutableEvidenceLedgerV2();
+            for(String[] f:new String[][]{{brandField,"Example"},{"productLine","Prism Basketball"},{"productReleaseYear","2024-25"}})
+                l.append(f[0],f[1],EvidenceAtom.EpistemicLevel.OBSERVED,EvidenceAtom.Modality.FOCUSED_VISION,"test",0,"front","central printed label","","printed text",95,95,"test","");
+            Models.Identification id=new Models.Identification();id.uploadedImageCount=1;
+            FinalStateReducerV2.reduce(id,l,DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT,new java.util.ArrayList<>(),new java.util.ArrayList<>(),"");
+            assertEquals("CONFIRMED",id.coreIdentityStatus);
+            assertEquals("TO_VERIFY",id.commercialFormatStatus);
+        }
+    }
 }
