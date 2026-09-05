@@ -12,6 +12,10 @@ final class SemanticRelationV3 {
 
     static Relation relate(String field,String left,String right){
         String a=safe(left),b=safe(right);if(a.isEmpty()||b.isEmpty())return Relation.AMBIGUOUS;
+        if(field.equals("configuration")&&(uncertainQuantityClause(a)||uncertainQuantityClause(b))){
+            Relation known=configurationQuantities(a,b);
+            return known==null?Relation.AMBIGUOUS:known;
+        }
         if(a.equalsIgnoreCase(b))return Relation.EXACT;
         if(field.equals("manufacturer")||field.equals("brand")){
             String corporateA=corporateRoot(a),corporateB=corporateRoot(b);
@@ -81,7 +85,7 @@ final class SemanticRelationV3 {
     private static Set<String> tokens(String raw){Set<String>out=new LinkedHashSet<>();for(String t:words(raw).split(" "))if(t.length()>1&&!t.equals("SERIES")&&!t.equals("THE"))out.add(t);return out;}
     private static Relation configurationQuantities(String left,String right){
         java.util.Map<String,long[]> a=quantities(left),b=quantities(right);
-        if(a.isEmpty()||b.isEmpty())return null;
+        if(a.isEmpty()||b.isEmpty())return uncertainQuantityClause(left)||uncertainQuantityClause(right)?Relation.AMBIGUOUS:null;
         int shared=0;
         for(String key:a.keySet())if(b.containsKey(key)){
             shared++;long[] x=a.get(key),y=b.get(key);
@@ -93,7 +97,9 @@ final class SemanticRelationV3 {
     }
     private static java.util.Map<String,long[]> quantities(String value){
         java.util.Map<String,long[]> out=new java.util.LinkedHashMap<>();
-        String normalized=words(value).replace("IN EVERY","PER").replace("IN EACH","PER");
+        StringBuilder known=new StringBuilder();
+        for(String clause:value.split("[;\\n]"))if(!uncertainQuantityClause(clause))known.append(clause).append("; ");
+        String normalized=words(known.toString()).replace("IN EVERY","PER").replace("IN EACH","PER");
         java.util.regex.Matcher m=java.util.regex.Pattern.compile(
                 "\\b([0-9]{1,6}) (AUTOGRAPHS?(?: CARDS?)?|CARDS?|PACKS?) PER (?:([0-9]{1,6}) )?(BOXES|BOX|PACKS?|CASES?)\\b").matcher(normalized);
         while(m.find()){
@@ -110,6 +116,14 @@ final class SemanticRelationV3 {
         }
         if(java.util.regex.Pattern.compile("[0-9]").matcher(m.reset().replaceAll("")).find())return new java.util.LinkedHashMap<>();
         return out;
+    }
+    private static boolean uncertainQuantityClause(String value){
+        return words(value).matches(".*\\b(?:NOT ESTABLISHED|NOT SHOWN|NOT SPECIFIED|NOT CONFIRMED|UNKNOWN|UNVERIFIED)\\b.*");
+    }
+    static boolean completeBoxConfiguration(String value){
+        java.util.Map<String,long[]> q=quantities(value);
+        return q.containsKey("CARD/PACK")&&q.containsKey("PACK/BOX")
+                &&q.get("CARD/PACK")[0]>0&&q.get("PACK/BOX")[0]>0;
     }
     private static Set<String> configurationTokens(String value){
         String normalized=words(value).replace("IN EVERY", "PER").replace("IN EACH", "PER").replace("BOXES", "BOX");

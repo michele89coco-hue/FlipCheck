@@ -50,12 +50,26 @@ final class ObservationExtractorV2 {
             // Keep the transcription without guessing that it is a collector number.
             if(profile==DomainProfileRouterV2.Profile.TCG_CARD&&field.equals("cardName")
                     &&raw.matches("#?\\s*[0-9]+(?:/[0-9]+)?")&&role.toLowerCase(Locale.ROOT).contains("number"))field="printedLabel";
+            if(profile==DomainProfileRouterV2.Profile.TCG_CARD){
+                // A full collector fraction is not a denominator merely because the
+                // transport key says printedTotal. Preserve its located transcription.
+                if(field.equals("printedTotal")&&raw.matches("[A-Za-z]*[0-9]+\\s*/\\s*[0-9]+")
+                        &&role.toLowerCase(Locale.ROOT).matches(".*(set numbering|collector|card number).*"))field="collectorNumber";
+                if(field.equals("collectorNumber")&&raw.matches("#?\\s*[0-9]+")
+                        &&location.toLowerCase(Locale.ROOT).matches(".*(flavor[ -]text|species|descriptive text).*")
+                        &&hasLocatedCollectorFraction(facts,ledger))field="printedLabel";
+            }
+            if(profile==DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT&&field.equals("commercialFormat")
+                    &&raw.toLowerCase(Locale.ROOT).replaceAll("[*!]", "").trim().matches(
+                        "[0-9]+ (?:autographs?(?: cards?)?|cards?|packs?) (?:in every|in each|per) (?:box|pack|case)"))field="configuration";
             String groundingRole=role;
             if(profile==DomainProfileRouterV2.Profile.SPORTS_CARD){
                 String labelRole=role.toLowerCase(Locale.ROOT).replace('-', ' ');
                 if((field.equals("brand")||field.equals("manufacturer"))
                         &&labelRole.matches("(?:manufacturer/brand|brand/manufacturer) mark(?:ing)?"))groundingRole="printed manufacturer label";
                 if(field.equals("productLine")&&labelRole.matches("set/product line mark(?:ing)?"))groundingRole="printed product line label";
+                if((field.equals("brand")||field.equals("manufacturer"))&&labelRole.equals("brand")
+                        &&location.toLowerCase(Locale.ROOT).contains("logo"))groundingRole="printed brand label";
             }
             EvidenceAtom.EpistemicLevel requested=groundingLevel(field,raw,groundingRole+(rawField.equalsIgnoreCase("brand_mark")?" brand_mark":""),modality,ledger,confidence);
             if(profile==DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT
@@ -67,6 +81,19 @@ final class ObservationExtractorV2 {
             if(atom!=null&&atom.epistemicLevel==EvidenceAtom.EpistemicLevel.INFERRED){/* intentionally demoted */}
         }}
 
+    private static boolean hasLocatedCollectorFraction(JSONArray facts,ImmutableEvidenceLedgerV2 ledger){
+        for(EvidenceAtom atom:ledger.current("collectorNumber"))if(atom.epistemicLevel==EvidenceAtom.EpistemicLevel.OBSERVED
+                &&atom.localized()&&atom.reliable()&&atom.normalizedValue.matches("[A-Za-z]*[0-9]+/[0-9]+"))return true;
+        for(int i=0;i<facts.length();i++){
+            JSONObject f=facts.optJSONObject(i);if(f==null||f.optInt("confidence",0)<72)continue;
+            String key=TypedFieldNormalizerV2.canonicalField(first(f,"key","field"),"");
+            if(!(key.equals("collectorNumber")||key.equals("printedTotal")))continue;
+            int image=f.has("image")?f.optInt("image",-1):f.optInt("image_index",-1);
+            if(image>=0&&!safe(first(f,"location","region","boundingBox")).isEmpty()
+                    &&first(f,"value","rawTextOrSymbol","raw_value").matches("[A-Za-z]*[0-9]+\\s*/\\s*[0-9]+"))return true;
+        }
+        return false;
+    }
     private static void ingestCandidates(JSONArray candidates,List<IdentityCandidateV2> out,DomainProfileRouterV2.Profile profile,String source,ImmutableEvidenceLedgerV2 ledger){if(candidates==null)return;
         for(int i=0;i<candidates.length();i++){JSONObject c=candidates.optJSONObject(i);if(c==null)continue;IdentityCandidateV2 x=new IdentityCandidateV2(source+"-"+(i+1),profile,source);
             add(x,"manufacturer",first(c,"brand","manufacturer"));add(x,profile==DomainProfileRouterV2.Profile.TCG_CARD?"setName":"productLine",first(c,"product_line","family","set_name"));
@@ -77,7 +104,7 @@ final class ObservationExtractorV2 {
 
     private static EvidenceAtom.EpistemicLevel groundingLevel(String field,String raw,String role,EvidenceAtom.Modality modality,ImmutableEvidenceLedgerV2 ledger,int confidence){
         String f=safe(field),r=safe(role).toLowerCase(Locale.ROOT);
-        if(r.equals("full product line"))r="product line";
+        if(r.equals("full product line")||r.equals("full product line and subseries"))r="product line";
         // Catalog symbol names are classifications, unlike the raw visualSymbol appearance.
         if(f.equals("setSymbol"))return EvidenceAtom.EpistemicLevel.INFERRED;
         boolean identityLabel=f.equals("manufacturer")||f.equals("brand")||f.equals("game")||f.equals("setName")||f.equals("productLine")||f.equals("subSeries");
