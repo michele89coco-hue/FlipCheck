@@ -1,7 +1,7 @@
 name: FlipCheck 26 targeted fixes
 on:
   push:
-    branches: [codex/v026-targeted-edition-photos]
+    branches: [codex/v0262-android-bars-picker]
   workflow_dispatch:
 permissions:
   contents: read
@@ -44,16 +44,36 @@ jobs:
         env:
           GIT_COMMIT: ${{ github.sha }}
         run: |
-          ./gradlew :legacy26:assembleDebug --no-daemon --console=plain
+          ./gradlew :legacy26:assembleDebug :legacy26:assembleDebugAndroidTest --no-daemon --console=plain
           mkdir -p artifact
-          cp legacy26/build/outputs/apk/debug/legacy26-debug.apk artifact/FlipCheck-v0.26.1-fix.apk
-          sha256sum artifact/FlipCheck-v0.26.1-fix.apk > artifact/FlipCheck-v0.26.1-fix.sha256
-          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose --print-certs artifact/FlipCheck-v0.26.1-fix.apk > artifact/apksigner-report.txt
+          cp legacy26/build/outputs/apk/debug/legacy26-debug.apk artifact/FlipCheck-v0.26.2-fix.apk
+          sha256sum artifact/FlipCheck-v0.26.2-fix.apk > artifact/FlipCheck-v0.26.2-fix.sha256
+          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose --print-certs artifact/FlipCheck-v0.26.2-fix.apk > artifact/apksigner-report.txt
           grep -q 'Signer #1 certificate SHA-256 digest: d4d02478ea31cb6bd83228047e9accd7dfb191ed991a4c8e8c06a228e54614c7' artifact/apksigner-report.txt
-          "$ANDROID_HOME/build-tools/36.0.0/aapt" dump badging artifact/FlipCheck-v0.26.1-fix.apk > artifact/apk-analyzer-report.txt
-          grep -q "package: name='com.flipcheck.beta.legacy26fix' versionCode='158' versionName='0.26.1-targeted'" artifact/apk-analyzer-report.txt
+          "$ANDROID_HOME/build-tools/36.0.0/aapt" dump badging artifact/FlipCheck-v0.26.2-fix.apk > artifact/apk-analyzer-report.txt
+          grep -q "package: name='com.flipcheck.beta.legacy26fix' versionCode='159' versionName='0.26.2-android-ui'" artifact/apk-analyzer-report.txt
           cp /tmp/flipcheck26-printing.png artifact/browser-printing.png
+      - name: Enable emulator acceleration
+        run: sudo chmod a+rw /dev/kvm
+      - name: Android 16 navigation and photo-picker checks without API
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 36
+          target: google_apis
+          arch: x86_64
+          profile: pixel_7
+          emulator-options: -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect -no-snapshot
+          disable-animations: true
+          script: |
+            set -euo pipefail
+            adb shell cmd overlay enable-exclusive --category com.android.internal.systemui.navbar.threebutton
+            adb install -t -r artifact/FlipCheck-v0.26.2-fix.apk
+            adb install -t -r legacy26/build/outputs/apk/androidTest/debug/legacy26-debug-androidTest.apk
+            adb shell am instrument -w -r -e class com.flipcheck.legacy26.AndroidUiRegressionTest com.flipcheck.beta.legacy26fix.test/androidx.test.runner.AndroidJUnitRunner | tee artifact/android-ui-test.txt
+            adb pull /sdcard/Android/data/com.flipcheck.beta.legacy26fix/files/ui159 artifact/android-ui
+            grep -q 'OK (1 test)' artifact/android-ui-test.txt
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: FlipCheck-v026-targeted-apk
           path: artifact/

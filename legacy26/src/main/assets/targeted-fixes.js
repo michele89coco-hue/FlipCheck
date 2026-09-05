@@ -57,6 +57,7 @@ async function loadSelectedPhotos(selected, replaceIndex = null) {
 for (let i = 0; i < 3; i++) {
   $('s'+i).onclick = event => {
     if (photoBusy || apiBusy || event.target.closest('.remove-photo')) return;
+    if (!images[i]) { openBatchPicker(); return; }
     $('photo'+i).value = ''; $('photo'+i).click();
   };
   $('photo'+i).onchange = event => loadSelectedPhotos(event.target.files,i);
@@ -121,7 +122,7 @@ $('identifyBtn').onclick = () => {
 $('marketBtn').onclick = () => runLocked26(originalMarket26);
 
 function diagnostic26() {
-  let build = {versionCode:158,versionName:'0.26.1-targeted',sourceCommit:'browser-test'};
+  let build = {versionCode:159,versionName:'0.26.2-android-ui',sourceCommit:'browser-test'};
   try { if (window.FlipCheckHost) build = JSON.parse(FlipCheckHost.buildInfo()); } catch (_) { }
   return {schema:'flipcheck-v026-targeted-diagnostic-1',...build,baseline:'0.26',
     exportedAt:new Date().toISOString(),uploadedImageCount:validImageCount(),photoEvents,

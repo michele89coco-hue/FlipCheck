@@ -5,7 +5,13 @@ import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.graphics.Insets;
+import android.provider.MediaStore;
+import android.view.View;
+import android.view.WindowInsets;
+import android.view.WindowInsetsController;
 import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
@@ -14,6 +20,7 @@ import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
+import android.widget.FrameLayout;
 import java.io.ByteArrayInputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
@@ -31,6 +38,18 @@ public final class MainActivity extends Activity {
 
     @Override public void onCreate(Bundle saved) {
         super.onCreate(saved);
+        getWindow().setStatusBarColor(0xff0b1020);
+        getWindow().setNavigationBarColor(0xff0b1020);
+        if (Build.VERSION.SDK_INT >= 29) getWindow().setNavigationBarContrastEnforced(false);
+        if (Build.VERSION.SDK_INT >= 30) {
+            getWindow().setDecorFitsSystemWindows(false);
+            WindowInsetsController controller = getWindow().getInsetsController();
+            if (controller != null) controller.setSystemBarsAppearance(0,
+                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS | WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS);
+        } else {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+        }
         web = new WebView(this);
         web.setBackgroundColor(0xff0b1020);
         web.getSettings().setJavaScriptEnabled(true);
@@ -66,22 +85,49 @@ public final class MainActivity extends Activity {
                 finishPicker(null);
                 pickerCallback = callback;
                 pickerMultiple = params.getMode() == FileChooserParams.MODE_OPEN_MULTIPLE;
-                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                intent.setType("image/*");
-                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, pickerMultiple);
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                try { startActivityForResult(intent, PICK_IMAGES); }
-                catch (ActivityNotFoundException e) { finishPicker(null); }
+                launchPhotoPicker();
                 return true;
             }
         });
-        setContentView(web);
-        web.setOnApplyWindowInsetsListener((view, insets) -> {
-            view.setPadding(insets.getSystemWindowInsetLeft(), insets.getSystemWindowInsetTop(), insets.getSystemWindowInsetRight(), insets.getSystemWindowInsetBottom());
-            return insets;
+        // The container reduces the actual WebView viewport, including CSS position:fixed.
+        // Padding the WebView itself leaves fixed web controls behind Android's navigation bar.
+        FrameLayout container = new FrameLayout(this);
+        container.setBackgroundColor(0xff0b1020);
+        container.addView(web, new FrameLayout.LayoutParams(-1, -1));
+        container.setOnApplyWindowInsetsListener((view, insets) -> {
+            if (Build.VERSION.SDK_INT >= 30) {
+                int handled = WindowInsets.Type.systemBars() | WindowInsets.Type.displayCutout() | WindowInsets.Type.ime();
+                Insets safe = insets.getInsets(handled);
+                view.setPadding(safe.left, safe.top, safe.right, safe.bottom);
+                // Deliver zeroed insets on every update so WebView cannot retain keyboard padding.
+                return new WindowInsets.Builder(insets).setInsets(handled, Insets.NONE)
+                    .setInsetsIgnoringVisibility(WindowInsets.Type.systemBars() | WindowInsets.Type.displayCutout(), Insets.NONE).build();
+            }
+            view.setPadding(insets.getSystemWindowInsetLeft(), insets.getSystemWindowInsetTop(),
+                insets.getSystemWindowInsetRight(), insets.getSystemWindowInsetBottom());
+            return insets.replaceSystemWindowInsets(0, 0, 0, 0);
         });
+        setContentView(container);
+        container.requestApplyInsets();
         web.loadUrl(ORIGIN + "index.html");
+    }
+
+    private void launchPhotoPicker() {
+        if (Build.VERSION.SDK_INT >= 33) {
+            Intent picker = new Intent(MediaStore.ACTION_PICK_IMAGES).setType("image/*");
+            if (pickerMultiple) {
+                picker.putExtra(MediaStore.EXTRA_PICK_IMAGES_MAX, Math.min(3, MediaStore.getPickImagesMaxLimit()));
+                if (Build.VERSION.SDK_INT >= 35) picker.putExtra(MediaStore.EXTRA_PICK_IMAGES_IN_ORDER, true);
+            }
+            try { startActivityForResult(picker, PICK_IMAGES); return; }
+            catch (ActivityNotFoundException ignored) { }
+        }
+        Intent document = new Intent(Intent.ACTION_OPEN_DOCUMENT).setType("image/*");
+        document.addCategory(Intent.CATEGORY_OPENABLE);
+        document.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, pickerMultiple);
+        document.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        try { startActivityForResult(document, PICK_IMAGES); }
+        catch (ActivityNotFoundException e) { finishPicker(null); }
     }
 
     private void finishPicker(Uri[] values) {
@@ -118,7 +164,7 @@ public final class MainActivity extends Activity {
 
     public final class DiagnosticBridge {
         @JavascriptInterface public String buildInfo() {
-            return "{\"versionCode\":158,\"versionName\":\"0.26.1-targeted\",\"sourceCommit\":\"" + BuildConfig.SOURCE_COMMIT + "\"}";
+            return "{\"versionCode\":" + BuildConfig.VERSION_CODE + ",\"versionName\":\"" + BuildConfig.VERSION_NAME + "\",\"sourceCommit\":\"" + BuildConfig.SOURCE_COMMIT + "\"}";
         }
         @JavascriptInterface public void saveDiagnostic(String json) {
             if (json == null || json.length() > 300000) return;

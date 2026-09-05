@@ -40,6 +40,16 @@ before(async()=>{
   photos=photos.map(p=>({name:p.name,mimeType:'image/png',buffer:Buffer.from(p.base64,'base64')}));
 });
 after(async()=>{if(browser)await browser.close();if(server)await new Promise(resolve=>server.close(resolve));});
+test('empty plus and add button open multi-select; filled slot opens replacement',async()=>{
+  await reset();
+  let chooserPromise=page.waitForEvent('filechooser');await page.locator('#s0').click();let chooser=await chooserPromise;
+  assert.equal(chooser.isMultiple(),true);await chooser.setFiles(photos.slice(0,2));await page.waitForFunction(()=>!photoBusy);
+  chooserPromise=page.waitForEvent('filechooser');await page.locator('#s0').click();chooser=await chooserPromise;
+  assert.equal(chooser.isMultiple(),false);await chooser.setFiles([]);
+  chooserPromise=page.waitForEvent('filechooser');await page.locator('#addPhotos').click();chooser=await chooserPromise;
+  assert.equal(chooser.isMultiple(),true);await chooser.setFiles([photos[2]]);await page.waitForFunction(()=>!photoBusy);
+  assert.equal(await page.evaluate(()=>validImageCount()),3);
+});
 test('multi-select accepts three photos in selection order and reports overflow',async()=>{
   await reset();await upload(photos);
   assert.deepEqual(await page.evaluate(()=>files.map(f=>f&&f.name)),['red.png','blue.png','green.png']);
