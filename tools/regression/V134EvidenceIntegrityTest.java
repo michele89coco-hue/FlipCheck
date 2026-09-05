@@ -65,4 +65,66 @@ public class V134EvidenceIntegrityTest {
         assertTrue(SemanticRelationV3.compatible(SemanticRelationV3.relate("productType",
                 "sealed trading-card box", "sealed trading-card product")));
     }
+    @Test public void firstEditionMarkHandlesNegativeAndLiteralReadings() {
+        assertEquals("PRESENT", TypedFieldNormalizerV2.normalizeValue("firstEditionMark", "Edition 1", ""));
+        assertEquals("ABSENT", TypedFieldNormalizerV2.normalizeValue("firstEditionMark", "not present", ""));
+        assertEquals("ABSENT", TypedFieldNormalizerV2.normalizeValue("firstEditionMark", "first edition mark absent", ""));
+        assertEquals("unknown", TypedFieldNormalizerV2.normalizeValue("firstEditionMark", "unknown", ""));
+    }
+    @Test public void finishAloneDoesNotConfirmTcgEditionOrVariant() {
+        for (String mark : new String[]{"ABSENT", "unknown", ""}) {
+            Models.Identification id = reduceEdition(mark);
+            assertEquals("TO_VERIFY", id.exactEditionStatus);
+            assertEquals("TO_VERIFY", id.variantStatus);
+            assertNotEquals("FIRST_EDITION", id.edition);
+        }
+    }
+    @Test public void localizedLiteralEditionClosesEditionAttribute() {
+        Models.Identification id = reduceEdition("Edition 1");
+        assertEquals("FIRST_EDITION", id.edition);
+        assertEquals("CONFIRMED", id.exactEditionStatus);
+        assertEquals("CONFIRMED", id.variantStatus);
+    }
+    private static Models.Identification reduceEdition(String mark) {
+        ImmutableEvidenceLedgerV2 ledger = new ImmutableEvidenceLedgerV2();
+        ledger.append("finish", "HOLO", EvidenceAtom.EpistemicLevel.OBSERVED,
+                EvidenceAtom.Modality.PRIMARY_VISION, "test", 0, "front", "art region",
+                "", "finish", 95, 90, "test", "");
+        if (!mark.isEmpty()) ledger.append("firstEditionMark", mark, EvidenceAtom.EpistemicLevel.OBSERVED,
+                EvidenceAtom.Modality.FOCUSED_VISION, "test", 0, "front", "edition region",
+                "", "edition", 95, 90, "test", "");
+        TypedFieldNormalizerV2.normalize(ledger);
+        Models.Identification id = new Models.Identification(); id.uploadedImageCount = 1;
+        FinalStateReducerV2.reduce(id, ledger, DomainProfileRouterV2.Profile.TCG_CARD,
+                new java.util.ArrayList<>(), new java.util.ArrayList<>(), "");
+        return id;
+    }
+    @Test public void genericTextUsesItsSemanticRole() throws Exception {
+        Models.LocalScan local = new Models.LocalScan(); local.textByImage.add("ACME Prism Update Series");
+        ImmutableEvidenceLedgerV2 ledger = new ImmutableEvidenceLedgerV2(); ObservationExtractorV2.ingestLocal(local, ledger);
+        JSONArray facts = new JSONArray();
+        String[][] rows = {{"Prism", "PRODUCT_LINE", "productLine"}, {"Update Series", "SERIES_TEXT", "subSeries"},
+            {"2025/26", "RELEASE_SEASON", "productReleaseYear"}, {"1 autograph in every box", "SEALED_CONFIGURATION", "configuration"}};
+        for (String[] row : rows) facts.put(new JSONObject().put("key", "text").put("value", row[0])
+            .put("role", row[1]).put("image", 0).put("side", "front").put("location", "center label").put("confidence", 98));
+        ObservationExtractorV2.ingestPrimary(new JSONObject().put("category", "sealed_trading_card_product").put("facts", facts), ledger);
+        for (String[] row : rows) assertNotNull(row[2], ledger.strongest(row[2]));
+        String prompt = CandidateRetrieverV2.prompt(DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT, ledger, new java.util.ArrayList<>());
+        assertTrue(prompt.contains("subSeries=Update Series"));
+    }
+    @Test public void uncorroboratedSubseriesDoesNotBecomePhysicalConstraint() throws Exception {
+        ImmutableEvidenceLedgerV2 ledger = new ImmutableEvidenceLedgerV2();
+        JSONObject fact = new JSONObject().put("key", "subSeries").put("value", "Imagined series")
+            .put("role", "SERIES_TEXT").put("image", 0).put("side", "front").put("location", "center").put("confidence", 99);
+        ObservationExtractorV2.ingestPrimary(new JSONObject().put("category", "sealed_trading_card_product").put("facts", new JSONArray().put(fact)), ledger);
+        assertFalse(ledger.hasObserved("subSeries"));
+        assertNotNull(ledger.strongest("subSeries", EvidenceAtom.EpistemicLevel.INFERRED));
+    }
+    @Test public void descriptiveListsAreNotAutomaticallyMultipleCatalogRecords() {
+        IdentityCandidateV2 c = new IdentityCandidateV2("record", DomainProfileRouterV2.Profile.TELEVISION_REMOTE_CONTROL, "test");
+        c.fields.put("manufacturer", "Example"); c.fields.put("controlLayout", "Home above Back; numeric keypad below"); c.layoutMatch = 90;
+        assertTrue(CatalogConsistencyV3.check(c, c.domain).coherent);
+        c.fields.put("manufacturer", "Example OR Alternative");
+        assertFalse(CatalogConsistencyV3.check(c, c.domain).coherent);
+    }
 }

@@ -72,7 +72,12 @@ final class TypedFieldNormalizerV2 {
         String f=canonicalField(field,scope);
         if(f.equals("collectorNumber")||f.equals("physicalCardNumber")||f.equals("catalogCardNumber"))return normalizeCollector(value);
         if(f.equals("edition")){String c=words(value);if(c.matches(".*\\b(1ST|FIRST|EDITION 1|1A EDIZIONE)\\b.*")&&!c.contains(" OR "))return "FIRST_EDITION";if(c.equals("UNLIMITED"))return "UNLIMITED";return value;}
-        if(f.equals("firstEditionMark")){String c=words(value);return c.contains("PRESENT")||c.contains("1ST")||c.contains("FIRST")?"PRESENT":c.contains("ABSENT")?"ABSENT":value;}
+        if(f.equals("firstEditionMark")){
+            String c=words(value);
+            if(c.contains("ABSENT")||c.contains("NOT PRESENT"))return "ABSENT";
+            if(c.equals("PRESENT")||c.equals("1ST EDITION")||c.equals("FIRST EDITION")||c.equals("EDITION 1"))return "PRESENT";
+            return value;
+        }
         if(f.equals("productReleaseYear")||f.equals("setSeason")||f.equals("statisticsSeason"))return SeasonNormalizer.normalize(value);
         if(f.equals("finish")){String c=words(value);if(c.equals("NON HOLO")||c.equals("NONHOLO"))return "NON_HOLO";if(c.contains("REVERSE")&&c.contains("HOLO"))return "REVERSE_HOLO";if(c.contains("HOLO")||c.contains("HOLOGRAPHIC"))return "HOLO";}
         if(f.equals("manufacturer")||f.equals("brand"))return displayWords(value);

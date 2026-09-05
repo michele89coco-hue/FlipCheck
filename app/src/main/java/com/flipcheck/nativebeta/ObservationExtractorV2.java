@@ -61,7 +61,7 @@ final class ObservationExtractorV2 {
 
     private static EvidenceAtom.EpistemicLevel groundingLevel(String field,String raw,String role,EvidenceAtom.Modality modality,ImmutableEvidenceLedgerV2 ledger,int confidence){
         String f=safe(field),r=safe(role).toLowerCase(Locale.ROOT);
-        boolean identityLabel=f.equals("manufacturer")||f.equals("brand")||f.equals("game")||f.equals("setName")||f.equals("productLine");
+        boolean identityLabel=f.equals("manufacturer")||f.equals("brand")||f.equals("game")||f.equals("setName")||f.equals("productLine")||f.equals("subSeries");
         if(!identityLabel)return EvidenceAtom.EpistemicLevel.OBSERVED;
         boolean literalRole=r.contains("printed")||r.contains("ocr")||r.contains("brand_mark")||r.contains("visible_text")||r.contains("logo")||r.endsWith("_text")||r.equals("product_line")||r.equals("set_name")||r.equals("game_brand");
         // A set-name inferred from a symbol classification is a hypothesis; the observed item is the symbol's appearance, not the catalog set label.
@@ -75,6 +75,14 @@ final class ObservationExtractorV2 {
     private static void strings(JSONArray a,List<String>out){if(a==null)return;for(int i=0;i<a.length();i++){String v=safe(a.optString(i,""));if(!v.isEmpty()&&!out.contains(v))out.add(v);}}
 
     private static String profileField(String field,String role,DomainProfileRouterV2.Profile profile){String k=safe(field).toLowerCase(Locale.ROOT).replace('-','_');String r=safe(role).toLowerCase(Locale.ROOT);
+        if(k.equals("text")||k.equals("raw_text")||k.equals("printed_text")){
+            if(r.equals("product_line"))return profile==DomainProfileRouterV2.Profile.TCG_CARD?"setName":"productLine";
+            if(r.equals("series_text")||r.equals("sub_series"))return "subSeries";
+            if(r.equals("release_season")||r.equals("printed_season"))return "productReleaseYear";
+            if(r.equals("sealed_configuration"))return "configuration";
+            // Composite branding text stays a transcription: do not invent a brand split.
+            if(r.equals("product_branding"))return "printedLabel";
+        }
         if((k.equals("subject")||k.equals("subject_name"))&&profile==DomainProfileRouterV2.Profile.TCG_CARD)return "cardName";
         if((k.equals("subject")||k.equals("subject_name"))&&profile==DomainProfileRouterV2.Profile.SPORTS_CARD)return "athlete";
         if((k.equals("card_number")||TypedFieldNormalizerV2.canonicalField(field,role).equals("collectorNumber"))&&profile==DomainProfileRouterV2.Profile.TCG_CARD)return "collectorNumber";

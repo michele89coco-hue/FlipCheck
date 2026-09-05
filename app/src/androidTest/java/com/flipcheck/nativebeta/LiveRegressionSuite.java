@@ -37,7 +37,7 @@ public final class LiveRegressionSuite {
         Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
         Context target = instrumentation.getTargetContext();
         String apiKey = requiredArgument(InstrumentationRegistry.getArguments(), "live_api_key");
-        File output = new File(target.getExternalFilesDir(null), "v134-live");
+        File output = new File(target.getFilesDir(), "v134-live");
         if (!output.isDirectory() && !output.mkdirs()) throw new IllegalStateException("Cannot create live output directory");
         target.getSharedPreferences("flipcheck_native_beta", 0).edit().putString("api_key", apiKey).putBoolean("ci_mock_mode", false).commit();
 
@@ -48,8 +48,7 @@ public final class LiveRegressionSuite {
             for (String mode : MODES) {
                 JSONObject run = new JSONObject().put("case", fixture.key).put("mode", mode).put("startedAt", Instant.now().toString());
                 try {
-                    RunResult result = runThroughForegroundService(instrumentation, target, fixture, mode);
-                    assertExpected(fixture.key, result.id, result.usage);
+                    RunResult result = runThroughForegroundService(instrumentation, target, fixture, mode, run);
                     File screenshot = new File(output, fixture.key + "-" + mode + ".png");
                     Bitmap captured = instrumentation.getUiAutomation().takeScreenshot();
                     if (captured == null) throw new AssertionError("UI screenshot unavailable");
@@ -67,14 +66,20 @@ public final class LiveRegressionSuite {
                             .put("visionCalls", result.usage.visionCalls).put("webCalls", result.usage.webCalls)
                             .put("marketCalls", result.id.marketCalls).put("requests", result.usage.requests)
                             .put("costUsd", result.usage.costUsd).put("queries", new JSONArray(result.id.webQueries))
+                            .put("observedTrace", result.id.v2ObservedFacts).put("inferredTrace", result.id.v2InferredFacts)
+                            .put("retrievedTrace", result.id.v2RetrievedFacts).put("imagePreparationTrace", result.id.v2ImagePreparationTrace)
+                            .put("rejectedSources", result.id.retrievedRejectedSources)
                             .put("candidateTrace", result.id.v2CandidateTrace).put("recoveryTrace", result.id.v2RecoveryTrace)
                             .put("screenshot", screenshot.getName());
+                    assertExpected(fixture.key, result.id, result.usage);
                 } catch (Throwable failure) {
                     allPassed = false;
-                    run.put("status", "FAIL").put("error", failure.getClass().getSimpleName() + ": " + safe(failure.getMessage()));
+                    run.put("status", "FAIL").put("error", failure.getClass().getSimpleName() + ": " + safe(failure.getMessage()).replace(apiKey, "[REDACTED]"));
                 }
                 run.put("completedAt", Instant.now().toString());
                 runs.put(run);
+                report.put("runs", runs).put("livePipelineTests", "INCOMPLETE");
+                writeJson(new File(output, "v134-live-results.json"), report);
             }
         }
         report.put("runs", runs).put("livePipelineTests", allPassed ? "PASS" : "FAIL")
@@ -87,10 +92,16 @@ public final class LiveRegressionSuite {
         assertTrue("Live installed-APK gate failed; see v134-live-results.json", allPassed && runs.length() == 12 && screenshotsPresent(output));
     }
 
-    private static RunResult runThroughForegroundService(Instrumentation instrumentation, Context target, Case fixture, String mode) throws Exception {
+    private static RunResult runThroughForegroundService(Instrumentation instrumentation, Context target, Case fixture, String mode, JSONObject run) throws Exception {
         AnalysisResultStore.reset(target);
         ArrayList<Uri> uris = new ArrayList<>();
-        for (String asset : fixture.assets) uris.add(Uri.fromFile(materialize(instrumentation, target, asset, mode)));
+        JSONArray inputs = new JSONArray();
+        for (String asset : fixture.assets) {
+            File input = materialize(instrumentation, target, asset, mode);
+            inputs.put(new JSONObject().put("imageIndex", inputs.length()).put("sha256", sha256(input)).put("bytes", input.length()));
+            uris.add(Uri.fromFile(input));
+        }
+        run.put("inputs", inputs).put("cachePolicy", "fresh_analysis_store_and_random_input_uris");
         Intent ui = new Intent(target, MainActivity.class).setAction(MainActivity.ACTION_DEBUG_SMOKE_IMPORT)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 .putExtra(MainActivity.EXTRA_DEBUG_SMOKE_IMAGES, strings(uris)).putExtra(MainActivity.EXTRA_DEBUG_SMOKE_MOCK, false);

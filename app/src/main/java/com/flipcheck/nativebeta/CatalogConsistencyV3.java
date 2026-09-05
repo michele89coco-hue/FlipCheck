@@ -25,6 +25,7 @@ final class CatalogConsistencyV3 {
         return new Result(true,"isolated_candidate_record_coherent");
     }
 
-    private static boolean mixed(IdentityCandidateV2 c){for(String field:c.fields.keySet()){String v=c.value(field).toUpperCase(Locale.ROOT);if(v.contains(" OR ")||v.contains(" | ")||v.contains("; ")||v.matches(".*#[0-9A-Z/-]+\\s*(?:,|/)\\s*#[0-9A-Z/-]+.*"))return true;}return false;}
+    private static boolean mixed(IdentityCandidateV2 c){for(String field:c.fields.keySet()){if(!identityField(field))continue;String v=c.value(field).toUpperCase(Locale.ROOT);if(v.contains(" OR ")||v.contains(" | ")||v.contains("; ")||v.matches(".*#[0-9A-Z/-]+\\s*(?:,|/)\\s*#[0-9A-Z/-]+.*"))return true;}return false;}
+    private static boolean identityField(String f){return f.matches("manufacturer|brand|game|productLine|setName|subSeries|cardName|athlete|catalogCardNumber|model|productCode|barcode|edition|commercialFormat");}
     private static boolean empty(String v){return v==null||v.trim().isEmpty();}
 }

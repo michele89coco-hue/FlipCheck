@@ -23,7 +23,10 @@ set +e
 adb shell "$instrumentation_command" | tee artifact/live-instrumentation.txt
 instrumentation_status=${PIPESTATUS[0]}
 set -e
-adb pull "/sdcard/Android/data/$PACKAGE/files/v134-live" artifact/live || true
+mkdir -p artifact/live
+# Read app-private reports as the debuggable target UID, including failed runs.
+adb exec-out run-as "$PACKAGE" tar -C files/v134-live -cf - . > artifact/live-reports.tar
+tar -xf artifact/live-reports.tar -C artifact/live
 test "$instrumentation_status" -eq 0
 grep -q 'OK (1 test)' artifact/live-instrumentation.txt
 touch artifact/live-instrumentation.pass
