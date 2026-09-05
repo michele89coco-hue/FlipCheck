@@ -66,6 +66,7 @@ final class ObservationExtractorV2 {
             int image=f.has("image")?f.optInt("image",-1):f.optInt("image_index",-1);String location=safe(first(f,"location","region","boundingBox"));
             String side=safe(f.optString("side","unknown")),role=safe(first(f,"role","semantic_role","semanticScope"));
             String field=TypedFieldNormalizerV2.canonicalField(profileField(rawField,role,location,profile),role+" "+location);int confidence=f.optInt("confidence",0);
+            field=ObservationSemanticsV157.field(field,role,location,profile);
             // A number in a descriptive text box is not a second subject name.
             // Keep the transcription without guessing that it is a collector number.
             if(profile==DomainProfileRouterV2.Profile.TCG_CARD&&field.equals("cardName")
@@ -118,12 +119,17 @@ final class ObservationExtractorV2 {
                         &&location.toLowerCase(Locale.ROOT).contains("logo"))groundingRole="printed brand label";
             }
             EvidenceAtom.EpistemicLevel requested=groundingLevel(field,raw,groundingRole+(rawField.equalsIgnoreCase("brand_mark")?" brand_mark":""),modality,ledger,confidence);
+            if(modality==EvidenceAtom.Modality.PRIMARY_VISION&&confidence>=90
+                    &&ObservationSemanticsV157.literalProductLine(field,raw,role,location))requested=EvidenceAtom.EpistemicLevel.OBSERVED;
             if(profile==DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT
                     &&(field.equals("productType")||field.equals("commercialFormat"))
                     &&raw.toLowerCase(Locale.ROOT).matches(".*\\b(hobby|blaster|jumbo|retail|mega|sapphire)\\b.*")
                     &&!role.toLowerCase(Locale.ROOT).matches(".*(printed|literal|visible text|ocr).*"))
                 requested=EvidenceAtom.EpistemicLevel.INFERRED;
             EvidenceAtom atom=ledger.append(field,raw,requested,modality,source,image,side,location,cropId,role,confidence,quality(location,raw),modality==EvidenceAtom.Modality.PRIMARY_VISION?"primary_observation":"focused_observation","");
+            String logoName=ObservationSemanticsV157.namedManufacturerLogo(field,raw,role,location);
+            if(atom!=null&&!logoName.isEmpty()&&confidence>=90&&localTextSupports(ledger,logoName))
+                ledger.appendNormalization(atom,logoName,"brand","visible manufacturer wordmark");
             if(atom!=null&&atom.epistemicLevel==EvidenceAtom.EpistemicLevel.INFERRED){/* intentionally demoted */}
         }}
 

@@ -880,11 +880,15 @@ public class MainActivity extends Activity {
     private void renderResult(final Models.Identification id, final Models.Usage usage) {
         this.resultPanel.removeAllViews();
         this.resultPanel.setVisibility(View.VISIBLE);
-        if ("PHOTO_READ".equals(id.identityStatus)) {
+        if (PhotoReadingV156.hasReading(id)) {
             LinearLayout reading = panel();
             reading.addView(text("Dati letti dalla foto", 14, MINT, true));
             reading.addView(text(id.title, 24, TEXT, true));
             reading.addView(text(id.photoReadingSummary, 15, TEXT, false));
+            if (!valueOrEmpty(id.photoReadingConflicts).isEmpty()) {
+                reading.addView(text("Letture discordanti da controllare", 15, WARN, true));
+                reading.addView(text(id.photoReadingConflicts, 14, WARN, false));
+            }
             reading.addView(text("La verifica del catalogo non è stata eseguita.", 12, MUTED, false));
             if (!valueOrEmpty(id.gradingCompany).isEmpty())
                 reading.addView(text("Il voto è trascritto dall’etichetta; autenticità non verificata.", 12, MUTED, false));

@@ -12,7 +12,7 @@ final class ObservationFieldContractV2 {
         "cardName", "athlete", "physicalCardNumber", "collectorNumber", "printedTotal",
         "physicalSerial", "jerseyNumber", "graphicNumber", "edition", "firstEditionMark",
         "finish", "language", "evolutionStage", "cardRole", "rarity", "hp", "attacks",
-        "artist", "team", "sport", "configuration", "commercialFormat", "sku", "barcode",
+        "artist", "team", "sport", "playerMeasurements", "configuration", "commercialFormat", "sku", "barcode",
         "productCode", "model", "compatibleDevice", "compatibleBrand", "controlLayout",
         "shortcutButtons", "navigationLayout", "numericKeypad", "voiceControl",
         "layoutSignature", "material", "color", "dimensions", "condition"

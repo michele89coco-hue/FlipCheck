@@ -1,0 +1,182 @@
+{
+  "v154_vision1_observation": {
+    "content_sufficient": true,
+    "category": "sports_card",
+    "views": [
+      "front",
+      "back",
+      "front close-up"
+    ],
+    "facts": [
+      {
+        "key": "printedLabel",
+        "value": "KOBE BRYANT LOS ANGELES LAKERS",
+        "image": 1,
+        "side": "front",
+        "location": "lower front",
+        "role": "identity",
+        "confidence": 99
+      },
+      {
+        "key": "athlete",
+        "value": "KOBE BRYANT",
+        "image": 1,
+        "side": "front",
+        "location": "lower front",
+        "role": "subject",
+        "confidence": 99
+      },
+      {
+        "key": "team",
+        "value": "LOS ANGELES LAKERS",
+        "image": 1,
+        "side": "front",
+        "location": "lower front",
+        "role": "team",
+        "confidence": 99
+      },
+      {
+        "key": "productLine",
+        "value": "METAL UNIVERSE",
+        "image": 1,
+        "side": "front",
+        "location": "lower right emblem",
+        "role": "product line",
+        "confidence": 96
+      },
+      {
+        "key": "physicalCardNumber",
+        "value": "46/74",
+        "image": 1,
+        "side": "front",
+        "location": "lower right near emblem",
+        "role": "card number",
+        "confidence": 75
+      },
+      {
+        "key": "finish",
+        "value": "foil",
+        "image": 1,
+        "side": "front",
+        "location": "card surface",
+        "role": "finish",
+        "confidence": 99
+      },
+      {
+        "key": "sport",
+        "value": "basketball",
+        "image": 1,
+        "side": "front",
+        "location": "player image",
+        "role": "sport",
+        "confidence": 99
+      },
+      {
+        "key": "productReleaseYear",
+        "value": "1997",
+        "image": 2,
+        "side": "back",
+        "location": "copyright line",
+        "role": "release year",
+        "confidence": 94
+      },
+      {
+        "key": "statisticsSeason",
+        "value": "96-97",
+        "image": 2,
+        "side": "back",
+        "location": "statistics table",
+        "role": "statistics season",
+        "confidence": 99
+      },
+      {
+        "key": "physicalFeature",
+        "value": "NBA logo",
+        "image": 2,
+        "side": "back",
+        "location": "lower right",
+        "role": "league mark",
+        "confidence": 98
+      },
+      {
+        "key": "physicalFeature",
+        "value": "SkyBox logo",
+        "image": 2,
+        "side": "back",
+        "location": "lower center",
+        "role": "manufacturer mark",
+        "confidence": 98
+      },
+      {
+        "key": "printedLabel",
+        "value": "1997 NBA PROPERTIES, INC. ©1997 SKYBOX INTERNATIONAL. PRINTED IN U.S.A. METAL/1/",
+        "image": 2,
+        "side": "back",
+        "location": "right vertical edge",
+        "role": "copyright and printing text",
+        "confidence": 88
+      },
+      {
+        "key": "hp",
+        "value": "HT: 6'6\" WT: 200",
+        "image": 2,
+        "side": "back",
+        "location": "left information panel",
+        "role": "player statistics",
+        "confidence": 82
+      },
+      {
+        "key": "physicalFeature",
+        "value": "Born 8/23/78; Lower Merion (PA); High School; Philadelphia, PA",
+        "image": 2,
+        "side": "back",
+        "location": "left information panel",
+        "role": "biographical text",
+        "confidence": 91
+      },
+      {
+        "key": "printedLabel",
+        "value": "YR CLUB FG% 3FG% FT% REB AST STL BLK PTS AVG",
+        "image": 2,
+        "side": "back",
+        "location": "statistics table",
+        "role": "table header",
+        "confidence": 98
+      },
+      {
+        "key": "printedLabel",
+        "value": "96-97 L.A. LAKERS .417 .375 .819 132 91 49 23 539 7.6",
+        "image": 2,
+        "side": "back",
+        "location": "statistics table",
+        "role": "season statistics",
+        "confidence": 90
+      }
+    ],
+    "identity_hint": "1997 Metal Universe Kobe Bryant Los Angeles Lakers card, 46/74, foil",
+    "candidates": [
+      {
+        "brand": "SkyBox",
+        "product_line": "Metal Universe",
+        "subject": "Kobe Bryant",
+        "year": "1997",
+        "card_number": "46/74",
+        "language": "English",
+        "edition": "",
+        "finish": "foil",
+        "format": "raw sports card",
+        "material_variant_key": "foil",
+        "materially_distinct": true,
+        "confidence": 94
+      }
+    ],
+    "missing_discriminators": [
+      "Exact card number is partially obscured",
+      "No authentication or grading information"
+    ]
+  },
+  "local_ocr": [
+    "10:18 9•\nX ldi2\nKOBE BRYANT\nLUS ANGeLES ARERS\n1.l(74\n10:18 .\nGgANtetsARERS\n1 di 2\nGgANGetsARERS\nKOBE\niM\nUNYERSE",
+    "10:18 9•\nX 2 di 2\nT: 200\nHGH SOHOO.\nLOWER MERON (PA)\nBOR\nB/23/78\nPHLADELPHA\nAKBRS\nYR CLUB\nKOBE BBYEINT\nNBA TOTALS\nFG, 3FG% FTS REB AST\n96 97 LA LAKERS 417 375 819 132 91\n417 375 819 132 91\nSiyiok\nSTL LK\n49 23\nPTS\n539\nAVG\n7.6\no197 MBA PROPERTIES. INC, O 1997 SKYBOX INTERNATIONAL. PRINTED IN U.S.A. METAL//\n46.l(74\n96 97 LA LAKERS\n375 819 132 91\n417\nYR\nCLUB\nSTL LK PTS\nFG\n3FG% FTS REB AST\nJAKBRS\nLAPROPERTIES, ING\n8/23/78\nMT: 200\nHGH SOHOOL\nA. METALA\n08AMS L6\n23\n49\nSTL BUK\nsioo\n375 818 132 91\n3FG% FT% REB AST\nKOBE BRRASNI\nF6\nPecil\nLAKERS\nBORN\nLOWMER NMERON PA)\nHGH SCHCOL\nWT: 200\n2 di 2\n10:18\n1997 NBA PROPERTIES, INC. o1997 SKYBOX INTERNATIONAL. PRINTED IN U.S.A. METALAr\nHT: 66\nSTL BUK PTS AVG\n49 23 539\n417 375 818 132 91\nLOWMER MERON PA)\n96- 97\nLA LAKERS\nPescils\n1997 NBA PROPERTIES, INC. O1997 SKYBOX INTERNATIONAL. PRINTED IN U.S.A. METAL/1/\n4l74\nL0PERTIES, INC. O197 SKY0X INT\nA METAL/\n1997 NBA PROPERTIES, INC. 1997 SKYBOX INTERNATIONAL. PRINTED DN U.S.A. METAL/1/"
+  ]
+}

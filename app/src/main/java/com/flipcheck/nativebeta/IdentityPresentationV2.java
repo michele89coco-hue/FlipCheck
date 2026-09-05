@@ -29,6 +29,7 @@ final class IdentityPresentationV2 {
     }
     static String explanation(Models.Identification id) {
         if (id == null) return "Analisi non disponibile.";
+        if (PhotoReadingV156.hasReading(id)&&id.photoReadingConflicts!=null&&!id.photoReadingConflicts.isEmpty()) return "Dati letti. Alcuni valori discordanti sono indicati nel risultato.";
         if ("PHOTO_READ".equals(id.identityStatus)) return "Lettura completata. Puoi verificare sul web i dati letti.";
         if ("CONFLICTED".equals(id.identityStatus)) return "Le prove identificative sono in conflitto: la conferma è sospesa.";
         if (!id.nextPhotoRequest.isEmpty() && !id.requestedPhotoReason.isEmpty()) return id.nextPhotoRequest;

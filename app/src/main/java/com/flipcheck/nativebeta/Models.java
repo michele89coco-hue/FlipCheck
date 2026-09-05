@@ -268,6 +268,7 @@ final class Models {
         boolean photoReadingOnly;
         String photoInputSignature = "";
         String photoReadingSummary = "";
+        String photoReadingConflicts = "";
         int brandEntityConfidence;
         int brandRoleConfidence;
         int categoryConfidence;

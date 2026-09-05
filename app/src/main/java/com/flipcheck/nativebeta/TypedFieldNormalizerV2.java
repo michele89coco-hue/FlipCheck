@@ -101,6 +101,12 @@ final class TypedFieldNormalizerV2 {
             return value;
         }
         if(f.equals("productReleaseYear")||f.equals("setSeason")||f.equals("statisticsSeason"))return SeasonNormalizer.normalize(value);
+        if(f.equals("copyrightYear")){
+            java.util.Set<String> years=new java.util.LinkedHashSet<>();
+            java.util.regex.Matcher m=java.util.regex.Pattern.compile("\\b(?:19|20)[0-9]{2}\\b").matcher(value);
+            while(m.find())years.add(m.group());
+            if(years.size()==1)return years.iterator().next();
+        }
         if(f.equals("finish")){String c=words(value);if(c.equals("NON HOLO")||c.equals("NONHOLO")||c.equals("NON HOLOGRAPHIC")||c.equals("NONHOLOGRAPHIC"))return "NON_HOLO";if(c.contains("REVERSE")&&c.contains("HOLO"))return "REVERSE_HOLO";if(c.contains("HOLO")||c.contains("HOLOGRAPHIC"))return "HOLO";}
         if(f.equals("manufacturer")||f.equals("brand"))return displayWords(value);
         if(f.equals("productLine")||f.equals("setName")||f.equals("subSeries"))return value.replaceAll("(?i)\\bupdates\\b","Update").replaceAll("\\s+"," ").trim();
