@@ -216,7 +216,7 @@ public final class V133LiveValidatedGlobalResolverRegressionTest {
 
     private static void releaseMetadataAndProductionHardcodeGate() throws Exception {
         String gradle = read("app/build.gradle");
-        require(gradle.contains("versionCode 149") && gradle.contains("versionName '1.34-evidence-integrity'"), "current candidate version metadata missing");
+        require(gradle.contains("versionCode 150") && gradle.contains("versionName '1.34-evidence-integrity'"), "current candidate version metadata missing");
         String production = readTree(Paths.get("app/src/main/java/com/flipcheck/nativebeta")).toLowerCase();
         for (String forbidden : new String[]{"topps", "kobe bryant", "vileplume", "philips"}) require(!production.contains(forbidden), "fixture literal in production: " + forbidden);
         pass();

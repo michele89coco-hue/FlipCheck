@@ -111,6 +111,10 @@ final class SemanticRelationV3 {
         StringBuilder known=new StringBuilder();
         for(String clause:value.split("[;\\n]"))if(!uncertainQuantityClause(clause))known.append(clause).append("; ");
         String normalized=words(known.toString()).replace("IN EVERY","PER").replace("IN EACH","PER");
+        // Packaging copy often says "per Hobby/Jumbo/retail box". The format
+        // adjective qualifies the container; it must not hide the quantity's
+        // unit when comparing the photographed guarantee with a catalog record.
+        normalized=normalized.replaceAll("\\bPER (?:HOBBY|JUMBO|BLASTER|MEGA|VALUE|RETAIL|SAPPHIRE) (BOX(?:ES)?)\\b","PER $1");
         java.util.regex.Matcher compact=java.util.regex.Pattern.compile("\\b([0-9]{1,6}) PACKS? X ([0-9]{1,6}) CARDS?\\b").matcher(normalized);
         while(compact.find()){
             if(!putQuantity(out,"PACK/BOX",Long.parseLong(compact.group(1)),1)||!putQuantity(out,"CARD/PACK",Long.parseLong(compact.group(2)),1))return new java.util.LinkedHashMap<>();
