@@ -22,6 +22,7 @@ public final class AnalysisForegroundService extends Service {
     static final String ACTION_STATE = "com.flipcheck.nativebeta.ANALYSIS_STATE";
     static final String EXTRA_IMAGES = "images";
     static final String EXTRA_DETAILS = "details";
+    static final String EXTRA_PHOTO_ONLY = "photo_only";
     private static final String CHANNEL_ID = "flipcheck_analysis_v084";
     private static final int NOTIFICATION_ID = 8401;
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
@@ -40,6 +41,8 @@ public final class AnalysisForegroundService extends Service {
         }
         final ArrayList<Uri> images = intent.getParcelableArrayListExtra(EXTRA_IMAGES);
         final String details = intent.getStringExtra(EXTRA_DETAILS);
+        final boolean photoOnly = intent.getBooleanExtra(EXTRA_PHOTO_ONLY, false);
+        final AnalysisResultStore.Snapshot previous = AnalysisResultStore.load(this);
         startForeground(NOTIFICATION_ID, notification("Analisi in corso…"));
         if (BuildConfig.DEBUG) {
             Log.i(SMOKE_TAG, "foreground_service_started");
@@ -49,13 +52,13 @@ public final class AnalysisForegroundService extends Service {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                analyze(images, details == null ? "" : details);
+                analyze(images, details == null ? "" : details, photoOnly, previous);
             }
         });
         return START_REDELIVER_INTENT;
     }
 
-    private void analyze(List<Uri> images, String details) {
+    private void analyze(List<Uri> images, String details, boolean photoOnly, AnalysisResultStore.Snapshot previous) {
         Models.Usage usage = new Models.Usage();
         try {
             if (images == null || images.isEmpty()) {
@@ -81,7 +84,7 @@ public final class AnalysisForegroundService extends Service {
             List<Uri> subjectImages = new ArrayList<>();
             for (Integer index : subjectIndexes) subjectImages.add(images.get(index));
             local = EvidenceProofPolicyV3.retainImages(local, subjectIndexes);
-            notifyProgress("Confronto identità e fonti…");
+            notifyProgress(photoOnly ? "Leggo i dati nelle foto…" : "Confronto identità e fonti…");
             List<String> dataUrls = new ArrayList<>();
             for (Uri uri : subjectImages) {
                 dataUrls.add(ImageDataEncoder.toDataUrl(this, uri));
@@ -92,8 +95,11 @@ public final class AnalysisForegroundService extends Service {
             if (!stampDetail.isEmpty()) {
                 dataUrls.add(stampDetail);
             }
-            Models.Identification id = IdentificationEngine.identify(
-                    local, dataUrls, details, new OpenAiClient(key), usage);
+            OpenAiClient client = new OpenAiClient(key);
+            Models.Identification id = photoOnly
+                    ? UniversalIdentityEngineV2.readPhoto(local, dataUrls, details, client, usage)
+                    : UniversalIdentityEngineV2.verifyAfterReading(local, dataUrls, details, client, usage,
+                            previous.identification, previous.usage);
             // V2 owns the public identity after its single reducer pass. Legacy
             // closure ladders remain available only for non-V2 fallback routes.
             if (FinalStateReducerV2.VERSION.equals(id.finalStateReducerVersion)) {

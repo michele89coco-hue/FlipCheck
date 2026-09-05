@@ -51,6 +51,7 @@ final class FinalStateReducerV2 {
         id.identifierConfidence=observedConfidence(ledger,profile==DomainProfileRouterV2.Profile.TCG_CARD?"collectorNumber":"physicalCardNumber");id.familyConfidence=Math.max(observedConfidence(ledger,profile==DomainProfileRouterV2.Profile.TCG_CARD?"setName":"productLine"),catalog&&winner!=null?Math.min(99,winner.totalScore):0);id.variantConfidence=Math.max(observedConfidence(ledger,"edition"),observedConfidence(ledger,"finish"));
         id.verificationSummary=summary(id,profile,catalog,exactPhysical);id.finalDecisionReason="reducer="+VERSION+"; profile="+id.v2Profile+"; core="+id.coreIdentityStatus+"; exact="+id.exactIdentityStatus+"; catalog="+id.exactCatalogStatus+"; conflicts="+(conflicts==null?0:conflicts.size());
         applyPhotoRequest(id,profile,core);serializeTrace(id,ledger,ranked,conflicts);enforceBlockingInvariants(id,ledger,profile,conflicts);
+        PhotoReadingV156.present(id,ledger);
         id.finalState=new FinalIdentityState(id,id.title,id.identityConfirmed&&!"CONFLICTED".equals(id.identityStatus));return id.finalState;
     }
 

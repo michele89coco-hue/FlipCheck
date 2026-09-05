@@ -15,6 +15,7 @@ final class IdentityPresentationV2 {
     }
     static String status(Models.Identification id) {
         if (id == null) return "IDENTIFICAZIONE INCOMPLETA";
+        if ("PHOTO_READ".equals(id.identityStatus)) return "DATI LETTI DALLA FOTO";
         if ("TECHNICAL_FAILURE".equals(id.identityStatus)) return "ERRORE TECNICO · ANALISI NON COMPLETATA";
         if ("CONFLICTED".equals(id.identityStatus)) return "PROVE IDENTIFICATIVE IN CONFLITTO";
         if ("CONFIRMED".equals(id.coreIdentityStatus))
@@ -28,6 +29,7 @@ final class IdentityPresentationV2 {
     }
     static String explanation(Models.Identification id) {
         if (id == null) return "Analisi non disponibile.";
+        if ("PHOTO_READ".equals(id.identityStatus)) return "Lettura completata. Puoi verificare sul web i dati letti.";
         if ("CONFLICTED".equals(id.identityStatus)) return "Le prove identificative sono in conflitto: la conferma è sospesa.";
         if (!id.nextPhotoRequest.isEmpty() && !id.requestedPhotoReason.isEmpty()) return id.nextPhotoRequest;
         if (id.identityConfirmed) return id.verificationSummary;

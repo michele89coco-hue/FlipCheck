@@ -265,6 +265,9 @@ final class Models {
 
     static final class Identification implements Serializable {
         private static final long serialVersionUID = 1L;
+        boolean photoReadingOnly;
+        String photoInputSignature = "";
+        String photoReadingSummary = "";
         int brandEntityConfidence;
         int brandRoleConfidence;
         int categoryConfidence;

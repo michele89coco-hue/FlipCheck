@@ -68,6 +68,7 @@ public class MainActivity extends Activity {
     private EditText apiKeyInput;
     private EditText detailsInput;
     private Button identifyButton;
+    private Button readPhotoButton;
     private LinearLayout photosRow;
     private SharedPreferences prefs;
     private LinearLayout resultPanel;
@@ -235,7 +236,12 @@ public class MainActivity extends Activity {
         this.detailsInput.setContentDescription("flipcheck-details");
         this.detailsInput.setMinLines(1);
         scan.addView(this.detailsInput, match());
-        this.identifyButton = primary("IDENTIFICA");
+        this.readPhotoButton = primary("LEGGI FOTO");
+        this.readPhotoButton.setContentDescription("flipcheck-read-photo");
+        this.readPhotoButton.setOnClickListener(v -> startIdentification(true));
+        scan.addView(this.readPhotoButton, match());
+        scan.addView(text("Lettura rapida di carta, slab o oggetto. La verifica web è facoltativa.", 12, MUTED, false), match());
+        this.identifyButton = secondary("VERIFICA COMPLETA");
         this.identifyButton.setContentDescription("flipcheck-identify");
         this.identifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -669,9 +675,13 @@ public class MainActivity extends Activity {
     }
 
     private void startIdentification() {
+        startIdentification(false);
+    }
+
+    private void startIdentification(boolean photoOnly) {
         final String key = this.apiKeyInput.getText().toString().trim();
         if (key.isEmpty()) {
-            setStatus("Inserisci la chiave OpenAI: la pipeline usa Vision, una seconda verifica fisica quando necessaria e massimo 1 Web Search.", DANGER);
+            setStatus("Inserisci la chiave OpenAI per leggere le foto.", DANGER);
             return;
         }
         if (this.images.isEmpty()) {
@@ -680,16 +690,17 @@ public class MainActivity extends Activity {
         }
         this.prefs.edit().putString("api_key", key).apply();
         this.identifyButton.setEnabled(false);
+        this.readPhotoButton.setEnabled(false);
         this.addPhotoButton.setEnabled(false);
         this.cameraButton.setEnabled(false);
         this.resultPanel.setVisibility(View.GONE);
         setStatus("Analizzo le foto...", MINT);
         ArrayList<Uri> snapshot = new ArrayList<>(this.images);
         String details = this.detailsInput.getText().toString().trim();
-        AnalysisResultStore.markRunning(this);
         Intent service = new Intent(this, AnalysisForegroundService.class);
         service.putParcelableArrayListExtra(AnalysisForegroundService.EXTRA_IMAGES, snapshot);
         service.putExtra(AnalysisForegroundService.EXTRA_DETAILS, details);
+        service.putExtra(AnalysisForegroundService.EXTRA_PHOTO_ONLY, photoOnly);
         try {
             if (Build.VERSION.SDK_INT >= 26) {
                 startForegroundService(service);
@@ -717,6 +728,7 @@ public class MainActivity extends Activity {
         AnalysisResultStore.Snapshot saved = AnalysisResultStore.load(this);
         if (AnalysisResultStore.RUNNING.equals(saved.state)) {
             this.identifyButton.setEnabled(false);
+        this.readPhotoButton.setEnabled(false);
             this.addPhotoButton.setEnabled(false);
             this.cameraButton.setEnabled(false);
             setStatus("Analisi in corso anche in background…", MINT);
@@ -792,6 +804,7 @@ public class MainActivity extends Activity {
 
     private void unlockScanControls() {
         this.identifyButton.setEnabled(true);
+        this.readPhotoButton.setEnabled(true);
         this.addPhotoButton.setEnabled(this.images.size() < 3);
         this.cameraButton.setEnabled(this.images.size() < 3);
     }
@@ -803,6 +816,7 @@ public class MainActivity extends Activity {
             return;
         }
         this.identifyButton.setEnabled(false);
+        this.readPhotoButton.setEnabled(false);
         this.addPhotoButton.setEnabled(false);
         this.cameraButton.setEnabled(false);
         setStatus("Verifico la tua risposta senza rilanciare Vision...", MINT);
@@ -864,6 +878,24 @@ public class MainActivity extends Activity {
     private void renderResult(final Models.Identification id, final Models.Usage usage) {
         this.resultPanel.removeAllViews();
         this.resultPanel.setVisibility(View.VISIBLE);
+        if ("PHOTO_READ".equals(id.identityStatus)) {
+            LinearLayout reading = panel();
+            reading.addView(text("Dati letti dalla foto", 14, MINT, true));
+            reading.addView(text(id.title, 24, TEXT, true));
+            reading.addView(text(id.photoReadingSummary, 15, TEXT, false));
+            reading.addView(text("La verifica del catalogo non è stata eseguita.", 12, MUTED, false));
+            if (!valueOrEmpty(id.gradingCompany).isEmpty())
+                reading.addView(text("Il voto è trascritto dall’etichetta; autenticità non verificata.", 12, MUTED, false));
+            reading.addView(text(String.format(Locale.ROOT,"Costo lettura: $%.4f · ricerche web: %d",usage.costUsd,usage.webCalls),12,MUTED,false));
+            Button verify = primary("VERIFICA QUESTI DATI SUL WEB");
+            verify.setOnClickListener(v -> startIdentification(false));
+            reading.addView(verify,match());
+            Button export = secondary("ESPORTA DIAGNOSTICA");
+            export.setOnClickListener(v -> prepareDiagnosticDocument(id,usage));
+            reading.addView(export,match());
+            this.resultPanel.addView(reading,match());
+            return;
+        }
         LinearLayout p = panel();
         p.addView(text("Risultato", 14, MUTED, false));
         p.addView(text(EvidencePolicy.publicTitle(id), 26, TEXT, true));

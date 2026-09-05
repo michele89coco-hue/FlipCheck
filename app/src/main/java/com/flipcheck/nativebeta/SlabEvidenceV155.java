@@ -29,6 +29,16 @@ final class SlabEvidenceV155 {
     static void normalize(ImmutableEvidenceLedgerV2 ledger){
         for(EvidenceAtom a:new java.util.ArrayList<>(ledger.all())){
             if(!a.parentEvidenceId.isEmpty()||a.epistemicLevel!=EvidenceAtom.EpistemicLevel.OBSERVED)continue;
+            // A grading label commonly prints YEAR + SET in one line. Preserve
+            // that literal parent but compare the separately typed set and year.
+            // Do not remove numbers elsewhere in a set name or in arbitrary text.
+            if(a.field.equals("slabSetName")){
+                java.util.regex.Matcher m=java.util.regex.Pattern.compile("^((?:19|20)[0-9]{2}(?:[-/][0-9]{2}(?:[0-9]{2})?)?)\\s+([\\p{L}].*)$").matcher(a.rawValue.trim());
+                if(m.matches()){
+                    ledger.appendNormalization(a,SeasonNormalizer.normalize(m.group(1)),"slabYear","grading label year");
+                    ledger.appendNormalization(a,m.group(2).trim(),"slabSetName","grading label set");
+                }
+            }
             if(a.field.equals("gradingGrade")){
                 java.util.regex.Matcher m=java.util.regex.Pattern.compile("^(10|[1-9](?:\\.[05])?)(?:\\s+(.*))?$").matcher(a.rawValue.trim());
                 if(m.matches()){

@@ -1,8 +1,8 @@
-name: FlipCheck build155 four-stage APK
+name: FlipCheck build156 four-stage APK
 
 on:
   push:
-    branches: [codex/v1.35-slab-build155]
+    branches: [codex/v1.36-photo-reading-build156]
   workflow_dispatch:
 
 permissions:
@@ -45,19 +45,19 @@ jobs:
         env:
           GIT_COMMIT: ${{ github.sha }}
         run: |
-          ./gradlew :app:testDebugUnitTest --tests "*V155*" --tests "*V154*" --tests "*V153*" :app:assembleDebug --no-daemon --console=plain --stacktrace
+          ./gradlew :app:testDebugUnitTest --tests "*V156*" --tests "*V155*" --tests "*V154*" --tests "*V153*" :app:assembleDebug --no-daemon --console=plain --stacktrace
           mkdir -p artifact
-          cp app/build/outputs/apk/debug/app-debug.apk artifact/FlipCheck-v1.35-build155.apk
-          sha256sum artifact/FlipCheck-v1.35-build155.apk | tee artifact/FlipCheck-v1.35-build155.sha256
-          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose --print-certs artifact/FlipCheck-v1.35-build155.apk | tee artifact/apksigner-report.txt
+          cp app/build/outputs/apk/debug/app-debug.apk artifact/FlipCheck-v1.35-build156.apk
+          sha256sum artifact/FlipCheck-v1.35-build156.apk | tee artifact/FlipCheck-v1.35-build156.sha256
+          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose --print-certs artifact/FlipCheck-v1.35-build156.apk | tee artifact/apksigner-report.txt
           cert=$(sed -n 's/^Signer #1 certificate SHA-256 digest: //p' artifact/apksigner-report.txt | tr -d ':' | tr '[:upper:]' '[:lower:]')
           test "$cert" = "$EXPECTED_CERT_SHA256"
-          "$ANDROID_HOME/build-tools/36.0.0/aapt" dump badging artifact/FlipCheck-v1.35-build155.apk | tee artifact/apk-analyzer-report.txt
-          grep -q "package: name='$PACKAGE' versionCode='155' versionName='1.35-vision-web-review'" artifact/apk-analyzer-report.txt
+          "$ANDROID_HOME/build-tools/36.0.0/aapt" dump badging artifact/FlipCheck-v1.35-build156.apk | tee artifact/apk-analyzer-report.txt
+          grep -q "package: name='$PACKAGE' versionCode='156' versionName='1.35-vision-web-review'" artifact/apk-analyzer-report.txt
 
       - uses: actions/upload-artifact@v4
         with:
-          name: FlipCheck-v1.35-build155-apk-only
+          name: FlipCheck-v1.35-build156-apk-only
           path: artifact/
           if-no-files-found: error
           retention-days: 14
