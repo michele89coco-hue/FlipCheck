@@ -65,7 +65,7 @@ final class ObservationExtractorV2 {
         if(f.equals("setSymbol"))return EvidenceAtom.EpistemicLevel.INFERRED;
         boolean identityLabel=f.equals("manufacturer")||f.equals("brand")||f.equals("game")||f.equals("setName")||f.equals("productLine")||f.equals("subSeries");
         if(!identityLabel)return EvidenceAtom.EpistemicLevel.OBSERVED;
-        boolean literalRole=r.contains("printed")||r.contains("ocr")||r.contains("brand_mark")||r.contains("visible_text")||r.contains("logo")||r.endsWith("_text")||r.equals("product_line")||r.equals("set_name")||r.equals("game_brand")||r.equals("manufacturer_brand")||r.equals("manufacturer mark")||r.equals("manufacturer")||r.startsWith("sealed_brand_line");
+        boolean literalRole=r.contains("printed")||r.contains("ocr")||r.contains("brand_mark")||r.contains("visible_text")||r.contains("logo")||r.endsWith("_text")||r.equals("product_line")||r.startsWith("product line")||r.equals("subseries")||r.equals("sub-series")||r.equals("set_name")||r.equals("game_brand")||r.equals("manufacturer_brand")||r.equals("manufacturer mark")||r.equals("manufacturer")||r.startsWith("sealed_brand_line");
         // A set-name inferred from a symbol classification is a hypothesis; the observed item is the symbol's appearance, not the catalog set label.
         if((f.equals("setName")||f.equals("productLine"))&&r.contains("symbol"))return EvidenceAtom.EpistemicLevel.INFERRED;
         return literalRole&&!TypedFieldNormalizerV2.ambiguous(raw)&&confidence>=72&&(localTextSupports(ledger,raw)||modality==EvidenceAtom.Modality.FOCUSED_VISION||r.equals("brand_logo")||r.contains("brand_mark"))?EvidenceAtom.EpistemicLevel.OBSERVED:EvidenceAtom.EpistemicLevel.INFERRED;
@@ -80,6 +80,18 @@ final class ObservationExtractorV2 {
         // A service logo on a control is not the maker of the physical accessory.
         String context=(r+" "+safe(location)).toLowerCase(Locale.ROOT);
         String canonical=TypedFieldNormalizerV2.canonicalField(field,role);
+        String semantic=r.replace('_',' ').replace('-',' ').replaceAll("\\s+"," ").trim();
+        if(profile==DomainProfileRouterV2.Profile.SPORTS_CARD){
+            if(semantic.matches("(?:printed )?(?:card|collector) number")||canonical.equals("collectorNumber"))return "physicalCardNumber";
+            if(semantic.startsWith("product line"))return "productLine";
+            if(canonical.equals("cardName"))return "athlete";
+        }
+        if(profile==DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT){
+            if(canonical.equals("athlete"))return "featuredSubjects";
+            if(canonical.equals("setName"))return "subSeries";
+            if(canonical.equals("printedLabel")&&semantic.contains("season")&&!semantic.contains("statistic"))return "productReleaseYear";
+            if(canonical.equals("printedLabel")&&semantic.contains("configuration")&&!semantic.contains("code"))return "configuration";
+        }
         if((context.contains("set branding")||context.contains("set_branding"))
                 &&(canonical.equals("brand")||canonical.equals("manufacturer")))
             return profile==DomainProfileRouterV2.Profile.TCG_CARD?"setName":"productLine";
