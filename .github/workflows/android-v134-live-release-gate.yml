@@ -70,7 +70,7 @@ jobs:
           cert=$(sed -n 's/^Signer #1 certificate SHA-256 digest: //p' artifact/apksigner-report.txt | tr -d ':' | tr '[:upper:]' '[:lower:]')
           test "$cert" = "$EXPECTED_CERT_SHA256"
           "$ANDROID_HOME/build-tools/36.0.0/aapt" dump badging artifact/FlipCheck-v1.34.apk | tee artifact/apk-analyzer-report.txt
-          grep -q "package: name='$PACKAGE' versionCode='147' versionName='1.34-evidence-integrity'" artifact/apk-analyzer-report.txt
+          grep -q "package: name='$PACKAGE' versionCode='148' versionName='1.34-evidence-integrity'" artifact/apk-analyzer-report.txt
           ! unzip -l artifact/FlipCheck-v1.34.apk | grep -Eq 'topps-front|kobe-(front|back)|vileplume-front|philips-front'
 
       - name: Enable runner virtualization
@@ -105,6 +105,7 @@ jobs:
             --apk artifact/FlipCheck-v1.34.apk \
             --live-report artifact/live/v134-live-results.json \
             --output artifact/v134-release-gate.json \
+            --expected-version-code 148 \
             "${flags[@]}"
 
       - uses: actions/upload-artifact@v4

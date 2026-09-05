@@ -13,6 +13,7 @@ def main() -> int:
     parser.add_argument("--apk", required=True)
     parser.add_argument("--live-report", required=True)
     parser.add_argument("--output", required=True)
+    parser.add_argument("--expected-version-code", required=True, type=int)
     parser.add_argument("--unit-pass", action="store_true")
     parser.add_argument("--replay-pass", action="store_true")
     parser.add_argument("--apk-installation-pass", action="store_true")
@@ -40,7 +41,7 @@ def main() -> int:
         "fourRealRegressions": live.get("fourRealRegressions") == "PASS",
         "invariants": live.get("invariants") == "PASS",
         "costReport": live.get("costReport") == "PRESENT",
-        "versionCode": int(live.get("versionCode", 0)) == 146,
+        "versionCode": int(live.get("versionCode", 0)) == args.expected_version_code,
         "versionName": live.get("versionName") == "1.34-evidence-integrity",
         "sameApkSha256": bool(apk_sha) and live.get("apkSha256") == apk_sha,
         "liveNoMock": live.get("testMode") == "LIVE_API_NO_MOCK_NO_REPLAY",

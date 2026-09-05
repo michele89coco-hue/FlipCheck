@@ -27,6 +27,10 @@ final class SemanticRelationV3 {
         if(season(field)){if(seasonContains(x,y))return x.length()<y.length()?Relation.PARENT:Relation.CHILD;return Relation.INCOMPATIBLE;}
         if(design(field)){
             if(unspecifiedDesign(x)||unspecifiedDesign(y))return Relation.AMBIGUOUS;
+            if(field.equals("numericKeypad")){
+                int aKeypad=standardNumericKeypad(x),bKeypad=standardNumericKeypad(y);
+                if(aKeypad!=0&&bKeypad!=0)return Relation.COMPATIBLE_EXTENSION;
+            }
             if(field.equals("voiceControl")){
                 int aVoice=voicePresence(x),bVoice=voicePresence(y);
                 if(aVoice!=0&&bVoice!=0)return aVoice==bVoice?Relation.COMPATIBLE_EXTENSION:Relation.INCOMPATIBLE;
@@ -66,7 +70,14 @@ final class SemanticRelationV3 {
     private static boolean genericContainer(String value){return words(value).matches("(?:SEALED |UNOPENED |PACKAGED )?(?:BOX|PACKAGE|PACK|PRODUCT)");}
     private static boolean unspecifiedDesign(String value){
         String s=words(value);
-        return s.contains("NOT DOCUMENTED")||s.contains("NOT SPECIFIED")||s.contains("NOT ESTABLISHED")||s.equals("N A");
+        return s.contains("NOT DOCUMENTED")||s.contains("NOT SPECIFIED")||s.contains("NOT FULLY SPECIFIED")
+                ||s.contains("NOT ESTABLISHED")||s.equals("N A");
+    }
+    private static int standardNumericKeypad(String value){
+        String s=words(value);
+        boolean digits=s.matches(".*\\b(?:DIGITS? )?1 (?:THROUGH|TO)? ?9\\b.*")&&s.matches(".*\\b0\\b.*");
+        boolean columns=s.matches(".*\\b(?:THREE|3) COLUMNS?\\b.*")||s.contains("THREE COLUMN GRID")||s.contains("3 COLUMN GRID");
+        return digits&&columns?1:0;
     }
     private static int voicePresence(String value){
         String s=words(value);

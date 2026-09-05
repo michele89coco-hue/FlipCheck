@@ -51,6 +51,12 @@ final class ObservationExtractorV2 {
             if(profile==DomainProfileRouterV2.Profile.TCG_CARD&&field.equals("cardName")
                     &&raw.matches("#?\\s*[0-9]+(?:/[0-9]+)?")&&role.toLowerCase(Locale.ROOT).contains("number"))field="printedLabel";
             if(profile==DomainProfileRouterV2.Profile.TCG_CARD){
+                String descriptiveContext=(role+" "+location).toLowerCase(Locale.ROOT).replace('-', ' ');
+                // Species/flavour classifications printed below the artwork are
+                // descriptors, not a second card identity. Keep the literal text,
+                // while leaving an actual name/title fact untouched.
+                if(field.equals("cardName")&&descriptiveContext.matches(
+                        ".*(species|creature type|pokemon type|pokémon type|flavor|flavour|descriptor|classification).*"))field="printedLabel";
                 // A full collector fraction is not a denominator merely because the
                 // transport key says printedTotal. Preserve its located transcription.
                 if(field.equals("printedTotal")&&raw.matches("[A-Za-z]*[0-9]+\\s*/\\s*[0-9]+")
@@ -65,6 +71,14 @@ final class ObservationExtractorV2 {
             String groundingRole=role;
             if(profile==DomainProfileRouterV2.Profile.SPORTS_CARD){
                 String labelRole=role.toLowerCase(Locale.ROOT).replace('-', ' ');
+                String labelContext=(labelRole+" "+location.toLowerCase(Locale.ROOT));
+                // Focused readers sometimes transport a publisher logo through the
+                // subject/cardName key. Reassign it only when its semantic role is a
+                // brand/manufacturer mark at a logo and literal OCR corroborates it.
+                if(field.equals("athlete")&&labelContext.matches(".*(brand|manufacturer|publisher).*\\b(mark|logo)\\b.*")){
+                    if(localTextSupports(ledger,raw)){field="brand";groundingRole="printed brand label";}
+                    else field="printedLabel";
+                }
                 if((field.equals("brand")||field.equals("manufacturer"))
                         &&labelRole.matches("(?:manufacturer/brand|brand/manufacturer) mark(?:ing)?"))groundingRole="printed manufacturer label";
                 if(field.equals("productLine")&&labelRole.matches("set/product line mark(?:ing)?"))groundingRole="printed product line label";
