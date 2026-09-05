@@ -93,7 +93,7 @@ public final class LiveRegressionSuite {
         }
         report.put("runs", runs).put("livePipelineTests", allPassed ? "PASS" : "FAIL")
                 .put("fourRealRegressions", allPassed ? "PASS" : "FAIL")
-                .put("invariants", allPassed ? "PASS" : "FAIL").put("costReport", "PRESENT")
+                .put("invariants", allInvariantsPassed(runs) ? "PASS" : "FAIL").put("costReport", "PRESENT")
                 .put("apkLaunch", screenshotsPresent(output) ? "PASS" : "FAIL")
                 .put("liveRunCount", runs.length()).put("expectedLiveRunCount", 12)
                 .put("completedAt", Instant.now().toString());
@@ -148,12 +148,14 @@ public final class LiveRegressionSuite {
         do {
             instrumentation.runOnMainSync(() -> {
                 TextView result = findText(activity.getWindow().getDecorView(), title);
-                if (result != null) {
+                if (result != null && result.getWidth() > 0 && result.getHeight() > 0) {
                     result.requestRectangleOnScreen(new Rect(0, 0, result.getWidth(), result.getHeight()), true);
-                    found[0] = true;
+                    Rect visible = new Rect();
+                    found[0] = result.isShown() && result.getGlobalVisibleRect(visible)
+                            && visible.height() >= result.getHeight();
                 }
             });
-            if (found[0]) { instrumentation.waitForIdleSync(); return; }
+            if (found[0]) { instrumentation.waitForIdleSync(); SystemClock.sleep(250L); return; }
             SystemClock.sleep(100L);
         } while (SystemClock.elapsedRealtime() < deadline);
         throw new AssertionError("Computed result was not rendered in the installed Activity");
@@ -229,6 +231,12 @@ public final class LiveRegressionSuite {
     private static String requiredArgument(Bundle arguments, String key) {String value = arguments == null ? "" : safe(arguments.getString(key)); if (value.isEmpty()) throw new IllegalStateException("Missing instrumentation argument: " + key); return value;}
     private static void writeJson(File file, JSONObject value) throws Exception {try (FileOutputStream output = new FileOutputStream(file)) {output.write(value.toString(2).getBytes(java.nio.charset.StandardCharsets.UTF_8));}}
     private static String sha256(File file) throws Exception {MessageDigest digest = MessageDigest.getInstance("SHA-256"); try (FileInputStream input = new FileInputStream(file)) {byte[] buffer = new byte[32_768]; int read; while ((read = input.read(buffer)) >= 0) digest.update(buffer, 0, read);} StringBuilder out = new StringBuilder(); for (byte b : digest.digest()) out.append(String.format(java.util.Locale.ROOT, "%02x", b & 255)); return out.toString();}
+    private static boolean allInvariantsPassed(JSONArray runs) {
+        if (runs.length() != 12) return false;
+        for (int i = 0; i < runs.length(); i++)
+            if (!"PASS".equals(runs.optJSONObject(i).optString("invariants", ""))) return false;
+        return true;
+    }
     private static boolean screenshotsPresent(File output) {File[] screenshots = output.listFiles((dir, name) -> name.endsWith(".png")); return screenshots != null && screenshots.length >= 12;}
     private static boolean contains(String text, String token) {return safe(text).toLowerCase(java.util.Locale.ROOT).contains(safe(token).toLowerCase(java.util.Locale.ROOT));}
     private static void require(boolean condition, String message) {if (!condition) throw new AssertionError(message);}
