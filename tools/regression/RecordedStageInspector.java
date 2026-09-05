@@ -6,7 +6,7 @@ import java.util.*;
 /** Diagnostic replay of captured API stages. Does not replace local OCR or live tests. */
 public final class RecordedStageInspector {
  public static void main(String[] args)throws Exception {
-  JSONArray runs=new JSONObject(Files.readString(Path.of(args[0]))).getJSONArray("runs");
+  JSONArray runs=new JSONObject(new String(Files.readAllBytes(Paths.get(args[0])),java.nio.charset.StandardCharsets.UTF_8)).getJSONArray("runs");
   for(int i=0;i<runs.length();i++){
    JSONObject run=runs.getJSONObject(i);JSONArray stages=run.getJSONArray("stagePayloads");
    ImmutableEvidenceLedgerV2 ledger=new ImmutableEvidenceLedgerV2();

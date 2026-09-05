@@ -45,4 +45,22 @@ public class V134DomainRoleTest {
             assertEquals("TO_VERIFY",id.commercialFormatStatus);
         }
     }
+    @Test public void sealedCatalogEditionFormatIsNotCardEdition() throws Exception {
+        JSONObject row=new JSONObject().put("candidate_id","format-record").put("edition","Hobby Box")
+            .put("source_url","https://catalog.example/product").put("source_record_id","record");
+        IdentityCandidateV2 c=CandidateRetrieverV2.parse(new JSONObject().put("candidates",new JSONArray().put(row)),
+            DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT,new ImmutableEvidenceLedgerV2()).get(0);
+        assertEquals("Hobby Box",c.value("commercialFormat"));
+        assertEquals("",c.value("edition"));
+    }
+    @Test public void genericObservedBoxDoesNotOverrideVerifiedFormat() {
+        ImmutableEvidenceLedgerV2 l=new ImmutableEvidenceLedgerV2();
+        l.append("commercialFormat","Box",EvidenceAtom.EpistemicLevel.OBSERVED,EvidenceAtom.Modality.FOCUSED_VISION,"test",0,"front","bottom label","","printed text",95,95,"test","");
+        IdentityCandidateV2 c=new IdentityCandidateV2("format",DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT,"WEB");
+        c.fields.put("commercialFormat","Hobby Box");c.fields.put("manufacturer","Example");c.fields.put("productLine","Prism");c.fields.put("productReleaseYear","2024-25");
+        c.retrieved=true;c.disproofPassed=true;c.webSourceQuality=95;c.totalScore=90;c.sourceUrl="https://catalog.example/product";
+        Models.Identification id=new Models.Identification();id.uploadedImageCount=1;
+        FinalStateReducerV2.reduce(id,l,DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT,java.util.Arrays.asList(c),new java.util.ArrayList<>(),"");
+        assertEquals("Hobby Box",id.sealedFormat);
+    }
 }
