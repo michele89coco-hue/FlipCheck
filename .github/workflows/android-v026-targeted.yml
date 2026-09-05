@@ -64,14 +64,7 @@ jobs:
           profile: pixel_7
           emulator-options: -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect -no-snapshot
           disable-animations: true
-          script: |
-            set -euo pipefail
-            adb shell cmd overlay enable-exclusive --category com.android.internal.systemui.navbar.threebutton
-            adb install -t -r artifact/FlipCheck-v0.26.2-fix.apk
-            adb install -t -r legacy26/build/outputs/apk/androidTest/debug/legacy26-debug-androidTest.apk
-            adb shell am instrument -w -r -e class com.flipcheck.legacy26.AndroidUiRegressionTest com.flipcheck.beta.legacy26fix.test/androidx.test.runner.AndroidJUnitRunner | tee artifact/android-ui-test.txt
-            adb pull /sdcard/Android/data/com.flipcheck.beta.legacy26fix/files/ui159 artifact/android-ui
-            grep -q 'OK (1 test)' artifact/android-ui-test.txt
+          script: bash legacy26/tests/run-android-ui.sh
       - uses: actions/upload-artifact@v4
         if: always()
         with:
