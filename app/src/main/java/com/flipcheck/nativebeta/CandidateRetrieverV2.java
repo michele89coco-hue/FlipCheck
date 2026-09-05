@@ -59,6 +59,7 @@ final class CandidateRetrieverV2 {
             if(profile==DomainProfileRouterV2.Profile.TCG_CARD)put(c,"cardName",x.optString("subject",""));else if(profile==DomainProfileRouterV2.Profile.SPORTS_CARD)put(c,"athlete",x.optString("subject",""));put(c,"catalogCardNumber",x.optString("card_number",""));put(c,"language",x.optString("language",""));
             String edition=x.optString("edition","");String rawFormat=x.optString("format","");
             String composedSealedFormat=profile==DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT
+                    &&SemanticRelationV3.completeBoxConfiguration(x.optString("configuration",""))
                     ?sealedEditionContainer(edition,rawFormat):"";
             if(!composedSealedFormat.isEmpty())put(c,"commercialFormat",composedSealedFormat);
             else if(profile==DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT&&edition.toLowerCase(Locale.ROOT).matches(".*\\b(?:box|case|pack|bundle|tin)\\b.*"))put(c,"commercialFormat",edition);
@@ -71,14 +72,15 @@ final class CandidateRetrieverV2 {
             out.add(c);}
         return out;}
 
-    private static void demoteUnprovedSealedFormat(IdentityCandidateV2 c,DomainProfileRouterV2.Profile profile){
+    static void demoteUnprovedSealedFormat(IdentityCandidateV2 c,DomainProfileRouterV2.Profile profile){
         if(profile!=DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT||c.value("commercialFormat").isEmpty()
+                ||!"VARIANT_OR_FORMAT".equals(c.identityLevel)
                 ||SemanticRelationV3.completeBoxConfiguration(c.value("configuration")))return;
         // A named format without both pack units remains a product-family lead,
         // but cannot compete with a complete isolated format record.
         c.unknownFields.add("commercialFormat:configuration_incomplete");
         c.fields.remove("commercialFormat");
-        if("VARIANT_OR_FORMAT".equals(c.identityLevel))c.identityLevel="CORE_IDENTITY";
+        c.identityLevel="CORE_IDENTITY";
         c.exactReference=false;
         c.reportedDisproofPassed=false;
     }

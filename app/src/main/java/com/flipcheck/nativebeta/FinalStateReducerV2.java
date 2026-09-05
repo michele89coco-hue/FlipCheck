@@ -139,6 +139,7 @@ final class FinalStateReducerV2 {
     }
     private static boolean physicalFormatObservationUnknown(String value){
         String unknown=safe(value).toLowerCase(Locale.ROOT).replace('_',' ').replaceAll("\\s+"," ").trim();
+        if(unknown.matches(".*\\b(?:or|versus|vs)\\s+(?:hobby|jumbo|blaster|mega|retail)\\b.*"))return false;
         if(unknown.matches("(?:packaging |printed |physical |box )?format (?:label|badge|marking)(?:(?: is)? not (?:fully )?(?:visible|readable)[.!]?)?"))return true;
         // The Web response may phrase the same absent photographed label as a
         // question; source-level uncertainty is intentionally excluded.
