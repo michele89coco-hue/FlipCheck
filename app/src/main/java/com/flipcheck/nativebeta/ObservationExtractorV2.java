@@ -46,7 +46,16 @@ final class ObservationExtractorV2 {
             int image=f.has("image")?f.optInt("image",-1):f.optInt("image_index",-1);String location=safe(first(f,"location","region","boundingBox"));
             String side=safe(f.optString("side","unknown")),role=safe(first(f,"role","semantic_role","semanticScope"));
             String field=TypedFieldNormalizerV2.canonicalField(profileField(rawField,role,location,profile),role+" "+location);int confidence=f.optInt("confidence",0);
+            // A number in a descriptive text box is not a second subject name.
+            // Keep the transcription without guessing that it is a collector number.
+            if(profile==DomainProfileRouterV2.Profile.TCG_CARD&&field.equals("cardName")
+                    &&raw.matches("#?\\s*[0-9]+(?:/[0-9]+)?")&&role.toLowerCase(Locale.ROOT).contains("number"))field="printedLabel";
             EvidenceAtom.EpistemicLevel requested=groundingLevel(field,raw,role+(rawField.equalsIgnoreCase("brand_mark")?" brand_mark":""),modality,ledger,confidence);
+            if(profile==DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT
+                    &&(field.equals("productType")||field.equals("commercialFormat"))
+                    &&raw.toLowerCase(Locale.ROOT).matches(".*\\b(hobby|blaster|jumbo|retail|mega|sapphire)\\b.*")
+                    &&!role.toLowerCase(Locale.ROOT).matches(".*(printed|literal|visible text|ocr).*"))
+                requested=EvidenceAtom.EpistemicLevel.INFERRED;
             EvidenceAtom atom=ledger.append(field,raw,requested,modality,source,image,side,location,cropId,role,confidence,quality(location,raw),modality==EvidenceAtom.Modality.PRIMARY_VISION?"primary_observation":"focused_observation","");
             if(atom!=null&&atom.epistemicLevel==EvidenceAtom.EpistemicLevel.INFERRED){/* intentionally demoted */}
         }}
@@ -61,6 +70,7 @@ final class ObservationExtractorV2 {
 
     private static EvidenceAtom.EpistemicLevel groundingLevel(String field,String raw,String role,EvidenceAtom.Modality modality,ImmutableEvidenceLedgerV2 ledger,int confidence){
         String f=safe(field),r=safe(role).toLowerCase(Locale.ROOT);
+        if(r.equals("full product line"))r="product line";
         // Catalog symbol names are classifications, unlike the raw visualSymbol appearance.
         if(f.equals("setSymbol"))return EvidenceAtom.EpistemicLevel.INFERRED;
         boolean identityLabel=f.equals("manufacturer")||f.equals("brand")||f.equals("game")||f.equals("setName")||f.equals("productLine")||f.equals("subSeries");
@@ -90,6 +100,8 @@ final class ObservationExtractorV2 {
             if(canonical.equals("athlete"))return "featuredSubjects";
             if(canonical.equals("setName"))return "subSeries";
             if(canonical.equals("printedLabel")&&semantic.contains("season")&&!semantic.contains("statistic"))return "productReleaseYear";
+            if(canonical.equals("statisticsSeason")&&semantic.contains("season")
+                    &&!context.matches(".*(statistic|career|table|biograph).*"))return "productReleaseYear";
             if(canonical.equals("printedLabel")&&semantic.contains("configuration")&&!semantic.contains("code"))return "configuration";
         }
         if((context.contains("set branding")||context.contains("set_branding"))

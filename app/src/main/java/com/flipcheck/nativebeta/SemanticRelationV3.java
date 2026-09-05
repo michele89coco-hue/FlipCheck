@@ -35,7 +35,9 @@ final class SemanticRelationV3 {
         if(hierarchical(field)){
             if(field.equals("productType")&&(genericContainer(x)||genericContainer(y)))return Relation.AMBIGUOUS;
             Set<String> xs=tokens(x),ys=tokens(y);if(xs.isEmpty()||ys.isEmpty())return Relation.AMBIGUOUS;
-            if(field.equals("productType")){xs.remove("PRODUCT");ys.remove("PRODUCT");}
+            if(field.equals("productType")){
+                xs=productTypeTokens(x);ys=productTypeTokens(y);
+            }
             if(xs.isEmpty()||ys.isEmpty())return Relation.AMBIGUOUS;
             if(ys.containsAll(xs))return Relation.PARENT;if(xs.containsAll(ys))return Relation.CHILD;
             // Shared family words do not establish equivalence between sibling lines.
@@ -46,6 +48,17 @@ final class SemanticRelationV3 {
     }
 
     private static String corporateRoot(String value){return words(value).replaceFirst("(?: (?:INCORPORATED|INC|LIMITED|LTD|LLC|CORPORATION|CORP|INTERNATIONAL))+$","").trim();}
+    private static Set<String> productTypeTokens(String value){
+        Set<String> out=tokens(value);out.remove("PRODUCT");
+        // Container and sealed-product descriptions are the same type of object.
+        // Keep sport/game and specific format words, so sibling products still differ.
+        if(out.contains("TRADING")&&(out.contains("CARD")||out.contains("CARDS"))
+                &&(out.contains("BOX")||out.contains("SEALED")||out.contains("UNOPENED"))){
+            out.remove("BOX");out.remove("SEALED");out.remove("UNOPENED");
+            out.remove("CARDS");out.add("CARD");out.add("PACKAGED");
+        }
+        return out;
+    }
     private static boolean genericContainer(String value){return words(value).matches("(?:SEALED |UNOPENED |PACKAGED )?(?:BOX|PACKAGE|PACK|PRODUCT)");}
     private static boolean unspecifiedDesign(String value){
         String s=words(value);

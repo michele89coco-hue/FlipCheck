@@ -119,6 +119,9 @@ final class FinalStateReducerV2 {
     private static String resolvedFormat(String observed,IdentityCandidateV2 candidate){
         String physical=safe(observed);
         if(physical.toLowerCase(Locale.ROOT).matches("(?:sealed |standard |retail )?(?:box|package|product|pack)"))physical="";
+        if(physical.isEmpty()&&candidate!=null&&candidate.domain==DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT)
+            for(String unknown:candidate.unknownFields)
+                if(unknown.toLowerCase(Locale.ROOT).matches(".*(format|hobby|jumbo|blaster|box configuration).*"))return "";
         return first(physical,candidate==null?"":candidate.value("commercialFormat"));
     }
     private static String titleYear(Models.Identification id){

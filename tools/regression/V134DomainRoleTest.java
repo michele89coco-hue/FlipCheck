@@ -4,6 +4,40 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class V134DomainRoleTest {
+    @Test public void tcgNumericLabelCannotBecomeASecondCardName() throws Exception {
+        ImmutableEvidenceLedgerV2 l=extract("tcg_card","cardName","#47","printed card number");
+        assertNull(l.strongest("cardName"));
+        assertEquals("#47",l.strongest("printedLabel").rawValue);
+        assertNotNull(extract("tcg_card","cardName","Porygon2","card name").strongest("cardName"));
+    }
+    @Test public void sealedSeasonRoleOverridesMisnamedStatisticsField() throws Exception {
+        assertNotNull(extract("sealed_trading_card_product","statisticsSeason","2024/25","season marking").strongest("productReleaseYear"));
+        assertNull(extract("sports_card","statisticsSeason","2024/25","statistics season").strongest("productReleaseYear"));
+    }
+    @Test public void focusedFullProductLineRemainsLiteral() throws Exception {
+        assertNotNull(extract("sealed_trading_card_product","productLine","Example Prism Update Series","full product line").strongest("productLine",EvidenceAtom.EpistemicLevel.OBSERVED));
+    }
+    @Test public void compatibleCardContainersDoNotConflict() {
+        assertTrue(SemanticRelationV3.compatible(SemanticRelationV3.relate("productType","sealed trading card box","Sealed basketball trading-card product")));
+        assertTrue(SemanticRelationV3.compatible(SemanticRelationV3.relate("productType","basketball trading card box","sealed trading card product")));
+        assertEquals(SemanticRelationV3.Relation.INCOMPATIBLE,SemanticRelationV3.relate("productType","sealed basketball trading card box","sealed baseball trading card box"));
+        assertFalse(SemanticRelationV3.compatible(SemanticRelationV3.relate("productType","sealed trading card box","single trading card")));
+    }
+    @Test public void unprintedSealedFormatIsOnlyAnInference() throws Exception {
+        assertNull(extract("sealed_trading_card_product","productType","blaster box","product type").strongest("productType",EvidenceAtom.EpistemicLevel.OBSERVED));
+        assertNotNull(extract("sealed_trading_card_product","commercialFormat","Blaster Box","printed format label").strongest("commercialFormat",EvidenceAtom.EpistemicLevel.OBSERVED));
+    }
+    @Test public void unresolvedCatalogFormatCannotBePromoted() {
+        ImmutableEvidenceLedgerV2 l=new ImmutableEvidenceLedgerV2();
+        l.append("configuration","1 autograph per box",EvidenceAtom.EpistemicLevel.OBSERVED,EvidenceAtom.Modality.FOCUSED_VISION,"test",0,"front","bottom panel","","printed configuration",95,95,"test","");
+        IdentityCandidateV2 c=new IdentityCandidateV2("format",DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT,"WEB");
+        c.fields.put("commercialFormat","Hobby Box");c.fields.put("manufacturer","Example");c.fields.put("productLine","Prism");c.fields.put("productReleaseYear","2024-25");
+        c.retrieved=true;c.disproofPassed=true;c.webSourceQuality=95;c.totalScore=90;c.sourceUrl="https://catalog.example/product";
+        c.unknownFields.add("whether photographed box is hobby or jumbo SKU");
+        Models.Identification id=new Models.Identification();id.uploadedImageCount=1;
+        FinalStateReducerV2.reduce(id,l,DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT,java.util.Arrays.asList(c),new java.util.ArrayList<>(),"");
+        assertEquals("",id.sealedFormat);assertEquals("CONFIRMED",id.coreIdentityStatus);
+    }
     private ImmutableEvidenceLedgerV2 extract(String profile,String key,String value,String role) throws Exception {
         ImmutableEvidenceLedgerV2 l=new ImmutableEvidenceLedgerV2();
         JSONObject f=new JSONObject().put("key",key).put("value",value).put("role",role)
