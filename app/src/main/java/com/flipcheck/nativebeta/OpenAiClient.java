@@ -1195,9 +1195,10 @@ class OpenAiClient {
             int code = c.getResponseCode();
             InputStream stream = (code < 200 || code >= 300) ? c.getErrorStream() : c.getInputStream();
             String text = readAll(stream);
+            String retryAfter = c.getHeaderField("Retry-After");
             c.disconnect();
             if (code < 200 || code >= 300) {
-                throw ApiCallFailure.fromResponse(code, text);
+                throw ApiCallFailure.fromResponse(code, text).withRetryAfter(retryAfter);
             }
             JSONObject raw = new JSONObject(text);
             Response r = new Response();

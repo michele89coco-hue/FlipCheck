@@ -48,7 +48,7 @@ public final class LiveRegressionSuite {
         JSONObject report = header(target);
         JSONArray runs = new JSONArray();
         boolean allPassed = true;
-        for (Case fixture : cases()) {
+        liveCases: for (Case fixture : cases()) {
             for (String mode : MODES) {
                 JSONObject run = new JSONObject().put("case", fixture.key).put("mode", mode).put("startedAt", Instant.now().toString());
                 try {
@@ -89,6 +89,10 @@ public final class LiveRegressionSuite {
                 runs.put(run);
                 report.put("runs", runs).put("livePipelineTests", "INCOMPLETE");
                 writeJson(new File(output, "v134-live-results.json"), report);
+                if (ApiCallFailure.stopsLiveSuite(run.optString("pipelineFailureDomain"))) {
+                    report.put("abortedReason", run.optString("pipelineFailureDomain"));
+                    break liveCases;
+                }
             }
         }
         report.put("runs", runs).put("livePipelineTests", allPassed ? "PASS" : "FAIL")
