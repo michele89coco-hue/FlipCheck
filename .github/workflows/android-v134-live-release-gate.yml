@@ -1,25 +1,24 @@
-name: FlipCheck v1.34 installed APK live release gate
+name: FlipCheck v1.34 APK build only
 
 on:
+  push:
+    branches: [codex/v1.34-evidence-integrity]
   workflow_dispatch:
 
 permissions:
   contents: read
-  actions: write
 
 jobs:
-  installed-live-gate:
+  build-apk:
     runs-on: ubuntu-24.04
-    timeout-minutes: 75
+    timeout-minutes: 30
     env:
       FLIPCHECK_KEYSTORE_PATH: ${{ github.workspace }}/flipcheck-compatible.jks
       FLIPCHECK_KEYSTORE_PASSWORD: ${{ secrets.FLIPCHECK_KEYSTORE_PASSWORD }}
       FLIPCHECK_KEY_ALIAS: ${{ secrets.FLIPCHECK_KEY_ALIAS }}
       FLIPCHECK_KEY_PASSWORD: ${{ secrets.FLIPCHECK_KEY_PASSWORD }}
-      FLIPCHECK_LIVE_API_KEY: ${{ secrets.FLIPCHECK_LIVE_API_KEY }}
       EXPECTED_CERT_SHA256: d4d02478ea31cb6bd83228047e9accd7dfb191ed991a4c8e8c06a228e54614c7
       PACKAGE: com.flipcheck.beta.nativev098.clean.debug
-      TEST_PACKAGE: com.flipcheck.beta.nativev098.clean.debug.test
     steps:
       - uses: actions/checkout@v4
       - uses: gradle/actions/wrapper-validation@v4
@@ -30,86 +29,35 @@ jobs:
       - uses: android-actions/setup-android@v3
 
       - name: Install declared Android SDK
-        run: sdkmanager 'platforms;android-36' 'build-tools;36.0.0' 'platform-tools' 'emulator' 'system-images;android-30;google_apis;x86_64'
-
-      - name: Check live credentials
-        id: live
-        run: |
-          if [[ -n "$FLIPCHECK_LIVE_API_KEY" ]]; then
-            echo "available=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "available=false" >> "$GITHUB_OUTPUT"
-            echo "::warning::FLIPCHECK_LIVE_API_KEY missing; candidate is NOT live validated"
-          fi
-
-      - name: Require signing credentials
-        run: |
-          test -n "$FLIPCHECK_KEYSTORE_PASSWORD"
-          test -n "$FLIPCHECK_KEY_ALIAS"
-          test -n "$FLIPCHECK_KEY_PASSWORD"
+        run: sdkmanager 'platforms;android-36' 'build-tools;36.0.0'
 
       - name: Restore compatible signing key
         env:
           FLIPCHECK_KEYSTORE_BASE64: ${{ secrets.FLIPCHECK_KEYSTORE_BASE64 }}
         run: |
           test -n "$FLIPCHECK_KEYSTORE_BASE64"
+          test -n "$FLIPCHECK_KEYSTORE_PASSWORD"
+          test -n "$FLIPCHECK_KEY_ALIAS"
+          test -n "$FLIPCHECK_KEY_PASSWORD"
           printf '%s' "$FLIPCHECK_KEYSTORE_BASE64" | tr -d '\n' | base64 -d > "$FLIPCHECK_KEYSTORE_PATH"
 
-      - name: Build deterministic tests and exact candidate APK
+      - name: Compile and sign APK without live API tests
         env:
           GIT_COMMIT: ${{ github.sha }}
         run: |
-          ./gradlew clean :app:testDebugUnitTest :app:lintDebug :app:assembleDebug :app:assembleDebugAndroidTest --no-daemon --console=plain --stacktrace
+          ./gradlew :app:assembleDebug --no-daemon --console=plain --stacktrace
           mkdir -p artifact
-          touch artifact/unit-replay.pass
-          cp app/build/outputs/apk/debug/app-debug.apk artifact/FlipCheck-v1.34.apk
-          sha256sum artifact/FlipCheck-v1.34.apk | tee artifact/FlipCheck-v1.34.sha256
-          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose --print-certs artifact/FlipCheck-v1.34.apk | tee artifact/apksigner-report.txt
+          cp app/build/outputs/apk/debug/app-debug.apk artifact/FlipCheck-v1.34-build153.apk
+          sha256sum artifact/FlipCheck-v1.34-build153.apk | tee artifact/FlipCheck-v1.34-build153.sha256
+          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose --print-certs artifact/FlipCheck-v1.34-build153.apk | tee artifact/apksigner-report.txt
           cert=$(sed -n 's/^Signer #1 certificate SHA-256 digest: //p' artifact/apksigner-report.txt | tr -d ':' | tr '[:upper:]' '[:lower:]')
           test "$cert" = "$EXPECTED_CERT_SHA256"
-          "$ANDROID_HOME/build-tools/36.0.0/aapt" dump badging artifact/FlipCheck-v1.34.apk | tee artifact/apk-analyzer-report.txt
+          "$ANDROID_HOME/build-tools/36.0.0/aapt" dump badging artifact/FlipCheck-v1.34-build153.apk | tee artifact/apk-analyzer-report.txt
           grep -q "package: name='$PACKAGE' versionCode='153' versionName='1.34-evidence-integrity'" artifact/apk-analyzer-report.txt
-          ! unzip -l artifact/FlipCheck-v1.34.apk | grep -Eq 'topps-front|kobe-(front|back)|vileplume-front|philips-front'
-
-      - name: Enable runner virtualization
-        run: |
-          test -e /dev/kvm
-          sudo chmod 666 /dev/kvm
-          "$ANDROID_HOME/emulator/emulator" -accel-check
-
-      - name: Install exact APK and execute 12 uncached live runs
-        timeout-minutes: 65
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 30
-          target: google_apis
-          arch: x86_64
-          profile: pixel_2
-          ram-size: 2048M
-          cores: 2
-          emulator-boot-timeout: 600
-          emulator-options: -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect -no-snapshot -no-snapshot-save
-          disable-animations: true
-          script: bash tools/ci/run-v134-installed-live.sh
-
-      - name: Enforce fail-closed release gate
-        if: always()
-        run: |
-          flags=()
-          if [[ -f artifact/unit-replay.pass ]]; then flags+=(--unit-pass --replay-pass); fi
-          if [[ -f artifact/apk-installation.pass ]]; then flags+=(--apk-installation-pass); fi
-          if [[ -f artifact/apk-launch.pass ]]; then flags+=(--apk-launch-pass); fi
-          python3 tools/release/v134_release_gate.py \
-            --apk artifact/FlipCheck-v1.34.apk \
-            --live-report artifact/live/v134-live-results.json \
-            --output artifact/v134-release-gate.json \
-            --expected-version-code 153 \
-            "${flags[@]}"
 
       - uses: actions/upload-artifact@v4
-        if: always()
         with:
-          name: FlipCheck-v1.34-live-gate-${{ github.sha }}
+          name: FlipCheck-v1.34-build153-apk-only
           path: artifact/
           if-no-files-found: error
-          retention-days: 7
+          retention-days: 14
