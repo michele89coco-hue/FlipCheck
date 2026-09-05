@@ -12,10 +12,12 @@ final class CandidateRetrieverV2 {
 
     static String prompt(DomainProfileRouterV2.Profile profile,ImmutableEvidenceLedgerV2 ledger,List<IdentityCandidateV2> hypotheses){
         StringBuilder observed=new StringBuilder(),inferred=new StringBuilder();
-        for(EvidenceAtom a:ledger.all()){
-            if(a.parentEvidenceId.isEmpty()&&hasNormalizedChild(ledger,a.id))continue;
+        for(EvidenceAtom a:queryEvidence(profile,ledger)){
+            if(a.parentEvidenceId.isEmpty()&&hasNormalizedChild(ledger,a))continue;
             if(!queryField(a.field)||a.semanticScope.equals("OBJECT_STATISTIC")||a.semanticScope.equals("UI_OVERLAY")||a.semanticScope.equals("MARKET_TEXT")||(a.modality==EvidenceAtom.Modality.LOCAL_OCR&&a.field.equals("printedLabel")&&a.rawValue.length()>80))continue;
             String item=a.field+"="+a.normalizedValue;
+            if((DomainProfileRouterV2.cards(profile)||profile==DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT)
+                    &&observed.indexOf(item+" | ")>=0)continue;
             if(a.epistemicLevel==EvidenceAtom.EpistemicLevel.OBSERVED&&a.localized())append(observed,item);
             else if(a.epistemicLevel==EvidenceAtom.EpistemicLevel.INFERRED)append(inferred,item);
         }
@@ -29,7 +31,12 @@ final class CandidateRetrieverV2 {
                 +"Create separate candidate records for every checklist row, edition, card number, product format or device model found on the same page. Never merge fields across records or pages. "
                 +"Do not include statistics, UI text, prices or marketplace wording. For remote controls return the candidate's own control_layout, shortcut_buttons, navigation_layout, numeric_keypad, voice_control and layout_signature so the app can recompute the match locally; for cards require checklist number agreement; for sealed products keep manufacturer, line, season and printed configuration separate from format/SKU."
                 +(profile==DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT
-                    ?" For sealed products, prioritize the manufacturer's exact packaging/configuration record, not card checklist rows. Use the complete observed product line and subseries in the configuration query. Retrieve actual cards per pack, packs per box and guarantees for each plausible format; preserve each unit. Compare visible packaging badges and configuration with that record. A shared autograph count alone cannot identify the format. If format is still unknown, leave format empty and explain the missing discriminator in unknown_fields; do not claim a format match while also marking it unknown."
+                    ?" For sealed products, prioritize the manufacturer's exact packaging/configuration record, not card checklist rows. Use the complete observed product line and subseries in the configuration query. Retrieve actual cards per pack, packs per box and guarantees for each plausible format; preserve each unit. Compare visible packaging badges and configuration with that record. A shared autograph count alone cannot identify the format. If format is still unknown, leave format empty and explain the missing discriminator in unknown_fields; do not claim a format match while also marking it unknown. Within the single web_search call, include targeted queries for exact manufacturer + complete line + season + box configuration using observed fields above. Prioritize results from actual product pages with pack quantities and packaging descriptions for each plausible format. A category page, checklist, shared autograph count or different format with an incompatible guarantee is insufficient for format proof."
+                    :"")
+                +(profile==DomainProfileRouterV2.Profile.TCG_CARD
+                    ?" For TCG, search the observed card name plus the complete collector fraction as the primary identifier. Include a targeted dedicated-card-catalog or grading-checklist query for this exact fraction in the single search batch; marketplace titles alone are not catalog proof. Compare edition and finish separately."
+                    :profile==DomainProfileRouterV2.Profile.SPORTS_CARD
+                    ?" For sports cards, verify the complete release season on the exact base/parallel record matching the physical number and product line. A copyright year or player statistics season is not the release season. Include a full-season parent-set-checklist query in the single search batch and return a complete matching record; never borrow a season from another parallel. Preserve the printed brand as brand and report a parent company in source metadata."
                     :"");
     }
 
@@ -67,7 +74,23 @@ final class CandidateRetrieverV2 {
         return "";
         }
     static void bindToolSources(List<IdentityCandidateV2> candidates,List<Models.Source> toolSources){if(candidates==null)return;for(IdentityCandidateV2 candidate:candidates){if(candidate==null||!candidate.retrieved)continue;Models.Source matched=null;if(toolSources!=null)for(Models.Source source:toolSources)if(source!=null&&sameUrl(candidate.sourceUrl,source.url)){matched=source;break;}if(matched==null){candidate.rejected=true;candidate.rejectionReason="candidate_url_not_in_web_tool_sources";candidate.disproofResult="FAILED";candidate.disproofReason=candidate.rejectionReason;}else{candidate.sourceUrl=matched.url;if(candidate.sourceTitle.isEmpty())candidate.sourceTitle=matched.title;}}}
-    private static boolean hasNormalizedChild(ImmutableEvidenceLedgerV2 ledger,String id){for(EvidenceAtom x:ledger.all())if(x.parentEvidenceId.equals(id))return true;return false;}
+    private static boolean hasNormalizedChild(ImmutableEvidenceLedgerV2 ledger,EvidenceAtom atom){
+        // A derived denominator/edition is an additional field, not a replacement
+        // for the original identifier. Suppress only normalization of the same field.
+        for(EvidenceAtom x:ledger.all())if(x.parentEvidenceId.equals(atom.id)&&x.field.equals(atom.field))return true;
+        return false;
+    }
+    private static List<EvidenceAtom> queryEvidence(DomainProfileRouterV2.Profile profile,ImmutableEvidenceLedgerV2 ledger){
+        List<EvidenceAtom> out=new ArrayList<>(ledger.all());
+        if(DomainProfileRouterV2.cards(profile)||profile==DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT)
+            out.sort(java.util.Comparator.comparingInt(a->queryPriority(a.field)));
+        return out;
+    }
+    private static int queryPriority(String f){
+        if(f.matches("collectorNumber|physicalCardNumber|cardName|athlete|manufacturer|brand|game|productLine|subSeries|setName|productReleaseYear"))return 0;
+        if(f.matches("edition|firstEditionMark|language|finish|configuration|commercialFormat|visualSymbol|sport"))return 1;
+        return 2;
+    }
     private static boolean queryField(String f){String x=safe(f);return x.matches("manufacturer|brand|game|productLine|subSeries|setName|cardName|athlete|physicalCardNumber|collectorNumber|productReleaseYear|language|edition|finish|configuration|commercialFormat|model|productCode|sku|barcode|controlLayout|shortcutButtons|printedLabel|navigationLayout|numericKeypad|voiceControl|layoutSignature|sport|visualSymbol|physicalFeature");}
     private static void put(IdentityCandidateV2 c,String field,String value){String v=safe(value);if(field.equals("commercialFormat")&&(v.toLowerCase(Locale.ROOT).matches(".*(unspecified|multiple|not determined|not specified).*|(?:sealed |standard )?(box|package|product)")||v.contains(" / "))){if(!v.isEmpty())c.unknownFields.add("commercialFormat:unresolved_source_value="+v);return;}if(!v.isEmpty()&&!TypedFieldNormalizerV2.ambiguous(v))c.fields.put(field,TypedFieldNormalizerV2.normalizeValue(field,v,""));}
     private static boolean isBaseRole(String value){String x=safe(value).toUpperCase(Locale.ROOT).replaceAll("[^A-Z0-9]+"," ").trim();return x.equals("BASE")||x.equals("BASE SET")||x.equals("BASE CARD");}

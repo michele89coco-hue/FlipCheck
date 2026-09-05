@@ -50,7 +50,14 @@ final class ObservationExtractorV2 {
             // Keep the transcription without guessing that it is a collector number.
             if(profile==DomainProfileRouterV2.Profile.TCG_CARD&&field.equals("cardName")
                     &&raw.matches("#?\\s*[0-9]+(?:/[0-9]+)?")&&role.toLowerCase(Locale.ROOT).contains("number"))field="printedLabel";
-            EvidenceAtom.EpistemicLevel requested=groundingLevel(field,raw,role+(rawField.equalsIgnoreCase("brand_mark")?" brand_mark":""),modality,ledger,confidence);
+            String groundingRole=role;
+            if(profile==DomainProfileRouterV2.Profile.SPORTS_CARD){
+                String labelRole=role.toLowerCase(Locale.ROOT).replace('-', ' ');
+                if((field.equals("brand")||field.equals("manufacturer"))
+                        &&labelRole.matches("(?:manufacturer/brand|brand/manufacturer) mark(?:ing)?"))groundingRole="printed manufacturer label";
+                if(field.equals("productLine")&&labelRole.matches("set/product line mark(?:ing)?"))groundingRole="printed product line label";
+            }
+            EvidenceAtom.EpistemicLevel requested=groundingLevel(field,raw,groundingRole+(rawField.equalsIgnoreCase("brand_mark")?" brand_mark":""),modality,ledger,confidence);
             if(profile==DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT
                     &&(field.equals("productType")||field.equals("commercialFormat"))
                     &&raw.toLowerCase(Locale.ROOT).matches(".*\\b(hobby|blaster|jumbo|retail|mega|sapphire)\\b.*")

@@ -40,7 +40,7 @@ def main() -> int:
         "fourRealRegressions": live.get("fourRealRegressions") == "PASS",
         "invariants": live.get("invariants") == "PASS",
         "costReport": live.get("costReport") == "PRESENT",
-        "versionCode": int(live.get("versionCode", 0)) == 144,
+        "versionCode": int(live.get("versionCode", 0)) == 145,
         "versionName": live.get("versionName") == "1.34-evidence-integrity",
         "sameApkSha256": bool(apk_sha) and live.get("apkSha256") == apk_sha,
         "liveNoMock": live.get("testMode") == "LIVE_API_NO_MOCK_NO_REPLAY",

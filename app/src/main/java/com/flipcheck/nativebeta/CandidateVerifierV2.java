@@ -37,7 +37,15 @@ final class CandidateVerifierV2 {
         int identifiers=0,identifierComparisons=0,text=0,textComparisons=0,logos=0,config=0,design=0,designComparisons=0,coreMatches=0,coreConflicts=0,observedCompared=0;
         for(String field:c.fields.keySet()){
             String candidate=c.value(field);EvidenceAtom observed=observedFor(ledger,field,profile);if(observed==null)continue;observedCompared++;
-            SemanticRelationV3.Relation relation=SemanticRelationV3.relate(photoField(field,profile),observed.normalizedValue,candidate);c.fieldRelations.put(field,relation);
+            SemanticRelationV3.Relation relation=SemanticRelationV3.relate(photoField(field,profile),observed.normalizedValue,candidate);if(profile==DomainProfileRouterV2.Profile.SPORTS_CARD&&field.equals("manufacturer")
+                    &&relation==SemanticRelationV3.Relation.INCOMPATIBLE&&candidate.contains("/")){
+                // Catalogs may list a publisher and its printed brand together.
+                // Only an exact component corroborates the photographed label.
+                for(String component:candidate.split("/"))if(TypedFieldNormalizerV2.equivalent("brand",observed.normalizedValue,component)){
+                    relation=SemanticRelationV3.Relation.COMPATIBLE_EXTENSION;break;
+                }
+            }
+            c.fieldRelations.put(field,relation);
             if(SemanticRelationV3.compatible(relation)){
                 addUnique(c.matchedEvidence,observed.id);int weight=SemanticRelationV3.matchWeight(relation);
                 if(identifier(field)){identifiers+=weight;identifierComparisons++;}else {text+=weight;textComparisons++;}
