@@ -1,0 +1,33 @@
+plugins { alias(libs.plugins.android.application) }
+
+android {
+    namespace 'com.flipcheck.legacy26'
+    compileSdk 36
+    buildToolsVersion '36.0.0'
+    defaultConfig {
+        applicationId 'com.flipcheck.beta.legacy26fix'
+        minSdk 23
+        targetSdk 36
+        versionCode 158
+        versionName '0.26.1-targeted'
+        buildConfigField 'String', 'SOURCE_COMMIT', '"' + (System.getenv('GIT_COMMIT') ?: 'local') + '"'
+    }
+    buildFeatures { buildConfig true }
+    signingConfigs {
+        compatible {
+            if (System.getenv('FLIPCHECK_KEYSTORE_PATH')) {
+                storeFile file(System.getenv('FLIPCHECK_KEYSTORE_PATH'))
+                storePassword System.getenv('FLIPCHECK_KEYSTORE_PASSWORD')
+                keyAlias System.getenv('FLIPCHECK_KEY_ALIAS')
+                keyPassword System.getenv('FLIPCHECK_KEY_PASSWORD')
+            }
+        }
+    }
+    buildTypes {
+        debug { if (System.getenv('FLIPCHECK_KEYSTORE_PATH')) signingConfig signingConfigs.compatible }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}

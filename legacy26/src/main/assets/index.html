@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>FlipCheck 26 Fix</title>
+<style>
+:root{--bg:#0b1020;--card:#141b2d;--line:#29324a;--text:#f4f6fb;--muted:#9aa5bd;--accent:#63e6be;--warn:#ffd166;--bad:#ff6b6b;--blue:#74c0fc}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}main{max-width:720px;margin:auto;padding:18px 16px 110px}.top{display:flex;justify-content:space-between;align-items:center;margin:4px 0 18px}.brand{font-size:25px;font-weight:850;letter-spacing:-.5px}.beta{font-size:11px;border:1px solid var(--line);padding:5px 8px;border-radius:999px;color:var(--muted)}h1{font-size:30px;line-height:1.05;margin:6px 0 7px}.sub{color:var(--muted);margin:0 0 18px;line-height:1.45}.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:15px;margin:12px 0}.label{font-size:13px;color:var(--muted);margin:0 0 7px}.photos{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.slot{aspect-ratio:1;border:1.5px dashed #3d4968;border-radius:14px;display:grid;place-items:center;overflow:hidden;background:#0d1425;position:relative}.slot img{width:100%;height:100%;object-fit:cover}.slot span{font-size:30px;color:#7784a5}.remove-photo{position:absolute;top:6px;right:6px;width:30px;height:30px;border:0;border-radius:50%;background:rgba(8,12,24,.88);color:#fff;font-size:20px;line-height:30px;font-weight:800;display:grid;place-items:center;z-index:3;box-shadow:0 1px 5px rgba(0,0,0,.35)}.confrow{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;margin-top:9px}.confrow b{font-size:13px}.candidate{padding:8px 10px;margin-top:7px;border-radius:10px;background:#0e1729;border:1px solid var(--line);font-size:13px}.likely{margin-top:10px;padding:11px 12px;border-radius:12px;background:#10251f;border:1px solid #295849;color:#b8f5df}.need{margin-top:10px;padding:10px;border-radius:10px;background:#211c10;border:1px solid #51431d;color:#ffe095}.ident-actions{display:grid;grid-template-columns:1fr;gap:8px;margin-top:12px}.file{width:100%;margin-top:10px}.file::file-selector-button{border:0;border-radius:10px;padding:10px 13px;background:#25314f;color:white;font-weight:700;margin-right:8px}input,textarea,select{width:100%;border:1px solid var(--line);background:#0d1425;color:var(--text);padding:13px;border-radius:12px;font-size:16px;outline:none}textarea{min-height:76px;resize:vertical}.row{display:grid;grid-template-columns:1fr 145px;gap:10px}.btn{width:100%;border:0;border-radius:14px;padding:15px 16px;font-size:16px;font-weight:850;background:var(--accent);color:#07140f;margin-top:12px}.btn.secondary{background:#26324d;color:white;border:1px solid #34415f}.btn.ghost{background:transparent;color:var(--muted);border:1px solid var(--line)}.btn:disabled{opacity:.42}.status{padding:12px;border-radius:12px;background:#0d1425;border:1px solid var(--line);margin-top:10px;color:var(--muted);font-size:14px}.ident-title{font-size:20px;font-weight:850;margin-bottom:5px}.tag{display:inline-block;font-size:12px;padding:4px 8px;border-radius:999px;background:#1d2944;margin-right:5px;color:#b9c4da}.meter{height:7px;border-radius:99px;background:#27314a;overflow:hidden;margin:9px 0}.meter>div{height:100%;background:var(--accent)}.resultHead{text-align:center;padding:12px}.verdict{font-size:35px;font-weight:950;letter-spacing:-1px}.buy{color:var(--accent)}.neg{color:var(--warn)}.pass{color:var(--bad)}.data{color:var(--blue)}.big{font-size:30px;font-weight:900}.grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.metric{background:#0d1425;border:1px solid var(--line);border-radius:12px;padding:11px}.metric b{display:block;font-size:18px;margin-top:3px}.metric small{color:var(--muted)}details{border-top:1px solid var(--line);padding-top:12px;margin-top:12px}summary{font-weight:750;cursor:pointer}.source{font-size:13px;padding:9px 0;border-bottom:1px solid #222c42}.source a{color:#91d5ff;text-decoration:none;word-break:break-word}.hide{display:none!important}.error{color:#ff9e9e}.ok{color:#93f4d4}.warn{color:#ffe095}.toolbar{position:fixed;bottom:0;left:0;right:0;background:rgba(11,16,32,.96);border-top:1px solid var(--line);backdrop-filter:blur(10px);padding:10px max(14px,calc((100vw - 720px)/2 + 16px));display:flex;gap:8px}.tool{flex:1;text-align:center;border:0;background:#131b2e;color:#aeb9d0;padding:10px;border-radius:10px;font-weight:700}.tool.active{color:var(--accent);background:#19243a}.note{font-size:12px;color:var(--muted);line-height:1.45}.pill{padding:7px 10px;border-radius:10px;background:#0e1729;border:1px solid var(--line);font-size:13px}.cost{font-variant-numeric:tabular-nums}.loader{width:20px;height:20px;border:3px solid #38506b;border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;display:inline-block;vertical-align:middle;margin-right:8px}@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body><main>
+<div class="top"><div class="brand">FlipCheck</div><div class="beta">v0.26.1 · FIX</div></div>
+<section id="scanPage">
+<h1>Prima di comprarlo,<br>controllalo.</h1><p class="sub">Foto + dettagli facoltativi. FlipCheck identifica l'oggetto o la carta, verifica il modello e cerca il mercato prima di darti un verdetto.</p>
+<div class="panel">
+<div class="label">Foto dell'oggetto · fino a 3</div><div class="photos"><div class="slot" id="s0"><span>＋</span></div><div class="slot" id="s1"><span>＋</span></div><div class="slot" id="s2"><span>＋</span></div></div>
+<input id="photo0" type="file" accept="image/*" style="display:none"><input id="photo1" type="file" accept="image/*" style="display:none"><input id="photo2" type="file" accept="image/*" style="display:none"><input id="photoBatch" type="file" accept="image/*" multiple style="display:none"><button class="btn secondary" id="addPhotos" type="button">📷 SELEZIONA FINO A 3 FOTO</button><div id="photoStatus" class="note" style="margin-top:8px">Scegli fino a 3 foto insieme. Tocca una foto per sostituirla, × per rimuoverla.</div>
+<p class="note">Le immagini vengono ridimensionate automaticamente a massimo 1280 px prima dell'analisi.</p>
+</div>
+<div class="panel">
+<div class="label">Marca, modello, carta o dettagli <b>· facoltativo</b></div><textarea id="details" placeholder="Es. Makita DHP485 con batteria 5Ah / S24 Ultra 256GB / LeBron 2003 Topps Chrome #111 PSA 9"></textarea>
+<div style="height:10px"></div><div class="label">Prezzo richiesto <b>· facoltativo</b></div><div class="row"><input id="price" inputmode="decimal" placeholder="0,00"><select id="currency"><option>EUR</option><option>USD</option><option>GBP</option></select></div>
+<button class="btn" id="identifyBtn">IDENTIFICA</button>
+<div id="runStatus" class="status hide"></div>
+<div id="liveCost" class="status hide"></div><div class="note" style="margin-top:8px">Identificazione v0.26: confidenza calibrata e fonti pertinenti. 1 Vision + massimo 1 Web Search; nessuna fonte irrilevante può alzare da sola la confidenza del modello.</div>
+</div>
+<div id="identPanel" class="panel hide">
+<div class="label">Identificazione</div><div id="identTitle" class="ident-title"></div><div id="tags"></div><div class="meter"><div id="confBar"></div></div><div id="identNote" class="note"></div>
+<div style="height:10px"></div><div class="label">Modello / descrizione confermata</div><input id="confirmed" placeholder="Correggi o completa se necessario">
+<div class="ident-actions"><button class="btn secondary hide" id="addConfirmPhoto" type="button">📷 AGGIUNGI FOTO PER CONFERMARE</button><button class="btn" id="marketBtn">CONFERMA E CERCA MERCATO</button><button class="btn ghost" id="failBtn">Non riesco a confermarlo</button></div>
+</div>
+<div id="resultPanel" class="panel hide"></div>
+</section>
+<section id="settingsPage" class="hide">
+<h1>Impostazioni Beta</h1><p class="sub">Questa build interna usa direttamente la tua chiave OpenAI. Nella versione pubblica la chiave sarà esclusivamente sul backend.</p>
+<div class="panel"><div class="label">OpenAI API key</div><input id="apiKey" type="password" placeholder="sk-…"><p class="note">Non viene salvata su disco: resta solo in memoria finché l'app rimane aperta. Un abbonamento ChatGPT non include automaticamente credito API.</p></div>
+<div class="panel"><div class="label">Parametri Decision Engine</div><div class="row"><div><div class="label">Costi vendita stimati %</div><input id="feeRate" type="number" value="12" min="0" max="50"></div><div><div class="label">Margine target %</div><input id="marginRate" type="number" value="15" min="0" max="70"></div></div></div>
+<div class="panel"><div class="label">Stato prova</div><div id="trialInfo" class="status"></div><button class="btn secondary" id="resetTrial">Reset prova Beta</button><p class="note">Il reset esiste solo per permettere i test interni. Non sarà presente nella build pubblica.</p></div>
+<div class="panel"><div class="label">Contabilità API della sessione</div><div class="grid"><div class="metric"><small>Richieste API</small><b id="requests">0</b></div><div class="metric"><small>Chiamate Vision</small><b id="vCalls">0</b></div><div class="metric"><small>Web search</small><b id="wCalls">0</b></div><div class="metric"><small>Token</small><b id="tokens">0</b></div><div class="metric"><small>Cache read</small><b id="cachedTokens">0</b></div><div class="metric"><small>Cache write</small><b id="cacheWriteTokens">0</b></div><div class="metric"><small>Costo stimato</small><b class="cost" id="cost">$0.0000</b></div><div class="metric"><small>Tempo API</small><b id="apiTime">0 ms</b></div></div><p class="note">La stima usa i token restituiti dalla Responses API, inclusi cache read/write, più $0,01 per Web Search. Il dashboard OpenAI resta il dato contabile definitivo.</p></div>
+<div class="panel"><div class="label">Ultima analisi · telemetria</div><div id="lastScanSummary" class="status">Nessuna analisi registrata in questa build.</div><div id="lastScanPhases"></div><button class="btn secondary" id="exportDiagnostic" type="button">ESPORTA DIAGNOSTICA</button><button class="btn secondary" id="resetTelemetry" type="button">RESET TELEMETRIA LOCALE</button><p class="note">Salviamo localmente solo metriche tecniche delle ultime analisi, non le fotografie né la API key.</p></div>
+<div class="panel"><div class="label">Storico costi · ultime 10 analisi</div><div id="scanHistory" class="note">Nessun dato.</div></div>
+<div class="panel"><div class="label">Monetizzazione prevista</div><div class="pill">1 FlipCheck completo gratis · massimo 2 tentativi per ottenerlo</div><div style="height:8px"></div><div class="pill">Starter Pack · 3 FlipCheck = €0,99</div><div style="height:8px"></div><div class="pill">20 FlipCheck = €4,99</div><p class="note">Google Play Billing non è ancora attivo in questa build tecnica. La v0.26 mantiene lo stato runtime stabile e calibra la confidenza in base alla qualità reale delle prove. OCR Android nativo/ML Kit resta previsto nella migrazione al progetto Android standard.</p></div>
+</section>
+</main>
+<div class="toolbar"><button id="tabScan" class="tool active">⌁ Analisi</button><button id="tabSettings" class="tool">⚙ Impostazioni</button></div>
+<script>
+const $=id=>document.getElementById(id);let files=[],images=[],ident=null,session={requests:0,vision:0,web:0,tokens:0,cached:0,cacheWrite:0,cost:0,apiMs:0};
+let localOcr={text:'',identifiers:[],barcodes:[],ms:0,engine:'barcode locale leggero',available:false};
+function resetLocalOcr(){localOcr={text:'',identifiers:[],barcodes:[],ms:0,engine:'barcode locale leggero',available:false}}
+function uniqLines(text){let seen=new Set(),out=[];String(text||'').split(/\r?\n/).map(x=>x.trim().replace(/\s+/g,' ')).filter(Boolean).forEach(x=>{let k=x.toLowerCase();if(!seen.has(k)){seen.add(k);out.push(x)}});return out.join('\n')}
+function localIdentifierCandidates(text,barcodes=[]){let out=[],seen=new Set();function add(v,label='local'){v=String(v||'').trim().replace(/^[\'\"`]+|[\'\"`,.;:]+$/g,'').replace(/\s+/g,' ');v=v.replace(/^(?:PN|P\/N|PART(?:\s+NUMBER)?|PART\s*NO|MODEL|MOD|REF|TYPE|SKU|S\/N|SERIAL)\s*[:#=-]?\s*/i,'').trim();if(!v||v.length<4||v.length>48)return;let c=v.replace(/\s/g,'');let ok=(/[A-Za-z]/.test(c)&&/\d/.test(c))||/^\d{4,9}[-\/_][A-Z0-9]{1,14}/i.test(c)||/^\d{8,14}$/.test(c);if(!ok)return;let k=c.toUpperCase();if(seen.has(k))return;seen.add(k);out.push({value:c,source:label})}barcodes.forEach(v=>add(v,'barcode'));return out.slice(0,8)}
+async function canvasFromFile(file,maxDim=1400){let bmp=null;try{if('createImageBitmap' in window)bmp=await createImageBitmap(file)}catch(e){};let w,h,src;if(bmp){w=bmp.width;h=bmp.height;src=bmp}else{src=await new Promise((res,rej)=>{let u=URL.createObjectURL(file),im=new Image();im.onload=()=>{URL.revokeObjectURL(u);res(im)};im.onerror=()=>{URL.revokeObjectURL(u);rej(new Error('Immagine non leggibile'))};im.src=u});w=src.naturalWidth||src.width;h=src.naturalHeight||src.height}let k=Math.min(1,maxDim/Math.max(w,h)),sw=Math.max(1,Math.round(w*k)),sh=Math.max(1,Math.round(h*k));let c=document.createElement('canvas');c.width=sw;c.height=sh;c.getContext('2d').drawImage(src,0,0,sw,sh);if(bmp&&bmp.close)bmp.close();return c}
+async function tryBarcodes(canvas){if(!('BarcodeDetector' in window))return[];try{let fmts=await BarcodeDetector.getSupportedFormats().catch(()=>[]);let d=new BarcodeDetector(fmts&&fmts.length?{formats:fmts}:undefined),r=await d.detect(canvas);return (r||[]).map(x=>x.rawValue||x.displayValue||'').filter(Boolean)}catch(e){return[]}}
+async function runLocalOcr(){resetLocalOcr();let t0=Date.now(),bars=[];for(let i=0;i<files.length;i++){let f=files[i];if(!f)continue;try{let c=await canvasFromFile(f,1400);let b=await tryBarcodes(c);if(b.length)bars.push(...b)}catch(e){console.log('barcode precheck photo',i,e)}}localOcr.barcodes=[...new Set(bars)].slice(0,8);localOcr.identifiers=localIdentifierCandidates('',localOcr.barcodes);localOcr.ms=Date.now()-t0;localOcr.engine=localOcr.barcodes.length?'BarcodeDetector':'nessun barcode locale';localOcr.available=!!localOcr.barcodes.length;let sc=ensureScan();sc.localOcr={engine:localOcr.engine,ms:localOcr.ms,identifiers:localOcr.identifiers.map(x=>x.value),barcodes:localOcr.barcodes,textPreview:''};renderTelemetry();return localOcr}
+
+let currentScan=null,scanHistory=loadScanHistory();
+function loadScanHistory(){try{return JSON.parse(localStorage.getItem('fcScanHistory'))||[]}catch(e){return[]}}
+function saveScanHistory(){try{localStorage.setItem('fcScanHistory',JSON.stringify(scanHistory.slice(0,10)))}catch(e){}}
+function newScan(){currentScan={id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),startedAt:Date.now(),status:'identifying',photos:validImageCount(),phases:[],totals:{requests:0,vision:0,web:0,input:0,cached:0,cacheWrite:0,uncached:0,output:0,tokens:0,cost:0,apiMs:0}};renderLiveCost();return currentScan}
+function ensureScan(){if(!currentScan||currentScan.closed)newScan();return currentScan}
+function persistCompletedScan(label,statusName){if(!currentScan)return;currentScan.closed=true;currentScan.status=statusName||currentScan.status||'completed';currentScan.label=(label||currentScan.label||'Analisi').slice(0,100);currentScan.finishedAt=Date.now();scanHistory=[JSON.parse(JSON.stringify(currentScan)),...scanHistory.filter(x=>x.id!==currentScan.id)].slice(0,10);saveScanHistory();renderTelemetry()}
+function resetTelemetry(){session={requests:0,vision:0,web:0,tokens:0,cached:0,cacheWrite:0,cost:0,apiMs:0};currentScan=null;scanHistory=[];saveScanHistory();updateUsage();renderTelemetry();$('liveCost').classList.add('hide')}
+let trial=loadTrial();
+function loadTrial(){try{return JSON.parse(localStorage.getItem('fcTrial'))||{attempts:2,free:true,credits:0}}catch(e){return{attempts:2,free:true,credits:0}}}
+function saveTrial(){try{localStorage.setItem('fcTrial',JSON.stringify(trial))}catch(e){}updateTrial()}
+function updateTrial(){if(!$('trialInfo'))return;$('trialInfo').innerHTML=`Tentativi gratuiti rimasti: <b>${trial.attempts}</b><br>Analisi completa gratuita: <b>${trial.free?'disponibile':'usata'}</b><br>Crediti: <b>${trial.credits||0}</b>`}
+function switchTab(s){$('scanPage').classList.toggle('hide',s!=='scan');$('settingsPage').classList.toggle('hide',s!=='settings');$('tabScan').classList.toggle('active',s==='scan');$('tabSettings').classList.toggle('active',s==='settings');updateTrial()}
+$('tabScan').onclick=()=>switchTab('scan');$('tabSettings').onclick=()=>switchTab('settings');$('resetTrial').onclick=()=>{trial={attempts:2,free:true,credits:0};saveTrial();alert('Prova Beta resettata')};$('resetTelemetry').onclick=()=>{if(confirm('Azzerare la telemetria locale della Beta?'))resetTelemetry()};
+function key(){return $('apiKey').value.trim()}function needKey(){if(key())return true;switchTab('settings');$('apiKey').focus();alert('Inserisci prima una OpenAI API key per la Beta interna.');return false}
+files=[null,null,null];images=[null,null,null];
+function validImageCount(){return images.filter(Boolean).length}
+function updatePhotoStatus(msg){$('photoStatus').textContent=msg||`${validImageCount()} foto caricata${validImageCount()===1?'':'e'} ✓`}
+function renderSlot(i){let s=$('s'+i);if(images[i]){s.innerHTML=`<img src="${images[i]}" alt="Foto ${i+1}"><button class="remove-photo" type="button" aria-label="Rimuovi foto ${i+1}">×</button>`;s.querySelector('.remove-photo').onclick=e=>{e.preventDefault();e.stopPropagation();removePhoto(i)}}else{s.innerHTML='<span>＋</span>'}}
+function removePhoto(i){resetLocalOcr();files[i]=null;images[i]=null;$('photo'+i).value='';renderSlot(i);ident=null;$('identPanel').classList.add('hide');$('resultPanel').classList.add('hide');updatePhotoStatus(validImageCount()?null:'Nessuna foto caricata. Puoi aggiungerne fino a 3.')}
+for(let i=0;i<3;i++){
+  $('s'+i).onclick=e=>{if(e.target&&e.target.closest&&e.target.closest('.remove-photo'))return;$('photo'+i).value='';$('photo'+i).click()};
+  $('photo'+i).onchange=async e=>{let f=e.target.files&&e.target.files[0];if(!f)return;resetLocalOcr();files[i]=f;updatePhotoStatus('Foto selezionata. Ottimizzazione in corso…');try{images[i]=await resize(f);renderSlot(i);ident=null;$('identPanel').classList.add('hide');$('resultPanel').classList.add('hide');updatePhotoStatus()}catch(err){files[i]=null;images[i]=null;renderSlot(i);updatePhotoStatus('Non riesco a elaborare la foto: '+(err&&err.message?err.message:err))}};
+}
+$('addPhotos').onclick=()=>{let i=files.findIndex(x=>!x);if(i<0){updatePhotoStatus('Hai già caricato 3 foto. Tocca × su una foto per rimuoverla, oppure tocca la foto per sostituirla.');return}$('photo'+i).value='';$('photo'+i).click()};
+async function resize(file){
+  let bmp=null;
+  try{if(window.createImageBitmap)bmp=await createImageBitmap(file)}catch(e){}
+  if(bmp){let w=bmp.width,h=bmp.height,m=1280;if(Math.max(w,h)>m){let k=m/Math.max(w,h);w=Math.round(w*k);h=Math.round(h*k)}let c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(bmp,0,0,w,h);if(bmp.close)bmp.close();return c.toDataURL('image/jpeg',.88)}
+  return new Promise((resolve,reject)=>{let url=URL.createObjectURL(file),im=new Image();im.onload=()=>{try{let w=im.naturalWidth||im.width,h=im.naturalHeight||im.height,m=1280;if(Math.max(w,h)>m){let k=m/Math.max(w,h);w=Math.round(w*k);h=Math.round(h*k)}let c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(im,0,0,w,h);let d=c.toDataURL('image/jpeg',.88);URL.revokeObjectURL(url);resolve(d)}catch(err){URL.revokeObjectURL(url);reject(err)}};im.onerror=()=>{URL.revokeObjectURL(url);reject(new Error('Formato immagine non leggibile'))};im.src=url})
+}
+function status(msg,cls=''){$('runStatus').className='status '+cls;$('runStatus').innerHTML=msg;$('runStatus').classList.remove('hide')}
+function outText(j){let a=[];(j.output||[]).forEach(o=>{if(o.type==='message')(o.content||[]).forEach(c=>{if(c.type==='output_text'&&c.text)a.push(c.text)})});return a.join('\n')}
+function parseResponseJSON(j){
+  if(j&&j.status==='incomplete'){
+    let reason=(j.incomplete_details&&j.incomplete_details.reason)||'output_incomplete';
+    throw new Error('Risposta API incompleta: '+reason);
+  }
+  let t=outText(j);
+  if(!t.trim())throw new Error('Risposta strutturata vuota');
+  return parseJSON(t);
+}
+function parseJSON(t){
+  let s=String(t||'').trim().replace(/^```(?:json)?\s*/i,'').replace(/\s*```$/,'').trim();
+  try{return JSON.parse(s)}catch(first){
+    let a=s.indexOf('{'),b=s.lastIndexOf('}');if(a>=0&&b>a)s=s.slice(a,b+1);
+    // Conservative recovery only: BOM/control chars and trailing commas. Never invent missing values.
+    s=s.replace(/^\uFEFF/,'').replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,'').replace(/,\s*([}\]])/g,'$1');
+    try{return JSON.parse(s)}catch(second){throw new Error('Risposta strutturata non valida: '+second.message)}
+  }
+}
+const IDENT_SCHEMA={type:'object',additionalProperties:false,properties:{
+ status:{type:'string',enum:['identified','uncertain','failed']},kind:{type:'string',enum:['object','card']},title:{type:'string'},category:{type:'string'},brand:{type:'string'},family:{type:'string'},model:{type:'string'},variant:{type:'string'},condition:{type:'string'},
+ category_confidence:{type:'integer',minimum:0,maximum:100},brand_confidence:{type:'integer',minimum:0,maximum:100},family_confidence:{type:'integer',minimum:0,maximum:100},model_confidence:{type:'integer',minimum:0,maximum:100},model_verified:{type:'boolean'},market_ready:{type:'boolean'},
+ candidate_models:{type:'array',maxItems:2,items:{type:'object',additionalProperties:false,properties:{model:{type:'string'},confidence:{type:'integer',minimum:0,maximum:100},reason:{type:'string'}},required:['model','confidence','reason']}},
+ visual_fingerprint:{type:'string'},distinctive_terms:{type:'array',maxItems:12,items:{type:'string'}},search_terms:{type:'array',maxItems:6,items:{type:'string'}},identifier_hints:{type:'array',maxItems:3,items:{type:'string'}},layout_signature:{type:'array',maxItems:8,items:{type:'object',additionalProperties:false,properties:{term:{type:'string'},position:{type:'string'},relation:{type:'string'}},required:['term','position','relation']}},
+ evidence:{type:'array',maxItems:5,items:{type:'string'}},missing_information:{type:'array',maxItems:3,items:{type:'string'}},next_photo_request:{type:['string','null']},user_text_consistent:{type:'boolean'},normalized_query:{type:'string'},verification_summary:{type:'string'}
+},required:['status','kind','title','category','brand','family','model','variant','condition','category_confidence','brand_confidence','family_confidence','model_confidence','model_verified','market_ready','candidate_models','visual_fingerprint','distinctive_terms','search_terms','identifier_hints','layout_signature','evidence','missing_information','next_photo_request','user_text_consistent','normalized_query','verification_summary']};
+const RESOLVE_SCHEMA={type:'object',additionalProperties:false,properties:{
+ status:{type:'string',enum:['identified','uncertain','failed']},kind:{type:'string',enum:['object','card']},title:{type:'string'},category:{type:'string'},brand:{type:'string'},family:{type:'string'},variant:{type:'string'},condition:{type:'string'},category_confidence:{type:'integer',minimum:0,maximum:100},brand_confidence:{type:'integer',minimum:0,maximum:100},family_confidence:{type:'integer',minimum:0,maximum:100},model_confidence:{type:'integer',minimum:0,maximum:100},model_verified:{type:'boolean'},market_ready:{type:'boolean'},visual_fingerprint:{type:'string'},distinctive_terms:{type:'array',maxItems:10,items:{type:'string'}},layout_signature:{type:'array',maxItems:8,items:{type:'object',additionalProperties:false,properties:{term:{type:'string'},position:{type:'string'},relation:{type:'string'}},required:['term','position','relation']}},evidence:{type:'array',maxItems:5,items:{type:'string'}},missing_information:{type:'array',maxItems:3,items:{type:'string'}},next_photo_request:{type:['string','null']},user_text_consistent:{type:'boolean'},verification_summary:{type:'string'},
+ candidate_checks:{type:'array',maxItems:3,items:{type:'object',additionalProperties:false,properties:{model:{type:'string'},brand:{type:'string'},family:{type:'string'},variant:{type:'string'},part_number:{type:'string'},alias:{type:'string'},matched_terms:{type:'array',items:{type:'string'}},missing_terms:{type:'array',items:{type:'string'}},conflicting_terms:{type:'array',items:{type:'string'}},source_specificity:{type:'string',enum:['exact_model','family','generic']},source_count:{type:'integer',minimum:0},reason:{type:'string'}},required:['model','brand','family','variant','part_number','alias','matched_terms','missing_terms','conflicting_terms','source_specificity','source_count','reason']}}
+},required:['status','kind','title','category','brand','family','variant','condition','category_confidence','brand_confidence','family_confidence','model_confidence','model_verified','market_ready','visual_fingerprint','distinctive_terms','layout_signature','evidence','missing_information','next_photo_request','user_text_consistent','verification_summary','candidate_checks']};
+const MARKET_SCHEMA={type:'object',additionalProperties:false,properties:{market_status:{type:'string',enum:['strong','medium','weak','insufficient']},exact_completed_sales_count:{type:'integer',minimum:0},active_listings_count:{type:'integer',minimum:0},market_low:{type:['number','null']},market_high:{type:['number','null']},quick_sale_price:{type:['number','null']},historical_new_price:{type:['number','null']},currency:{type:'string'},market_notes:{type:'string'},source_summary:{type:'string'}},required:['market_status','exact_completed_sales_count','active_listings_count','market_low','market_high','quick_sale_price','historical_new_price','currency','market_notes','source_summary']};
+function schemaFormat(name,schema){return{text:{format:{type:'json_schema',name,strict:true,schema},verbosity:'low'}}}
+function countWeb(j){return (j.output||[]).filter(x=>x.type==='web_search_call').length}
+function modelPrice(model){if(model==='gpt-5.6-luna')return{input:.20,cached:.02,write:.25,output:1.20};if(model==='gpt-5.6-terra')return{input:2.00,cached:.20,write:2.50,output:12.00};if(model==='gpt-5.6-sol')return{input:5.00,cached:.50,write:6.25,output:30.00};return{input:0,cached:0,write:0,output:0}}
+function usageMetrics(j,model,web=0){let u=j.usage||{},d=u.input_tokens_details||{},it=Number(u.input_tokens||0),ot=Number(u.output_tokens||0),cached=Number(d.cached_tokens||0),write=Number(d.cache_write_tokens||0);let uncached=Math.max(0,it-cached-write),p=modelPrice(model);let tokenCost=(uncached*p.input+cached*p.cached+write*p.write+ot*p.output)/1e6;return{input:it,output:ot,cached,cacheWrite:write,uncached,tokens:it+ot,web:Number(web||0),tokenCost,webCost:Number(web||0)*.01,cost:tokenCost+Number(web||0)*.01}}
+function addUsage(j,model,web=0,phase='API',isVision=false,startedAt=0){let m=usageMetrics(j,model,web),ms=startedAt?Math.max(0,Date.now()-startedAt):0;session.requests++;session.tokens+=m.tokens;session.cached+=m.cached;session.cacheWrite+=m.cacheWrite;session.cost+=m.cost;session.web+=m.web;session.apiMs+=ms;if(isVision)session.vision++;let sc=ensureScan();let rec={phase,model,input:m.input,uncached:m.uncached,cached:m.cached,cacheWrite:m.cacheWrite,output:m.output,tokens:m.tokens,web:m.web,cost:m.cost,ms};sc.phases.push(rec);let t=sc.totals;t.requests++;t.vision+=isVision?1:0;t.web+=m.web;t.input+=m.input;t.uncached+=m.uncached;t.cached+=m.cached;t.cacheWrite+=m.cacheWrite;t.output+=m.output;t.tokens+=m.tokens;t.cost+=m.cost;t.apiMs+=ms;updateUsage();renderLiveCost();renderTelemetry();return rec}
+function updateUsage(){$('requests').textContent=session.requests;$('vCalls').textContent=session.vision;$('wCalls').textContent=session.web;$('tokens').textContent=session.tokens.toLocaleString('it-IT');$('cachedTokens').textContent=session.cached.toLocaleString('it-IT');$('cacheWriteTokens').textContent=session.cacheWrite.toLocaleString('it-IT');$('cost').textContent='$'+session.cost.toFixed(4);$('apiTime').textContent=session.apiMs.toLocaleString('it-IT')+' ms'}
+function renderLiveCost(){let el=$('liveCost');if(!el||!currentScan){if(el)el.classList.add('hide');return}let t=currentScan.totals;el.innerHTML=`<b>Costo di questa analisi finora: $${t.cost.toFixed(4)}</b><br><span class="note">${t.requests} richieste · ${t.web} Web Search · ${t.tokens.toLocaleString('it-IT')} token · ${t.cached.toLocaleString('it-IT')} cache read · ${t.cacheWrite.toLocaleString('it-IT')} cache write · ${t.apiMs.toLocaleString('it-IT')} ms API</span>`;el.classList.remove('hide')}
+function phaseHtml(p){return `<div class="candidate"><b>${esc(p.phase)}</b> · ${esc(p.model)}<br><span class="note">$${Number(p.cost||0).toFixed(4)} · ${Number(p.tokens||0).toLocaleString('it-IT')} token · input ${Number(p.input||0).toLocaleString('it-IT')} (cache ${Number(p.cached||0).toLocaleString('it-IT')} / write ${Number(p.cacheWrite||0).toLocaleString('it-IT')}) · output ${Number(p.output||0).toLocaleString('it-IT')} · web ${p.web||0} · ${Number(p.ms||0).toLocaleString('it-IT')} ms</span></div>`}
+function renderTelemetry(){let last=(currentScan&&currentScan.phases.length)?currentScan:scanHistory[0];if(last){let t=last.totals;$('lastScanSummary').innerHTML=`<b>${esc(last.label||'Analisi in corso')}</b><br>Stato: ${esc(last.status||'in corso')}<br><b>$${Number(t.cost||0).toFixed(4)}</b> · ${t.requests||0} richieste · ${t.web||0} web · ${Number(t.tokens||0).toLocaleString('it-IT')} token · ${Number(t.apiMs||0).toLocaleString('it-IT')} ms API`;$('lastScanPhases').innerHTML=(last.phases||[]).map(phaseHtml).join('')}else{$('lastScanSummary').textContent='Nessuna analisi registrata in questa build.';$('lastScanPhases').innerHTML=''}let hist=scanHistory.slice(0,10);$('scanHistory').innerHTML=hist.length?hist.map((x,i)=>{let t=x.totals||{};let when=x.finishedAt?new Date(x.finishedAt).toLocaleString('it-IT'):'';return `<div class="source"><b>${i+1}. ${esc(x.label||'Analisi')}</b><br>${esc(x.status||'')} · $${Number(t.cost||0).toFixed(4)} · ${t.web||0} web · ${Number(t.tokens||0).toLocaleString('it-IT')} token${when?' · '+esc(when):''}</div>`}).join(''):'Nessun dato.'}
+async function openai(body){let r=await fetch('https://api.openai.com/v1/responses',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+key()},body:JSON.stringify(body)});let j=await r.json();if(!r.ok)throw new Error(j?.error?.message||('HTTP '+r.status));return j}
+function canUse(){return trial.free || (trial.credits||0)>0}
+$('identifyBtn').onclick=async()=>{if(!needKey())return;if(!canUse()){showPaywall();return}if(!images.filter(Boolean).length&&!$('details').value.trim()){alert('Aggiungi almeno una foto oppure una descrizione/modello.');return}let sc=ensureScan();sc.status='identifying';sc.photos=validImageCount();renderTelemetry();status('<span class="loader"></span>Identificazione in corso…');$('identPanel').classList.add('hide');$('resultPanel').classList.add('hide');
+try{let userDetails=$('details').value.trim();$('identifyBtn').disabled=true;status('<span class="loader"></span>Avvio identificazione…');await new Promise(r=>setTimeout(r,30));status('<span class="loader"></span>Controllo barcode…');let ocr=await runLocalOcr();status('<span class="loader"></span>Identificazione AI in corso…');let localOcrContext=ocr.available?`\n\nBARCODE LOCALE: ${ocr.barcodes.join(' | ')}. Verifica visivamente che appartenga all'oggetto prima di usarlo come identificatore.`:'';let content=[{type:'input_text',text:`Sei il primo stadio del motore di identificazione visuale di FlipCheck. Devi osservare TUTTE le immagini insieme con estrema precisione e creare un fingerprint utile a trovare il modello esatto. Non inventare codici o modelli non visibili/non giustificati.
+
+OBIETTIVO: riconoscere marca, famiglia, modello e variante quando davvero deducibili. Se il modello non e' certo, NON fermarti a una descrizione generica: estrai un FINGERPRINT VISIVO estremamente specifico che un secondo stadio potra' cercare sul web.
+
+Per OGGETTI annota, quando presenti: testi ESATTI sui pulsanti, ordine e posizione dei comandi, colori, forme, numero di lenti/porte/manopole, loghi, codici, etichette, proporzioni e dettagli rari. LEGGI LETTERALMENTE le scritte visibili: non sostituire un'etichetta con una semanticamente simile (es. TOP PICKS non e' YouTube). Se un termine o simbolo e' caratteristico di un produttore (es. Ambilight), trattalo come indizio forte ma comunque verificabile. Per telecomandi l'insieme e l'ORDINE di scritte come PAIR, TOP PICKS, VOICE, NETFLIX, SETTINGS, OPTIONS, INFO, HOME, SUBTITLE, TEXT, TV GUIDE, LIST e la matrice dei tasti sono molto discriminanti. Se un tasto usa SOLO un'icona chiaramente riconoscibile (es. cartella/folder, menu, Ambilight), descrivi l'icona in layout_signature e, se la funzione standard e' inequivocabile, aggiungi anche il nome funzione in distinctive_terms marcandolo come termine funzionale. Devi cercare soprattutto le differenze tra modelli quasi uguali: ad esempio FOLDERS vs MENU nello stesso slot e stessa riga.
+Per CARTE: sport/TCG, giocatore/personaggio, anno, produttore, set, numero carta, parallel/variant, seriale, autograph/memorabilia, lingua, raw oppure grader+grade. Fronte e retro possono appartenere alla stessa carta.
+
+Restituisci SOLO JSON valido con:
+status: 'identified' | 'uncertain' | 'failed';
+kind: 'object' | 'card';
+title; category; brand; family; model; variant; condition;
+category_confidence: 0-100; brand_confidence: 0-100; family_confidence: 0-100; model_confidence: 0-100;
+model_verified: true/false; market_ready: true/false;
+candidate_models: array massimo 2;
+visual_fingerprint: stringa molto sintetica e specifica (max 450 caratteri);
+distinctive_terms: array max 12 contenente SOLO testi/codici/etichette LETTERALI realmente visibili (una voce per etichetta/codice; niente sinonimi o termini inferiti). Ordinali dal piu' discriminante/raro al piu' comune;
+search_terms: array max 6, sottoinsieme di distinctive_terms. OGNI elemento deve essere UNA singola etichetta/codice letterale visibile, per esempio TOP PICKS oppure TV GUIDE oppure PAIR. NON creare frasi sintetiche come 'Philips TOP PICKS VOICE remote'. Privilegia etichette rare e codici; evita SETTINGS, INFO, HOME se esistono termini piu' rari;
+identifier_hints: array max 3 contenente SOLO identificatori LETTERALMENTE VISIBILI nelle immagini oppure SCRITTI dall'utente. PRIORITA' MASSIMA a codici preceduti da PN, P/N, PART, MODEL, MOD, REF, TYPE, S/N, SKU o simili: trascrivi il codice COMPLETO carattere per carattere (es. PN 57254-33E -> 57254-33E). Non trasformare un codice in un modello commerciale e NON inventare prefissi/famiglie. Se nessun identificatore è davvero leggibile o fornito dall'utente, restituisci [];
+layout_signature: array max 8 di oggetti {term, position, relation} per descrivere posizione e vicinanza dei termini visibili;
+evidence: array max 5 di elementi osservati;
+missing_information: array;
+next_photo_request: breve istruzione concreta oppure null;
+user_text_consistent: true/false;
+normalized_query: query precisa SOLO se modello/identita' e variante sono abbastanza specifici per comparabili; altrimenti stringa vuota.
+
+Regole: se leggi un codice stampato/etichetta (PN, P/N, MODEL, REF, TYPE, SKU, S/N), copialo in identifier_hints e cita nell'evidence che è VISIBILE; non ometterlo anche se non sai cosa significhi. category_confidence riguarda solo il tipo di oggetto. family_confidence riguarda la famiglia/serie hardware quando piu' codici possono condividere lo stesso frontale. model_confidence riguarda il MODELLO ESATTO e deve restare bassa se modelli diversi condividono lo stesso aspetto. model_verified=true soltanto con prova oggettiva (codice/etichetta/testo utente univoco). market_ready=true solo se il prodotto e' sufficientemente specifico da evitare comparabili generici. Non assegnare model_confidence >79 solo per somiglianza visiva se esistono varianti quasi identiche. Se piu' modelli OEM condividono lo stesso layout, identifica la FAMIGLIA e mantieni model vuoto: non scegliere arbitrariamente un codice. Distingui modello originale, alias, ricambio compatibile e modello sostitutivo/superseded.
+
+Dettagli utente: ${userDetails||'(nessuno)'}${localOcrContext}` }];images.filter(Boolean).forEach(x=>content.push({type:'input_image',image_url:x,detail:'original'}));let visionStarted=Date.now();let j=await openai({model:'gpt-5.6-luna',input:[{role:'user',content}],...schemaFormat('flipcheck_identification',IDENT_SCHEMA),max_output_tokens:1800,store:false});addUsage(j,'gpt-5.6-luna',0,'Vision identificazione',true,visionStarted);ident=parseResponseJSON(j);if(ocr&&ocr.identifiers&&ocr.identifiers.length){ident.identifier_hints=[...ocr.identifiers.map(x=>x.value),...arr(ident.identifier_hints)].filter((v,i,a)=>a.findIndex(z=>canonTerm(z)===canonTerm(v))===i).slice(0,6);ident.local_ocr_identifiers=ocr.identifiers.map(x=>x.value);ident.local_ocr_text=ocr.text;ident.local_ocr_engine=ocr.engine;ident.local_ocr_ms=ocr.ms;ident.evidence=[`OCR locale: ${ocr.identifiers.map(x=>x.value).join(', ')}`,...arr(ident.evidence)].slice(0,6)}else if(ocr){ident.local_ocr_engine=ocr.engine;ident.local_ocr_ms=ocr.ms;ident.local_ocr_text=ocr.text;}
+if(shouldResolveOnline(ident)){status('<span class="loader"></span>Modello non certo: confronto mirato sul web…');try{ident=await resolveIdentificationCheap(ident,userDetails)}catch(refErr){console.log('Cheap web resolve failed',refErr)}}
+ident=enforceIdentificationPolicy(ident);currentScan.status=ident?.market_ready?'identified':'needs_confirmation';currentScan.label=(ident?.normalized_query||ident?.title||ident?.family||'Identificazione').slice(0,100);renderIdent(ident);renderTelemetry();$('identifyBtn').disabled=false;status(ident?.market_ready?'Modello trovato: verifica prima della ricerca mercato.':((Number(ident?.family_confidence||0)>=75)?'Famiglia identificata. Modello esatto non verificabile con il limite di 1 Web Search.':'Identificazione completata: il modello esatto non e’ ancora abbastanza sicuro.'),ident?.market_ready?'ok':'warn')}
+catch(e){$('identifyBtn').disabled=false;status('Errore tecnico: '+e.message+' · nessuna ricerca mercato avviata.','error')}};
+function arr(v){if(!v)return[];return Array.isArray(v)?v:[String(v)]}
+function shouldResolveOnline(x){if(!x||x.status==='failed')return false;let mc=Number(x.model_confidence||0),ready=!!x.market_ready&&!!x.normalized_query;let hasClues=!!(x.brand||x.family||x.visual_fingerprint||arr(x.distinctive_terms).length||arr(x.evidence).length);return hasClues&&(!ready||mc<88)}
+function canonTerm(v){let s=String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,' ').trim();s=s.replace(/\btop pics\b/g,'top picks').replace(/\btv exit\b/g,'exit tv').replace(/\bch \+\b/g,'p +').replace(/\bch -\b/g,'p -');return s}
+function extractStrongIdentifiers(base,userDetails){
+  // v0.20: exact visible identifiers outrank all visual clues. We intentionally
+  // accept only code-like strings, especially those presented with labels such as PN/MODEL/REF.
+  let out=[],seen=new Set();
+  function push(v,type='code',source='vision'){
+    v=String(v||'').trim().replace(/^["'`]+|["'`,.;:]+$/g,'').replace(/\s+/g,' ');
+    v=v.replace(/^(?:PN|P\/N|PART(?:\s+NUMBER)?|PART\s*NO|MODEL|MOD|REF|TYPE|SKU|S\/N|SERIAL)\s*[:#=-]?\s*/i,'').trim();
+    if(!v||v.length<4||v.length>40)return;
+    // Must look like an identifier: digit+letter mix, a hyphenated numeric code, or a long numeric part number.
+    let compact=v.replace(/\s/g,'');
+    let ok=(/[A-Za-z]/.test(compact)&&/\d/.test(compact)) || /^\d{4,9}[-\/]\w{2,12}(?:[-\/]\w{1,12})*$/.test(compact) || /^\d{8,14}$/.test(compact);
+    if(!ok)return;
+    let k=canonTerm(compact);if(!k||seen.has(k))return;seen.add(k);out.push({value:compact,type,source})
+  }
+  arr(base.identifier_hints).forEach(v=>push(v,'identifier_hint','vision'));
+  let blob=[base.visual_fingerprint,...arr(base.distinctive_terms),...arr(base.evidence)].join('\n');
+  let labeled=/(?:\bPN\b|P\/N|PART(?:\s+NUMBER)?|PART\s*NO|\bMODEL\b|\bMOD\b|\bREF\b|\bTYPE\b|\bSKU\b|S\/N|\bSERIAL\b)\s*[:#=-]?\s*([A-Z0-9][A-Z0-9._\-/]{3,39})/gi,m;
+  while((m=labeled.exec(blob)))push(m[1],'labeled_visible','vision');
+  // Safe code patterns from the visual transcript. Do not harvest ordinary words/numbers.
+  let pats=[/\b\d{4,9}-[A-Z0-9]{2,12}(?:-[A-Z0-9]{1,12})*\b/gi,/\b[A-Z]{1,8}\d{2,9}[A-Z0-9]*(?:[-\/_][A-Z0-9]{2,14})+\b/g,/\b[A-Z]{2,8}[-_]?[A-Z0-9]*\d[A-Z0-9-_/]{2,20}\b/g];
+  pats.forEach(rx=>(blob.match(rx)||[]).forEach(v=>push(v,'visible_code','vision')));
+  if(userDetails){
+    let ub=String(userDetails);let um;
+    labeled.lastIndex=0;while((um=labeled.exec(ub)))push(um[1],'user_labeled','user');
+    pats.forEach(rx=>(ub.match(rx)||[]).forEach(v=>push(v,'user_code','user')))
+  }
+  return out.slice(0,4)
+}
+function normalizedIdentifierVariants(identifier){
+  // v0.21: conservative normalization only. Variants help discovery in the SAME web search;
+  // they never become proof by themselves. Example: 57254-33E -> 57254.
+  let exact=String(identifier||'').trim().replace(/\s+/g,'');
+  let out=[],seen=new Set([canonTerm(exact)]);
+  function add(v,kind){v=String(v||'').trim();let c=canonTerm(v);if(!v||v.length<4||!c||seen.has(c))return;seen.add(c);out.push({value:v,kind,original:exact})}
+  let m=exact.match(/^(\d{4,9})[-\/_]([A-Z0-9]{2,12})(?:[-\/_][A-Z0-9]{1,12})*$/i);
+  if(m)add(m[1],'numeric_root');
+  let parts=exact.split(/[-\/_]/).filter(Boolean);
+  if(parts.length>=2){
+    let last=parts[parts.length-1];
+    // Strip only suffixes that look like revision/build tokens, not arbitrary product segments.
+    if(/^(?:R|REV|V|VER)?\d{1,4}[A-Z]?$/i.test(last)||/^\d{2,4}[A-Z]$/i.test(last))add(parts.slice(0,-1).join('-'),'revision_stripped')
+  }
+  return out.slice(0,2)
+}
+function buildFingerprintSignature(base,userDetails){
+  let generic=new Set(['smart tv','tv','object','oggetto','black','nero','button','buttons','tasto','tasti','originale','compatible','compatibile','home','back','ok','power','red','green','yellow','blue','volume','mute','settings','info','options','sources','source','menu','text']);
+  let commonUi=new Set(['settings','info','options','sources','source','home','back','ok','menu','netflix','subtitle','text','list']);
+  let scored=[];
+  function add(term,bonus=0,source='text'){
+    term=String(term||'').trim().replace(/\s+/g,' ');if(!term||term.length<2)return;
+    let c=canonTerm(term);if(!c||generic.has(c))return;if(scored.some(x=>canonTerm(x.term)===c))return;
+    let z=bonus;
+    if(/[0-9]/.test(term))z+=15;if(/[\-\/#]/.test(term))z+=6;if(term.includes(' '))z+=8;
+    if(term.length>=5)z+=3;if(/^[A-Z0-9][A-Z0-9 &+\-\/#.]{2,}$/.test(term))z+=7;
+    if(commonUi.has(c))z-=10;if(source==='search')z+=20;if(source==='layout')z+=4;
+    scored.push({term,score:z})
+  }
+  arr(base.search_terms).forEach((t,i)=>add(t,42-i*2,'search'));
+  arr(base.distinctive_terms).forEach((t,i)=>add(t,26-i,'text'));
+  arr(base.layout_signature).forEach((x,i)=>{if(x&&typeof x==='object')add(x.term,18-i,'layout');else add(x,12-i,'layout')});
+  let blob=[base.visual_fingerprint,...arr(base.evidence)].join(' ');
+  let caps=blob.match(/\b[A-Z0-9][A-Z0-9&+\-\/#.]*(?:\s+[A-Z0-9][A-Z0-9&+\-\/#.]*){0,2}\b/g)||[];caps.forEach(t=>add(t,5,'blob'));
+  if(userDetails){let codes=String(userDetails).match(/\b[A-Za-z0-9][A-Za-z0-9._\-\/#]{2,}\b/g)||[];codes.forEach(t=>add(t,22,'user'))}
+  scored.sort((a,b)=>b.score-a.score);
+  let identifiers=extractStrongIdentifiers(base,userDetails);
+  let identifierVariants=[];
+  identifiers.forEach(id=>normalizedIdentifierVariants(id.value).forEach(v=>{if(!identifierVariants.some(x=>canonTerm(x.value)===canonTerm(v.value)))identifierVariants.push(v)}));
+  // Ensure visible IDs are part of the full fingerprint even if Vision forgot to rank them.
+  identifiers.forEach((x,i)=>add(x.value,90-i*3,'identifier'));
+  scored.sort((a,b)=>b.score-a.score);
+  let terms=scored.slice(0,16).map(x=>x.term);
+  let discovery=scored.filter(x=>!identifiers.some(id=>canonTerm(id.value)===canonTerm(x.term))).slice(0,5).map(x=>x.term);
+  let brand=(Number(base.brand_confidence||0)>=70&&base.brand)?String(base.brand).trim():'';
+  let family=(Number(base.family_confidence||0)>=70&&base.family)?String(base.family).trim():'';
+  let noun=String(base.category||'').toLowerCase();
+  if(/telecom|remote/.test(noun))noun='remote';else if(/smartphone|phone|telefono/.test(noun))noun='';else if(/irrig|watering|sprinkler|controller|programmat/.test(noun))noun='irrigation controller';else noun=noun.split(/[\/,]/)[0].trim().split(/\s+/).slice(0,2).join(' ');
+  let mode='fingerprint',query='',primaryIdentifier='';
+  if(identifiers.length){
+    mode='identifier';primaryIdentifier=identifiers[0].value;
+    // One search only: exact identifier + conservative normalized variants in the SAME query.
+    // The exact code remains the strongest evidence; variants are discovery aliases only.
+    let ctx=[brand||family,noun].filter(Boolean).join(' ');
+    let aliases=identifierVariants.filter(v=>v.original===primaryIdentifier).map(v=>v.value).slice(0,2);
+    let idQuery=[primaryIdentifier,...aliases].map(v=>`"${String(v).replace(/"/g,'')}"`).join(' OR ');
+    query=[idQuery,ctx,(base.kind==='card'?'checklist card':'manual model')].filter(Boolean).join(' ').trim();
+  }else{
+    let quoted=discovery.slice(0,4).map(t=>'"'+t.replace(/"/g,'')+'"').join(' ');
+    query=[brand,noun,quoted].filter(Boolean).join(' ').replace(/\s+/g,' ').trim();
+    if(!query)query=String(base.visual_fingerprint||base.title||'').slice(0,500)
+  }
+  return {terms,discovery,hints:identifiers.map(x=>x.value).slice(0,3),identifiers,identifierVariants,primaryIdentifier,mode,query,layout:arr(base.layout_signature).slice(0,10),brand,family,category:String(base.category||''),kind:base.kind||'object',contextNoun:noun}
+}
+
+// v0.18: Ask Responses API to return the actual web-search result set, then score
+// model/part-number candidates against those result snippets in app code. This avoids
+// relying only on the model's summary of its own search.
+function flattenWebResultNodes(v,out,depth=0){
+  if(v==null||depth>4)return;
+  if(Array.isArray(v)){v.forEach(x=>flattenWebResultNodes(x,out,depth+1));return}
+  if(typeof v!=='object')return;
+  let hasPayload=!!(v.url||v.link||v.title||v.name||v.snippet||v.text||v.description||v.summary);
+  if(hasPayload)out.push(v);
+  ['results','items','data','search_results','documents'].forEach(k=>{if(v[k])flattenWebResultNodes(v[k],out,depth+1)})
+}
+function collectRawWebResults(j){
+  let nodes=[];
+  (j.output||[]).forEach(o=>{
+    if(o.type!=='web_search_call')return;
+    flattenWebResultNodes(o.results,nodes);
+    flattenWebResultNodes(o.action?.results,nodes);
+    flattenWebResultNodes(o.search_results,nodes);
+    flattenWebResultNodes(o.action?.search_results,nodes);
+  });
+  let seen=new Set(),out=[];
+  nodes.forEach(r=>{
+    let title=String(r.title||r.name||'').trim();
+    let url=String(r.url||r.link||'').trim();
+    let body=r.snippet??r.text??r.description??r.summary??r.content??'';
+    if(body&&typeof body==='object'){try{body=JSON.stringify(body)}catch(e){body=String(body)}}
+    body=String(body||'').replace(/\s+/g,' ').trim();
+    let key=(url||title+'|'+body.slice(0,160)).toLowerCase();
+    if(!key||seen.has(key))return;seen.add(key);
+    out.push({title,url,snippet:body,text:[title,body].filter(Boolean).join(' ').trim()})
+  });
+  return out.slice(0,20)
+}
+function termMatchesInText(text,terms){
+  let hay=canonTerm(text),hits=[];
+  arr(terms).forEach(t=>{let c=canonTerm(t);if(c&&hay.includes(c)&&!hits.some(x=>canonTerm(x)===c))hits.push(String(t))});
+  return hits
+}
+function rawModelCodes(text){
+  let s=String(text||''),out=[];
+  // Strong product/model patterns such as YKF423-003, RC-2422, SM-S928B, CFI-2016.
+  let pats=[
+    /\b[A-Z]{2,10}\d{2,7}[A-Z0-9]*(?:[-\/_][A-Z0-9]{2,14})+\b/g,
+    /\b[A-Z]{2,8}[-_][A-Z0-9]{2,14}(?:[-\/_][A-Z0-9]{2,14})*\b/g,
+    /\b[A-Z]{1,6}\d{3,8}[A-Z]{1,4}\b/g,
+    /\b\d{4,9}-[A-Z0-9]{2,12}(?:-[A-Z0-9]{1,12})*\b/g
+  ];
+  pats.forEach(rx=>(s.toUpperCase().match(rx)||[]).forEach(x=>{x=x.replace(/_+/g,'-');if(!out.includes(x))out.push(x)}));
+  return out.slice(0,12)
+}
+function rawPartNumbers(text){
+  let out=[];(String(text||'').match(/\b\d{8,14}\b/g)||[]).forEach(x=>{if(!out.includes(x))out.push(x)});return out.slice(0,8)
+}
+function rawNumericModels(text,identifierHit=false){
+  if(!identifierHit)return[];let s=String(text||''),out=[];
+  // Numeric-only commercial models are common in irrigation/electrical catalogs (e.g. 57346).
+  // Only harvest them from a result already grounded by the exact visible identifier.
+  (s.match(/\b\d{4,6}\b/g)||[]).forEach(x=>{if(!out.includes(x))out.push(x)});return out.slice(0,10)
+}
+
+// v0.26: a hit is evidence only when the surrounding source is product-relevant.
+// A random page containing the same number must not raise model confidence.
+function sourceEvidenceQuality(r,signature,candidate){
+  let text=canonTerm([r&&r.title,r&&r.snippet,r&&r.text].filter(Boolean).join(' '));
+  let domain=String(sourceDomain(r&&r.url)||'').toLowerCase();
+  let compactDomain=canonTerm(domain).replace(/\s+/g,'');
+  let ids=arr(signature.identifiers).map(x=>canonTerm(x&&x.value||x)).filter(Boolean);
+  let norms=arr(signature.identifierVariants).map(x=>canonTerm(x&&x.value||x)).filter(Boolean);
+  let needles=[candidate&&candidate.model,candidate&&candidate.name,candidate&&candidate.part_number,candidate&&candidate.alias].filter(Boolean).map(canonTerm).filter(Boolean);
+  let candidateHit=needles.some(n=>text.includes(n));
+  let exactIdHit=ids.some(id=>text.includes(id));
+  let normalizedIdHit=norms.some(id=>text.includes(id));
+  let brand=canonTerm(signature.brand||''),family=canonTerm(signature.family||''),noun=canonTerm(signature.contextNoun||signature.category||'');
+  let brandHit=!!brand&&(text.includes(brand)||compactDomain.includes(brand.replace(/\s+/g,'')));
+  let familyHit=!!family&&text.includes(family);
+  let nounWords=noun.split(/\s+/).filter(x=>x.length>=4);
+  let productHit=nounWords.length?nounWords.some(w=>text.includes(w)):false;
+  let fingerprintHits=termMatchesInText(text,arr(signature.discovery)).length;
+  let docHit=/(manual|user guide|owner.?s manual|installation|service manual|datasheet|catalog|catalogue|support|parts diagram|specification|specs|product page|instruction)/i.test(String([r&&r.title,r&&r.snippet].join(' ')));
+  let marketplaceHit=/(ebay\.|amazon\.|etsy\.|mercari\.|aliexpress\.|walmart\.|cardmarket\.|tcgplayer\.)/i.test(domain);
+  let communityOrDump=/(scribd\.|pinterest\.|facebook\.|instagram\.|tiktok\.|x\.com$|twitter\.|quora\.|reddit\.|archive\.org$)/i.test(domain);
+  let official=!!brand&&compactDomain.includes(brand.replace(/\s+/g,''))&&candidateHit;
+  let contextScore=(brandHit?2:0)+(familyHit?2:0)+(productHit?2:0)+(docHit?2:0)+Math.min(2,fingerprintHits);
+  let quality=0;
+  if(candidateHit&&(brandHit||familyHit)&&productHit)quality=2;
+  if(candidateHit&&docHit&&(brandHit||familyHit||productHit||fingerprintHits>=1))quality=Math.max(quality,2);
+  if(candidateHit&&(exactIdHit||normalizedIdHit)&&productHit&&docHit)quality=3;
+  if(candidateHit&&(exactIdHit||normalizedIdHit)&&(brandHit||familyHit)&&productHit)quality=3;
+  if(official&&(productHit||familyHit||docHit))quality=3;
+  if(candidateHit&&marketplaceHit&&productHit)quality=Math.max(quality,1);
+  if(candidateHit&&productHit&&fingerprintHits>=2)quality=Math.max(quality,1);
+  if(communityOrDump)quality=Math.min(quality,1);
+  if(!candidateHit||(!brandHit&&!familyHit&&!productHit&&!docHit&&fingerprintHits===0))quality=0;
+  return {quality,official,exactIdHit,normalizedIdHit,brandHit,familyHit,productHit,docHit,fingerprintHits,contextScore,domain};
+}
+function addCandidateEvidenceSource(c,r,ev){
+  if(!c||!r||!ev||ev.quality<1)return;
+  if(!Array.isArray(c.evidence_sources))c.evidence_sources=[];
+  let url=String(r.url||'').trim(),key=url||String(r.title||'').trim();if(!key)return;
+  let old=c.evidence_sources.find(x=>(x.url||x.title)===key);
+  let item={title:String(r.title||sourceDomain(url)||url||'Fonte pertinente'),url,quality:ev.quality,official:!!ev.official,domain:ev.domain||sourceDomain(url)};
+  if(old){if(item.quality>Number(old.quality||0))Object.assign(old,item)}else c.evidence_sources.push(item);
+  c.source_quality_max=Math.max(Number(c.source_quality_max||0),ev.quality);
+  c.strong_source_count=Number(c.evidence_sources.filter(x=>Number(x.quality||0)>=2).length);
+  c.official_source_count=Number(c.evidence_sources.filter(x=>x.official).length);
+  c.source_count=c.evidence_sources.length;
+}
+function augmentCandidatesFromRawResults(refined,rawResults,signature){
+  let checks=arr(refined.candidate_checks||refined.candidate_models).filter(Boolean).map(x=>Object.assign({},x));
+  let byKey=new Map();
+  function keyFor(c){return canonTerm(c.model||c.name||c.part_number||'')}
+  checks.forEach(c=>{let k=keyFor(c);if(k)byKey.set(k,c)});
+  // Ground resolver candidates only in relevant sources. Random numeric collisions are ignored.
+  checks.forEach(c=>{
+    let needles=[c.model,c.name,c.part_number,c.alias].filter(Boolean).map(canonTerm).filter(Boolean);
+    let m=new Set(arr(c.matched_terms).map(String));
+    rawResults.forEach(r=>{
+      let h=canonTerm(r.text);if(!needles.some(n=>h.includes(n)))return;
+      let ev=sourceEvidenceQuality(r,signature,c);if(ev.quality<1)return;
+      addCandidateEvidenceSource(c,r,ev);
+      termMatchesInText(r.text,signature.terms).forEach(t=>m.add(t));
+      if(ev.exactIdHit)c.source_exact_identifier_hits=Number(c.source_exact_identifier_hits||0)+1;
+      if(ev.normalizedIdHit)c.source_normalized_identifier_hits=Number(c.source_normalized_identifier_hits||0)+1;
+    });
+    c.matched_terms=[...m];
+  });
+  // Discover literal model codes only from a result that has product context.
+  rawResults.forEach(r=>{
+    let rareHits=termMatchesInText(r.text,signature.discovery),allHits=termMatchesInText(r.text,signature.terms);
+    let idHits=arr(signature.identifiers).filter(id=>canonTerm(r.text).includes(canonTerm(id&&id.value||id)));
+    let normalizedHits=arr(signature.identifierVariants).filter(v=>canonTerm(r.text).includes(canonTerm(v&&v.value||v)));
+    let codes=rawModelCodes(r.text),parts=rawPartNumbers(r.text);
+    if(idHits.length||normalizedHits.length)codes=[...new Set([...codes,...rawNumericModels(r.text,true)])];
+    codes.forEach(code=>{
+      let k=canonTerm(code);if(!k)return;
+      let probe={model:code,part_number:parts[0]||''};let ev=sourceEvidenceQuality(r,signature,probe);
+      if(ev.quality<1)return;
+      let c=byKey.get(k);
+      if(!c){
+        c={model:code,brand:'',family:'',variant:'',part_number:parts[0]||'',alias:'',matched_terms:[],missing_terms:[],conflicting_terms:[],source_specificity:idHits.length?'identifier_grounded':(normalizedHits.length?'identifier_normalized':'exact_model'),source_count:0,reason:idHits.length?'Codice/modello estratto da una fonte pertinente che contiene anche l’identificatore visibile.':(normalizedHits.length?'Codice/modello estratto da una fonte pertinente che contiene la variante normalizzata dell’identificatore.':'Codice modello estratto da una fonte prodotto pertinente.')};
+        checks.push(c);byKey.set(k,c)
+      }
+      addCandidateEvidenceSource(c,r,ev);
+      if(ev.exactIdHit)c.source_exact_identifier_hits=Number(c.source_exact_identifier_hits||0)+1;
+      if(ev.normalizedIdHit)c.source_normalized_identifier_hits=Number(c.source_normalized_identifier_hits||0)+1;
+      c.matched_terms=[...new Set([...arr(c.matched_terms),...allHits])];
+      if(!c.part_number&&parts.length)c.part_number=parts[0]
+    })
+  });
+  let dedup=[],seen=new Map();
+  checks.forEach(c=>{
+    let k=keyFor(c);if(!k)return;
+    if(!seen.has(k)){seen.set(k,c);dedup.push(c);return}
+    let a=seen.get(k);a.matched_terms=[...new Set([...arr(a.matched_terms),...arr(c.matched_terms)])];
+    a.conflicting_terms=[...new Set([...arr(a.conflicting_terms),...arr(c.conflicting_terms)])];
+    arr(c.evidence_sources).forEach(src=>addCandidateEvidenceSource(a,{title:src.title,url:src.url,snippet:''},{quality:Number(src.quality||0),official:!!src.official,domain:src.domain||sourceDomain(src.url)}));
+    a.source_exact_identifier_hits=Math.max(Number(a.source_exact_identifier_hits||0),Number(c.source_exact_identifier_hits||0));
+    a.source_normalized_identifier_hits=Math.max(Number(a.source_normalized_identifier_hits||0),Number(c.source_normalized_identifier_hits||0));
+    if(!a.part_number)a.part_number=c.part_number||''
+  });
+  refined.candidate_checks=dedup.slice(0,8);refined.raw_web_results_count=rawResults.length;return refined
+}
+
+function candidateFingerprintScore(c,signature,hasSources){
+  if(!c||!(c.model||c.name))return {score:0,matched:0,total:0,conflicts:99,sourceCount:0,strongSourceCount:0,officialSourceCount:0,sourceQuality:0,rareMatched:0,rareTotal:0,identifierMatched:0,normalizedIdentifierMatched:0};
+  let all=arr(signature.terms).map(canonTerm).filter(Boolean),rare=arr(signature.discovery).map(canonTerm).filter(Boolean);
+  let matchedRaw=arr(c.matched_terms).map(canonTerm).filter(Boolean),conflictRaw=arr(c.conflicting_terms||c.contradiction_terms).map(canonTerm).filter(Boolean);
+  function eqLoose(a,b){return a===b||a.includes(b)||b.includes(a)}
+  let matchedAll=all.filter(r=>matchedRaw.some(m=>eqLoose(r,m))),matchedRare=rare.filter(r=>matchedRaw.some(m=>eqLoose(r,m)));
+  let ids=arr(signature.identifiers).map(x=>canonTerm(x&&x.value||x)).filter(Boolean);
+  let identity=[c.part_number,c.alias,c.model,c.name].map(canonTerm).filter(Boolean);
+  // Exact means exact. A normalized root such as 57254 must never count as exact match for 57254-33E.
+  let identifierMatched=ids.filter(id=>identity.some(v=>id===v)).length;
+  let normVals=arr(signature.identifierVariants).map(v=>canonTerm(v&&v.value||v)).filter(Boolean);
+  let normalizedIdentifierMatched=normVals.filter(id=>identity.some(v=>id===v)).length;
+  let conflicts=conflictRaw.length,total=Math.max(1,all.length),rareTotal=Math.max(1,rare.length),ratioAll=matchedAll.length/total,ratioRare=matchedRare.length/rareTotal;
+  let sourceCount=Number(c.source_count||arr(c.evidence_sources).length||0),strongSourceCount=Number(c.strong_source_count||0),officialSourceCount=Number(c.official_source_count||0),sourceQuality=Number(c.source_quality_max||0);
+  let spec=String(c.source_specificity||'').toLowerCase(),exactModel=spec==='exact_model';
+  let exactSourceLink=Number(c.source_exact_identifier_hits||0)>0&&strongSourceCount>0;
+  let normalizedSourceLink=Number(c.source_normalized_identifier_hits||0)>0&&strongSourceCount>0;
+  let idGrounded=identifierMatched>0||exactSourceLink;
+  let normGrounded=normalizedIdentifierMatched>0||normalizedSourceLink;
+  let score=Math.round(ratioRare*32+ratioAll*13+Math.min(12,strongSourceCount*6)+sourceQuality*6+(officialSourceCount?8:0)+(exactModel?6:0)+(idGrounded?20:0)+(normGrounded?14:0)-conflicts*30);
+  // Evidence floors only when the source itself is relevant/technical.
+  if(idGrounded&&strongSourceCount>=1&&conflicts===0)score=Math.max(score,86);
+  if(normGrounded&&strongSourceCount>=1&&matchedAll.length>=1&&conflicts===0)score=Math.max(score,82);
+  if(exactModel&&strongSourceCount>=1&&matchedRare.length>=2&&conflicts===0)score=Math.max(score,84);
+  // Hard confidence ceilings: the source quality controls what the app is allowed to claim.
+  let cap=99;
+  if(sourceCount===0)cap=ids.length?55:35;                       // visible code, but no source linkage / visual only
+  else if(normGrounded&&strongSourceCount===0)cap=70;           // normalized code + weak source
+  else if(idGrounded&&strongSourceCount===0)cap=70;             // exact code on weak source is still not proof
+  else if((idGrounded||normGrounded||exactModel)&&strongSourceCount>=1)cap=officialSourceCount?99:94;
+  if(conflicts>0)cap=Math.min(cap,64);
+  score=Math.min(score,cap);
+  return {score:Math.max(0,Math.min(99,score)),matched:matchedAll.length,total,conflicts,sourceCount,strongSourceCount,officialSourceCount,sourceQuality,rareMatched:matchedRare.length,rareTotal,identifierMatched,normalizedIdentifierMatched,idGrounded,normGrounded,exactModel}
+}
+function mergeResolvedFingerprint(base,refined,sources,signature){
+  let checks=arr(refined.candidate_checks||refined.candidate_models).filter(Boolean),ranked=checks.map(c=>({c,meta:candidateFingerprintScore(c,signature,sources.length>0)})).sort((a,b)=>b.meta.score-a.meta.score),best=ranked[0];
+  let out=Object.assign({},base,refined);out.all_identification_sources=sources;out.search_signature_used=signature.query;out.auto_web_resolved=true;out.cheap_web_resolved=true;
+  out.identification_sources=best?arr(best.c.evidence_sources).sort((a,b)=>Number(b.quality||0)-Number(a.quality||0)).slice(0,5):[];
+  out.candidate_models=ranked.slice(0,3).map(x=>({model:x.c.model||x.c.name||'',part_number:x.c.part_number||'',confidence:x.meta.score,source_count:x.meta.sourceCount,strong_source_count:x.meta.strongSourceCount,verified:false,reason:`${x.meta.idGrounded?'codice esatto collegato · ':''}${x.meta.normGrounded?'radice/variante collegata · ':''}${x.meta.strongSourceCount} fonti pertinenti forti · ${x.meta.rareMatched}/${x.meta.rareTotal} indizi rari · ${x.meta.matched}/${x.meta.total} fingerprint${x.meta.conflicts?' · '+x.meta.conflicts+' conflitti':''}`}));
+  // Market-ready requires a strong, relevant source plus a code/model linkage; raw numeric collisions never qualify.
+  let canPromote=!!(best&&best.meta.conflicts===0&&best.meta.strongSourceCount>=1&&best.meta.score>=85&&(best.meta.idGrounded||best.meta.normGrounded||best.meta.exactModel));
+  if(canPromote){
+    let c=best.c;out.model=c.model||c.name||out.model;out.brand=c.brand||out.brand;out.family=c.family||out.family;out.variant=c.variant||out.variant;out.model_confidence=best.meta.score;out.status='identified';out.model_verified=false;out.market_ready=true;out.family_mode=false;out.normalized_query=[out.brand,out.model,out.variant].filter(Boolean).join(' ').trim();out.verification_summary=`Match forte e calibrato: ${best.meta.idGrounded?'identificatore esatto collegato; ':''}${best.meta.normGrounded?'variante normalizzata collegata; ':''}${best.meta.strongSourceCount} fonte/i pertinente/i forte/i, ${best.meta.rareMatched}/${best.meta.rareTotal} indizi rari e ${best.meta.matched}/${best.meta.total} elementi complessivi; nessun conflitto. Modello da confermare prima della ricerca mercato.`
+  }else{
+    out.market_ready=false;out.normalized_query='';out.model='';out.status='uncertain';out.family_mode=Number(out.family_confidence||0)>=75;
+    if(best){out.model_confidence=best.meta.score;out.verification_summary=`Candidato non ancora dimostrato: ${best.meta.sourceCount} fonte/i pertinente/i (${best.meta.strongSourceCount} forte/i), ${best.meta.rareMatched}/${best.meta.rareTotal} indizi rari e ${best.meta.matched}/${best.meta.total} elementi complessivi${best.meta.conflicts?', con '+best.meta.conflicts+' conflitti':''}. La confidenza è limitata automaticamente dalla qualità delle fonti.`}
+    else{out.model_confidence=Math.min(arr(signature.identifiers).length?55:35,Number(out.model_confidence||0));out.verification_summary=out.family_mode?'Famiglia identificata; la singola ricerca web non ha prodotto una fonte pertinente che dimostri il modello esatto. Nessuna ulteriore ricerca automatica viene eseguita.':'Identificazione incompleta; nessun candidato è supportato da una fonte web pertinente.'}
+  }
+  return out
+}
+
+async function resolveIdentificationCheap(base,userDetails){
+  let sig=buildFingerprintSignature(base,userDetails);
+  let compact={kind:base.kind,title:base.title,category:base.category,brand:base.brand,brand_confidence:base.brand_confidence,family:base.family,model:base.model,variant:base.variant,visual_fingerprint:base.visual_fingerprint,distinctive_terms:sig.terms,search_terms:arr(base.search_terms),identifier_hints:sig.hints,layout_signature:sig.layout,evidence:base.evidence};
+  let idMode=sig.mode==='identifier'&&sig.primaryIdentifier;
+  let method=idMode?`IDENTIFIER-FIRST (OBBLIGATORIO):\n1. Fai UNA SOLA Web Search usando la query gia' costruita dall'app: ${sig.query}. Essa contiene il codice ESATTO ${sig.primaryIdentifier} e, quando sicuro, una o due VARIANTI NORMALIZZATE conservative nella stessa ricerca.\n2. Il codice esatto resta la prova principale. Le varianti normalizzate servono SOLO per discovery: non dichiarare che sono equivalenti al modello senza una fonte contestuale.\n3. Prima stabilisci che cosa rappresenta il codice: modello commerciale, part number, codice scheda/pannello, ricambio, SKU, serial/family code. NON assumere che sia il modello commerciale.\n4. Se una fonte collega esplicitamente ${sig.primaryIdentifier} a un prodotto/modello commerciale, candidate_checks.model deve essere il MODELLO COMMERCIALE e candidate_checks.part_number deve conservare il codice ${sig.primaryIdentifier}.\n5. Se una fonte trova invece una variante normalizzata (es. radice numerica) associata a un prodotto che combacia anche per categoria/famiglia, restituisci quel prodotto come candidato e indica source_specificity='identifier_normalized'.\n6. Non eseguire una seconda Web Search.`:`FINGERPRINT-FIRST:\n1. Fai UNA SOLA Web Search usando la query ${sig.query}.\n2. Scopri fino a 3 modelli reali e confrontali con gli indizi rari e il layout. Non inventare codici o prefissi.`;
+  let prompt=`Sei il resolver di identificazione di FlipCheck. NON cercare prezzi. Hai diritto a UNA SOLA Web Search totale.\n\nMODALITA': ${idMode?'IDENTIFIER-FIRST':'FINGERPRINT-FIRST'}\nQUERY DI PARTENZA:\n${sig.query}\nIDENTIFICATORI VISIBILI/UTENTE:\n${JSON.stringify(sig.identifiers)}\nVARIANTI NORMALIZZATE CONSERVATIVE (discovery, non prova):\n${JSON.stringify(sig.identifierVariants)}\nTERMINI DISCOVERY SECONDARI:\n${JSON.stringify(sig.discovery)}\nFINGERPRINT COMPLETO:\n${JSON.stringify(sig.terms)}\nLAYOUT:\n${JSON.stringify(sig.layout)}\nDATI VISIVI:\n${JSON.stringify(compact)}\nDettagli utente: ${userDetails||'(nessuno)'}\n\n${method}\n\nREGOLE COMUNI:\n- Dai priorita' assoluta a produttore, manuali ufficiali/tecnici, supporto, cataloghi ricambi e database specialistici. Un risultato che contiene solo lo stesso numero ma non il prodotto/categoria NON e' una prova e va ignorato.\n- Distingui modello commerciale, part number, board/panel code, alias, ricambio compatibile e sostitutivo.\n- candidate_checks max 3. matched_terms contiene SOLO elementi del FINGERPRINT realmente dimostrati. conflicting_terms contiene contraddizioni reali.\n- source_specificity='exact_model' solo se la fonte nomina proprio il modello; 'identifier_grounded' se la fonte collega l'identificatore visibile al candidato; 'family' per pagina solo di famiglia.\n- Se il codice visibile e' interno a un componente ma la fonte lo collega a piu' modelli, restituisci quei modelli come candidati non verificati anziche' trasformare il codice nel nome prodotto.\n- NON calcolare la confidenza finale: la calcola l'app. Non restituire normalized_query pronto al mercato.\n- Per carte, un seriale/card number/grade leggibile e' equivalente a un identificatore forte, ma non confondere seriale copia con numero carta.\n\nRestituisci SOLO JSON strutturato secondo lo schema.`;
+  let body={model:'gpt-5.6-luna',reasoning:{effort:'low'},tools:[{type:'web_search',search_context_size:idMode?'medium':'low'}],max_tool_calls:1,include:['web_search_call.action.sources','web_search_call.results'],input:prompt,...schemaFormat('flipcheck_resolver',RESOLVE_SCHEMA),max_output_tokens:950,store:false};
+  let webStarted=Date.now();let j;try{j=await openai(body)}catch(e){if(String(e.message).toLowerCase().includes('web_search')){body.tools=[{type:'web_search_preview'}];delete body.include;webStarted=Date.now();j=await openai(body)}else throw e}
+  let wc=countWeb(j);addUsage(j,'gpt-5.6-luna',wc,idMode?'Web identificazione codice':'Web identificazione fingerprint',false,webStarted);let refined=parseResponseJSON(j);let rawResults=collectRawWebResults(j);refined=augmentCandidatesFromRawResults(refined,rawResults,sig);let sources=enrichSources(collectSources(j),rawResults);let merged=mergeResolvedFingerprint(base,refined,sources,sig);merged.raw_web_results_count=rawResults.length;merged.raw_web_results=rawResults.slice(0,6);merged.observed_identifiers=sig.identifiers;merged.identifier_variants=sig.identifierVariants;merged.search_mode=sig.mode;merged.primary_identifier=sig.primaryIdentifier;return merged
+}
+function enforceIdentificationPolicy(x){if(!x)return x;let mc=Number(x.model_confidence||0),fc=Number(x.family_confidence||0),threshold=x.kind==='card'?90:85;if(mc<threshold){x.market_ready=false;x.normalized_query=''}if(mc<80){x.model=''}if(!x.model&&fc>=75&&x.family){x.status='uncertain';x.family_mode=true}if(!Array.isArray(x.candidate_models))x.candidate_models=[];return x}
+function renderIdent(x){
+  $('identPanel').classList.remove('hide');let mc=Math.max(0,Math.min(100,+x.model_confidence||0)),cc=Math.max(0,Math.min(100,+x.category_confidence||0));let ready=!!x.market_ready&&!!x.normalized_query,fc=Math.max(0,Math.min(100,+x.family_confidence||0));let familyMode=!ready&&fc>=75&&!!x.family;let displayModel=mc>=80&&x.model?x.model:'';let title=displayModel?[x.brand,displayModel,x.variant].filter(Boolean).join(' '):(x.title||[x.brand,x.family].filter(Boolean).join(' ')||'Oggetto non confermato');$('identTitle').textContent=title;
+  let statusLabel=ready?'PRONTO DA CONFERMARE':(x.status==='failed'?'NON IDENTIFICATO':(familyMode?'FAMIGLIA CONFERMATA':'MODELLO NON CONFERMATO'));
+  $('tags').innerHTML=`<span class="tag">${x.kind==='card'?'CARTA':'OGGETTO'}</span><span class="tag">${statusLabel}</span>${x.cheap_web_resolved?'<span class="tag">1 WEB CHECK</span>':''}`;$('confBar').style.width=(ready?mc:familyMode?fc:mc)+'%';
+  let ev=arr(x.evidence),miss=arr(x.missing_information),cand=arr(x.candidate_models).filter(v=>{if(typeof v==='string')return !!v;return !!(v&&v.model)}),srcs=arr(x.identification_sources);
+  let html=`<div class="confrow"><span>Tipo/categoria</span><b>${cc}%</b></div>${x.family?`<div class="confrow"><span>Famiglia/serie</span><b>${fc}%</b></div>`:''}<div class="confrow"><span>Modello esatto</span><b>${mc}%</b></div>`;
+  if(ready){html+=`<div class="likely"><b>Modello da confermare</b><br>${esc([x.brand,x.model,x.variant].filter(Boolean).join(' '))}</div>`}
+  else if(familyMode){html+=`<div class="likely"><b>Famiglia confermata</b><br>${esc([x.brand,x.family].filter(Boolean).join(' '))}<br><span class="note">Il modello esatto non è verificabile con sufficiente affidabilità dalle informazioni disponibili.</span></div>`}
+  if(cand.length&&!ready){html+=`<div class="label" style="margin-top:12px">Candidati plausibili · non verificati</div>${cand.slice(0,3).map(v=>{if(typeof v==='string')return `<div class="candidate">${esc(v)}<br><span class="note">Plausibile, non verificato</span></div>`;let name=[v.model,v.part_number?`(${v.part_number})`:null].filter(Boolean).join(' '),extra=[v.confidence!=null?`${v.confidence}% match`:null,v.source_count?`${v.source_count} fonte/i`:null,v.reason].filter(Boolean).join(' · ');return `<div class="candidate"><b>${esc(name)}</b><br><span class="note">Plausibile, non verificato${extra?' · '+esc(extra):''}</span></div>`}).join('')}`}
+  if(!ready){let msg=familyMode?'Per arrivare al modello esatto serve un elemento discriminante, per esempio codice/etichetta, oppure una foto che distingua le varianti. FlipCheck non farà altre ricerche automatiche su questo tentativo.':(miss.length?miss.map(v=>'• '+esc(v)).join('<br>'):'Serve un dettaglio aggiuntivo per identificare il modello.');html+=`<div class="need"><b>Modello esatto non verificato</b><br>${msg}</div>`}
+  let detailBits=[];if(x.local_ocr_engine){let oids=arr(x.local_ocr_identifiers);detailBits.push(`<div class="label" style="margin-top:9px">Pre-analisi locale · zero costo API</div>${esc(x.local_ocr_engine)} · ${Number(x.local_ocr_ms||0).toLocaleString('it-IT')} ms${oids.length?`<br><b>Codici:</b> ${oids.map(esc).join(' · ')}`:''}`)}if(x.verification_summary)detailBits.push(`<div class="label" style="margin-top:9px">Verifica automatica</div>${esc(x.verification_summary)}`);if(x.primary_identifier)detailBits.push(`<div class="label" style="margin-top:9px">Identificatore prioritario</div>${esc(x.primary_identifier)} · ricerca identifier-first`);if(arr(x.identifier_variants).length)detailBits.push(`<div class="label" style="margin-top:9px">Varianti normalizzate usate nella stessa ricerca</div>${arr(x.identifier_variants).map(v=>esc((v&&v.value)||v)).join(' · ')}`);if(x.search_signature_used)detailBits.push(`<div class="label" style="margin-top:9px">Firma cercata</div>${esc(x.search_signature_used)}`);if(x.raw_web_results_count!=null)detailBits.push(`<div class="label" style="margin-top:9px">Risultati Web Search grezzi</div>${Number(x.raw_web_results_count)} risultati restituiti all'app.`);if(ev.length)detailBits.push(`<div class="label" style="margin-top:9px">Dettagli osservati</div>${ev.map(v=>'• '+esc(v)).join('<br>')}`);if(srcs.length)detailBits.push(`<div class="label" style="margin-top:9px">Fonti identificazione pertinenti</div>${srcs.slice(0,5).map(s=>`<div class="source">${s&&s.url?`<a href="${esc(s.url)}">${esc(s.title||s.url)}</a>`:esc(String(s))}</div>`).join('')}`);else if(x.cheap_web_resolved)detailBits.push(`<div class="label" style="margin-top:9px">Fonti identificazione pertinenti</div>Nessuna fonte restituita dalla singola ricerca soddisfa i criteri minimi di pertinenza/prova.`);if(detailBits.length)html+=`<details><summary>Perché?</summary><div class="note" style="margin-top:9px">${detailBits.join('')}</div></details>`;
+  $('identNote').innerHTML=html;$('confirmed').value=ready?(x.normalized_query||''):'';$('confirmed').placeholder=ready?'Conferma o correggi il modello':'Scrivi qui marca e modello se li conosci';$('marketBtn').disabled=!ready;$('marketBtn').textContent=ready?'CONFERMA E CERCA MERCATO':'INSERISCI MODELLO PER CERCARE';$('failBtn').textContent=x.status==='failed'?'Registra tentativo fallito':'Non riesco a confermarlo';let needPhoto=!ready&&validImageCount()<3;$('addConfirmPhoto').classList.toggle('hide',!needPhoto)
+}
+$('addConfirmPhoto').onclick=()=>{let i=files.findIndex(x=>!x);if(i<0){status('Hai già 3 foto. Rimuovine una e sostituiscila se serve.','warn');return}$('photo'+i).value='';$('photo'+i).click();window.scrollTo({top:0,behavior:'smooth'})};
+$('confirmed').oninput=()=>{let manual=$('confirmed').value.trim();$('marketBtn').disabled=manual.length<4;$('marketBtn').textContent=manual.length>=4?'USA QUESTO MODELLO E CERCA MERCATO':'INSERISCI MODELLO PER CERCARE'};
+$('failBtn').onclick=()=>{persistCompletedScan(ident?.title||ident?.family||'Identificazione fallita','failed_identification');if(trial.free){trial.attempts=Math.max(0,trial.attempts-1);if(trial.attempts===0)trial.free=false;saveTrial();$('identPanel').classList.add('hide');status(trial.free?`Tentativo fallito registrato. Ti resta ${trial.attempts} tentativo gratuito.`:'Prova gratuita terminata: i 2 tentativi non hanno prodotto un modello confermato.','warn')}else status('Identificazione non confermata. Nessun credito consumato nella Beta.','warn')};
+$('marketBtn').onclick=async()=>{if(!needKey())return;let q=$('confirmed').value.trim();if(!q){alert('Inserisci o conferma il modello/descrizione esatta.');return}if(!canUse()){showPaywall();return}let usedFree=trial.free;if(usedFree){trial.free=false;trial.attempts=0}else trial.credits=Math.max(0,(trial.credits||0)-1);saveTrial();status('<span class="loader"></span>Ricerca vendite e comparabili…');$('resultPanel').classList.add('hide');
+let p=$('price').value.trim().replace(',','.');let ask=p?Number(p):null;try{let prompt=`Sei il Market Engine di FlipCheck. Oggetto/carta CONFERMATO: ${q}. Tipo: ${ident?.kind||'unknown'}. Condizione/variante rilevata: ${ident?.condition||''} ${ident?.variant||''}. Prezzo richiesto: ${ask??'non indicato'} ${$('currency').value}. Usa web search con massimo due ricerche. Priorita': vendite concluse reali e recenti dell'esatto modello/variante/condizione. Se una pagina dice 'X sold' ma non mostra le singole transazioni, NON contarle come X vendite individuali. Se eBay sold/completed non e' accessibile, dichiaralo. Se e' una carta, NON mischiare raw con graded o parallel/grade diversi. Se non trovi abbastanza vendite concluse, usa con peso minore annunci attivi, retail nuovo e prezzo storico, senza inventare un valore. Restituisci SOLO JSON valido con: market_status ('strong','medium','weak','insufficient'), exact_completed_sales_count, active_listings_count, market_low, market_high, quick_sale_price, historical_new_price, currency, market_notes, source_summary. Non decidere BUY/PASS: lo calcola l'app.`;let body={model:'gpt-5.6-luna',reasoning:{effort:'low'},tools:[{type:'web_search'}],max_tool_calls:2,include:['web_search_call.action.sources','web_search_call.results'],input:prompt,...schemaFormat('flipcheck_market',MARKET_SCHEMA),max_output_tokens:1200,store:false};let marketStarted=Date.now();let j;try{j=await openai(body)}catch(e){if(String(e.message).toLowerCase().includes('web_search')){body.tools=[{type:'web_search_preview'}];delete body.include;marketStarted=Date.now();j=await openai(body)}else throw e}let wc=countWeb(j);addUsage(j,'gpt-5.6-luna',wc,'Ricerca mercato',false,marketStarted);let m=parseResponseJSON(j);let src=collectSources(j);renderResult(m,src,ask,q);persistCompletedScan(q,'completed')}catch(e){if(usedFree)trial.free=true;else trial.credits=(trial.credits||0)+1;saveTrial();persistCompletedScan(q,'technical_error');status('Errore tecnico: '+e.message+' · credito/prova ripristinato.','error')}};
+function sourceDomain(url){try{return new URL(String(url||'')).hostname.replace(/^www\./,'')}catch(e){return ''}}
+function enrichSources(sources,rawResults){
+  let raw=arr(rawResults),out=[],seen=new Set();
+  function add(title,url){url=String(url||'').trim();if(!url||seen.has(url))return;seen.add(url);let match=raw.find(r=>r&&r.url&&(r.url===url||r.url.startsWith(url)||url.startsWith(r.url)));let t=String(title||'').trim();if(!t||/^fonte$/i.test(t))t=String(match&&match.title||'').trim();if(!t)t=sourceDomain(url)||url;out.push({title:t,url})}
+  arr(sources).forEach(s=>{if(s&&typeof s==='object')add(s.title,s.url);});
+  raw.forEach(r=>add(r&&r.title,r&&r.url));
+  return out.slice(0,12)
+}
+function collectSources(j){let a=[];(j.output||[]).forEach(o=>{if(o.type==='web_search_call'){let ss=o.action?.sources||o.sources||[];ss.forEach(x=>{let u=x.url||'';a.push({title:x.title||x.name||sourceDomain(u)||u,url:u})})}if(o.type==='message')(o.content||[]).forEach(c=>(c.annotations||[]).forEach(n=>{let x=n.url_citation||n;if(x.url)a.push({title:x.title||sourceDomain(x.url)||x.url,url:x.url})}))});let seen=new Set;return a.filter(x=>x.url&&!seen.has(x.url)&&seen.add(x.url)).slice(0,12)}
+function money(v,c){if(v===null||v===undefined||isNaN(Number(v)))return '—';try{return new Intl.NumberFormat('it-IT',{style:'currency',currency:c||$('currency').value,maximumFractionDigits:0}).format(Number(v))}catch(e){return v+' '+(c||'')}}
+function renderResult(m,sources,ask,q){let c=m.currency||$('currency').value,exit=Number(m.quick_sale_price||m.market_low||0),fee=(Number($('feeRate').value)||0)/100,margin=(Number($('marginRate').value)||0)/100;let maxBuy=exit>0?exit*(1-fee)*(1-margin):null;let verdict='DATA',label='DATI DI MERCATO',klass='data';if(m.market_status==='insufficient'||!exit){label='DATI INSUFFICIENTI'}else if(ask!==null&&maxBuy){if(ask<=maxBuy*.95){verdict='BUY';label='COMPRA';klass='buy'}else if(ask<=maxBuy*1.08){verdict='NEGOTIATE';label='TRATTA';klass='neg'}else{verdict='PASS';label='PASSA';klass='pass'}}
+let sourceHtml=sources.length?sources.map(x=>`<div class="source"><a href="${esc(x.url)}">${esc(x.title)}</a></div>`).join(''):'<div class="note">Nessuna URL strutturata restituita dalla ricerca.</div>';
+$('resultPanel').innerHTML=`<div class="resultHead"><div class="verdict ${klass}">${label}</div><div class="note">${esc(q)}</div>${maxBuy?`<div style="margin-top:12px" class="label">Non pagherei oltre</div><div class="big">${money(maxBuy,c)}</div>`:''}</div><div class="grid"><div class="metric"><small>Prezzo richiesto</small><b>${ask===null?'—':money(ask,c)}</b></div><div class="metric"><small>Vendita rapida</small><b>${money(exit,c)}</b></div><div class="metric"><small>Range mercato</small><b>${money(m.market_low,c)}–${money(m.market_high,c)}</b></div><div class="metric"><small>Vendite esatte trovate</small><b>${m.exact_completed_sales_count??'—'}</b></div></div><div class="status">Affidabilità mercato: <b>${esc(m.market_status||'—')}</b><br>${esc(m.market_notes||m.source_summary||'')}</div>${m.historical_new_price?`<div class="status">Prezzo storico/nuovo rilevato: <b>${money(m.historical_new_price,c)}</b></div>`:''}${currentScan?`<div class="status"><b>Costo API di questo FlipCheck: $${Number(currentScan.totals.cost||0).toFixed(4)}</b><br>${currentScan.totals.requests||0} richieste · ${currentScan.totals.web||0} Web Search · ${Number(currentScan.totals.tokens||0).toLocaleString('it-IT')} token</div>`:''}<details><summary>Fonti e comparabili</summary>${sourceHtml}</details><p class="note">Beta: il prezzo massimo usa costi vendita ${$('feeRate').value}% e margine target ${$('marginRate').value}%. Non e' una perizia o garanzia di rivendita.</p>`;$('resultPanel').classList.remove('hide');status('FlipCheck completato.','ok')}
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function showPaywall(){$('resultPanel').classList.remove('hide');$('resultPanel').innerHTML=`<div class="resultHead"><div class="verdict data">PROVA TERMINATA</div><p class="sub">Starter Pack previsto: <b>3 FlipCheck a €0,99</b>.</p></div><div class="status">Google Play Billing non e' attivo nella Beta tecnica. Usa “Reset prova Beta” nelle impostazioni per continuare i test interni.</div><button class="btn secondary" onclick="switchTab('settings')">IMPOSTAZIONI BETA</button>`}
+updateTrial();updateUsage();renderTelemetry();
+</script><script src="editions.js"></script><script src="targeted-fixes.js"></script></body></html>

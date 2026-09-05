@@ -17,3 +17,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = 'FlipCheckNative'
 include ':app'
+
+include ':legacy26'

@@ -1,0 +1,61 @@
+name: FlipCheck 26 targeted fixes
+on:
+  push:
+    branches: [codex/v026-targeted-edition-photos]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build-apk:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      FLIPCHECK_KEYSTORE_PATH: ${{ github.workspace }}/flipcheck-compatible.jks
+      FLIPCHECK_KEYSTORE_PASSWORD: ${{ secrets.FLIPCHECK_KEYSTORE_PASSWORD }}
+      FLIPCHECK_KEY_ALIAS: ${{ secrets.FLIPCHECK_KEY_ALIAS }}
+      FLIPCHECK_KEY_PASSWORD: ${{ secrets.FLIPCHECK_KEY_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Targeted policy checks without live API
+        run: node --test legacy26/tests/editions.test.cjs
+      - name: Browser integration without live API
+        run: |
+          npm install --prefix /tmp/flipcheck26-tests playwright@1.62.1 --no-audit --no-fund
+          /tmp/flipcheck26-tests/node_modules/.bin/playwright install --with-deps chromium
+          NODE_PATH=/tmp/flipcheck26-tests/node_modules node --test legacy26/tests/browser.test.cjs
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/wrapper-validation@v4
+      - uses: android-actions/setup-android@v3
+      - name: Install declared Android SDK
+        run: sdkmanager 'platforms;android-36' 'build-tools;36.0.0'
+      - name: Restore signing key
+        env:
+          FLIPCHECK_KEYSTORE_BASE64: ${{ secrets.FLIPCHECK_KEYSTORE_BASE64 }}
+        run: |
+          test -n "$FLIPCHECK_KEYSTORE_BASE64"
+          printf '%s' "$FLIPCHECK_KEYSTORE_BASE64" | tr -d '\n' | base64 -d > "$FLIPCHECK_KEYSTORE_PATH"
+      - name: Build lightweight v26 APK
+        env:
+          GIT_COMMIT: ${{ github.sha }}
+        run: |
+          ./gradlew :legacy26:assembleDebug --no-daemon --console=plain
+          mkdir -p artifact
+          cp legacy26/build/outputs/apk/debug/legacy26-debug.apk artifact/FlipCheck-v0.26.1-fix.apk
+          sha256sum artifact/FlipCheck-v0.26.1-fix.apk > artifact/FlipCheck-v0.26.1-fix.sha256
+          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose --print-certs artifact/FlipCheck-v0.26.1-fix.apk > artifact/apksigner-report.txt
+          grep -q 'Signer #1 certificate SHA-256 digest: d4d02478ea31cb6bd83228047e9accd7dfb191ed991a4c8e8c06a228e54614c7' artifact/apksigner-report.txt
+          "$ANDROID_HOME/build-tools/36.0.0/aapt" dump badging artifact/FlipCheck-v0.26.1-fix.apk > artifact/apk-analyzer-report.txt
+          grep -q "package: name='com.flipcheck.beta.legacy26fix' versionCode='158' versionName='0.26.1-targeted'" artifact/apk-analyzer-report.txt
+          cp /tmp/flipcheck26-printing.png artifact/browser-printing.png
+      - uses: actions/upload-artifact@v4
+        with:
+          name: FlipCheck-v026-targeted-apk
+          path: artifact/
+          if-no-files-found: error
+          retention-days: 14
