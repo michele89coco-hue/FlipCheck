@@ -59,6 +59,7 @@ public class MainActivity extends Activity {
     private static final int MAX_IMAGES = 3;
     private static final int PICK_IMAGE = 2301;
     private static final int CAPTURE_IMAGE = 2302;
+    private static final int EXPORT_DIAGNOSTIC = 2303;
     private static final String PREF_PENDING_CAMERA_URI = "pending_camera_uri_v095";
     private static final String PREF_PENDING_CAMERA_STARTED = "pending_camera_started_v095";
     private static final long CAMERA_TRANSACTION_TIMEOUT_MS = 15L * 60L * 1000L;
@@ -346,6 +347,11 @@ public class MainActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == EXPORT_DIAGNOSTIC) {
+            if (resultCode == RESULT_OK && data != null && data.getData() != null)
+                saveDiagnosticDocument(data.getData());
+            return;
+        }
         if (requestCode == CAPTURE_IMAGE) {
             handleCameraResult(resultCode, data);
             return;
@@ -866,12 +872,12 @@ public class MainActivity extends Activity {
         chip.setPadding(0, dp(6), 0, dp(8));
         p.addView(chip);
         int confidence = EvidencePolicy.publicConfidence(id);
-        if (id.categoryConfidence > 0) {
+        if (!IdentityPresentationV2.owns(id) && id.categoryConfidence > 0) {
             p.addView(line("Confidenza tipo", id.categoryConfidence + "%"));
         }
-        if (confidence > 0) {
+        if (!IdentityPresentationV2.owns(id) && confidence > 0) {
             p.addView(line("Confidenza identità principale", confidence + "%"));
-        } else if (!id.marketReady) {
+        } else if (!IdentityPresentationV2.owns(id) && !id.marketReady) {
             p.addView(line("Identità esatta", "da determinare"));
         }
         if(!valueOrEmpty(id.coreIdentityStatus).isEmpty())p.addView(line("Identità principale",humanState(id.coreIdentityStatus)));
@@ -1079,8 +1085,54 @@ public class MainActivity extends Activity {
             }
         });
         p.addView(toggle, match());
+        Button export = secondary("ESPORTA DIAGNOSTICA");
+        export.setOnClickListener(v -> prepareDiagnosticDocument(id, usage));
+        p.addView(export, match());
         p.addView(technical, match());
         this.resultPanel.addView(p, match());
+    }
+
+    private void prepareDiagnosticDocument(Models.Identification id, Models.Usage usage) {
+        executor.execute(() -> {
+            try {
+                org.json.JSONObject report = new org.json.JSONObject(DiagnosticExportV2.create(id, usage, prefs.getString("api_key", "")));
+                report.put("versionCode", BuildConfig.VERSION_CODE).put("versionName", BuildConfig.VERSION_NAME)
+                        .put("sourceCommit", BuildConfig.SOURCE_COMMIT).put("packageName", getPackageName())
+                        .put("device", Build.MANUFACTURER + " " + Build.MODEL).put("androidVersion", Build.VERSION.RELEASE)
+                        .put("exportedAtEpochMs", System.currentTimeMillis());
+                java.security.MessageDigest digest = java.security.MessageDigest.getInstance("SHA-256");
+                try (InputStream input = new java.io.FileInputStream(getApplicationInfo().sourceDir)) {
+                    byte[] buffer = new byte[32768]; int count;
+                    while ((count = input.read(buffer)) != -1) digest.update(buffer, 0, count);
+                }
+                StringBuilder hash = new StringBuilder();
+                for (byte b : digest.digest()) hash.append(String.format(Locale.ROOT, "%02x", b & 255));
+                report.put("apkSha256", hash.toString());
+                File pending = new File(getCacheDir(), "pending-diagnostic.json");
+                try (FileOutputStream output = new FileOutputStream(pending)) {
+                    output.write(report.toString(2).getBytes(java.nio.charset.StandardCharsets.UTF_8));
+                }
+                runOnUiThread(() -> {
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
+                                .setType("application/json").putExtra(Intent.EXTRA_TITLE, "FlipCheck-diagnostica.json");
+                        startActivityForResult(intent, EXPORT_DIAGNOSTIC);
+                    } catch (Exception error) { toast("Selezione del file di esportazione non disponibile."); }
+                });
+            } catch (Exception error) { runOnUiThread(() -> toast("Impossibile preparare la diagnostica.")); }
+        });
+    }
+
+    private void saveDiagnosticDocument(Uri destination) {
+        executor.execute(() -> {
+            try (InputStream input = new java.io.FileInputStream(new File(getCacheDir(), "pending-diagnostic.json"));
+                    java.io.OutputStream output = getContentResolver().openOutputStream(destination, "wt")) {
+                if (output == null) throw new java.io.IOException("No output stream");
+                byte[] buffer = new byte[32768]; int count;
+                while ((count = input.read(buffer)) != -1) output.write(buffer, 0, count);
+                runOnUiThread(() -> toast("Diagnostica esportata senza la chiave API."));
+            } catch (Exception error) { runOnUiThread(() -> toast("Esportazione non riuscita.")); }
+        });
     }
 
     public void lambda$renderResult$12(Models.Identification id, Models.Usage usage, ImageMatchPolicy.Decision imageDecision, View v) {
@@ -1304,6 +1356,12 @@ public class MainActivity extends Activity {
             panel.addView(text("Conferme utente: " + id.userConfirmedFacts, 12, MINT, false));
         }
 
+        if (IdentityPresentationV2.owns(id)) {
+            panel.addView(section("Stato delle prove"));
+            panel.addView(text("Identità principale: " + humanState(id.coreIdentityStatus), 12, MUTED, false));
+            panel.addView(text("Identità esatta: " + humanState(id.exactIdentityStatus), 12, MUTED, false));
+            panel.addView(text("I punteggi dei candidati misurano i riscontri del confronto; non sono probabilità calibrate.", 11, MUTED, false));
+        } else {
         panel.addView(section("Confidenze separate"));
         panel.addView(text("Tipo/categoria: " + id.categoryConfidence + "%", 12, MUTED, false));
         panel.addView(text("Famiglia/serie: " + id.familyConfidence + "%", 12, MUTED, false));
@@ -1314,6 +1372,8 @@ public class MainActivity extends Activity {
         panel.addView(text(id.priceConfidence > 0
                 ? "Prezzo: " + id.priceConfidence + "%"
                 : "Prezzo: non ancora calcolato", 12, MUTED, false));
+
+        }
 
         panel.addView(section("Candidate Tournament"));
         panel.addView(text("Margine leader: " + id.tournamentMargin + " punti", 12, MUTED, false));

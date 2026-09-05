@@ -202,4 +202,109 @@ public class V134EvidenceIntegrityTest {
         CandidateVerifierV2.verify(java.util.Collections.singletonList(c),l,c.domain);
         assertTrue(c.rejected);assertFalse(c.trueConflicts.isEmpty());
     }
+    @Test public void reliableSubseriesConflictCannotWinSealedTournament() {
+        ImmutableEvidenceLedgerV2 l = new ImmutableEvidenceLedgerV2();
+        for (String[] pair : new String[][]{{"manufacturer","Example"},{"productLine","Prism"},
+                {"subSeries","Update Series"},{"configuration","1 autograph per box"}})
+            l.append(pair[0],pair[1],EvidenceAtom.EpistemicLevel.OBSERVED,
+                EvidenceAtom.Modality.LOCAL_OCR,"test",0,"front","printed identity panel","","printed_text",95,90,"test","");
+        IdentityCandidateV2 c = new IdentityCandidateV2("different-subseries",DomainProfileRouterV2.Profile.SEALED_TRADING_CARD_PRODUCT,"test");
+        c.retrieved=true;c.sourceUrl="https://catalog.example/row";c.sourceRecordId="row";
+        c.sourcePageScope="PRODUCT_PAGE";c.webSourceQuality=95;
+        c.fields.put("manufacturer","Example");c.fields.put("productLine","Prism");
+        c.fields.put("subSeries","Sapphire");c.fields.put("configuration","1 autograph per box");
+        CandidateVerifierV2.verify(java.util.Collections.singletonList(c),l,c.domain);
+        assertEquals(SemanticRelationV3.Relation.INCOMPATIBLE,c.fieldRelations.get("subSeries"));
+        assertTrue("reliable identifying contradiction must reject candidate",c.rejected);
+        assertFalse(c.trueConflicts.isEmpty());assertFalse(c.disproofPassed);
+    }
+
+    @Test public void presentationStatusUsesReducerWithoutInventedClosureOrPhoto() {
+        Models.Identification id = new Models.Identification();
+        id.identityStatus="UNRESOLVED";id.coreIdentityStatus="UNRESOLVED";
+        assertEquals("IDENTIFICAZIONE INCOMPLETA",IdentityPresentationV2.status(id));
+        id.coreIdentityStatus="PROBABLE";
+        assertEquals("IDENTITÀ DA VERIFICARE",IdentityPresentationV2.status(id));
+        id.coreIdentityStatus="CONFIRMED";id.identityStatus="CONFIRMED_WITH_ATTRIBUTE_PENDING";
+        assertTrue(IdentityPresentationV2.status(id).contains("ATTRIBUTI DA VERIFICARE"));
+        id.identityStatus="CONFLICTED";
+        assertEquals("PROVE IDENTIFICATIVE IN CONFLITTO",IdentityPresentationV2.status(id));
+    }
+
+    @Test public void catalogSeasonExtendsPrintedReleaseYearWithoutReplacingEvidence() {
+        ImmutableEvidenceLedgerV2 l = new ImmutableEvidenceLedgerV2();
+        for(String[] pair:new String[][]{{"athlete","Example Athlete"},{"physicalCardNumber","12"},{"productReleaseYear","2009"}})
+            l.append(pair[0],pair[1],EvidenceAtom.EpistemicLevel.OBSERVED,EvidenceAtom.Modality.LOCAL_OCR,
+                "test",0,"front","printed label","","identity",95,90,"test","");
+        IdentityCandidateV2 c = new IdentityCandidateV2("season-record",DomainProfileRouterV2.Profile.SPORTS_CARD,"test");
+        c.retrieved=true;c.disproofPassed=true;c.totalScore=90;c.webSourceQuality=95;
+        c.sourceUrl="https://catalog.example/season-record";c.sourceRecordId="season-record";
+        c.fields.put("productReleaseYear","2009-10");c.fields.put("manufacturer","Example");
+        c.fields.put("productLine","Prism");c.fields.put("athlete","Example Athlete");c.fields.put("catalogCardNumber","12");
+        Models.Identification id=new Models.Identification();id.uploadedImageCount=1;
+        FinalStateReducerV2.reduce(id,l,c.domain,java.util.Collections.singletonList(c),new java.util.ArrayList<>(),"");
+        assertTrue(id.title,id.title.startsWith("2009-10 "));
+        assertEquals("2009",id.physicalReleaseYear);
+        assertEquals("2009-10",id.sourceConfirmedReleaseYear);
+    }
+
+    @Test public void configurationComparesQuantitiesWithTheirUnits() {
+        assertTrue(SemanticRelationV3.compatible(SemanticRelationV3.relate("configuration",
+                "1 autograph in every box", "4 cards per pack, 20 packs per box, 1 autograph per box")));
+        assertEquals(SemanticRelationV3.Relation.INCOMPATIBLE,SemanticRelationV3.relate("configuration",
+                "4 cards per pack, 20 packs per box", "20 cards per pack, 4 packs per box"));
+        assertEquals(SemanticRelationV3.Relation.AMBIGUOUS,SemanticRelationV3.relate("configuration",
+                "4 cards per pack", "20 packs per box"));
+        assertEquals(SemanticRelationV3.Relation.INCOMPATIBLE,SemanticRelationV3.relate("configuration",
+                "1 autograph per box and 3 bonus items", "1 autograph per box and 5 bonus items"));
+    }
+
+    @Test public void diagnosticExportRedactsCredentialAndKeepsStructuredEvidence() throws Exception {
+        Models.Identification id=new Models.Identification();
+        String secret="secret-with-quote-\"-and-backslash-\\";
+        id.title="Example";id.webQueries.add("query "+secret);id.v2StagePayloads.add("payload "+secret);
+        ImmutableEvidenceLedgerV2 ledger=new ImmutableEvidenceLedgerV2();
+        ledger.append("printedLabel","visible "+secret,EvidenceAtom.EpistemicLevel.OBSERVED,
+                EvidenceAtom.Modality.LOCAL_OCR,"test",0,"front","center panel","","printed_text",95,90,"test","");
+        id.evidenceAtomsV2.addAll(ledger.all());
+        JSONObject report=new JSONObject(DiagnosticExportV2.create(id,new Models.Usage(),secret));
+        assertEquals("Example",report.getString("title"));
+        assertEquals("query [REDACTED]",report.getJSONArray("queries").getString(0));
+        assertEquals("payload [REDACTED]",report.getJSONArray("stagePayloads").getString(0));
+        JSONObject atom=report.getJSONArray("evidence").getJSONObject(0);
+        assertEquals("visible [REDACTED]",atom.getString("rawValue"));
+        assertEquals("center panel",atom.getString("region"));
+        assertEquals(0,atom.getInt("imageIndex"));
+        assertFalse(report.has("api_key"));
+    }
+
+    @Test public void sportsPlayerNameAliasMustReachAthleteField() throws Exception {
+        ImmutableEvidenceLedgerV2 l=new ImmutableEvidenceLedgerV2();
+        JSONObject fact=new JSONObject().put("key","player_name").put("value","Example Athlete")
+                .put("image",0).put("side","front").put("location","nameplate").put("role","subject").put("confidence",99);
+        ObservationExtractorV2.ingestPrimary(new JSONObject().put("category","sports_card").put("facts",new JSONArray().put(fact)),l);
+        assertTrue(l.hasObserved("athlete"));
+    }
+    @Test public void collectorRarityGlyphIsSeparateFromNumber() {
+        ImmutableEvidenceLedgerV2 l=new ImmutableEvidenceLedgerV2();
+        l.append("collectorNumber","12/80 ★",EvidenceAtom.EpistemicLevel.OBSERVED,EvidenceAtom.Modality.PRIMARY_VISION,
+                "test",0,"front","number and rarity area","","collector number and rarity",99,90,"test","");
+        TypedFieldNormalizerV2.normalize(l);
+        assertEquals("12/80",l.strongest("collectorNumber").normalizedValue);
+        assertEquals("80",l.strongest("printedTotal").normalizedValue);
+        assertEquals("12/80 ★",l.all().get(0).rawValue);
+    }
+    @Test public void tcgFranchiseIsNotTheCopyrightManufacturer() throws Exception {
+        Models.LocalScan scan=new Models.LocalScan();scan.textByImage.add("ExampleGame");
+        ImmutableEvidenceLedgerV2 l=new ImmutableEvidenceLedgerV2();ObservationExtractorV2.ingestLocal(scan,l);
+        JSONObject f=new JSONObject().put("key","visible_text").put("value","ExampleGame").put("role","franchise_text")
+                .put("image",0).put("side","front").put("location","rules text").put("confidence",99);
+        ObservationExtractorV2.ingestPrimary(new JSONObject().put("category","tcg").put("facts",new JSONArray().put(f)),l);
+        assertTrue(l.hasObserved("game"));
+        IdentityCandidateV2 c=new IdentityCandidateV2("publisher-record",DomainProfileRouterV2.Profile.TCG_CARD,"test");
+        c.fields.put("manufacturer","Example Publisher");c.fields.put("setName","Example Set");
+        CandidateVerifierV2.verify(java.util.Collections.singletonList(c),l,c.domain);
+        assertFalse("franchise must not be compared with manufacturer",c.fieldRelations.containsKey("manufacturer"));
+    }
+
 }

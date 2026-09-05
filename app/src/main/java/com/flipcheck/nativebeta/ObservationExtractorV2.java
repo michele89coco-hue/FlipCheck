@@ -77,6 +77,7 @@ final class ObservationExtractorV2 {
     private static void strings(JSONArray a,List<String>out){if(a==null)return;for(int i=0;i<a.length();i++){String v=safe(a.optString(i,""));if(!v.isEmpty()&&!out.contains(v))out.add(v);}}
 
     private static String profileField(String field,String role,DomainProfileRouterV2.Profile profile){String k=safe(field).toLowerCase(Locale.ROOT).replace('-','_');String r=safe(role).toLowerCase(Locale.ROOT);
+        if(profile==DomainProfileRouterV2.Profile.TCG_CARD&&(r.equals("franchise_text")||r.equals("game_title")))return "game";
         if(k.equals("text")||k.equals("raw_text")||k.equals("printed_text")){
             if(r.equals("product_line"))return profile==DomainProfileRouterV2.Profile.TCG_CARD?"setName":"productLine";
             if(r.equals("series_text")||r.equals("sub_series"))return "subSeries";
@@ -86,7 +87,7 @@ final class ObservationExtractorV2 {
             if(r.equals("product_branding"))return "printedLabel";
         }
         if((k.equals("name")||k.equals("subject")||k.equals("subject_name"))&&profile==DomainProfileRouterV2.Profile.TCG_CARD)return "cardName";
-        if((k.equals("subject")||k.equals("subject_name")||k.equals("featured_subject")||k.equals("featuredsubject"))&&profile==DomainProfileRouterV2.Profile.SPORTS_CARD)return "athlete";
+        if((k.equals("subject")||k.equals("subject_name")||k.equals("player_name")||k.equals("playername")||k.equals("featured_subject")||k.equals("featuredsubject"))&&profile==DomainProfileRouterV2.Profile.SPORTS_CARD)return "athlete";
         if((k.equals("card_number")||TypedFieldNormalizerV2.canonicalField(field,role).equals("collectorNumber"))&&profile==DomainProfileRouterV2.Profile.TCG_CARD)return "collectorNumber";
         if(k.equals("card_number")&&profile==DomainProfileRouterV2.Profile.SPORTS_CARD)return "physicalCardNumber";
         if((k.equals("year")||k.equals("season"))&&r.contains("stat"))return "statisticsSeason";

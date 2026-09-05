@@ -196,6 +196,7 @@ final class EvidencePolicy {
     }
 
     static String publicStatus(Models.Identification id) {
+        if(IdentityPresentationV2.owns(id))return IdentityPresentationV2.status(id);
         if (id == null) {
             return "NEED_ANOTHER_PHOTO · ANALISI INCOMPLETA";
         }

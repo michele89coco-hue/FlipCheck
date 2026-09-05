@@ -64,6 +64,10 @@ public final class LiveRegressionSuite {
                             .put("brand", result.id.brand).put("family", result.id.family).put("model", result.id.model)
                             .put("physicalCardNumber", result.id.physicalCardNumber).put("collectorNumber", result.id.physicalCollectorNumber)
                             .put("edition", result.id.edition).put("finish", result.id.finish).put("language", result.id.language)
+                            .put("editionStatus", result.id.exactEditionStatus).put("finishStatus", result.id.finishStatus)
+                            .put("variantStatus", result.id.variantStatus).put("format", result.id.sealedFormat)
+                            .put("formatStatus", result.id.commercialFormatStatus).put("exactModelStatus", result.id.exactModelStatus)
+                            .put("physicalReleaseYear", result.id.physicalReleaseYear).put("catalogReleaseYear", result.id.sourceConfirmedReleaseYear)
                             .put("candidateWinnerId", result.id.candidateWinnerId).put("candidateRunnerUpId", result.id.candidateRunnerUpId)
                             .put("disproofStatus", result.id.disproofStatus).put("views", new JSONArray(result.id.photoViews))
                             .put("invariants", result.id.consistencyInvariants).put("requestedPhotoReason", result.id.requestedPhotoReason)
@@ -191,9 +195,12 @@ public final class LiveRegressionSuite {
         if ("topps".equals(key)) {
             require("Topps".equalsIgnoreCase(id.brand) && contains(id.family, "Chrome") && (contains(id.family, "Update") || contains(id.sourceConfirmedSubSeries, "Update")), "sealed hierarchy wrong: " + id.title);
             require("2025-26".equals(id.physicalReleaseYear) || "2025-26".equals(id.sourceConfirmedReleaseYear), "sealed season wrong");
+            require(contains(id.sealedFormat, "Hobby") && "CONFIRMED".equals(id.commercialFormatStatus), "Hobby configuration unresolved: " + id.sealedFormat);
             require(!contains(id.title, "Upper Deck") && ("FORMAT_PENDING".equals(id.exactIdentityStatus) || "CATALOG_MATCHED".equals(id.exactIdentityStatus)), "sealed result contaminated");
         } else if ("kobe".equals(key)) {
-            require("1997-98 SkyBox Metal Universe Kobe Bryant #81".equals(id.title), "sports identity wrong: " + id.title);
+            require(id.title.startsWith("1997-98 ") && "SkyBox".equalsIgnoreCase(id.brand)
+                    && contains(id.family, "Metal Universe") && "Kobe Bryant".equalsIgnoreCase(id.model)
+                    && contains(id.title, "#81"), "sports identity wrong: " + id.title);
             require("81".equals(id.physicalCardNumber) && !contains(id.v2RetrievedFacts, "catalogCardNumber=3") && !contains(id.v2RetrievedFacts, "catalogCardNumber=86"), "sports rows fused");
             require(!"1996-97".equals(id.physicalReleaseYear), "statistics replaced product season");
         } else if ("vileplume".equals(key)) {

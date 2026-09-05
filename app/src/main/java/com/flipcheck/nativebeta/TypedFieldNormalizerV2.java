@@ -77,7 +77,7 @@ final class TypedFieldNormalizerV2 {
         if(f.equals("firstEditionMark")){
             String c=words(value);
             if(c.contains("ABSENT")||c.contains("NOT PRESENT"))return "ABSENT";
-            if(c.equals("PRESENT")||c.equals("1ST EDITION")||c.equals("FIRST EDITION")||c.equals("EDITION 1")||c.equals("EDITION 1 LOGO")||c.equals("FIRST EDITION LOGO")||c.equals("1ST EDITION LOGO"))return "PRESENT";
+            if(c.equals("PRESENT")||c.equals("1ST EDITION")||c.equals("FIRST EDITION")||c.equals("EDITION 1")||c.equals("EDITION 1 SYMBOL")||c.equals("EDITION 1 LOGO")||c.equals("FIRST EDITION LOGO")||c.equals("1ST EDITION LOGO"))return "PRESENT";
             return value;
         }
         if(f.equals("productReleaseYear")||f.equals("setSeason")||f.equals("statisticsSeason"))return SeasonNormalizer.normalize(value);
@@ -98,6 +98,7 @@ final class TypedFieldNormalizerV2 {
 
     private static String normalizeCollector(String input){
         String compact=safe(input).toUpperCase(Locale.ROOT).replaceAll("\\s+","").replace('|','/');
+        if(compact.matches("[A-Z0-9]{1,8}/[A-Z0-9]{1,8}[★☆*]"))compact=compact.substring(0,compact.length()-1);
         if(compact.matches("[A-Z]{1,5}\\d+[A-Z]?(?:/[A-Z0-9]+)?")&&!compact.matches("[ILOSBZ0-9]+/[ILOSBZ0-9]+"))return compact;
         if(compact.matches("[ILOSBZ0-9]+/[ILOSBZ0-9]+")){
             String repaired=compact.replace('I','1').replace('L','1').replace('O','0')
