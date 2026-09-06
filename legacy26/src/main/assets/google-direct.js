@@ -41,10 +41,10 @@ function normalize(response){
 async function references(found,options){
  if(found.state!=='ok')return found;
  // Filter first: early generic pages must not hide later pages with actual linked images.
- const pages=list(found.pagesWithMatchingImages).filter(p=>[...list(p.fullMatchingImages),...list(p.partialMatchingImages)].some(i=>url(i.url)))
+ const pages=list(found.pagesWithMatchingImages).filter(p=>[...list(p.fullMatchingImages),...list(p.partialMatchingImages)].some(i=>url(i.url)&&FlipCheckVisual.referenceImageUseful(i.url)))
   .filter((p,i,a)=>a.findIndex(x=>x.url===p.url)===i).slice(0,3);
  const results=await Promise.allSettled(pages.map(async(p,i)=>{
-  const image=[...list(p.fullMatchingImages),...list(p.partialMatchingImages)].find(i=>url(i.url));
+  const image=[...list(p.fullMatchingImages),...list(p.partialMatchingImages)].find(i=>url(i.url)&&FlipCheckVisual.referenceImageUseful(i.url));
   // Both downloads are public GETs. The Google key is never passed to reference requests.
   const [page,picture]=await Promise.allSettled([call('page',{url:p.url},options),call('image',{url:image.url},options)]);
   const data=picture.status==='fulfilled'?picture.value:null;if(!data?.image_data)return null;
@@ -55,13 +55,13 @@ async function references(found,options){
  const refs=results.filter(r=>r.status==='fulfilled'&&r.value).map(r=>r.value);
  return {...found,references:refs,referenceAttempts:pages.length,referenceState:!pages.length?'no_linked_images':refs.length?'retrieved':'downloads_unavailable',state:pages.length&&!refs.length?'references_unavailable':'ok'};
 }
-async function catalogueReferences(sources,options){
+async function catalogueReferences(sources,options,base){
  const pages=list(sources).filter(s=>url(s.url)).slice(0,3);
  const results=await Promise.allSettled(pages.map(async(s,i)=>{
   const page=await call('page',{url:s.url},options);
   if(page.document_type==='pdf'&&page.image_data){const text=[s.title,s.text||s.snippet].filter(Boolean).join(' ').slice(0,5000);if(!text)return null;return {id:'ref'+(i+1),url:s.url,title:s.title,text,text_origin:'web_indexed_document',pages_rendered:page.pages_rendered,page_count:page.page_count,image_url:s.url,image_data:page.image_data};}
   if(!page.text)return null;
-  const image=list(page.images).map(url).find(Boolean);if(!image)return null;
+  const image=list(page.images).map(url).find(u=>u&&FlipCheckVisual.referenceImageUseful(u));if(!image)return null;
   const picture=await call('image',{url:image},options);if(!picture.image_data)return null;
   return {id:'ref'+(i+1),url:s.url,title:page.title||s.title,text:page.text.slice(0,5000),text_origin:'retrieved_page',image_url:image,image_data:picture.image_data};
  }));

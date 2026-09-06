@@ -1,0 +1,395 @@
+{
+  "pele": {
+    "vision": {
+      "kind": "card",
+      "market_ready": false,
+      "model_confidence": 0,
+      "object_unit": "panel",
+      "photo_clues": [
+        {
+          "text": "MANOEL FRANCISCO SANTOS",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.12,
+            "y": 0.615,
+            "width": 0.3,
+            "height": 0.035,
+            "certain": true
+          }
+        },
+        {
+          "text": "EDVALDO ALVES SANTAROSA",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.43,
+            "y": 0.615,
+            "width": 0.28,
+            "height": 0.035,
+            "certain": true
+          }
+        },
+        {
+          "text": "PELÉ",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.72,
+            "y": 0.615,
+            "width": 0.08,
+            "height": 0.035,
+            "certain": true
+          }
+        }
+      ],
+      "physical_observations": [
+        {
+          "feature": "count",
+          "text": "Two illustrated player portraits",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "configuration",
+          "text": "Portraits arranged side by side in one rectangular panel",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "layout",
+          "text": "Red outer border with separate pale blue portrait frames",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        }
+      ],
+      "variant": ""
+    },
+    "comparison": {
+      "physical_detail_needed": null,
+      "candidates": [
+        {
+          "category": "collectible picture",
+          "brand": "Tidningen Rekord",
+          "family": "samlarbild",
+          "model": "",
+          "year": "1958",
+          "issue_number": "37",
+          "catalog_number": "",
+          "unit": "panel",
+          "variant": "Two-player panel: Manoel Francisco Santos and Edvaldo Alves Santarosa “Pelé”",
+          "decision": "match",
+          "same_unit": true,
+          "physical_ambiguity": false,
+          "conflicts": [],
+          "matches": [
+            {
+              "reference_id": "ref1",
+              "feature": "text",
+              "photo_detail": "The target visibly reads “MANOEL FRANCISCO SANTOS” and “EDVALDO ALVES SANTAROSA ‘PELÉ’”.",
+              "reference_detail": "The source image shows the same two names, including the printed “PELÉ” attribution.",
+              "agrees": true,
+              "reference_evidence": "image"
+            },
+            {
+              "reference_id": "ref1",
+              "feature": "configuration",
+              "photo_detail": "Two illustrated portraits arranged side by side in one rectangular panel, with red border and pale-blue frames.",
+              "reference_detail": "The source image shows the same two side-by-side portraits, red outer border and pale-blue frames.",
+              "agrees": true,
+              "reference_evidence": "image"
+            },
+            {
+              "reference_id": "ref1",
+              "feature": "subject",
+              "photo_detail": "The panel contains two player portraits.",
+              "reference_detail": "“Foto de colección sin cortes de Pelé y Manoel Francisco Santos en el frente.”",
+              "agrees": true,
+              "reference_evidence": "description"
+            }
+          ],
+          "fields": [
+            {
+              "field": "brand",
+              "value": "Tidningen Rekord",
+              "reference_id": "ref1",
+              "quote": "PELÈ, foto de colección de Tidningen Rekord",
+              "scope": "parent",
+              "number_kind": "none"
+            },
+            {
+              "field": "year",
+              "value": "1958",
+              "reference_id": "ref1",
+              "quote": "Tidningen Rekord, nº 37 1958",
+              "scope": "parent",
+              "number_kind": "year"
+            },
+            {
+              "field": "issue_number",
+              "value": "37",
+              "reference_id": "ref1",
+              "quote": "Tidningen Rekord, nº 37 1958",
+              "scope": "parent",
+              "number_kind": "issue_number"
+            },
+            {
+              "field": "family",
+              "value": "foto de colección",
+              "reference_id": "ref1",
+              "quote": "PELÈ, foto de colección",
+              "scope": "target",
+              "number_kind": "none"
+            },
+            {
+              "field": "subject",
+              "value": "Manoel Francisco Santos; Edvaldo Alves Santarosa “Pelé”",
+              "reference_id": "ref1",
+              "quote": "Foto de colección sin cortes de Pelé y Manoel Francisco Santos en el frente.",
+              "scope": "target",
+              "number_kind": "none"
+            }
+          ],
+          "identity_level": "exact",
+          "specimen_notes": [
+            "La fuente documenta explícitamente el error impreso: Edvaldo Alves Santarosa no era el nombre verdadero de Pelé.",
+            "La fotografía muestra el panel dentro de una custodia; la custodia no se considera parte de la identidad.",
+            "La coincidencia identifica la variante catalográfica, pero no certifica autenticidad ni estado."
+          ]
+        }
+      ]
+    },
+    "references": [
+      {
+        "id": "ref1",
+        "url": "https://auctionet.com/es/2658196-pele-foto-de-coleccion-de-tidningen-rekord-n-37-1958",
+        "title": "PELÈ, foto de colección de Tidningen Rekord, nº 37 1958. Libros, mapas y manuscritos - Otros - Auctionet",
+        "text": "PELÈ, foto de colección de Tidningen Rekord, nº 37 1958. Libros, mapas y manuscritos - Otros - Auctionet PELÈ, foto de colección de Tidningen Rekord, nº 37 1958. La subasta ya ha terminado, ¿pero quizás te interesan estos otros lotes? 2658196. PELÈ, foto de colección de Tidningen Rekord, nº 37 1958. Imágenes 2658196. PELÈ, foto de colección de Tidningen Rekord, nº 37 1958. Descripción Foto de colección sin cortes de Pelé y Manoel Francisco Santos en el frente. En el reverso de las cartas hay información en sueco sobre ambas estrellas. Curioso; El nombre que le dieron a Pelé en la foto de coleccionista está mal, Edvaldo Alves Santarosa era un futbolista completamente diferente, el verdadero nombre de Pelé era Edson Arantes do Nascimento. Santarosa era Dida, compañera de Pelé. Dimensiones del periódico aproximadamente 30x21 cm, dimensiones de la imagen de Pelé aproximadamente 5,2x3,7 cm. ",
+        "image_data": "recorded-image-presence-only"
+      }
+    ]
+  },
+  "mach": {
+    "vision": {
+      "pokemon_printing": {
+        "is_pokemon": true,
+        "language": "English",
+        "set_name": "Base Set",
+        "card_type": "pokemon",
+        "first_edition_stamp": "present",
+        "stamp_image": 1,
+        "stamp_location": "Below artwork, left side",
+        "stamp_text": "EDITION 1",
+        "artwork_shadow": "unclear",
+        "shadow_image": 1,
+        "shadow_location": "Artwork frame, right/lower edge",
+        "copyright_text": "© 1995,96,98,99 Nintendo, Creatures, GAMEFREAK © 1999 Wizards",
+        "copyright_image": 1,
+        "slab_text": "",
+        "slab_image": 0
+      },
+      "printing_detail_regions": [
+        {
+          "detail": "stamp",
+          "region": {
+            "image_index": 1,
+            "x": 0.06,
+            "y": 0.53,
+            "width": 0.1,
+            "height": 0.08,
+            "certain": true
+          }
+        },
+        {
+          "detail": "shadow",
+          "region": {
+            "image_index": 1,
+            "x": 0.12,
+            "y": 0.14,
+            "width": 0.77,
+            "height": 0.4,
+            "certain": false
+          }
+        },
+        {
+          "detail": "copyright",
+          "region": {
+            "image_index": 1,
+            "x": 0.02,
+            "y": 0.95,
+            "width": 0.94,
+            "height": 0.045,
+            "certain": true
+          }
+        }
+      ],
+      "object_region": {
+        "image_index": 1,
+        "x": 0.01,
+        "y": 0.005,
+        "width": 0.98,
+        "height": 0.99,
+        "certain": true
+      }
+    },
+    "check": {
+      "stamp": "present",
+      "shadow": "unclear",
+      "applicable": true,
+      "labels": [
+        "1st Edition"
+      ],
+      "missing": [
+        "bordo destro del riquadro e riga copyright in basso"
+      ],
+      "slab": "",
+      "contradiction": false,
+      "complete": false,
+      "stampLocation": "Below artwork, left side",
+      "shadowLocation": "Artwork frame, right/lower edge",
+      "copyright": "© 1995,96,98,99 Nintendo, Creatures, GAMEFREAK © 1999 Wizards"
+    }
+  },
+  "box": {
+    "identity": {
+      "kind": "object",
+      "market_ready": true,
+      "model_confidence": 86,
+      "normalized_query": "Topps 2025-26 Topps Chrome Updates Basketball Hobby Box Hobby Box",
+      "model": "2025-26 Topps Chrome Updates Basketball Hobby Box",
+      "title": "2025/26 Topps Chrome Update Series Basketball Blaster Box",
+      "variant": "Hobby Box",
+      "missing_information": [
+        "La fotografia non mostra un codice SKU o una denominazione esplicita del formato Hobby Box."
+      ],
+      "next_photo_request": null
+    }
+  },
+  "doncic": {
+    "vision": {
+      "kind": "card",
+      "market_ready": false,
+      "model_confidence": 97,
+      "variant": "Green Pulsar, likely",
+      "photo_clues": [
+        {
+          "text": "LUKA DONCIC",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.53,
+            "y": 0.75,
+            "width": 0.34,
+            "height": 0.05,
+            "certain": true
+          }
+        },
+        {
+          "text": "DALLAS MAVERICKS",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.53,
+            "y": 0.8,
+            "width": 0.3,
+            "height": 0.04,
+            "certain": true
+          }
+        },
+        {
+          "text": "NO. 280",
+          "role": "collector_number",
+          "certainty": "clear",
+          "image_index": 2,
+          "region": {
+            "image_index": 2,
+            "x": 0.05,
+            "y": 0.22,
+            "width": 0.17,
+            "height": 0.04,
+            "certain": true
+          }
+        },
+        {
+          "text": "2018-19 PANINI - PRIZM BASKETBALL",
+          "role": "season",
+          "certainty": "clear",
+          "image_index": 2,
+          "region": {
+            "image_index": 2,
+            "x": 0.11,
+            "y": 0.76,
+            "width": 0.42,
+            "height": 0.03,
+            "certain": true
+          }
+        },
+        {
+          "text": "© 2018 NBA Properties, Inc.",
+          "role": "copyright",
+          "certainty": "clear",
+          "image_index": 2,
+          "region": {
+            "image_index": 2,
+            "x": 0.1,
+            "y": 0.81,
+            "width": 0.38,
+            "height": 0.03,
+            "certain": true
+          }
+        }
+      ],
+      "physical_observations": [
+        {
+          "feature": "count",
+          "text": "Single standard basketball trading card",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "configuration",
+          "text": "Portrait-oriented card shown front and reverse in separate images",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 2
+        },
+        {
+          "feature": "layout",
+          "text": "Central full-body player image with geometric prismatic side panels",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "shape",
+          "text": "Standard rectangular card enclosed in a rigid holder",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        }
+      ],
+      "object_region": {
+        "image_index": 1,
+        "x": 0.02,
+        "y": 0.17,
+        "width": 0.96,
+        "height": 0.75,
+        "certain": true
+      }
+    }
+  }
+}

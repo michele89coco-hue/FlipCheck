@@ -91,3 +91,29 @@ test('same catalogue name with different year or physical variant remains ambigu
  }
  const duplicate=V.validate(base,{candidates:[candidate,structuredClone(candidate)]},[reference]);assert.equal(duplicate.market_ready,true);
 });
+
+const recorded168=require('./fixtures/diagnostics-168.json');
+test('recorded Machamp recovery covers the unknown border as well as copyright',()=>{
+ const m=recorded168.mach,plan=V.printingPlan(m.vision,m.check,1);assert.equal(plan.length,2);assert.equal(plan.find(p=>p.detail==='shadow').fallback,true);assert.equal(plan.find(p=>p.detail==='shadow').object_region.width,.98);assert.equal(plan.find(p=>p.detail==='copyright').detail_crop,true);
+});
+test('recorded Pele comparison closes using the cited description without invented name or lot number',()=>{
+ const p=recorded168.pele,out=V.validate(p.vision,p.comparison,p.references);assert.equal(out.market_ready,true);assert.match(out.model,/1958.*37.*Pelé y Manoel Francisco Santos/);assert.equal(out.source_confirmed_catalog_number,'');assert.equal(out.catalogue_data.find(f=>f.field==='subject').recovered_from,'cited_subject_description');assert.equal(out.authenticity_status,'not_assessed');
+});
+test('subject recovery still rejects uncited descriptions and quotations unrelated to the photographed names',()=>{
+ const p=recorded168.pele;for(const quote of ['Invented unknown description','Tidningen Rekord, nº 37 1958']){const c=structuredClone(p.comparison);c.candidates[0].fields.find(f=>f.field==='subject').quote=quote;assert.equal(V.validate(p.vision,c,p.references).market_ready,false);}
+});
+test('typed collector labels normalize without changing physical numbers or year meaning',()=>{
+ assert.equal(V.identifierValue({role:'collector_number',text:'NO. 280'}),'280');assert.equal(V.identifierValue({role:'model',text:'NO-280'}),'NO-280');assert.equal(V.seasonValue('2018-19 PANINI - PRIZM BASKETBALL'),'2018-19');assert.equal(V.seasonValue('2018/2019'),'2018-19');
+});
+test('appearance travels into queries and needs both image comparison and a cited variant name',()=>{
+ const x={...base,variant:'Green Pulsar, likely',physical_observations:[{feature:'color',text:'Green patterned frame',certainty:'clear',entity:'target',image_index:1}]};assert.match(V.plan(x).query,/Green patterned frame/);assert.match(V.resolverPrompt(x,''),/Green patterned frame/);
+ const r={...reference,text:reference.text+' Parallel: Green Pulsar.'},c={...candidate,variant:'Green Pulsar',matches:[...candidate.matches,{reference_id:'ref1',feature:'color',photo_detail:'green frame',reference_detail:'green frame',reference_evidence:'image',agrees:true}]};
+ assert.equal(V.validate(x,{candidates:[c]},[r]).market_ready,false);c.fields=[...c.fields,{field:'variant',scope:'target',number_kind:'none',value:'Green Pulsar',quote:'Parallel: Green Pulsar.',reference_id:'ref1'}];assert.equal(V.validate(x,{candidates:[c]},[r]).market_ready,true);assert.equal(V.validate(x,{candidates:[c]},[r]).variant,'Green Pulsar');
+ c.matches=c.matches.filter(m=>m.feature!=='color');assert.equal(V.validate(x,{candidates:[c]},[r]).market_ready,false);
+});
+test('Google first targets unknown cards or uncertain appearance while known identities stay terminal',()=>{
+ assert.equal(V.googleFirst(recorded168.pele.vision),true);assert.equal(V.googleFirst(recorded168.doncic.vision),true);assert.equal(V.googleFirst({...base,market_ready:true,normalized_query:'Known',model_confidence:95}),false);assert.equal(V.googleFirst({kind:'object',photo_clues:[{text:'ZX-430',role:'model',certainty:'clear'}]}),false);
+});
+test('reference compaction preserves useful evidence and excludes obvious template images',()=>{
+ const r={text:'Header. '+('Generic navigation. '.repeat(150))+'2 batteries included. Cookie settings Unrelated footer'};const out=V.compactReference(r,{photo_clues:[{text:'2 batteries included',role:'text',certainty:'clear'}]},900);assert.ok(out.text.length<=900);assert.match(out.text,/2 batteries included/);assert.doesNotMatch(out.text,/Cookie settings/);assert.equal(V.referenceImageUseful('https://site.example/static-images/hero-inner.png'),false);assert.equal(V.referenceImageUseful('https://site.example/actual-product.jpg'),true);
+});

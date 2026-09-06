@@ -1,12 +1,12 @@
 /* Browser production wiring. All API payloads are fabricated; no live recognition. */
 const {test,before,after}=require('node:test'),assert=require('node:assert/strict'),http=require('node:http'),fs=require('node:fs'),path=require('node:path');
 const {chromium}=require('playwright');
-let server,browser,page,origin,photos,requests=[],googleRequests=[],vision,comparison,printingReply,providerMode='ok',resolverMode='',waitApi=null,errors=[];
+let server,browser,page,origin,photos,requests=[],googleRequests=[],vision,comparison,comparisonQueue=[],catalogText='',printingReply,providerMode='ok',resolverMode='',waitApi=null,errors=[];
 const root=path.join(__dirname,'../src/main/assets');
 const unknown={status:'uncertain',kind:'object',title:'Oggetto',category:'object',brand:'',family:'',model:'',variant:'',condition:'raw',category_confidence:70,brand_confidence:0,family_confidence:0,model_confidence:20,model_verified:false,market_ready:false,candidate_models:[],visual_fingerprint:'geometrical outline',distinctive_terms:[],search_terms:[],identifier_hints:[],layout_signature:[],evidence:[],missing_information:['catalogue identity'],next_photo_request:null,user_text_consistent:true,normalized_query:'',verification_summary:'Mock only',pokemon_printing:null,photo_clues:[],object_unit:'object',object_region:{image_index:1,x:.1,y:.1,width:.8,height:.8,certain:true}};
 const known={...unknown,status:'identified',brand:'Example',family:'Series',model:'Known model',title:'Known model',model_confidence:94,market_ready:true,normalized_query:'Example Known model'};
 function candidate(){return {category:'object',brand:'Example',family:'Series',model:'Documented model',year:'',issue_number:'',catalog_number:'',unit:'object',variant:'',identity_level:'exact',specimen_notes:[],decision:'match',same_unit:true,physical_ambiguity:false,conflicts:[],matches:[{reference_id:'ref1',feature:'layout',photo_detail:'two round controls',reference_detail:'two round controls',reference_evidence:'image',agrees:true},{reference_id:'ref1',feature:'shape',photo_detail:'rectangular body',reference_detail:'rectangular body',reference_evidence:'image',agrees:true}],fields:[{field:'model',scope:'target',number_kind:'model_number',value:'Documented model',reference_id:'ref1',quote:'Catalogue entry: Documented model.'}]};}
-async function reset(enabled=true){requests=[];googleRequests=[];vision=structuredClone(unknown);comparison={physical_detail_needed:null,candidates:[candidate()]};providerMode='ok';resolverMode='';printingReply=null;waitApi=null;await page.goto(origin);await page.waitForFunction(()=>typeof newContext164==='function');await page.evaluate(enabled=>{window.FlipCheckTestMode='mock';trial={free:true,attempts:2,credits:0};saveTrial();$('apiKey').value='fake-openai';$('visualEnabled').checked=enabled;$('googleApiKey').value='fake-google-key-1234567890';$('scanBudget').value='.025';$('budgetFx').value='1';},enabled);}
+async function reset(enabled=true){requests=[];googleRequests=[];vision=structuredClone(unknown);comparison={physical_detail_needed:null,candidates:[candidate()]};providerMode='ok';resolverMode='';printingReply=null;comparisonQueue=[];catalogText='Catalogue entry: Documented model.';waitApi=null;await page.goto(origin);await page.waitForFunction(()=>typeof newContext164==='function');await page.evaluate(enabled=>{window.FlipCheckTestMode='mock';trial={free:true,attempts:2,credits:0};saveTrial();$('apiKey').value='fake-openai';$('visualEnabled').checked=enabled;$('googleApiKey').value='fake-google-key-1234567890';$('scanBudget').value='.025';$('budgetFx').value='1';},enabled);}
 async function upload(){await page.locator('#photoBatch').setInputFiles(photos);await page.waitForFunction(()=>!photoBusy);}
 async function identify(){await page.locator('#identifyBtn').click();await page.waitForFunction(()=>!apiBusy,{},{timeout:12000});}
 before(async()=>{
@@ -16,7 +16,7 @@ before(async()=>{
  await page.route('**/*',async route=>{
   const u=route.request().url();if(u.startsWith(origin))return route.continue();
   if(u==='https://api.openai.com/v1/responses'){
-   const body=JSON.parse(route.request().postData());requests.push(body);let payload=body.text.format.name==='flipcheck_printing_detail'?{pokemon_printing:printingReply||vision.pokemon_printing}:body.text.format.name==='flipcheck_visual_comparison'?comparison:body.text.format.name==='flipcheck_market'?{market_status:'insufficient',exact_completed_sales_count:0,active_listings_count:0,market_low:null,market_high:null,quick_sale_price:null,historical_new_price:null,currency:'EUR',market_notes:'No verified comparable sales',source_summary:''}:vision;
+   const body=JSON.parse(route.request().postData());requests.push(body);let payload=body.text.format.name==='flipcheck_printing_detail'?{pokemon_printing:printingReply||vision.pokemon_printing}:body.text.format.name==='flipcheck_visual_comparison'?(comparisonQueue.length?comparisonQueue.shift():comparison):body.text.format.name==='flipcheck_market'?{market_status:'insufficient',exact_completed_sales_count:0,active_listings_count:0,market_low:null,market_high:null,quick_sale_price:null,historical_new_price:null,currency:'EUR',market_notes:'No verified comparable sales',source_summary:''}:vision;
    if(body.text.format.name==='flipcheck_resolver'&&resolverMode){
     if(resolverMode==='unauthorized')return route.fulfill({status:401,contentType:'application/json',body:JSON.stringify({error:{message:'API key rejected'}})});
     const source={url:'https://acme.example/manual/zx-430',title:'Acme ZX-430 water pump product manual',snippet:'Acme ZX-430 water pump. Two round controls, rectangular body. Model ZX-430.'};
@@ -40,7 +40,7 @@ before(async()=>{
     else if(providerMode==='quota')reply={status:429,body:{error:{status:'RESOURCE_EXHAUSTED'}}};
     else {const linked={url:'https://catalog.example/item',pageTitle:'Catalogue entry: Documented model.',fullMatchingImages:[{url:'https://catalog.example/item.png'}]};const empty=Array.from({length:7},(_,i)=>({url:'https://catalog.example/generic'+i,pageTitle:'Generic page'}));reply={status:200,body:{responses:[{webDetection:{webEntities:[{description:'Documented model',score:.99}],pagesWithMatchingImages:providerMode==='late_images'?[...empty,linked]:providerMode==='no_images'?empty:[linked]}}]}};}
    }else if(action==='page'&&resolverMode==='catalogue_pdf')reply={status:200,document_type:'pdf',page_count:8,pages_rendered:[1,2,3],image_data:'data:image/png;base64,'+photos[0].buffer.toString('base64')};
-   else if(action==='page')reply={status:200,text:'Catalogue entry: Documented model.',images:resolverMode.startsWith('catalogue')?['https://catalog.example/item.png']:[]};
+   else if(action==='page')reply={status:200,text:catalogText,images:resolverMode.startsWith('catalogue')?['https://catalog.example/item.png']:[]};
    else if(action==='image')reply={status:200,image_data:'data:image/png;base64,'+photos[0].buffer.toString('base64')};
    else throw new Error('Unexpected native action '+action);
    return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(reply)});
@@ -132,5 +132,32 @@ test('genuine quoted configuration may close without an identifier; conflicting 
 test('market budget refusal keeps identity confirmed and does not consume trial entitlement',async()=>{
  await reset();vision=known;await upload();await identify();const before=await page.evaluate(()=>{scan164.budget.maxUsd=scan164.budget.spent();return JSON.stringify(trial);});await page.locator('#marketBtn').click();await page.waitForFunction(()=>!apiBusy);
  const d=await page.evaluate(()=>diagnostic26());assert.equal(requests.length,1);assert.equal(d.identification.market_ready,true);assert.equal(d.visualAssistance.state,'confirmed');assert.equal(d.visualAssistance.comparablesState,'budget_exhausted');assert.equal(await page.evaluate(()=>JSON.stringify(trial)),before);
+});
+
+
+test('Google image lookup precedes text for an uncertain card variant and comparison includes both sides',async()=>{
+ await reset();vision={...structuredClone(known),kind:'card',object_unit:'single',market_ready:false,variant:'Green Pulsar, likely',photo_clues:[{text:'Visible player name',role:'text',certainty:'clear',image_index:1,region:null}],physical_observations:[{feature:'color',text:'Green patterned frame',certainty:'clear',entity:'target',image_index:1}]};
+ catalogText+=' Parallel: Green Pulsar.';comparison.candidates[0]={...candidate(),unit:'single',variant:'Green Pulsar',fields:[...candidate().fields,{field:'variant',scope:'target',number_kind:'none',value:'Green Pulsar',quote:'Parallel: Green Pulsar.',reference_id:'ref1'}],matches:[...candidate().matches,{reference_id:'ref1',feature:'color',photo_detail:'green frame',reference_detail:'green frame',reference_evidence:'image',agrees:true}]};
+ await page.locator('#photoBatch').setInputFiles([photos[0],{...photos[0],name:'synthetic-back.png'}]);await page.waitForFunction(()=>!photoBusy);await identify();
+ assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_identification','flipcheck_visual_comparison']);assert.equal(googleRequests.filter(r=>r.action==='detect').length,1);assert.equal(requests[1].input[0].content.filter(c=>c.type==='input_image').length,3);
+ const d=await page.evaluate(()=>diagnostic26());assert.equal(d.identification.market_ready,true);assert.equal(d.identification.variant,'Green Pulsar');assert.deepEqual(d.visualAssistance.comparison.photoIndexes,[1,2]);assert.equal(d.visualAssistance.route,'google_first');assert.ok(d.visualAssistance.budget.spentOrReservedUsd<=.025);
+});
+test('unconfirmed catalogue images allow a single Google recovery and a new verified reference',async()=>{
+ await reset();textObject();vision.photo_clues.push({text:'Rectangular body',role:'text',certainty:'clear',image_index:1,region:null});resolverMode='catalogue';comparisonQueue=[{physical_detail_needed:null,candidates:[]},comparison];
+ await upload();await identify();assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_identification','flipcheck_resolver','flipcheck_visual_comparison','flipcheck_visual_comparison']);assert.equal(googleRequests.filter(r=>r.action==='detect').length,1);assert.equal(await page.evaluate(()=>ident.market_ready),true);assert.equal(await page.evaluate(()=>diagnostic26().visualAssistance.comparisons.length),2);
+});
+test('Google first with no match can use one text fallback and never repeat the Google call',async()=>{
+ await reset();textObject();vision.kind='card';vision.object_unit='single';vision.photo_clues.push({text:'Rectangular body',role:'text',certainty:'clear',image_index:1,region:null});resolverMode='catalogue';comparisonQueue=[{physical_detail_needed:null,candidates:[]},{physical_detail_needed:null,candidates:[]}];
+ await upload();await identify();assert.equal(requests.filter(r=>r.text.format.name==='flipcheck_resolver').length,1);assert.equal(googleRequests.filter(r=>r.action==='detect').length,1);assert.equal(await page.evaluate(()=>ident.market_ready),false);assert.equal(await page.evaluate(()=>apiBusy),false);
+});
+test('Google preflight reserves room for verification before spending on detection',async()=>{
+ await reset();await upload();const result=await page.evaluate(async()=>{scan164=newContext164();scan164.budget.maxUsd=.004;const photos=await targetPhotos169({},scan164);return googleResolve169({market_ready:false},scan164,photos);});assert.equal(result.assistance_state,'budget_exhausted');assert.equal(googleRequests.length,0);assert.equal(requests.length,0);
+});
+test('recorded uncertain shadow region also sends the full card instead of copyright alone',async()=>{
+ await reset();printingCard();const recorded=require('./fixtures/diagnostics-168.json').mach;vision.printing_detail_regions=recorded.vision.printing_detail_regions;vision.object_region=recorded.vision.object_region;
+ await upload();await identify();const p=await page.evaluate(()=>diagnostic26().visualAssistance.printingRecovery);assert.equal(p.images.length,2);assert.ok(p.coverage.some(r=>r.detail==='shadow'&&r.fallback));assert.ok(p.images.some(r=>r.rect.height>=590));assert.equal(googleRequests.length,0);
+});
+test('confirmed Hobby identity clears the old Blaster title and obsolete SKU request',async()=>{
+ await reset();const recorded=require('./fixtures/diagnostics-168.json').box.identity;const out=await page.evaluate(value=>syncIdentity169(value),recorded);assert.match(out.title,/Hobby/);assert.doesNotMatch(out.title,/Blaster/);assert.deepEqual(out.missing_information,[]);assert.equal(out.market_ready,true);
 });
 test('no unhandled browser errors',()=>assert.deepEqual(errors,[]));
