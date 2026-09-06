@@ -1,12 +1,12 @@
 /* Browser production wiring. All API payloads are fabricated; no live recognition. */
 const {test,before,after}=require('node:test'),assert=require('node:assert/strict'),http=require('node:http'),fs=require('node:fs'),path=require('node:path');
 const {chromium}=require('playwright');
-let server,browser,page,origin,photos,requests=[],googleRequests=[],vision,initialMode='',comparison,comparisonQueue=[],catalogText='',printingReply,providerMode='ok',resolverMode='',waitApi=null,errors=[];
+let server,browser,page,origin,photos,requests=[],googleRequests=[],vision,initialMode='',comparison,comparisonQueue=[],catalogText='',printingReply,providerMode='ok',resolverMode='',waitApi=null,errors=[],usageOverrides={};
 const root=path.join(__dirname,'../src/main/assets');
 const unknown={status:'uncertain',kind:'object',title:'Oggetto',category:'object',brand:'',family:'',model:'',variant:'',condition:'raw',category_confidence:70,brand_confidence:0,family_confidence:0,model_confidence:20,model_verified:false,market_ready:false,candidate_models:[],visual_fingerprint:'geometrical outline',distinctive_terms:[],search_terms:[],identifier_hints:[],layout_signature:[],evidence:[],missing_information:['catalogue identity'],next_photo_request:null,user_text_consistent:true,normalized_query:'',verification_summary:'Mock only',pokemon_printing:null,photo_clues:[],object_unit:'object',object_region:{image_index:1,x:.1,y:.1,width:.8,height:.8,certain:true}};
 const known={...unknown,status:'identified',brand:'Example',family:'Series',model:'Known model',title:'Known model',model_confidence:94,market_ready:true,normalized_query:'Example Known model'};
 function candidate(){return {category:'object',brand:'Example',family:'Series',model:'Documented model',year:'',issue_number:'',catalog_number:'',unit:'object',variant:'',identity_level:'exact',specimen_notes:[],decision:'match',same_unit:true,physical_ambiguity:false,conflicts:[],matches:[{reference_id:'ref1',feature:'layout',photo_detail:'two round controls',reference_detail:'two round controls',reference_evidence:'image',agrees:true},{reference_id:'ref1',feature:'shape',photo_detail:'rectangular body',reference_detail:'rectangular body',reference_evidence:'image',agrees:true}],fields:[{field:'model',scope:'target',number_kind:'model_number',value:'Documented model',reference_id:'ref1',quote:'Catalogue entry: Documented model.'}]};}
-async function reset(enabled=true){requests=[];googleRequests=[];initialMode='';vision=structuredClone(unknown);comparison={physical_detail_needed:null,candidates:[candidate()]};providerMode='ok';resolverMode='';printingReply=null;comparisonQueue=[];catalogText='Catalogue entry: Documented model.';waitApi=null;await page.goto(origin);await page.waitForFunction(()=>typeof newContext164==='function');await page.evaluate(enabled=>{window.FlipCheckTestMode='mock';trial={free:true,attempts:2,credits:0};saveTrial();$('apiKey').value='fake-openai';$('visualEnabled').checked=enabled;$('googleApiKey').value='fake-google-key-1234567890';$('scanBudget').value='.03';$('budgetFx').value='1';},enabled);}
+async function reset(enabled=true){usageOverrides={};requests=[];googleRequests=[];initialMode='';vision=structuredClone(unknown);comparison={physical_detail_needed:null,candidates:[candidate()]};providerMode='ok';resolverMode='';printingReply=null;comparisonQueue=[];catalogText='Catalogue entry: Documented model.';waitApi=null;await page.goto(origin);await page.waitForFunction(()=>typeof newContext164==='function');await page.evaluate(enabled=>{window.FlipCheckTestMode='mock';trial={free:true,attempts:2,credits:0};saveTrial();$('apiKey').value='fake-openai';$('visualEnabled').checked=enabled;$('googleApiKey').value='fake-google-key-1234567890';$('scanBudget').value='.03';$('budgetFx').value='1';},enabled);}
 async function upload(){await page.locator('#photoBatch').setInputFiles(photos);await page.waitForFunction(()=>!photoBusy);}
 async function identify(){await page.locator('#identifyBtn').click();await page.waitForFunction(()=>!apiBusy,{},{timeout:12000});}
 before(async()=>{
@@ -21,28 +21,29 @@ before(async()=>{
    let payload=body.text.format.name==='flipcheck_resolver_recovery'?{candidate_checks:[],verification_summary:'Insufficient evidence',missing_information:['Exact model label']}:body.text.format.name==='flipcheck_printing_detail'?{pokemon_printing:printingReply||vision.pokemon_printing}:body.text.format.name==='flipcheck_visual_comparison'?(comparisonQueue.length?comparisonQueue.shift():comparison):body.text.format.name==='flipcheck_market'?{market_status:'insufficient',exact_completed_sales_count:0,active_listings_count:0,market_low:null,market_high:null,quick_sale_price:null,historical_new_price:null,currency:'EUR',market_notes:'No verified comparable sales',source_summary:''}:vision;
    if(body.text.format.name==='flipcheck_resolver'&&resolverMode){
     if(resolverMode==='unauthorized')return route.fulfill({status:401,contentType:'application/json',body:JSON.stringify({error:{message:'API key rejected'}})});
-    const source={url:'https://acme.example/manual/zx-430',title:'Acme ZX-430 water pump product manual',snippet:'Acme ZX-430 water pump. Two round controls, rectangular body. Model ZX-430.'};
-    const withSource=resolverMode==='source'||resolverMode==='complete_source'||resolverMode==='google_incomplete';
+    const source=resolverMode==='box_completion'?{url:'https://catalog.example/box-entry',title:'2025-26 Topps Chrome Update Series Basketball Hobby, Box',snippet:'1 autograph in every box.'}:{url:'https://acme.example/manual/zx-430',title:'Acme ZX-430 water pump product manual',snippet:'Acme ZX-430 water pump. Two round controls, rectangular body. Model ZX-430.'};
+    const withSource=resolverMode==='source'||resolverMode==='complete_source'||resolverMode==='google_incomplete'||resolverMode==='box_completion';
     const catalogue=resolverMode.startsWith('catalogue');
     const sources=catalogue?Array.from({length:resolverMode==='catalogue_cost'?3:1},(_,i)=>({url:'https://catalog.example/entry'+i+(resolverMode==='catalogue_pdf'?'.pdf':''),title:'Catalogue entry: Documented model.',snippet:'Two round controls. Rectangular body. Catalogue entry: Documented model.'})):withSource?[source]:[];
     const output=[{type:'web_search_call',status:'completed',action:{type:'search',sources},results:sources},{type:'message',content:[{type:'output_text',text:resolverMode==='malformed'?'{':JSON.stringify({candidate_checks:[],verification_summary:'Mock response',missing_information:[]})}]}];
-    const incomplete=!['malformed','complete_source'].includes(resolverMode)&&!catalogue;
+    const incomplete=!['malformed','complete_source','box_completion'].includes(resolverMode)&&!catalogue;
     return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({status:incomplete?'incomplete':'completed',...(incomplete?{incomplete_details:{reason:'max_output_tokens'}}:{}),output,usage:resolverMode==='expensive'?{input_tokens:60000,output_tokens:1500}:resolverMode==='catalogue_cost'?{input_tokens:24000,output_tokens:400}:{input_tokens:100,output_tokens:100}})});
    }
    if(waitApi){const pending=waitApi;await pending;}
-   return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({status:'completed',output:[{type:'message',content:[{type:'output_text',text:JSON.stringify(payload)}]}],usage:{input_tokens:100,output_tokens:100}})});
+   return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({status:'completed',output:[{type:'message',content:[{type:'output_text',text:JSON.stringify(payload)}]}],usage:usageOverrides[body.text.format.name]||{input_tokens:100,output_tokens:100}})});
   }
   if(u.startsWith('https://native.example/')){
    const action=u.split('/').pop(),body=JSON.parse(route.request().postData());googleRequests.push({action,...body});
    let reply;
    if(action==='detect'){
-    if(providerMode==='timeout')reply={status:0,state:'timeout',attempted:true};
+    if(providerMode==='network')reply={status:0,state:'dns_error',attempted:true};
+    else if(providerMode==='timeout')reply={status:0,state:'timeout',attempted:true};
     else if(providerMode==='invalid')reply={status:400,body:{error:{details:[{reason:'API_KEY_INVALID'}]}}};
     else if(providerMode==='disabled')reply={status:403,body:{error:{details:[{reason:'SERVICE_DISABLED'}]}}};
     else if(providerMode==='quota')reply={status:429,body:{error:{status:'RESOURCE_EXHAUSTED'}}};
     else {const linked={url:'https://catalog.example/item',pageTitle:'Catalogue entry: Documented model.',fullMatchingImages:[{url:'https://catalog.example/item.png'}]};const empty=Array.from({length:7},(_,i)=>({url:'https://catalog.example/generic'+i,pageTitle:'Generic page'}));reply={status:200,body:{responses:[{webDetection:{webEntities:[{description:'Documented model',score:.99}],pagesWithMatchingImages:providerMode==='late_images'?[...empty,linked]:providerMode==='no_images'?empty:[linked]}}]}};}
    }else if(action==='page'&&resolverMode==='catalogue_pdf')reply={status:200,document_type:'pdf',page_count:8,pages_rendered:[1,2,3],image_data:'data:image/png;base64,'+photos[0].buffer.toString('base64')};
-   else if(action==='page')reply={status:200,text:catalogText,images:resolverMode.startsWith('catalogue')?['https://catalog.example/item.png']:[]};
+   else if(action==='page')reply={status:200,text:catalogText,images:resolverMode.startsWith('catalogue')?['https://catalog.example/'+(resolverMode==='catalogue_cost'?body.url.split('/').pop():'item')+'.png']:[]};
    else if(action==='image')reply={status:200,image_data:'data:image/png;base64,'+photos[0].buffer.toString('base64')};
    else throw new Error('Unexpected native action '+action);
    return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(reply)});
@@ -187,5 +188,34 @@ test('Google-first truncated web output can be completed from collected sources 
 test('default budget migration raises the previous ceiling and preserves a deliberately smaller cap',async()=>{
  await reset();await page.evaluate(()=>localStorage.setItem('flipcheck_visual_config',JSON.stringify({scanBudget:.025,budgetFx:1,enabled:true})));await page.reload();assert.equal(await page.locator('#scanBudget').inputValue(),'.03');assert.equal(await page.evaluate(()=>visualConfig164().maxEur),.03);
  await page.evaluate(()=>localStorage.setItem('flipcheck_visual_config',JSON.stringify({scanBudget:.01,budgetFx:1,enabled:true})));await page.reload();assert.equal(await page.evaluate(()=>visualConfig164().maxEur),.01);
+});
+
+test('build170 two-photo Google failure permits the actual text request within 0.03',async()=>{
+ await reset();const f=require('./fixtures/diagnostics-170.json').doncic;vision=structuredClone(f.vision);usageOverrides.flipcheck_identification=f.phases[0].usage;providerMode='network';resolverMode='catalogue';comparison={physical_detail_needed:null,candidates:[]};
+ const back=await page.evaluate(()=>{const c=document.createElement('canvas');c.width=420;c.height=600;c.getContext('2d').fillStyle='blue';c.getContext('2d').fillRect(0,0,420,600);return c.toDataURL('image/png').split(',')[1];});
+ await page.locator('#photoBatch').setInputFiles([photos[0],{name:'back.png',mimeType:'image/png',buffer:Buffer.from(back,'base64')}]);await page.waitForFunction(()=>!photoBusy);await identify();
+ const d=await page.evaluate(()=>diagnostic26());assert.equal(d.uploadedImageCount,2);assert.equal(requests.filter(r=>r.tools?.length).length,1);assert.equal(googleRequests.filter(r=>r.action==='detect').length,1);assert.equal(d.visualAssistance.calls.find(c=>c.provider==='google').failureReason,'dns_error');assert.equal(d.visualAssistance.continuationBudget.strategy,'next_request');assert.ok(d.visualAssistance.budget.spentOrReservedUsd<=.03);assert.equal(d.identification.market_ready,false);
+});
+test('build170 box reuses its visual comparison and closes after a specification query',async()=>{
+ await reset();const f=require('./fixtures/diagnostics-170.json').box;vision=structuredClone(f.vision);comparison=structuredClone(f.phases.find(p=>p.stage==='flipcheck_visual_comparison').result);
+ for(const c of comparison.candidates)for(const entry of [...c.matches,...c.fields])entry.reference_id='ref1';
+ catalogText='2025-26 Topps Chrome Update Series Basketball Hobby, Box';resolverMode='box_completion';
+ usageOverrides.flipcheck_identification=f.phases[0].usage;usageOverrides.flipcheck_visual_comparison=f.phases[1].usage;
+ await upload();await identify();const d=await page.evaluate(()=>diagnostic26());assert.equal(requests.filter(r=>r.tools?.length).length,1);assert.equal(requests.filter(r=>r.text.format.name==='flipcheck_visual_comparison').length,1);assert.match(requests.find(r=>r.tools?.length).input,/1 AUTOGRAPH IN EVERY BOX/);assert.equal(d.identification.market_ready,true);assert.match(d.identification.title,/Hobby/);assert.equal(d.visualAssistance.referenceCompletion.reusedComparison,true);assert.ok(d.visualAssistance.budget.spentOrReservedUsd<=.03);
+});
+test('build170 inferred set is researched before an uncertain edition stamp',async()=>{
+ await reset();vision=structuredClone(require('./fixtures/diagnostics-170.json').politoed.vision);providerMode='no_images';resolverMode='catalogue';comparison={physical_detail_needed:null,candidates:[]};await upload();await identify();
+ assert.equal(requests.filter(r=>r.text.format.name==='flipcheck_printing_detail').length,0);assert.equal(requests.filter(r=>r.tools?.length).length,1);assert.equal(googleRequests.filter(r=>r.action==='detect').length,1);
+ const query=requests.find(r=>r.tools?.length).input;assert.match(query,/Crescita Improvvisa/);assert.doesNotMatch(query,/12\/111|Neo Genesis/);assert.equal(await page.evaluate(()=>ident.market_ready),false);
+});
+test('printing applicability is reread against verified catalogue without overriding a certain stamp',async()=>{
+ await reset();await upload();const raw=structuredClone(require('./fixtures/diagnostics-170.json').politoed.vision);
+ printingReply={...raw.pokemon_printing,set_name:'Verified catalogue series',first_edition_stamp:'not_applicable'};
+ const result=await page.evaluate(async raw=>{lastVisionReading=raw;scan164=newContext164();return finishIdentity171({...raw,family:'Verified catalogue series',catalogue_verified:true,market_ready:true,model_confidence:95,normalized_query:'Verified catalogue entry'},scan164);},raw);
+ assert.equal(requests.length,1);assert.equal(requests[0].text.format.name,'flipcheck_printing_detail');assert.match(requests[0].input[0].content[0].text,/Verified catalogue series/);assert.equal(result.printing_check.stamp,'not_applicable');assert.equal(result.market_ready,true);
+});
+test('Google references with the same image are downloaded and compared once',async()=>{
+ await reset();await upload();const result=await page.evaluate(async()=>FlipCheckDirect.references({state:'ok',pagesWithMatchingImages:[{url:'https://catalog.example/a',pageTitle:'Entry A',fullMatchingImages:[{url:'https://catalog.example/item.png'}]},{url:'https://catalog.example/b',pageTitle:'Entry B',fullMatchingImages:[{url:'https://catalog.example/item.png'}]}]},{}));
+ assert.equal(result.references.length,1);assert.equal(googleRequests.filter(r=>r.action==='image').length,1);
 });
 test('no unhandled browser errors',()=>assert.deepEqual(errors,[]));

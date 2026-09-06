@@ -55,6 +55,16 @@ public final class GoogleDirectRegressionTest {
         assertFalse(page.getString("text").contains("Unrelated catalogue list"));assertFalse(page.getString("text").contains("Different kit"));
         assertEquals("https://catalog.example/kit.jpg",page.getJSONArray("images").getString(0));assertEquals(1,page.getJSONArray("images").length());
     }
+    @Test public void collectionImageLinksKeepProductScopeAndErrorsStaySpecific() throws Exception {
+        String html="<html><head><title>All products</title></head><body><main><a href='/item/a'><img src='/a.jpg' alt='Kit A'></a><a href='/item/b'><img src='/b.jpg' alt='Kit B'></a><p>   1 battery per kit</p></main></body></html>";
+        JSONObject page=GoogleVisionBridge.pageData(html,"https://catalog.example/collection");
+        assertTrue(page.getBoolean("is_collection"));assertEquals(2,page.getJSONArray("image_links").length());
+        assertEquals("https://catalog.example/item/a",page.getJSONArray("image_links").getJSONObject(0).getString("url"));
+        assertEquals("https://catalog.example/a.jpg",page.getJSONArray("image_links").getJSONObject(0).getString("image_url"));
+        assertEquals("Kit A",page.getJSONArray("image_links").getJSONObject(0).getString("title"));
+        assertEquals("dns_error",GoogleVisionBridge.networkFailure(new java.net.UnknownHostException("never export this message")));
+        assertEquals("tls_error",GoogleVisionBridge.networkFailure(new javax.net.ssl.SSLException("never export this message")));
+    }
     @Test public void pdfReferencesRenderOnlyThreePagesAndCleanTemporaryFiles() throws Exception {
         java.io.File cache=androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().getTargetContext().getCacheDir();
         java.io.ByteArrayOutputStream bytes=new java.io.ByteArrayOutputStream();

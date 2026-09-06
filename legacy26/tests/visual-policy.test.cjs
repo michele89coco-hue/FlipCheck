@@ -153,3 +153,14 @@ test('recorded remote query keeps category and printed controls before incidenta
 test('0.03 EUR ceiling preserves configured exchange factor and enforces the aggregate budget',()=>{
  const b=new V.Budget(),r=b.reserve('vision',.01);b.settle(r,.01);b.reserve('text',.015);b.reserve('visual',.0035);assert.throws(()=>b.reserve('vision',.002),/budget_exhausted/);assert.equal(b.maxUsd,.03);assert.equal(new V.Budget({maxEur:1,usdPerEur:1.1}).maxUsd,.033);
 });
+
+
+test('build170 box completes its missing specification from an exact entry without another image comparison',()=>{
+ const f=require('./fixtures/diagnostics-170.json').box,reply=f.phases.find(p=>p.stage==='flipcheck_visual_comparison').result;
+ const refs=f.references.map(r=>({...r,image_data:'already-compared-image-marker'}));
+ const source={url:'https://catalog.example/entry',title:'2025-26 Topps Chrome Update Series Basketball Hobby, Box',snippet:'1 autograph in every box.'};
+ const before=V.validate(f.vision,reply,refs);assert.equal(before.visual_candidates[0].rejection,'configuration_not_matched');
+ const after=V.completeComparison(f.vision,reply,refs,[source]);assert.equal(after.market_ready,true);assert.match(after.title,/Hobby/);assert.ok(after.identification_sources.some(s=>s.url===source.url));
+ for(const change of [{snippet:'2 autographs in every box.'},{title:'A different product, hobby box'},{title:'2024-25 Topps Chrome Update Series Basketball Hobby, Box'}])assert.notEqual(V.completeComparison(f.vision,reply,refs,[{...source,...change}]).market_ready,true);
+ assert.notEqual(V.completeComparison(f.vision,reply,f.references,[source]).market_ready,true);
+});

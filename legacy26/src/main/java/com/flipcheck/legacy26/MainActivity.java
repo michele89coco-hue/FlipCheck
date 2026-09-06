@@ -35,6 +35,9 @@ public final class MainActivity extends Activity {
     private GoogleVisionBridge googleVision;
     private ValueCallback<Uri[]> pickerCallback;
     private boolean pickerMultiple;
+    private volatile Boolean requestedPickerMultiple;
+    private volatile boolean requestedDocumentPicker;
+    private boolean pickerDocuments;
     private String pendingDiagnostic;
 
     @Override public void onCreate(Bundle saved) {
@@ -89,7 +92,11 @@ public final class MainActivity extends Activity {
             @Override public boolean onShowFileChooser(WebView view, ValueCallback<Uri[]> callback, FileChooserParams params) {
                 finishPicker(null);
                 pickerCallback = callback;
-                pickerMultiple = params.getMode() == FileChooserParams.MODE_OPEN_MULTIPLE;
+                Boolean requested = requestedPickerMultiple;
+                requestedPickerMultiple = null;
+                pickerMultiple = requested != null ? requested : params.getMode() == FileChooserParams.MODE_OPEN_MULTIPLE;
+                pickerDocuments = requestedDocumentPicker;
+                requestedDocumentPicker = false;
                 launchPhotoPicker();
                 return true;
             }
@@ -118,8 +125,9 @@ public final class MainActivity extends Activity {
     }
 
     private void launchPhotoPicker() {
-        if (Build.VERSION.SDK_INT >= 33) {
+        if (!pickerDocuments && Build.VERSION.SDK_INT >= 33) {
             Intent picker = new Intent(MediaStore.ACTION_PICK_IMAGES).setType("image/*");
+            picker.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, pickerMultiple);
             if (pickerMultiple) {
                 picker.putExtra(MediaStore.EXTRA_PICK_IMAGES_MAX, Math.min(3, MediaStore.getPickImagesMaxLimit()));
                 if (Build.VERSION.SDK_INT >= 35) picker.putExtra(MediaStore.EXTRA_PICK_IMAGES_IN_ORDER, true);
@@ -150,7 +158,7 @@ public final class MainActivity extends Activity {
                 if (clips != null) for (int i = 0; i < clips.getItemCount(); i++) {
                     Uri uri = clips.getItemAt(i).getUri();
                     if (uri != null && "content".equals(uri.getScheme()) && !values.contains(uri)) values.add(uri);
-                    if (!pickerMultiple && !values.isEmpty()) break;
+                    if (values.size() >= (pickerMultiple ? 3 : 1)) break;
                 }
                 else if (data.getData() != null && "content".equals(data.getData().getScheme())) values.add(data.getData());
             }
@@ -168,6 +176,14 @@ public final class MainActivity extends Activity {
     }
 
     public final class DiagnosticBridge {
+        @JavascriptInterface public void preparePhotoPicker(boolean multiple) {
+            requestedDocumentPicker = false;
+            requestedPickerMultiple = multiple;
+        }
+        @JavascriptInterface public void prepareDocumentPicker() {
+            requestedDocumentPicker = true;
+            requestedPickerMultiple = true;
+        }
         @JavascriptInterface public String buildInfo() {
             return "{\"versionCode\":" + BuildConfig.VERSION_CODE + ",\"versionName\":\"" + BuildConfig.VERSION_NAME + "\",\"sourceCommit\":\"" + BuildConfig.SOURCE_COMMIT + "\"}";
         }

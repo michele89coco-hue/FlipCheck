@@ -43,3 +43,13 @@ Validation: node unit tests and Chromium UI tests with clearly synthetic API
 responses, all outgoing API requests intercepted. These test software behavior,
 not recognition accuracy on real cards. CI assembles and verifies the signed APK.
 No paid live API scan or phone installation is part of these automated checks.
+
+
+## Build 171: targeted continuation and multi-photo fixes
+
+- Continue with the estimated cost of the next API request within the existing 0.03 budget; do not reserve a mandatory second image comparison before a text search. Failed Google calls keep their unknown-billing reserve and a sanitized failure reason.
+- Defer uncertain Pokémon printing recovery until an inferred catalogue family has been resolved. Re-evaluate only uncertain printing fields with that verified family; preserve certain stamps.
+- Reuse completed image matches to validate a missing quantity from a source naming the same model and season. Conflicting amounts, different entries, missing image evidence and uncertain card parallels remain blocking.
+- Follow the product link attached to a matching Google image where available. Do not attach a whole collection's text to one product; remove duplicate image references and excess page whitespace.
+- Send explicit native batch/single picker modes. The main button and empty slots support three photos; a separate File selector also supports multiple photos. Cancellation preserves the loaded images.
+- Regression fixtures from build 170 contain diagnostics only. Browser responses and images are synthetic; these tests do not establish live recognition accuracy. No live AI requests are part of the release checks.

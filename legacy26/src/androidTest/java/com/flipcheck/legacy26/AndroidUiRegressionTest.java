@@ -90,6 +90,7 @@ public final class AndroidUiRegressionTest {
                 assertNotNull("Native picker must be opened from an empty +", launched.get());
                 assertEquals(MediaStore.ACTION_PICK_IMAGES, launched.get().getAction());
                 assertEquals(3, launched.get().getIntExtra(MediaStore.EXTRA_PICK_IMAGES_MAX,0));
+                assertTrue(launched.get().getBooleanExtra(Intent.EXTRA_ALLOW_MULTIPLE,false));
                 assertTrue(launched.get().getBooleanExtra(MediaStore.EXTRA_PICK_IMAGES_IN_ORDER,false));
                 assertEquals("3",eval("document.querySelectorAll('.slot img').length"));
                 screenshot("three-photos-loaded.png");
@@ -97,11 +98,23 @@ public final class AndroidUiRegressionTest {
                 tap("s0"); waitForIntent(launched);
                 assertFalse("Replacing an existing photo stays single-select", launched.get().hasExtra(MediaStore.EXTRA_PICK_IMAGES_MAX));
                 assertEquals("3",eval("validImageCount()"));
+                // Exercise the main batch button too, after a single replacement/cancel.
+                eval("removePhoto(0);removePhoto(1);removePhoto(2);$('addPhotos').scrollIntoView({block:'center'});true");
+                pickerResult.set(new Instrumentation.ActivityResult(Activity.RESULT_OK,result));launched.set(null);
+                tap("addPhotos");waitForJs("validImageCount() === 3 && !photoBusy",15000);
+                assertEquals(3,launched.get().getIntExtra(MediaStore.EXTRA_PICK_IMAGES_MAX,0));
+                assertTrue(launched.get().getBooleanExtra(Intent.EXTRA_ALLOW_MULTIPLE,false));
+                assertEquals("true",eval("photoEvents.at(-1).selected === 3 && photoEvents.at(-1).loaded === 3"));
+                eval("removePhoto(0);removePhoto(1);removePhoto(2);$('addPhotoFiles').scrollIntoView({block:'center'});true");launched.set(null);
+                tap("addPhotoFiles");waitForJs("validImageCount() === 3 && !photoBusy",15000);
+                assertEquals(Intent.ACTION_OPEN_DOCUMENT,launched.get().getAction());
+                assertTrue(launched.get().getBooleanExtra(Intent.EXTRA_ALLOW_MULTIPLE,false));
+                assertEquals("true",eval("photoEvents.at(-1).selected === 3 && photoEvents.at(-1).loaded === 3"));
             } finally { instrumentation.removeMonitor(monitor); }
 
             // Also open the real system picker. URI delivery above is deterministic via an
             // instrumented activity result; this screenshot records the actual system UI.
-            eval("removePhoto(0);true"); tap("s0");
+            eval("removePhoto(0);window.scrollTo(0,0);true"); tap("s0");
             long deadline = SystemClock.uptimeMillis()+10000;
             boolean systemPickerOpened = false;
             while (SystemClock.uptimeMillis()<deadline) {

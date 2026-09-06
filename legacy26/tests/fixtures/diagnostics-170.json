@@ -1,0 +1,2682 @@
+{
+  "box": {
+    "vision": {
+      "status": "uncertain",
+      "kind": "object",
+      "title": "2025/26 Topps Chrome Basketball Update Series box",
+      "category": "sealed basketball trading card box",
+      "brand": "Topps",
+      "family": "Topps Chrome Basketball Update Series",
+      "model": "",
+      "variant": "sealed retail box; exact format uncertain",
+      "condition": "sealed, visible packaging wear/creases",
+      "category_confidence": 98,
+      "brand_confidence": 99,
+      "family_confidence": 96,
+      "model_confidence": 55,
+      "model_verified": false,
+      "market_ready": false,
+      "candidate_models": [
+        {
+          "model": "2025/26 Topps Chrome Basketball Update Series Hobby Box",
+          "confidence": 55,
+          "reason": "Front states “1 AUTOGRAPH IN EVERY BOX,” consistent with a hobby-style configuration, but no explicit format label is visible."
+        },
+        {
+          "model": "2025/26 Topps Chrome Basketball Update Series box",
+          "confidence": 45,
+          "reason": "Series and season are clearly printed, while the exact box configuration is not."
+        }
+      ],
+      "visual_fingerprint": "Tall sealed Topps Chrome basketball box in blue/silver design, featuring Cooper Flagg in a Dallas uniform and Victor Wembanyama in a Spurs uniform; large “UPDATE SERIES” badge and bottom claim “1 AUTOGRAPH IN EVERY BOX.”",
+      "distinctive_terms": [
+        "2025/26",
+        "Topps Chrome",
+        "UPDATE SERIES",
+        "1 AUTOGRAPH IN EVERY BOX",
+        "COOPER FLAGG"
+      ],
+      "search_terms": [
+        "2025/26",
+        "Topps Chrome",
+        "UPDATE SERIES",
+        "1 AUTOGRAPH IN EVERY BOX",
+        "COOPER FLAGG"
+      ],
+      "identifier_hints": [],
+      "layout_signature": [
+        {
+          "term": "Topps Chrome",
+          "position": "lower center",
+          "relation": "large product logo above UPDATE SERIES"
+        },
+        {
+          "term": "UPDATE SERIES",
+          "position": "lower center",
+          "relation": "directly below Topps Chrome logo"
+        },
+        {
+          "term": "COOPER FLAGG",
+          "position": "upper right vertical",
+          "relation": "beside the Dallas player image"
+        },
+        {
+          "term": "2025/26",
+          "position": "left vertical",
+          "relation": "along the left side of the front panel"
+        },
+        {
+          "term": "1 AUTOGRAPH IN EVERY BOX",
+          "position": "bottom",
+          "relation": "above the lower edge and league logos"
+        }
+      ],
+      "evidence": [
+        "The front packaging visibly reads “Topps Chrome” and “UPDATE SERIES.”",
+        "The season text “2025/26” is visible along the left side.",
+        "“COOPER FLAGG” is printed vertically beside the Dallas player.",
+        "The box visibly states “1 AUTOGRAPH IN EVERY BOX.”",
+        "The product is physically sealed in factory-style shrink wrap."
+      ],
+      "missing_information": [
+        "Exact product format or SKU is not visible.",
+        "No barcode or back-panel product details are shown."
+      ],
+      "next_photo_request": "Photograph the back, bottom, and side panels straight-on, including barcode and any format/model text.",
+      "user_text_consistent": true,
+      "normalized_query": "",
+      "verification_summary": "Topps Chrome Basketball Update Series and 2025/26 season are printed clearly. The exact commercial box format is not explicitly identified.",
+      "photo_clues": [
+        {
+          "text": "Topps Chrome",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.42,
+            "y": 0.62,
+            "width": 0.31,
+            "height": 0.1,
+            "certain": true
+          }
+        },
+        {
+          "text": "UPDATE SERIES",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.43,
+            "y": 0.7,
+            "width": 0.29,
+            "height": 0.08,
+            "certain": true
+          }
+        },
+        {
+          "text": "2025/26",
+          "role": "season",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.28,
+            "y": 0.52,
+            "width": 0.06,
+            "height": 0.17,
+            "certain": true
+          }
+        },
+        {
+          "text": "COOPER FLAGG",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.77,
+            "y": 0.21,
+            "width": 0.06,
+            "height": 0.17,
+            "certain": true
+          }
+        },
+        {
+          "text": "1 AUTOGRAPH IN EVERY BOX",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.46,
+            "y": 0.85,
+            "width": 0.3,
+            "height": 0.07,
+            "certain": true
+          }
+        }
+      ],
+      "physical_observations": [
+        {
+          "feature": "configuration",
+          "text": "Single sealed rectangular product box",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "color",
+          "text": "Blue, silver, black, red and gold front artwork",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "pattern",
+          "text": "Layered metallic curved-line frame design",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "count",
+          "text": "Two basketball players and two basketballs shown on the front",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "finish",
+          "text": "Glossy shrink-wrapped packaging with reflective highlights",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        }
+      ],
+      "printing_detail_regions": [],
+      "object_region": {
+        "image_index": 1,
+        "x": 0.27,
+        "y": 0.01,
+        "width": 0.6,
+        "height": 0.86,
+        "certain": true
+      },
+      "object_regions": [
+        {
+          "image_index": 1,
+          "x": 0.27,
+          "y": 0.01,
+          "width": 0.6,
+          "height": 0.86,
+          "certain": true
+        }
+      ],
+      "object_unit": "box",
+      "identity_basis": {
+        "family": "printed",
+        "variant": "inferred"
+      },
+      "pokemon_printing": null
+    },
+    "identity": {
+      "status": "uncertain",
+      "kind": "object",
+      "title": "2025/26 Topps Chrome Basketball Update Series box",
+      "category": "sealed basketball trading card box",
+      "brand": "Topps",
+      "family": "Topps Chrome Basketball Update Series",
+      "model": "",
+      "variant": "sealed retail box; exact format uncertain",
+      "condition": "sealed, visible packaging wear/creases",
+      "category_confidence": 98,
+      "brand_confidence": 99,
+      "family_confidence": 96,
+      "model_confidence": 55,
+      "model_verified": false,
+      "market_ready": false,
+      "candidate_models": [
+        {
+          "model": "2025/26 Topps Chrome Basketball Update Series Hobby Box",
+          "confidence": 55,
+          "reason": "Front states “1 AUTOGRAPH IN EVERY BOX,” consistent with a hobby-style configuration, but no explicit format label is visible."
+        },
+        {
+          "model": "2025/26 Topps Chrome Basketball Update Series box",
+          "confidence": 45,
+          "reason": "Series and season are clearly printed, while the exact box configuration is not."
+        }
+      ],
+      "visual_fingerprint": "Tall sealed Topps Chrome basketball box in blue/silver design, featuring Cooper Flagg in a Dallas uniform and Victor Wembanyama in a Spurs uniform; large “UPDATE SERIES” badge and bottom claim “1 AUTOGRAPH IN EVERY BOX.”",
+      "distinctive_terms": [
+        "2025/26",
+        "Topps Chrome",
+        "UPDATE SERIES",
+        "1 AUTOGRAPH IN EVERY BOX",
+        "COOPER FLAGG"
+      ],
+      "search_terms": [
+        "2025/26",
+        "Topps Chrome",
+        "UPDATE SERIES",
+        "1 AUTOGRAPH IN EVERY BOX",
+        "COOPER FLAGG"
+      ],
+      "identifier_hints": [],
+      "layout_signature": [
+        {
+          "term": "Topps Chrome",
+          "position": "lower center",
+          "relation": "large product logo above UPDATE SERIES"
+        },
+        {
+          "term": "UPDATE SERIES",
+          "position": "lower center",
+          "relation": "directly below Topps Chrome logo"
+        },
+        {
+          "term": "COOPER FLAGG",
+          "position": "upper right vertical",
+          "relation": "beside the Dallas player image"
+        },
+        {
+          "term": "2025/26",
+          "position": "left vertical",
+          "relation": "along the left side of the front panel"
+        },
+        {
+          "term": "1 AUTOGRAPH IN EVERY BOX",
+          "position": "bottom",
+          "relation": "above the lower edge and league logos"
+        }
+      ],
+      "evidence": [
+        "The front packaging visibly reads “Topps Chrome” and “UPDATE SERIES.”",
+        "The season text “2025/26” is visible along the left side.",
+        "“COOPER FLAGG” is printed vertically beside the Dallas player.",
+        "The box visibly states “1 AUTOGRAPH IN EVERY BOX.”",
+        "The product is physically sealed in factory-style shrink wrap."
+      ],
+      "missing_information": [
+        "Exact product format or SKU is not visible.",
+        "No barcode or back-panel product details are shown.",
+        "Verifica del sottotipo o della variante"
+      ],
+      "next_photo_request": null,
+      "user_text_consistent": true,
+      "normalized_query": "",
+      "verification_summary": "Topps Chrome Basketball Update Series and 2025/26 season are printed clearly. The exact commercial box format is not explicitly identified.",
+      "photo_clues": [
+        {
+          "text": "Topps Chrome",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.42,
+            "y": 0.62,
+            "width": 0.31,
+            "height": 0.1,
+            "certain": true
+          }
+        },
+        {
+          "text": "UPDATE SERIES",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.43,
+            "y": 0.7,
+            "width": 0.29,
+            "height": 0.08,
+            "certain": true
+          }
+        },
+        {
+          "text": "2025/26",
+          "role": "season",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.28,
+            "y": 0.52,
+            "width": 0.06,
+            "height": 0.17,
+            "certain": true
+          }
+        },
+        {
+          "text": "COOPER FLAGG",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.77,
+            "y": 0.21,
+            "width": 0.06,
+            "height": 0.17,
+            "certain": true
+          }
+        },
+        {
+          "text": "1 AUTOGRAPH IN EVERY BOX",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.46,
+            "y": 0.85,
+            "width": 0.3,
+            "height": 0.07,
+            "certain": true
+          }
+        }
+      ],
+      "physical_observations": [
+        {
+          "feature": "configuration",
+          "text": "Single sealed rectangular product box",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "color",
+          "text": "Blue, silver, black, red and gold front artwork",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "pattern",
+          "text": "Layered metallic curved-line frame design",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "count",
+          "text": "Two basketball players and two basketballs shown on the front",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "finish",
+          "text": "Glossy shrink-wrapped packaging with reflective highlights",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        }
+      ],
+      "printing_detail_regions": [],
+      "object_region": {
+        "image_index": 1,
+        "x": 0.27,
+        "y": 0.01,
+        "width": 0.6,
+        "height": 0.86,
+        "certain": true
+      },
+      "object_regions": [
+        {
+          "image_index": 1,
+          "x": 0.27,
+          "y": 0.01,
+          "width": 0.6,
+          "height": 0.86,
+          "certain": true
+        }
+      ],
+      "object_unit": "box",
+      "identity_basis": {
+        "family": "printed",
+        "variant": "inferred"
+      },
+      "pokemon_printing": null,
+      "local_ocr_engine": "nessun barcode locale",
+      "local_ocr_ms": 344,
+      "local_ocr_text": "",
+      "variant_needs_verification": true,
+      "visual_candidates": [
+        {
+          "category": "sealed basketball trading card box",
+          "brand": "Topps",
+          "family": "Topps Chrome Update Series Basketball Hobby",
+          "model": "Topps Chrome Update Series Basketball Hobby, Box",
+          "year": "",
+          "issue_number": "",
+          "catalog_number": "",
+          "unit": "box",
+          "variant": "",
+          "decision": "match",
+          "same_unit": true,
+          "physical_ambiguity": false,
+          "conflicts": [],
+          "matches": [
+            {
+              "reference_id": "ref2",
+              "feature": "layout",
+              "photo_detail": "Due giocatori frontali, logo Topps Chrome centrale e dicitura UPDATE SERIES",
+              "reference_detail": "Immagine con due giocatori, logo Topps Chrome e pannello UPDATE SERIES",
+              "agrees": true,
+              "reference_evidence": "image"
+            },
+            {
+              "reference_id": "ref3",
+              "feature": "color",
+              "photo_detail": "Blue, silver, black, red and gold front artwork",
+              "reference_detail": "Immagine del box con grafica prevalentemente blu, con bordi metallici rossi e dorati",
+              "agrees": true,
+              "reference_evidence": "image"
+            },
+            {
+              "reference_id": "ref3",
+              "feature": "pattern",
+              "photo_detail": "Layered metallic curved-line frame design",
+              "reference_detail": "Immagine con cornici curve stratificate e bordi metallici",
+              "agrees": true,
+              "reference_evidence": "image"
+            }
+          ],
+          "fields": [
+            {
+              "field": "brand",
+              "value": "Topps",
+              "reference_id": "ref2",
+              "quote": "2025-26 Topps Chrome Update Series Basketball Hobby, Box",
+              "scope": "target",
+              "number_kind": "none"
+            },
+            {
+              "field": "family",
+              "value": "Topps Chrome Update Series Basketball Hobby",
+              "reference_id": "ref2",
+              "quote": "2025-26 Topps Chrome Update Series Basketball Hobby, Box",
+              "scope": "target",
+              "number_kind": "none"
+            },
+            {
+              "field": "model",
+              "value": "Topps Chrome Update Series Basketball Hobby, Box",
+              "reference_id": "ref2",
+              "quote": "2025-26 Topps Chrome Update Series Basketball Hobby, Box",
+              "scope": "target",
+              "number_kind": "none"
+            },
+            {
+              "field": "year",
+              "value": "2025-26",
+              "reference_id": "ref2",
+              "quote": "2025-26 Topps Chrome Update Series Basketball Hobby, Box",
+              "scope": "target",
+              "number_kind": "season"
+            }
+          ],
+          "identity_level": "exact",
+          "specimen_notes": [],
+          "identity_conflicts": [],
+          "accepted": false,
+          "rejection": "configuration_not_matched"
+        }
+      ],
+      "assistance_state": "budget_exhausted",
+      "catalogue_needs_verification": false,
+      "family_mode": true
+    },
+    "phases": [
+      {
+        "stage": "vision",
+        "result": {
+          "status": "uncertain",
+          "kind": "object",
+          "title": "2025/26 Topps Chrome Basketball Update Series box",
+          "category": "sealed basketball trading card box",
+          "brand": "Topps",
+          "family": "Topps Chrome Basketball Update Series",
+          "model": "",
+          "variant": "sealed retail box; exact format uncertain",
+          "condition": "sealed, visible packaging wear/creases",
+          "category_confidence": 98,
+          "brand_confidence": 99,
+          "family_confidence": 96,
+          "model_confidence": 55,
+          "model_verified": false,
+          "market_ready": false,
+          "candidate_models": [
+            {
+              "model": "2025/26 Topps Chrome Basketball Update Series Hobby Box",
+              "confidence": 55,
+              "reason": "Front states “1 AUTOGRAPH IN EVERY BOX,” consistent with a hobby-style configuration, but no explicit format label is visible."
+            },
+            {
+              "model": "2025/26 Topps Chrome Basketball Update Series box",
+              "confidence": 45,
+              "reason": "Series and season are clearly printed, while the exact box configuration is not."
+            }
+          ],
+          "visual_fingerprint": "Tall sealed Topps Chrome basketball box in blue/silver design, featuring Cooper Flagg in a Dallas uniform and Victor Wembanyama in a Spurs uniform; large “UPDATE SERIES” badge and bottom claim “1 AUTOGRAPH IN EVERY BOX.”",
+          "distinctive_terms": [
+            "2025/26",
+            "Topps Chrome",
+            "UPDATE SERIES",
+            "1 AUTOGRAPH IN EVERY BOX",
+            "COOPER FLAGG"
+          ],
+          "search_terms": [
+            "2025/26",
+            "Topps Chrome",
+            "UPDATE SERIES",
+            "1 AUTOGRAPH IN EVERY BOX",
+            "COOPER FLAGG"
+          ],
+          "identifier_hints": [],
+          "layout_signature": [
+            {
+              "term": "Topps Chrome",
+              "position": "lower center",
+              "relation": "large product logo above UPDATE SERIES"
+            },
+            {
+              "term": "UPDATE SERIES",
+              "position": "lower center",
+              "relation": "directly below Topps Chrome logo"
+            },
+            {
+              "term": "COOPER FLAGG",
+              "position": "upper right vertical",
+              "relation": "beside the Dallas player image"
+            },
+            {
+              "term": "2025/26",
+              "position": "left vertical",
+              "relation": "along the left side of the front panel"
+            },
+            {
+              "term": "1 AUTOGRAPH IN EVERY BOX",
+              "position": "bottom",
+              "relation": "above the lower edge and league logos"
+            }
+          ],
+          "evidence": [
+            "The front packaging visibly reads “Topps Chrome” and “UPDATE SERIES.”",
+            "The season text “2025/26” is visible along the left side.",
+            "“COOPER FLAGG” is printed vertically beside the Dallas player.",
+            "The box visibly states “1 AUTOGRAPH IN EVERY BOX.”",
+            "The product is physically sealed in factory-style shrink wrap."
+          ],
+          "missing_information": [
+            "Exact product format or SKU is not visible.",
+            "No barcode or back-panel product details are shown."
+          ],
+          "next_photo_request": "Photograph the back, bottom, and side panels straight-on, including barcode and any format/model text.",
+          "user_text_consistent": true,
+          "normalized_query": "",
+          "verification_summary": "Topps Chrome Basketball Update Series and 2025/26 season are printed clearly. The exact commercial box format is not explicitly identified.",
+          "photo_clues": [
+            {
+              "text": "Topps Chrome",
+              "role": "text",
+              "certainty": "clear",
+              "image_index": 1,
+              "region": {
+                "image_index": 1,
+                "x": 0.42,
+                "y": 0.62,
+                "width": 0.31,
+                "height": 0.1,
+                "certain": true
+              }
+            },
+            {
+              "text": "UPDATE SERIES",
+              "role": "text",
+              "certainty": "clear",
+              "image_index": 1,
+              "region": {
+                "image_index": 1,
+                "x": 0.43,
+                "y": 0.7,
+                "width": 0.29,
+                "height": 0.08,
+                "certain": true
+              }
+            },
+            {
+              "text": "2025/26",
+              "role": "season",
+              "certainty": "clear",
+              "image_index": 1,
+              "region": {
+                "image_index": 1,
+                "x": 0.28,
+                "y": 0.52,
+                "width": 0.06,
+                "height": 0.17,
+                "certain": true
+              }
+            },
+            {
+              "text": "COOPER FLAGG",
+              "role": "text",
+              "certainty": "clear",
+              "image_index": 1,
+              "region": {
+                "image_index": 1,
+                "x": 0.77,
+                "y": 0.21,
+                "width": 0.06,
+                "height": 0.17,
+                "certain": true
+              }
+            },
+            {
+              "text": "1 AUTOGRAPH IN EVERY BOX",
+              "role": "text",
+              "certainty": "clear",
+              "image_index": 1,
+              "region": {
+                "image_index": 1,
+                "x": 0.46,
+                "y": 0.85,
+                "width": 0.3,
+                "height": 0.07,
+                "certain": true
+              }
+            }
+          ],
+          "physical_observations": [
+            {
+              "feature": "configuration",
+              "text": "Single sealed rectangular product box",
+              "certainty": "clear",
+              "entity": "target",
+              "image_index": 1
+            },
+            {
+              "feature": "color",
+              "text": "Blue, silver, black, red and gold front artwork",
+              "certainty": "clear",
+              "entity": "target",
+              "image_index": 1
+            },
+            {
+              "feature": "pattern",
+              "text": "Layered metallic curved-line frame design",
+              "certainty": "clear",
+              "entity": "target",
+              "image_index": 1
+            },
+            {
+              "feature": "count",
+              "text": "Two basketball players and two basketballs shown on the front",
+              "certainty": "clear",
+              "entity": "target",
+              "image_index": 1
+            },
+            {
+              "feature": "finish",
+              "text": "Glossy shrink-wrapped packaging with reflective highlights",
+              "certainty": "clear",
+              "entity": "target",
+              "image_index": 1
+            }
+          ],
+          "printing_detail_regions": [],
+          "object_region": {
+            "image_index": 1,
+            "x": 0.27,
+            "y": 0.01,
+            "width": 0.6,
+            "height": 0.86,
+            "certain": true
+          },
+          "object_regions": [
+            {
+              "image_index": 1,
+              "x": 0.27,
+              "y": 0.01,
+              "width": 0.6,
+              "height": 0.86,
+              "certain": true
+            }
+          ],
+          "object_unit": "box",
+          "identity_basis": {
+            "family": "printed",
+            "variant": "inferred"
+          },
+          "pokemon_printing": null
+        },
+        "webCalls": 0,
+        "usage": {
+          "input_tokens": 5188,
+          "input_tokens_details": {
+            "cache_write_tokens": 5185,
+            "cached_tokens": 0
+          },
+          "output_tokens": 1266,
+          "output_tokens_details": {
+            "reasoning_tokens": 136
+          },
+          "total_tokens": 6454
+        }
+      },
+      {
+        "stage": "flipcheck_visual_comparison",
+        "result": {
+          "physical_detail_needed": null,
+          "candidates": [
+            {
+              "category": "sealed basketball trading card box",
+              "brand": "Topps",
+              "family": "Topps Chrome Update Series Basketball Hobby",
+              "model": "Topps Chrome Update Series Basketball Hobby, Box",
+              "year": "",
+              "issue_number": "",
+              "catalog_number": "",
+              "unit": "box",
+              "variant": "",
+              "decision": "match",
+              "same_unit": true,
+              "physical_ambiguity": false,
+              "conflicts": [],
+              "matches": [
+                {
+                  "reference_id": "ref2",
+                  "feature": "layout",
+                  "photo_detail": "Due giocatori frontali, logo Topps Chrome centrale e dicitura UPDATE SERIES",
+                  "reference_detail": "Immagine con due giocatori, logo Topps Chrome e pannello UPDATE SERIES",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                },
+                {
+                  "reference_id": "ref2",
+                  "feature": "configuration",
+                  "photo_detail": "Single sealed rectangular product box",
+                  "reference_detail": "\"2025-26 Topps Chrome Update Series Basketball Hobby, Box\"",
+                  "agrees": true,
+                  "reference_evidence": "description"
+                },
+                {
+                  "reference_id": "ref3",
+                  "feature": "color",
+                  "photo_detail": "Blue, silver, black, red and gold front artwork",
+                  "reference_detail": "Immagine del box con grafica prevalentemente blu, con bordi metallici rossi e dorati",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                },
+                {
+                  "reference_id": "ref3",
+                  "feature": "pattern",
+                  "photo_detail": "Layered metallic curved-line frame design",
+                  "reference_detail": "Immagine con cornici curve stratificate e bordi metallici",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                }
+              ],
+              "fields": [
+                {
+                  "field": "brand",
+                  "value": "Topps",
+                  "reference_id": "ref2",
+                  "quote": "2025-26 Topps Chrome Update Series Basketball Hobby, Box",
+                  "scope": "target",
+                  "number_kind": "none"
+                },
+                {
+                  "field": "family",
+                  "value": "Topps Chrome Update Series Basketball Hobby",
+                  "reference_id": "ref2",
+                  "quote": "2025-26 Topps Chrome Update Series Basketball Hobby, Box",
+                  "scope": "target",
+                  "number_kind": "none"
+                },
+                {
+                  "field": "model",
+                  "value": "Topps Chrome Update Series Basketball Hobby, Box",
+                  "reference_id": "ref2",
+                  "quote": "2025-26 Topps Chrome Update Series Basketball Hobby, Box",
+                  "scope": "target",
+                  "number_kind": "none"
+                },
+                {
+                  "field": "year",
+                  "value": "2025-26",
+                  "reference_id": "ref2",
+                  "quote": "2025-26 Topps Chrome Update Series Basketball Hobby, Box",
+                  "scope": "target",
+                  "number_kind": "season"
+                }
+              ],
+              "identity_level": "exact",
+              "specimen_notes": []
+            }
+          ]
+        },
+        "webCalls": 0,
+        "usage": {
+          "input_tokens": 7666,
+          "input_tokens_details": {
+            "cache_write_tokens": 7663,
+            "cached_tokens": 0
+          },
+          "output_tokens": 728,
+          "output_tokens_details": {
+            "reasoning_tokens": 219
+          },
+          "total_tokens": 8394
+        }
+      }
+    ],
+    "references": [
+      {
+        "id": "ref1",
+        "url": "https://rbicru7.com/collections/nba-basketball",
+        "title": "All Basketball - RbiCru7 Collectibles",
+        "text": "All Basketball\n\n\n      \n\n\n\n  \n\n  \n\n    \n      \n        \n\n\n\n  \n  \n  \n    \n      \n        \n          \n          \n        \n\n        \n\n      \n\n      \n    \n\n  \n\n  \n    \n      Panini\n\n    \n\n    2025-26 Panini Noir Basketball Hobby, Box *RELEASES 9/18*\n\n\n    \n      \n    \n      \n    \n    \n    \n      \n        \n          \n            \n      \n            \n              Regular price\n              $750\n            \n\n          \n\n\n      \n    \n  \n\n\n  \n  \n    \n    View\n  \n\n\n\n      \n\n    \n      \n        \n\n\n\n  \n  \n  \n    \n      \n        \n          \n          \n        \n\n        \n\n      \n\n      \n    \n\n  \n\n  \n    \n      Panini\n\n    \n\n    2025-26 Panini Noir Basketball Hobby, 4 Box Case *RELEASES 9/18*\n\n\n    \n      \n    \n      \n    \n    \n    \n      \n        \n          \n            \n      \n            \n              Regular price\n              $3,000\n            \n\n          \n\n\n      \n    \n  \n\n\n  \n  \n    \n    View\n  \n\n\n\n      \n\n    \n      \n        \n\n\n\n  \n  \n  \n    \n      \n        \n          \n          \n        \n\n        \n\n      \n\n      \n    \n\n  \n\n  \n    \n      Panini\n\n    \n\n    2026 Panini Donruss WNBA Basketball Hobby, Box\n\n\n    \n      \n    \n      \n    \n    \n    \n      \n        \n          \n            \n      \n            \n              Regular price\n              $295\n            \n\n          \n\n\n      \n    \n  \n\n\n  \n  \n    \n    View\n  \n\n\n\n      \n\n    \n      \n        \n\n\n\n  \n  \n  \n    \n      \n        \n          \n          \n        \n\n        \n\n      \n\n      \n    \n\n  \n\n  \n    \n      Panini\n\n    \n\n    2026 Panini Donruss WNBA Basketball Hobby, Pack\n\n\n    \n      \n    \n      \n    \n    \n    \n      \n        \n          \n            \n      \n            \n              Regular price\n              $28\n            \n\n          \n\n\n      \n    \n  \n\n\n  \n  \n    \n    View\n  \n\n\n\n      \n\n    \n      \n        \n\n\n\n  \n  \n  \n    \n      \n        \n          \n          \n        \n\n        \n\n      \n\n      \n    \n\n  \n\n  \n    \n      Panini\n\n    \n\n    2026 Panini Donruss WNBA Basketball Hobby, 16 Box Case\n\n\n    \n      \n    \n      \n    \n    \n    \n      \n        \n          \n            \n      \n            \n              Regular price\n              $4,697\n            \n\n          \n\n\n      \n    \n  \n\n\n  \n  \n    \n    View\n  \n\n\n\n      \n\n    \n      \n        \n\n\n\n  \n  \n  \n    \n      \n        \n          \n          \n        \n\n        \n\n      \n\n      \n    \n\n  \n\n  \n    \n      Panini\n\n    \n\n    2025-26 Panini Origins Basketball Hobby, Box\n\n\n    \n      \n    \n      \n    \n    \n    \n      \n        \n          \n            \n      \n            \n              Regular price\n              $210\n            \n\n          \n\n\n      \n    \n  \n\n\n  \n  \n    \n    View\n  \n\n\n\n      \n\n    \n      \n        \n\n\n\n  \n  \n  \n    \n      \n        \n          \n          \n        \n\n        \n\n      \n\n      \n    \n\n  \n\n  \n    \n      Panini\n\n    \n\n    2025-26 Panini Origins Basketball Hobby, 12 Box Case\n\n\n    \n      \n    \n      \n    \n    \n    \n      \n        \n          \n            \n      \n            \n              Regular price\n              $2,497\n            \n\n          \n\n\n      \n    \n  \n\n\n  \n  \n    \n    View\n  \n\n\n\n      \n\n    \n      \n        \n\n\n\n  \n  \n  \n    \n      \n        \n          \n          \n        \n\n        \n\n      \n\n      \n    \n\n  \n\n  \n    \n      Topps\n\n    \n\n    2025-26 Topps Chrome Black Basketball Hobby, Box\n\n\n    \n      \n    \n      \n    \n    \n    \n      \n        \n          \n            \n          \n            \n              Regular price\n              $575\n\n              Sale price\n              $550\n            \n\n          \n\n\n      \n    \n  \n\n\n  \n    \n    \n      Sale\n    \n\n  \n  \n    \n    View\n  \n\n\n\n      \n\n    \n      \n        \n\n\n\n  \n  \n  \n    \n      \n        \n          \n          \n        \n\n        \n\n      \n\n      \n    \n\n  \n\n  \n    \n      Topps\n\n    \n\n    2025-26 Topps Chrome Black Basketball Hobby, 8 Box Case\n\n\n    \n      \n    \n      \n    \n    \n    \n      \n        \n          \n            \n          \n            \n              Regular price\n              $4,597\n\n              Sale price\n              $4,397\n            \n\n          \n\n\n      \n    \n  \n\n\n  \n    \n    \n      Sale\n    \n\n  \n  \n    \n    View\n  \n\n\n\n      \n\n    \n      \n        \n\n\n\n  \n  \n  \n    \n      \n        \n          \n          \n        \n\n        \n\n      \n\n      \n    \n\n  \n\n  \n    \n      Topps\n\n    \n\n    2025-26 Topps Motif Basketball Hobby, Box\n\n\n    \n      \n    \n      \n    \n    \n    \n      \n        \n          Sold Out\n        \n\n      \n    \n  \n\n\n  \n    \n    \n      Sale\n    \n\n  \n  \n    \n    View\n  \n\n\n\n      \n\n    \n      \n        \n\n\n\n  \n  \n  \n    \n      \n        \n          \n          \n        \n\n        \n\n      \n\n      \n    \n\n  \n\n  \n    \n      Topps\n\n    \n\n    2025-26 Topps Motif Basketball Hobby, 3 Box Case\n\n\n    \n      \n    \n      \n    \n    \n    \n      \n        \n          \n            \n          \n            \n              Regular price\n              $8,997\n\n              Sale price\n              $7,497\n            \n\n          \n\n\n      \n    \n  \n\n\n  \n    \n    \n      Sale\n    \n\n  \n  \n    \n    View\n  \n\n\n\n      \n\n    \n      \n        \n\n\n\n  \n  \n  \n    \n    ",
+        "text_origin": "retrieved_page",
+        "image_url": "https://rbicru7.com/cdn/shop/files/Scan_2_33212c66-28ec-49e1-8ef5-d47abd01f38a_1080x.jpg?v=1785946935"
+      },
+      {
+        "id": "ref2",
+        "url": "https://rbicru7.com/collections/nba-boxes",
+        "title": "Basketball Boxes - RbiCru7 Collectibles",
+        "text": "Basketball Boxes\n\n\n      \n\n\n\n  \n\n  \n\n    \n      \n        \n\n\n\n  \n  \n  \n    \n      \n        \n          \n          \n        \n\n        \n\n      \n\n      \n    \n\n  \n\n  \n    \n      Panini\n\n    \n\n    2026 Panini Donruss WNBA Basketball Hobby, Box\n\n\n    \n      \n    \n      \n    \n    \n    \n      \n        \n          \n            \n      \n            \n              Regular price\n              $295\n            \n\n          \n\n\n      \n    \n  \n\n\n  \n  \n    \n    View\n  \n\n\n\n      \n\n    \n      \n        \n\n\n\n  \n  \n  \n    \n      \n        \n          \n          \n        \n\n        \n\n      \n\n      \n    \n\n  \n\n  \n    \n      Panini\n\n    \n\n    2026 Panini Donruss WNBA Basketball Hobby, 16 Box Case\n\n\n    \n      \n    \n      \n    \n    \n    \n      \n        \n          \n            \n      \n            \n              Regular price\n              $4,697\n            \n\n          \n\n\n      \n    \n  \n\n\n  \n  \n    \n    View\n  \n\n\n\n      \n\n    \n      \n        \n\n\n\n  \n  \n  \n    \n      \n        \n          \n          \n        \n\n        \n\n      \n\n      \n    \n\n  \n\n  \n    \n      Panini\n\n    \n\n    2025-26 Panini Origins Basketball Hobby, Box\n\n\n    \n      \n    \n      \n    \n    \n    \n      \n        \n          \n            \n      \n            \n              Regular price\n              $210\n            \n\n          \n\n\n      \n    \n  \n\n\n  \n  \n    \n    View\n  \n\n\n\n      \n\n    \n      \n        \n\n\n\n  \n  \n  \n    \n      \n        \n          \n          \n        \n\n        \n\n      \n\n      \n    \n\n  \n\n  \n    \n      Panini\n\n    \n\n    2025-26 Panini Origins Basketball Hobby, 12 Box Case\n\n\n    \n      \n    \n      \n    \n    \n    \n      \n        \n          \n            \n      \n            \n              Regular price\n              $2,497\n            \n\n          \n\n\n      \n    \n  \n\n\n  \n  \n    \n    View\n  \n\n\n\n      \n\n    \n      \n        \n\n\n\n  \n  \n  \n    \n      \n        \n          \n          \n        \n\n        \n\n      \n\n      \n    \n\n  \n\n  \n    \n      Topps\n\n    \n\n    2025-26 Topps Chrome Black Basketball Hobby, Box\n\n\n    \n      \n    \n      \n    \n    \n    \n      \n        \n          \n            \n          \n            \n              Regular price\n              $575\n\n              Sale price\n              $550\n            \n\n          \n\n\n      \n    \n  \n\n\n  \n    \n    \n      Sale\n    \n\n  \n  \n    \n    View\n  \n\n\n\n      \n\n    \n      \n        \n\n\n\n  \n  \n  \n    \n      \n        \n          \n          \n        \n\n        \n\n      \n\n      \n    \n\n  \n\n  \n    \n      Topps\n\n    \n\n    2025-26 Topps Chrome Black Basketball Hobby, 8 Box Case\n\n\n    \n      \n    \n      \n    \n    \n    \n      \n        \n          \n            \n          \n            \n              Regular price\n              $4,597\n\n              Sale price\n              $4,397\n            \n\n          \n\n\n      \n    \n  \n\n\n  \n    \n    \n      Sale\n    \n\n  \n  \n    \n    View\n  \n\n\n\n      \n\n    \n      \n        \n\n\n\n  \n  \n  \n    \n      \n        \n          \n          \n        \n\n        \n\n      \n\n      \n    \n\n  \n\n  \n    \n      Topps\n\n    \n\n    2025-26 Topps Motif Basketball Hobby, Box\n\n\n    \n      \n    \n      \n    \n    \n    \n      \n        \n          Sold Out\n        \n\n      \n    \n  \n\n\n  \n    \n    \n      Sale\n    \n\n  \n  \n    \n    View\n  \n\n\n\n      \n\n    \n      \n        \n\n\n\n  \n  \n  \n    \n      \n        \n          \n          \n        \n\n        \n\n      \n\n      \n    \n\n  \n\n  \n    \n      Topps\n\n    \n\n    2025-26 Topps Motif Basketball Hobby, 3 Box Case\n\n\n    \n      \n    \n      \n    \n    \n    \n      \n        \n          \n            \n          \n            \n              Regular price\n              $8,997\n\n              Sale price\n              $7,497\n            \n\n          \n\n\n      \n    \n  \n\n\n  \n    \n    \n      Sale\n    \n\n  \n  \n    \n    View\n  \n\n\n\n      \n\n    \n      \n        \n\n\n\n  \n  \n  \n    \n      \n        \n          \n          \n        \n\n        \n\n      \n\n      \n    \n\n  \n\n  \n    \n      Panini\n\n    \n\n    2025-26 Panini Noir Basketball Hobby, Box *RELEASES 9/18*\n\n\n    \n      \n    \n      \n    \n    \n    \n      \n        \n          \n            \n      \n            \n              Regular price\n              $750\n            \n\n          \n\n\n      \n    \n  \n\n\n  \n  \n    \n    View\n  \n\n\n\n      \n\n    \n      \n        \n\n\n\n  \n  \n  \n    \n      \n        \n          \n          \n        \n\n        \n\n      \n\n      \n    \n\n  \n\n  \n    \n      Panini\n\n    \n\n    2025-26 Panini Noir Basketball Hobby, 4 Box Case *RELEASES 9/18*\n\n\n    \n      \n    \n      \n    \n    \n    \n      \n        \n          \n            \n      \n            \n              Regular price\n              $3,000\n            \n\n          \n\n\n      \n    \n  \n\n\n  \n  \n    \n    View\n  \n\n\n\n      \n\n    \n      \n        \n\n\n\n  \n  \n  \n    \n      \n        \n          \n          \n        \n\n        \n\n      \n\n      \n    \n\n  \n\n  \n    \n      Topps\n\n    \n\n    2025-26 Topps Chrome Update Series Basketball Hobby, Box\n\n\n    \n      \n    \n      \n    \n    \n    \n      \n        \n          \n            \n      \n            \n              Regular price\n              $1,095\n            \n\n          \n\n\n      \n    \n  \n\n\n  \n  \n    \n    View\n  \n\n\n\n      \n\n    \n      \n        \n\n\n\n  \n  ",
+        "text_origin": "retrieved_page",
+        "image_url": "https://rbicru7.com/cdn/shop/files/Scan_2_33212c66-28ec-49e1-8ef5-d47abd01f38a_1080x.jpg?v=1785946935"
+      },
+      {
+        "id": "ref3",
+        "url": "https://www.checklistinsider.com/basketball-cards",
+        "title": "Basketball Cards Checklist, Set Info, Guides, Product Breakdown",
+        "text": "Basketball Cards Checklist, Set Info, Guides, Product Breakdown\n\n\n\n                2025-26 Topps Chrome Update Sapphire Basketball Checklist Guide\n\n2025-26 Topps Chrome Update Sapphire Basketball adds the Sapphire Edition treatment to the past and present NBA stars of Update Series.\n\n\nSep 1, 2026Sep 1, 2026\n\n",
+        "text_origin": "retrieved_page",
+        "image_url": "https://xcdn.checklistinsider.com/public/2026/06/2025-26-Topps-Chrome-Update-Series-Basketball-Sealed-Hobby-box-thumb-1200-500x500.jpg"
+      }
+    ],
+    "budget": {
+      "maxUsd": 0.03,
+      "spentOrReservedUsd": 0.009106,
+      "entries": [
+        {
+          "kind": "vision",
+          "reservedUsd": 0.0096885,
+          "actualUsd": 0.00281605,
+          "status": "usage_returned"
+        },
+        {
+          "kind": "visual",
+          "reservedUsd": 0.0035,
+          "actualUsd": 0.0035,
+          "status": "usage_returned",
+          "costBasis": "google_web_detection_list_price_2026-09-06"
+        },
+        {
+          "kind": "vision",
+          "reservedUsd": 0.01190125,
+          "actualUsd": 0.00278995,
+          "status": "usage_returned"
+        }
+      ],
+      "estimated": true,
+      "includesIdentificationAndMarket": true
+    }
+  },
+  "politoed": {
+    "vision": {
+      "status": "identified",
+      "kind": "card",
+      "title": "Politoed",
+      "category": "Pokémon TCG card",
+      "brand": "Nintendo",
+      "family": "Neo Genesis",
+      "model": "Politoed 12/111",
+      "variant": "Holofoil; first-edition status unclear",
+      "condition": "Raw; visibly worn/photographed in sleeve",
+      "category_confidence": 99,
+      "brand_confidence": 95,
+      "family_confidence": 68,
+      "model_confidence": 82,
+      "model_verified": false,
+      "market_ready": false,
+      "candidate_models": [
+        {
+          "model": "Politoed 12/111",
+          "confidence": 82,
+          "reason": "Name, Italian text, holo artwork and bottom-right number appear consistent."
+        },
+        {
+          "model": "Politoed 13/111",
+          "confidence": 18,
+          "reason": "Number is partially blurred and could be misread."
+        }
+      ],
+      "visual_fingerprint": "Italian vintage Pokémon Politoed Stage 2 card with yellow border, blue text area, holographic forest artwork, 110 PV, attacks Crescita Improvvisa, Ranabalzo and Spruzza Energia; bottom-right number appears 12/111.",
+      "distinctive_terms": [
+        "Politoed",
+        "Crescita Improvvisa",
+        "Ranabalzo",
+        "Spruzza Energia",
+        "110 PV"
+      ],
+      "search_terms": [
+        "Politoed",
+        "Crescita Improvvisa",
+        "Ranabalzo",
+        "Spruzza Energia"
+      ],
+      "identifier_hints": [
+        "12/111"
+      ],
+      "layout_signature": [
+        {
+          "term": "Politoed",
+          "position": "top center",
+          "relation": "large name text above artwork"
+        },
+        {
+          "term": "110 PV",
+          "position": "top right",
+          "relation": "beside Water-type symbol"
+        },
+        {
+          "term": "Crescita Improvvisa",
+          "position": "below artwork",
+          "relation": "first attack heading"
+        },
+        {
+          "term": "Ranabalzo",
+          "position": "middle text box",
+          "relation": "second attack heading"
+        },
+        {
+          "term": "Spruzza Energia",
+          "position": "lower text box",
+          "relation": "third attack heading"
+        }
+      ],
+      "evidence": [
+        "The card name “Politoed” is clearly visible at the top.",
+        "Italian attack names and Italian rules text are visible.",
+        "Holographic Politoed artwork and 110 PV are visible.",
+        "Bottom-right collector number appears to read 12/111, but is blurred.",
+        "Copyright line visibly begins with © 2000 Nintendo."
+      ],
+      "missing_information": [
+        "Set symbol/name is not sufficiently legible.",
+        "First Edition stamp cannot be confirmed from this image.",
+        "Shadow/shadowless status cannot be reliably determined."
+      ],
+      "next_photo_request": "Provide a sharp, straight-on close-up of the bottom edge and the area below the artwork, plus the full front in even lighting.",
+      "user_text_consistent": true,
+      "normalized_query": "",
+      "verification_summary": "The card is confidently identified as an Italian Politoed holo, probably 12/111 from Neo Genesis, but the set and collector number require sharper confirmation.",
+      "photo_clues": [
+        {
+          "text": "Politoed",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.33,
+            "y": 0.065,
+            "width": 0.23,
+            "height": 0.05,
+            "certain": true
+          }
+        },
+        {
+          "text": "110 PV",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.69,
+            "y": 0.065,
+            "width": 0.12,
+            "height": 0.05,
+            "certain": true
+          }
+        },
+        {
+          "text": "Crescita Improvvisa",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.34,
+            "y": 0.52,
+            "width": 0.3,
+            "height": 0.04,
+            "certain": true
+          }
+        },
+        {
+          "text": "Ranabalzo",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.34,
+            "y": 0.59,
+            "width": 0.2,
+            "height": 0.04,
+            "certain": true
+          }
+        },
+        {
+          "text": "Spruzza Energia",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.34,
+            "y": 0.68,
+            "width": 0.25,
+            "height": 0.04,
+            "certain": true
+          }
+        },
+        {
+          "text": "12/111",
+          "role": "collector_number",
+          "certainty": "uncertain",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.8,
+            "y": 0.89,
+            "width": 0.1,
+            "height": 0.03,
+            "certain": false
+          }
+        },
+        {
+          "text": "© 2000 Nintendo",
+          "role": "copyright",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.24,
+            "y": 0.925,
+            "width": 0.22,
+            "height": 0.025,
+            "certain": true
+          }
+        }
+      ],
+      "physical_observations": [
+        {
+          "feature": "color",
+          "text": "Yellow border with blue lower text panel",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "finish",
+          "text": "Holographic foil artwork background",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "configuration",
+          "text": "Three visible attacks with Water and Colorless energy symbols",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "layout",
+          "text": "Stage 2 layout with Politoed evolution portrait at upper left",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        }
+      ],
+      "printing_detail_regions": [
+        {
+          "detail": "copyright",
+          "region": {
+            "image_index": 1,
+            "x": 0.2,
+            "y": 0.91,
+            "width": 0.45,
+            "height": 0.05,
+            "certain": true
+          }
+        },
+        {
+          "detail": "stamp",
+          "region": {
+            "image_index": 1,
+            "x": 0.08,
+            "y": 0.04,
+            "width": 0.18,
+            "height": 0.12,
+            "certain": false
+          }
+        },
+        {
+          "detail": "shadow",
+          "region": {
+            "image_index": 1,
+            "x": 0.18,
+            "y": 0.13,
+            "width": 0.75,
+            "height": 0.34,
+            "certain": false
+          }
+        }
+      ],
+      "object_region": {
+        "image_index": 1,
+        "x": 0.075,
+        "y": 0,
+        "width": 0.85,
+        "height": 0.975,
+        "certain": true
+      },
+      "object_regions": [
+        {
+          "image_index": 1,
+          "x": 0.075,
+          "y": 0,
+          "width": 0.85,
+          "height": 0.975,
+          "certain": true
+        }
+      ],
+      "object_unit": "single",
+      "identity_basis": {
+        "family": "inferred",
+        "variant": "physical_evidence"
+      },
+      "pokemon_printing": {
+        "is_pokemon": true,
+        "language": "Italian",
+        "set_name": "Neo Genesis (inferred)",
+        "card_type": "pokemon",
+        "first_edition_stamp": "unclear",
+        "stamp_image": 1,
+        "stamp_location": "upper-left border area",
+        "stamp_text": "",
+        "artwork_shadow": "unclear",
+        "shadow_image": 1,
+        "shadow_location": "right/lower edge of artwork frame",
+        "copyright_text": "© 2000 Nintendo",
+        "copyright_image": 1,
+        "slab_text": "",
+        "slab_image": 0
+      }
+    },
+    "identity": {
+      "status": "uncertain",
+      "kind": "card",
+      "title": "Politoed",
+      "category": "Pokémon TCG card",
+      "brand": "Nintendo",
+      "family": "Neo Genesis",
+      "model": "Politoed 12/111",
+      "variant": "Holofoil; first-edition status unclear",
+      "condition": "Raw; visibly worn/photographed in sleeve",
+      "category_confidence": 99,
+      "brand_confidence": 95,
+      "family_confidence": 68,
+      "model_confidence": 82,
+      "model_verified": false,
+      "market_ready": false,
+      "candidate_models": [
+        {
+          "model": "Politoed 12/111",
+          "confidence": 82,
+          "reason": "Name, Italian text, holo artwork and bottom-right number appear consistent."
+        },
+        {
+          "model": "Politoed 13/111",
+          "confidence": 18,
+          "reason": "Number is partially blurred and could be misread."
+        }
+      ],
+      "visual_fingerprint": "Italian vintage Pokémon Politoed Stage 2 card with yellow border, blue text area, holographic forest artwork, 110 PV, attacks Crescita Improvvisa, Ranabalzo and Spruzza Energia; bottom-right number appears 12/111.",
+      "distinctive_terms": [
+        "Politoed",
+        "Crescita Improvvisa",
+        "Ranabalzo",
+        "Spruzza Energia",
+        "110 PV"
+      ],
+      "search_terms": [
+        "Politoed",
+        "Crescita Improvvisa",
+        "Ranabalzo",
+        "Spruzza Energia"
+      ],
+      "identifier_hints": [
+        "12/111"
+      ],
+      "layout_signature": [
+        {
+          "term": "Politoed",
+          "position": "top center",
+          "relation": "large name text above artwork"
+        },
+        {
+          "term": "110 PV",
+          "position": "top right",
+          "relation": "beside Water-type symbol"
+        },
+        {
+          "term": "Crescita Improvvisa",
+          "position": "below artwork",
+          "relation": "first attack heading"
+        },
+        {
+          "term": "Ranabalzo",
+          "position": "middle text box",
+          "relation": "second attack heading"
+        },
+        {
+          "term": "Spruzza Energia",
+          "position": "lower text box",
+          "relation": "third attack heading"
+        }
+      ],
+      "evidence": [
+        "The card name “Politoed” is clearly visible at the top.",
+        "Italian attack names and Italian rules text are visible.",
+        "Holographic Politoed artwork and 110 PV are visible.",
+        "Bottom-right collector number appears to read 12/111, but is blurred.",
+        "Copyright line visibly begins with © 2000 Nintendo."
+      ],
+      "missing_information": [
+        "zona del timbro di edizione sul fronte",
+        "Verifica catalografica della serie"
+      ],
+      "next_photo_request": "Fotografa da vicino: zona del timbro di edizione sul fronte.",
+      "user_text_consistent": true,
+      "normalized_query": "",
+      "verification_summary": "The card is confidently identified as an Italian Politoed holo, probably 12/111 from Neo Genesis, but the set and collector number require sharper confirmation.",
+      "photo_clues": [
+        {
+          "text": "Politoed",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.33,
+            "y": 0.065,
+            "width": 0.23,
+            "height": 0.05,
+            "certain": true
+          }
+        },
+        {
+          "text": "110 PV",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.69,
+            "y": 0.065,
+            "width": 0.12,
+            "height": 0.05,
+            "certain": true
+          }
+        },
+        {
+          "text": "Crescita Improvvisa",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.34,
+            "y": 0.52,
+            "width": 0.3,
+            "height": 0.04,
+            "certain": true
+          }
+        },
+        {
+          "text": "Ranabalzo",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.34,
+            "y": 0.59,
+            "width": 0.2,
+            "height": 0.04,
+            "certain": true
+          }
+        },
+        {
+          "text": "Spruzza Energia",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.34,
+            "y": 0.68,
+            "width": 0.25,
+            "height": 0.04,
+            "certain": true
+          }
+        },
+        {
+          "text": "12/111",
+          "role": "collector_number",
+          "certainty": "uncertain",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.8,
+            "y": 0.89,
+            "width": 0.1,
+            "height": 0.03,
+            "certain": false
+          }
+        },
+        {
+          "text": "© 2000 Nintendo",
+          "role": "copyright",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.24,
+            "y": 0.925,
+            "width": 0.22,
+            "height": 0.025,
+            "certain": true
+          }
+        }
+      ],
+      "physical_observations": [
+        {
+          "feature": "color",
+          "text": "Yellow border with blue lower text panel",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "finish",
+          "text": "Holographic foil artwork background",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "configuration",
+          "text": "Three visible attacks with Water and Colorless energy symbols",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "layout",
+          "text": "Stage 2 layout with Politoed evolution portrait at upper left",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        }
+      ],
+      "printing_detail_regions": [
+        {
+          "detail": "copyright",
+          "region": {
+            "image_index": 1,
+            "x": 0.2,
+            "y": 0.91,
+            "width": 0.45,
+            "height": 0.05,
+            "certain": true
+          }
+        },
+        {
+          "detail": "stamp",
+          "region": {
+            "image_index": 1,
+            "x": 0.08,
+            "y": 0.04,
+            "width": 0.18,
+            "height": 0.12,
+            "certain": false
+          }
+        },
+        {
+          "detail": "shadow",
+          "region": {
+            "image_index": 1,
+            "x": 0.18,
+            "y": 0.13,
+            "width": 0.75,
+            "height": 0.34,
+            "certain": false
+          }
+        }
+      ],
+      "object_region": {
+        "image_index": 1,
+        "x": 0.075,
+        "y": 0,
+        "width": 0.85,
+        "height": 0.975,
+        "certain": true
+      },
+      "object_regions": [
+        {
+          "image_index": 1,
+          "x": 0.075,
+          "y": 0,
+          "width": 0.85,
+          "height": 0.975,
+          "certain": true
+        }
+      ],
+      "object_unit": "single",
+      "identity_basis": {
+        "family": "inferred",
+        "variant": "physical_evidence"
+      },
+      "pokemon_printing": {
+        "is_pokemon": true,
+        "language": "Italian",
+        "set_name": "Neo Genesis (inferred)",
+        "card_type": "pokemon",
+        "first_edition_stamp": "unclear",
+        "stamp_image": 1,
+        "stamp_location": "upper-left border area",
+        "stamp_text": "",
+        "artwork_shadow": "unclear",
+        "shadow_image": 1,
+        "shadow_location": "right/lower edge of artwork frame",
+        "copyright_text": "© 2000 Nintendo",
+        "copyright_image": 1,
+        "slab_text": "",
+        "slab_image": 0
+      },
+      "local_ocr_engine": "nessun barcode locale",
+      "local_ocr_ms": 92,
+      "local_ocr_text": "",
+      "variant_needs_verification": false,
+      "catalogue_needs_verification": true,
+      "printing_check": {
+        "stamp": "unclear",
+        "shadow": "not_applicable",
+        "applicable": false,
+        "labels": [],
+        "missing": [
+          "zona del timbro di edizione sul fronte"
+        ],
+        "slab": "",
+        "contradiction": false,
+        "complete": false,
+        "stampLocation": "upper-left border area",
+        "shadowLocation": "right/lower edge of artwork frame",
+        "copyright": "© 2000 Nintendo"
+      },
+      "assistance_state": "physical_detail_needed"
+    },
+    "phases": [
+      {
+        "stage": "vision",
+        "result": {
+          "status": "identified",
+          "kind": "card",
+          "title": "Politoed",
+          "category": "Pokémon TCG card",
+          "brand": "Nintendo",
+          "family": "Neo Genesis",
+          "model": "Politoed 12/111",
+          "variant": "Holofoil; first-edition status unclear",
+          "condition": "Raw; visibly worn/photographed in sleeve",
+          "category_confidence": 99,
+          "brand_confidence": 95,
+          "family_confidence": 68,
+          "model_confidence": 82,
+          "model_verified": false,
+          "market_ready": false,
+          "candidate_models": [
+            {
+              "model": "Politoed 12/111",
+              "confidence": 82,
+              "reason": "Name, Italian text, holo artwork and bottom-right number appear consistent."
+            },
+            {
+              "model": "Politoed 13/111",
+              "confidence": 18,
+              "reason": "Number is partially blurred and could be misread."
+            }
+          ],
+          "visual_fingerprint": "Italian vintage Pokémon Politoed Stage 2 card with yellow border, blue text area, holographic forest artwork, 110 PV, attacks Crescita Improvvisa, Ranabalzo and Spruzza Energia; bottom-right number appears 12/111.",
+          "distinctive_terms": [
+            "Politoed",
+            "Crescita Improvvisa",
+            "Ranabalzo",
+            "Spruzza Energia",
+            "110 PV"
+          ],
+          "search_terms": [
+            "Politoed",
+            "Crescita Improvvisa",
+            "Ranabalzo",
+            "Spruzza Energia"
+          ],
+          "identifier_hints": [
+            "12/111"
+          ],
+          "layout_signature": [
+            {
+              "term": "Politoed",
+              "position": "top center",
+              "relation": "large name text above artwork"
+            },
+            {
+              "term": "110 PV",
+              "position": "top right",
+              "relation": "beside Water-type symbol"
+            },
+            {
+              "term": "Crescita Improvvisa",
+              "position": "below artwork",
+              "relation": "first attack heading"
+            },
+            {
+              "term": "Ranabalzo",
+              "position": "middle text box",
+              "relation": "second attack heading"
+            },
+            {
+              "term": "Spruzza Energia",
+              "position": "lower text box",
+              "relation": "third attack heading"
+            }
+          ],
+          "evidence": [
+            "The card name “Politoed” is clearly visible at the top.",
+            "Italian attack names and Italian rules text are visible.",
+            "Holographic Politoed artwork and 110 PV are visible.",
+            "Bottom-right collector number appears to read 12/111, but is blurred.",
+            "Copyright line visibly begins with © 2000 Nintendo."
+          ],
+          "missing_information": [
+            "Set symbol/name is not sufficiently legible.",
+            "First Edition stamp cannot be confirmed from this image.",
+            "Shadow/shadowless status cannot be reliably determined."
+          ],
+          "next_photo_request": "Provide a sharp, straight-on close-up of the bottom edge and the area below the artwork, plus the full front in even lighting.",
+          "user_text_consistent": true,
+          "normalized_query": "",
+          "verification_summary": "The card is confidently identified as an Italian Politoed holo, probably 12/111 from Neo Genesis, but the set and collector number require sharper confirmation.",
+          "photo_clues": [
+            {
+              "text": "Politoed",
+              "role": "text",
+              "certainty": "clear",
+              "image_index": 1,
+              "region": {
+                "image_index": 1,
+                "x": 0.33,
+                "y": 0.065,
+                "width": 0.23,
+                "height": 0.05,
+                "certain": true
+              }
+            },
+            {
+              "text": "110 PV",
+              "role": "text",
+              "certainty": "clear",
+              "image_index": 1,
+              "region": {
+                "image_index": 1,
+                "x": 0.69,
+                "y": 0.065,
+                "width": 0.12,
+                "height": 0.05,
+                "certain": true
+              }
+            },
+            {
+              "text": "Crescita Improvvisa",
+              "role": "text",
+              "certainty": "clear",
+              "image_index": 1,
+              "region": {
+                "image_index": 1,
+                "x": 0.34,
+                "y": 0.52,
+                "width": 0.3,
+                "height": 0.04,
+                "certain": true
+              }
+            },
+            {
+              "text": "Ranabalzo",
+              "role": "text",
+              "certainty": "clear",
+              "image_index": 1,
+              "region": {
+                "image_index": 1,
+                "x": 0.34,
+                "y": 0.59,
+                "width": 0.2,
+                "height": 0.04,
+                "certain": true
+              }
+            },
+            {
+              "text": "Spruzza Energia",
+              "role": "text",
+              "certainty": "clear",
+              "image_index": 1,
+              "region": {
+                "image_index": 1,
+                "x": 0.34,
+                "y": 0.68,
+                "width": 0.25,
+                "height": 0.04,
+                "certain": true
+              }
+            },
+            {
+              "text": "12/111",
+              "role": "collector_number",
+              "certainty": "uncertain",
+              "image_index": 1,
+              "region": {
+                "image_index": 1,
+                "x": 0.8,
+                "y": 0.89,
+                "width": 0.1,
+                "height": 0.03,
+                "certain": false
+              }
+            },
+            {
+              "text": "© 2000 Nintendo",
+              "role": "copyright",
+              "certainty": "clear",
+              "image_index": 1,
+              "region": {
+                "image_index": 1,
+                "x": 0.24,
+                "y": 0.925,
+                "width": 0.22,
+                "height": 0.025,
+                "certain": true
+              }
+            }
+          ],
+          "physical_observations": [
+            {
+              "feature": "color",
+              "text": "Yellow border with blue lower text panel",
+              "certainty": "clear",
+              "entity": "target",
+              "image_index": 1
+            },
+            {
+              "feature": "finish",
+              "text": "Holographic foil artwork background",
+              "certainty": "clear",
+              "entity": "target",
+              "image_index": 1
+            },
+            {
+              "feature": "configuration",
+              "text": "Three visible attacks with Water and Colorless energy symbols",
+              "certainty": "clear",
+              "entity": "target",
+              "image_index": 1
+            },
+            {
+              "feature": "layout",
+              "text": "Stage 2 layout with Politoed evolution portrait at upper left",
+              "certainty": "clear",
+              "entity": "target",
+              "image_index": 1
+            }
+          ],
+          "printing_detail_regions": [
+            {
+              "detail": "copyright",
+              "region": {
+                "image_index": 1,
+                "x": 0.2,
+                "y": 0.91,
+                "width": 0.45,
+                "height": 0.05,
+                "certain": true
+              }
+            },
+            {
+              "detail": "stamp",
+              "region": {
+                "image_index": 1,
+                "x": 0.08,
+                "y": 0.04,
+                "width": 0.18,
+                "height": 0.12,
+                "certain": false
+              }
+            },
+            {
+              "detail": "shadow",
+              "region": {
+                "image_index": 1,
+                "x": 0.18,
+                "y": 0.13,
+                "width": 0.75,
+                "height": 0.34,
+                "certain": false
+              }
+            }
+          ],
+          "object_region": {
+            "image_index": 1,
+            "x": 0.075,
+            "y": 0,
+            "width": 0.85,
+            "height": 0.975,
+            "certain": true
+          },
+          "object_regions": [
+            {
+              "image_index": 1,
+              "x": 0.075,
+              "y": 0,
+              "width": 0.85,
+              "height": 0.975,
+              "certain": true
+            }
+          ],
+          "object_unit": "single",
+          "identity_basis": {
+            "family": "inferred",
+            "variant": "physical_evidence"
+          },
+          "pokemon_printing": {
+            "is_pokemon": true,
+            "language": "Italian",
+            "set_name": "Neo Genesis (inferred)",
+            "card_type": "pokemon",
+            "first_edition_stamp": "unclear",
+            "stamp_image": 1,
+            "stamp_location": "upper-left border area",
+            "stamp_text": "",
+            "artwork_shadow": "unclear",
+            "shadow_image": 1,
+            "shadow_location": "right/lower edge of artwork frame",
+            "copyright_text": "© 2000 Nintendo",
+            "copyright_image": 1,
+            "slab_text": "",
+            "slab_image": 0
+          }
+        },
+        "webCalls": 0,
+        "usage": {
+          "input_tokens": 5236,
+          "input_tokens_details": {
+            "cache_write_tokens": 5233,
+            "cached_tokens": 0
+          },
+          "output_tokens": 1656,
+          "output_tokens_details": {
+            "reasoning_tokens": 246
+          },
+          "total_tokens": 6892
+        }
+      },
+      {
+        "stage": "flipcheck_printing_detail",
+        "result": {
+          "pokemon_printing": {
+            "is_pokemon": true,
+            "language": "Italian",
+            "set_name": "Neo Genesis (inferred)",
+            "card_type": "pokemon",
+            "first_edition_stamp": "unclear",
+            "stamp_image": 1,
+            "stamp_location": "zona sotto il riquadro illustrazione a sinistra, non leggibile",
+            "stamp_text": "",
+            "artwork_shadow": "not_applicable",
+            "shadow_image": 0,
+            "shadow_location": "",
+            "copyright_text": "© 2000 Pokémon / Nintendo",
+            "copyright_image": 1,
+            "slab_text": "",
+            "slab_image": 0
+          }
+        },
+        "webCalls": 0,
+        "usage": {
+          "input_tokens": 2325,
+          "input_tokens_details": {
+            "cache_write_tokens": 2322,
+            "cached_tokens": 0
+          },
+          "output_tokens": 434,
+          "output_tokens_details": {
+            "reasoning_tokens": 313
+          },
+          "total_tokens": 2759
+        }
+      }
+    ],
+    "references": [],
+    "budget": {
+      "maxUsd": 0.03,
+      "spentOrReservedUsd": 0.004397949999999999,
+      "entries": [
+        {
+          "kind": "vision",
+          "reservedUsd": 0.0096885,
+          "actualUsd": 0.0032960499999999996,
+          "status": "usage_returned"
+        },
+        {
+          "kind": "vision",
+          "reservedUsd": 0.0039285,
+          "actualUsd": 0.0011019,
+          "status": "usage_returned"
+        }
+      ],
+      "estimated": true,
+      "includesIdentificationAndMarket": true
+    }
+  },
+  "doncic": {
+    "vision": {
+      "status": "identified",
+      "kind": "card",
+      "title": "Luka Dončić 2018-19 Panini Prizm Basketball No. 280",
+      "category": "Basketball trading card",
+      "brand": "Panini",
+      "family": "2018-19 Panini Prizm Basketball",
+      "model": "Luka Dončić No. 280",
+      "variant": "Green prismatic parallel, exact subtype unconfirmed",
+      "condition": "Graded/slabbed; grade not visible",
+      "category_confidence": 99,
+      "brand_confidence": 99,
+      "family_confidence": 99,
+      "model_confidence": 96,
+      "model_verified": true,
+      "market_ready": false,
+      "candidate_models": [
+        {
+          "model": "2018-19 Panini Prizm Basketball Luka Dončić No. 280 Green Prizm",
+          "confidence": 70,
+          "reason": "Visible green prismatic finish; exact parallel subtype not legible."
+        },
+        {
+          "model": "2018-19 Panini Prizm Basketball Luka Dončić No. 280 Green Pulsar",
+          "confidence": 30,
+          "reason": "Green patterned finish could correspond to a Pulsar-style parallel, but no serial or definitive label is visible."
+        }
+      ],
+      "visual_fingerprint": "Two-sided Luka Dončić rookie card, Dallas Mavericks uniform #77. Front has blue/purple Prizm design with bright green prismatic side borders and silver PRIZM logo; reverse reads NO. 280 and shows Real Madrid text, 2018-19 Panini Prizm Basketball copyright and Panini logo.",
+      "distinctive_terms": [
+        "NO. 280",
+        "LUKA DONCIC",
+        "PRIZM",
+        "2018-19 PANINI - PRIZM BASKETBALL",
+        "DALLAS MAVERICKS"
+      ],
+      "search_terms": [
+        "NO. 280",
+        "LUKA DONCIC",
+        "PRIZM",
+        "2018-19 PANINI - PRIZM BASKETBALL"
+      ],
+      "identifier_hints": [
+        "NO. 280"
+      ],
+      "layout_signature": [
+        {
+          "term": "NO. 280",
+          "position": "top left on reverse",
+          "relation": "above the player image"
+        },
+        {
+          "term": "PRIZM",
+          "position": "top right on front",
+          "relation": "inside silver logo panel"
+        },
+        {
+          "term": "LUKA DONCIC",
+          "position": "bottom front and reverse",
+          "relation": "nameplate below player image"
+        },
+        {
+          "term": "DALLAS MAVERICKS",
+          "position": "bottom front",
+          "relation": "directly below player name"
+        },
+        {
+          "term": "2018-19 PANINI - PRIZM BASKETBALL",
+          "position": "lower reverse",
+          "relation": "above licensing and copyright text"
+        }
+      ],
+      "evidence": [
+        "Reverse visibly states NO. 280.",
+        "Reverse visibly identifies 2018-19 PANINI - PRIZM BASKETBALL.",
+        "Front and reverse both visibly name Luka Doncic and show the Dallas Mavericks.",
+        "Front has a clearly visible green prismatic finish, but no parallel name or serial number is readable.",
+        "Card is visibly inside a slab; grader and grade are not readable."
+      ],
+      "missing_information": [
+        "Exact green parallel subtype",
+        "Serial numbering, if applicable",
+        "Grading company and numeric grade"
+      ],
+      "next_photo_request": "Photograph the slab label and a glare-free close-up of the front parallel pattern and any serial numbering.",
+      "user_text_consistent": true,
+      "normalized_query": "",
+      "verification_summary": "The base card identity is directly verified by the visible set, player name, team, and card number. The green parallel is physically visible, but its exact commercial subtype is not proven.",
+      "photo_clues": [
+        {
+          "text": "LUKA DONCIC",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.51,
+            "y": 0.73,
+            "width": 0.38,
+            "height": 0.05,
+            "certain": true
+          }
+        },
+        {
+          "text": "DALLAS MAVERICKS",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.52,
+            "y": 0.78,
+            "width": 0.3,
+            "height": 0.035,
+            "certain": true
+          }
+        },
+        {
+          "text": "PRIZM",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.67,
+            "y": 0.13,
+            "width": 0.19,
+            "height": 0.06,
+            "certain": true
+          }
+        },
+        {
+          "text": "NO. 280",
+          "role": "collector_number",
+          "certainty": "clear",
+          "image_index": 2,
+          "region": {
+            "image_index": 2,
+            "x": 0.08,
+            "y": 0.2,
+            "width": 0.16,
+            "height": 0.04,
+            "certain": true
+          }
+        },
+        {
+          "text": "2018-19 PANINI - PRIZM BASKETBALL",
+          "role": "copyright",
+          "certainty": "clear",
+          "image_index": 2,
+          "region": {
+            "image_index": 2,
+            "x": 0.1,
+            "y": 0.82,
+            "width": 0.36,
+            "height": 0.025,
+            "certain": true
+          }
+        },
+        {
+          "text": "Panini",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 2,
+          "region": {
+            "image_index": 2,
+            "x": 0.67,
+            "y": 0.87,
+            "width": 0.12,
+            "height": 0.04,
+            "certain": true
+          }
+        }
+      ],
+      "physical_observations": [
+        {
+          "feature": "color",
+          "text": "Bright green prismatic side borders with blue, purple and silver central design",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "pattern",
+          "text": "Reflective geometric Prizm pattern with dotted green foil texture",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "configuration",
+          "text": "Two-sided card photographed in a rigid slab",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 2
+        },
+        {
+          "feature": "layout",
+          "text": "Player image centered with vertical geometric side panels",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        }
+      ],
+      "printing_detail_regions": [],
+      "object_region": {
+        "image_index": 1,
+        "x": 0.02,
+        "y": 0.13,
+        "width": 0.96,
+        "height": 0.72,
+        "certain": true
+      },
+      "object_regions": [
+        {
+          "image_index": 1,
+          "x": 0.02,
+          "y": 0.13,
+          "width": 0.96,
+          "height": 0.72,
+          "certain": true
+        },
+        {
+          "image_index": 2,
+          "x": 0.04,
+          "y": 0.17,
+          "width": 0.91,
+          "height": 0.72,
+          "certain": true
+        }
+      ],
+      "object_unit": "single",
+      "identity_basis": {
+        "family": "printed",
+        "variant": "physical_evidence"
+      },
+      "pokemon_printing": null
+    },
+    "identity": {
+      "status": "uncertain",
+      "kind": "card",
+      "title": "Luka Dončić 2018-19 Panini Prizm Basketball No. 280",
+      "category": "Basketball trading card",
+      "brand": "Panini",
+      "family": "2018-19 Panini Prizm Basketball",
+      "model": "Luka Dončić No. 280",
+      "variant": "Green prismatic parallel, exact subtype unconfirmed",
+      "condition": "Graded/slabbed; grade not visible",
+      "category_confidence": 99,
+      "brand_confidence": 99,
+      "family_confidence": 99,
+      "model_confidence": 89,
+      "model_verified": false,
+      "market_ready": false,
+      "candidate_models": [
+        {
+          "model": "2018-19 Panini Prizm Basketball Luka Dončić No. 280 Green Prizm",
+          "confidence": 70,
+          "reason": "Visible green prismatic finish; exact parallel subtype not legible."
+        },
+        {
+          "model": "2018-19 Panini Prizm Basketball Luka Dončić No. 280 Green Pulsar",
+          "confidence": 30,
+          "reason": "Green patterned finish could correspond to a Pulsar-style parallel, but no serial or definitive label is visible."
+        }
+      ],
+      "visual_fingerprint": "Two-sided Luka Dončić rookie card, Dallas Mavericks uniform #77. Front has blue/purple Prizm design with bright green prismatic side borders and silver PRIZM logo; reverse reads NO. 280 and shows Real Madrid text, 2018-19 Panini Prizm Basketball copyright and Panini logo.",
+      "distinctive_terms": [
+        "NO. 280",
+        "LUKA DONCIC",
+        "PRIZM",
+        "2018-19 PANINI - PRIZM BASKETBALL",
+        "DALLAS MAVERICKS"
+      ],
+      "search_terms": [
+        "NO. 280",
+        "LUKA DONCIC",
+        "PRIZM",
+        "2018-19 PANINI - PRIZM BASKETBALL"
+      ],
+      "identifier_hints": [
+        "NO. 280"
+      ],
+      "layout_signature": [
+        {
+          "term": "NO. 280",
+          "position": "top left on reverse",
+          "relation": "above the player image"
+        },
+        {
+          "term": "PRIZM",
+          "position": "top right on front",
+          "relation": "inside silver logo panel"
+        },
+        {
+          "term": "LUKA DONCIC",
+          "position": "bottom front and reverse",
+          "relation": "nameplate below player image"
+        },
+        {
+          "term": "DALLAS MAVERICKS",
+          "position": "bottom front",
+          "relation": "directly below player name"
+        },
+        {
+          "term": "2018-19 PANINI - PRIZM BASKETBALL",
+          "position": "lower reverse",
+          "relation": "above licensing and copyright text"
+        }
+      ],
+      "evidence": [
+        "Reverse visibly states NO. 280.",
+        "Reverse visibly identifies 2018-19 PANINI - PRIZM BASKETBALL.",
+        "Front and reverse both visibly name Luka Doncic and show the Dallas Mavericks.",
+        "Front has a clearly visible green prismatic finish, but no parallel name or serial number is readable.",
+        "Card is visibly inside a slab; grader and grade are not readable."
+      ],
+      "missing_information": [
+        "Exact green parallel subtype",
+        "Serial numbering, if applicable",
+        "Grading company and numeric grade",
+        "Verifica del sottotipo o della variante"
+      ],
+      "next_photo_request": null,
+      "user_text_consistent": true,
+      "normalized_query": "",
+      "verification_summary": "The base card identity is directly verified by the visible set, player name, team, and card number. The green parallel is physically visible, but its exact commercial subtype is not proven.",
+      "photo_clues": [
+        {
+          "text": "LUKA DONCIC",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.51,
+            "y": 0.73,
+            "width": 0.38,
+            "height": 0.05,
+            "certain": true
+          }
+        },
+        {
+          "text": "DALLAS MAVERICKS",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.52,
+            "y": 0.78,
+            "width": 0.3,
+            "height": 0.035,
+            "certain": true
+          }
+        },
+        {
+          "text": "PRIZM",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.67,
+            "y": 0.13,
+            "width": 0.19,
+            "height": 0.06,
+            "certain": true
+          }
+        },
+        {
+          "text": "NO. 280",
+          "role": "collector_number",
+          "certainty": "clear",
+          "image_index": 2,
+          "region": {
+            "image_index": 2,
+            "x": 0.08,
+            "y": 0.2,
+            "width": 0.16,
+            "height": 0.04,
+            "certain": true
+          }
+        },
+        {
+          "text": "2018-19 PANINI - PRIZM BASKETBALL",
+          "role": "copyright",
+          "certainty": "clear",
+          "image_index": 2,
+          "region": {
+            "image_index": 2,
+            "x": 0.1,
+            "y": 0.82,
+            "width": 0.36,
+            "height": 0.025,
+            "certain": true
+          }
+        },
+        {
+          "text": "Panini",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 2,
+          "region": {
+            "image_index": 2,
+            "x": 0.67,
+            "y": 0.87,
+            "width": 0.12,
+            "height": 0.04,
+            "certain": true
+          }
+        }
+      ],
+      "physical_observations": [
+        {
+          "feature": "color",
+          "text": "Bright green prismatic side borders with blue, purple and silver central design",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "pattern",
+          "text": "Reflective geometric Prizm pattern with dotted green foil texture",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "configuration",
+          "text": "Two-sided card photographed in a rigid slab",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 2
+        },
+        {
+          "feature": "layout",
+          "text": "Player image centered with vertical geometric side panels",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        }
+      ],
+      "printing_detail_regions": [],
+      "object_region": {
+        "image_index": 1,
+        "x": 0.02,
+        "y": 0.13,
+        "width": 0.96,
+        "height": 0.72,
+        "certain": true
+      },
+      "object_regions": [
+        {
+          "image_index": 1,
+          "x": 0.02,
+          "y": 0.13,
+          "width": 0.96,
+          "height": 0.72,
+          "certain": true
+        },
+        {
+          "image_index": 2,
+          "x": 0.04,
+          "y": 0.17,
+          "width": 0.91,
+          "height": 0.72,
+          "certain": true
+        }
+      ],
+      "object_unit": "single",
+      "identity_basis": {
+        "family": "printed",
+        "variant": "physical_evidence"
+      },
+      "pokemon_printing": null,
+      "local_ocr_engine": "nessun barcode locale",
+      "local_ocr_ms": 184,
+      "local_ocr_text": "",
+      "assistance_state": "budget_exhausted",
+      "assistance_message": "",
+      "variant_needs_verification": true,
+      "catalogue_needs_verification": false,
+      "core_identity": {
+        "model": "Luka Dončić No. 280",
+        "confidence": 96,
+        "origin": "photo"
+      },
+      "variant_check": "pending"
+    },
+    "phases": [
+      {
+        "stage": "vision",
+        "result": {
+          "status": "identified",
+          "kind": "card",
+          "title": "Luka Dončić 2018-19 Panini Prizm Basketball No. 280",
+          "category": "Basketball trading card",
+          "brand": "Panini",
+          "family": "2018-19 Panini Prizm Basketball",
+          "model": "Luka Dončić No. 280",
+          "variant": "Green prismatic parallel, exact subtype unconfirmed",
+          "condition": "Graded/slabbed; grade not visible",
+          "category_confidence": 99,
+          "brand_confidence": 99,
+          "family_confidence": 99,
+          "model_confidence": 96,
+          "model_verified": true,
+          "market_ready": false,
+          "candidate_models": [
+            {
+              "model": "2018-19 Panini Prizm Basketball Luka Dončić No. 280 Green Prizm",
+              "confidence": 70,
+              "reason": "Visible green prismatic finish; exact parallel subtype not legible."
+            },
+            {
+              "model": "2018-19 Panini Prizm Basketball Luka Dončić No. 280 Green Pulsar",
+              "confidence": 30,
+              "reason": "Green patterned finish could correspond to a Pulsar-style parallel, but no serial or definitive label is visible."
+            }
+          ],
+          "visual_fingerprint": "Two-sided Luka Dončić rookie card, Dallas Mavericks uniform #77. Front has blue/purple Prizm design with bright green prismatic side borders and silver PRIZM logo; reverse reads NO. 280 and shows Real Madrid text, 2018-19 Panini Prizm Basketball copyright and Panini logo.",
+          "distinctive_terms": [
+            "NO. 280",
+            "LUKA DONCIC",
+            "PRIZM",
+            "2018-19 PANINI - PRIZM BASKETBALL",
+            "DALLAS MAVERICKS"
+          ],
+          "search_terms": [
+            "NO. 280",
+            "LUKA DONCIC",
+            "PRIZM",
+            "2018-19 PANINI - PRIZM BASKETBALL"
+          ],
+          "identifier_hints": [
+            "NO. 280"
+          ],
+          "layout_signature": [
+            {
+              "term": "NO. 280",
+              "position": "top left on reverse",
+              "relation": "above the player image"
+            },
+            {
+              "term": "PRIZM",
+              "position": "top right on front",
+              "relation": "inside silver logo panel"
+            },
+            {
+              "term": "LUKA DONCIC",
+              "position": "bottom front and reverse",
+              "relation": "nameplate below player image"
+            },
+            {
+              "term": "DALLAS MAVERICKS",
+              "position": "bottom front",
+              "relation": "directly below player name"
+            },
+            {
+              "term": "2018-19 PANINI - PRIZM BASKETBALL",
+              "position": "lower reverse",
+              "relation": "above licensing and copyright text"
+            }
+          ],
+          "evidence": [
+            "Reverse visibly states NO. 280.",
+            "Reverse visibly identifies 2018-19 PANINI - PRIZM BASKETBALL.",
+            "Front and reverse both visibly name Luka Doncic and show the Dallas Mavericks.",
+            "Front has a clearly visible green prismatic finish, but no parallel name or serial number is readable.",
+            "Card is visibly inside a slab; grader and grade are not readable."
+          ],
+          "missing_information": [
+            "Exact green parallel subtype",
+            "Serial numbering, if applicable",
+            "Grading company and numeric grade"
+          ],
+          "next_photo_request": "Photograph the slab label and a glare-free close-up of the front parallel pattern and any serial numbering.",
+          "user_text_consistent": true,
+          "normalized_query": "",
+          "verification_summary": "The base card identity is directly verified by the visible set, player name, team, and card number. The green parallel is physically visible, but its exact commercial subtype is not proven.",
+          "photo_clues": [
+            {
+              "text": "LUKA DONCIC",
+              "role": "text",
+              "certainty": "clear",
+              "image_index": 1,
+              "region": {
+                "image_index": 1,
+                "x": 0.51,
+                "y": 0.73,
+                "width": 0.38,
+                "height": 0.05,
+                "certain": true
+              }
+            },
+            {
+              "text": "DALLAS MAVERICKS",
+              "role": "text",
+              "certainty": "clear",
+              "image_index": 1,
+              "region": {
+                "image_index": 1,
+                "x": 0.52,
+                "y": 0.78,
+                "width": 0.3,
+                "height": 0.035,
+                "certain": true
+              }
+            },
+            {
+              "text": "PRIZM",
+              "role": "text",
+              "certainty": "clear",
+              "image_index": 1,
+              "region": {
+                "image_index": 1,
+                "x": 0.67,
+                "y": 0.13,
+                "width": 0.19,
+                "height": 0.06,
+                "certain": true
+              }
+            },
+            {
+              "text": "NO. 280",
+              "role": "collector_number",
+              "certainty": "clear",
+              "image_index": 2,
+              "region": {
+                "image_index": 2,
+                "x": 0.08,
+                "y": 0.2,
+                "width": 0.16,
+                "height": 0.04,
+                "certain": true
+              }
+            },
+            {
+              "text": "2018-19 PANINI - PRIZM BASKETBALL",
+              "role": "copyright",
+              "certainty": "clear",
+              "image_index": 2,
+              "region": {
+                "image_index": 2,
+                "x": 0.1,
+                "y": 0.82,
+                "width": 0.36,
+                "height": 0.025,
+                "certain": true
+              }
+            },
+            {
+              "text": "Panini",
+              "role": "text",
+              "certainty": "clear",
+              "image_index": 2,
+              "region": {
+                "image_index": 2,
+                "x": 0.67,
+                "y": 0.87,
+                "width": 0.12,
+                "height": 0.04,
+                "certain": true
+              }
+            }
+          ],
+          "physical_observations": [
+            {
+              "feature": "color",
+              "text": "Bright green prismatic side borders with blue, purple and silver central design",
+              "certainty": "clear",
+              "entity": "target",
+              "image_index": 1
+            },
+            {
+              "feature": "pattern",
+              "text": "Reflective geometric Prizm pattern with dotted green foil texture",
+              "certainty": "clear",
+              "entity": "target",
+              "image_index": 1
+            },
+            {
+              "feature": "configuration",
+              "text": "Two-sided card photographed in a rigid slab",
+              "certainty": "clear",
+              "entity": "target",
+              "image_index": 2
+            },
+            {
+              "feature": "layout",
+              "text": "Player image centered with vertical geometric side panels",
+              "certainty": "clear",
+              "entity": "target",
+              "image_index": 1
+            }
+          ],
+          "printing_detail_regions": [],
+          "object_region": {
+            "image_index": 1,
+            "x": 0.02,
+            "y": 0.13,
+            "width": 0.96,
+            "height": 0.72,
+            "certain": true
+          },
+          "object_regions": [
+            {
+              "image_index": 1,
+              "x": 0.02,
+              "y": 0.13,
+              "width": 0.96,
+              "height": 0.72,
+              "certain": true
+            },
+            {
+              "image_index": 2,
+              "x": 0.04,
+              "y": 0.17,
+              "width": 0.91,
+              "height": 0.72,
+              "certain": true
+            }
+          ],
+          "object_unit": "single",
+          "identity_basis": {
+            "family": "printed",
+            "variant": "physical_evidence"
+          },
+          "pokemon_printing": null
+        },
+        "webCalls": 0,
+        "usage": {
+          "input_tokens": 5573,
+          "input_tokens_details": {
+            "cache_write_tokens": 5570,
+            "cached_tokens": 0
+          },
+          "output_tokens": 1428,
+          "output_tokens_details": {
+            "reasoning_tokens": 118
+          },
+          "total_tokens": 7001
+        }
+      }
+    ],
+    "references": [],
+    "budget": {
+      "maxUsd": 0.03,
+      "spentOrReservedUsd": 0.0066067,
+      "entries": [
+        {
+          "kind": "vision",
+          "reservedUsd": 0.0117445,
+          "actualUsd": 0.0031067,
+          "status": "usage_returned"
+        },
+        {
+          "kind": "visual",
+          "reservedUsd": 0.0035,
+          "actualUsd": null,
+          "status": "billing_unknown",
+          "costBasis": "google_web_detection_list_price_2026-09-06"
+        }
+      ],
+      "estimated": true,
+      "includesIdentificationAndMarket": true
+    }
+  }
+}

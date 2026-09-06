@@ -121,7 +121,7 @@ public final class GoogleVisionBridge {
         call.enqueue(new Callback() {
             public void onFailure(Call c, IOException error) {
                 if (!calls.remove(id,c)) return;
-                deliver(id,json("state",error instanceof java.io.InterruptedIOException?"timeout":"network_error","status",0,"attempted",true));
+                deliver(id,json("state",networkFailure(error),"status",0,"attempted",true));
             }
             public void onResponse(Call c, Response response) {
                 try (Response r=response) {
@@ -154,6 +154,12 @@ public final class GoogleVisionBridge {
             }
         });
     }
+    static String networkFailure(IOException error) {
+        if(error instanceof java.net.UnknownHostException)return "dns_error";
+        if(error instanceof javax.net.ssl.SSLException)return "tls_error";
+        if(error instanceof java.net.ConnectException)return "connection_error";
+        return error instanceof java.io.InterruptedIOException?"timeout":"network_error";
+    }
     static JSONObject pageData(String html, String pageUrl) {
         Document doc=Jsoup.parse(html,pageUrl);
         LinkedHashSet<String> images=new LinkedHashSet<>();
@@ -162,6 +168,21 @@ public final class GoogleVisionBridge {
             try { productFacts(new org.json.JSONTokener(script.data()).nextValue(),productText,0); } catch(Exception ignored) {}
         }
         doc.select("nav,header,footer,aside,[role=navigation],[role=banner],[role=contentinfo],.related-products,.product-recommendations,.recommendations,#related-products,.mega-menu,.megamenu,.site-menu").remove();
+        JSONArray imageLinks=new JSONArray();LinkedHashSet<String> linkedPages=new LinkedHashSet<>();
+        for(Element anchor:doc.select("a[href]:has(img)")) {
+            try {
+                String destination=publicUrl(anchor.absUrl("href")).toString();
+                if(destination.equals(pageUrl)||destination.matches("(?i).*\\.(?:jpg|jpeg|png|webp|gif)(?:\\?.*)?$"))continue;
+                for(Element img:anchor.select("img"))for(String attr:new String[]{"src","data-src"}) {
+                    try {
+                        String imageUrl=publicUrl(img.absUrl(attr)).toString();
+                        String label=anchor.text().trim();if(label.isEmpty())label=img.attr("alt").trim();
+                        imageLinks.put(json("image_url",imageUrl,"url",destination,"title",label));linkedPages.add(destination);
+                    }catch(IOException ignored){}
+                }
+            }catch(IOException ignored){}
+            if(imageLinks.length()>=60)break;
+        }
         // Only images explicitly linked by this page. Global search images are never relabelled as its evidence.
         for(Element el:doc.select("meta[property=og:image],meta[property=og:image:secure_url],meta[name=twitter:image],link[rel=image_src],main img[src],article img[src]")) {
             String attr=el.tagName().equals("meta")?"content":el.tagName().equals("link")?"href":"src";
@@ -172,8 +193,8 @@ public final class GoogleVisionBridge {
         Element main=doc.selectFirst("main,article,[role=main],[itemtype$=/Product]");
         Element content=main==null?doc.body():main;
         for(Element block:content.select("p,li,h1,h2,h3,section,div,br"))block.appendText("\n");
-        String text=doc.title()+"\n"+productText+"\n"+content.wholeText();
-        return json("status",200,"title",doc.title(),"text",text.substring(0,Math.min(5000,text.length())),"images",new JSONArray(images));
+        String text=(doc.title()+"\n"+productText+"\n"+content.wholeText()).replaceAll("[\\t\\x0B\\f\\r ]+"," ").replaceAll(" *\n *","\n").replaceAll("\n{3,}","\n\n").trim();
+        return json("status",200,"url",pageUrl,"title",doc.title(),"text",text.substring(0,Math.min(5000,text.length())),"images",new JSONArray(images),"image_links",imageLinks,"is_collection",productText.length()==0&&linkedPages.size()>1);
     }
     private static void productFacts(Object value,StringBuilder out,int depth) {
         if(depth>6||out.length()>2200)return;

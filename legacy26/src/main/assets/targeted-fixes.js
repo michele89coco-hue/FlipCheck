@@ -12,6 +12,7 @@ function lockPhotoControls() {
   const busy = photoBusy || apiBusy;
   ['identifyBtn','addPhotos','addConfirmPhoto','photoBatch','photo0','photo1','photo2','details','confirmed'].forEach(id => $(id).disabled = busy);
   document.querySelectorAll('.remove-photo').forEach(button => button.disabled = busy);
+  if ($('addPhotoFiles')) $('addPhotoFiles').disabled = busy;
   $('marketBtn').disabled = busy || $('confirmed').value.trim().length < 4;
 }
 function invalidatePhotoReading() {
@@ -58,17 +59,26 @@ for (let i = 0; i < 3; i++) {
   $('s'+i).onclick = event => {
     if (photoBusy || apiBusy || event.target.closest('.remove-photo')) return;
     if (!images[i]) { openBatchPicker(); return; }
+    window.FlipCheckHost?.preparePhotoPicker?.(false);
     $('photo'+i).value = ''; $('photo'+i).click();
   };
   $('photo'+i).onchange = event => loadSelectedPhotos(event.target.files,i);
 }
-function openBatchPicker() {
+function openBatchPicker(fromFiles = false) {
   if (photoBusy || apiBusy) return;
   if (validImageCount() >= 3) { updatePhotoStatus('Hai già 3 foto. Tocca × per liberare un posto.'); return; }
+  $('photoBatch').multiple = true;
+  if (fromFiles === true && window.FlipCheckHost?.prepareDocumentPicker) FlipCheckHost.prepareDocumentPicker();
+  else window.FlipCheckHost?.preparePhotoPicker?.(true);
   $('photoBatch').value = ''; $('photoBatch').click();
 }
 $('photoBatch').onchange = event => loadSelectedPhotos(event.target.files);
-$('addPhotos').onclick = openBatchPicker;
+$('addPhotos').onclick = () => openBatchPicker();
+if (window.FlipCheckHost?.prepareDocumentPicker) {
+  const fileButton = document.createElement('button'); fileButton.id = 'addPhotoFiles'; fileButton.type = 'button'; fileButton.className = 'btn secondary';
+  fileButton.textContent = 'SELEZIONA DA FILE'; fileButton.style.marginTop = '8px';
+  fileButton.onclick = () => openBatchPicker(true); $('addPhotos').after(fileButton);
+}
 $('addConfirmPhoto').onclick = () => { openBatchPicker(); window.scrollTo({top:0,behavior:'smooth'}); };
 
 openai = async function(body) {
