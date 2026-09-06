@@ -47,6 +47,8 @@ public final class GoogleVisionBridge {
     private final Handler main = new Handler(Looper.getMainLooper());
     private final Map<String, Call> calls = new ConcurrentHashMap<>();
     private final OkHttpClient client;
+    private final OkHttpClient googleClient;
+    private final LocalReferenceOcr localOcr=new LocalReferenceOcr();
     private volatile boolean closed;
 
     GoogleVisionBridge(WebView web) {
@@ -59,6 +61,7 @@ public final class GoogleVisionBridge {
         }).connectTimeout(6, TimeUnit.SECONDS).readTimeout(8, TimeUnit.SECONDS)
           .writeTimeout(12, TimeUnit.SECONDS).callTimeout(22, TimeUnit.SECONDS)
           .retryOnConnectionFailure(false).followRedirects(false).followSslRedirects(false).build();
+        googleClient=client.newBuilder().readTimeout(15,TimeUnit.SECONDS).build();
     }
 
     static boolean isPublic(InetAddress a) {
@@ -116,8 +119,13 @@ public final class GoogleVisionBridge {
             }
         });
     }
+    @JavascriptInterface public boolean ocrAvailable(){return !closed;}
+    @JavascriptInterface public void readText(String id,String image){
+        if(closed||id==null||!id.matches("[a-zA-Z0-9_-]{8,100}")||image==null||image.length()>6000000)return;
+        main.post(()->{if(!closed&&"https://flipcheck.local/index.html".equals(web.getUrl()))localOcr.read(id,image,result->deliver(id,result));});
+    }
     private void execute(String id, String action, Request request, int redirects) {
-        Call call=client.newCall(request);calls.put(id,call);
+        Call call=("detect".equals(action)?googleClient:client).newCall(request);calls.put(id,call);
         call.enqueue(new Callback() {
             public void onFailure(Call c, IOException error) {
                 if (!calls.remove(id,c)) return;
@@ -295,7 +303,8 @@ public final class GoogleVisionBridge {
             web.evaluateJavascript("window.FlipCheckDirect && window.FlipCheckDirect.receive("+JSONObject.quote(id)+","+result.toString()+")",null);});
     }
     @JavascriptInterface public void cancel(String id) {
+        localOcr.cancel(id);
         main.post(() -> {synchronized(calls) {Call call=calls.remove(id);if(call!=null)call.cancel();}});
     }
-    void close() {closed=true;for(Call c:calls.values())c.cancel();calls.clear();client.dispatcher().executorService().shutdown();client.connectionPool().evictAll();}
+    void close() {closed=true;localOcr.close();for(Call c:calls.values())c.cancel();calls.clear();client.dispatcher().executorService().shutdown();client.connectionPool().evictAll();}
 }

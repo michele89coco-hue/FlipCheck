@@ -1,0 +1,1979 @@
+{
+  "doncic": {
+    "version": 172,
+    "vision": {
+      "status": "identified",
+      "kind": "card",
+      "title": "Luka Dončić 2018-19 Panini Prizm No. 280",
+      "category": "Basketball trading card",
+      "brand": "Panini",
+      "family": "2018-19 Panini Prizm Basketball",
+      "model": "No. 280 Luka Dončić",
+      "variant": "Green Prizm parallel (visual identification; exact subtype unconfirmed)",
+      "condition": "Raw, housed in protective holder; no grade visible",
+      "category_confidence": 99,
+      "brand_confidence": 99,
+      "family_confidence": 99,
+      "model_confidence": 96,
+      "model_verified": true,
+      "market_ready": true,
+      "candidate_models": [],
+      "visual_fingerprint": "Luka Dončić Dallas Mavericks rookie card, shooting pose in blue uniform #77, Prizm geometric design. Front has vivid green refractor-style side panels and blue lower name bar; reverse clearly reads NO. 280, 2018-19 PANINI - PRIZM BASKETBALL and Panini copyright.",
+      "distinctive_terms": [
+        "NO. 280",
+        "LUKA DONCIC",
+        "2018-19 PANINI - PRIZM BASKETBALL",
+        "DALLAS MAVERICKS",
+        "PRIZM"
+      ],
+      "search_terms": [
+        "NO. 280",
+        "LUKA DONCIC",
+        "2018-19 PANINI - PRIZM BASKETBALL",
+        "DALLAS MAVERICKS",
+        "PRIZM"
+      ],
+      "identifier_hints": [
+        "NO. 280"
+      ],
+      "layout_signature": [
+        {
+          "term": "NO. 280",
+          "position": "upper left on reverse",
+          "relation": "printed in white header panel"
+        },
+        {
+          "term": "PRIZM",
+          "position": "upper right on front and reverse",
+          "relation": "brand mark"
+        },
+        {
+          "term": "LUKA DONCIC",
+          "position": "lower front",
+          "relation": "name bar beneath image"
+        },
+        {
+          "term": "DALLAS MAVERICKS",
+          "position": "directly below player name on front",
+          "relation": "team label"
+        },
+        {
+          "term": "2018-19 PANINI - PRIZM BASKETBALL",
+          "position": "lower reverse",
+          "relation": "set/copyright line"
+        }
+      ],
+      "evidence": [
+        "Reverse visibly shows NO. 280 and the full line 2018-19 PANINI - PRIZM BASKETBALL.",
+        "Front visibly identifies LUKA DONCIC and DALLAS MAVERICKS.",
+        "Panini logo and NBA logo are visible on the reverse.",
+        "Green reflective parallel coloring is visibly present on the front; exact commercial parallel subtype is not printed.",
+        "The card is photographed front and back in a protective holder."
+      ],
+      "missing_information": [
+        "Exact Green Prizm subtype or retail configuration is not explicitly printed.",
+        "No professional grading label or grade is visible."
+      ],
+      "next_photo_request": "Optional: provide a glare-free close-up of the front foil and any slab/holder label to confirm the exact green parallel subtype.",
+      "user_text_consistent": true,
+      "normalized_query": "2018-19 Panini Prizm Luka Doncic #280 Green Prizm",
+      "verification_summary": "The set, player, team, and card number are directly visible on the card. The green foil parallel is physical evidence, but its precise commercial subtype remains unconfirmed.",
+      "photo_clues": [
+        {
+          "text": "NO. 280",
+          "role": "collector_number",
+          "certainty": "clear",
+          "image_index": 2,
+          "region": {
+            "image_index": 2,
+            "x": 0.05,
+            "y": 0.2,
+            "width": 0.2,
+            "height": 0.06,
+            "certain": true
+          }
+        },
+        {
+          "text": "LUKA DONCIC",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.51,
+            "y": 0.76,
+            "width": 0.36,
+            "height": 0.05,
+            "certain": true
+          }
+        },
+        {
+          "text": "DALLAS MAVERICKS",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.56,
+            "y": 0.81,
+            "width": 0.28,
+            "height": 0.04,
+            "certain": true
+          }
+        },
+        {
+          "text": "2018-19 PANINI - PRIZM BASKETBALL",
+          "role": "copyright",
+          "certainty": "clear",
+          "image_index": 2,
+          "region": {
+            "image_index": 2,
+            "x": 0.1,
+            "y": 0.82,
+            "width": 0.45,
+            "height": 0.04,
+            "certain": true
+          }
+        },
+        {
+          "text": "PRIZM",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.67,
+            "y": 0.2,
+            "width": 0.18,
+            "height": 0.05,
+            "certain": true
+          }
+        }
+      ],
+      "physical_observations": [
+        {
+          "feature": "color",
+          "text": "Bright green reflective foil side panels with blue and silver geometric center design",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "configuration",
+          "text": "Single basketball card shown front and reverse",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "layout",
+          "text": "Player centered in shooting pose; name bar across lower front",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "pattern",
+          "text": "Angular geometric Prizm pattern with diagonal silver striping",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "finish",
+          "text": "Highly reflective refractor-style surface",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "configuration",
+          "text": "Card photographed inside clear protective holder",
+          "certainty": "clear",
+          "entity": "holder",
+          "image_index": 1
+        }
+      ],
+      "printing_detail_regions": [],
+      "object_region": {
+        "image_index": 1,
+        "x": 0.03,
+        "y": 0.15,
+        "width": 0.94,
+        "height": 0.74,
+        "certain": true
+      },
+      "object_regions": [
+        {
+          "image_index": 1,
+          "x": 0.03,
+          "y": 0.15,
+          "width": 0.94,
+          "height": 0.74,
+          "certain": true
+        },
+        {
+          "image_index": 2,
+          "x": 0.05,
+          "y": 0.16,
+          "width": 0.9,
+          "height": 0.74,
+          "certain": true
+        }
+      ],
+      "object_unit": "single",
+      "identity_basis": {
+        "family": "printed",
+        "variant": "physical_evidence"
+      },
+      "unresolved_identity_fields": [
+        "variant"
+      ],
+      "pokemon_printing": null
+    },
+    "phases": [
+      {
+        "stage": "flipcheck_visual_comparison",
+        "result": {
+          "physical_detail_needed": null,
+          "candidates": [
+            {
+              "category": "Basketball trading card",
+              "brand": "Panini",
+              "family": "Prizm",
+              "model": "",
+              "year": "2018",
+              "issue_number": "",
+              "catalog_number": "280",
+              "unit": "single",
+              "variant": "Green Prizm",
+              "decision": "match",
+              "same_unit": true,
+              "physical_ambiguity": false,
+              "conflicts": [],
+              "matches": [
+                {
+                  "reference_id": "ref1",
+                  "feature": "color",
+                  "photo_detail": "Bright green reflective foil side panels with blue and silver geometric center design",
+                  "reference_detail": "GREEN PRIZM",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                },
+                {
+                  "reference_id": "ref1",
+                  "feature": "layout",
+                  "photo_detail": "Player centered in shooting pose; name bar across lower front",
+                  "reference_detail": "LUKA DONCIC",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                },
+                {
+                  "reference_id": "ref1",
+                  "feature": "code",
+                  "photo_detail": "NO. 280",
+                  "reference_detail": "#280",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                }
+              ],
+              "fields": [
+                {
+                  "field": "brand",
+                  "value": "PANINI",
+                  "reference_id": "ref1",
+                  "quote": "2018 PANINI PRIZM",
+                  "evidence": "image",
+                  "scope": "target",
+                  "number_kind": "none"
+                },
+                {
+                  "field": "family",
+                  "value": "PRIZM",
+                  "reference_id": "ref1",
+                  "quote": "2018 PANINI PRIZM",
+                  "evidence": "image",
+                  "scope": "target",
+                  "number_kind": "none"
+                },
+                {
+                  "field": "year",
+                  "value": "2018",
+                  "reference_id": "ref1",
+                  "quote": "2018 PANINI PRIZM",
+                  "evidence": "image",
+                  "scope": "target",
+                  "number_kind": "year"
+                },
+                {
+                  "field": "subject",
+                  "value": "LUKA DONCIC",
+                  "reference_id": "ref1",
+                  "quote": "LUKA DONCIC",
+                  "evidence": "image",
+                  "scope": "target",
+                  "number_kind": "none"
+                },
+                {
+                  "field": "catalog_number",
+                  "value": "#280",
+                  "reference_id": "ref1",
+                  "quote": "#280",
+                  "evidence": "image",
+                  "scope": "target",
+                  "number_kind": "card_number"
+                },
+                {
+                  "field": "variant",
+                  "value": "GREEN PRIZM",
+                  "reference_id": "ref1",
+                  "quote": "GREEN PRIZM",
+                  "evidence": "image",
+                  "scope": "target",
+                  "number_kind": "none"
+                }
+              ],
+              "identity_level": "exact",
+              "specimen_notes": [
+                "La fonte mostra la carta in una custodia graduata; la custodia non è parte dell’unità identificata."
+              ]
+            },
+            {
+              "category": "Basketball trading card",
+              "brand": "Panini",
+              "family": "Prizm",
+              "model": "",
+              "year": "2018",
+              "issue_number": "",
+              "catalog_number": "280",
+              "unit": "single",
+              "variant": "",
+              "decision": "different",
+              "same_unit": true,
+              "physical_ambiguity": false,
+              "conflicts": [
+                {
+                  "scope": "target",
+                  "reason": "La fonte mostra una versione argentata/base, mentre l’oggetto presenta pannelli foil verde brillante e variante Green Prizm."
+                }
+              ],
+              "matches": [
+                {
+                  "reference_id": "ref2",
+                  "feature": "layout",
+                  "photo_detail": "Player centered in shooting pose; name bar across lower front",
+                  "reference_detail": "LUKA DONCIC",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                },
+                {
+                  "reference_id": "ref2",
+                  "feature": "color",
+                  "photo_detail": "Bright green reflective foil side panels",
+                  "reference_detail": "Pannelli principalmente argentati/grigi",
+                  "agrees": false,
+                  "reference_evidence": "image"
+                }
+              ],
+              "fields": [
+                {
+                  "field": "family",
+                  "value": "PRIZM",
+                  "reference_id": "ref2",
+                  "quote": "PRIZM",
+                  "evidence": "image",
+                  "scope": "target",
+                  "number_kind": "none"
+                },
+                {
+                  "field": "subject",
+                  "value": "LUKA DONCIC",
+                  "reference_id": "ref2",
+                  "quote": "LUKA DONCIC",
+                  "evidence": "image",
+                  "scope": "target",
+                  "number_kind": "none"
+                }
+              ],
+              "identity_level": "family",
+              "specimen_notes": []
+            }
+          ],
+          "detail_needed_from": "none"
+        }
+      }
+    ],
+    "assistance": {
+      "provider": {
+        "references": [
+          {
+            "id": "ref1",
+            "url": "https://www.ebay.com/shop/luka-doncic-rookie-card?_nkw=luka+doncic+rookie+card",
+            "title": "Luka Doncic Rookie Card - eBay",
+            "text": "Luka Doncic Rookie Card - eBay",
+            "text_origin": "google_indexed_title",
+            "image_url": "https://i.ebayimg.com/images/g/uAEAAeSwpx9qV8dh/s-l300.jpg"
+          },
+          {
+            "id": "ref2",
+            "url": "https://www.ebay.com/shop/luka-doncic-prizm-rookie-card?_nkw=luka+doncic+prizm+rookie+card",
+            "title": "Luka Doncic Prizm Rookie Card - eBay",
+            "text": "Luka Doncic Prizm Rookie Card - eBay",
+            "text_origin": "google_indexed_title",
+            "image_url": "https://i.ebayimg.com/images/g/QmYAAeSwG5pqfOBX/s-l300.jpg"
+          },
+          {
+            "id": "ref3",
+            "url": "https://www.sportsmemorabilia.com/luka-doncic/rookie-cards-trading-cards/a-12101+d-7092-7085",
+            "title": "Luka Dončić Autographed Rookie Cards Trading Cards, Signed ...",
+            "text": "Luka Dončić Autographed Rookie Cards Trading Cards, Signed ...",
+            "text_origin": "google_indexed_title",
+            "image_url": "https://images.footballfanatics.com/luka-doncic-rookie-card-2018-19-panini-prizm-number-280-bgs-85_ss2_p-204586323+pv-1+u-ozsxktctpbdnhfgeihdi+v-irdxvqmwvbtmnrgrxgzf.jpg?_hv=2&w=600"
+          }
+        ]
+      },
+      "catalogueRetrieval": {
+        "references": [
+          {
+            "id": "ref3",
+            "url": "https://www.beckett.com/basketball/2018-19/panini-prizm-prizms-blue-ice/280-luka-doncic-16096782",
+            "title": "Beckett: Online Sports & Non Sports Cards Collectibles and Price Guide Subscription",
+            "text": "Beckett: Online Sports & Non Sports Cards Collectibles and Price Guide Subscription\n\nSubmit\n\nLogin\n\nMy Shopping Bag\n\nOnline Price Guide 0\n\nMarketplace 0\n\nPricing/Checklists\nMarketplace\n\nAll Categories\nAll Categories\nBaseball\nBasketball\nFootball\nHockey\nNonSport/Gaming\nOther/Multi-Sports\n\nPlease login to search the Beckett Online Price Guide. Click here\n\n×\n\nUnlock Search Results\nTo keep searching on Online Price Guide,\n\nplease renew your xxxxx Subscription\n\nSubscribe Now!\n\n×\n\nReceive a 10% credit in your Beckett Wallet for each friend who successfully places an OPG order.Your friend will also save 10% on his first OPG purchase.\n\nForgot password?\n\nLogin\n\nNew to Beckett? Sign Up Now!\n\nTerms & Conditions\n\n×\n\nBack\n\nTerms & conditions\n\nTerms & Conditions\n\n2018-19 Panini Prizm Prizms Blue Ice #280 Luka Doncic\n\nBeckett Real Time Pricing\n\nbuy now\n\nBuy 15 days Basketball price guide\n\nBuy 1 month Basketball price guide\n\nBuy 6 month Basketball price guide\n\nBuy 12 month Basketball price guide\n\nBuy Pricing for this Item\n\nBuy Total Access\n\nClose\n\nConditional Pricing\n\nGraded Pricing\n\nConditional pricing available when you Buy Pricing\n\nBuy Now\n\n*A $5.00 minimum charge applies to single card Online Price Guide credit card purchases. Unused balances will be applied toward your future OPG purchases.\n\nNo graded pricing is available for this item.\n\nOther Actions\n\nGrade this Card\n\nView POP Report\n\nView BGS Registries\n\nItem Details\n\nSet:\n2018-19 Panini Prizm Prizms Blue Ice\n\nPlayer:\nDoncic, Luka\nSport:\nBasketball\n\nTeam: Dallas Mavericks\n\nAttributes:\nSer\n\nPrint Run: 99\n\nCard Number: #280\n\nManufacturer: Panini Group\n\nBrand:\nPanini Prizm\n\nShop the Beckett Marketplace\n\nThis item is not currently in stock on the Beckett Marketplace. Please check back again soon!\n\nMarket Data\n\nRaw Card Data\n\nGraded Card Data\n\nBuy OPG Plus\n\nBuy OPG Plus\n\nFor Trade\n\nFor Sale\n\nNo users have to trade for this.\n\nComing soon...\n\n×\n\nPlease use this form to submit data corrections such as cards missing from the checklist, incorrect images, teams or players, incorrect or missing attributes, etc.\nPlease do NOT use this form to submit questions. If you have questions, please contact customerservice@beckett.com\n\nDate:\n09/06/2026\n\nUsername:\n\nEmail:\n\nSource :\n2018-19 Panini Prizm Prizms Blue Ice #280 Luka Doncic\n\nNature of Correction\nCard missing from checklist\n\nIncorrect Image\n\nIncorrect Player\n\nIncorrect Team\n\nSelect One\n\nIncorrect Card Data (i.e card#, attributes, print run, etc.)\n\nOthers\n\nComments - please be as specific as possible and give as much detail as necessary.\n\nUpload (Image Front)\n\nUpload (Image Back)\n\nComing soon..\n\nSign up for Beckett’s latest news and exclusive offers\n\nServices\n\nGrading\n\nNews\n\nOnline Price Guide\n\nMarketplace\n\nAuthenticate\n\nPublications\n\nInsurance\n\nBrowse by\n\nPop Report\n\nBaseball Cards\n\nBasketball Cards\n\nFootball Cards\n\nHockey Cards\n\nSoccer Cards\n\nGaming Cards\n\nNon-Sports Cards\n\nPlayer Directory\n\nTeam Directory\n\nSet Directory\n\nResources\n\nEvents\n\nGrading FAQ\n\nAdvertise with Us\n\nBecome a Dealer\n\nContact\n\nHelp\n\nGift Cards\n\nCompany\n\nAbout Us\n\nPress Releases\n\nCareers Hiring Now\n\nLegal\n\nPrivacy Policy\n\nTerms of Service\n\nCookie Settings\n\nGet the app\n\n© 2026 Beckett Collectibles, LLC. All rights reserved.\n\nDisclosure about relationship with EPN. When you click on links to various merchants on this site and make a purchase, this can result in this site earning a commission. Affiliate programs and affiliations include, but are not limited to, the eBay Partner Network.\n\nConnect With Us!\n\n×\n\nTalk to Us\n\nCall Toll Free 469-830-3996\n\n(Mon - Fri, 9am - 8pm CDT)\n\nOr\n\nMessage Us\n\nSubmit your inquiry via our contact form below and a representative will respond as soon as possible.\n\nContact Form\n\nOr\n\nChat with Us\n\nPrefer a silent conversation?\n\nClick on the Leave a Message icon at the bottom right of the page. (Available from Mon - Fri, 9am - 8pm CDT)\n\nPlease let us know a convenient time to call you on\n\n(*All time slots are available in CDT zone.)\n\nMonday, Sep 07, 2026Tuesday, Sep 08, 2026Wednesday, Sep 09, 2026Thursday, Sep 10, 2026Friday, Sep 11, 2026\n\n09:00-09:30\n09:30-10:00\n10:00-10:30\n10:30-11:00\n11:00-11:30\n11:30-12:00\n12:00-12:30\n12:30-13:00\n13:00-13:30\n13:30-14:00\n14:00-14:30\n14:30-15:00\n15:00-15:30\n16:00-16:30\n16:30-17:00\n17:00-17:30\n17:30-18:00\n18:00-18:30\n18:30-19:00\n19:00-19:30\n19:30-20:00\n\nSchedule a Call\n\n09:00-09:30\n09:30-10:00\n10:00-10:30\n10:30-11:00\n11:00-11:30\n11:30-12:00\n12:00-12:30\n12:30-13:00\n13:00-13:30\n13:30-14:00\n14:00-14:30\n14:30-15:00\n15:00-15:30\n16:00-16:30\n16:30-17:00\n17:00-17:30\n17:30-18:00\n18:00-18:30\n18:30-19:00\n19:00-19:30\n19:30-20:00\n\n17:30-18:00\n18:00-18:30\n18:30-19:00\n19:00-19:30\n19:30-20:00\n\n \n\nThank you for choosing this service. Our experts will call you on your preferred time.",
+            "text_origin": "retrieved_page",
+            "image_url": "https://www.beckett.com/images/beckett-new-logo-meta.png"
+          },
+          {
+            "id": "ref4",
+            "url": "https://marketplace.beckett.com/jimandsteves_434/item/2018-19-panini-prizm-280-luka-doncic-rc_97406207",
+            "title": "2018-19 Panini Prizm #280 Luka Doncic RC - NM-MT - Jim & Steve's Sportscard Shop | Beckett Marketplace",
+            "text": "2018-19 Panini Prizm #280 Luka Doncic RC - NM-MT - Jim & Steve's Sportscard Shop | Beckett Marketplace\n\nBeckett Member Login\n\nIf you have an account, please login below or login using Facebook.\n\nEmail Address:\n\n(ex. jsmith@example.com)\n\nPassword:\n\npasswords are case sensitive\n\nRemember me\n\nForgot your password?\n\nHome\n\nBeckett Marketplace\n\nDealer Home\n\n2018-19 Panini Prizm #280 Luka Doncic RC\n\n2018-19 Panini Prizm #280 Luka Doncic RC\n\nFrontBackZoomZoom\n\nPrice:\n\n$100.00\n\nBeckett Value:\nSUBSCRIBE NOW\n\nBuy 1 month Basketball price guide\n\nBuy 6 month Basketball price guide\n\nBuy 12 month Basketball price guide\n\nBuy Pricing for this Item\n\nClose\n\nSale ends on Nov 30, -0001 12:00am\n\nyou save 0%\n\nCondition:\nNM-MT\n\nQty Available: 0\n\nQty to Buy:\n\nAttributes:\n\nSport: Basketball\n\nTeam:\nDallas Mavericks\n\nBrand: Panini Prizm\nManufacturer: Panini Group\nPlayer:\nDoncic, Luka\n\nYear: 2018\n\nGrade Company: Raw Grade\n\nView OPG Price\nView POP Report\nBack\n\nDealer Stats\n\nJim & Steve's Sportscard Shop\n\nFeedback Score: 4.64\n\nTotal Number of Cards for sale: 9,393,987\n\nTop Brands For Sale »\n\nTopps (1,331,416)\n\nUpper Deck (457,154)\n\nFleer (371,092)\n\nDonruss (268,636)\n\nClose\n\nTop Sports For Sale »\n\nBaseball (3,314,879)\n\nFootball (1,568,298)\n\nBasketball (950,341)\n\nHockey (680,463)\n\nNon-sports (86,071)\n\nClose\n\nShipping Information »\n\nUSPS Priority Mail Express International (Insured)\n\nUSPS Priority Mail International (Insured)\n\nUSPS Priority Mail International (Uninsured)\n\nUSPS First Class Package International (Uninsured)\n\nUSPS Global Express Guaranteed (Insured)\n\nLocal In Store Pickup\n\nUSPS First Class (Insured)\n\nUSPS Priority Mail (Uninsured)\n\nUSPS First Class (Uninsured)\n\nUSPS Priority Mail Express (Insured)\n\nUSPS Priority Mail (Insured)\n\nClose\n\nContact this Dealer »\n\nDealer Stats\n\nUnique Items\n\nSold\nTotal Quantity Sold\nUnique Items Added\n\nYesterday\n186\n204\n0\n\nThis Week\n514\n885\n0\n\nThis Month\n2,810\n4,061\n2\n\nThis Year\n20,656\n26,315\n3,678\n\nLifetime\n751,541\n1,029,541\n1,816,217\n\n \n\nCustomer\n\nFeedback\n\n\"Cards came as described, perfect transaction.\"\n\nSee more feedbacks\n\nTerms of Service, Privacy Statement and Policy Information\n\n©\n2026 Beckett Collectibles, LLC. All Rights Reserved.",
+            "text_origin": "retrieved_page",
+            "image_url": "https://img.beckett.com/images/items/16091712/marketplace/97406207/front.jpg"
+          }
+        ]
+      }
+    }
+  },
+  "box": {
+    "version": 172,
+    "vision": {
+      "status": "identified",
+      "kind": "object",
+      "title": "2025/26 Topps Chrome Basketball Update Series Blaster Box",
+      "category": "sealed sports trading card box",
+      "brand": "Topps",
+      "family": "Topps Chrome Basketball Update Series",
+      "model": "",
+      "variant": "Blaster box",
+      "condition": "sealed; exterior appears good with minor handling wear",
+      "category_confidence": 98,
+      "brand_confidence": 99,
+      "family_confidence": 96,
+      "model_confidence": 45,
+      "model_verified": false,
+      "market_ready": false,
+      "candidate_models": [
+        {
+          "model": "2025/26 Topps Chrome Basketball Update Series Blaster Box",
+          "confidence": 78,
+          "reason": "Series name and 2025/26 season are visibly printed on the packaging."
+        },
+        {
+          "model": "2025/26 Topps Chrome Basketball Update Series retail box variant",
+          "confidence": 35,
+          "reason": "Packaging is consistent with a retail blaster format, but no product code or configuration panel is visible."
+        }
+      ],
+      "visual_fingerprint": "Sealed blue Topps Chrome Basketball Update Series retail box, 2025/26 season. Front features Cooper Flagg in a Dallas #32 uniform and Victor Wembanyama in a San Antonio uniform, NBA/NBPA logos, Topps Chrome branding, and a large “1 AUTOGRAPH IN EVERY BOX!” claim.",
+      "distinctive_terms": [
+        "2025/26",
+        "Topps Chrome",
+        "UPDATE SERIES",
+        "COOPER FLAGG",
+        "VICTOR WEMBANYAMA READY? No"
+      ],
+      "search_terms": [
+        "2025/26",
+        "Topps Chrome",
+        "UPDATE SERIES",
+        "COOPER FLAGG",
+        "VICTOR WEMBANYAMA"
+      ],
+      "identifier_hints": [],
+      "layout_signature": [
+        {
+          "term": "Topps Chrome",
+          "position": "lower center",
+          "relation": "large product logo above UPDATE SERIES"
+        },
+        {
+          "term": "UPDATE SERIES",
+          "position": "lower center",
+          "relation": "directly below Topps Chrome logo"
+        },
+        {
+          "term": "COOPER FLAGG",
+          "position": "upper right",
+          "relation": "vertical text beside the player image"
+        },
+        {
+          "term": "VICTOR WEMBANYAMA",
+          "position": "left-center",
+          "relation": "vertical text beside the player image"
+        },
+        {
+          "term": "1 AUTOGRAPH IN EVERY BOX!",
+          "position": "bottom",
+          "relation": "large promotional claim beneath product branding"
+        }
+      ],
+      "evidence": [
+        "Visible packaging text reads “2025/26” and “Topps Chrome Basketball Update Series.”",
+        "Visible player names are “COOPER FLAGG” and “VICTOR WEMBANYAMA.”",
+        "Front artwork shows Cooper Flagg in Dallas #32 and Victor Wembanyama in San Antonio attire.",
+        "NBA and NBPA logos are visible.",
+        "Bottom claim visibly reads “1 AUTOGRAPH IN EVERY BOX!”"
+      ],
+      "missing_information": [
+        "Exact retail SKU or UPC",
+        "Exact pack count and card count",
+        "Whether this is a specific regional or retailer-exclusive configuration"
+      ],
+      "next_photo_request": "Photograph the back and bottom panels straight-on, including the UPC, product code, pack count, and copyright text.",
+      "user_text_consistent": true,
+      "normalized_query": "",
+      "verification_summary": "The series, season, branding, and blaster-style packaging are clearly visible. The exact SKU/configuration is not shown, so no exact commercial model is verified.",
+      "photo_clues": [
+        {
+          "text": "2025/26",
+          "role": "season",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.26,
+            "y": 0.58,
+            "width": 0.06,
+            "height": 0.2,
+            "certain": true
+          }
+        },
+        {
+          "text": "Topps Chrome",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.43,
+            "y": 0.66,
+            "width": 0.27,
+            "height": 0.08,
+            "certain": true
+          }
+        },
+        {
+          "text": "UPDATE SERIES",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.42,
+            "y": 0.73,
+            "width": 0.29,
+            "height": 0.08,
+            "certain": true
+          }
+        },
+        {
+          "text": "COOPER FLAGG",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.77,
+            "y": 0.23,
+            "width": 0.07,
+            "height": 0.22,
+            "certain": true
+          }
+        },
+        {
+          "text": "VICTOR WEMBANYAMA",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.33,
+            "y": 0.5,
+            "width": 0.07,
+            "height": 0.19,
+            "certain": true
+          }
+        },
+        {
+          "text": "1 AUTOGRAPH IN EVERY BOX!",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.44,
+            "y": 0.85,
+            "width": 0.3,
+            "height": 0.08,
+            "certain": true
+          }
+        }
+      ],
+      "physical_observations": [
+        {
+          "feature": "configuration",
+          "text": "Sealed retail box with a front display panel",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "color",
+          "text": "Metallic blue and dark navy packaging with red, white, and gold accent lines",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "pattern",
+          "text": "Chrome-style curved line graphics and dotted border detailing",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "count",
+          "text": "Two basketball players shown on the front panel",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        }
+      ],
+      "printing_detail_regions": [],
+      "object_region": {
+        "image_index": 1,
+        "x": 0.21,
+        "y": 0.01,
+        "width": 0.66,
+        "height": 0.88,
+        "certain": true
+      },
+      "object_regions": [
+        {
+          "image_index": 1,
+          "x": 0.21,
+          "y": 0.01,
+          "width": 0.66,
+          "height": 0.88,
+          "certain": true
+        }
+      ],
+      "object_unit": "panel",
+      "identity_basis": {
+        "family": "printed",
+        "variant": "physical_evidence"
+      },
+      "unresolved_identity_fields": [
+        "variant"
+      ],
+      "pokemon_printing": null
+    },
+    "phases": [
+      {
+        "stage": "flipcheck_visual_comparison",
+        "result": {
+          "physical_detail_needed": null,
+          "candidates": [
+            {
+              "category": "sealed sports trading card box",
+              "brand": "Topps",
+              "family": "Topps Chrome Update Series",
+              "model": "2025-26 Topps Chrome Update Series Basketball Hobby",
+              "year": "2025-26",
+              "issue_number": "",
+              "catalog_number": "",
+              "unit": "single",
+              "variant": "Hobby",
+              "decision": "match",
+              "same_unit": true,
+              "physical_ambiguity": false,
+              "conflicts": [],
+              "matches": [
+                {
+                  "reference_id": "ref1",
+                  "feature": "layout",
+                  "photo_detail": "Pannello frontale con Cooper Flagg e Victor Wembanyama, logo Topps Chrome e dicitura UPDATE SERIES",
+                  "reference_detail": "La foto mostra lo stesso layout frontale con i due giocatori, il logo Topps Chrome e UPDATE SERIES",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                },
+                {
+                  "reference_id": "ref1",
+                  "feature": "appearance",
+                  "photo_detail": "Packaging blu metallizzato/navy con linee curve rosse, bianche e dorate e bordo puntinato",
+                  "reference_detail": "La confezione fotografata presenta gli stessi colori e la stessa grafica a linee curve",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                },
+                {
+                  "reference_id": "ref1",
+                  "feature": "configuration",
+                  "photo_detail": "Scatola retail sigillata singola con pannello frontale",
+                  "reference_detail": "La foto mostra una singola hobby box",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                }
+              ],
+              "fields": [
+                {
+                  "field": "brand",
+                  "value": "Topps",
+                  "reference_id": "ref1",
+                  "quote": "2025-26 Topps Chrome Update Series Basketball Hobby 12-Box Case",
+                  "evidence": "text",
+                  "scope": "target",
+                  "number_kind": "none"
+                },
+                {
+                  "field": "family",
+                  "value": "Topps Chrome Update Series",
+                  "reference_id": "ref1",
+                  "quote": "2025-26 Topps Chrome Update Series Basketball Hobby 12-Box Case",
+                  "evidence": "text",
+                  "scope": "target",
+                  "number_kind": "none"
+                },
+                {
+                  "field": "year",
+                  "value": "2025-26",
+                  "reference_id": "ref1",
+                  "quote": "2025-26 Topps Chrome Update Series Basketball Hobby 12-Box Case",
+                  "evidence": "text",
+                  "scope": "target",
+                  "number_kind": "season"
+                },
+                {
+                  "field": "subject",
+                  "value": "Basketball",
+                  "reference_id": "ref1",
+                  "quote": "2025-26 Topps Chrome Update Series Basketball Hobby 12-Box Case",
+                  "evidence": "text",
+                  "scope": "target",
+                  "number_kind": "none"
+                },
+                {
+                  "field": "variant",
+                  "value": "Hobby",
+                  "reference_id": "ref1",
+                  "quote": "2025-26 Topps Chrome Update Series Basketball Hobby 12-Box Case",
+                  "evidence": "text",
+                  "scope": "target",
+                  "number_kind": "none"
+                }
+              ],
+              "identity_level": "exact",
+              "specimen_notes": []
+            }
+          ],
+          "detail_needed_from": "none"
+        }
+      }
+    ],
+    "assistance": {
+      "provider": {
+        "references": []
+      },
+      "catalogueRetrieval": {
+        "references": [
+          {
+            "id": "ref1",
+            "url": "https://www.steelcitycollectibles.com/i/2025-26-topps-chrome-update-series-basketball-hobby-12-box-case",
+            "title": "2025-26 Topps Chrome Update Series Basketball Hobby 12-Box Case | Steel City Collectibles",
+            "text": "2025-26 Topps Chrome Update Series Basketball Hobby 12-Box Case | Steel City Collectibles\n\nSteel City Collectibles will be closed on Monday, September 7th. Orders will begin shipping on Tuesday, September 8th.\n\nBasketball Cards\n\n>\n\n2025-26 Basketball Cards\n\n> 2025-26 Topps Chrome Update Series Basketball Hobby 12-Box Case\n\n0887521161317\n\n2025-26 Topps Chrome Update Series Basketball Hobby 12-Box Case\n\nhttps://www.steelcitycollectibles.com/i/2025-26-topps-chrome-update-series-basketball-hobby-12-box-case\n\nSorry, but this item is currently out of stock.\n\n13999.95\n\nNotify me when available\n\nHAVE ONE TO SELL?\n\nConfiguration:\n\n4 cards per pack.\n\n20 packs per box.\n\n12 boxes per case.\n\nLook for 1 autograph per box on average.\n\nCards To Chase: NBA Debut Patch Autographs of Cooper Flagg, Dylan Harper, Kon Knueppel, Ace Bailey, VJ Edgecombe, Tre Johnson III, Cedric Coward, Derik Queen, and others, on-card rookie autographs of Cooper Flagg, Kon Knueppel, Dylan Harper, and others, veteran autographs of LeBron James, Stephen Curry, Victor Wembanyama, Anthony Edwards, Nikola Jokic, Shai Gilgeous-Alexander, and others, additional autographs of Druski and Spike Lee, super short print inserts like Alter Egos, Minions NBA Variations, and Denim Tears Parallels, short print case hit inserts like Helix, Radiating Rookies, Captains, and Celebración, new and returning inserts like New Edition, Stratospheric Stars, No Limit, Glass Canvas, Fanatical, and Moment in Time, and additional hits, inserts, variations, and parallels. Some of the cards, inserts, parallels, and sets listed here for this release may be exclusive to specific versions and configurations of the product. Please review the checklist for additional information.\n\nRelease Date: 8/6/26\n\nUPC: 887521161317\n\nFREE Shipping Available*\n\nFrequently Asked Questions\n\nAbout this item\n\nItem Details\n\nScroll down for a complete product description.\n\nProduct Description\n\n2025-26 Topps Chrome Update Series Basketball is headlined by one of the most coveted cards in the hobby, Rookie Debut Patch Autographs, making their Topps Basketball debut. Considered a pinnacle chase across The Hobby, these one-of-one grails, featuring game-worn NBA Debut patches, arrive for the first time in basketball with standout rookies like Cooper Flagg, Kon Knueppel, and Dylan Harper leading the charge. The chase is rounded out by superstars such as Stephen Curry, LeBron James, Victor Wembanyama, Anthony Edwards, Nikola Jokić, and Shai Gilgeous-Alexander and more across major SSPs and Autographs.\n\nEach Hobby Pack of 2025-2026 Topps Chrome Updates Basketball contains four cards. Each box contains one autograph. Look for Refractors, Prism Refractors, inserts, case hit inserts, and NBA Debut Patch Autographs.\n\nThe 200-card base set features refreshed imagery for the rookies, vets, and legends, all showcased in updated, in-season photography featuring Statement, City and Classic Edition uniforms and of course, a deep rainbow of Chrome parallels. Collectors can also hunt a wide range of new inserts including New Edition, Stratospheric Stars, No Limit, and Moment in Time, highlighting iconic NBA moments like Curry's \"Ring Me\" celebration in the NBA Finals.\n\nBeyond the Rookie Debut Patch Autographs, chase elements run deep with exciting case hits like the NBA's first Alter Egos SSPs, an epic 10-card set that transforms each player into a dynamic, illustrated, super-powered persona. Minions NBA are SSPs that reimagine NBA stars as Minions in collaboration with Illumination for a fun, highly collectible crossover insert. In addition, look out for the Denim Tears SSP parallel, and newly added Captains, Celebración case hit inserts.\n\nAutograph collectors can chase a robust lineup of Topps Chrome Autographs, including special appearances from Druski and Spike Lee. The 1980–81 Topps Basketball Autographs deliver another loaded checklist, while the ultra-cool Lava Lamp Rookie Autographs add a groovy twist. Chrome Updates Basketball is a must-have release, bursting with star power, innovation, and true hobby heat.\n\nTopps Chrome Updates brings the season to life with dynamic, refreshed photography, capturing the biggest stars and rising rookies in their latest looks. Chrome Updates expands on the flagship Chrome lineup with new additions and timely storytelling from across the league. Built on the signature shine, premium feel, and dynamic design collectors expect from Topps Chrome, Updates delivers a remix that keeps The Hobby aligned with the current moment.\n\nBase Set\n\nBase Refractors\n\nMagenta - #'d /399\n\nTeal - #d/299\n\nYellow - #d/275\n\nPink - #'d /250\n\nAqua - #'d /199\n\nBlue - #'d /150\n\nGreen - #d /99\n\nPurple - #'d /75\n\nGold - #'d /50\n\nOrange - #'d /25\n\nBlack - #'d /10\n\nRed -#'d /5\n\nSuperFractor - #'d 1/1\n\nFrozenfractor - #'d /5\n\nBase Wave\n\nDenim Tears\n\nHobby Box & Hobby Jumbo Box Exclusive Base Set Parallels\n\nWave Yellow - #'d /275\n\nWave Aqua - #d /199\n\nWave Blue - #'d /150\n\nWave Green - #'d /99\n\nWave Purple - #'d /75\n",
+            "text_origin": "retrieved_page",
+            "image_url": "https://www.steelcitycollectibles.com/storage/img/uploads/products/large/Image-Mockups-002---2026-08-05T100449-02689299648.jpeg"
+          },
+          {
+            "id": "ref2",
+            "url": "https://launches.topps.com/en-US/launch/2025-26-topps-chrome-updates-basketball-hobby-box-sealed-case-pre-order",
+            "title": "2025-26 Topps Chrome® Updates Basketball - Hobby Box Sealed Case - Pre-order",
+            "text": "2025-26 Topps Chrome® Updates Basketball - Hobby Box Sealed Case - Pre-order\n\n2025-26 Topps Chrome® Updates Basketball - Hobby Box Sealed Case - Pre-order\n\n2025-26 Topps Chrome® Updates Basketball - Hobby Box Sealed Case - Pre-order\nUS$6,359.99\n\nHow do EQL launches work?Free to enter\nOne entry per person\nNo bots\nThe EQLizer\n\nFree to enter\nOne entry per person\nNo bots\nThe EQLizer\nRead the FAQs for more info on EQL launches.\n\nMaximum of 1 per customer\n4 Cards Per Pack. 20 Packs Per Box.\n1 autograph per box!\n12 boxes per case.\n2025-26 Topps Chrome Updates Basketball is headlined by one of the most coveted cards in the hobby: Rookie Debut Patch Autographs, making their Topps Basketball debut. Considered a pinnacle chase across The Hobby, these 1-of-1 grails, featuring game-worn NBA Debut patches, arrive for the first time in basketball with standout rookies like Cooper Flagg, Kon Knueppel, and Dylan Harper leading the charge. The chase is rounded out by superstars such as Stephen Curry, LeBron James, Victor Wembanyama, Anthony Edwards, Nikola Jokić and Shai Gilgeous-Alexander and more across major SSPs and Autographs.\nThe 200-card base set features refreshed imagery for the rookies, vets and legends, all showcased in updated, in-season photography featuring Statement, City and Classic Edition uniforms and of course, a deep rainbow of Chrome parallels. Collectors can also hunt a wide range of new inserts including New Edition, Stratospheric Stars, No Limit, and Moment in Time, highlighting iconic NBA moments like Curry's \"Ring Me\" celebration in the NBA Finals.\nBeyond the Rookie Debut Patch Autographs, chase elements run deep with exciting case hits like the NBA's first Alter Egos SSPs, an epic 10-card set that transforms each player into a dynamic, illustrated, super-powered persona. Minions NBA are SSPs that reimagine NBA stars as Minions in collaboration with Illumination for a fun, highly collectible crossover insert. In addition, look out for the Denim Tears SSP parallel, and newly added Captains, Celebración case hit inserts.\nAutograph collectors can chase a robust lineup of Topps Chrome Autographs, including special appearances from Druski and Spike Lee. The 1980–81 Topps Basketball Autographs deliver another loaded checklist, while the ultra-cool Lava Lamp Rookie Autographs add a groovy twist. Chrome Updates Basketball is a must-have release, bursting with star power, innovation, and true hobby heat.\nDownload checklist:\n\nhttps://cdn.shopify.com/s/files/1/0662/9749/5709/files/Final_CheckList_26CUBK.pdf?v=1783360479\nSKU: FGC006720-CSE\n\nHow do EQL launches work?Free to enter\nOne entry per person\nNo bots\nThe EQLizer\n\nFree to enter\nOne entry per person\nNo bots\nThe EQLizer\nRead the FAQs for more info on EQL launches.\n\nMaximum of 1 per customer\n4 Cards Per Pack. 20 Packs Per Box.\n1 autograph per box!\n12 boxes per case.\n2025-26 Topps Chrome Updates Basketball is headlined by one of the most coveted cards in the hobby: Rookie Debut Patch Autographs, making their Topps Basketball debut. Considered a pinnacle chase across The Hobby, these 1-of-1 grails, featuring game-worn NBA Debut patches, arrive for the first time in basketball with standout rookies like Cooper Flagg, Kon Knueppel, and Dylan Harper leading the charge. The chase is rounded out by superstars such as Stephen Curry, LeBron James, Victor Wembanyama, Anthony Edwards, Nikola Jokić and Shai Gilgeous-Alexander and more across major SSPs and Autographs.\nThe 200-card base set features refreshed imagery for the rookies, vets and legends, all showcased in updated, in-season photography featuring Statement, City and Classic Edition uniforms and of course, a deep rainbow of Chrome parallels. Collectors can also hunt a wide range of new inserts including New Edition, Stratospheric Stars, No Limit, and Moment in Time, highlighting iconic NBA moments like Curry's \"Ring Me\" celebration in the NBA Finals.\nBeyond the Rookie Debut Patch Autographs, chase elements run deep with exciting case hits like the NBA's first Alter Egos SSPs, an epic 10-card set that transforms each player into a dynamic, illustrated, super-powered persona. Minions NBA are SSPs that reimagine NBA stars as Minions in collaboration with Illumination for a fun, highly collectible crossover insert. In addition, look out for the Denim Tears SSP parallel, and newly added Captains, Celebración case hit inserts.\nAutograph collectors can chase a robust lineup of Topps Chrome Autographs, including special appearances from Druski and Spike Lee. The 1980–81 Topps Basketball Autographs deliver another loaded checklist, while the ultra-cool Lava Lamp Rookie Autographs add a groovy twist. Chrome Updates Basketball is a must-have release, bursting with star power, innovation, and true hobby heat.\nDownload checklist:\n\nhttps://cdn.shopify.com/s/files/1/0662/9749/5709/files/Final_CheckList_26CUBK.pdf?v=1783360479\n\nUS$6,359.99\nSKU: FGC006720-CSE\n\nContinue",
+            "text_origin": "retrieved_page",
+            "image_url": "https://cdn.eql.media/draw-api/9201f031-26db-4f29-ad0a-8df9f073c959/f201c00e-257f-48fe-82d8-0741ffca3927.png?auto=format%2Ccompress&ar=1%3A1.333&fit=crop&ixlib=react-9.11.0&w=580"
+          },
+          {
+            "id": "ref3",
+            "url": "https://ripped.topps.com/2025-26-topps-chrome-black-basketball-box-guide/",
+            "title": "2025-26 Topps Chrome Black Basketball Guide - Topps Ripped",
+            "text": "2025-26 Topps Chrome Black Basketball Guide - Topps Ripped\n\nDiscover 2025-26 Topps Chrome Black Basketball\n\nDate: Aug 27, 2026\n\nTopics: 2025-26 Topps Chrome Black Basketball, Basketball, Instant Packs, NBA, SKU Guide, Trending\n\nLength: 1830 Words\n\nReading Time: ~10 Minutes\n\n2025-26 Topps Chrome Black Basketball brings back its signature dark aesthetic, pairing bold card designs with a premium chromium finish. Collectors can find the biggest names in basketball, from established stars like Victor Wembanyama, LeBron James, and Stephen Curry to exciting rookies like Cooper Flagg, Dylan Harper, and Kon Knueppel.\n\nThe insert lineup features returning favorites Black Lightning, Nocturnal, and Home Court, joined by two new additions, Carbon Flare and Obscura.\n\nThe autograph lineup runs just as deep, with Autographs, Rookie Autographs, Ivory Autographs, Super Futures Autographs, and the new Glow Up Signatures joining Carbon Ink, Black Fire Autographs, and Shrouded Signatures. Every box includes numbered parallels and one encased autograph card.\n\n2025-26 Topps Chrome Black Basketball comes in two formats: physical Hobby boxes and the new Instant Packs available on Fanatics Collect. Both draw from the same print run and checklist, so the right format depends on whether you want to open sealed wax at home or rip instantly online. Here’s a breakdown of what each format offers.\n\n2025-26 Topps Chrome Black Basketball is available in two formats: physical Hobby boxes and digital Instant Packs on Fanatics Collect. Every Hobby box includes two packs of six cards plus one encased autograph card, while Instant Packs deliver four cards from the same print run, plus two exclusive parallels. Collectors can find Victor Wembanyama, LeBron James, Stephen Curry, and top rookies like Cooper Flagg, Dylan Harper, and Kon Knueppel across a signature dark chromium design.\n\n2025-26 Topps Chrome Black Basketball Format Comparison\n\nFormatConfigurationKey DrawBest ForHobbyTwo packs per box, six cards per pack, plus one encased autograph card. Eight boxes per caseAn encased autograph card in every box, backed by a full parallel and insert lineupCollectors who want the full physical Chrome Black experience with sealed wax at homeInstant PacksFour cards per pack, six-pack daily limit per collector, available on Fanatics CollectTwo exclusive parallels, Black Glitter numbered to /11 and Teal Glitter numbered to /64Collectors who want to rip instantly online without waiting on shipping\n\nDISCOVER NOW\n\n2025-26 Topps Chrome Black Basketball Hobby Box\n\nEach Hobby box of 2025-26 Topps Chrome Black Basketball includes two packs of six cards and one additional encased autograph card. Eight boxes make up a case, and every box includes numbered parallels drawn from the Base Card Parallel Matrix, which runs from the Base Refractor, numbered to 299, up through the one-of-one Base SuperFractor.\n\nThat encased autograph card is the anchor of every box, drawing from a signature lineup that includes Autographs, Rookie Autographs, Carbon Ink, Super Futures Autographs, Black Fire Autographs, Shrouded Signatures, Glow Up Signatures, and Ivory Autographs. Collectors can also find insert cards from Black Lightning, Nocturnal, Home Court, Carbon Flare, and Obscura mixed throughout the base packs.\n\nBuilt around a premium autograph anchor and a deep parallel ladder, Hobby is the way to experience 2025-26 Topps Chrome Black Basketball as a sealed, physical product.\n\n2025-26 Topps Chrome Black Basketball Instant Packs\n\nOur newest format, Instant Packs are digital rips of real, physical 2025-26 Topps Chrome Black Basketball cards. Topps set aside 10 percent of the Chrome Black Basketball print run for this format, ripped on Fanatics Collect. Every card has already been scanned in, so the card a collector sees when ripping is the exact physical card they’ll receive if they ship it home. Aside from two exclusive parallels, the checklist matches the physical Hobby release.\n\nEach pack costs $100 and includes four cards, with a daily limit of six packs per collector. Instant Packs release on August 27 at 4 p.m. ET / 1 p.m. PT and are available to US collectors only.\n\nThe two Instant Packs exclusive parallels are Black Glitter, numbered to /11, and Teal Glitter, numbered to /64. Everything else matches the physical release checklist, giving collectors a way to rip the same print run instantly instead of waiting on shipping.\n\nRIP INSTANT PACKS NOW\n\nSo, What Format Should You Get?\n\nIf you want the full physical experience, sealed wax, an encased autograph card in every box, and a deep parallel and insert lineup to work through, Hobby is the easy call. Collectors who want to rip the same print run instantly, without waiting on shipping, and pick up two exclusive parallels found nowhere else should look to Instant Packs on Fanatics Collect.\n\nWhat to Look For\n\nBlack Lightning, Nocturnal, and Home Court: Three returning insert sets bring back the dark, dramatic design work Chrome Black",
+            "text_origin": "retrieved_page",
+            "image_url": "https://ripped.topps.com/wp-content/uploads/2026/08/Untitled-design-20.webp"
+          }
+        ]
+      }
+    }
+  },
+  "remote": {
+    "version": 172,
+    "vision": {
+      "status": "uncertain",
+      "kind": "object",
+      "title": "Smart TV remote control",
+      "category": "television remote control",
+      "brand": "Philips",
+      "family": "Philips Smart TV remote",
+      "model": "",
+      "variant": "Black remote with Netflix shortcut",
+      "condition": "Used, visibly worn",
+      "category_confidence": 99,
+      "brand_confidence": 78,
+      "family_confidence": 72,
+      "model_confidence": 0,
+      "model_verified": false,
+      "market_ready": false,
+      "candidate_models": [],
+      "visual_fingerprint": "Tall black Philips-style TV remote with top power button, PAIR label, three-column shortcut grid including TV GUIDE, VOICE, TOP PICKS, SOURCES and TV EXIT; central circular OK/navigation pad, colored red/green/yellow/blue keys, NETFLIX shortcut, side volume/channel rockers, SUBTITLE/TEXT keypad labels and playback controls.",
+      "distinctive_terms": [
+        "PAIR",
+        "TOP PICKS",
+        "TV GUIDE",
+        "VOICE",
+        "NETFLIX"
+      ],
+      "search_terms": [
+        "PAIR",
+        "TOP PICKS",
+        "TV GUIDE",
+        "VOICE",
+        "NETFLIX"
+      ],
+      "identifier_hints": [],
+      "layout_signature": [
+        {
+          "term": "PAIR",
+          "position": "upper right",
+          "relation": "above SETTINGS in the top shortcut area"
+        },
+        {
+          "term": "TV GUIDE",
+          "position": "upper left",
+          "relation": "left of VOICE and TOP PICKS"
+        },
+        {
+          "term": "VOICE",
+          "position": "upper center",
+          "relation": "between TV GUIDE and TOP PICKS"
+        },
+        {
+          "term": "TOP PICKS",
+          "position": "upper right",
+          "relation": "right of VOICE"
+        },
+        {
+          "term": "NETFLIX",
+          "position": "below colored keys",
+          "relation": "centered between vertical volume/channel controls"
+        }
+      ],
+      "evidence": [
+        "Visible PAIR, TOP PICKS, TV GUIDE, VOICE and NETFLIX labels.",
+        "Three-column upper shortcut layout with central circular OK/navigation control.",
+        "SUBTITLE and TEXT labels are visible beneath the numeric keypad.",
+        "No model, part number, serial number or brand logo is legible."
+      ],
+      "missing_information": [
+        "Exact remote model or part number",
+        "Readable rear label or battery-compartment sticker",
+        "Confirmed Philips branding"
+      ],
+      "next_photo_request": "Photograph the rear label and battery compartment closely, including any MODEL, TYPE or P/N text.",
+      "user_text_consistent": true,
+      "normalized_query": "",
+      "verification_summary": "The layout strongly suggests a Philips Smart TV remote, but the exact model cannot be verified from the front alone; several compatible remotes may share this design.",
+      "photo_clues": [
+        {
+          "text": "PAIR",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.58,
+            "y": 0.135,
+            "width": 0.07,
+            "height": 0.03,
+            "certain": true
+          }
+        },
+        {
+          "text": "TOP PICKS",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.57,
+            "y": 0.21,
+            "width": 0.1,
+            "height": 0.035,
+            "certain": true
+          }
+        },
+        {
+          "text": "TV GUIDE",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.405,
+            "y": 0.21,
+            "width": 0.1,
+            "height": 0.035,
+            "certain": true
+          }
+        },
+        {
+          "text": "VOICE",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.49,
+            "y": 0.21,
+            "width": 0.07,
+            "height": 0.035,
+            "certain": true
+          }
+        },
+        {
+          "text": "NETFLIX",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.485,
+            "y": 0.58,
+            "width": 0.11,
+            "height": 0.04,
+            "certain": true
+          }
+        },
+        {
+          "text": "SUBTITLE",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.42,
+            "y": 0.8,
+            "width": 0.08,
+            "height": 0.03,
+            "certain": true
+          }
+        },
+        {
+          "text": "TEXT",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.6,
+            "y": 0.8,
+            "width": 0.06,
+            "height": 0.03,
+            "certain": true
+          }
+        }
+      ],
+      "physical_observations": [
+        {
+          "feature": "configuration",
+          "text": "Tall black remote with three-column shortcut grid and central circular navigation pad",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "count",
+          "text": "Four colored keys: red, green, yellow and blue",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "layout",
+          "text": "Vertical volume and channel rockers flank the NETFLIX key",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "finish",
+          "text": "Brushed-looking dark upper panel with glossy black lower body",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "pattern",
+          "text": "Numeric keypad in three columns with SUBTITLE and TEXT at the bottom corners",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "finish",
+          "text": "Surface shows substantial wear and scuffing around navigation and lower controls",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        }
+      ],
+      "printing_detail_regions": [],
+      "object_region": {
+        "image_index": 1,
+        "x": 0.36,
+        "y": 0.03,
+        "width": 0.34,
+        "height": 0.97,
+        "certain": true
+      },
+      "object_regions": [
+        {
+          "image_index": 1,
+          "x": 0.36,
+          "y": 0.03,
+          "width": 0.34,
+          "height": 0.97,
+          "certain": true
+        }
+      ],
+      "object_unit": "single",
+      "identity_basis": {
+        "family": "inferred",
+        "variant": "physical_evidence"
+      },
+      "unresolved_identity_fields": [
+        "family",
+        "variant"
+      ],
+      "pokemon_printing": null
+    },
+    "phases": [
+      {
+        "stage": "flipcheck_visual_comparison",
+        "result": {
+          "physical_detail_needed": null,
+          "candidates": [
+            {
+              "category": "television remote control",
+              "brand": "",
+              "family": "",
+              "model": "",
+              "year": "",
+              "issue_number": "",
+              "catalog_number": "",
+              "unit": "single",
+              "variant": "",
+              "decision": "different",
+              "same_unit": true,
+              "physical_ambiguity": false,
+              "conflicts": [
+                {
+                  "scope": "target",
+                  "reason": "La disposizione dei tasti e le app shortcut differiscono: l’oggetto mostra PAIR, VOICE e TOP PICKS, mentre la fonte mostra Netflix, Prime Video e YouTube."
+                }
+              ],
+              "matches": [
+                {
+                  "reference_id": "ref1",
+                  "feature": "layout",
+                  "photo_detail": "Tall black remote with three-column shortcut grid and central circular navigation pad",
+                  "reference_detail": "L’immagine mostra una griglia numerica a tre colonne e un’area centrale di navigazione",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                },
+                {
+                  "reference_id": "ref1",
+                  "feature": "color",
+                  "photo_detail": "Four colored keys: red, green, yellow and blue",
+                  "reference_detail": "L’immagine mostra quattro tasti colorati rosso, verde, giallo e blu",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                },
+                {
+                  "reference_id": "ref1",
+                  "feature": "configuration",
+                  "photo_detail": "The upper shortcut area shows PAIR, VOICE and TOP PICKS",
+                  "reference_detail": "L’immagine mostra Netflix, Prime Video e YouTube nell’area superiore",
+                  "agrees": false,
+                  "reference_evidence": "image"
+                }
+              ],
+              "fields": [],
+              "identity_level": "family",
+              "specimen_notes": []
+            },
+            {
+              "category": "television remote control",
+              "brand": "",
+              "family": "",
+              "model": "SR-CR4526",
+              "year": "",
+              "issue_number": "",
+              "catalog_number": "",
+              "unit": "single",
+              "variant": "",
+              "decision": "different",
+              "same_unit": true,
+              "physical_ambiguity": false,
+              "conflicts": [
+                {
+                  "scope": "target",
+                  "reason": "La configurazione superiore non coincide: l’oggetto ha PAIR, VOICE e TOP PICKS, mentre la fonte mostra Prime Video, Google Play, Netflix e YouTube."
+                }
+              ],
+              "matches": [
+                {
+                  "reference_id": "ref2",
+                  "feature": "layout",
+                  "photo_detail": "Tall black remote with three-column shortcut grid and central circular navigation pad",
+                  "reference_detail": "L’immagine mostra una griglia numerica a tre colonne e un pad centrale di navigazione",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                },
+                {
+                  "reference_id": "ref2",
+                  "feature": "color",
+                  "photo_detail": "Four colored keys: red, green, yellow and blue",
+                  "reference_detail": "L’immagine mostra quattro tasti colorati rosso, verde, giallo e blu",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                },
+                {
+                  "reference_id": "ref2",
+                  "feature": "configuration",
+                  "photo_detail": "The upper shortcut area shows PAIR, VOICE and TOP PICKS",
+                  "reference_detail": "L’immagine mostra Prime Video, Google Play, Netflix e YouTube nell’area superiore",
+                  "agrees": false,
+                  "reference_evidence": "image"
+                }
+              ],
+              "fields": [
+                {
+                  "field": "model",
+                  "value": "SR-CR4526",
+                  "reference_id": "ref2",
+                  "quote": "Remote Control Model No. : SRC-4526",
+                  "evidence": "text",
+                  "scope": "target",
+                  "number_kind": "model_number"
+                }
+              ],
+              "identity_level": "family",
+              "specimen_notes": []
+            }
+          ],
+          "detail_needed_from": "none"
+        }
+      }
+    ],
+    "assistance": {
+      "provider": {
+        "references": []
+      },
+      "catalogueRetrieval": {
+        "references": [
+          {
+            "id": "ref1",
+            "url": "https://www.documents.philips.com/assets/20230526/aae5aea645ef4abfac80b00e0065ba5f.pdf",
+            "title": "User Manual",
+            "text": "Page 9: 1 - \r\n• If you have a Netflix membership subscription, you\r\ncan enjoy Netflix on this TV. Your TV must be\r\nconnected to the Internet.\r\n• To launch the Netflix, press  to open Netflix\r\nimmediately with the TV switched on or from\r\nstandby.\r\nwww.netflix.com \r\n2 -  ( Mute) / (Volume)\r\nPress in middle to mute the sound or to restore it.\r\nPress + or - to adjust the volume level.\r\n3 - Number keys\r\nTo select a channel directly.\r\n4 - TEXT\r\nTo open or close Text/Teletext.\r\n5 -  (TV Guide) / (LIST)\r\nTo open or close the TV Guide. Long press to open\r\nthe channel list.\r\n6\r\nTo launch the Amazon \r\n - \r\nprime video App.\r\n7 - YouTube\r\nTo launch the YouTube App.\r\n8 -  (DASHBOARD)\r\nTo launch Dashboard on side of screen to access\r\nSettings, device controls, notifications and more.\r\n3.2\r\nPair Your Remote Control to\r\nTV\r\nThis remote control uses both Bluetooth® and IR\r\n(infrared) to send its commands to the TV.\r\n• You can use this remote control via IR (infrared) for\r\nmost operations.\r\n• To use advanced operation like voice search, you\r\nneed to pair (link) the TV with the remote control. \r\nWhen you start the initial TV installation, the TV\r\ninvites you to press Home + Back key to pair the\r\nremote control. It is suggested to complete the pairing\r\nduring the first TV installation.\r\nNote: \r\n1 - Once the remote control has entered pairing\r\nmode successfully, the LED indicator ring around the\r\nmicrophone on the front side of the remote control\r\nstarts blinking.\r\n2 - The remote control must be kep\nPage 10: 1 - Press and hold the  key on remote control, the\r\nblue light on the remote control lights up and the\r\nsearch field opens, the microphone is active.\r\n2 - Speak out what you are looking for with clear\r\npronunciation. Once the voice input is done, release\r\nthe  key to start the search. It might take some time\r\nfor the results to appear.\r\n3 - In the list of search results, you can select the\r\nitem you want.\r\n3.4\r\nRemote Control Keyboard\r\nOverview\r\nOverview of a Qwerty/Azerty keyboard\r\n1 - Azerty character\r\nCharacter position if the keyboard layout is set to\r\nAzerty.\r\n2 -  Delete\r\nTo delete input characters.\r\n3 -  Shift\r\nTo type uppercase characters.\r\n4 - Fn key\r\nTo type a number or punctuation character.\r\n5 -  Spacebar\r\n6 - Navigation and OK\r\nNote: You need to pair the remote control to the TV\r\nbefore use remote control keyboard.\r\nWriting Text\r\nWith the keyboard on the back of the remote control,\r\nyou can write text in any text field on screen.\r\nTo write text…\r\n1 - Select a text field if it is not yet selected.\r\n2 - Turn the remote control keyboard facing upwards\r\nto activate the keyboard keys. Hold the remote\r\ncontrol with two hands and type with both thumbs.\r\n3 - To hide the on screen keyboard, press  Back.\r\n4 - Press OK to confirm the text. \r\n* Note:\r\n• Best distance to operate remote control with the TV\r\nis less than 5 m. \r\n• When using remote control keyboard, best to hold\r\nthe remote control with the angle less than 50\r\ndegree.\r\n• Do not block the IR ray of the remo\nPage 82: Online support 73\r\n Open Source Software 53\r\n Options on a Channel 20 P\r\n Parental Rating 19\r\n Personal mode, Clear dialogue 42\r\n Personal mode, Equalizer 42\r\n Philips Wireless Home Speakers with\r\nAmbilight\r\n48\r\n Photos, Videos and Music 59\r\n Picture Settings Menu 38\r\n Picture styles 38\r\n Picture, picture format 41\r\n Picture, quick settings 41\r\n Play-Fi Wireless Home Theater 45\r\n Power cable\r\n6\r\n Problems, Channels 71\r\n Problems, Connection, Internet 72\r\n Problems, Connection, Wi-Fi 72\r\n Problems, HDMI Connection 72\r\n Problems, Picture 71\r\n Problems, Remote control 71\r\n Problems, Sound 72\r\n Problems, USB Connection 72\r\n Problems, Wrong menu language 73\r\n Product Fiche 67 Q\r\n Quick Menu 37 R\r\n Radio station 18\r\n Reception Quality 16\r\n Register your product 70\r\n Repair 73\r\n Reset 53 S\r\n Safety Instructions 74\r\n Satellite CAMs 12\r\n Satellite Installation 12\r\n Satellite, Channel packages 13\r\n Satellite, Manual Channel Update 13\r\n Satellite, Manual Installation 13\r\n Satellite, Unicable 13\r\n Screen care 75\r\n Screen off 54\r\n Self-diagnose 70\r\n Sharpness, MPEG Artefact Reduction 40\r\n Sleep timer 54\r\n Smart Card, CAM 28\r\n Software, Update 52\r\n Sound, style setting 41\r\n Standby 11\r\n Subtitle 20\r\n Subtitle Language 20\r\n Subtitle Language, Primary 20\r\n Subtitle Language, Secondary 20\r\n Sunrise alarm 49\r\n Switch off timer 54\r\n Switching On 11 T\r\n Teletext 23\r\n Terms of Use 76\r\n Test Reception 16\r\n Text 23\r\n Text language, Primary 24\r\n Text language, Secondary 24\r\n Troubleshooting 71\r\n TV \n",
+            "text_origin": "retrieved_pdf_pages",
+            "pages_rendered": [
+              9,
+              10,
+              82
+            ],
+            "page_count": 83,
+            "page_selection": "observed_text_match",
+            "image_url": "https://www.documents.philips.com/assets/20230526/aae5aea645ef4abfac80b00e0065ba5f.pdf"
+          },
+          {
+            "id": "ref2",
+            "url": "https://fccid.io/m/417665c4d889928c41d32a01f0ec62f4167b406e7ccd6432b4feee007f7e1f40.pdf",
+            "title": "User Manual",
+            "text": "Page 4: 1\r\nHome Screen\r\n1.1\r\nHome Screen and Channels\r\nThe Home launcher\r\nTo enjoy the benefits of your Android TV, connect the\r\nTV to the Internet. Press Home on your remote\r\ncontrol to get your new Android Home screen. Like on\r\nyour Android smartphone or tablet, the Home screen\r\nis the center of your TV. From here you can decide\r\nwhat to watch by browsing entertainment options\r\nfrom app and live TV. Your Home has channels to let\r\nyou discover great contents from your favorite apps.\r\nYou can also add additional channels or find new\r\napps to get more contents.\r\nThe Home screen is organized in channels. Apps may\r\npopulate their recommendation (if available)\r\naccording to their own choice as an individual\r\nchannels in the home screen.\r\nApps\r\nYour favorite Apps are placed on the first row. This\r\nrow contains a number of pre-installed apps. The\r\norder of these apps is according to business\r\nagreements with content service providers. You can\r\nalso add more apps as favorite from the Apps page,\r\nsuch as the Live TV and MMP (MultiMediaPlayer). The\r\nApps page can be opened by clicking the Apps icon\r\nat the left end of the Apps row.\r\nLive TV\r\nThe Live TV row shows the currently running\r\nprograms from the installed channels. It contains up\r\nto 10 channels as the recommendation for you to\r\nselect the TV channels. The first channel on Live TV\r\nrow is the channel you are watching, and the\r\nfollowing channels will be the channels on your\r\nfavorites list*.\r\n* Note: If there are still more spaces ava\nPage 8: 3\r\nRemote Control\r\n3.1\r\nKey Overview\r\nTop\r\n1 - Power (Standby/On)\r\nTo switch the TV on or back to Standby.\r\n2 - VOICE microphone\r\n3 - MENU\r\nTo open the TV Menu with typical TV functions.\r\n4 - Amazon Prime Video\r\nTo launch the Amazon Prime Video App.\r\n5 - NETFLIX\r\nTo launch the Netflix App with the TV switched on or\r\nfrom standby.\r\n• If you have a Netflix subscription, you can enjoy\r\nNetflix on this TV. Your TV must be connected to the\r\nInternet.\r\n• To open Netflix, press the NETFLIX key to open the\r\nNetflix App. You can open Netflix immediately from a\r\nTV in standby. \r\n6 - INFO\r\nPress to open the program information screen. Press\r\nonce to show brief channel information, press again\r\nto show expanded screen with program title and\r\nmore information, press again to show full program\r\ninformation. Keep pressing the key to switch to\r\ndifferent views of the information.\r\n7 - Google Play\r\nTo launch the Google Play App.\r\n8 - YouTube\r\nTo launch the YouTube App.\r\n9 - SOURCES/PAIR\r\n• To open or close the Sources menu.\r\n• To pair the remote control to the TV.\r\n10 - Google Assistant™\r\nTo launch the Google Assistant™.\r\nMiddle\r\n1 - OK key\r\nTo confirm a selection or setting. To open the channel\r\nlist while watching TV.\r\n2 - Back\r\n• To return to previous menu or TV source.\r\n• To go back to the previous App.\r\n3 - Playback and Record\r\n• Play, to playback.\r\n• Pause, to pause playback\r\n• Stop, to stop playback\r\n• Rewind, to rewind\r\n• Fast forward, to fast forward\r\n• Record, to start recording\r\n4 \nPage 9: Bottom\r\n1 - EXIT\r\nTo leave from current menu or App.\r\n2 - Volume\r\nPress + or - to adjust the volume level.\r\n3 - Number keys\r\nTo select a channel directly.\r\n4 - (Dot)\r\nTo enter digital sub-channels.\r\n5 - Channel\r\nPress + or - to switch to the next or previous\r\nchannel in the channel list.\r\n6 - Mute\r\nPress to mute the sound or to restore it.\r\n7 - CC\r\nTo enable/disable Closed Caption, or to show it on\r\nmute.\r\n3.2\r\nPair Your Remote Control to\r\nthe TV\r\nThis remote control uses both Bluetooth and IR\r\n(infrared) to send its commands to the TV.\r\n• You can use this remote control via IR (infrared) for\r\nmost operations.\r\n• To use advanced operation like voice search and\r\nremote control keyboard, you need to pair (link) the\r\nTV with the remote control.\r\nWhen you start the initial TV installation, the TV\r\ninvites you to long press the PAIR key until you see\r\nthe light pulsing on the remote. By doing so, the\r\npairing will be done. \r\nNote: \r\n1 - Once the remote control has entered pairing\r\nmode successfully, the blue LED indicator ring around\r\nthe microphone on the front side of the remote\r\ncontrol starts blinking.\r\n2 - The remote control must be kept close to the TV\r\n(within 3 feet) during pairing in order to ensure\r\nsuccess.\r\n3 - If the TV does not launch the voice control\r\nfield when you press Google Assistant™, pairing was\r\nunsuccessful.\r\n4 - It is advisable to wait until the set has fully started\r\nup and launched all background processes before\r\npairing mode is entered as the toast me\n",
+            "text_origin": "retrieved_pdf_pages",
+            "pages_rendered": [
+              4,
+              8,
+              9
+            ],
+            "page_count": 55,
+            "page_selection": "observed_text_match",
+            "image_url": "https://fccid.io/m/417665c4d889928c41d32a01f0ec62f4167b406e7ccd6432b4feee007f7e1f40.pdf"
+          },
+          {
+            "id": "ref3",
+            "url": "https://www.universalremotereviews.com/best-remotes-with-voice-control/",
+            "title": "7 Best Remotes with Voice Control [2026 Update] - Universal Remote Reviews",
+            "text": "7 Best Remotes with Voice Control [2026 Update] - Universal Remote Reviews\n\nShare via:\n\n96\nShares\n\nFacebook\n\n49\n\nX (Twitter)\n\n36\n\nTumblr\n\n3\n\nBlogger\n\n1\n\nAffiliate Disclosure:\n\nAs an Amazon Associate, I earn from qualifying purchases.\n\nViews: 249\nThe best remotes with voice control let you ditch the pile of clickers and run your whole entertainment center by voice.\n\nVoice Control Is Here\n\nBuck Rogers and his robot Twiggy\n\nAlright Buck Rogers, so you want the scoop on voice-control remotes. I get it. Searching around in the bowels of your sofa or favorite E-Z chair among the crumbs for that ever-elusive remote does get tiresome.\n\nApparently, we are in good company. Research by Statista found that around 44% of surveyed U.S. households have a TV remote capable of voice control. This was surprisingly higher than I was expecting.\n\nSo which remote is right for you?\n\nFear not. Below, I review the seven top voice-control remotes, ranked by who they actually serve. Most work with both Alexa and Google Assistant.\n\n★ Editor’s Choice\n\nThe best remote with voice control right now is the SofaBaton X2. Its 2.4-inch color touchscreen, fast Alexa and Google Assistant response, and refined hub control over IR, Bluetooth, RF, and Wi-Fi devices make it the smartest voice-remote purchase you can make today.\n\nSee the full review below →\n\nBest Remotes with Voice Control: Comparison Table\n\nThe table below compares my top five picks side by side, from full hub consolidation down to a Fire TV power clicker.\n\nEditor’s Choice\nPremium Hub\nHands-Free Alexa\nHub Plus App\nFire TV Power Clicker\n\nSofaBaton X2\nSofaBaton X1S\nFire TV Cube\nBroadlink RM4 Pro\nVoice Remote Pro\n\nRank\n1\n2\n3\n4\n5\n\nType\nHub remote with touchscreen\nHub remote with OLED\nHands-free streaming device\nIR and RF hub for phone control\nFire TV power-user remote\n\nVoice Assistants\nAlexa, Google, Home Assistant\nAlexa and Google Assistant\nAlexa hands-free\nAlexa, Google Assistant, Siri\nAlexa\n\nSmart Home Control\n✓\n✓\n✓\n✓\n✗\n\nBacklit Buttons\n✓\n✓\n✗\n✗\n✓\n\nPower\nRechargeable with dock\nRechargeable, long life\nPlugs in (AC)\nPlugs in (USB)\n2x AAA batteries\n\nBest For\nAll-in-one home theater plus smart home\nPremium hub without a touchscreen\nTruly hands-free Alexa control\nControlling devices behind cabinet doors\nFire TV power users\n\nTecTimmy’s Grade\nA\nB+\nA-\nB\nA\n\nCheck Price\nCheck Price\nCheck Price\nCheck Price\nCheck Price\n\nThe full reviews for all seven picks follow below, including pros and cons and a buyer’s guide.\n\n#1 – SofaBaton X2: Editor’s Choice\n\nAt a Glance\n\nCompatibility: 500,000+ devices from 6,000 brands via IR, Bluetooth, RF, and Wi-Fi.\n\nPower: Rechargeable lithium battery with charging dock.\n\nVoice / Smart Home: Alexa, Google Assistant, and Home Assistant.\n\nScreen: 2.4-inch color touchscreen with backlit hard buttons.\n\nBest For: A full living room with TV, soundbar, streamer, and smart-home gear consolidated to one remote.\n\nThe new SofaBaton X2 has officially taken the top spot on my list of the best remotes with voice control. After several months testing the X2 alongside my X1S and Harmony Elite, the upgraded color touchscreen and refined hub make this the smartest voice-remote purchase you can make right now.\n\nWhat pushes the X2 ahead of the already-excellent X1S? The 2.4-inch color screen is responsive enough to actually use for activity launches and channel surfing without reaching for buttons. Voice command latency through Alexa and Google Assistant is noticeably faster than the X1S, and SofaBaton has tightened up the Bluetooth pairing so smart-home control feels native rather than like a workaround. Home Assistant support lands the X2 alongside the X1S as a true whole-home option.\n\nPros\n\nColor touchscreen makes activity switching genuinely fast.\n\nFaster voice response than the X1S in side-by-side testing.\n\nSupports Alexa, Google Assistant, and Home Assistant.\n\nHub controls IR, Bluetooth, RF, and Wi-Fi devices.\n\nBacklit hard buttons for nighttime viewing.\n\nCons\n\nPremium price compared to the X1S.\n\nInitial setup takes patience for first-time hub users.\n\nTouchscreen learning curve for hard-button purists.\n\nEditor's Choice\n\nSofaBaton X2\n\n$359.99\n\nTouchscreen hub remote for a full home-theater setup.\n\nCheck Price\n\n09/06/2026 01:41 am GMT\n\nVideo Review\n\nI unboxed the SofaBaton X2 over on my TecTimmy YouTube channel. Click the “Watch on YouTube” link in the video if you prefer to watch this over there.\n\n#2 – SofaBaton X1S: Premium Hub\n\nAt a Glance\n\nCompatibility: 500,000 devices from 5,000 brands across IR, Bluetooth, and Wi-Fi.\n\nPower: Rechargeable with about 60 hours per charge.\n\nVoice / Smart Home: Alexa and Google Assistant.\n\nScreen: Small LCD for activity and device menus.\n\nBest For: Hub control without paying for the X2 touchscreen.\n\nSince Logitech announced it would no longer make new Harmony remotes, the SofaBaton X1S earned the top hub-remote spot among the best remotes with voice control for several years, and it is still the right pick for buyers who want full hub power with",
+            "text_origin": "retrieved_page",
+            "image_url": "https://www.universalremotereviews.com/wp-content/uploads/2022/08/best-remotes-with-voice-control-3.jpg"
+          }
+        ]
+      }
+    }
+  },
+  "machamp": {
+    "version": 172,
+    "vision": {
+      "status": "identified",
+      "kind": "card",
+      "title": "Machamp 1st Edition Holo",
+      "category": "Pokémon TCG card",
+      "brand": "Wizards of the Coast",
+      "family": "Base Set",
+      "model": "Machamp",
+      "variant": "1st Edition holographic, #8/102",
+      "condition": "Raw; visibly worn with edge wear and surface scratches",
+      "category_confidence": 99,
+      "brand_confidence": 97,
+      "family_confidence": 82,
+      "model_confidence": 98,
+      "model_verified": true,
+      "market_ready": true,
+      "candidate_models": [],
+      "visual_fingerprint": "English vintage Pokémon Machamp Stage 2, 100 HP, holographic fighting artwork, 1st Edition stamp left below illustration, Seismic Toss 60, copyright 1995,96,98,99 Nintendo/Creatures/GAMEFREAK ©1999 Wizards, number 8/102.",
+      "distinctive_terms": [
+        "Machamp",
+        "1st Edition",
+        "Seismic Toss",
+        "8/102",
+        "Strikes Back"
+      ],
+      "search_terms": [
+        "Machamp",
+        "1st Edition",
+        "Seismic Toss",
+        "8/102"
+      ],
+      "identifier_hints": [
+        "8/102"
+      ],
+      "layout_signature": [
+        {
+          "term": "Machamp",
+          "position": "top center",
+          "relation": "below Stage 2 header"
+        },
+        {
+          "term": "1st Edition",
+          "position": "left below illustration",
+          "relation": "beside flavor text"
+        },
+        {
+          "term": "Strikes Back",
+          "position": "mid-lower text box",
+          "relation": "red Pokémon Power heading"
+        },
+        {
+          "term": "Seismic Toss",
+          "position": "lower center",
+          "relation": "above damage value 60"
+        },
+        {
+          "term": "8/102",
+          "position": "bottom right",
+          "relation": "beside copyright line"
+        }
+      ],
+      "evidence": [
+        "The card visibly names Machamp and shows 100 HP.",
+        "A circular 1st Edition stamp is clearly visible left below the illustration.",
+        "The bottom-right collector number is visibly 8/102.",
+        "The copyright line visibly includes ©1999 Wizards."
+      ],
+      "missing_information": [
+        "Set name is not printed on the card; Base Set attribution is inferred from artwork, layout, number and copyright.",
+        "Shadowless status cannot be confirmed with certainty from this image alone."
+      ],
+      "next_photo_request": "Provide a straight-on, high-resolution photo of the lower illustration border and full copyright line to verify shadowless details.",
+      "user_text_consistent": true,
+      "normalized_query": "Pokémon Base Set 1st Edition Machamp holo 8/102 English",
+      "verification_summary": "Machamp, 1st Edition stamp, and 8/102 are directly visible. Base Set identification is highly likely but inferred because the set name is not printed.",
+      "photo_clues": [
+        {
+          "text": "Machamp",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.25,
+            "y": 0.075,
+            "width": 0.23,
+            "height": 0.055,
+            "certain": true
+          }
+        },
+        {
+          "text": "1st Edition",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.073,
+            "y": 0.548,
+            "width": 0.06,
+            "height": 0.055,
+            "certain": true
+          }
+        },
+        {
+          "text": "8/102",
+          "role": "collector_number",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.844,
+            "y": 0.966,
+            "width": 0.061,
+            "height": 0.02,
+            "certain": true
+          }
+        },
+        {
+          "text": "©1999 Wizards",
+          "role": "copyright",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.272,
+            "y": 0.966,
+            "width": 0.35,
+            "height": 0.02,
+            "certain": true
+          }
+        },
+        {
+          "text": "Seismic Toss",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.387,
+            "y": 0.77,
+            "width": 0.2,
+            "height": 0.035,
+            "certain": true
+          }
+        }
+      ],
+      "physical_observations": [
+        {
+          "feature": "configuration",
+          "text": "Single English Pokémon card with holographic illustration",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "pattern",
+          "text": "Multicolor reflective holographic foil background",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "finish",
+          "text": "Glossy foil surface with visible scratches and wear",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "color",
+          "text": "Yellow border with blue Machamp artwork",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        }
+      ],
+      "printing_detail_regions": [
+        {
+          "detail": "stamp",
+          "region": {
+            "image_index": 1,
+            "x": 0.07,
+            "y": 0.54,
+            "width": 0.07,
+            "height": 0.07,
+            "certain": true
+          }
+        },
+        {
+          "detail": "shadow",
+          "region": {
+            "image_index": 1,
+            "x": 0.13,
+            "y": 0.14,
+            "width": 0.8,
+            "height": 0.4,
+            "certain": false
+          }
+        },
+        {
+          "detail": "copyright",
+          "region": {
+            "image_index": 1,
+            "x": 0.19,
+            "y": 0.958,
+            "width": 0.62,
+            "height": 0.03,
+            "certain": true
+          }
+        }
+      ],
+      "object_region": {
+        "image_index": 1,
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "certain": true
+      },
+      "object_regions": [
+        {
+          "image_index": 1,
+          "x": 0,
+          "y": 0,
+          "width": 1,
+          "height": 1,
+          "certain": true
+        }
+      ],
+      "object_unit": "single",
+      "identity_basis": {
+        "family": "inferred",
+        "variant": "physical_evidence"
+      },
+      "unresolved_identity_fields": [
+        "family"
+      ],
+      "pokemon_printing": {
+        "is_pokemon": true,
+        "language": "English",
+        "set_name": "Base Set",
+        "card_type": "pokemon",
+        "first_edition_stamp": "present",
+        "stamp_image": 1,
+        "stamp_location": "Below the illustration at left",
+        "stamp_text": "1st Edition",
+        "artwork_shadow": "unclear",
+        "shadow_image": 1,
+        "shadow_location": "Right/lower edge of illustration frame",
+        "copyright_text": "© 1995,96,98,99 Nintendo, Creatures, GAMEFREAK © 1999 Wizards",
+        "copyright_image": 1,
+        "slab_text": "",
+        "slab_image": 0
+      }
+    },
+    "phases": [
+      {
+        "stage": "flipcheck_visual_comparison",
+        "result": {
+          "physical_detail_needed": null,
+          "candidates": [
+            {
+              "category": "Pokémon TCG card",
+              "brand": "Pokémon",
+              "family": "Base Set",
+              "model": "",
+              "year": "1999",
+              "issue_number": "8/102",
+              "catalog_number": "",
+              "unit": "single",
+              "variant": "Cosmos Holofoil",
+              "decision": "match",
+              "same_unit": true,
+              "physical_ambiguity": false,
+              "conflicts": [],
+              "matches": [
+                {
+                  "reference_id": "ref5",
+                  "feature": "layout",
+                  "photo_detail": "Single English Pokémon card con Machamp in alto, 100 HP e Seismic Toss 60",
+                  "reference_detail": "Machamp LV.67, 8/102",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                },
+                {
+                  "reference_id": "ref5",
+                  "feature": "pattern",
+                  "photo_detail": "Sfondo olografico riflettente multicolore con stelle",
+                  "reference_detail": "Cosmos Holofoil",
+                  "agrees": true,
+                  "reference_evidence": "description"
+                },
+                {
+                  "reference_id": "ref4",
+                  "feature": "color",
+                  "photo_detail": "Bordo giallo e illustrazione blu di Machamp",
+                  "reference_detail": "Machamp (Base Set 8/102)",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                },
+                {
+                  "reference_id": "ref4",
+                  "feature": "layout",
+                  "photo_detail": "Numero 8/102 in basso e illustrazione di Ken Sugimori",
+                  "reference_detail": "Machamp (Base Set 8/102)",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                }
+              ],
+              "fields": [
+                {
+                  "field": "model",
+                  "value": "Machamp",
+                  "reference_id": "ref4",
+                  "quote": "Machamp (Base Set 8/102)",
+                  "evidence": "text",
+                  "scope": "target",
+                  "number_kind": "none"
+                },
+                {
+                  "field": "family",
+                  "value": "Base Set",
+                  "reference_id": "ref4",
+                  "quote": "Base Set",
+                  "evidence": "text",
+                  "scope": "target",
+                  "number_kind": "none"
+                },
+                {
+                  "field": "year",
+                  "value": "1999",
+                  "reference_id": "ref4",
+                  "quote": "1999",
+                  "evidence": "text",
+                  "scope": "target",
+                  "number_kind": "year"
+                },
+                {
+                  "field": "issue_number",
+                  "value": "8/102",
+                  "reference_id": "ref4",
+                  "quote": "8/102",
+                  "evidence": "text",
+                  "scope": "target",
+                  "number_kind": "card_number"
+                },
+                {
+                  "field": "subject",
+                  "value": "Machamp",
+                  "reference_id": "ref5",
+                  "quote": "Machamp",
+                  "evidence": "text",
+                  "scope": "target",
+                  "number_kind": "none"
+                },
+                {
+                  "field": "variant",
+                  "value": "Cosmos Holofoil",
+                  "reference_id": "ref5",
+                  "quote": "Cosmos Holofoil",
+                  "evidence": "text",
+                  "scope": "target",
+                  "number_kind": "none"
+                }
+              ],
+              "identity_level": "exact",
+              "specimen_notes": [
+                "La foto mostra usura e graffi sulla superficie olografica; ciò riguarda la condizione, non l’identità."
+              ]
+            }
+          ],
+          "detail_needed_from": "none"
+        }
+      },
+      {
+        "stage": "flipcheck_visual_comparison",
+        "result": {
+          "physical_detail_needed": null,
+          "candidates": [
+            {
+              "category": "Pokémon TCG card",
+              "brand": "Pokemon",
+              "family": "Fossil Set",
+              "model": "Machamp",
+              "year": "",
+              "issue_number": "",
+              "catalog_number": "8/102",
+              "unit": "single",
+              "variant": "Holo 1st Edition",
+              "decision": "match",
+              "same_unit": true,
+              "physical_ambiguity": false,
+              "conflicts": [],
+              "matches": [
+                {
+                  "reference_id": "ref1",
+                  "feature": "layout",
+                  "photo_detail": "Single English Pokémon card con layout Machamp, 100 HP e Seismic Toss",
+                  "reference_detail": "La fonte mostra la stessa carta Machamp con 100 HP e Seismic Toss",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                },
+                {
+                  "reference_id": "ref1",
+                  "feature": "subject",
+                  "photo_detail": "Illustrazione blu di Machamp nella cornice olografica",
+                  "reference_detail": "Illustrazione blu di Machamp nella cornice olografica",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                },
+                {
+                  "reference_id": "ref1",
+                  "feature": "code",
+                  "photo_detail": "8/102",
+                  "reference_detail": "8/102",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                },
+                {
+                  "reference_id": "ref1",
+                  "feature": "pattern",
+                  "photo_detail": "Sfondo foil olografico multicolore",
+                  "reference_detail": "Sfondo olografico visibile dietro Machamp",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                }
+              ],
+              "fields": [
+                {
+                  "field": "model",
+                  "value": "Machamp",
+                  "reference_id": "ref1",
+                  "quote": "Pokemon Machamp Holo 1st Edition Fossil Set Holo Rare Card 8/102",
+                  "evidence": "text",
+                  "scope": "target",
+                  "number_kind": "none"
+                },
+                {
+                  "field": "family",
+                  "value": "Fossil Set",
+                  "reference_id": "ref1",
+                  "quote": "Pokemon Machamp Holo 1st Edition Fossil Set Holo Rare Card 8/102",
+                  "evidence": "text",
+                  "scope": "target",
+                  "number_kind": "none"
+                },
+                {
+                  "field": "brand",
+                  "value": "Pokemon",
+                  "reference_id": "ref1",
+                  "quote": "Pokemon Machamp Holo 1st Edition Fossil Set Holo Rare Card 8/102",
+                  "evidence": "text",
+                  "scope": "target",
+                  "number_kind": "none"
+                },
+                {
+                  "field": "catalog_number",
+                  "value": "8/102",
+                  "reference_id": "ref1",
+                  "quote": "Pokemon Machamp Holo 1st Edition Fossil Set Holo Rare Card 8/102",
+                  "evidence": "text",
+                  "scope": "target",
+                  "number_kind": "catalog_number"
+                },
+                {
+                  "field": "subject",
+                  "value": "Machamp",
+                  "reference_id": "ref1",
+                  "quote": "Pokemon Machamp Holo 1st Edition Fossil Set Holo Rare Card 8/102",
+                  "evidence": "text",
+                  "scope": "target",
+                  "number_kind": "none"
+                },
+                {
+                  "field": "variant",
+                  "value": "Holo 1st Edition",
+                  "reference_id": "ref1",
+                  "quote": "Pokemon Machamp Holo 1st Edition Fossil Set Holo Rare Card 8/102",
+                  "evidence": "text",
+                  "scope": "target",
+                  "number_kind": "none"
+                }
+              ],
+              "identity_level": "exact",
+              "specimen_notes": [
+                "La carta è fotografata con graffi e usura superficiale visibili.",
+                "La fonte mostra la carta inserita in una custodia; la custodia è scope holder."
+              ]
+            }
+          ],
+          "detail_needed_from": "none"
+        }
+      }
+    ],
+    "assistance": {
+      "provider": {
+        "references": [
+          {
+            "id": "ref1",
+            "url": "https://www.uk-66.co.jp/goods.php?product/category/view_more/35677665301100",
+            "title": "Pokemon Machamp Holo 1st Edition Fossil Set Holo Rare Card 8/102",
+            "text": "Pokemon Machamp Holo 1st Edition Fossil Set Holo Rare Card 8/102",
+            "text_origin": "google_indexed_title",
+            "image_url": "https://pokemonvancouver.com/wp-content/uploads/2024/02/Machamp1stEditionShadowless-8-Front-scaled.jpg"
+          },
+          {
+            "id": "ref2",
+            "url": "https://jordaanmuseum.nl/?q=60955854104",
+            "title": "how much is a charizard vstar pokemon card worth 18/172 Price ...",
+            "text": "how much is a charizard vstar pokemon card worth 18/172 Price ...",
+            "text_origin": "google_indexed_title",
+            "image_url": "https://images.pokemonwizard.com/uploads/images/cards/604/42382-charizard-medium.jpg"
+          },
+          {
+            "id": "ref3",
+            "url": "https://goldin.co/item/1999-pokemon-japanese-gym-2-challenge-from-the-darkness-holo-66-machamclyiy?queryId=eyJjYXJkSW5kZXgiOjE1fQ%3D%3D",
+            "title": "Challenge From The Darkness Holo #66 Machamp - CGC MINT+ 9.5",
+            "text": "Goldin | The Global Go-To For High-End Collectibles\n1999 Pokemon Japanese Gym 2: Challenge From The Darkness Holo #66 Machamp - CGC MINT+ 9.5",
+            "text_origin": "retrieved_page",
+            "image_url": "https://d2tt46f3mh26nl.cloudfront.net/public/Lots/202608-1315-3432-27f39148-04d6-4ffc-a41c-c44aa13cc8da/e2820562-c400-48eb-9748-f77bcffa1a7c@1x"
+          }
+        ]
+      },
+      "catalogueRetrieval": {
+        "references": [
+          {
+            "id": "ref2",
+            "url": "https://www.mrpokemon.com/info.php?i=6484",
+            "title": "MrPokemon.com",
+            "text": "MrPokemon.com\n\nSign In\nNews\n\nFAQ\n\nMrPokemon\n\nPrice(+/-): $39.99( - )\n\nFind Other Machamp\nExplore Base Set-1999-2000\nModify In Collection\nView in Collection\n\nMachamp\nNDEX#: 68\n\nStage: Stage 2\n\nEvolves From: Machoke\n\nType:     HP: 100\n\nPokémon Power\nStrikes Back\n\nWhenever your opponent's attack damages Machamp (even if Machamp is Knocked Out), this power does 10 damage to the attacking Pokémon. (Don't apply Weakness and Resistance.) This power can't be used if Machamp is Asleep, Confused, or Paralyzed when your opponent attacks.\n\n     Seismic Toss     60\n\nWeakness: ×2\n\nResistance:\n\nRetreat Cost:\n\nUsing its amazing muscles, it throws powerful punches that can knock its victim clear over the horizon.\n\nHolo 1st Edition-1999-2000 Rare\n\nBase Set-1999-2000 8/102\n\nIllustrator: Ken Sugimori\n\n06484\n\n© MrPokemon.com\n\nPokémon © 2002-2026 Pokémon. © 1995-2026 Nintendo/Creatures Inc./GAME FREAK inc. TM, ® and Pokémon character names are trademarks of Nintendo.\n\nNo copyright or trademark infringement is intended.\n\nContent is available under Attribution-NonCommercial-ShareAlike 2.5.",
+            "text_origin": "retrieved_page",
+            "image_url": "https://www.mrpokemon.com/logo/mrpokemonlogo26.jpg"
+          },
+          {
+            "id": "ref4",
+            "url": "https://pokedreams.com/tcg/cards/base1-8",
+            "title": "Machamp 8/102 Price & Card Guide · Base Set | PokéDreams",
+            "text": "Machamp 8/102 Price & Card Guide · Base Set | PokéDreams\nMachamp (Base Set 8/102)\nPokemon TCG card: Machamp, Rare, Base Set 8/102, illustrated by Ken Sugimori; versions: Holofoil · Unlimited, Holofoil · 1999-2000 Copyright, Holofoil · Shadowless, Holofoil · Shadowless · 1st Edition.\nbase1-8\n\n#7 Hitmonchan#9 Magneton\nMachamp\nBase Set · 8/102 · Holofoil · Unlimited\n\nCompareCollect\n\nVersions\nHolofoil · Unlimited\nMore versions (3)Holofoil · 1999-2000 CopyrightHolofoil · ShadowlessHolofoil · Shadowless · 1st Edition\n\nExpandCompareShare\n\nAdd to collection (Holofoil · Unlimited)Add to wishlist (Holofoil · Unlimited)\n\nRareHP 100FightingStage2Pokedex entryAll 45 Machamp cards\nEvolves from Machoke\nSetBase Set8/102 · 1999\nArtistKen Sugimori\nLegalNot legal\nVersions4\n\nHow much is Machamp (Base Set 8/102) worth?\nMarket prices · Holofoil · Unlimited\nEurope: €17.30 trend · €0.99 low\n-54.8% over 30 days\n30d €14.74 · 7d €11.57 · 1d €6.66\n\nAs of 2026-08-28 · via tcgdex · How we price\n\nAbilities\nPokemon Power · Strikes Back\nWhenever your opponent's attack damages Machamp (even if Machamp is Knoced Out), this power does 10 damage to attacking Pokémon. (Don't apply Weakness and Resistance.) This power can't be used if Machamp is already Asleep, Confused, or Paralyzed when your opponent attacks.\n\nAttacks\nFFFCSeismic Toss\n60\n\nBattle stats\nWeaknessPsychic×2\nResistanceNone\nRetreatCCC\n\nFlavor text\nUsing its amazing muscles, it throws powerful punches that can knock its victim clear over the horizon.\nCard facts\nSetBase Set· BaseNumber8/102Released1999-01-09RarityRare · all in Base SetIllustratorKen Sugimori · 1107 cardsVersionsHolofoil · Unlimited, Holofoil · 1999-2000 Copyright, Holofoil · Shadowless, Holofoil · Shadowless · 1st EditionLegalityNot legal in Standard or ExpandedRotationNot in the Standard format. This card was printed before regulation marks (introduced in 2019), so it is outside the current Standard format. It is not legal in Expanded either. Official announcement · table as of 2026-08-16\nFrequently asked\nHow many versions of Machamp are there in Base Set?4: Holofoil · Unlimited, Holofoil · 1999-2000 Copyright, Holofoil · Shadowless, Holofoil · Shadowless · 1st Edition. Each version has its own price and its own foil, and you can switch between them above.\nWhat set is Machamp from?Machamp is card 8/102 of Base Set, released 1999-01-09, in the Base series.\nIs Machamp legal in Standard?No. Machamp is not legal in Standard or Expanded.\nWho illustrated Machamp?The artwork of Machamp (Base Set 8/102) is by Ken Sugimori.\nHow many Machamp cards are there?PokéDreams lists 12 other Machamp prints besides this one; the print history below shows them with prices, and the Pokédex entry links every card of the Pokémon.\n\nAbout this card\nMachamp is a rare card from Base Set, released 1999-01-09, with artwork by Ken Sugimori. This Pokemon has 12 other prints in the database; see the print history below.\n\nEvolution line\n\nMachop\n#52 · Common\n\nMachoke\n#34 · Uncommon\n\nMachamp\n#8 · Rare\n\nOther prints of this Pokemon\nAll 45 prints →Compare prints →\n\nMachamp\n#068 · Rare\n\nMachamp\n#088 · Holo Rare\n\nMachamp V\n#072 · Holo Rare V\n\nMachamp VMAX\n#073 · Holo Rare VMAX\n\nMachamp V\n#171 · Ultra Rare\n\nMachamp V\n#172 · Ultra Rare\n\nMachamp VMAX\n#194 · Secret Rare\n\nMachamp\n#26 · Holo Rare\n\nMachamp\n#SWSH053 · Promo\n\nMachamp\n#SWSH243 · Promo\n\nMachamp\n#13 · Rare\n\nMachamp GX\n#64 · Ultra Rare\n\nMore by Ken Sugimori\nAll 1107 cards by Ken Sugimori →\n\nBrandon\n#151 · Uncommon\n\nCandice\n#152 · Uncommon\n\nLance\n#159 · Uncommon\n\nProfessor Laventon\n#162 · Uncommon\n\nSerena\n#164 · Uncommon\n\nRiley\n#166 · Uncommon\n\nBarry\n#130 · Uncommon\n\nGloria\n#141 · Uncommon",
+            "text_origin": "retrieved_page",
+            "image_url": "https://tcg-images.pokedreams.com/og/base1/8-machamp.webp"
+          },
+          {
+            "id": "ref5",
+            "url": "https://bulbapedia.bulbagarden.net/wiki/Machamp_%28Base_Set%29",
+            "title": "Machamp (Base Set 8) - Bulbapedia, the community-driven Pokémon encyclopedia",
+            "text": "Machamp (Base Set 8) - Bulbapedia, the community-driven Pokémon encyclopedia\n\nMore\n\n(Redirected from Machamp (Base Set))\n\nMachamp LV.67\n\nカイリキー Kairiky\n\nIllus. Ken Sugimori\n\nEvolution stage\n\nStage 2 Pokémon\n\nEvolves from Machoke\n\nCard name\n\nMachamp\n\nType\n\nFighting\n\nHP\n\n100\n\nweakness\n\n×2\n\nresistance\n\nNone\n\nretreat cost\n\nEnglish expansion\n\nBase Set\n\nRarity\n\nEnglish card no.\n\n8/102\n\nJapanese expansion\n\nExpansion Pack\n\nJapanese rarity\n\nTCG GB1 set\n\nEvolution\n\nTCG GB1 ID\n\nB28\n\nTCG GB2 set\n\nBeginning Pokémon\n\nTCG GB2 ID\n\nA36\n\nExpansion\n\nLegendary Collection\n\nRarity\n\nEnglish card no.\n\n15/110\n\nFor more information on this Pokémon's species, see Machamp.\n\nMachamp (Japanese: カイリキー Kairiky) is a Fighting-type Stage 2 Pokémon card. It was first released as part of the Base Set.\n\nCard text\n\nBase Set print\n\nPokémon Power:\n\nStrikes Backはんげき\n\nWhenever your opponent's attack damages Machamp (even if Machamp is Knocked Out), this power does 10 damage to the attacking Pokémon. (Don't apply Weakness and Resistance.) This power can't be used if Machamp is already Asleep, Confused, or Paralyzed when your opponent attacks.\n\nSeismic Tossちきゅうなげ\n\n60\n\nLegendary Collection print\n\nPokémon Power:\n\nStrikes Backはんげき\n\nWhenever your opponent's attack damages Machamp (even if Machamp is Knocked Out), this power does 10 damage to the attacking Pokémon. (Don't apply Weakness and Resistance.) This power can't be used if Machamp is already affected by a Special Condition when your opponent attacks.\n\nSeismic Tossちきゅうなげ\n\n60\n\nPokédex data\n\nMachamp - Superpower Pokémon\n\nNo.\n\n068\n\nHeight\n\n5'3\" (1.6 m)\n\nWeight\n\n287 lbs. (130.0 kg)\n\nPokédex entry\nUsing its amazing muscles, it throws powerful punches that can knock its victim clear over the horizon.\n発達した４本の腕は、２秒間に１０００発のパンチをくりだすことができる。\n\nRelease information\n\nThis card was included in the Base Set, first released in the Japanese Expansion Pack. A 1st Edition version of this card was included in the 2-Player Starter Set, with the Shadowless variant being available in the first (Shadowless) print of the Set and the non-Shadowless being available in the second print. While an Unlimited Edition version of the Base Set print of this card was never officially released, a Non Holofoil version of this card lacking the 1st Edition stamp was included in the Trainer Deck A, distributed to prototype Pokémon Leagues before the TCG officially launched in North America. Like the rest of the cards included in the deck, this print has a red border and \"Trainer Deck A\" printed on the back. Another 1st Edition Base Set version of this card, with the Cosmos Holofoil treatment, was included in the 2-Player CD-ROM Starter Set released alongside Base Set 2, which was only released outside of Japan. This card was reprinted in the Legendary Collection expansion, which was also only released outside of Japan.\n\nGallery\n\nTCG GB1 Evolution sprite\n\nTCG GB2 Beginning Pokémon sprite\n\n[[File:|200px|center]]\n\n[[(TCG)|]] print\n\nIllus. [[]]\n\n[[File:|200px|center]]\n\n[[(TCG)|]] print\n\nIllus. [[]]\n\n[[File:|200px|center]]\n\n[[(TCG)|]] print\n\nIllus. [[]]\n\n[[File:|200px|center]]\n\n[[(TCG)|]] print\n\nIllus. [[]]\n\n[[File:|200px|center]]\n\n[[(TCG)|]] print\n\nIllus. [[]]\n\n[[File:|200px|center]]\n\n[[(TCG)|]] print\n\nIllus. [[]]\n\n[[File:|200px|center]]\n\n[[(TCG)|]] print\n\nIllus. [[]]\n\n[[File:|200px|center]]\n\n[[(TCG)|]] print\n\nIllus. [[]]\n\n[[File:|200px|center]]\n\n[[(TCG)|]] print\n\nIllus. [[]]\n\n[[File:|200px|center]]\n\n[[(TCG)|]] print\n\nIllus. [[]]\n\n[[File:|200px|center]]\n\n[[(TCG)|]] print\n\nIllus. [[]]\n\n[[File:|200px|center]]\n\n[[(TCG)|]] print\n\nIllus. [[]]\n\n[[File:|200px|center]]\n\n[[(TCG)|]] print\n\nIllus. [[]]\n\n[[File:|200px|center]]\n\n[[(TCG)|]] print\n\nIllus. [[]]\n\n[[File:|200px|center]]\n\n[[(TCG)|]] print\n\nIllus. [[]]\n\n[[File:|200px|center]]\n\n[[(TCG)|]] print\n\nIllus. [[]]\n\nTrivia\n\nOrigin\n\nStrikes Back's Japanese name is that of Counterattack, a skill later introduced in Pokémon Shuffle. Seismic Toss is a move in the Pokémon games that Machamp can learn. This card's English Pokédex entry comes from Pokémon Red and Blue, though it is slightly reworded. The Japanese entry comes from Pokémon Red and Green.\n\nThis article is part of Project TCG, a Bulbapedia project that aims to report on every aspect of the Pokémon Trading Card Game.\n\nRetrieved from \"https://bulbapedia.bulbagarden.net/w/index.php?title=Machamp_(Base_Set_8)&oldid=4608495\"\n\nCategoriesCards\nPokémon cards\nMachamp (TCG)\nPokémon cards with 100 HP\nPokémon cards with a Retreat Cost of 3\nStage 2 Pokémon cards\nEvolution cards\nFighting-type Pokémon cards\nCards with Seismic Toss\nPokémon cards with attack damage 60\nBase Set cards\nExpansion Pack cards\nLegendary Collection cards\nIllus. by Ken Sugimori\nHolographic cards",
+            "text_origin": "retrieved_page",
+            "image_url": "https://archives.bulbagarden.net/media/upload/2/22/MachampBaseSet8.jpg"
+          }
+        ]
+      }
+    }
+  },
+  "pele": {
+    "version": 172,
+    "vision": {
+      "status": "uncertain",
+      "kind": "card",
+      "title": "Football portrait panel featuring Pelé",
+      "category": "sports collectible card/sticker panel",
+      "brand": "",
+      "family": "",
+      "model": "",
+      "variant": "Two-player portrait panel",
+      "condition": "Used; housed in a clear plastic holder",
+      "category_confidence": 95,
+      "brand_confidence": 0,
+      "family_confidence": 10,
+      "model_confidence": 5,
+      "model_verified": false,
+      "market_ready": false,
+      "candidate_models": [],
+      "visual_fingerprint": "Vintage-style football portrait panel with two side-by-side illustrated headshots, pale blue backgrounds, thin blue inner borders and red outer border. Left caption reads MANOEL FRANCISCO SANTOS; right reads EDVALDO ALVES SANTAROSA “PELÉ”.",
+      "distinctive_terms": [
+        "MANOEL FRANCISCO SANTOS",
+        "EDVALDO ALVES SANTAROSA",
+        "PELÉ"
+      ],
+      "search_terms": [
+        "MANOEL FRANCISCO SANTOS",
+        "EDVALDO ALVES SANTAROSA",
+        "PELÉ"
+      ],
+      "identifier_hints": [],
+      "layout_signature": [
+        {
+          "term": "MANOEL FRANCISCO SANTOS",
+          "position": "bottom left",
+          "relation": "caption beneath left portrait"
+        },
+        {
+          "term": "EDVALDO ALVES SANTAROSA",
+          "position": "bottom right",
+          "relation": "caption beneath right portrait"
+        },
+        {
+          "term": "PELÉ",
+          "position": "bottom right",
+          "relation": "nickname in quotation marks after the right player's name"
+        },
+        {
+          "term": "red outer border",
+          "position": "around entire panel",
+          "relation": "surrounds two blue-framed portraits"
+        }
+      ],
+      "evidence": [
+        "Two illustrated Brazilian football player portraits are visible in one joined panel.",
+        "The left caption visibly reads MANOEL FRANCISCO SANTOS.",
+        "The right caption visibly reads EDVALDO ALVES SANTAROSA “PELÉ”.",
+        "No publisher, set name, year, card number, or catalog code is legible."
+      ],
+      "missing_information": [
+        "Publisher or manufacturer",
+        "Set/series name and year",
+        "Card or panel number"
+      ],
+      "next_photo_request": "Photograph the reverse side and a close-up of the bottom captions and any border text.",
+      "user_text_consistent": true,
+      "normalized_query": "",
+      "verification_summary": "The players and panel layout are identifiable, but the issuing series and exact product cannot be verified from this image.",
+      "photo_clues": [
+        {
+          "text": "MANOEL FRANCISCO SANTOS",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.12,
+            "y": 0.537,
+            "width": 0.31,
+            "height": 0.019,
+            "certain": true
+          }
+        },
+        {
+          "text": "EDVALDO ALVES SANTAROSA",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.43,
+            "y": 0.537,
+            "width": 0.32,
+            "height": 0.019,
+            "certain": true
+          }
+        },
+        {
+          "text": "PELÉ",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.76,
+            "y": 0.537,
+            "width": 0.06,
+            "height": 0.019,
+            "certain": true
+          }
+        }
+      ],
+      "physical_observations": [
+        {
+          "feature": "configuration",
+          "text": "Two adjacent portrait sections printed as one horizontal panel",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "color",
+          "text": "Red outer border with pale blue portrait backgrounds and blue inner frames",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "count",
+          "text": "Two player portraits",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "finish",
+          "text": "Glossy surface visible through clear plastic holder",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        }
+      ],
+      "printing_detail_regions": [],
+      "object_region": {
+        "image_index": 1,
+        "x": 0.03,
+        "y": 0.326,
+        "width": 0.9,
+        "height": 0.28,
+        "certain": true
+      },
+      "object_regions": [
+        {
+          "image_index": 1,
+          "x": 0.03,
+          "y": 0.326,
+          "width": 0.9,
+          "height": 0.28,
+          "certain": true
+        }
+      ],
+      "object_unit": "panel",
+      "identity_basis": {
+        "family": "inferred",
+        "variant": "physical_evidence"
+      },
+      "unresolved_identity_fields": [
+        "family",
+        "variant"
+      ],
+      "pokemon_printing": null
+    },
+    "phases": [],
+    "assistance": {
+      "provider": {
+        "references": []
+      }
+    }
+  }
+}

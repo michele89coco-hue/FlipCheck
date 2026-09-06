@@ -10,6 +10,28 @@ import static org.junit.Assert.*;
 
 /** Actual production request construction and network guards, with zero HTTP calls. */
 public final class GoogleDirectRegressionTest {
+    @Test public void bundledOcrReadsAReferenceLabelWithoutApiCredentials() throws Exception {
+        android.graphics.Bitmap bitmap=android.graphics.Bitmap.createBitmap(1100,400,android.graphics.Bitmap.Config.ARGB_8888);
+        android.graphics.Canvas canvas=new android.graphics.Canvas(bitmap);canvas.drawColor(android.graphics.Color.WHITE);
+        android.graphics.Paint paint=new android.graphics.Paint(android.graphics.Paint.ANTI_ALIAS_FLAG);paint.setColor(android.graphics.Color.BLACK);paint.setTextSize(62);paint.setTypeface(android.graphics.Typeface.create("sans-serif",android.graphics.Typeface.BOLD));
+        canvas.drawText("ACME MODEL ZX-430",45,125,paint);canvas.drawText("SERIES 2018-19",45,235,paint);
+        java.io.ByteArrayOutputStream bytes=new java.io.ByteArrayOutputStream();bitmap.compress(android.graphics.Bitmap.CompressFormat.PNG,100,bytes);bitmap.recycle();
+        String image="data:image/png;base64,"+android.util.Base64.encodeToString(bytes.toByteArray(),android.util.Base64.NO_WRAP);
+        java.util.concurrent.CountDownLatch done=new java.util.concurrent.CountDownLatch(1);java.util.concurrent.atomic.AtomicReference<JSONObject> output=new java.util.concurrent.atomic.AtomicReference<>();
+        try(LocalReferenceOcr reader=new LocalReferenceOcr()){
+            reader.read("local-label-test",image,result->{output.set(result);done.countDown();});
+            assertTrue("Bundled OCR should work without a model download",done.await(25,java.util.concurrent.TimeUnit.SECONDS));
+            assertEquals("ok",output.get().getString("state"));assertEquals("on_device_reference_ocr",output.get().getString("origin"));
+            assertTrue(output.get().getString("text").contains("ZX-430"));assertTrue(output.get().getString("text").contains("2018"));
+        }
+    }
+    @Test public void localOcrBoundsBitmapMemoryAndRejectsNonImages() throws Exception {
+        try{LocalReferenceOcr.decode("data:image/png;base64,bm90IGFuIGltYWdl");fail();}catch(IOException expected){}
+        android.graphics.Bitmap original=android.graphics.Bitmap.createBitmap(4096,256,android.graphics.Bitmap.Config.ARGB_8888);original.eraseColor(android.graphics.Color.WHITE);
+        java.io.ByteArrayOutputStream bytes=new java.io.ByteArrayOutputStream();original.compress(android.graphics.Bitmap.CompressFormat.PNG,100,bytes);original.recycle();
+        android.graphics.Bitmap bounded=LocalReferenceOcr.decode("data:image/png;base64,"+android.util.Base64.encodeToString(bytes.toByteArray(),android.util.Base64.NO_WRAP));
+        try{assertTrue(bounded.getWidth()<=2048);assertTrue(bounded.getHeight()<=2048);}finally{bounded.recycle();}
+    }
     @Test public void keyGoesOnlyToFixedGoogleEndpointAndOneImage() throws Exception {
         Request r=GoogleVisionBridge.googleRequest(new JSONObject().put("apiKey","fake-key-12345678901234567890").put("image_base64","aGVsbG8="));
         assertEquals("https://vision.googleapis.com/v1/images:annotate",r.url().toString());

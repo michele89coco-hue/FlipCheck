@@ -13,7 +13,7 @@ function call(action,payload,{signal,timeoutMs=22000}={}){
   pending.set(id,{resolve:r=>finish(r)});signal?.addEventListener('abort',abort,{once:true});
   if(signal?.aborted){abort();return;}
   timer=setTimeout(abort,timeoutMs);
-  try{root.FlipCheckGoogle.request(id,action,JSON.stringify(payload));}catch(_){finish(null,new Error('native_service_missing'));}
+  try{if(action==='ocr')root.FlipCheckGoogle.readText(id,payload.image_data);else root.FlipCheckGoogle.request(id,action,JSON.stringify(payload));}catch(_){finish(null,new Error('native_service_missing'));}
  });
 }
 function errorState(response){
@@ -32,7 +32,7 @@ function normalize(response){
   return {state:errorState(response),failureReason:allowed.includes(response.state)?response.state:'http_error',references:[],providerCalls:response.attempted===false?0:1,billingUnknown:response.attempted!==false};
  }
  const first=response.body?.responses?.[0];
- if(!first||first.error)return {state:first?.error?'provider_image_error':'empty_response',references:[],providerCalls:1,billingUnknown:true};
+ if(!first||first.error)return {state:first?.error?'provider_image_error':'empty_response',providerErrorCode:Number(first?.error?.code)||null,failureReason:first?.error?.code===3?'invalid_image':first?.error?.code===8?'quota_exhausted':first?.error?'google_processing_error':'empty_response',references:[],providerCalls:1,billingUnknown:true};
  const raw=first.webDetection||{},images=xs=>list(xs).slice(0,10).map(i=>({url:url(i.url)})).filter(i=>i.url);
  return {state:'ok',providerCalls:1,billingUnknown:false,
   webEntities:list(raw.webEntities).slice(0,10).map(e=>({description:String(e.description||'').slice(0,300),providerScore:e.score})),
@@ -65,7 +65,12 @@ async function references(found,options){
   return {id:'ref'+(i+1),url:referenceUrl,title,text:text.slice(0,5000),text_origin:document?.is_collection?'linked_image_title':document?.text?'retrieved_page':'google_indexed_title',image_url:image.url,image_data:data.image_data};
  }));
  const refs=results.filter(r=>r.status==='fulfilled'&&r.value).map(r=>r.value);
- return {...found,references:refs,referenceAttempts:pages.length,referenceState:!pages.length?'no_linked_images':refs.length?'retrieved':'downloads_unavailable',state:pages.length&&!refs.length?'references_unavailable':'ok'};
+ // Global image matches have no attributed page. Retain them for visual discovery, without inventing one.
+ const direct=[...list(found.fullMatchingImages),...list(found.partialMatchingImages)].filter((item,i,all)=>url(item.url)&&FlipCheckVisual.referenceImageUseful(item.url)&&all.findIndex(x=>imageKey(x.url)===imageKey(item.url))===i&&!refs.some(r=>imageKey(r.image_url)===imageKey(item.url))).slice(0,3-refs.length);
+ const downloads=await Promise.allSettled(direct.map(async(item,i)=>{const picture=await call('image',{url:item.url},options);return picture.image_data?{id:'ref'+(pages.length+i+1),url:item.url,title:'Immagine trovata da Google · pagina non attribuita',text:'',text_origin:'unattributed_image',discovery_only:true,image_url:item.url,image_data:picture.image_data}:null;}));
+ for(const download of downloads)if(download.status==='fulfilled'&&download.value)refs.push(download.value);
+ const attempts=pages.length+direct.length;
+ return {...found,references:refs,referenceAttempts:attempts,unattributedImageAttempts:direct.length,referenceState:!attempts?'no_linked_images':refs.length?'retrieved':'downloads_unavailable',state:attempts&&!refs.length?'references_unavailable':'ok'};
 }
 function titleSupported(title,text){
  const words=String(title||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().match(/[a-z0-9]{4,}/g)||[];

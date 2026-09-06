@@ -9,20 +9,20 @@
 </style>
 </head>
 <body><main>
-<div class="top"><div class="brand">FlipCheck</div><div class="beta">v0.26.2 + Google API · 172</div></div>
+<div class="top"><div class="brand">FlipCheck</div><div class="beta">v0.26.2 + Google API · 173</div></div>
 <section id="scanPage">
 <h1>Prima di comprarlo,<br>controllalo.</h1><p class="sub">Foto + dettagli facoltativi. FlipCheck identifica l'oggetto o la carta, verifica il modello e cerca il mercato prima di darti un verdetto.</p>
 <div class="panel">
 <div class="label">Foto dell'oggetto · fino a 3</div><div class="photos"><div class="slot" id="s0"><span>＋</span></div><div class="slot" id="s1"><span>＋</span></div><div class="slot" id="s2"><span>＋</span></div></div>
 <input id="photo0" type="file" accept="image/*" style="display:none"><input id="photo1" type="file" accept="image/*" style="display:none"><input id="photo2" type="file" accept="image/*" style="display:none"><input id="photoBatch" type="file" accept="image/*" multiple style="display:none"><button class="btn secondary" id="addPhotos" type="button">📷 SELEZIONA FINO A 3 FOTO</button><div id="photoStatus" class="note" style="margin-top:8px">Scegli fino a 3 foto insieme. Tocca una foto per sostituirla, × per rimuoverla.</div>
-<p class="note">Lettura iniziale: massimo 1280 px. Ricerca Google, se necessaria: dall’originale fino a 2048 px.</p>
+<p class="note">Conserviamo l’originale per rileggere testi e dettagli quando necessario.</p>
 </div>
 <div class="panel">
 <div class="label">Marca, modello, carta o dettagli <b>· facoltativo</b></div><textarea id="details" placeholder="Es. Makita DHP485 con batteria 5Ah / S24 Ultra 256GB / LeBron 2003 Topps Chrome #111 PSA 9"></textarea>
 <div style="height:10px"></div><div class="label">Prezzo richiesto <b>· facoltativo</b></div><div class="row"><input id="price" inputmode="decimal" placeholder="0,00"><select id="currency"><option>EUR</option><option>USD</option><option>GBP</option></select></div>
 <button class="btn" id="identifyBtn">IDENTIFICA</button>
 <div id="runStatus" class="status hide"></div>
-<div id="liveCost" class="status hide"></div><div class="note" style="margin-top:8px">Identificazione v0.26: confidenza calibrata e fonti pertinenti. 1 Vision + massimo 1 Web Search; nessuna fonte irrilevante può alzare da sola la confidenza del modello.</div>
+<div id="liveCost" class="status hide"></div><div class="note" style="margin-top:8px">Le letture e le ricerche aggiuntive si attivano solo quando mancano prove, entro il limite di spesa impostato.</div>
 </div>
 <div id="identPanel" class="panel hide">
 <div class="label">Identificazione</div><div id="identTitle" class="ident-title"></div><div id="tags"></div><div class="meter"><div id="confBar"></div></div><div id="identNote" class="note"></div>
@@ -39,7 +39,7 @@
 <div class="panel"><div class="label">Contabilità API della sessione</div><div class="grid"><div class="metric"><small>Richieste API</small><b id="requests">0</b></div><div class="metric"><small>Chiamate Vision</small><b id="vCalls">0</b></div><div class="metric"><small>Web search</small><b id="wCalls">0</b></div><div class="metric"><small>Token</small><b id="tokens">0</b></div><div class="metric"><small>Cache read</small><b id="cachedTokens">0</b></div><div class="metric"><small>Cache write</small><b id="cacheWriteTokens">0</b></div><div class="metric"><small>Costo stimato</small><b class="cost" id="cost">$0.0000</b></div><div class="metric"><small>Tempo API</small><b id="apiTime">0 ms</b></div></div><p class="note">La stima usa i token restituiti dalla Responses API, inclusi cache read/write, più $0,01 per Web Search. Il dashboard OpenAI resta il dato contabile definitivo.</p></div>
 <div class="panel"><div class="label">Ultima analisi · telemetria</div><div id="lastScanSummary" class="status">Nessuna analisi registrata in questa build.</div><div id="lastScanPhases"></div><button class="btn secondary" id="exportDiagnostic" type="button">ESPORTA DIAGNOSTICA</button><button class="btn secondary" id="resetTelemetry" type="button">RESET TELEMETRIA LOCALE</button><p class="note">Salviamo localmente solo metriche tecniche delle ultime analisi, non le fotografie né la API key.</p></div>
 <div class="panel"><div class="label">Storico costi · ultime 10 analisi</div><div id="scanHistory" class="note">Nessun dato.</div></div>
-<div class="panel"><div class="label">Monetizzazione prevista</div><div class="pill">1 FlipCheck completo gratis · massimo 2 tentativi per ottenerlo</div><div style="height:8px"></div><div class="pill">Starter Pack · 3 FlipCheck = €0,99</div><div style="height:8px"></div><div class="pill">20 FlipCheck = €4,99</div><p class="note">Google Play Billing non è ancora attivo in questa build tecnica. La v0.26 mantiene lo stato runtime stabile e calibra la confidenza in base alla qualità reale delle prove. OCR Android nativo/ML Kit resta previsto nella migrazione al progetto Android standard.</p></div>
+<div class="panel"><div class="label">Monetizzazione prevista</div><div class="pill">1 FlipCheck completo gratis · massimo 2 tentativi per ottenerlo</div><div style="height:8px"></div><div class="pill">Starter Pack · 3 FlipCheck = €0,99</div><div style="height:8px"></div><div class="pill">20 FlipCheck = €4,99</div><p class="note">Google Play Billing non è ancora attivo in questa build tecnica. La v0.26 mantiene lo stato runtime stabile e calibra la confidenza in base alla qualità reale delle prove. La lettura locale delle scritte nelle immagini di riferimento è disponibile senza costi API.</p></div>
 </section>
 </main>
 <div class="toolbar"><button id="tabScan" class="tool active">⌁ Analisi</button><button id="tabSettings" class="tool">⚙ Impostazioni</button></div>

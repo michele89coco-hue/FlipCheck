@@ -93,6 +93,47 @@ test('same catalogue name with different year or physical variant remains ambigu
 });
 
 const recorded168=require('./fixtures/diagnostics-168.json');
+const recorded172=require('./fixtures/diagnostics-172.json');
+const replayRefs=refs=>structuredClone(refs).map(r=>({...r,image_data:'synthetic-replay-marker-not-a-real-image'}));
+test('build172 box keeps its catalogue configuration without confusing the printed front panel with the unit',()=>{
+ const d=recorded172.box,c=d.phases.find(p=>p.stage==='flipcheck_visual_comparison').result,refs=replayRefs(d.assistance.catalogueRetrieval.references);
+ const out=V.validate(d.vision,c,refs);assert.equal(out.catalogue_verified,true);assert.equal(out.variant,'Hobby');assert.match(out.title,/Hobby/);assert.doesNotMatch(out.title,/Blaster/);
+ assert.equal(V.targetUnit(d.vision),'box');assert.ok(out.visual_candidates[0].description_matches.some(m=>m.recovered_from==='same_cited_reference'));
+ const otherUnit=structuredClone(c);otherUnit.candidates[0].unit='case';assert.notEqual(V.validate(d.vision,otherUnit,refs).catalogue_verified,true);
+ const wrongQuantity=refs.map(r=>({...r,text:r.text.replace(/1 autograph/ig,'2 autographs')}));assert.notEqual(V.validate(d.vision,c,wrongQuantity).catalogue_verified,true);
+});
+test('build172 card number in a layout comparison is retained and a first edition ordinal is not a quantity',()=>{
+ const d=recorded172.machamp,c=d.phases.find(p=>p.stage==='flipcheck_visual_comparison').result;
+ const out=V.validate(d.vision,c,replayRefs(d.assistance.catalogueRetrieval.references));
+ assert.equal(out.catalogue_verified,true);assert.equal(out.family,'Base Set');assert.equal(out.source_confirmed_catalog_number,'8/102');assert.equal(out.source_confirmed_issue_number,'');assert.match(out.normalized_query,/Base Set/);assert.match(out.normalized_query,/8\/102/);
+ assert.deepEqual(V.quantityPairs('1st Edition').pairs,[]);assert.equal(V.configuration({text:'1st Edition',role:'text'}),false);assert.equal(V.configuration({text:'2 batteries per kit',role:'text'}),true);
+});
+test('build172 incorrect indexed expansion cannot replace the correctly retrieved catalogue',()=>{
+ const d=recorded172.machamp,c=d.phases.filter(p=>p.stage==='flipcheck_visual_comparison')[1].result;
+ const out=V.validate(d.vision,c,replayRefs(d.assistance.provider.references));assert.notEqual(out.catalogue_verified,true);assert.equal(out.visual_candidates[0].rejection,'catalogue_not_cited');
+});
+test('build172 slab OCR retains short cited facts without declaring an unexamined pattern confirmed',()=>{
+ const d=recorded172.doncic,c=d.phases.find(p=>p.stage==='flipcheck_visual_comparison').result,refs=replayRefs(d.assistance.provider.references);
+ refs[0].ocr={state:'ok',origin:'on_device_reference_ocr',text:'2018 PANINI PRIZM\nLUKA DONCIC\n#280\nGREEN PRIZM'};
+ const out=V.validate(d.vision,c,refs),fields=out.visual_candidates[0].fields;
+ for(const field of ['brand','family','year','catalog_number','subject','variant'])assert.ok(fields.some(f=>f.field===field),field);
+ assert.notEqual(out.catalogue_verified,true);assert.equal(out.visual_candidates[0].rejection,'appearance_not_matched');
+ const otherImage=structuredClone(refs);otherImage[0].ocr.text='Another player';assert.equal(V.validFields(c.candidates[0],otherImage,d.vision,c.candidates[0].matches).some(f=>f.field==='year'),false);
+});
+test('build172 season and subject text dominate queries, with a distinct short fallback',()=>{
+ const q=V.plan(recorded172.doncic.vision).query;assert.match(q,/2018-19 PANINI/);assert.doesNotMatch(q,/Single basketball/);
+ const p=V.plan(recorded172.pele.vision);assert.match(p.query,/MANOEL/);assert.match(p.query,/PELÉ/);assert.doesNotMatch(p.query,/adjacent|horizontal|border/);
+ const retry=V.fallbackPlan(recorded172.pele.vision,[p.query]);assert.equal(retry.duplicate,false);assert.ok(retry.query.length<p.query.length);assert.match(retry.query,/PELÉ/);
+});
+test('generic model harvesting rejects feature codes and seasons without losing explicit product models',()=>{
+ for(const value of ['HDR10','2018','EDITION-1999-2000'])assert.equal(V.harvestCode(value,'Specifications: HDR10. Released 2018. EDITION-1999-2000',recorded172.remote.vision),false);
+ assert.equal(V.harvestCode('ZX-430','ACME model: ZX-430',recorded172.remote.vision),true);
+ assert.equal(V.harvestCode('280','Model 280. 2018 Prizm No. 280',recorded172.doncic.vision),false);
+});
+test('Vision retries have a four-call ceiling independent of their low billed cost',()=>{
+ const b=new V.Budget();for(let i=0;i<4;i++){const entry=b.reserve('vision',.001);b.settle(entry,.0005);}
+ assert.throws(()=>b.reserve('vision',0),/call_limit/);assert.equal(b.visionCalls,4);assert.equal(b.textCalls,0);assert.equal(b.visualCalls,0);
+});
 test('recorded Machamp recovery covers the unknown border as well as copyright',()=>{
  const m=recorded168.mach,plan=V.printingPlan(m.vision,m.check,1);assert.equal(plan.length,2);assert.equal(plan.find(p=>p.detail==='shadow').fallback,true);assert.equal(plan.find(p=>p.detail==='shadow').object_region.width,.98);assert.equal(plan.find(p=>p.detail==='copyright').detail_crop,true);
 });
