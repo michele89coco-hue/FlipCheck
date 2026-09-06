@@ -7,7 +7,7 @@ const has=(text,value)=>!empty(value)&&(' '+norm(text)+' ').includes(' '+norm(va
 const url=x=>{try{const u=new URL(x);return u.protocol==='https:'&&!u.username&&!u.password?u.href.replace(/#.*$/,''):'';}catch(_){return '';}};
 function clues(base){
  const rich=list(base.photo_clues).filter(c=>!empty(c.text)&&c.certainty==='clear');
- const raw=rich.length?rich:list(base.layout_signature).map(c=>({text:c.term,role:'text',certainty:'clear',location:c.position}));
+ const raw=Array.isArray(base.photo_clues)?rich:list(base.layout_signature).map(c=>({text:c.term,role:'text',certainty:'clear',location:c.position}));
  return raw.filter(c=>!empty(c.text)&&!['serial','slab_certificate'].includes(c.role)&&norm(c.text).length>=4)
   .filter((c,i,a)=>a.findIndex(v=>norm(v.text)===norm(c.text))===i);
 }
