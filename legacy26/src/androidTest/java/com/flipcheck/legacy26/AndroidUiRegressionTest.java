@@ -39,7 +39,7 @@ public final class AndroidUiRegressionTest {
         instrumentation = InstrumentationRegistry.getInstrumentation();
         activity = (MainActivity) instrumentation.startActivitySync(new Intent(instrumentation.getTargetContext(), MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         instrumentation.runOnMainSync(() -> web = findWeb(activity.getWindow().getDecorView()));
-        output = new File(activity.getExternalFilesDir(null), "ui159"); output.mkdirs();
+        output = new File(activity.getExternalFilesDir(null), "ui160"); output.mkdirs();
         List<Uri> created = new ArrayList<>();
         try {
             screenshot("launch-before-web-ready.png");

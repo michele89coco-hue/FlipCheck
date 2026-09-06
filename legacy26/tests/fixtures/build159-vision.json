@@ -1,0 +1,515 @@
+{
+  "vileplume": {
+    "status": "identified",
+    "kind": "card",
+    "title": "Vileplume 1st Edition Holo Jungle 15/64",
+    "category": "Pokémon TCG",
+    "brand": "Wizards of the Coast",
+    "family": "Jungle",
+    "model": "Vileplume 15/64",
+    "variant": "1st Edition Holo",
+    "condition": "Raw, ungraded; apparent good condition",
+    "category_confidence": 100,
+    "brand_confidence": 99,
+    "family_confidence": 99,
+    "model_confidence": 99,
+    "model_verified": true,
+    "market_ready": true,
+    "candidate_models": [
+      {
+        "model": "Vileplume 15/64",
+        "confidence": 99,
+        "reason": "Nome, numero 15/64, set Jungle e simbolo 1st Edition visibili."
+      }
+    ],
+    "visual_fingerprint": "Carta Pokémon inglese vintage Vileplume, Stage 2, 80 HP, artwork olografico con fungo rosso, set Jungle, numero 15/64, timbro 1st Edition sotto l'illustrazione a sinistra.",
+    "distinctive_terms": [
+      "Vileplume",
+      "15/64",
+      "1st Edition",
+      "Petal Dance",
+      "Pokémon Power: Heal",
+      "Jungle"
+    ],
+    "search_terms": [
+      "Vileplume",
+      "15/64",
+      "1st Edition",
+      "Petal Dance",
+      "Jungle"
+    ],
+    "identifier_hints": [
+      "15/64",
+      "1st Edition"
+    ],
+    "layout_signature": [
+      {
+        "term": "1st Edition",
+        "position": "sotto il riquadro illustrazione, a sinistra",
+        "relation": "timbro circolare"
+      },
+      {
+        "term": "Vileplume",
+        "position": "in alto al centro",
+        "relation": "nome della carta"
+      },
+      {
+        "term": "15/64",
+        "position": "in basso a destra",
+        "relation": "numero carta"
+      },
+      {
+        "term": "Petal Dance",
+        "position": "metà inferiore",
+        "relation": "nome dell'attacco"
+      },
+      {
+        "term": "Pokémon Power: Heal",
+        "position": "sotto la descrizione specie",
+        "relation": "abilità"
+      }
+    ],
+    "evidence": [
+      "Il nome Vileplume è chiaramente visibile sul fronte.",
+      "Il numero 15/64 è chiaramente visibile in basso a destra.",
+      "Il simbolo 1st Edition è visibile sotto l'illustrazione a sinistra.",
+      "La carta mostra il layout e il simbolo del set Jungle.",
+      "Il copyright riporta ©1995, 96, 98 Nintendo, Creatures, GAMEFREAK, ©1999 Wizards."
+    ],
+    "missing_information": [
+      "Nessun voto numerico o grading visibile.",
+      "Non è possibile valutare pienamente centratura e difetti superficiali da questa immagine."
+    ],
+    "next_photo_request": null,
+    "user_text_consistent": true,
+    "normalized_query": "Vileplume 15/64 1st Edition Holo Jungle Wizards of the Coast English Pokémon card",
+    "verification_summary": "Identificata con alta confidenza tramite nome, numero 15/64, set Jungle e timbro 1st Edition.",
+    "pokemon_printing": {
+      "is_pokemon": true,
+      "language": "English",
+      "set_name": "Jungle",
+      "card_type": "pokemon",
+      "first_edition_stamp": "present",
+      "stamp_image": 1,
+      "stamp_location": "Sotto il riquadro illustrazione, a sinistra",
+      "stamp_text": "1st Edition",
+      "artwork_shadow": "not_applicable",
+      "shadow_image": 0,
+      "shadow_location": "",
+      "copyright_text": "©1995, 96, 98 Nintendo, Creatures, GAMEFREAK. ©1999 Wizards.",
+      "copyright_image": 1,
+      "slab_text": "",
+      "slab_image": 0
+    }
+  },
+  "politoed": {
+    "status": "identified",
+    "kind": "card",
+    "title": "Politoed 12/111 Neo Genesis",
+    "category": "Pokemon TCG",
+    "brand": "Pokémon",
+    "family": "Neo Genesis",
+    "model": "Politoed 12/111",
+    "variant": "Holographic, Italian",
+    "condition": "Raw; condition not reliably gradeable from image",
+    "category_confidence": 99,
+    "brand_confidence": 99,
+    "family_confidence": 88,
+    "model_confidence": 90,
+    "model_verified": true,
+    "market_ready": true,
+    "candidate_models": [
+      {
+        "model": "Politoed 12/111 Neo Genesis",
+        "confidence": 90,
+        "reason": "Nome, layout, attacchi e numero 12/111 coerenti con la carta italiana Neo Genesis."
+      }
+    ],
+    "visual_fingerprint": "Carta Pokémon italiana olografica con bordo giallo, Politoed verde su sfondo scintillante, 110 PV, Fase 2; attacchi Crescita Improvvisa, Ranabalzo e Spruzza; numero 12/111 visibile in basso a destra.",
+    "distinctive_terms": [
+      "Politoed",
+      "Crescita Improvvisa",
+      "Ranabalzo",
+      "Spruzza",
+      "12/111",
+      "FASE 2",
+      "110 PV",
+      "30+",
+      "70"
+    ],
+    "search_terms": [
+      "Politoed",
+      "Ranabalzo",
+      "Spruzza",
+      "12/111"
+    ],
+    "identifier_hints": [
+      "12/111"
+    ],
+    "layout_signature": [
+      {
+        "term": "Politoed",
+        "position": "alto, al centro",
+        "relation": "nome sopra l'illustrazione"
+      },
+      {
+        "term": "110 PV",
+        "position": "alto a destra",
+        "relation": "a destra del nome"
+      },
+      {
+        "term": "FASE 2",
+        "position": "alto a sinistra",
+        "relation": "sopra il ritratto evolutivo"
+      },
+      {
+        "term": "Crescita Improvvisa",
+        "position": "metà inferiore",
+        "relation": "primo attacco"
+      },
+      {
+        "term": "Ranabalzo",
+        "position": "metà inferiore",
+        "relation": "secondo attacco, con 30+"
+      },
+      {
+        "term": "Spruzza",
+        "position": "metà inferiore",
+        "relation": "terzo attacco, con 70"
+      },
+      {
+        "term": "12/111",
+        "position": "basso a destra",
+        "relation": "numero carta"
+      }
+    ],
+    "evidence": [
+      "Nome \"Politoed\" visibile sul fronte.",
+      "Testo degli attacchi italiano: \"Crescita Improvvisa\", \"Ranabalzo\" e \"Spruzza\".",
+      "Numero carta leggibile come \"12/111\" in basso a destra.",
+      "Illustrazione olografica e layout coerenti con Politoed Neo Genesis."
+    ],
+    "missing_information": [
+      "Il grado della condizione non è valutabile con precisione.",
+      "Il timbro Prima Edizione non è sufficientemente leggibile."
+    ],
+    "next_photo_request": "Foto nitida e perpendicolare del bordo inferiore e dell'angolo sinistro sotto l'illustrazione per verificare il simbolo Prima Edizione e il numero.",
+    "user_text_consistent": true,
+    "normalized_query": "Italian Pokémon Politoed 12/111 Neo Genesis holo",
+    "verification_summary": "Identificazione specifica basata su nome, testo italiano, attacchi, HP, artwork olografico e numero 12/111.",
+    "pokemon_printing": {
+      "is_pokemon": true,
+      "language": "Italiano",
+      "set_name": "Neo Genesis",
+      "card_type": "pokemon",
+      "first_edition_stamp": "unclear",
+      "stamp_image": 1,
+      "stamp_location": "sotto l'illustrazione a sinistra; area non sufficientemente leggibile",
+      "stamp_text": "",
+      "artwork_shadow": "not_applicable",
+      "shadow_image": 0,
+      "shadow_location": "",
+      "copyright_text": "© 2000 Pokémon / Nintendo",
+      "copyright_image": 1,
+      "slab_text": "",
+      "slab_image": 0
+    }
+  },
+  "remote": {
+    "status": "uncertain",
+    "kind": "object",
+    "title": "Telecomando Philips per Smart TV",
+    "category": "Telecomando TV",
+    "brand": "Philips",
+    "family": "Telecomando Philips Smart TV con pairing e controllo vocale",
+    "model": "",
+    "variant": "Nera, con tasto Netflix e tastierino numerico",
+    "condition": "Usato, con evidenti segni d'usura",
+    "category_confidence": 99,
+    "brand_confidence": 94,
+    "family_confidence": 91,
+    "model_confidence": 20,
+    "model_verified": false,
+    "market_ready": false,
+    "candidate_models": [],
+    "visual_fingerprint": "Telecomando nero Philips con tasto PAIR in alto a destra, VOICE con quattro punti colorati, TOP PICKS, SOURCES, TV GUIDE, OPTIONS, grande pad direzionale a rombo, quattro tasti colore, Netflix centrale, SUBTITLE/TEXT, tastierino numerico e comandi playback.",
+    "distinctive_terms": [
+      "398GM10BEPHN0004HT",
+      "YKF423-001",
+      "RC6H_IR_V10_20170707",
+      "PAIR",
+      "TOP PICKS",
+      "VOICE",
+      "TV GUIDE",
+      "SOURCES",
+      "OPTIONS",
+      "SUBTITLE",
+      "TEXT",
+      "NETFLIX"
+    ],
+    "search_terms": [
+      "398GM10BEPHN0004HT",
+      "YKF423-001",
+      "RC6H_IR_V10_20170707",
+      "PAIR",
+      "TOP PICKS",
+      "TV GUIDE"
+    ],
+    "identifier_hints": [
+      "398GM10BEPHN0004HT",
+      "YKF423-001",
+      "RC6H_IR_V10_20170707"
+    ],
+    "layout_signature": [
+      {
+        "term": "PAIR",
+        "position": "alto a destra",
+        "relation": "sopra SETTINGS"
+      },
+      {
+        "term": "VOICE",
+        "position": "seconda riga, centro",
+        "relation": "tra TV GUIDE e TOP PICKS"
+      },
+      {
+        "term": "TOP PICKS",
+        "position": "seconda riga, destra",
+        "relation": "a destra di VOICE"
+      },
+      {
+        "term": "TV GUIDE",
+        "position": "seconda riga, sinistra",
+        "relation": "a sinistra di VOICE"
+      },
+      {
+        "term": "OPTIONS",
+        "position": "sopra il pad direzionale, destra",
+        "relation": "opposto a INFO"
+      },
+      {
+        "term": "NETFLIX",
+        "position": "sotto i quattro tasti colore, centro",
+        "relation": "tra i comandi volume"
+      },
+      {
+        "term": "SUBTITLE",
+        "position": "riga inferiore del tastierino numerico, sinistra",
+        "relation": "opposto a TEXT"
+      },
+      {
+        "term": "TEXT",
+        "position": "riga inferiore del tastierino numerico, destra",
+        "relation": "opposto a SUBTITLE"
+      }
+    ],
+    "evidence": [
+      "Il retro mostra visibilmente l'etichetta 398GM10BEPHN0004HT e il codice YKF423-001.",
+      "Il vano batterie riporta visibilmente RC6H_IR_V10_20170707.",
+      "Layout e terminologia del telecomando sono coerenti con un telecomando Philips Smart TV.",
+      "Sono presenti PAIR, VOICE, TOP PICKS, TV GUIDE, NETFLIX, SUBTITLE e TEXT.",
+      "Il telecomando presenta usura superficiale e abrasioni sui tasti."
+    ],
+    "missing_information": [
+      "Codice modello commerciale Philips non visibile.",
+      "Logo Philips non chiaramente visibile.",
+      "Numero esatto del televisore compatibile non determinabile dal solo telecomando."
+    ],
+    "next_photo_request": "Fotografare nitidamente il retro completo del telecomando, inclusa ogni etichetta e codice, e il vano batterie.",
+    "user_text_consistent": true,
+    "normalized_query": "",
+    "verification_summary": "Famiglia Philips altamente probabile dal layout e dai testi, ma il codice esatto del telecomando commerciale non è verificabile dalle immagini.",
+    "pokemon_printing": null
+  },
+  "box": {
+    "status": "uncertain",
+    "kind": "object",
+    "title": "2025/26 Topps Chrome Basketball Update Series box",
+    "category": "Scatola sigillata di trading card sportive",
+    "brand": "Topps",
+    "family": "Chrome Update Series Basketball",
+    "model": "",
+    "variant": "Formato non determinabile dall'immagine",
+    "condition": "Sigillata, apparentemente nuova",
+    "category_confidence": 99,
+    "brand_confidence": 99,
+    "family_confidence": 96,
+    "model_confidence": 55,
+    "model_verified": false,
+    "market_ready": false,
+    "candidate_models": [
+      {
+        "model": "2025-26 Topps Chrome Basketball Update Series Hobby Box",
+        "confidence": 65,
+        "reason": "La confezione dichiara “1 AUTOGRAPH IN EVERY BOX!”"
+      },
+      {
+        "model": "2025-26 Topps Chrome Basketball Update Series retail box",
+        "confidence": 25,
+        "reason": "Formato della scatola non identificabile con certezza dalla sola vista frontale"
+      }
+    ],
+    "visual_fingerprint": "Scatola Topps Chrome Basketball con grafica blu/grigia e cornici multicolori; dicitura verticale 2025/26; immagini di Cooper Flagg in maglia Dallas #32 e Victor Wembanyama in maglia San Antonio; logo NBA; testo “UPDATE SERIES” e promessa “1 AUTOGRAPH IN EVERY BOX!”.",
+    "distinctive_terms": [
+      "1 AUTOGRAPH IN EVERY BOX!",
+      "COOPER FLAGG",
+      "VICTOR WEMBANYAMA",
+      "UPDATE SERIES",
+      "Topps Chrome",
+      "2025/26",
+      "DALLAS",
+      "San Antonio"
+    ],
+    "search_terms": [
+      "1 AUTOGRAPH IN EVERY BOX!",
+      "COOPER FLAGG",
+      "VICTOR WEMBANYAMA",
+      "UPDATE SERIES",
+      "Topps Chrome",
+      "2025/26"
+    ],
+    "identifier_hints": [],
+    "layout_signature": [
+      {
+        "term": "2025/26",
+        "position": "bordo sinistro verticale",
+        "relation": "sopra il logo Topps"
+      },
+      {
+        "term": "UPDATE SERIES",
+        "position": "parte inferiore centrale",
+        "relation": "sotto il logo Topps Chrome"
+      },
+      {
+        "term": "COOPER FLAGG",
+        "position": "lato destro superiore",
+        "relation": "verticale accanto al giocatore Dallas"
+      },
+      {
+        "term": "VICTOR WEMBANYAMA",
+        "position": "lato sinistro centrale",
+        "relation": "verticale accanto al giocatore San Antonio"
+      },
+      {
+        "term": "1 AUTOGRAPH IN EVERY BOX!",
+        "position": "bordo inferiore",
+        "relation": "sopra i loghi NBA e Panini?"
+      }
+    ],
+    "evidence": [
+      "È visibile il marchio Topps sul fronte della confezione.",
+      "È leggibile “Topps Chrome” e “UPDATE SERIES”.",
+      "È leggibile “2025/26”.",
+      "Sono raffigurati Cooper Flagg e Victor Wembanyama.",
+      "È leggibile “1 AUTOGRAPH IN EVERY BOX!”."
+    ],
+    "missing_information": [
+      "Formato esatto della confezione: hobby, retail, mega o altro.",
+      "Numero di pacchetti/carte e codice prodotto non visibili.",
+      "Retro della confezione non disponibile."
+    ],
+    "next_photo_request": "Fotografare retro e lati della scatola, inclusi barcode, codice prodotto e numero di pacchetti.",
+    "user_text_consistent": true,
+    "normalized_query": "",
+    "verification_summary": "Marca, famiglia, anno e tema sono chiaramente visibili; il formato commerciale esatto non è verificabile.",
+    "pokemon_printing": null
+  },
+  "machamp": {
+    "status": "identified",
+    "kind": "card",
+    "title": "Machamp Base Set 1st Edition Holo",
+    "category": "Pokémon TCG",
+    "brand": "Wizards of the Coast",
+    "family": "Base Set",
+    "model": "Machamp 8/102",
+    "variant": "1st Edition Holofoil, Shadowless",
+    "condition": "Raw, visibly played with surface and edge wear",
+    "category_confidence": 100,
+    "brand_confidence": 98,
+    "family_confidence": 99,
+    "model_confidence": 99,
+    "model_verified": true,
+    "market_ready": true,
+    "candidate_models": [],
+    "visual_fingerprint": "Carta Pokémon inglese Machamp Stage 2, 100 HP, artwork olografico, simbolo 1st Edition sotto l’illustrazione a sinistra, attacco Seismic Toss 60, numero 8/102 in basso a destra, copyright Wizards 1999.",
+    "distinctive_terms": [
+      "Machamp",
+      "8/102",
+      "EDITION 1",
+      "Seismic Toss",
+      "Pokémon Power: Strikes Back",
+      "Evolves from Machoke",
+      "Superpower Pokémon",
+      "Lv. 67",
+      "100 HP"
+    ],
+    "search_terms": [
+      "Machamp",
+      "8/102",
+      "EDITION 1",
+      "Seismic Toss",
+      "Pokémon Power: Strikes Back"
+    ],
+    "identifier_hints": [
+      "8/102"
+    ],
+    "layout_signature": [
+      {
+        "term": "EDITION 1",
+        "position": "sotto il bordo inferiore sinistro dell’illustrazione",
+        "relation": "a sinistra della descrizione del Pokémon"
+      },
+      {
+        "term": "Machamp",
+        "position": "in alto al centro",
+        "relation": "a destra di STAGE 2"
+      },
+      {
+        "term": "100 HP",
+        "position": "in alto a destra",
+        "relation": "a destra del nome"
+      },
+      {
+        "term": "Seismic Toss",
+        "position": "zona inferiore centrale",
+        "relation": "sopra il valore 60"
+      },
+      {
+        "term": "8/102",
+        "position": "angolo inferiore destro",
+        "relation": "sotto il riquadro degli attacchi"
+      }
+    ],
+    "evidence": [
+      "Nome Machamp, 100 HP e testo “Evolves from Machoke” visibili.",
+      "Simbolo e testo “EDITION 1” visibili sotto l’illustrazione.",
+      "Numero carta “8/102” visibile in basso a destra.",
+      "Testo copyright “© 1995,96,98,99 Nintendo, Creatures/GAMEFREAK © 1999 Wizards” visibile.",
+      "Illustrazione olografica e attacco “Seismic Toss” visibili."
+    ],
+    "missing_information": [
+      "Autenticità non verificabile da una singola foto.",
+      "Non è possibile assegnare un grado professionale."
+    ],
+    "next_photo_request": "Foto nitide di fronte, retro e bordi senza riflessi per verificare autenticità e condizioni.",
+    "user_text_consistent": true,
+    "normalized_query": "1999 Pokémon Base Set Machamp 1st Edition Holo #8/102 English Shadowless",
+    "verification_summary": "Identificazione verificata da nome, numero 8/102, simbolo 1st Edition, layout Base Set e copyright Wizards 1999.",
+    "pokemon_printing": {
+      "is_pokemon": true,
+      "language": "English",
+      "set_name": "Base Set",
+      "card_type": "pokemon",
+      "first_edition_stamp": "present",
+      "stamp_image": 1,
+      "stamp_location": "Sotto l’illustrazione, lato sinistro",
+      "stamp_text": "EDITION 1",
+      "artwork_shadow": "absent",
+      "shadow_image": 1,
+      "shadow_location": "Bordo destro del riquadro illustrazione",
+      "copyright_text": "© 1995,96,98,99 Nintendo, Creatures/GAMEFREAK © 1999 Wizards",
+      "copyright_image": 1,
+      "slab_text": "",
+      "slab_image": 0
+    }
+  }
+}

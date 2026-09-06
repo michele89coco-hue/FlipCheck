@@ -1,7 +1,7 @@
 name: FlipCheck 26 targeted fixes
 on:
   push:
-    branches: [codex/v0262-android-bars-picker]
+    branches: [codex/v0263-targeted-recognition]
   workflow_dispatch:
 permissions:
   contents: read
@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: '22'
       - name: Targeted policy checks without live API
-        run: node --test legacy26/tests/editions.test.cjs
+        run: node --test legacy26/tests/editions.test.cjs legacy26/tests/recognition.test.cjs
       - name: Browser integration without live API
         run: |
           npm install --prefix /tmp/flipcheck26-tests playwright@1.62.1 --no-audit --no-fund
@@ -46,12 +46,12 @@ jobs:
         run: |
           ./gradlew :legacy26:assembleDebug :legacy26:assembleDebugAndroidTest --no-daemon --console=plain
           mkdir -p artifact
-          cp legacy26/build/outputs/apk/debug/legacy26-debug.apk artifact/FlipCheck-v0.26.2-fix.apk
-          sha256sum artifact/FlipCheck-v0.26.2-fix.apk > artifact/FlipCheck-v0.26.2-fix.sha256
-          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose --print-certs artifact/FlipCheck-v0.26.2-fix.apk > artifact/apksigner-report.txt
+          cp legacy26/build/outputs/apk/debug/legacy26-debug.apk artifact/FlipCheck-v0.26.3-fix.apk
+          sha256sum artifact/FlipCheck-v0.26.3-fix.apk > artifact/FlipCheck-v0.26.3-fix.sha256
+          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose --print-certs artifact/FlipCheck-v0.26.3-fix.apk > artifact/apksigner-report.txt
           grep -q 'Signer #1 certificate SHA-256 digest: d4d02478ea31cb6bd83228047e9accd7dfb191ed991a4c8e8c06a228e54614c7' artifact/apksigner-report.txt
-          "$ANDROID_HOME/build-tools/36.0.0/aapt" dump badging artifact/FlipCheck-v0.26.2-fix.apk > artifact/apk-analyzer-report.txt
-          grep -q "package: name='com.flipcheck.beta.legacy26fix' versionCode='159' versionName='0.26.2-android-ui'" artifact/apk-analyzer-report.txt
+          "$ANDROID_HOME/build-tools/36.0.0/aapt" dump badging artifact/FlipCheck-v0.26.3-fix.apk > artifact/apk-analyzer-report.txt
+          grep -q "package: name='com.flipcheck.beta.legacy26fix' versionCode='160' versionName='0.26.3-targeted-recognition'" artifact/apk-analyzer-report.txt
           cp /tmp/flipcheck26-printing.png artifact/browser-printing.png
       - name: Enable emulator acceleration
         run: sudo chmod a+rw /dev/kvm
