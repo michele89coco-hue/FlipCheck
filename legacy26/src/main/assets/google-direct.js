@@ -59,6 +59,7 @@ async function catalogueReferences(sources,options){
  const pages=list(sources).filter(s=>url(s.url)).slice(0,3);
  const results=await Promise.allSettled(pages.map(async(s,i)=>{
   const page=await call('page',{url:s.url},options);
+  if(page.document_type==='pdf'&&page.image_data){const text=[s.title,s.text||s.snippet].filter(Boolean).join(' ').slice(0,5000);if(!text)return null;return {id:'ref'+(i+1),url:s.url,title:s.title,text,text_origin:'web_indexed_document',pages_rendered:page.pages_rendered,page_count:page.page_count,image_url:s.url,image_data:page.image_data};}
   if(!page.text)return null;
   const image=list(page.images).map(url).find(Boolean);if(!image)return null;
   const picture=await call('image',{url:image},options);if(!picture.image_data)return null;

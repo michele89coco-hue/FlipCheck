@@ -45,3 +45,41 @@ test('visual confirmation must compare clear quantities and reject a different c
  assert.equal(V.validate(x,{candidates:[{...candidate,matches:[...candidate.matches,match]}]},[reference]).market_ready,true);
  assert.equal(V.validate(x,{candidates:[{...candidate,matches:[...candidate.matches,{...match,reference_detail:'3 batteries in the package'}]}]},[reference]).market_ready,false);
 });
+
+test('physical counts reach discovery while holder and uncertain observations stay out',()=>{
+ const x={photo_clues:[{text:'PROGRAM',role:'text',certainty:'clear'},{text:'PROGRAM RESET',role:'text',certainty:'clear'}],physical_observations:[{text:'6 stations',feature:'count',certainty:'clear',entity:'target',image_index:1},{text:'30 cm holder',feature:'measurement',certainty:'clear',entity:'holder',image_index:1},{text:'Maybe brand',feature:'shape',certainty:'uncertain',entity:'target',image_index:1}]};
+ assert.equal(V.plan(x).query,'6 stations PROGRAM RESET');assert.match(V.resolverPrompt(x,''),/6 stations/);assert.doesNotMatch(V.resolverPrompt(x,''),/30 cm holder|Maybe brand/);
+});
+test('typed seasons and listing IDs are not product identifiers; short card numbers survive',()=>{
+ const x={photo_clues:[{text:'2025/26',role:'season',certainty:'clear'},{text:'81',role:'collector_number',certainty:'clear'},{text:'ZX-430',role:'model',certainty:'clear'}]};
+ assert.deepEqual(V.identifiers(x).map(c=>c.text),['81','ZX-430']);assert.equal(V.seasonLike('2025/26'),true);assert.equal(V.seasonLike('ZX-430'),false);
+ const r={...reference,url:'https://auction.example/2030184-card',text:'2030184. Auction catalogue number. Historical portrait panel.'};
+ const field={field:'catalog_number',value:'2030184',quote:'2030184. Auction catalogue number.',reference_id:'ref1'};
+ assert.deepEqual(V.validFields({fields:[field]},[r]),[]);assert.deepEqual(V.validFields({fields:[{...field,number_kind:'listing_id',scope:'listing'}]},[{...r,url:'https://catalog.example/item'}]),[]);
+});
+function composedPanel(){
+ const ref={...reference,text:'Publisher Rekord. Year 1958, issue 37. Subjects Pelé and Manoel Francisco Santos. Auction 2030184.'};
+ const f=(field,value,quote,scope='target',number_kind='none')=>({field,value,quote,scope,number_kind,reference_id:'ref1'});
+ const c={...candidate,model:'Italian translated title',identity_level:'exact',decision:'possible',physical_ambiguity:true,conflicts:[{scope:'holder',reason:'Plastic holder versus loose panel'},{scope:'parent',reason:'30 by 21 cm describes newspaper'},{scope:'authenticity',reason:'Originality cannot be certified'}],specimen_notes:['Originality not assessed'],fields:[f('brand','Rekord','Publisher Rekord.','parent'),f('year','1958','Year 1958, issue 37.','parent','year'),f('issue_number','37','Year 1958, issue 37.','parent','issue_number'),f('subject','Pelé and Manoel Francisco Santos','Subjects Pelé and Manoel Francisco Santos.'),f('catalog_number','2030184','Auction 2030184.','listing','listing_id')]};
+ return {ref,c};
+}
+test('separately cited catalogue facts name a panel without importing listing or holder data',()=>{
+ const {ref,c}=composedPanel(),out=V.validate(base,{candidates:[c]},[ref]);assert.equal(out.market_ready,true);assert.match(out.model,/Rekord.*1958.*n\. 37.*Pelé/);assert.doesNotMatch(out.model,/2030184|Italian/);assert.equal(out.source_confirmed_catalog_number,'');assert.equal(out.authenticity_status,'not_assessed');assert.equal(out.specimen_notes.length,1);
+});
+test('real target conflict, unknown physical ambiguity, family and different unit remain blocking',()=>{
+ const {ref,c}=composedPanel();for(const change of [{conflicts:[{scope:'target',reason:'different printed frame'}]},{conflicts:[]},{identity_level:'family'},{decision:'different'},{unit:'single'}])assert.equal(V.validate(base,{candidates:[{...c,...change}]},[ref]).market_ready,false);
+});
+test('description quotations cannot stand in for an actual image comparison',()=>{
+ const c={...candidate,matches:candidate.matches.map(m=>({...m,reference_evidence:'description'}))};assert.equal(V.validate(base,{candidates:[c]},[reference]).market_ready,false);
+});
+test('complete configuration evidence can close only with source-grounded quantities',()=>{
+ const texts=['Acme Delta','Portable Kit','2 batteries included'],x={photo_clues:texts.map(text=>({text,role:'text',certainty:'clear'}))};
+ const source={url:'https://acme.example/kit',text:'Acme Delta Portable Kit has 2 batteries included.'};
+ const c={source_specificity:'exact_model',strong_source_count:1,matched_terms:texts,conflicting_terms:[],evidence_sources:[{url:source.url,quality:3}],match_evidence:[{photo_text:texts[2],source_text:'2 batteries included',source_url:source.url}]};
+ assert.equal(V.groundChecks([c],x,[source])[0].complete_observed_match,true);
+ for(const change of [{match_evidence:[]},{strong_source_count:0},{source_specificity:'family'},{matched_terms:texts.slice(0,2)}])assert.equal(V.groundChecks([{...c,...change}],x,[source])[0].complete_observed_match,false);
+});
+test('PDF manuals remain eligible references and observed season mismatches block closure',()=>{
+ const x={photo_clues:[{text:'ZX-430',role:'model',certainty:'clear'}]};assert.equal(V.rankSources([{url:'https://acme.example/manual.pdf',text:'ZX-430 manual'}],x).length,1);
+ const season={...base,photo_clues:[{text:'2025/26',role:'season',certainty:'clear'}]};assert.equal(V.validate(season,{candidates:[candidate]},[reference]).market_ready,false);
+});

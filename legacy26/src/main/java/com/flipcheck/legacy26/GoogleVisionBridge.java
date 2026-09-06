@@ -2,6 +2,12 @@ package com.flipcheck.legacy26;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.os.ParcelFileDescriptor;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Rect;
+import android.graphics.pdf.PdfRenderer;
 import android.util.Base64;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
@@ -13,6 +19,8 @@ import org.jsoup.nodes.Element;
 import java.util.LinkedHashSet;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
@@ -35,6 +43,7 @@ import java.io.IOException;
 public final class GoogleVisionBridge {
     static final String ENDPOINT = "https://vision.googleapis.com/v1/images:annotate";
     private final WebView web;
+    private final File referenceCache;
     private final Handler main = new Handler(Looper.getMainLooper());
     private final Map<String, Call> calls = new ConcurrentHashMap<>();
     private final OkHttpClient client;
@@ -42,6 +51,7 @@ public final class GoogleVisionBridge {
 
     GoogleVisionBridge(WebView web) {
         this.web = web;
+        referenceCache=web.getContext().getCacheDir();
         client = new OkHttpClient.Builder().dns(host -> {
             List<InetAddress> addresses = Arrays.asList(InetAddress.getAllByName(host));
             for (InetAddress address : addresses) if (!isPublic(address)) throw new UnknownHostException("address_blocked");
@@ -129,8 +139,9 @@ public final class GoogleVisionBridge {
                         result=json("status",code,"attempted",true,"body",new JSONObject(new String(read(r,1500000),StandardCharsets.UTF_8)));
                     } else if (code!=200) result=json("status",code,"state","reference_unavailable");
                     else if ("page".equals(action)) {
-                        String html=new String(read(r,600000),StandardCharsets.UTF_8);
-                        result=pageData(html,r.request().url().toString());
+                        boolean pdf=r.header("Content-Type","").toLowerCase().contains("application/pdf") || r.request().url().encodedPath().toLowerCase().endsWith(".pdf");
+                        byte[] data=read(r,pdf?6000000:600000);
+                        result=pdf?pdfData(data,referenceCache):pageData(new String(data,StandardCharsets.UTF_8),r.request().url().toString());
                     } else {
                         byte[] data=read(r,4000000);String mime=imageType(data);
                         if(mime.isEmpty()) throw new IOException("invalid_image");
@@ -156,6 +167,26 @@ public final class GoogleVisionBridge {
         Element main=doc.selectFirst("main");
         String text=doc.title()+" "+(main==null?doc.body().text():main.text());
         return json("status",200,"title",doc.title(),"text",text.substring(0,Math.min(5000,text.length())),"images",new JSONArray(images));
+    }
+    static synchronized JSONObject pdfData(byte[] data, File cache) throws Exception {
+        if(data.length<5 || data.length>6000000 || !new String(data,0,5,StandardCharsets.US_ASCII).equals("%PDF-"))throw new IOException("invalid_pdf");
+        File file=File.createTempFile("reference-",".pdf",cache);Bitmap sheet=null;
+        try {
+            try(FileOutputStream out=new FileOutputStream(file)){out.write(data);}
+            try(ParcelFileDescriptor fd=ParcelFileDescriptor.open(file,ParcelFileDescriptor.MODE_READ_ONLY);PdfRenderer renderer=new PdfRenderer(fd)) {
+                int count=Math.min(3,renderer.getPageCount());if(count==0)throw new IOException("empty_pdf");
+                sheet=Bitmap.createBitmap(768*count,1024,Bitmap.Config.ARGB_8888);sheet.eraseColor(Color.WHITE);Canvas canvas=new Canvas(sheet);
+                JSONArray pages=new JSONArray();
+                for(int i=0;i<count;i++)try(PdfRenderer.Page page=renderer.openPage(i)) {
+                    float scale=Math.min(768f/page.getWidth(),1024f/page.getHeight());
+                    int w=Math.max(1,Math.round(page.getWidth()*scale)),h=Math.max(1,Math.round(page.getHeight()*scale));
+                    Bitmap bitmap=Bitmap.createBitmap(w,h,Bitmap.Config.ARGB_8888);
+                    try{bitmap.eraseColor(Color.WHITE);page.render(bitmap,null,null,PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);canvas.drawBitmap(bitmap,null,new Rect(i*768,0,i*768+w,h),null);pages.put(i+1);}finally{bitmap.recycle();}
+                }
+                ByteArrayOutputStream out=new ByteArrayOutputStream();sheet.compress(Bitmap.CompressFormat.JPEG,92,out);
+                return json("status",200,"document_type","pdf","page_count",renderer.getPageCount(),"pages_rendered",pages,"image_data","data:image/jpeg;base64,"+Base64.encodeToString(out.toByteArray(),Base64.NO_WRAP));
+            }
+        }finally{if(sheet!=null)sheet.recycle();file.delete();}
     }
     static byte[] read(Response r, int limit) throws IOException {
         if(r.body()==null || r.body().contentLength()>limit) throw new IOException("response_size");

@@ -1,12 +1,12 @@
 /* Browser production wiring. All API payloads are fabricated; no live recognition. */
 const {test,before,after}=require('node:test'),assert=require('node:assert/strict'),http=require('node:http'),fs=require('node:fs'),path=require('node:path');
 const {chromium}=require('playwright');
-let server,browser,page,origin,photos,requests=[],googleRequests=[],vision,comparison,providerMode='ok',resolverMode='',waitApi=null,errors=[];
+let server,browser,page,origin,photos,requests=[],googleRequests=[],vision,comparison,printingReply,providerMode='ok',resolverMode='',waitApi=null,errors=[];
 const root=path.join(__dirname,'../src/main/assets');
 const unknown={status:'uncertain',kind:'object',title:'Oggetto',category:'object',brand:'',family:'',model:'',variant:'',condition:'raw',category_confidence:70,brand_confidence:0,family_confidence:0,model_confidence:20,model_verified:false,market_ready:false,candidate_models:[],visual_fingerprint:'geometrical outline',distinctive_terms:[],search_terms:[],identifier_hints:[],layout_signature:[],evidence:[],missing_information:['catalogue identity'],next_photo_request:null,user_text_consistent:true,normalized_query:'',verification_summary:'Mock only',pokemon_printing:null,photo_clues:[],object_unit:'object',object_region:{image_index:1,x:.1,y:.1,width:.8,height:.8,certain:true}};
 const known={...unknown,status:'identified',brand:'Example',family:'Series',model:'Known model',title:'Known model',model_confidence:94,market_ready:true,normalized_query:'Example Known model'};
-function candidate(){return {category:'object',brand:'Example',family:'Series',model:'Documented model',year:'',issue_number:'',catalog_number:'',unit:'object',variant:'',decision:'match',same_unit:true,physical_ambiguity:false,conflicts:[],matches:[{reference_id:'ref1',feature:'layout',photo_detail:'two round controls',reference_detail:'two round controls',agrees:true},{reference_id:'ref1',feature:'shape',photo_detail:'rectangular body',reference_detail:'rectangular body',agrees:true}],fields:[{field:'model',value:'Documented model',reference_id:'ref1',quote:'Catalogue entry: Documented model.'}]};}
-async function reset(enabled=true){requests=[];googleRequests=[];vision=structuredClone(unknown);comparison={physical_detail_needed:null,candidates:[candidate()]};providerMode='ok';resolverMode='';waitApi=null;await page.goto(origin);await page.waitForFunction(()=>typeof newContext164==='function');await page.evaluate(enabled=>{window.FlipCheckTestMode='mock';trial={free:true,attempts:2,credits:0};saveTrial();$('apiKey').value='fake-openai';$('visualEnabled').checked=enabled;$('googleApiKey').value='fake-google-key-1234567890';$('scanBudget').value='.025';$('budgetFx').value='1';},enabled);}
+function candidate(){return {category:'object',brand:'Example',family:'Series',model:'Documented model',year:'',issue_number:'',catalog_number:'',unit:'object',variant:'',identity_level:'exact',specimen_notes:[],decision:'match',same_unit:true,physical_ambiguity:false,conflicts:[],matches:[{reference_id:'ref1',feature:'layout',photo_detail:'two round controls',reference_detail:'two round controls',reference_evidence:'image',agrees:true},{reference_id:'ref1',feature:'shape',photo_detail:'rectangular body',reference_detail:'rectangular body',reference_evidence:'image',agrees:true}],fields:[{field:'model',scope:'target',number_kind:'model_number',value:'Documented model',reference_id:'ref1',quote:'Catalogue entry: Documented model.'}]};}
+async function reset(enabled=true){requests=[];googleRequests=[];vision=structuredClone(unknown);comparison={physical_detail_needed:null,candidates:[candidate()]};providerMode='ok';resolverMode='';printingReply=null;waitApi=null;await page.goto(origin);await page.waitForFunction(()=>typeof newContext164==='function');await page.evaluate(enabled=>{window.FlipCheckTestMode='mock';trial={free:true,attempts:2,credits:0};saveTrial();$('apiKey').value='fake-openai';$('visualEnabled').checked=enabled;$('googleApiKey').value='fake-google-key-1234567890';$('scanBudget').value='.025';$('budgetFx').value='1';},enabled);}
 async function upload(){await page.locator('#photoBatch').setInputFiles(photos);await page.waitForFunction(()=>!photoBusy);}
 async function identify(){await page.locator('#identifyBtn').click();await page.waitForFunction(()=>!apiBusy,{},{timeout:12000});}
 before(async()=>{
@@ -16,13 +16,13 @@ before(async()=>{
  await page.route('**/*',async route=>{
   const u=route.request().url();if(u.startsWith(origin))return route.continue();
   if(u==='https://api.openai.com/v1/responses'){
-   const body=JSON.parse(route.request().postData());requests.push(body);let payload=body.text.format.name==='flipcheck_visual_comparison'?comparison:body.text.format.name==='flipcheck_market'?{market_status:'insufficient',exact_completed_sales_count:0,active_listings_count:0,market_low:null,market_high:null,quick_sale_price:null,historical_new_price:null,currency:'EUR',market_notes:'No verified comparable sales',source_summary:''}:vision;
+   const body=JSON.parse(route.request().postData());requests.push(body);let payload=body.text.format.name==='flipcheck_printing_detail'?{pokemon_printing:printingReply||vision.pokemon_printing}:body.text.format.name==='flipcheck_visual_comparison'?comparison:body.text.format.name==='flipcheck_market'?{market_status:'insufficient',exact_completed_sales_count:0,active_listings_count:0,market_low:null,market_high:null,quick_sale_price:null,historical_new_price:null,currency:'EUR',market_notes:'No verified comparable sales',source_summary:''}:vision;
    if(body.text.format.name==='flipcheck_resolver'&&resolverMode){
     if(resolverMode==='unauthorized')return route.fulfill({status:401,contentType:'application/json',body:JSON.stringify({error:{message:'API key rejected'}})});
     const source={url:'https://acme.example/manual/zx-430',title:'Acme ZX-430 water pump product manual',snippet:'Acme ZX-430 water pump. Two round controls, rectangular body. Model ZX-430.'};
     const withSource=resolverMode==='source'||resolverMode==='complete_source';
     const catalogue=resolverMode.startsWith('catalogue');
-    const sources=catalogue?Array.from({length:resolverMode==='catalogue_cost'?3:1},(_,i)=>({url:'https://catalog.example/entry'+i,title:'Catalogue entry: Documented model.',snippet:'Two round controls. Rectangular body. Catalogue entry: Documented model.'})):withSource?[source]:[];
+    const sources=catalogue?Array.from({length:resolverMode==='catalogue_cost'?3:1},(_,i)=>({url:'https://catalog.example/entry'+i+(resolverMode==='catalogue_pdf'?'.pdf':''),title:'Catalogue entry: Documented model.',snippet:'Two round controls. Rectangular body. Catalogue entry: Documented model.'})):withSource?[source]:[];
     const output=[{type:'web_search_call',status:'completed',action:{type:'search',sources},results:sources},{type:'message',content:[{type:'output_text',text:resolverMode==='malformed'?'{':JSON.stringify({candidate_checks:[],verification_summary:'Mock response',missing_information:[]})}]}];
     const incomplete=!['malformed','complete_source'].includes(resolverMode)&&!catalogue;
     return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({status:incomplete?'incomplete':'completed',...(incomplete?{incomplete_details:{reason:'max_output_tokens'}}:{}),output,usage:resolverMode==='expensive'?{input_tokens:60000,output_tokens:1500}:resolverMode==='catalogue_cost'?{input_tokens:24000,output_tokens:400}:{input_tokens:100,output_tokens:100}})});
@@ -39,7 +39,8 @@ before(async()=>{
     else if(providerMode==='disabled')reply={status:403,body:{error:{details:[{reason:'SERVICE_DISABLED'}]}}};
     else if(providerMode==='quota')reply={status:429,body:{error:{status:'RESOURCE_EXHAUSTED'}}};
     else {const linked={url:'https://catalog.example/item',pageTitle:'Catalogue entry: Documented model.',fullMatchingImages:[{url:'https://catalog.example/item.png'}]};const empty=Array.from({length:7},(_,i)=>({url:'https://catalog.example/generic'+i,pageTitle:'Generic page'}));reply={status:200,body:{responses:[{webDetection:{webEntities:[{description:'Documented model',score:.99}],pagesWithMatchingImages:providerMode==='late_images'?[...empty,linked]:providerMode==='no_images'?empty:[linked]}}]}};}
-   }else if(action==='page')reply={status:200,text:'Catalogue entry: Documented model.',images:resolverMode.startsWith('catalogue')?['https://catalog.example/item.png']:[]};
+   }else if(action==='page'&&resolverMode==='catalogue_pdf')reply={status:200,document_type:'pdf',page_count:8,pages_rendered:[1,2,3],image_data:'data:image/png;base64,'+photos[0].buffer.toString('base64')};
+   else if(action==='page')reply={status:200,text:'Catalogue entry: Documented model.',images:resolverMode.startsWith('catalogue')?['https://catalog.example/item.png']:[]};
    else if(action==='image')reply={status:200,image_data:'data:image/png;base64,'+photos[0].buffer.toString('base64')};
    else throw new Error('Unexpected native action '+action);
    return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(reply)});
@@ -98,5 +99,38 @@ test('existing catalogue images are verified before spending on Google; uncertai
 test('comparison selects only as many references as remaining budget can fund',async()=>{
  await reset();textObject();resolverMode='catalogue_cost';vision.photo_clues.push({text:'Rectangular body',role:'text',certainty:'clear',image_index:1,region:null});
  await upload();await identify();const d=await page.evaluate(()=>diagnostic26());assert.equal(d.visualAssistance.comparison.availableReferences,3);assert.ok(d.visualAssistance.comparison.referenceIds.length<3);assert.ok(d.visualAssistance.comparison.referenceIds.length>=1);assert.ok(d.visualAssistance.budget.spentOrReservedUsd<=.025);assert.equal(await page.evaluate(()=>ident.market_ready),true);assert.equal(googleRequests.filter(r=>r.action==='detect').length,0);
+});
+
+
+const printing168={is_pokemon:true,language:'English',set_name:'Base Set',card_type:'pokemon',first_edition_stamp:'present',stamp_image:1,stamp_location:'left below artwork',stamp_text:'1 EDITION',artwork_shadow:'unclear',shadow_image:1,shadow_location:'right artwork border',copyright_text:'',copyright_image:0,slab_text:'',slab_image:0};
+function printingCard(){vision={...structuredClone(known),kind:'card',brand:'Pokemon',family:'Base Set',model:'Machamp 8/102',title:'Machamp',variant:'Holo',normalized_query:'Pokemon Base Set Machamp 8/102',pokemon_printing:{...printing168},printing_detail_regions:[{detail:'shadow',region:{image_index:1,x:.8,y:.2,width:.08,height:.4,certain:true}},{detail:'copyright',region:{image_index:1,x:.1,y:.9,width:.7,height:.04,certain:true}}]};}
+test('uncertain printing is reread once from original detail crops without web and preserves certain stamp',async()=>{
+ await reset();printingCard();printingReply={...printing168,first_edition_stamp:'absent',artwork_shadow:'absent',copyright_text:'©1995,96,98 Nintendo ©1999 Wizards',copyright_image:1};await upload();await identify();
+ assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_identification','flipcheck_printing_detail']);assert.equal(requests[1].tools,undefined);assert.equal(googleRequests.length,0);
+ const d=await page.evaluate(()=>diagnostic26());assert.equal(d.identification.market_ready,true);assert.equal(d.identification.printing_check.stamp,'present');assert.equal(d.identification.printing_check.shadow,'absent');assert.equal(d.visualAssistance.identityState,'confirmed');assert.equal(d.visualAssistance.printingRecovery.images.length,2);assert.ok(d.visualAssistance.printingRecovery.images.every(p=>p.cropped&&p.sentWidth<400));assert.equal(d.visualAssistance.closures[0].closure_result,false);assert.equal(d.visualAssistance.closures.at(-1).closure_result,true);
+});
+test('unreadable printing finishes with one specific detail request and never a confirmed state',async()=>{
+ await reset();printingCard();await upload();await identify();const d=await page.evaluate(()=>diagnostic26());assert.equal(requests.length,2);assert.equal(googleRequests.length,0);assert.equal(d.identification.market_ready,false);assert.equal(d.visualAssistance.identityState,'physical_detail_needed');assert.ok(d.visualAssistance.closures.every(c=>!c.closure_result));assert.match(d.identification.next_photo_request,/bordo destro.*copyright/);assert.doesNotMatch(d.identification.next_photo_request,/Retro/);
+});
+test('physical observations and PDF figures are passed to comparison before Google',async()=>{
+ await reset();textObject();resolverMode='catalogue_pdf';vision.physical_observations=[{text:'Rectangular body',feature:'shape',certainty:'clear',entity:'target',image_index:1}];
+ await upload();await identify();assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_identification','flipcheck_resolver','flipcheck_visual_comparison']);assert.match(requests[1].input,/physical_observations.*Rectangular body/);assert.equal(googleRequests.length,1);assert.equal(googleRequests[0].action,'page');assert.match(JSON.stringify(requests[2].input),/web_indexed_document/);assert.match(JSON.stringify(requests[2].input),/pages_rendered/);assert.equal(await page.evaluate(()=>ident.market_ready),true);
+});
+test('season is removed from identifier scoring while explicit user model survives',async()=>{
+ await reset();const sig=await page.evaluate(()=>{lastVisionReading={...lastVisionReading,identifier_hints:['2025/26'],photo_clues:[{text:'2025/26',role:'season',certainty:'clear'}]};return buildFingerprintSignature(lastVisionReading,'MODEL ZX-430');});assert.deepEqual(sig.identifiers.map(i=>i.value),['ZX-430']);assert.ok(!sig.identifierVariants.some(i=>i.value==='2025'));
+});
+test('genuine quoted configuration may close without an identifier; conflicting candidates cannot both close',async()=>{
+ await reset();const out=await page.evaluate(()=>{
+  lastVisionReading={photo_clues:['Acme Delta','Portable Kit','2 batteries included','2025/26'].map(text=>({text,role:text==='2025/26'?'season':'text',certainty:'clear'}))};
+  const sig=buildFingerprintSignature(lastVisionReading,''),source={url:'https://acme.example/kit',text:'Acme Delta Portable Kit 2025/26 has 2 batteries included.'};
+  const c={model:'Acme Delta Portable Kit',source_specificity:'exact_model',strong_source_count:1,matched_terms:lastVisionReading.photo_clues.map(c=>c.text),conflicting_terms:[],evidence_sources:[{url:source.url,quality:3}],match_evidence:[{photo_text:'2 batteries included',source_text:'2 batteries included',source_url:source.url}]};
+  const a=augmentCandidatesFromRawResults({candidate_checks:[c]},[source],sig).candidate_checks.find(x=>x.model===c.model);
+  const both=augmentCandidatesFromRawResults({candidate_checks:[c,{...c,model:'Acme Delta Different Kit'}]},[source],sig).candidate_checks;
+  return {ids:sig.identifiers,complete:a.complete_observed_match,score:candidateFingerprintScore(a,sig,true).score,both:both.map(x=>({complete:x.complete_observed_match,score:candidateFingerprintScore(x,sig,true).score}))};
+ });assert.deepEqual(out.ids,[]);assert.equal(out.complete,true);assert.ok(out.score>=85);assert.ok(out.both.every(c=>!c.complete&&c.score<=84));assert.equal(requests.length,0);
+});
+test('market budget refusal keeps identity confirmed and does not consume trial entitlement',async()=>{
+ await reset();vision=known;await upload();await identify();const before=await page.evaluate(()=>{scan164.budget.maxUsd=scan164.budget.spent();return JSON.stringify(trial);});await page.locator('#marketBtn').click();await page.waitForFunction(()=>!apiBusy);
+ const d=await page.evaluate(()=>diagnostic26());assert.equal(requests.length,1);assert.equal(d.identification.market_ready,true);assert.equal(d.visualAssistance.state,'confirmed');assert.equal(d.visualAssistance.comparablesState,'budget_exhausted');assert.equal(await page.evaluate(()=>JSON.stringify(trial)),before);
 });
 test('no unhandled browser errors',()=>assert.deepEqual(errors,[]));

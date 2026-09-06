@@ -103,10 +103,10 @@ test('uncertain edition keeps identity visible, disables automatic comps and exp
   await reset();await upload([photos[0]]);
   response={...kobe,brand:'Pokemon',family:'Base Set',model:'Alakazam #1/102',variant:'Holo',pokemon_printing:{...printing,first_edition_stamp:'unclear',stamp_text:''}};
   await page.locator('#identifyBtn').click();await page.waitForFunction(()=>!apiBusy);
-  assert.equal(requests.length,1);assert.match(await page.locator('#identTitle').textContent(),/Alakazam #1\/102/);
+  assert.equal(requests.length,2);assert.equal(requests[1].text.format.name,'flipcheck_printing_detail');assert.match(await page.locator('#identTitle').textContent(),/Alakazam #1\/102/);
   assert.match(await page.locator('#tags').textContent(),/EDIZIONE DA VERIFICARE/);assert.equal(await page.locator('#marketBtn').isDisabled(),true);
   const diagnostic=await page.evaluate(()=>JSON.stringify(diagnostic26()));
   assert.doesNotMatch(diagnostic,/test-key-never-transmitted|data:image|Authorization|Bearer/);
-  assert.equal(JSON.parse(diagnostic).uploadedImageCount,1);assert.equal(JSON.parse(diagnostic).phases.length,1);
+  assert.equal(JSON.parse(diagnostic).uploadedImageCount,1);assert.equal(JSON.parse(diagnostic).phases.length,2);
   assert.deepEqual(errors,[]);
 });
