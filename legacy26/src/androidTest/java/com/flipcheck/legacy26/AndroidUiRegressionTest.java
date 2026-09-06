@@ -88,6 +88,12 @@ public final class AndroidUiRegressionTest {
                 assertEquals(3, launched.get().getIntExtra(MediaStore.EXTRA_PICK_IMAGES_MAX,0));
                 assertTrue(launched.get().getBooleanExtra(MediaStore.EXTRA_PICK_IMAGES_IN_ORDER,false));
                 assertEquals("3",eval("document.querySelectorAll('.slot img').length"));
+                CountDownLatch photosPainted = new CountDownLatch(1);
+                instrumentation.runOnMainSync(() -> web.postVisualStateCallback(1, new WebView.VisualStateCallback() {
+                    @Override public void onComplete(long requestId) { web.postOnAnimation(photosPainted::countDown); }
+                }));
+                assertTrue("Photo compositor timeout", photosPainted.await(30, TimeUnit.SECONDS));
+                SystemClock.sleep(250);
                 screenshot("three-photos-loaded.png");
                 pickerResult.set(new Instrumentation.ActivityResult(Activity.RESULT_CANCELED,null)); launched.set(null);
                 tap("s0"); waitForIntent(launched);

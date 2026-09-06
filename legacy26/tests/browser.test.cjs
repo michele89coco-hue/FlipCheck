@@ -52,6 +52,8 @@ before(async()=>{
 after(async()=>{if(browser)await browser.close();if(server)await new Promise(resolve=>server.close(resolve));});
 test('empty plus and add button open multi-select; filled slot opens replacement',async()=>{
   await reset();
+  assert.equal(await page.locator('.beta').textContent(),'v0.26.4 · FIX');
+  assert.match(await page.locator('#scanPage').textContent(),/2560 px/);
   let chooserPromise=page.waitForEvent('filechooser');await page.locator('#s0').click();let chooser=await chooserPromise;
   assert.equal(chooser.isMultiple(),true);await chooser.setFiles(photos.slice(0,2));await page.waitForFunction(()=>!photoBusy);
   chooserPromise=page.waitForEvent('filechooser');await page.locator('#s0').click();chooser=await chooserPromise;
