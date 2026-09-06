@@ -179,7 +179,7 @@ test('invalid or oversized regions are skipped and small images are never enlarg
 });
 test('actual Vileplume and Boniface first readings close after one Vision with no web or crops',async()=>{
  for(const name of ['wilo','boniface']){
-  await reset();const f=regressions[name];await upload(photos.slice(0,f.uploadedImageCount));response=structuredClone(f.firstVision);
+  await reset();const f=regressions[name];await upload(photos.slice(0,f.uploadedImageCount));response=structuredClone(f.phases[0].result);
   await page.locator('#identifyBtn').click();await page.waitForFunction(()=>!apiBusy);
   const d=await page.evaluate(()=>diagnostic26());
   assert.equal(requests.length,1,name);assert.equal(d.identification.market_ready,true,name);
