@@ -45,6 +45,10 @@ public final class AndroidUiRegressionTest {
             screenshot("launch-before-web-ready.png");
             waitForJs("typeof diagnostic26 === 'function'", 45000);
             eval("window.fetch = function(){throw new Error('NETWORK_FORBIDDEN_IN_UI_TEST')}; true");
+            assertEquals("true",eval("typeof FlipCheckGoogle.request === 'function' && !!$('googleApiKey') && !$('visualEndpoint') && !$('visualAccess')"));
+            eval("window.googleBridgeProbe=null;FlipCheckDirect.call('detect',{apiKey:'invalid',image_base64:'aGVsbG8='}).then(r=>window.googleBridgeProbe=r);true");
+            waitForJs("window.googleBridgeProbe !== null",5000);
+            assertEquals("true",eval("googleBridgeProbe.state === 'invalid_api_key' && googleBridgeProbe.attempted === false"));
             int fullHeight = webHeight();
             assertViewportAboveNavigation();
             tap("tabSettings"); waitForJs("!$('settingsPage').classList.contains('hide')", 5000);

@@ -32,6 +32,7 @@ public final class MainActivity extends Activity {
     private static final int PICK_IMAGES = 26, SAVE_DIAGNOSTIC = 27;
     private static final String ORIGIN = "https://flipcheck.local/";
     private WebView web;
+    private GoogleVisionBridge googleVision;
     private ValueCallback<Uri[]> pickerCallback;
     private boolean pickerMultiple;
     private String pendingDiagnostic;
@@ -59,13 +60,15 @@ public final class MainActivity extends Activity {
         web.getSettings().setAllowFileAccess(false);
         web.getSettings().setAllowContentAccess(true);
         web.addJavascriptInterface(new DiagnosticBridge(), "FlipCheckHost");
+        googleVision = new GoogleVisionBridge(web);
+        web.addJavascriptInterface(googleVision, "FlipCheckGoogle");
         web.setWebViewClient(new WebViewClient() {
             @Override public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
                 Uri uri = request.getUrl();
                 if (!"https".equals(uri.getScheme()) || !"flipcheck.local".equals(uri.getHost())) return null;
                 String path = uri.getPath();
                 if (path == null || path.equals("/")) path = "/index.html";
-                if (!path.matches("/(index\\.html|editions\\.js|targeted-fixes\\.js|visual-policy\\.js|visual-runtime\\.js)"))
+                if (!path.matches("/(index\\.html|editions\\.js|targeted-fixes\\.js|visual-policy\\.js|visual-runtime\\.js|google-direct\\.js)"))
                     return new WebResourceResponse("text/plain", "UTF-8", 404, "Not Found", null, new ByteArrayInputStream(new byte[0]));
                 try {
                     return new WebResourceResponse(path.endsWith(".js") ? "application/javascript" : "text/html", "UTF-8", getAssets().open(path.substring(1)));
@@ -185,7 +188,8 @@ public final class MainActivity extends Activity {
 
     @Override protected void onDestroy() {
         finishPicker(null);
-        if (web != null) { web.removeJavascriptInterface("FlipCheckHost"); web.destroy(); }
+        if (googleVision != null) googleVision.close();
+        if (web != null) { web.removeJavascriptInterface("FlipCheckGoogle"); web.removeJavascriptInterface("FlipCheckHost"); web.destroy(); }
         super.onDestroy();
     }
 }

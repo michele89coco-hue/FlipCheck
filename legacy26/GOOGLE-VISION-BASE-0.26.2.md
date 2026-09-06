@@ -1,62 +1,31 @@
-# FlipCheck v0.26.2 + Google Vision — build 164
+# FlipCheck v0.26.2 · Google con chiave API · build 165
 
-## Base richiesta e compatibilità
+## Uso
 
-Questa versione parte dall'APK v0.26.2 allegato dall'utente, non dalla v0.26.6:
+Installare `FlipCheck-v0.26.2-GoogleKey.apk` sopra la versione precedente. Package e firma sono compatibili; versionCode 165.
 
-- Repository: `michele89coco-hue/FlipCheck`.
-- Branch: `codex/v0262-google-visual`.
-- Commit della base: `fbb4f1ead7cc65afe01f9aae7446c13161a32f10`.
-- APK della base: `versionCode=159`, `versionName=0.26.2-android-ui`.
-- SHA-256 dell'APK allegato: `a64d206c2461f237f12e20908b4837e8cf8180b2e3c42f10126fdf34070094ea`.
-- Tutti e tre gli asset della base sono stati confrontati byte per byte con l'APK.
-- Nuovo APK: `versionCode=164`, `versionName=0.26.2-google-visual`.
-- Package invariato: `com.flipcheck.beta.legacy26fix`. La numerazione consente l'aggiornamento anche da build 163.
-- Firma attesa SHA-256: `d4d02478ea31cb6bd83228047e9accd7dfb191ed991a4c8e8c06a228e54614c7`.
-- Backend aggiunto: `visual-api-1-build164`, protocollo 1, sorgenti nella stessa revisione dell'APK.
+In Impostazioni lasciare la chiave OpenAI e incollare la chiave **Google Cloud Vision** nel nuovo campo. Non occorrono URL, token di servizio, server personali o file di credenziali. Nel progetto Google associato alla chiave devono essere abilitati Cloud Vision API e fatturazione. La chiave deve poter utilizzare questa API; una configurazione che consente soltanto Gemini non basta.
 
-Il motore JavaScript inline originale, `editions.js`, `targeted-fixes.js`, il caricamento multiplo e la gestione Android di barra/tastiera restano quelli della v0.26.2. Nel wrapper Android cambia soltanto l'elenco dei due nuovi asset consentiti. Non vengono importate le pipeline delle build 160–163. I nuovi moduli sono `visual-policy.js` e `visual-runtime.js`.
+Le due chiavi restano in memoria per la sessione: la chiave Google va reinserita dopo la chiusura dell’app. Nessuna chiave viene incorporata nell’APK, salvata nelle preferenze, inclusa nella diagnostica o inviata ai siti di confronto. Preferenze e tetto di spesa restano salvati. L’inserimento non lancia richieste di prova a pagamento; la validità viene verificata alla prima ricerca necessaria.
 
 ## Comportamento
 
-Una identità già pronta nella v0.26.2 resta pronta e non avvia Google. Quando il servizio è configurato, la prima lettura raccoglie anche indizi con ruolo, posizione, incertezza, unità fisica e un riquadro dell'intero oggetto. La ricerca testuale esistente usa le scritte fisiche disponibili, senza richiedere marca, anno o serie. Se il testo è assente o generico, il nuovo percorso può passare direttamente alla ricerca tramite immagine.
+La base scelta rimane v0.26.2, commit fbb4f1ead7cc65afe01f9aae7446c13161a32f10. Il motore originale, le correzioni per edizione/Shadowless, il caricamento simultaneo di tre foto e gli insets Android sono conservati. Una identità già pronta salta Google; senza chiave Google continua il percorso precedente.
 
-Google riceve una sola immagine, tramite contenuto base64 nella richiesta `WEB_DETECTION`: non viene creata una URL pubblica della foto. Il ritaglio proviene dall'originale orientato, fino a 2048 px, JPEG 0,94; se il riquadro è incerto viene usata l'immagine completa. Il ritaglio conserva l'intero pannello e i bordi. La preparazione della prima lettura v0.26.2 resta invariata.
+Quando serve, Android invia una sola immagine a `https://vision.googleapis.com/v1/images:annotate`, con funzione WEB_DETECTION e chiave nell’header `x-goog-api-key`. Il crop parte dal file originale orientato e conserva l’intero oggetto, fino a 2048 pixel senza ingrandimento artificiale. I dati visibili guidano le eventuali query testuali. Restano al massimo due chiamate testuali per identificazione e una Google, mai imposte a una identità già chiusa.
 
-Il backend restituisce candidati, fino a tre pagine e tre immagini di riferimento. Il modello già usato dall'app confronta fisicamente foto e riferimenti in una richiesta Vision senza ulteriori ricerche web. I punteggi di Google non sono probabilità e non confermano nulla da soli. Le citazioni devono provenire dai testi recuperati. Numero di fascicolo e numero di catalogo rimangono distinti. Seriali, edizioni, condizioni e autenticità non vengono copiati da un altro esemplare.
+Il telefono recupera fino a tre pagine e tre immagini pubbliche associate da Google. Se una pagina non è accessibile, il titolo indicizzato da Google viene marcato come tale; senza immagine utilizzabile il riferimento non può confermare una identità. Le immagini e le citazioni sono confrontate da OpenAI. Punteggi Google e somiglianza da soli non confermano identità, edizione, finitura, autenticità o stato fisico. Un errore dei comparabili non riapre una identità confermata.
 
-Il confronto può rimanere incerto: una ristampa indistinguibile non viene autenticata. I risultati senza immagini di riferimento utilizzabili non vengono promossi a confermati. Le fonti non accessibili, gli errori Google e la mancanza di configurazione producono un esito finito e riconoscibile, senza richiesta di foto usata per nascondere il problema del servizio.
+La rete nativa conserva la verifica TLS, filtra gli indirizzi privati nella risoluzione DNS e controlla ciascun redirect delle fonti. Le richieste Google non seguono redirect; nessun retry applicativo o recupero automatico della connessione. Le fonti ricevono solo GET senza chiavi. URL con parametri di credenziali/firme sono esclusi; altri parametri, per esempio dimensione di immagini, sono ammessi.
 
-## Attivazione del servizio
+Chiave non valida, API disabilitata, fatturazione non attiva, permesso negato, quota esaurita e riferimenti inaccessibili hanno messaggi distinti quando Google fornisce il motivo. Timeout e annullamento cancellano le richieste pendenti; risposte tardive non aggiornano una nuova scansione. Nessun loop di ricerche.
 
-**Il codice è integrato, ma questa consegna non configura credenziali Google e non effettua un deployment.** Nell'APK, servizio e token inizialmente non sono impostati. In tale stato continua il riconoscimento v0.26.2 e la diagnostica riporta `not_configured`. Non è Google Lens.
+Il limite stimato resta €0,025 per identificazione e mercato. Google Web Detection riserva $0,0035 per immagine, senza presumere la fascia gratuita. Le richieste fallite potenzialmente addebitate conservano la riserva. Il fattore di pianificazione iniziale USD/EUR è 1, configurabile e non una quotazione aggiornata. Prezzi OpenAI ereditati dalla base: il limite è preventivo stimato, non un rendiconto fiscale del provider.
 
-1. In un progetto Google Cloud abilitare fatturazione e Cloud Vision API. Preparare una identità di servizio con i permessi necessari per Vision e impostare le quote nel progetto.
-2. Eseguire `backend/visual-search/server.py` con Python 3.12 e le dipendenze di `requirements.txt`, oppure costruire il Dockerfile della stessa cartella. Su Cloud Run è preferibile assegnare una identità di servizio e usare Application Default Credentials; in ambiente locale usare ADC o `GOOGLE_APPLICATION_CREDENTIALS` con un file protetto, mai nel repository/APK.
-3. Impostare `VISUAL_ENABLED=true` e un `FLIPCHECK_ACCESS_TOKEN` casuale. Questo token protegge l'accesso al proprio servizio e va comunicato soltanto agli utenti autorizzati. Le credenziali Google restano esclusivamente sul server.
-4. Esporre il servizio tramite HTTPS. Il server locale ascolta per default su `127.0.0.1:8080`; il Dockerfile ascolta su `0.0.0.0:8080`. La piattaforma deve terminare TLS. Non pubblicare direttamente il server HTTP di sviluppo su Internet.
-5. Nell'app, Impostazioni → Ricerca tramite immagine → Configurazione del servizio, inserire l'indirizzo HTTPS e il token di accesso. Il token resta soltanto in memoria. Il controllo di disponibilità avviene quando la ricerca è necessaria.
+## Verifica
 
-Endpoint autenticati: `GET /v1/config` e `POST /v1/visual-search`. Il secondo accetta `scan_id`, `image_base64`, `clues` e `remaining_usd`. Non accetta URL della foto utente. Protocollo/revisione e stato effettivo sono inclusi nella risposta.
+I controlli usano risposte simulate e immagini sintetiche. Nessuna chiamata reale a pagamento viene lanciata durante la preparazione. Il workflow controlla policy, percorso browser, payload nativo, separazione delle credenziali, limiti di rete e Android 16 (navigazione, tastiera, foto multiple). Non costituisce una prova di riconoscimento delle carte reali: quella richiede le chiavi dell’utente e fotografie reali.
 
-## Quote, timeout e costo
+La build 165 sostituisce il collegamento al backend introdotto nella 164 con rete nativa e chiave API diretta. I file `backend/visual-search` restano nel repository come implementazione precedente, ma l’APK non li usa e non richiede il loro deployment.
 
-- `VISUAL_ENABLED`: default `false` sul server; interruttore anche nell'app.
-- `GOOGLE_WEB_DETECTION_UNIT_USD`: default `0.0035` come stima per immagine, senza assumere che la quota gratuita sia ancora disponibile.
-- `VISUAL_TIMEOUT_SECONDS`: default 22, massimo 30. Zero retry automatici di annotazione.
-- `VISUAL_REQUESTS_PER_MINUTE`: default 10 per istanza.
-- `ALLOWED_ORIGIN`: default `https://flipcheck.local`.
-- Massimo una richiesta Google per scansione; massimo due tentativi di ricerca testuale identificativa inclusi quelli della baseline. Questi limiti non impongono di utilizzare tutte le chiamate.
-- Tetto iniziale app: €0,025 per scansione, identificazione e mercato inclusi. Si può ridurre; non viene aumentato automaticamente. Il fattore iniziale di pianificazione è 1 USD per EUR, configurabile: non rappresenta una quotazione valutaria aggiornata.
-- Il controllo preventivo usa stime di token e riserva l'output massimo; l'usage restituito regola la quota effettivamente conteggiata. I timeout mantengono la riserva perché possono essere addebitati. I prezzi OpenAI sono quelli configurati nella v0.26.2: verificarli prima di una distribuzione commerciale. Costi di hosting e imposte non sono una misura per-scansione fornita dal provider.
-- Il budget può fermare il confronto o il mercato anche dopo una ricerca. L'identità già confermata rimane tale; non viene inventato un prezzo.
-
-La deduplicazione conserva soltanto risultati di ricerca e digest della foto per la stessa scansione, in memoria per dieci minuti. Non riusa una identità tra esemplari diversi. Per scalare su più istanze usare affinità di scansione o un registro condiviso equivalente e quote Google del progetto: il limite per istanza non è un limite globale di progetto. Nessun upload utente viene scritto su disco; riferimenti pubblici possono restare nella cache breve. URL con parametri di query sono esclusi dalla restituzione per evitare URL temporanee sensibili: alcune immagini di riferimento possono quindi non essere utilizzabili.
-
-## Verifiche e limiti
-
-I controlli locali e browser usano fixture e risposte simulate. Verificano il payload ufficiale Google, campi mancanti/errori per immagine, confronto, provenienza, pannelli, duplicati, budget, annullamento e conservazione della baseline. Nessuna campagna di riconoscimento live a pagamento è autorizzata o eseguita in questa consegna. I test simulati non dimostrano che Google troverà la carta reale o che la foto del box verrà riconosciuta. La diagnostica distingue `production` da `mock` e non contiene immagini base64 né credenziali.
-
-Per riprodurre: `node --test legacy26/tests/editions.test.cjs legacy26/tests/visual-policy.test.cjs`, `python3 -m unittest discover -s backend/visual-search -p 'test_*.py'`, poi i test browser con Playwright indicati nel workflow. L'APK viene firmato e controllato contro package, versione, certificato e commit. Il controllo Android della tastiera è separato dai risultati di riconoscimento e il suo esito va riportato senza trasformare un fallimento in un successo.
-
-Fonti tecniche verificate il 6 settembre 2026: [richiesta e risposta Web Detection](https://cloud.google.com/vision/docs/detecting-web), [listino Cloud Vision](https://cloud.google.com/vision/pricing), [formati supportati](https://cloud.google.com/vision/docs/supported-files), [autenticazione Google](https://google-auth.readthedocs.io/en/latest/user-guide.html). Il listino indica $3,50 per 1.000 unità Web Detection nella fascia a pagamento ordinaria; servizi di hosting aggiuntivi possono avere costi separati.
+Riferimenti ufficiali: [autenticazione Vision con API key](https://docs.cloud.google.com/vision/product-search/docs/auth), [header delle API key](https://docs.cloud.google.com/docs/authentication/api-keys-use), [Web Detection](https://docs.cloud.google.com/vision/docs/detecting-web), [listino](https://cloud.google.com/vision/pricing).
