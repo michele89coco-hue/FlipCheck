@@ -40,9 +40,11 @@ function normalize(response){
 }
 async function references(found,options){
  if(found.state!=='ok')return found;
- const pages=found.pagesWithMatchingImages.filter((p,i,a)=>a.findIndex(x=>x.url===p.url)===i).slice(0,3);
+ // Filter first: early generic pages must not hide later pages with actual linked images.
+ const pages=list(found.pagesWithMatchingImages).filter(p=>[...list(p.fullMatchingImages),...list(p.partialMatchingImages)].some(i=>url(i.url)))
+  .filter((p,i,a)=>a.findIndex(x=>x.url===p.url)===i).slice(0,3);
  const results=await Promise.allSettled(pages.map(async(p,i)=>{
-  const image=[...p.fullMatchingImages,...p.partialMatchingImages][0];if(!image)return null;
+  const image=[...list(p.fullMatchingImages),...list(p.partialMatchingImages)].find(i=>url(i.url));
   // Both downloads are public GETs. The Google key is never passed to reference requests.
   const [page,picture]=await Promise.allSettled([call('page',{url:p.url},options),call('image',{url:image.url},options)]);
   const data=picture.status==='fulfilled'?picture.value:null;if(!data?.image_data)return null;
@@ -51,7 +53,19 @@ async function references(found,options){
   return {id:'ref'+(i+1),url:p.url,title:p.pageTitle,text:text.slice(0,5000),text_origin:page.status==='fulfilled'&&page.value.text?'retrieved_page':'google_indexed_title',image_url:image.url,image_data:data.image_data};
  }));
  const refs=results.filter(r=>r.status==='fulfilled'&&r.value).map(r=>r.value);
- return {...found,references:refs,state:pages.length&&!refs.length?'references_unavailable':'ok'};
+ return {...found,references:refs,referenceAttempts:pages.length,referenceState:!pages.length?'no_linked_images':refs.length?'retrieved':'downloads_unavailable',state:pages.length&&!refs.length?'references_unavailable':'ok'};
 }
-root.FlipCheckDirect={call,receive,normalize,references,url};
+async function catalogueReferences(sources,options){
+ const pages=list(sources).filter(s=>url(s.url)).slice(0,3);
+ const results=await Promise.allSettled(pages.map(async(s,i)=>{
+  const page=await call('page',{url:s.url},options);
+  if(!page.text)return null;
+  const image=list(page.images).map(url).find(Boolean);if(!image)return null;
+  const picture=await call('image',{url:image},options);if(!picture.image_data)return null;
+  return {id:'ref'+(i+1),url:s.url,title:page.title||s.title,text:page.text.slice(0,5000),text_origin:'retrieved_page',image_url:image,image_data:picture.image_data};
+ }));
+ const refs=results.filter(r=>r.status==='fulfilled'&&r.value).map(r=>r.value);
+ return {state:'ok',references:refs,referenceAttempts:pages.length,referenceState:refs.length?'retrieved':'no_accessible_page_images'};
+}
+root.FlipCheckDirect={call,receive,normalize,references,catalogueReferences,url};
 })(typeof window==='undefined'?globalThis:window);

@@ -15,3 +15,33 @@ test('already confirmed baseline is immutable',()=>{const x={...base,market_read
 test('global budget includes failed attempts, stops duplicate count and expires',()=>{let now=0;const b=new V.Budget({now:()=>now});const e=b.reserve('text',.012);b.settle(e,.0105);b.reserve('visual',.0035);assert.throws(()=>b.reserve('visual',.001),/call_limit/);assert.throws(()=>b.reserve('market',.02),/budget_exhausted/);const second=b.reserve('text',.011);b.settle(second,null);assert.equal(b.spent(),.025);now=90001;assert.throws(()=>b.reserve('vision',0),/timeout/);});
 
 test('explicit uncertain OCR cannot re-enter the query through legacy layout',()=>{const x={photo_clues:[{text:'PX-7',role:'model',certainty:'uncertain'}],layout_signature:[{term:'PX-7',position:'label'}]};assert.equal(V.plan(x).query,'');});
+test('sixth quantity clue gets query priority for any product; guesses and uncertain OCR are absent',()=>{
+ const x={title:'Guessed premium edition',evidence:['MAYBE OCR'],photo_clues:['Acme Tools','Series Delta','Portable Kit','Outdoor Use','Workshop','2 BATTERIES INCLUDED'].map(text=>({text,role:'text',certainty:'clear'}))};
+ x.photo_clues.push({text:'MAYBE OCR',role:'text',certainty:'uncertain'});
+ assert.match(V.plan(x).query,/^2 BATTERIES INCLUDED/);assert.equal(V.plan(x).terms.length,6);
+ assert.doesNotMatch(V.resolverPrompt(x,''),/Guessed premium edition|MAYBE OCR/);
+});
+test('observed and sourced contradictions survive; guesses cannot become physical conflicts',()=>{
+ const x={photo_clues:[{text:'2 BATTERIES INCLUDED',role:'text',certainty:'clear'}]},source={url:'https://catalog.example/kit',text:'This kit contains 3 batteries included in the package.'};
+ const c={matched_terms:[],conflicting_terms:['2 BATTERIES INCLUDED'],conflict_evidence:[{photo_text:'2 BATTERIES INCLUDED',source_text:source.text,source_url:source.url,kind:'contradiction'}]};
+ const grounded=V.groundChecks([c],x,[source])[0];assert.equal(grounded.conflicting_terms.length,1);
+ const guessed=V.groundChecks([{...c,conflict_evidence:[],conflicting_terms:['premium edition']}],x,[source])[0];assert.equal(guessed.conflicting_terms.length,0);assert.equal(guessed.requires_visual_check,true);
+ const fake=V.groundChecks([{...c,conflict_evidence:[{...c.conflict_evidence[0],source_text:'Invented contradictory quotation'}]}],x,[source])[0];assert.equal(fake.conflicting_terms.length,0);assert.equal(fake.requires_visual_check,true);
+});
+test('a matching documented label error is distinct from a physical contradiction',()=>{
+ const x={photo_clues:[{text:'MISPRINTED NAME',role:'text',certainty:'clear'}]},s={url:'https://catalog.example/label',text:'The original item has the documented error MISPRINTED NAME.'};
+ const c={matched_terms:['MISPRINTED NAME'],conflicting_terms:['MISPRINTED NAME'],conflict_evidence:[{photo_text:'MISPRINTED NAME',source_text:s.text,source_url:s.url,kind:'documented_label_error'}]};
+ assert.equal(V.groundChecks([c],x,[s])[0].conflicting_terms.length,0);
+});
+test('catalogue discovery requires observed context and prefers discriminating quantities',()=>{
+ const x={photo_clues:['Acme Tools','Series Delta','2 BATTERIES INCLUDED'].map(text=>({text,role:'text',certainty:'clear'}))};
+ const sources=[{url:'https://catalog.example/generic',text:'Acme Tools Series Delta'},{url:'https://catalog.example/exact',text:'Acme Tools Series Delta 2 BATTERIES INCLUDED'},{url:'https://catalog.example/unrelated',text:'Acme Tools only'}];
+ assert.deepEqual(V.rankSources(sources,x).map(s=>s.url),[sources[1].url,sources[0].url]);
+});
+test('visual confirmation must compare clear quantities and reject a different count',()=>{
+ const x={...base,photo_clues:[{text:'2 BATTERIES INCLUDED',role:'text',certainty:'clear'}]};
+ assert.equal(V.validate(x,{candidates:[candidate]},[reference]).market_ready,false);
+ const match={reference_id:'ref1',feature:'configuration',photo_detail:'2 BATTERIES INCLUDED',reference_detail:'2 batteries in the package',agrees:true};
+ assert.equal(V.validate(x,{candidates:[{...candidate,matches:[...candidate.matches,match]}]},[reference]).market_ready,true);
+ assert.equal(V.validate(x,{candidates:[{...candidate,matches:[...candidate.matches,{...match,reference_detail:'3 batteries in the package'}]}]},[reference]).market_ready,false);
+});

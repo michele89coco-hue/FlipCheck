@@ -21,9 +21,11 @@ before(async()=>{
     if(resolverMode==='unauthorized')return route.fulfill({status:401,contentType:'application/json',body:JSON.stringify({error:{message:'API key rejected'}})});
     const source={url:'https://acme.example/manual/zx-430',title:'Acme ZX-430 water pump product manual',snippet:'Acme ZX-430 water pump. Two round controls, rectangular body. Model ZX-430.'};
     const withSource=resolverMode==='source'||resolverMode==='complete_source';
-    const output=[{type:'web_search_call',status:'completed',action:{type:'search',sources:withSource?[source]:[]},results:withSource?[source]:[]},{type:'message',content:[{type:'output_text',text:resolverMode==='malformed'?'{':JSON.stringify({candidate_checks:[],verification_summary:'Mock response',missing_information:[]})}]}];
-    const incomplete=!['malformed','complete_source'].includes(resolverMode);
-    return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({status:incomplete?'incomplete':'completed',...(incomplete?{incomplete_details:{reason:'max_output_tokens'}}:{}),output,usage:resolverMode==='expensive'?{input_tokens:60000,output_tokens:1500}:{input_tokens:100,output_tokens:100}})});
+    const catalogue=resolverMode.startsWith('catalogue');
+    const sources=catalogue?Array.from({length:resolverMode==='catalogue_cost'?3:1},(_,i)=>({url:'https://catalog.example/entry'+i,title:'Catalogue entry: Documented model.',snippet:'Two round controls. Rectangular body. Catalogue entry: Documented model.'})):withSource?[source]:[];
+    const output=[{type:'web_search_call',status:'completed',action:{type:'search',sources},results:sources},{type:'message',content:[{type:'output_text',text:resolverMode==='malformed'?'{':JSON.stringify({candidate_checks:[],verification_summary:'Mock response',missing_information:[]})}]}];
+    const incomplete=!['malformed','complete_source'].includes(resolverMode)&&!catalogue;
+    return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({status:incomplete?'incomplete':'completed',...(incomplete?{incomplete_details:{reason:'max_output_tokens'}}:{}),output,usage:resolverMode==='expensive'?{input_tokens:60000,output_tokens:1500}:resolverMode==='catalogue_cost'?{input_tokens:24000,output_tokens:400}:{input_tokens:100,output_tokens:100}})});
    }
    if(waitApi){const pending=waitApi;await pending;}
    return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({status:'completed',output:[{type:'message',content:[{type:'output_text',text:JSON.stringify(payload)}]}],usage:{input_tokens:100,output_tokens:100}})});
@@ -36,8 +38,8 @@ before(async()=>{
     else if(providerMode==='invalid')reply={status:400,body:{error:{details:[{reason:'API_KEY_INVALID'}]}}};
     else if(providerMode==='disabled')reply={status:403,body:{error:{details:[{reason:'SERVICE_DISABLED'}]}}};
     else if(providerMode==='quota')reply={status:429,body:{error:{status:'RESOURCE_EXHAUSTED'}}};
-    else reply={status:200,body:{responses:[{webDetection:{webEntities:[{description:'Documented model',score:.99}],pagesWithMatchingImages:[{url:'https://catalog.example/item',pageTitle:'Catalogue entry: Documented model.',fullMatchingImages:[{url:'https://catalog.example/item.png'}]}]}}]}};
-   }else if(action==='page')reply={status:200,text:'Catalogue entry: Documented model.'};
+    else {const linked={url:'https://catalog.example/item',pageTitle:'Catalogue entry: Documented model.',fullMatchingImages:[{url:'https://catalog.example/item.png'}]};const empty=Array.from({length:7},(_,i)=>({url:'https://catalog.example/generic'+i,pageTitle:'Generic page'}));reply={status:200,body:{responses:[{webDetection:{webEntities:[{description:'Documented model',score:.99}],pagesWithMatchingImages:providerMode==='late_images'?[...empty,linked]:providerMode==='no_images'?empty:[linked]}}]}};}
+   }else if(action==='page')reply={status:200,text:'Catalogue entry: Documented model.',images:resolverMode.startsWith('catalogue')?['https://catalog.example/item.png']:[]};
    else if(action==='image')reply={status:200,image_data:'data:image/png;base64,'+photos[0].buffer.toString('base64')};
    else throw new Error('Unexpected native action '+action);
    return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(reply)});
@@ -81,4 +83,20 @@ test('existing complete source evidence is retained when text JSON is cut off',a
 });
 test('incomplete text with insufficient remaining budget skips Google and keeps an explicit budget result',async()=>{await reset();textObject();resolverMode='expensive';await upload();await identify();assert.equal(requests.length,2);assert.equal(googleRequests.length,0);const d=await page.evaluate(()=>diagnostic26());assert.equal(d.visualAssistance.provider.state,'skipped_budget');assert.equal(await page.evaluate(()=>ident.assistance_state),'budget_exhausted');assert.ok(d.visualAssistance.budget.spentOrReservedUsd<=.025);});
 test('an OpenAI authentication error is not retried through Google',async()=>{await reset();textObject();resolverMode='unauthorized';await upload();await identify();assert.equal(requests.length,2);assert.equal(googleRequests.length,0);assert.equal(await page.evaluate(()=>ident.assistance_state),'service_unavailable');});
+test('linked images beyond the first three Google pages are compared',async()=>{await reset();providerMode='late_images';await upload();await identify();assert.equal(googleRequests.length,3);assert.equal(await page.evaluate(()=>ident.market_ready),true);assert.equal(await page.evaluate(()=>diagnostic26().visualAssistance.provider.referenceAttempts),1);});
+test('pages without linked images are not reported as failed image downloads',async()=>{await reset();providerMode='no_images';await upload();await identify();const p=await page.evaluate(()=>diagnostic26().visualAssistance.provider);assert.equal(p.referenceAttempts,0);assert.equal(p.referenceState,'no_linked_images');assert.equal(await page.evaluate(()=>ident.assistance_state),'unidentified');assert.equal(googleRequests.length,1);});
+test('existing catalogue images are verified before spending on Google; uncertain title data stay out',async()=>{
+ await reset();textObject();resolverMode='catalogue';vision.title='Guessed premium edition';vision.evidence=['MAYBE OCR'];vision.variant='Guessed premium edition';
+ vision.photo_clues.push({text:'Rectangular body',role:'text',certainty:'clear',image_index:1,region:null},{text:'MAYBE OCR',role:'text',certainty:'uncertain',image_index:1,region:null});
+ await upload();await identify();assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_identification','flipcheck_resolver','flipcheck_visual_comparison']);
+ assert.equal(googleRequests.filter(r=>r.action==='detect').length,0);assert.equal(googleRequests.length,2);assert.equal(await page.evaluate(()=>ident.market_ready),true);
+ assert.doesNotMatch(requests[1].input,/Guessed premium edition|MAYBE OCR/);assert.doesNotMatch(JSON.stringify(requests[2].input),/Guessed premium edition|MAYBE OCR/);
+ assert.doesNotMatch(await page.evaluate(()=>ident.normalized_query),/Guessed premium edition/);
+ assert.equal(await page.evaluate(()=>diagnostic26().visualAssistance.provider.state),'skipped_catalogue_references');
+ assert.deepEqual(await page.evaluate(()=>rawModelCodes('GAME-WORN model ZX-430')),['ZX-430']);
+});
+test('comparison selects only as many references as remaining budget can fund',async()=>{
+ await reset();textObject();resolverMode='catalogue_cost';vision.photo_clues.push({text:'Rectangular body',role:'text',certainty:'clear',image_index:1,region:null});
+ await upload();await identify();const d=await page.evaluate(()=>diagnostic26());assert.equal(d.visualAssistance.comparison.availableReferences,3);assert.ok(d.visualAssistance.comparison.referenceIds.length<3);assert.ok(d.visualAssistance.comparison.referenceIds.length>=1);assert.ok(d.visualAssistance.budget.spentOrReservedUsd<=.025);assert.equal(await page.evaluate(()=>ident.market_ready),true);assert.equal(googleRequests.filter(r=>r.action==='detect').length,0);
+});
 test('no unhandled browser errors',()=>assert.deepEqual(errors,[]));

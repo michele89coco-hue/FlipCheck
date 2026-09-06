@@ -1,8 +1,8 @@
-# FlipCheck v0.26.2 · Google con chiave API · build 166
+# FlipCheck v0.26.2 · Google con chiave API · build 167
 
 ## Uso
 
-Installare `FlipCheck-v0.26.2-GoogleFix-166.apk` sopra la versione precedente. Package e firma sono compatibili; versionCode 166.
+Installare `FlipCheck-v0.26.2-GoogleFix-167.apk` sopra la versione precedente. Package e firma sono compatibili; versionCode 167.
 
 In Impostazioni lasciare la chiave OpenAI e incollare la chiave **Google Cloud Vision** nel nuovo campo. Non occorrono URL, token di servizio, server personali o file di credenziali. Nel progetto Google associato alla chiave devono essere abilitati Cloud Vision API e fatturazione. La chiave deve poter utilizzare questa API; una configurazione che consente soltanto Gemini non basta.
 
@@ -41,3 +41,15 @@ Una risposta testuale troncata, vuota o malformata viene scartata senza inventar
 La diagnostica distingue HTTP 200 da contenuto incompleto e registra ragione del recupero, fonti disponibili e risposta parziale scartata. Se non resta budget sufficiente, dichiara il limite e non promette una identificazione. I test simulati verificano anche questo caso: recuperare il flusso non implica che tutti gli oggetti possano chiudersi entro il limite.
 
 La preparazione foto non cambia: 1280 px per la lettura iniziale, fino a 2048 px dall’originale per Google. L’etichetta nella schermata chiarisce entrambi i passaggi. Il codice nativo Google, la firma, gli insets e il selettore delle foto non cambiano.
+
+## Correzione mirata 167: indizi discriminanti e riferimenti
+
+Nei tre nuovi log della 166, Vileplume chiude con una sola lettura (zero web e Google). Google risponde correttamente nei due casi non chiusi: 952 ms sul pannello e 1268 ms sul box. Il problema riscontrato riguarda la selezione delle prove, non un errore di chiave Google.
+
+Le query assegnano priorità a identificatori, quantità e specifiche chiare, anche quando questi indizi arrivano dopo i primi cinque. Il resolver riceve le trascrizioni chiare e l’unità fisica, senza le varianti ipotizzate nel titolo o OCR incerto rientrato nei vecchi campi. Un conflitto richiede una trascrizione chiara e una citazione della fonte. Un errore di etichetta documentato è distinto da una contraddizione. Le quantità mancanti e i conflitti non verificabili impediscono una promozione automatica per punteggio. Le parole composte senza cifre non vengono estratte come codici modello.
+
+Prima di spendere per Google, l’app recupera fino a tre pagine pertinenti già trovate dalla ricerca testuale e le loro immagini esplicitamente collegate (metadati social o immagini principali). Il parser nativo jsoup conserva titolo e testo principale, rimuove script e navigazione e applica i limiti di rete già esistenti. Le fonti restano dati non attendibili come istruzioni. Le immagini devono essere confrontate, non bastano titolo, pagina o somiglianza. Se non ci sono riferimenti utilizzabili, può partire la singola chiamata Google prevista. Le pagine Google vengono filtrate per immagini associate prima del limite di tre; una pagina senza immagini non è più registrata come download immagine fallito.
+
+Il confronto usa il ritaglio dell’intero oggetto dall’originale, ad alta qualità, e da una a tre immagini di riferimento in base al budget disponibile. Elimina la copia ridondante della panoramica e il lungo rapporto Vision già acquisito. La stima conservativa per immagine e il tetto €0,025 restano attivi. Se neppure un confronto è finanziabile, il risultato esplicita il limite; non garantisce una chiusura. Una quantità chiara richiede un confronto della configurazione con lo stesso numero. Le varianti ipotizzate di oggetti non vengono aggiunte alla nuova query confermata; i dati fisici delle carte restano protetti.
+
+Le regressioni sono sintetiche e senza chiamate a pagamento: quantità al sesto indizio, conflitti veri e inventati, errore stampato documentato, selezione delle fonti, immagini Google oltre la terza pagina, recupero delle immagini di catalogo prima di Google e confronto entro budget. Le foto reali dei tre test devono essere riprovate sul telefono; i log da soli non consentono una nuova verifica visiva.

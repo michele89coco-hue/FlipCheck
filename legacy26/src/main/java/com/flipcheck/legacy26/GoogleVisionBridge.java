@@ -2,12 +2,15 @@ package com.flipcheck.legacy26;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.text.Html;
 import android.util.Base64;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import java.util.LinkedHashSet;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.InetAddress;
@@ -126,10 +129,8 @@ public final class GoogleVisionBridge {
                         result=json("status",code,"attempted",true,"body",new JSONObject(new String(read(r,1500000),StandardCharsets.UTF_8)));
                     } else if (code!=200) result=json("status",code,"state","reference_unavailable");
                     else if ("page".equals(action)) {
-                        String html=new String(read(r,400000),StandardCharsets.UTF_8)
-                            .replaceAll("(?is)<(script|style|noscript|svg)\\b[^>]*>.*?</\\1\\s*>"," ");
-                        String text=Html.fromHtml(html).toString().replaceAll("\\s+"," ").trim();
-                        result=json("status",code,"text",text.substring(0,Math.min(5000,text.length())));
+                        String html=new String(read(r,600000),StandardCharsets.UTF_8);
+                        result=pageData(html,r.request().url().toString());
                     } else {
                         byte[] data=read(r,4000000);String mime=imageType(data);
                         if(mime.isEmpty()) throw new IOException("invalid_image");
@@ -141,6 +142,20 @@ public final class GoogleVisionBridge {
                 }
             }
         });
+    }
+    static JSONObject pageData(String html, String pageUrl) {
+        Document doc=Jsoup.parse(html,pageUrl);
+        LinkedHashSet<String> images=new LinkedHashSet<>();
+        // Only images explicitly linked by this page. Global search images are never relabelled as its evidence.
+        for(Element el:doc.select("meta[property=og:image],meta[property=og:image:secure_url],meta[name=twitter:image],link[rel=image_src],main img[src],article img[src]")) {
+            String attr=el.tagName().equals("meta")?"content":el.tagName().equals("link")?"href":"src";
+            try { images.add(publicUrl(el.absUrl(attr)).toString()); } catch(IOException ignored) {}
+            if(images.size()>=3)break;
+        }
+        doc.select("script,style,noscript,svg,nav,header,footer").remove();
+        Element main=doc.selectFirst("main");
+        String text=doc.title()+" "+(main==null?doc.body().text():main.text());
+        return json("status",200,"title",doc.title(),"text",text.substring(0,Math.min(5000,text.length())),"images",new JSONArray(images));
     }
     static byte[] read(Response r, int limit) throws IOException {
         if(r.body()==null || r.body().contentLength()>limit) throw new IOException("response_size");

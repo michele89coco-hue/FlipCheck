@@ -39,4 +39,13 @@ public final class GoogleDirectRegressionTest {
         assertEquals("",GoogleVisionBridge.imageType("<svg><script>alert(1)</script></svg>".getBytes()));
         assertEquals("image/png",GoogleVisionBridge.imageType(new byte[]{(byte)137,80,78,71,13,10,26,10,0}));
     }
+    @Test public void catalogueImagesBelongToThePageAndRelativeUrlsAreResolved() throws Exception {
+        JSONObject page=GoogleVisionBridge.pageData("<html><head><title>Acme kit</title><meta property='og:image' content='/images/kit.jpg'><meta name='twitter:image' content='https://localhost/private'></head><body><nav>Menu</nav><main><h1>Acme kit</h1><p>2 batteries included</p><img src='detail.png'><script>Untrusted instructions</script></main><footer>Other products</footer></body></html>","https://catalog.example/items/kit");
+        assertEquals("https://catalog.example/images/kit.jpg",page.getJSONArray("images").getString(0));
+        assertEquals("https://catalog.example/items/detail.png",page.getJSONArray("images").getString(1));
+        assertEquals(2,page.getJSONArray("images").length());
+        assertTrue(page.getString("text").contains("2 batteries included"));
+        assertFalse(page.getString("text").contains("Untrusted instructions"));
+        assertFalse(page.getString("text").contains("Other products"));
+    }
 }
