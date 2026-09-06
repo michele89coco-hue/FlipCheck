@@ -1,8 +1,8 @@
-# FlipCheck v0.26.2 · Google con chiave API · build 165
+# FlipCheck v0.26.2 · Google con chiave API · build 166
 
 ## Uso
 
-Installare `FlipCheck-v0.26.2-GoogleKey.apk` sopra la versione precedente. Package e firma sono compatibili; versionCode 165.
+Installare `FlipCheck-v0.26.2-GoogleFix-166.apk` sopra la versione precedente. Package e firma sono compatibili; versionCode 166.
 
 In Impostazioni lasciare la chiave OpenAI e incollare la chiave **Google Cloud Vision** nel nuovo campo. Non occorrono URL, token di servizio, server personali o file di credenziali. Nel progetto Google associato alla chiave devono essere abilitati Cloud Vision API e fatturazione. La chiave deve poter utilizzare questa API; una configurazione che consente soltanto Gemini non basta.
 
@@ -26,6 +26,18 @@ Il limite stimato resta €0,025 per identificazione e mercato. Google Web Detec
 
 I controlli usano risposte simulate e immagini sintetiche. Nessuna chiamata reale a pagamento viene lanciata durante la preparazione. Il workflow controlla policy, percorso browser, payload nativo, separazione delle credenziali, limiti di rete e Android 16 (navigazione, tastiera, foto multiple). Non costituisce una prova di riconoscimento delle carte reali: quella richiede le chiavi dell’utente e fotografie reali.
 
-La build 165 sostituisce il collegamento al backend introdotto nella 164 con rete nativa e chiave API diretta. I file `backend/visual-search` restano nel repository come implementazione precedente, ma l’APK non li usa e non richiede il loro deployment.
+La build 166 sostituisce il collegamento al backend introdotto nella 164 con rete nativa e chiave API diretta. I file `backend/visual-search` restano nel repository come implementazione precedente, ma l’APK non li usa e non richiede il loro deployment.
 
 Riferimenti ufficiali: [autenticazione Vision con API key](https://docs.cloud.google.com/vision/product-search/docs/auth), [header delle API key](https://docs.cloud.google.com/docs/authentication/api-keys-use), [Web Detection](https://docs.cloud.google.com/vision/docs/detecting-web), [listino](https://cloud.google.com/vision/pricing).
+
+## Correzione mirata 166: risultati del 6 settembre
+
+I log ricevuti mostrano Politoed H23/H32 pronta al mercato dopo una sola Vision (31,8 s API, zero web e zero Google). Il box legge anno, linea e frase sull’autografo, ma la risposta del resolver testuale termina a `max_output_tokens`; nella 165 il catch esterno interrompeva il percorso prima di Google. Questi due test non verificavano ancora una chiamata Google reale.
+
+Nella 166 il resolver restituisce solo candidati, riepilogo e dati mancanti, con massimo 1800 token invece di 950. I dati fotografici già acquisiti non devono essere ripetuti nella risposta. Il motore originario resta byte-identico.
+
+Una risposta testuale troncata, vuota o malformata viene scartata senza inventarne la parte mancante. Le fonti web complete eventualmente già presenti nella stessa risposta possono ancora essere valutate dalla logica esistente. Se non chiudono l’identità, si può proseguire con una sola ricerca Google, nei limiti di tempo e budget. Non viene ripetuta la ricerca testuale. Errori di autenticazione, annullamento e limite di spesa non vengono trattati come JSON recuperabile.
+
+La diagnostica distingue HTTP 200 da contenuto incompleto e registra ragione del recupero, fonti disponibili e risposta parziale scartata. Se non resta budget sufficiente, dichiara il limite e non promette una identificazione. I test simulati verificano anche questo caso: recuperare il flusso non implica che tutti gli oggetti possano chiudersi entro il limite.
+
+La preparazione foto non cambia: 1280 px per la lettura iniziale, fino a 2048 px dall’originale per Google. L’etichetta nella schermata chiarisce entrambi i passaggi. Il codice nativo Google, la firma, gli insets e il selettore delle foto non cambiano.

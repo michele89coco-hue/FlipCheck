@@ -1,12 +1,12 @@
 /* Browser production wiring. All API payloads are fabricated; no live recognition. */
 const {test,before,after}=require('node:test'),assert=require('node:assert/strict'),http=require('node:http'),fs=require('node:fs'),path=require('node:path');
 const {chromium}=require('playwright');
-let server,browser,page,origin,photos,requests=[],googleRequests=[],vision,comparison,providerMode='ok',waitApi=null,errors=[];
+let server,browser,page,origin,photos,requests=[],googleRequests=[],vision,comparison,providerMode='ok',resolverMode='',waitApi=null,errors=[];
 const root=path.join(__dirname,'../src/main/assets');
 const unknown={status:'uncertain',kind:'object',title:'Oggetto',category:'object',brand:'',family:'',model:'',variant:'',condition:'raw',category_confidence:70,brand_confidence:0,family_confidence:0,model_confidence:20,model_verified:false,market_ready:false,candidate_models:[],visual_fingerprint:'geometrical outline',distinctive_terms:[],search_terms:[],identifier_hints:[],layout_signature:[],evidence:[],missing_information:['catalogue identity'],next_photo_request:null,user_text_consistent:true,normalized_query:'',verification_summary:'Mock only',pokemon_printing:null,photo_clues:[],object_unit:'object',object_region:{image_index:1,x:.1,y:.1,width:.8,height:.8,certain:true}};
 const known={...unknown,status:'identified',brand:'Example',family:'Series',model:'Known model',title:'Known model',model_confidence:94,market_ready:true,normalized_query:'Example Known model'};
 function candidate(){return {category:'object',brand:'Example',family:'Series',model:'Documented model',year:'',issue_number:'',catalog_number:'',unit:'object',variant:'',decision:'match',same_unit:true,physical_ambiguity:false,conflicts:[],matches:[{reference_id:'ref1',feature:'layout',photo_detail:'two round controls',reference_detail:'two round controls',agrees:true},{reference_id:'ref1',feature:'shape',photo_detail:'rectangular body',reference_detail:'rectangular body',agrees:true}],fields:[{field:'model',value:'Documented model',reference_id:'ref1',quote:'Catalogue entry: Documented model.'}]};}
-async function reset(enabled=true){requests=[];googleRequests=[];vision=structuredClone(unknown);comparison={physical_detail_needed:null,candidates:[candidate()]};providerMode='ok';waitApi=null;await page.goto(origin);await page.waitForFunction(()=>typeof newContext164==='function');await page.evaluate(enabled=>{window.FlipCheckTestMode='mock';trial={free:true,attempts:2,credits:0};saveTrial();$('apiKey').value='fake-openai';$('visualEnabled').checked=enabled;$('googleApiKey').value='fake-google-key-1234567890';$('scanBudget').value='.025';$('budgetFx').value='1';},enabled);}
+async function reset(enabled=true){requests=[];googleRequests=[];vision=structuredClone(unknown);comparison={physical_detail_needed:null,candidates:[candidate()]};providerMode='ok';resolverMode='';waitApi=null;await page.goto(origin);await page.waitForFunction(()=>typeof newContext164==='function');await page.evaluate(enabled=>{window.FlipCheckTestMode='mock';trial={free:true,attempts:2,credits:0};saveTrial();$('apiKey').value='fake-openai';$('visualEnabled').checked=enabled;$('googleApiKey').value='fake-google-key-1234567890';$('scanBudget').value='.025';$('budgetFx').value='1';},enabled);}
 async function upload(){await page.locator('#photoBatch').setInputFiles(photos);await page.waitForFunction(()=>!photoBusy);}
 async function identify(){await page.locator('#identifyBtn').click();await page.waitForFunction(()=>!apiBusy,{},{timeout:12000});}
 before(async()=>{
@@ -17,6 +17,14 @@ before(async()=>{
   const u=route.request().url();if(u.startsWith(origin))return route.continue();
   if(u==='https://api.openai.com/v1/responses'){
    const body=JSON.parse(route.request().postData());requests.push(body);let payload=body.text.format.name==='flipcheck_visual_comparison'?comparison:body.text.format.name==='flipcheck_market'?{market_status:'insufficient',exact_completed_sales_count:0,active_listings_count:0,market_low:null,market_high:null,quick_sale_price:null,historical_new_price:null,currency:'EUR',market_notes:'No verified comparable sales',source_summary:''}:vision;
+   if(body.text.format.name==='flipcheck_resolver'&&resolverMode){
+    if(resolverMode==='unauthorized')return route.fulfill({status:401,contentType:'application/json',body:JSON.stringify({error:{message:'API key rejected'}})});
+    const source={url:'https://acme.example/manual/zx-430',title:'Acme ZX-430 water pump product manual',snippet:'Acme ZX-430 water pump. Two round controls, rectangular body. Model ZX-430.'};
+    const withSource=resolverMode==='source'||resolverMode==='complete_source';
+    const output=[{type:'web_search_call',status:'completed',action:{type:'search',sources:withSource?[source]:[]},results:withSource?[source]:[]},{type:'message',content:[{type:'output_text',text:resolverMode==='malformed'?'{':JSON.stringify({candidate_checks:[],verification_summary:'Mock response',missing_information:[]})}]}];
+    const incomplete=!['malformed','complete_source'].includes(resolverMode);
+    return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({status:incomplete?'incomplete':'completed',...(incomplete?{incomplete_details:{reason:'max_output_tokens'}}:{}),output,usage:resolverMode==='expensive'?{input_tokens:60000,output_tokens:1500}:{input_tokens:100,output_tokens:100}})});
+   }
    if(waitApi){const pending=waitApi;await pending;}
    return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({status:'completed',output:[{type:'message',content:[{type:'output_text',text:JSON.stringify(payload)}]}],usage:{input_tokens:100,output_tokens:100}})});
   }
@@ -54,4 +62,23 @@ test('only Google key is required for assistance and no key is saved in preferen
 test('missing Google key leaves original schema and known identity working',async()=>{await reset();await page.evaluate(()=>{$('googleApiKey').value='';});vision=known;await upload();await identify();assert.equal(requests[0].text.format.schema.properties.photo_clues,undefined);assert.equal(googleRequests.length,0);assert.equal(await page.evaluate(()=>ident.market_ready),true);});
 test('invalid key and exhausted quota have useful final messages and no retry',async()=>{for(const mode of ['invalid','quota']){await reset();providerMode=mode;await upload();await identify();assert.equal(googleRequests.length,1);assert.equal(await page.evaluate(()=>ident.assistance_state),'service_unavailable');assert.match(await page.locator('#visualResult').textContent(),mode==='invalid'?/Chiave Google non valida/:/Quota Google esaurita/);}});
 test('direct native timeout cancels the pending request and drops a late response',async()=>{await reset();const result=await page.evaluate(async()=>{let id,cancelled=false;const previous=window.FlipCheckGoogle;window.FlipCheckGoogle={request(value){id=value;},cancel(){cancelled=true;}};let state;try{await FlipCheckDirect.call('detect',{}, {timeoutMs:20});}catch(e){state=e.message;}FlipCheckDirect.receive(id,{status:200});window.FlipCheckGoogle=previous;return {state,cancelled};});assert.deepEqual(result,{state:'scan_timeout',cancelled:true});});
+function textObject(){vision={...structuredClone(unknown),brand:'Example',family:'Series',photo_clues:[{text:'Two round controls',role:'text',certainty:'clear',image_index:1,region:null}],distinctive_terms:['Two round controls'],object_region:null};}
+test('incomplete or malformed textual JSON reaches Google once without a second text request',async()=>{
+ for(const mode of ['incomplete','malformed']){await reset();textObject();resolverMode=mode;await upload();await identify();
+  assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_identification','flipcheck_resolver','flipcheck_visual_comparison']);
+  const resolver=requests[1];assert.equal(resolver.max_output_tokens,1800);assert.deepEqual(Object.keys(resolver.text.format.schema.properties).sort(),['candidate_checks','missing_information','verification_summary']);
+  assert.equal(googleRequests.filter(r=>r.action==='detect').length,1);assert.equal(await page.evaluate(()=>ident.market_ready),true);
+  const d=await page.evaluate(()=>diagnostic26());assert.equal(d.visualAssistance.recoveries.length,1);assert.equal(d.visualAssistance.recoveries[0].partialJsonDiscarded,true);
+  if(mode==='incomplete'){assert.equal(d.visualAssistance.calls[1].state,'incomplete');assert.equal(d.visualAssistance.calls[1].incompleteReason,'max_output_tokens');}
+ }
+});
+test('existing complete source evidence is retained when text JSON is cut off',async()=>{
+ for(const mode of ['source','complete_source']){await reset();textObject();resolverMode=mode;
+  vision={...vision,brand:'Acme',family:'water pump',category:'water pump',title:'Acme water pump',identifier_hints:['ZX-430'],distinctive_terms:['ZX-430','water pump','two round controls'],photo_clues:[{text:'ZX-430',role:'model',certainty:'clear',image_index:1,region:null}]};
+  await upload();await identify();assert.equal(requests.length,2);assert.equal(googleRequests.length,0);assert.equal(await page.evaluate(()=>ident.market_ready),true);assert.match(await page.evaluate(()=>ident.model),/ZX-430/);
+  const d=await page.evaluate(()=>diagnostic26());assert.equal(d.visualAssistance.recoveries.length,mode==='source'?1:0);
+ }
+});
+test('incomplete text with insufficient remaining budget skips Google and keeps an explicit budget result',async()=>{await reset();textObject();resolverMode='expensive';await upload();await identify();assert.equal(requests.length,2);assert.equal(googleRequests.length,0);const d=await page.evaluate(()=>diagnostic26());assert.equal(d.visualAssistance.provider.state,'skipped_budget');assert.equal(await page.evaluate(()=>ident.assistance_state),'budget_exhausted');assert.ok(d.visualAssistance.budget.spentOrReservedUsd<=.025);});
+test('an OpenAI authentication error is not retried through Google',async()=>{await reset();textObject();resolverMode='unauthorized';await upload();await identify();assert.equal(requests.length,2);assert.equal(googleRequests.length,0);assert.equal(await page.evaluate(()=>ident.assistance_state),'service_unavailable');});
 test('no unhandled browser errors',()=>assert.deepEqual(errors,[]));
