@@ -65,7 +65,7 @@ public final class MainActivity extends Activity {
                 if (!"https".equals(uri.getScheme()) || !"flipcheck.local".equals(uri.getHost())) return null;
                 String path = uri.getPath();
                 if (path == null || path.equals("/")) path = "/index.html";
-                if (!path.matches("/(index\\.html|editions\\.js|targeted-fixes\\.js|photo-detail\\.js|identity-web\\.js|detail-runtime\\.js)"))
+                if (!path.matches("/(index\\.html|editions\\.js|targeted-fixes\\.js|photo-detail\\.js|identity-web\\.js|tcg-reference\\.js|identity-policy\\.js|detail-runtime\\.js)"))
                     return new WebResourceResponse("text/plain", "UTF-8", 404, "Not Found", null, new ByteArrayInputStream(new byte[0]));
                 try {
                     return new WebResourceResponse(path.endsWith(".js") ? "application/javascript" : "text/html", "UTF-8", getAssets().open(path.substring(1)));

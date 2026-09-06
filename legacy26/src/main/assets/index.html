@@ -9,7 +9,7 @@
 </style>
 </head>
 <body><main>
-<div class="top"><div class="brand">FlipCheck</div><div class="beta">v0.26.4 · FIX</div></div>
+<div class="top"><div class="brand">FlipCheck</div><div class="beta">v0.26.5 · FIX</div></div>
 <section id="scanPage">
 <h1>Prima di comprarlo,<br>controllalo.</h1><p class="sub">Foto + dettagli facoltativi. FlipCheck identifica l'oggetto o la carta, verifica il modello e cerca il mercato prima di darti un verdetto.</p>
 <div class="panel">
@@ -513,4 +513,4 @@ $('resultPanel').innerHTML=`<div class="resultHead"><div class="verdict ${klass}
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function showPaywall(){$('resultPanel').classList.remove('hide');$('resultPanel').innerHTML=`<div class="resultHead"><div class="verdict data">PROVA TERMINATA</div><p class="sub">Starter Pack previsto: <b>3 FlipCheck a €0,99</b>.</p></div><div class="status">Google Play Billing non e' attivo nella Beta tecnica. Usa “Reset prova Beta” nelle impostazioni per continuare i test interni.</div><button class="btn secondary" onclick="switchTab('settings')">IMPOSTAZIONI BETA</button>`}
 updateTrial();updateUsage();renderTelemetry();
-</script><script src="editions.js"></script><script src="targeted-fixes.js"></script><script src="photo-detail.js"></script><script src="identity-web.js"></script><script src="detail-runtime.js"></script></body></html>
+</script><script src="editions.js"></script><script src="targeted-fixes.js"></script><script src="photo-detail.js"></script><script src="identity-web.js"></script><script src="tcg-reference.js"></script><script src="identity-policy.js"></script><script src="detail-runtime.js"></script></body></html>

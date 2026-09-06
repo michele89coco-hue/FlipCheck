@@ -1,12 +1,14 @@
-/* v0.26.4: bounded detail rereading and up to two evidence-driven web searches. */
+/* v0.26.5: photo closure first; detail rereading and web only for unresolved identity. */
 'use strict';
 const originalUsage264=addUsage, originalDiagnostic264=diagnostic26, originalIdentify264=$('identifyBtn').onclick;
 const originalRender264=renderIdent;
 let firstVision264=null,webAttempts264=[],lastRequestError264=null;
+let attemptStarted265=0,attemptElapsed265=0;
 addUsage=function(j,...args){if(j?._usageRecorded264)return;return originalUsage264(j,...args);};
 function schema264(){
   const schema=JSON.parse(JSON.stringify(IDENT_SCHEMA));
-  Object.assign(schema.properties,{pokemon_printing:FlipCheckEditions.schema,detail_regions:photoSchema264,identifier_observations:observationSchema264});
+  Object.assign(schema.properties,JSON.parse(JSON.stringify({pokemon_printing:FlipCheckEditions.schema,detail_regions:photoSchema264,identifier_observations:observationSchema264})));
+  for(const name of ['detail_regions','identifier_observations'])schema.properties[name].items.properties.image_index.maximum=Math.max(1,validImageCount());
   schema.required.push('pokemon_printing','detail_regions','identifier_observations');return schema;
 }
 async function request264(body,stage,isVision=false){
@@ -25,40 +27,63 @@ async function request264(body,stage,isVision=false){
     return {response,parsed};
   }catch(error){
     if(!error.recorded264)diagnosticPhases.push({stage,attempted:true,responseStatus:'request_error',httpStatus:error.httpStatus || null,
-      error:error.name==='AbortError'?'Tempo massimo della richiesta superato':String(error.message || error).split(key() || '\u0000').join('[redacted]').slice(0,250),elapsedMs:Date.now()-started});
+      error:error.name==='AbortError'?'Tempo massimo della richiesta superato':String(error.message || error).split(key() || '\u0000').join('[redacted]').slice(0,250),elapsedMs:Date.now()-started,
+      usageKnown:false,requestedWeb:!!body.tools});
     throw error;
   }finally{clearTimeout(timer);}
 }
 function saneReading264(value){
   const out=JSON.parse(JSON.stringify(value));
+  out.invalid_photo_references=(value.identifier_observations||[]).filter(x=>!Number.isInteger(x.image_index)||x.image_index<1||x.image_index>validImageCount());
   out.identifier_observations=FlipCheckWeb264.observations(out).filter(x=>Number.isInteger(x.image_index) && x.image_index>=1 && x.image_index<=validImageCount());
   if(out.identifier_observations.length)out.identifier_hints=out.identifier_observations.filter(x=>x.legibility==='clear' && !['slab_cert','serial_number'].includes(x.role)).map(x=>x.text);
   return out;
 }
+function detailSchema265(){return {type:'object',additionalProperties:false,properties:{
+  identifier_observations:schema264().properties.identifier_observations,
+  text_corrections:{type:'array',maxItems:4,items:{type:'object',additionalProperties:false,properties:{previous:{type:'string'},read_text:{type:'string'}},required:['previous','read_text']}},
+  pokemon_printing:FlipCheckEditions.schema,detail_note:{type:'string'}},required:['identifier_observations','text_corrections','pokemon_printing','detail_note']};}
+function mergeDetail265(first,detail){
+  const next=JSON.parse(JSON.stringify(first));
+  const literal=FlipCheckWeb264.literals(first);
+  for(const c of detail.text_corrections||[]){
+    if(c.previous?.length<2||!c.read_text||!literal.includes(c.previous))continue;
+    const pattern=new RegExp('(?<![A-Za-z0-9])'+c.previous.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?![A-Za-z0-9])','g');
+    for(const k of ['title','model','normalized_query','visual_fingerprint'])if(typeof next[k]==='string')next[k]=next[k].replace(pattern,()=>c.read_text);
+    for(const k of ['distinctive_terms','identifier_hints'])next[k]=(next[k]||[]).map(v=>v===c.previous?c.read_text:v);
+    next.layout_signature=(next.layout_signature||[]).map(v=>v.term===c.previous?{...v,term:c.read_text}:v);
+  }
+  if(detail.identifier_observations?.length)next.identifier_observations=[...(first.identifier_observations||[]).filter(o=>!detail.identifier_observations.some(n=>n.role===o.role&&n.image_index===o.image_index)),...detail.identifier_observations];
+  if(detail.pokemon_printing?.is_pokemon)next.pokemon_printing=detail.pokemon_printing;
+  return saneReading264(next);
+}
 openai=async function(body){
   if(body.text?.format?.name!=='flipcheck_identification')return originalOpenai26(body); // Market flow stays v26.
-  const request={...body,max_output_tokens:3000,...schemaFormat('flipcheck_identification',schema264()),
-    input:body.input.map(m=>({...m,content:m.content.map(c=>c.type==='input_text'?{...c,text:c.text+'\n\n'+FlipCheckEditions.prompt+'\n\n'+detailPrompt264}:c)}))};
+  let imageIndex=0;
+  const request={...body,reasoning:{effort:'low'},max_output_tokens:2600,...schemaFormat('flipcheck_identification',schema264()),
+    input:body.input.map(m=>({...m,content:m.content.flatMap(c=>c.type==='input_text'?[{...c,text:c.text+'\n\n'+FlipCheckEditions.prompt+'\n\n'+detailPrompt264+
+      '\nFoto totali: '+validImageCount()+'. Usa esclusivamente gli indici dichiarati prima delle immagini. Non chiedere retro/angoli per identificare una carta già completa: condizione, autenticità e voto slab sono dettagli separati.'}]:
+      c.type==='input_image'?[{type:'input_text',text:'FOTO ORIGINALE '+(++imageIndex)+' DI '+validImageCount()},c]:[c])}))};
   detailDiagnostics264.photos=files.filter(Boolean).map((f,i)=>({image_index:i+1,...photoPrepared264.get(f)}));
   const first=await request264(request,'Vision foto intere',true);firstVision264=saneReading264(first.parsed);
   let reading=firstVision264;
   try{
-    const crops=await detailCrops264(firstVision264.detail_regions);
+    const cropPlan=FlipCheckIdentity265.cropPlan(firstVision264,validImageCount());detailDiagnostics264.cropDecision=cropPlan.reason;
+    const crops=await detailCrops264(cropPlan.regions);
     if(crops.length){
       status('<span class="loader"></span>Rilettura di numeri ed etichette dall’originale…');
-      const content=[{type:'input_text',text:detailPrompt264+'\n'+FlipCheckEditions.prompt+
-        '\nRILETTURA: seguono prima le foto intere nello stesso ordine e poi i ritagli. Gli indici delle osservazioni e pokemon_printing si riferiscono SEMPRE alle foto ORIGINALI, come indicato prima di ciascun ritaglio. Rileggi letteralmente i dettagli; correggi anche titolo, modello, set e identifier_hints se la prima lettura era errata. Non completare caratteri sfocati. Se non leggibili, legibility=uncertain. Mantieni gli altri dati visibili e restituisci detail_regions=[]. Prima lettura da verificare, non prova: '+JSON.stringify(firstVision264)}];
-      images.filter(Boolean).forEach((url,i)=>content.push({type:'input_text',text:'Foto originale '+(i+1)},{type:'input_image',image_url:url,detail:'original'}));
+      const content=[{type:'input_text',text:'Rileggi SOLO i testi indicati nei ritagli. Non ripetere l’identificazione completa. Le panoramiche danno contesto; i ritagli provengono dagli originali. Usa gli indici ORIGINALI dichiarati, non la posizione del ritaglio nella richiesta. Non completare dati da memoria; se ancora illeggibili usa uncertain. text_corrections contiene solo sostituzioni di testi già letti, mai aggiunte inventate. pokemon_printing=null salvo rilettura del timbro/slab. Testi precedenti: '+JSON.stringify({terms:FlipCheckWeb264.literals(firstVision264),identifiers:firstVision264.identifier_observations})}];
+      const seen=new Set();crops.forEach(c=>{if(!seen.has(c.image_index)){seen.add(c.image_index);content.push({type:'input_text',text:'Panoramica FOTO ORIGINALE '+c.image_index},{type:'input_image',image_url:c.overview,detail:'original'});}});
       crops.forEach(c=>content.push({type:'input_text',text:'Ritaglio '+c.purpose+' dalla foto ORIGINALE '+c.image_index},{type:'input_image',image_url:c.data,detail:'original'}));
-      const second=await request264({...request,input:[{role:'user',content}]},'Vision dettagli originali',true);
-      reading=saneReading264(second.parsed);
+      const second=await request264({...request,max_output_tokens:1400,...schemaFormat('flipcheck_detail_reading',detailSchema265()),input:[{role:'user',content}]},'Vision dettagli originali',true);
+      reading=mergeDetail265(firstVision264,second.parsed);
     }
   }catch(error){detailDiagnostics264.readingFailure=error.name==='AbortError'?'timeout':'detail_reading_failed';lastRequestError264=error.httpStatus || null;}
-  lastVisionReading=JSON.parse(JSON.stringify(reading));
+  lastVisionReading=JSON.parse(JSON.stringify(reading));reading=FlipCheckIdentity265.close(reading,validImageCount());
   // Preserve the first response's usage marker: each real request was recorded exactly once above.
   return {...first.response,output:[{type:'message',content:[{type:'output_text',text:JSON.stringify(reading)}]}]};
 };
-shouldResolveOnline=function(x){return !!x && x.status!=='failed' && !!(x.brand || x.family || FlipCheckWeb264.literals(x).length);};
+shouldResolveOnline=function(x){return !!x&&!x.core_identity_confirmed&&!(x.identity_route?.coreReady&&x.identity_route.reason==='printing_uncertain')&&x.status!=='failed'&&!!(x.brand||x.family||FlipCheckWeb264.literals(x).length);};
 function returnedSources264(response){
   const raw=collectRawWebResults(response),out=[];
   for(const item of response.output || [])if(item.type==='web_search_call')for(const s of [...(item.action?.sources || []),...(item.sources || [])])
@@ -71,6 +96,7 @@ function returnedSources264(response){
   return out;
 }
 resolveIdentificationCheap=async function(base,userDetails){
+  if(base.core_identity_confirmed)return base;
   let previous=null,result=base,combined=[],lastQuery='';
   if([401,403,429].includes(lastRequestError264))return {...base,market_ready:false,model_verified:false,normalized_query:'',verification_summary:'Rilettura interrotta: verifica disponibilità API.'};
   for(let pass=1;pass<=2;pass++){
@@ -94,17 +120,23 @@ Restituisci JSON; relation=exact_product soltanto se la fonte riguarda esattamen
       const sources=returnedSources264(response);combined=[...combined,...sources].filter((s,i,a)=>a.findIndex(x=>x.url===s.url)===i);
       previous=parsed;result=FlipCheckWeb264.result(base,parsed,sources,pass);entry.outcome=result.market_ready?'matched':'unresolved';
       entry.candidateChecks=result.web_checks;
-      if(result.market_ready)break;
+      if(result.market_ready){entry.stopReason='identity_resolved';break;}
+      if(!FlipCheckIdentity265.retry(base,parsed,result)){entry.stopReason='no_candidate_to_verify';break;}
     }catch(error){
       entry.outcome='request_failed';entry.httpStatus=error.httpStatus || null;
       result={...base,status:'uncertain',market_ready:false,model_verified:false,normalized_query:'',web_passes:pass,verification_summary:'Verifica web non completata; lettura fotografica conservata.'};
-      if([401,403,429].includes(error.httpStatus))break;
+      entry.stopReason='request_failed_no_automatic_retry';break;
     }
   }
   result.all_identification_sources=combined.map(s=>({title:s.title,url:s.url}));return result;
 };
 renderIdent=function(identity){
   originalRender264(identity);
+  if(identity?.core_identity_confirmed){
+    const panel=document.createElement('div');panel.className='status';panel.id='photoIdentity265';
+    panel.innerHTML='<b>Identità riconosciuta dalla foto</b>'+(identity.variant_status==='to_verify'?'<br>Nome della variante da verificare: '+esc(identity.proposed_variant || ''):'');
+    $('identNote').prepend(panel);
+  }
   if(identity?.web_passes){
     const panel=document.createElement('div');panel.className='status';panel.id='webVerification264';
     panel.innerHTML='<b>Verifica identificativa</b><br>'+esc(identity.verification_summary || '')+'<br>'+identity.web_passes+' ricerca/e web';
@@ -114,13 +146,18 @@ renderIdent=function(identity){
     $('identNote').append(panel);
   }
 };
-diagnostic26=function(){return {...originalDiagnostic264(),schema:'flipcheck-v0264-detail-web-1',
-  firstVision:firstVision264,visionResult:lastVisionReading,imagePreparation:detailDiagnostics264,webAttempts:webAttempts264};};
+diagnostic26=function(){return {...originalDiagnostic264(),schema:'flipcheck-v0265-fast-identity-1',
+  firstVision:firstVision264,visionResult:lastVisionReading,imagePreparation:detailDiagnostics264,webAttempts:webAttempts264,
+  identificationTiming:{elapsedMs:attemptElapsed265||(attemptStarted265?Date.now()-attemptStarted265:0),
+    failedRequestMs:diagnosticPhases.filter(p=>p.responseStatus==='request_error').reduce((n,p)=>n+(p.elapsedMs||0),0),
+    failedRequests:diagnosticPhases.filter(p=>p.responseStatus==='request_error').length,
+    usageNote:'Usage includes returned API usage only; failed-request billing is unknown.'}};};
 $('identifyBtn').onclick=async()=>{
   if(photoBusy || apiBusy)return;
   detailDiagnostics264={photos:[],crops:[],skipped:[],readingFailure:null};firstVision264=null;webAttempts264=[];lastRequestError264=null;ident=null;currentScan=null;
-  await originalIdentify264();
-  if(ident)status(ident.market_ready?'Identità verificata: conferma per cercare il mercato.':'Lettura completata; verifica i dati ancora incerti.',ident.market_ready?'ok':'warn');
+  attemptStarted265=Date.now();attemptElapsed265=0;
+  try{await originalIdentify264();}finally{attemptElapsed265=Date.now()-attemptStarted265;}
+  if(ident)status(ident.market_ready?'Identità riconosciuta: conferma per cercare il mercato.':'Lettura completata; verifica i dati ancora incerti.',ident.market_ready?'ok':'warn');
 };
 const invalidate264=invalidatePhotoReading;
-invalidatePhotoReading=function(){invalidate264();firstVision264=null;webAttempts264=[];detailDiagnostics264={photos:[],crops:[],skipped:[],readingFailure:null};};
+invalidatePhotoReading=function(){invalidate264();firstVision264=null;webAttempts264=[];attemptStarted265=0;attemptElapsed265=0;detailDiagnostics264={photos:[],crops:[],skipped:[],readingFailure:null};};

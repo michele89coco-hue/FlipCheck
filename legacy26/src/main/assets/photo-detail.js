@@ -9,10 +9,10 @@ const photoSchema264 = {
     required:['image_index','purpose','x','y','width','height']}
 };
 const observationSchema264 = {type:'array',maxItems:8,items:{type:'object',additionalProperties:false,
-  properties:{text:{type:'string'},role:{type:'string',enum:['collector_number','serial_number','model','part_number','barcode','slab_cert']},
+  properties:{text:{type:'string'},role:{type:'string',enum:['collector_number','serial_number','model','part_number','barcode','slab_cert','season','printed_code']},
     image_index:{type:'integer',minimum:1,maximum:3},legibility:{type:'string',enum:['clear','uncertain']}},required:['text','role','image_index','legibility']}};
 const detailPrompt264 = `LETTURA AD ALTA RISOLUZIONE:
-Trascrivi i testi fisici, senza completare da memoria numeri, copyright o modello. Distingui numero catalografico della carta, seriale della singola copia (/5, /99...), certificato della slab, codice modello, ricambio e barcode. Riporta gli identificatori in identifier_observations con ruolo, foto originale e leggibilita'; un numero ipotizzato NON e' clear.
+Se hai già nome/numero/codice e prove nitide non proporre crop ridondanti. Anno/stagione è season, un codice accessorio e-reader è printed_code: nessuno dei due è un modello commerciale. Trascrivi i testi fisici, senza completare da memoria numeri, copyright o modello. Distingui numero catalografico della carta, seriale della singola copia (/5, /99...), certificato della slab, codice modello, ricambio e barcode. Riporta gli identificatori in identifier_observations con ruolo, foto originale e leggibilita'; un numero ipotizzato NON e' clear.
 detail_regions: individua fino a 3 riquadri PRECISI di testo piccolo utile da rileggere sull'originale. Priorita': numero carta/seriale, etichetta slab o modello/SKU, timbro edizione o riga stampata decisiva. Coordinate normalizzate 0..1 rispetto all'INTERA foto orientata mostrata, origine in alto a sinistra. Inquadra l'intera riga/etichetta con margine, non la carta intera, non un ritaglio fisso. Usa [] se i testi decisivi sono gia' grandi e inequivocabili o non individui la zona. Non individuare testi dell'interfaccia telefono, annunci o watermark. Non inventare una posizione per un testo non visibile.
 Per box sigillati leggi anno, linea, diciture, configurazione pacchetti/carte/autografi. Hobby, Blaster, Mega e Retail non sono equivalenti: non confermare un formato dedotto dalla forma. Per tutti gli oggetti usa tutte le foto fornite.`;
 async function decodeOriginal264(file) {
@@ -59,7 +59,7 @@ async function detailCrops264(regions) {
       if(rect.width<24 || rect.height<12){detailDiagnostics264.skipped.push({image_index:r.image_index,reason:'too_small'});continue;}
       const crop=drawPhoto264(source,rect,1600,'image/png');
       const meta={image_index:r.image_index,purpose:r.purpose,originalRect:rect,sentWidth:crop.width,sentHeight:crop.height,mime:crop.mime,encodedBytes:crop.encodedBytes};
-      detailDiagnostics264.crops.push(meta);out.push({...meta,data:crop.data});
+      detailDiagnostics264.crops.push(meta);out.push({...meta,data:crop.data,overview:drawPhoto264(source,{x:0,y:0,...size},1024,'image/jpeg',.9).data});
     } finally {if(source.close)source.close();}
   }
   return out;
