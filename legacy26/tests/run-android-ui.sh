@@ -7,4 +7,4 @@ adb install -t -r artifact/FlipCheck-v0.26.2-GoogleFix-170.apk
 adb install -t -r legacy26/build/outputs/apk/androidTest/debug/legacy26-debug-androidTest.apk
 adb shell am instrument -w -r -e class com.flipcheck.legacy26.AndroidUiRegressionTest,com.flipcheck.legacy26.GoogleDirectRegressionTest com.flipcheck.beta.legacy26fix.test/androidx.test.runner.AndroidJUnitRunner | tee artifact/android-ui-test.txt
 adb pull /sdcard/Android/data/com.flipcheck.beta.legacy26fix/files/ui159 artifact/android-ui
-grep -q 'OK (6 tests)' artifact/android-ui-test.txt
+grep -q 'OK (7 tests)' artifact/android-ui-test.txt
