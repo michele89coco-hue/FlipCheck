@@ -280,6 +280,9 @@ async function recoverText170(base,ctx,evidence){
 async function finishIdentity171(value,ctx){
  value=enforceIdentificationPolicy(value);
  if(value?.catalogue_verified&&value.printing_check?.complete===false)value=await resolvePrinting168(value,ctx);
+ // Printing temporarily clears readiness/query. Restore the already validated catalogue identity
+ // only after its remaining physical checks succeed; a failed or contradictory check stays open.
+ if(value?.catalogue_verified&&value.printing_check?.complete===true)value={...value,market_ready:true,assistance_state:'confirmed',normalized_query:value.normalized_query||[value.model,value.source_confirmed_year,value.variant,value.pokemon_printing?.language].filter(Boolean).join(' ')};
  return syncIdentity169(value);
 }
 resolveIdentificationCheap=async function(base,user){
