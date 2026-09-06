@@ -203,7 +203,7 @@ function deferGoogleComparison173(base,refs){
  if(base.kind==='card'&&V164.identifiers(base).length&&V164.variantPending(base))return true;
  if(refs.every(r=>!V164.trustedReferenceText(r)&&!r.ocr?.text))return true;
  const quantities=V164.evidence(base).filter(V164.configuration);
- return quantities.length>0&&!refs.some(r=>V164.trustedReferenceText(r)&&quantities.every(o=>V164.quantityMatches(o.text,r.text)));
+ return quantities.length>0&&!refs.some(r=>V164.trustedReferenceText(r)&&quantities.every(o=>V164.compactReference(r,base).text.split(/\n+|(?<=[.!?])\s+/).some(t=>V164.quantityMatches(o.text,t))));
 }
 async function rereadPhotoDetails173(base,ctx){
  if(ctx.detailReread||V164.ready(base)||ctx.budget.visionCalls>=3)return base;
