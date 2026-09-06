@@ -77,6 +77,7 @@
     const ids = list(vision?.identifier_hints).filter(s => /[a-z]/i.test(s) && /\d/.test(s));
     if (!ids.length) return x;
     const requested = String(x.next_photo_request);
+    if (/\b(?:fronte|front|barcode|codice a barre|EAN|UPC|QR)\b/i.test(requested)) return x;
     const rear = /(?:retro|back|rear)/i;
     const battery = /(?:vano batterie|battery compartment)/i;
     const legible = /(?:visibil|leggibil|legible|readable)/i;

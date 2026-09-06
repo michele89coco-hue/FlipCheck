@@ -61,4 +61,7 @@ test('genuinely unreadable codes and unphotographed backs retain a targeted requ
   const unclear={...x,missing_information:['Codice YKF423-001 illeggibile nella parte finale.']};
   assert.strictEqual(fixes.removeRedundantPhoto(unclear,x),unclear);
   assert.strictEqual(fixes.removeRedundantPhoto(fixtures.box,fixtures.box),fixtures.box);
+  for(const request of ['Foto fronte e retro del telecomando.','Foto del barcode sul retro.']) {
+    const partial={...x,next_photo_request:request};assert.strictEqual(fixes.removeRedundantPhoto(partial,x),partial);
+  }
 });

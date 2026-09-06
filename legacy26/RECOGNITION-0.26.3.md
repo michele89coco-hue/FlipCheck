@@ -23,6 +23,9 @@ and compact-output instructions. This is a ceiling, not a fixed token charge.
 There is still at most one automatic web search per identification. The schema
 now permits the identifier-grounded specificity values already used by the v26
 resolver prompt and scoring code. No automatic retry or new paid request.
+Actual excerpts inside `action.sources`/`sources` are now accepted alongside the
+existing `results` forms. URL/title-only metadata is excluded from that evidence
+path. Diagnostics record both extracted-result and source counts.
 
 Diagnostics now record attempted requests, completion status, incomplete reason,
 parse failure, token limit and elapsed time, including network/HTTP failures.

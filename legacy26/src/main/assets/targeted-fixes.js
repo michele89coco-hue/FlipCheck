@@ -8,6 +8,7 @@ const originalShouldResolve26 = shouldResolveOnline;
 const originalSignature26 = buildFingerprintSignature;
 const originalResolver26 = resolveIdentificationCheap;
 const originalCandidateScore26 = candidateFingerprintScore;
+const originalRawResults26 = collectRawWebResults;
 const originalPolicy26 = enforceIdentificationPolicy;
 const originalRender26 = renderIdent;
 const originalIdentify26 = $('identifyBtn').onclick;
@@ -77,6 +78,15 @@ $('photoBatch').onchange = event => loadSelectedPhotos(event.target.files);
 $('addPhotos').onclick = openBatchPicker;
 $('addConfirmPhoto').onclick = () => { openBatchPicker(); window.scrollTo({top:0,behavior:'smooth'}); };
 
+collectRawWebResults = function(response) {
+  // Some envelopes put actual excerpts alongside action.sources. URL/title-only
+  // source metadata is deliberately excluded from this evidence path.
+  const output=(response.output || []).map(item=>item.type!=='web_search_call'?item:{...item,
+    results:[...(Array.isArray(item.results)?item.results:item.results?[item.results]:[]),
+      ...[...(item.action?.sources || []),...(item.sources || [])].filter(s=>
+        [s.snippet,s.text,s.description,s.summary].some(t=>typeof t==='string' && t.trim()))]});
+  return originalRawResults26({...response,output});
+};
 openai = async function(body) {
   const identification = body.text?.format?.name === 'flipcheck_identification';
   const resolver = body.text?.format?.name === 'flipcheck_resolver';
@@ -114,6 +124,8 @@ openai = async function(body) {
   diagnosticPhases.push({stage,attempted:true,result:parsed,responseStatus:response.status || 'unknown',
     incompleteReason:response.incomplete_details?.reason || null,parseError,
     maxOutputTokens:body.max_output_tokens,outputCharacters:outText(response).length,elapsedMs:Date.now()-started,
+    rawWebResultsCount:resolver?collectRawWebResults(response).length:0,
+    sourceCount:resolver?collectSources(response).length:0,
     webCalls:countWeb(response),usage:response.usage || null});
   diagnosticPhases = diagnosticPhases.slice(-6);
   return response;

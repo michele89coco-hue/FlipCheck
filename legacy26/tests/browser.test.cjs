@@ -216,3 +216,9 @@ test('a complete box resolver response uses source-backed configuration without 
   assert.equal(d.identification.market_ready,true);assert.match(d.identification.model,/Hobby Box/);
   assert.equal(d.identification.next_photo_request,null);
 });
+test('source metadata without excerpts cannot become grounded web evidence',async()=>{
+  await reset();
+  const results=await page.evaluate(()=>collectRawWebResults({output:[{type:'web_search_call',action:{sources:[
+    {url:'https://www.philips.com/example',title:'Philips YKF423-001 remote manual'}]}}]}));
+  assert.equal(results.length,0);
+});
