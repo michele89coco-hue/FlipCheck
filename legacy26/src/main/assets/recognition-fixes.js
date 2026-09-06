@@ -27,6 +27,11 @@
     const literal = [...list(observed.distinctive_terms),...list(observed.layout_signature).map(t => t.term),observed.visual_fingerprint].join(' ');
     const hp = unique([...literal.matchAll(/\b(\d{2,3})\s*(?:HP|PV|PS)\b/gi)].map(m => Number(m[1])));
     const candidatesInSet = set.cards.filter(c => norm(c[1]) === norm(subject));
+    // Italian qualifiers/owners can be translated (e.g. Oscuro, di Erika).
+    // A suffix-only Pokémon name must not turn an untranslated qualified name
+    // into a false catalogue contradiction. Leave this unsupported match alone.
+    if (['italian','italiano','it'].includes(language) && !candidatesInSet.length
+      && set.cards.some(c=>norm(c[1])!==norm(subject) && hasName(c[1],subject))) return null;
     const row = mark ? set.cards.find(c => c[0].toUpperCase() === mark.number) : null;
     const conflicts = [];
     if (['base4','base6','ecard1','ecard2','ecard3'].includes(set.id) && x.pokemon_printing.first_edition_stamp==='present')

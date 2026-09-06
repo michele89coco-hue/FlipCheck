@@ -44,6 +44,9 @@ test('unknown sets, unsupported translations and non-Pokémon retain their previ
     {pokemon_printing:null},{kind:'object'}]) {
     const x={...copy(fixtures.vileplume),...change};assert.strictEqual(fixes.guard(x),x);
   }
+  const translated={...copy(fixtures.vileplume),model:'Charizard Oscuro 4/82',title:'Charizard Oscuro',family:'Team Rocket',
+    pokemon_printing:{...fixtures.vileplume.pokemon_printing,language:'Italiano',set_name:'Team Rocket'}};
+  assert.strictEqual(fixes.guard(translated),translated);
 });
 test('a claimed visible first edition on a Western e-card set remains a conflict',()=>{
   const x={...copy(fixtures.politoed),model:'Politoed H23/H32',family:'Skyridge',
