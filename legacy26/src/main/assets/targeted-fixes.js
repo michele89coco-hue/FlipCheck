@@ -122,7 +122,7 @@ $('identifyBtn').onclick = () => {
 $('marketBtn').onclick = () => runLocked26(originalMarket26);
 
 function diagnostic26() {
-  let build = {versionCode:162,versionName:'0.26.5-fast-identity',sourceCommit:'browser-test'};
+  let build = {versionCode:163,versionName:'0.26.6-photo-fact-search',sourceCommit:'browser-test'};
   try { if (window.FlipCheckHost) build = JSON.parse(FlipCheckHost.buildInfo()); } catch (_) { }
   return {schema:'flipcheck-v026-targeted-diagnostic-1',...build,baseline:'0.26',
     exportedAt:new Date().toISOString(),uploadedImageCount:validImageCount(),photoEvents,

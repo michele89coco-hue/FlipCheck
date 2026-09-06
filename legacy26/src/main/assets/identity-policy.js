@@ -71,7 +71,7 @@
   }
   function retry(base,reply,result){
     if(result.core_identity_confirmed||result.market_ready)return false;
-    return list(result.web_checks).some(c=>c.model&&list(c.evidence_sources).length>0&&(c.relation!=='family'||c.collector_number||c.product_code));
+    return list(result.web_checks).some(c=>c.model&&list(c.evidence_sources).length>0&&(c.relation!=='family'||c.collector_number||c.product_code||c.specification_check?.matched.length));
   }
   const api={observations,reference,decision,close,cropPlan,retry,conditionOnly,variantUnknown};
   if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckIdentity265=api;

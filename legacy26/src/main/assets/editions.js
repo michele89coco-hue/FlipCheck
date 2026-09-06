@@ -68,6 +68,10 @@ First Edition e Shadowless sono due attributi separati: il timbro non dimostra d
   }
   function apply(identity, printing, count) {
     if (!identity || identity.kind !== 'card') return identity;
+    // The set is catalogue context; stamp, shadow, language and copyright remain photo evidence.
+    if(printing && identity.model_verified && identity.catalog_context?.source==='validated_web'
+      && identity.catalog_context.photo_family_inferred && identity.catalog_context.family===identity.family)
+      printing={...printing,set_name:identity.family};
     const result = evaluate(printing,count);
     if (!result) return identity;
     const out = Object.assign({},identity);

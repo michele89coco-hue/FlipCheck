@@ -6,6 +6,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const {chromium} = require('playwright');
 const regressions=require('./fixtures/build161-regressions.json');
+const regressions162=require('./fixtures/build162-regressions.json');
 let server,browser,page,origin,photos,requests=[],response,errors=[],apiHandler=null;
 const root=path.join(__dirname,'../src/main/assets');
 const kobe={status:'identified',kind:'card',title:'SkyBox 1997-98 Metal Universe Kobe Bryant #81 Base',category:'sports card',brand:'SkyBox',family:'Metal Universe',model:'1997-98 Metal Universe Kobe Bryant #81',variant:'Base',condition:'raw',category_confidence:99,brand_confidence:98,family_confidence:98,model_confidence:94,model_verified:false,market_ready:true,candidate_models:[],visual_fingerprint:'Kobe Bryant with metal background',distinctive_terms:['Kobe Bryant','Metal Universe','81'],search_terms:['Metal Universe'],identifier_hints:['81'],layout_signature:[],evidence:['Kobe Bryant nameplate','81 on back'],missing_information:[],next_photo_request:null,user_text_consistent:true,normalized_query:'1997-98 SkyBox Metal Universe Kobe Bryant #81 Base',verification_summary:'Synthetic browser behavior fixture',pokemon_printing:null,identifier_observations:[{text:'81',role:'collector_number',legibility:'clear',image_index:1}]};
@@ -53,7 +54,7 @@ before(async()=>{
 after(async()=>{if(browser)await browser.close();if(server)await new Promise(resolve=>server.close(resolve));});
 test('empty plus and add button open multi-select; filled slot opens replacement',async()=>{
   await reset();
-  assert.equal(await page.locator('.beta').textContent(),'v0.26.5 · FIX');
+  assert.equal(await page.locator('.beta').textContent(),'v0.26.6 · FIX');
   assert.match(await page.locator('#scanPage').textContent(),/2560 px/);
   let chooserPromise=page.waitForEvent('filechooser');await page.locator('#s0').click();let chooser=await chooserPromise;
   assert.equal(chooser.isMultiple(),true);await chooser.setFiles(photos.slice(0,2));await page.waitForFunction(()=>!photoBusy);
@@ -220,4 +221,46 @@ test('targeted detail merge changes literal numbers only and preserves prior ima
   {text_corrections:[{previous:'H22/H32',read_text:'H23/H32'},{previous:'Card',read_text:'Invented'}],identifier_observations:[{text:'H23/H32',role:'collector_number',legibility:'clear',image_index:2}],pokemon_printing:null}));
  assert.equal(merged.model,'Card H23/H32');assert.equal(merged.identifier_observations[0].image_index,2);
  assert.deepEqual(errors,[]);
+});
+test('new diagnostic replays resolve Vileplume and Politoed with one web and preserve physical printing/language',async()=>{
+ for(const name of ['vile','poli']){
+  await reset();await upload([photos[0]]);const f=regressions162[name];response=structuredClone(f.firstVision);
+  apiHandler=request=>request.tools?envelope(f.phases.find(p=>p.stage==='Web identificazione 1').result,true,f.sources):defaultEnvelope(request);
+  await page.locator('#identifyBtn').click();await page.waitForFunction(()=>!apiBusy);
+  const d=await page.evaluate(()=>diagnostic26());assert.equal(requests.length,2,name);assert.equal(d.usage.vision,1,name);assert.equal(d.usage.web,1,name);
+  assert.equal(d.identification.market_ready,true,name);assert.equal(d.identification.printing_check.complete,true,name);
+  assert.equal(await page.locator('#marketBtn').isDisabled(),false);
+  if(name==='vile'){assert.equal(d.identification.family,'Jungle');assert.equal(d.identification.printing_check.shadow,'not_applicable');assert.match(await page.locator('#confirmed').inputValue(),/1st Edition/);}
+  else{assert.equal(d.identification.family,'Skyridge');assert.match(await page.locator('#confirmed').inputValue(),/Italiano/);}
+ }
+});
+test('quantity contradiction triggers one original crop, then the next query follows the corrected photo facts',async()=>{
+ // The corrected reading is synthetic: this verifies orchestration, not recognition of the user's box photo.
+ await reset();await upload([photos[0]]);const f=regressions162.box;response=structuredClone(f.firstVision);let webs=0;
+ apiHandler=request=>{
+  if(request.text?.format?.name==='flipcheck_detail_reading')return envelope({identifier_observations:[],text_corrections:[{previous:'1 AUTOGRAPH CARD EVERY 3 BOXES',read_text:'1 AUTOGRAPH CARD EVERY BOX'}],pokemon_printing:null,detail_note:'Synthetic correction'});
+  if(!request.tools)return defaultEnvelope(request);
+  const r=structuredClone(f.phases.find(p=>p.stage==='Web identificazione 1').result);
+  if(++webs===2){r.candidates=r.candidates.filter(c=>/Hobby Box/.test(c.model));r.candidates[0].relation='exact_product';r.candidates[0].conflicts=[];}
+  return envelope(r,true,f.sources);
+ };
+ await page.locator('#identifyBtn').click();await page.waitForFunction(()=>!apiBusy);
+ const d=await page.evaluate(()=>diagnostic26());assert.equal(requests.length,4);assert.equal(d.usage.vision,2);assert.equal(d.usage.web,2);
+ assert.equal(requests[2].text.format.name,'flipcheck_detail_reading');assert.equal(d.webAttempts[0].photoRecovery.changed,true);
+ assert.match(d.webAttempts[1].query,/Hobby Box/);assert.match(d.webAttempts[1].query,/1 AUTOGRAPH CARD EVERY BOX/);
+ assert.doesNotMatch(d.webAttempts[1].query,/every 3|Mega Box/i);assert.equal(d.identification.market_ready,true);
+ assert.match(d.identification.model,/Hobby Box/);assert.match(d.firstVision.distinctive_terms.join(' '),/EVERY 3 BOXES/);
+ assert.doesNotMatch(d.visionResult.distinctive_terms.join(' '),/EVERY 3 BOXES/);
+ const props=requests[1].text.format.schema.properties.candidates.items.properties.conflicts.items.properties;
+ assert.ok(props.state.enum.includes('missing'));assert.ok(props.source_value);assert.deepEqual(errors,[]);
+});
+test('unchanged contradictory reading stays unresolved within two Vision/two web limits',async()=>{
+ await reset();await upload([photos[0]]);const f=regressions162.box;response=structuredClone(f.firstVision);
+ apiHandler=request=>{
+  if(request.text?.format?.name==='flipcheck_detail_reading')return envelope({identifier_observations:[],text_corrections:[],pokemon_printing:null,detail_note:'Unchanged'});
+  return request.tools?envelope(f.phases.find(p=>p.stage==='Web identificazione 1').result,true,f.sources):defaultEnvelope(request);
+ };
+ await page.locator('#identifyBtn').click();await page.waitForFunction(()=>!apiBusy);
+ const d=await page.evaluate(()=>diagnostic26());assert.equal(requests.length,4);assert.equal(d.usage.vision,2);assert.equal(d.usage.web,2);
+ assert.equal(d.identification.market_ready,false);assert.equal(d.webAttempts[0].photoRecovery.changed,false);assert.deepEqual(errors,[]);
 });
