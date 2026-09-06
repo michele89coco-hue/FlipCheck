@@ -12,7 +12,7 @@ test('missing image or fabricated quotation is insufficient',()=>{assert.equal(V
 test('duplicates are merged while distinct units survive',()=>{const out=V.mergeCandidates([candidate,structuredClone(candidate),{...candidate,unit:'single'}]);assert.equal(out.length,2);assert.equal(out[0].matches.length,2);});
 test('clear identifiers must be compared; serial and edition are never transferred',()=>{const x={...base,photo_clues:[...base.photo_clues,{text:'2/5',role:'serial',certainty:'clear'},{text:'PX-7',role:'model',certainty:'clear'}],variant:'1st edition 2/5'};assert.equal(V.validate(x,{candidates:[candidate]},[reference]).market_ready,false);const c={...candidate,matches:[...candidate.matches,{reference_id:'ref1',feature:'code',photo_detail:'PX-7',reference_detail:'PX-7',agrees:true}]};assert.equal(V.validate(x,{candidates:[c]},[reference]).variant,'1st edition 2/5');});
 test('already confirmed baseline is immutable',()=>{const x={...base,market_ready:true,model_confidence:94,normalized_query:'known'};assert.equal(V.validate(x,{candidates:[]},[]),x);});
-test('global budget includes failed attempts, stops duplicate count and expires',()=>{let now=0;const b=new V.Budget({now:()=>now});const e=b.reserve('text',.012);b.settle(e,.0105);b.reserve('visual',.0035);assert.throws(()=>b.reserve('visual',.001),/call_limit/);assert.throws(()=>b.reserve('market',.02),/budget_exhausted/);const second=b.reserve('text',.011);b.settle(second,null);assert.equal(b.spent(),.025);now=90001;assert.throws(()=>b.reserve('vision',0),/timeout/);});
+test('global budget includes failed attempts, stops duplicate count and expires',()=>{let now=0;const b=new V.Budget({now:()=>now,deadlineMs:90000});const e=b.reserve('text',.012);b.settle(e,.0105);b.reserve('visual',.0035);assert.throws(()=>b.reserve('visual',.001),/call_limit/);assert.throws(()=>b.reserve('market',.02),/budget_exhausted/);const second=b.reserve('text',.011);b.settle(second,null);assert.equal(b.spent(),.025);now=90001;assert.throws(()=>b.reserve('vision',0),/timeout/);});
 
 test('explicit uncertain OCR cannot re-enter the query through legacy layout',()=>{const x={photo_clues:[{text:'PX-7',role:'model',certainty:'uncertain'}],layout_signature:[{term:'PX-7',position:'label'}]};assert.equal(V.plan(x).query,'');});
 test('sixth quantity clue gets query priority for any product; guesses and uncertain OCR are absent',()=>{
@@ -116,4 +116,40 @@ test('Google first targets unknown cards or uncertain appearance while known ide
 });
 test('reference compaction preserves useful evidence and excludes obvious template images',()=>{
  const r={text:'Header. '+('Generic navigation. '.repeat(150))+'2 batteries included. Cookie settings Unrelated footer'};const out=V.compactReference(r,{photo_clues:[{text:'2 batteries included',role:'text',certainty:'clear'}]},900);assert.ok(out.text.length<=900);assert.match(out.text,/2 batteries included/);assert.doesNotMatch(out.text,/Cookie settings/);assert.equal(V.referenceImageUseful('https://site.example/static-images/hero-inner.png'),false);assert.equal(V.referenceImageUseful('https://site.example/actual-product.jpg'),true);
+});
+
+const recorded169=require('./fixtures/diagnostics-169.json');
+test('recorded Hobby comparison closes from images plus cited quantity without requiring every surface adjective',()=>{
+ const p=recorded169.box,refs=p.references.map(r=>V.compactReference(r,p.vision)),out=V.validate(p.vision,p.comparison,refs);
+ assert.equal(out.market_ready,true);assert.match(out.model,/Hobby Box/);assert.equal(out.variant,'Hobby Box');assert.equal(out.visual_candidates[1].rejection,'unit_mismatch');assert.equal(out.catalogue_verified,true);
+ assert.match(refs[0].text,/Each Box contains 1 Autograph/);assert.doesNotMatch(refs[0].text,/Blaster 40-Box/);
+});
+test('description is supplementary evidence, never a substitute for images or an invented quantity quote',()=>{
+ const p=recorded169.box;for(const change of ['quantity','invented','no_images']){
+  const r=structuredClone(p.comparison),refs=p.references.map(x=>({...x}));
+  if(change==='quantity')r.candidates[0].matches.find(m=>m.feature==='configuration').reference_detail='Each Box contains 2 Autographs';
+  if(change==='invented')r.candidates[0].matches.find(m=>m.feature==='configuration').reference_detail='Guaranteed imaginary source: 1 autograph every box';
+  if(change==='no_images')r.candidates[0].matches=r.candidates[0].matches.filter(m=>m.reference_evidence==='description');
+  assert.equal(V.validate(p.vision,r,refs).market_ready,false,change);
+ }
+ assert.equal(V.quantityMatches('2 batteries in every kit','Each kit contains 2 batteries'),true);
+ assert.equal(V.quantityMatches('2 batteries in every kit','2 batteries per pack'),false);
+ assert.equal(V.quantityMatches('2 batteries 4 chargers','4 batteries 2 chargers'),false);
+});
+test('recorded Doncic confidence cannot bypass its own explicit subtype uncertainty',()=>{
+ const x=V.auditIdentity(recorded169.doncic.vision);assert.equal(V.ready(x),false);assert.equal(x.market_ready,false);assert.equal(x.variant_needs_verification,true);assert.equal(V.googleFirst(x),true);assert.equal(x.model,recorded169.doncic.vision.model);
+});
+test('a remembered expansion requires a cited catalogue family and can be corrected without a product rule',()=>{
+ const x={...base,model:'Visible name A12',family:'Guessed Series',market_ready:true,model_confidence:98,normalized_query:'Guessed Series Visible name A12',photo_clues:[{text:'Visible name',role:'text',certainty:'clear'},{text:'A12',role:'collector_number',certainty:'clear'}]};
+ assert.equal(V.ready(x),false);assert.equal(V.auditIdentity(x).catalogue_needs_verification,true);
+ const r={...reference,text:'Real Series Visible name A12 catalogue entry.'};const c={...candidate,model:'Real Series Visible name A12',family:'Real Series',matches:[...candidate.matches,{reference_id:'ref1',feature:'code',photo_detail:'A12',reference_detail:'A12',agrees:true,reference_evidence:'image'}],fields:[{field:'model',value:'Real Series Visible name A12',reference_id:'ref1',quote:r.text}]};
+ const out=V.validate(V.auditIdentity(x),{candidates:[c]},[r]);assert.equal(out.market_ready,true);assert.equal(out.family,'Real Series');assert.equal(V.ready(out),true);
+ const ungrounded={...c,family:'Unsupported Series'};assert.equal(V.validate(V.auditIdentity(x),{candidates:[ungrounded]},[r]).market_ready,false);
+ const printed={...x,photo_clues:[...x.photo_clues,{text:'Guessed Series',role:'text',certainty:'clear'}]};assert.equal(V.ready(printed),true);
+});
+test('recorded remote query keeps category and printed controls before incidental texture',()=>{
+ const q=V.plan(recorded169.remote.vision).query;assert.match(q,/^TV remote control/);assert.match(q,/TV GUIDE/);assert.match(q,/TOP PICKS/);assert.doesNotMatch(q,/Brushed|Philips|scuff/);
+});
+test('0.03 EUR ceiling preserves configured exchange factor and enforces the aggregate budget',()=>{
+ const b=new V.Budget(),r=b.reserve('vision',.01);b.settle(r,.01);b.reserve('text',.015);b.reserve('visual',.0035);assert.throws(()=>b.reserve('vision',.002),/budget_exhausted/);assert.equal(b.maxUsd,.03);assert.equal(new V.Budget({maxEur:1,usdPerEur:1.1}).maxUsd,.033);
 });

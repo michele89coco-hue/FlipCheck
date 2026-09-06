@@ -48,6 +48,13 @@ public final class GoogleDirectRegressionTest {
         assertFalse(page.getString("text").contains("Untrusted instructions"));
         assertFalse(page.getString("text").contains("Other products"));
     }
+    @Test public void productFactsSurviveNavigationAndRelatedProducts() throws Exception {
+        String html="<html><head><title>Acme Delta kit</title><script type='application/ld+json'>{\"@type\":\"Product\",\"name\":\"Acme Delta kit\",\"description\":\"2 batteries per kit\",\"sku\":\"DELTA-2\"}</script></head><body><div role='navigation'>Unrelated catalogue list</div><main><h1>Acme Delta kit</h1><p>2 batteries per kit</p><div class='related-products'><p>Different kit 4 batteries</p><img src='/unrelated.jpg'></div><img src='/kit.jpg'></main></body></html>";
+        JSONObject page=GoogleVisionBridge.pageData(html,"https://catalog.example/kit");
+        assertTrue(page.getString("text").contains("DELTA-2"));assertTrue(page.getString("text").contains("2 batteries per kit"));
+        assertFalse(page.getString("text").contains("Unrelated catalogue list"));assertFalse(page.getString("text").contains("Different kit"));
+        assertEquals("https://catalog.example/kit.jpg",page.getJSONArray("images").getString(0));assertEquals(1,page.getJSONArray("images").length());
+    }
     @Test public void pdfReferencesRenderOnlyThreePagesAndCleanTemporaryFiles() throws Exception {
         java.io.File cache=androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().getTargetContext().getCacheDir();
         java.io.ByteArrayOutputStream bytes=new java.io.ByteArrayOutputStream();

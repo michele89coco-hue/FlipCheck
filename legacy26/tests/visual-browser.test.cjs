@@ -1,12 +1,12 @@
 /* Browser production wiring. All API payloads are fabricated; no live recognition. */
 const {test,before,after}=require('node:test'),assert=require('node:assert/strict'),http=require('node:http'),fs=require('node:fs'),path=require('node:path');
 const {chromium}=require('playwright');
-let server,browser,page,origin,photos,requests=[],googleRequests=[],vision,comparison,comparisonQueue=[],catalogText='',printingReply,providerMode='ok',resolverMode='',waitApi=null,errors=[];
+let server,browser,page,origin,photos,requests=[],googleRequests=[],vision,initialMode='',comparison,comparisonQueue=[],catalogText='',printingReply,providerMode='ok',resolverMode='',waitApi=null,errors=[];
 const root=path.join(__dirname,'../src/main/assets');
 const unknown={status:'uncertain',kind:'object',title:'Oggetto',category:'object',brand:'',family:'',model:'',variant:'',condition:'raw',category_confidence:70,brand_confidence:0,family_confidence:0,model_confidence:20,model_verified:false,market_ready:false,candidate_models:[],visual_fingerprint:'geometrical outline',distinctive_terms:[],search_terms:[],identifier_hints:[],layout_signature:[],evidence:[],missing_information:['catalogue identity'],next_photo_request:null,user_text_consistent:true,normalized_query:'',verification_summary:'Mock only',pokemon_printing:null,photo_clues:[],object_unit:'object',object_region:{image_index:1,x:.1,y:.1,width:.8,height:.8,certain:true}};
 const known={...unknown,status:'identified',brand:'Example',family:'Series',model:'Known model',title:'Known model',model_confidence:94,market_ready:true,normalized_query:'Example Known model'};
 function candidate(){return {category:'object',brand:'Example',family:'Series',model:'Documented model',year:'',issue_number:'',catalog_number:'',unit:'object',variant:'',identity_level:'exact',specimen_notes:[],decision:'match',same_unit:true,physical_ambiguity:false,conflicts:[],matches:[{reference_id:'ref1',feature:'layout',photo_detail:'two round controls',reference_detail:'two round controls',reference_evidence:'image',agrees:true},{reference_id:'ref1',feature:'shape',photo_detail:'rectangular body',reference_detail:'rectangular body',reference_evidence:'image',agrees:true}],fields:[{field:'model',scope:'target',number_kind:'model_number',value:'Documented model',reference_id:'ref1',quote:'Catalogue entry: Documented model.'}]};}
-async function reset(enabled=true){requests=[];googleRequests=[];vision=structuredClone(unknown);comparison={physical_detail_needed:null,candidates:[candidate()]};providerMode='ok';resolverMode='';printingReply=null;comparisonQueue=[];catalogText='Catalogue entry: Documented model.';waitApi=null;await page.goto(origin);await page.waitForFunction(()=>typeof newContext164==='function');await page.evaluate(enabled=>{window.FlipCheckTestMode='mock';trial={free:true,attempts:2,credits:0};saveTrial();$('apiKey').value='fake-openai';$('visualEnabled').checked=enabled;$('googleApiKey').value='fake-google-key-1234567890';$('scanBudget').value='.025';$('budgetFx').value='1';},enabled);}
+async function reset(enabled=true){requests=[];googleRequests=[];initialMode='';vision=structuredClone(unknown);comparison={physical_detail_needed:null,candidates:[candidate()]};providerMode='ok';resolverMode='';printingReply=null;comparisonQueue=[];catalogText='Catalogue entry: Documented model.';waitApi=null;await page.goto(origin);await page.waitForFunction(()=>typeof newContext164==='function');await page.evaluate(enabled=>{window.FlipCheckTestMode='mock';trial={free:true,attempts:2,credits:0};saveTrial();$('apiKey').value='fake-openai';$('visualEnabled').checked=enabled;$('googleApiKey').value='fake-google-key-1234567890';$('scanBudget').value='.03';$('budgetFx').value='1';},enabled);}
 async function upload(){await page.locator('#photoBatch').setInputFiles(photos);await page.waitForFunction(()=>!photoBusy);}
 async function identify(){await page.locator('#identifyBtn').click();await page.waitForFunction(()=>!apiBusy,{},{timeout:12000});}
 before(async()=>{
@@ -16,11 +16,13 @@ before(async()=>{
  await page.route('**/*',async route=>{
   const u=route.request().url();if(u.startsWith(origin))return route.continue();
   if(u==='https://api.openai.com/v1/responses'){
-   const body=JSON.parse(route.request().postData());requests.push(body);let payload=body.text.format.name==='flipcheck_printing_detail'?{pokemon_printing:printingReply||vision.pokemon_printing}:body.text.format.name==='flipcheck_visual_comparison'?(comparisonQueue.length?comparisonQueue.shift():comparison):body.text.format.name==='flipcheck_market'?{market_status:'insufficient',exact_completed_sales_count:0,active_listings_count:0,market_low:null,market_high:null,quick_sale_price:null,historical_new_price:null,currency:'EUR',market_notes:'No verified comparable sales',source_summary:''}:vision;
+   const body=JSON.parse(route.request().postData());requests.push(body);
+   if(body.text.format.name==='flipcheck_identification'&&initialMode&&(initialMode==='always'||requests.filter(r=>r.text.format.name==='flipcheck_identification').length===1))return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({status:'incomplete',incomplete_details:{reason:'max_output_tokens'},output:[{type:'message',content:[{type:'output_text',text:'{'}]}],usage:{input_tokens:4000,output_tokens:3200}})});
+   let payload=body.text.format.name==='flipcheck_resolver_recovery'?{candidate_checks:[],verification_summary:'Insufficient evidence',missing_information:['Exact model label']}:body.text.format.name==='flipcheck_printing_detail'?{pokemon_printing:printingReply||vision.pokemon_printing}:body.text.format.name==='flipcheck_visual_comparison'?(comparisonQueue.length?comparisonQueue.shift():comparison):body.text.format.name==='flipcheck_market'?{market_status:'insufficient',exact_completed_sales_count:0,active_listings_count:0,market_low:null,market_high:null,quick_sale_price:null,historical_new_price:null,currency:'EUR',market_notes:'No verified comparable sales',source_summary:''}:vision;
    if(body.text.format.name==='flipcheck_resolver'&&resolverMode){
     if(resolverMode==='unauthorized')return route.fulfill({status:401,contentType:'application/json',body:JSON.stringify({error:{message:'API key rejected'}})});
     const source={url:'https://acme.example/manual/zx-430',title:'Acme ZX-430 water pump product manual',snippet:'Acme ZX-430 water pump. Two round controls, rectangular body. Model ZX-430.'};
-    const withSource=resolverMode==='source'||resolverMode==='complete_source';
+    const withSource=resolverMode==='source'||resolverMode==='complete_source'||resolverMode==='google_incomplete';
     const catalogue=resolverMode.startsWith('catalogue');
     const sources=catalogue?Array.from({length:resolverMode==='catalogue_cost'?3:1},(_,i)=>({url:'https://catalog.example/entry'+i+(resolverMode==='catalogue_pdf'?'.pdf':''),title:'Catalogue entry: Documented model.',snippet:'Two round controls. Rectangular body. Catalogue entry: Documented model.'})):withSource?[source]:[];
     const output=[{type:'web_search_call',status:'completed',action:{type:'search',sources},results:sources},{type:'message',content:[{type:'output_text',text:resolverMode==='malformed'?'{':JSON.stringify({candidate_checks:[],verification_summary:'Mock response',missing_information:[]})}]}];
@@ -69,7 +71,7 @@ function textObject(){vision={...structuredClone(unknown),brand:'Example',family
 test('incomplete or malformed textual JSON reaches Google once without a second text request',async()=>{
  for(const mode of ['incomplete','malformed']){await reset();textObject();resolverMode=mode;await upload();await identify();
   assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_identification','flipcheck_resolver','flipcheck_visual_comparison']);
-  const resolver=requests[1];assert.equal(resolver.max_output_tokens,1800);assert.deepEqual(Object.keys(resolver.text.format.schema.properties).sort(),['candidate_checks','missing_information','verification_summary']);
+  const resolver=requests[1];assert.equal(resolver.max_output_tokens,2600);assert.deepEqual(Object.keys(resolver.text.format.schema.properties).sort(),['candidate_checks','missing_information','verification_summary']);
   assert.equal(googleRequests.filter(r=>r.action==='detect').length,1);assert.equal(await page.evaluate(()=>ident.market_ready),true);
   const d=await page.evaluate(()=>diagnostic26());assert.equal(d.visualAssistance.recoveries.length,1);assert.equal(d.visualAssistance.recoveries[0].partialJsonDiscarded,true);
   if(mode==='incomplete'){assert.equal(d.visualAssistance.calls[1].state,'incomplete');assert.equal(d.visualAssistance.calls[1].incompleteReason,'max_output_tokens');}
@@ -97,7 +99,7 @@ test('existing catalogue images are verified before spending on Google; uncertai
  assert.deepEqual(await page.evaluate(()=>rawModelCodes('GAME-WORN model ZX-430')),['ZX-430']);
 });
 test('comparison selects only as many references as remaining budget can fund',async()=>{
- await reset();textObject();resolverMode='catalogue_cost';vision.photo_clues.push({text:'Rectangular body',role:'text',certainty:'clear',image_index:1,region:null});
+ await reset();await page.evaluate(()=>{$('scanBudget').value='.025';});textObject();resolverMode='catalogue_cost';vision.photo_clues.push({text:'Rectangular body',role:'text',certainty:'clear',image_index:1,region:null});
  await upload();await identify();const d=await page.evaluate(()=>diagnostic26());assert.equal(d.visualAssistance.comparison.availableReferences,3);assert.ok(d.visualAssistance.comparison.referenceIds.length<3);assert.ok(d.visualAssistance.comparison.referenceIds.length>=1);assert.ok(d.visualAssistance.budget.spentOrReservedUsd<=.025);assert.equal(await page.evaluate(()=>ident.market_ready),true);assert.equal(googleRequests.filter(r=>r.action==='detect').length,0);
 });
 
@@ -160,5 +162,30 @@ test('recorded uncertain shadow region also sends the full card instead of copyr
 });
 test('confirmed Hobby identity clears the old Blaster title and obsolete SKU request',async()=>{
  await reset();const recorded=require('./fixtures/diagnostics-168.json').box.identity;const out=await page.evaluate(value=>syncIdentity169(value),recorded);assert.match(out.title,/Hobby/);assert.doesNotMatch(out.title,/Blaster/);assert.deepEqual(out.missing_information,[]);assert.equal(out.market_ready,true);
+});
+
+
+test('incomplete initial Vision gets one bounded retry with a larger response and correct cost accounting',async()=>{
+ await reset();vision=known;initialMode='once';await upload();await identify();const d=await page.evaluate(()=>diagnostic26());
+ assert.equal(requests.length,2);assert.equal(requests[0].max_output_tokens,4500);assert.equal(requests[1].max_output_tokens,6000);assert.equal(requests[0].reasoning.effort,'low');assert.equal(d.usage.requests,2);assert.equal(d.identification.market_ready,true);assert.equal(d.visualAssistance.recoveries.filter(r=>r.stage==='initial_vision').length,1);assert.equal(googleRequests.length,0);
+});
+test('two incomplete Vision responses stop without loops or invented identification',async()=>{
+ await reset();initialMode='always';await upload();await identify();const d=await page.evaluate(()=>diagnostic26());assert.equal(requests.length,2);assert.equal(d.identification,null);assert.equal(d.visualAssistance.state,'response_incomplete');assert.equal(d.usage.requests,2);assert.equal(await page.evaluate(()=>apiBusy),false);
+});
+test('recorded high confidence subtype uncertainty reaches Google instead of closing early',async()=>{
+ await reset();vision=structuredClone(require('./fixtures/diagnostics-169.json').doncic.vision);vision.object_regions=[];vision.object_region=null;providerMode='no_images';resolverMode='catalogue';comparison={physical_detail_needed:null,candidates:[]};await page.evaluate(()=>{$('scanBudget').value='.03';});
+ await upload();await identify();const d=await page.evaluate(()=>diagnostic26());assert.equal(d.visualAssistance.closures[0].closure_result,false);assert.equal(googleRequests.filter(r=>r.action==='detect').length,1);assert.equal(d.identification.market_ready,false);assert.equal(d.identification.variant_needs_verification,true);assert.ok(d.visualAssistance.budget.spentOrReservedUsd<=.03);
+});
+test('recorded box closes from Google reference comparison without a subsequent text search',async()=>{
+ await reset();const fixture=require('./fixtures/diagnostics-169.json').box;vision=structuredClone(fixture.vision);comparison=structuredClone(fixture.comparison);catalogText=fixture.references[0].text;await page.evaluate(()=>{$('scanBudget').value='.03';});
+ await upload();await identify();const d=await page.evaluate(()=>diagnostic26());assert.equal(d.identification.market_ready,true);assert.equal(d.identification.variant,'Hobby Box');assert.equal(requests.filter(r=>r.tools?.length).length,0);assert.equal(googleRequests.filter(r=>r.action==='detect').length,1);
+});
+test('Google-first truncated web output can be completed from collected sources without another web search',async()=>{
+ await reset();textObject();vision.kind='card';vision.object_unit='single';resolverMode='google_incomplete';providerMode='no_images';comparison={physical_detail_needed:null,candidates:[]};await page.evaluate(()=>{$('scanBudget').value='.03';});
+ await upload();await identify();const d=await page.evaluate(()=>diagnostic26());assert.equal(requests.filter(r=>r.tools?.length).length,1);assert.equal(requests.filter(r=>r.text.format.name==='flipcheck_resolver_recovery').length,1);assert.equal(d.visualAssistance.recoveries.filter(r=>r.stage==='text_response_completion').length,1);assert.equal(d.identification.market_ready,false);
+});
+test('default budget migration raises the previous ceiling and preserves a deliberately smaller cap',async()=>{
+ await reset();await page.evaluate(()=>localStorage.setItem('flipcheck_visual_config',JSON.stringify({scanBudget:.025,budgetFx:1,enabled:true})));await page.reload();assert.equal(await page.locator('#scanBudget').inputValue(),'.03');assert.equal(await page.evaluate(()=>visualConfig164().maxEur),.03);
+ await page.evaluate(()=>localStorage.setItem('flipcheck_visual_config',JSON.stringify({scanBudget:.01,budgetFx:1,enabled:true})));await page.reload();assert.equal(await page.evaluate(()=>visualConfig164().maxEur),.01);
 });
 test('no unhandled browser errors',()=>assert.deepEqual(errors,[]));

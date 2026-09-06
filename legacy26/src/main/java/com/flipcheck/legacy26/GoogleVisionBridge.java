@@ -157,6 +157,11 @@ public final class GoogleVisionBridge {
     static JSONObject pageData(String html, String pageUrl) {
         Document doc=Jsoup.parse(html,pageUrl);
         LinkedHashSet<String> images=new LinkedHashSet<>();
+        StringBuilder productText=new StringBuilder();
+        for(Element script:doc.select("script[type=application/ld+json]")) {
+            try { productFacts(new org.json.JSONTokener(script.data()).nextValue(),productText,0); } catch(Exception ignored) {}
+        }
+        doc.select("nav,header,footer,aside,[role=navigation],[role=banner],[role=contentinfo],.related-products,.product-recommendations,.recommendations,#related-products,.mega-menu,.megamenu,.site-menu").remove();
         // Only images explicitly linked by this page. Global search images are never relabelled as its evidence.
         for(Element el:doc.select("meta[property=og:image],meta[property=og:image:secure_url],meta[name=twitter:image],link[rel=image_src],main img[src],article img[src]")) {
             String attr=el.tagName().equals("meta")?"content":el.tagName().equals("link")?"href":"src";
@@ -164,9 +169,23 @@ public final class GoogleVisionBridge {
             if(images.size()>=3)break;
         }
         doc.select("script,style,noscript,svg,nav,header,footer").remove();
-        Element main=doc.selectFirst("main");
-        String text=doc.title()+" "+(main==null?doc.body().text():main.text());
+        Element main=doc.selectFirst("main,article,[role=main],[itemtype$=/Product]");
+        Element content=main==null?doc.body():main;
+        for(Element block:content.select("p,li,h1,h2,h3,section,div,br"))block.appendText("\n");
+        String text=doc.title()+"\n"+productText+"\n"+content.wholeText();
         return json("status",200,"title",doc.title(),"text",text.substring(0,Math.min(5000,text.length())),"images",new JSONArray(images));
+    }
+    private static void productFacts(Object value,StringBuilder out,int depth) {
+        if(depth>6||out.length()>2200)return;
+        if(value instanceof JSONArray) {JSONArray array=(JSONArray)value;for(int i=0;i<array.length();i++)productFacts(array.opt(i),out,depth+1);return;}
+        if(!(value instanceof JSONObject))return;
+        JSONObject item=(JSONObject)value;
+        if(item.optString("@type").equals("Product")) {
+            for(String field:new String[]{"name","description","sku","mpn","gtin13","gtin12"}) {
+                String text=item.optString(field,"");if(!text.isEmpty())out.append(Jsoup.parse(text).text()).append('\n');
+            }
+        }
+        if(item.has("@graph"))productFacts(item.opt("@graph"),out,depth+1);
     }
     static synchronized JSONObject pdfData(byte[] data, File cache) throws Exception {
         if(data.length<5 || data.length>6000000 || !new String(data,0,5,StandardCharsets.US_ASCII).equals("%PDF-"))throw new IOException("invalid_pdf");

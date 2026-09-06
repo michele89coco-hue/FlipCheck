@@ -78,7 +78,7 @@ openai = async function(body) {
     schema.properties.pokemon_printing = FlipCheckEditions.schema;
     schema.required.push('pokemon_printing');
     body = Object.assign({},body,{text:{...body.text,format:{...body.text.format,schema}},
-      max_output_tokens:2150,input:body.input.map(message => ({...message,content:message.content.map(item =>
+      max_output_tokens:Math.max(2150,body.max_output_tokens||0),input:body.input.map(message => ({...message,content:message.content.map(item =>
         item.type === 'input_text' ? {...item,text:item.text+'\n\n'+FlipCheckEditions.prompt} : item)}))});
   }
   const response = await originalOpenai26(body);

@@ -1,0 +1,1348 @@
+{
+  "provenance": "Sanitized build 169 response excerpts; no original photos, keys or live calls.",
+  "box": {
+    "vision": {
+      "status": "uncertain",
+      "kind": "object",
+      "title": "2025/26 Topps Chrome Basketball Update Series sealed box",
+      "category": "sealed sports trading card box",
+      "brand": "Topps",
+      "family": "Topps Chrome Basketball Update Series",
+      "model": "",
+      "variant": "Box format unclear; advertised autograph inclusion",
+      "condition": "Sealed-looking packaging",
+      "category_confidence": 99,
+      "brand_confidence": 99,
+      "family_confidence": 92,
+      "model_confidence": 0,
+      "model_verified": false,
+      "market_ready": false,
+      "candidate_models": [
+        {
+          "model": "2025/26 Topps Chrome Basketball Update Series box",
+          "confidence": 78,
+          "reason": "Front packaging visibly shows the product name, season, NBA branding, and basketball players."
+        }
+      ],
+      "visual_fingerprint": "Tall blue retail box with chrome-style red, gold and white curved borders, Topps Chrome Update Series branding, 2025/26 season, Victor Wembanyama and Cooper Flagg pictured, NBA logos, and a bottom claim reading 1 AUTOGRAPH IN EVERY BOX!",
+      "distinctive_terms": [
+        "1 AUTOGRAPH IN EVERY BOX!",
+        "UPDATE SERIES",
+        "TOPPS CHROME",
+        "COOPER FLAGG",
+        "VICTOR WEMBANYAMA",
+        "2025/26",
+        "TOPPS",
+        "NBA"
+      ],
+      "search_terms": [
+        "1 AUTOGRAPH IN EVERY BOX!",
+        "UPDATE SERIES",
+        "TOPPS CHROME",
+        "COOPER FLAGG",
+        "VICTOR WEMBANYAMA",
+        "2025/26"
+      ],
+      "identifier_hints": [],
+      "layout_signature": [
+        {
+          "term": "TOPPS CHROME",
+          "position": "lower center",
+          "relation": "large product logo above UPDATE SERIES"
+        },
+        {
+          "term": "UPDATE SERIES",
+          "position": "lower center",
+          "relation": "directly below TOPPS CHROME"
+        },
+        {
+          "term": "COOPER FLAGG",
+          "position": "upper right",
+          "relation": "vertical text beside pictured player"
+        },
+        {
+          "term": "VICTOR WEMBANYAMA",
+          "position": "left-center",
+          "relation": "vertical text beside pictured player"
+        },
+        {
+          "term": "1 AUTOGRAPH IN EVERY BOX!",
+          "position": "bottom",
+          "relation": "inside gold-and-black promotional panel"
+        },
+        {
+          "term": "2025/26",
+          "position": "lower left",
+          "relation": "vertical season marking beside product branding"
+        }
+      ],
+      "evidence": [
+        "Visible front packaging text reads TOPPS CHROME and UPDATE SERIES.",
+        "Visible season marking reads 2025/26.",
+        "Front prominently depicts Victor Wembanyama and Cooper Flagg in NBA uniforms.",
+        "Visible promotional text reads 1 AUTOGRAPH IN EVERY BOX!.",
+        "Box has NBA logos and blue chrome-style basketball-card packaging design."
+      ],
+      "missing_information": [
+        "Exact box format or retail configuration",
+        "UPC or product number",
+        "Back and side panel details"
+      ],
+      "next_photo_request": "Photograph the back and both side panels straight-on, including any barcode, SKU, or configuration text.",
+      "user_text_consistent": true,
+      "normalized_query": "",
+      "verification_summary": "Brand, product family, season, and featured players are readable, but the exact box configuration/model is not uniquely verified.",
+      "photo_clues": [
+        {
+          "text": "TOPPS CHROME",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": null
+        },
+        {
+          "text": "UPDATE SERIES",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": null
+        },
+        {
+          "text": "2025/26",
+          "role": "season",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": null
+        },
+        {
+          "text": "COOPER FLAGG",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": null
+        },
+        {
+          "text": "VICTOR WEMBANYAMA",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": null
+        },
+        {
+          "text": "1 AUTOGRAPH IN EVERY BOX!",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": null
+        }
+      ],
+      "physical_observations": [
+        {
+          "feature": "configuration",
+          "text": "Tall single sealed box with front-facing product artwork",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "color",
+          "text": "Dark blue and silver front with red, gold, and white border accents",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "pattern",
+          "text": "Chrome-style curved stripe framing around the player artwork",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "count",
+          "text": "Two basketball players pictured on the front",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "finish",
+          "text": "Glossy reflective packaging surface",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        }
+      ],
+      "printing_detail_regions": [],
+      "object_region": {
+        "image_index": 1,
+        "x": 0.21,
+        "y": 0.01,
+        "width": 0.67,
+        "height": 0.8,
+        "certain": true
+      },
+      "object_regions": [
+        {
+          "image_index": 1,
+          "x": 0.21,
+          "y": 0.01,
+          "width": 0.67,
+          "height": 0.8,
+          "certain": true
+        }
+      ],
+      "object_unit": "box",
+      "pokemon_printing": null
+    },
+    "budget": {
+      "maxUsd": 0.025,
+      "spentOrReservedUsd": 0.022544719999999997,
+      "entries": [
+        {
+          "kind": "vision",
+          "reservedUsd": 0.007772,
+          "actualUsd": 0.00292585,
+          "status": "usage_returned"
+        },
+        {
+          "kind": "visual",
+          "reservedUsd": 0.0035,
+          "actualUsd": 0.0035,
+          "status": "usage_returned",
+          "costBasis": "google_web_detection_list_price_2026-09-06"
+        },
+        {
+          "kind": "vision",
+          "reservedUsd": 0.01097775,
+          "actualUsd": 0.0029311,
+          "status": "usage_returned"
+        },
+        {
+          "kind": "text",
+          "reservedUsd": 0.01278575,
+          "actualUsd": 0.01318777,
+          "status": "usage_returned"
+        }
+      ],
+      "estimated": true,
+      "includesIdentificationAndMarket": true
+    },
+    "provider": {
+      "bestGuessLabels": [
+        {
+          "label": "2025 26 topps chrome update basketball hobby"
+        }
+      ],
+      "partialMatchingImages": [
+        {
+          "url": "https://www.baseballdreamsandmemories.com/cdn/shop/files/IMG_5294_2_grande.jpg?v=1786030515"
+        },
+        {
+          "url": "https://assets.dacw.co/itemimages/977854_004_080426.jpg"
+        },
+        {
+          "url": "https://www.baseballdreamsandmemories.com/cdn/shop/files/IMG_5294_2_2048x.jpg?v=1786030515"
+        },
+        {
+          "url": "https://d2j6dbq0eux0bg.cloudfront.net/images/117616253/products/853350757/6045317996.jpg"
+        },
+        {
+          "url": "https://images.sbito.it/api/v1/sbt-ads-images-pro/images/24/2421ce35-aaa0-4128-aac6-51cd0bb13495?rule=vertical-mini-card-1x-auto"
+        },
+        {
+          "url": "https://rbicru7.com/cdn/shop/files/Scan_2_33212c66-28ec-49e1-8ef5-d47abd01f38a_480x480.jpg?v=1785946935"
+        },
+        {
+          "url": "https://pbs.twimg.com/media/HMEau8iWkAA4OqA.png"
+        }
+      ],
+      "pagesWithMatchingImages": [
+        {
+          "url": "https://www.dacardworld.com/sports-cards/2025-26-topps-chrome-update-basketball-hobby-box",
+          "pageTitle": "2025/26 Topps Chrome Update Series Basketball Hobby Box",
+          "fullMatchingImages": [],
+          "partialMatchingImages": [
+            {
+              "url": "https://dacardworld1.imgix.net/977854_004_080426.jpg?auto=format%2Ccompress&fm=jpg&h=1800&ixlib=php-3.3.1&w=1800&s=941b7603cf54ce2a8d2798ed6938ded7"
+            },
+            {
+              "url": "https://assets.dacw.co/itemimages/977854_004_080426.jpg"
+            }
+          ]
+        },
+        {
+          "url": "https://www.ebay.com/shop/2025-2026-topps-chrome-basketball-hobby-box?_nkw=2025+2026+topps+chrome+basketball+hobby+box",
+          "pageTitle": "2025 2026 Topps Chrome Basketball Hobby Box - eBay",
+          "fullMatchingImages": [],
+          "partialMatchingImages": [
+            {
+              "url": "https://i.ebayimg.com/images/g/tsUAAeSwPXdqmDKR/s-l300.jpg"
+            },
+            {
+              "url": "https://i.ebayimg.com/images/g/rGcAAeSwiodqgPSs/s-l300.jpg"
+            }
+          ]
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=AMEgATmUGhs",
+          "pageTitle": "New Topps Chrome UPDATE Basketball has arrived ... - YouTube",
+          "fullMatchingImages": [],
+          "partialMatchingImages": []
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=NdHGicFzxlE",
+          "pageTitle": "BIGGEST RETAIL CHASE EVER?! 2025-26 Topps Chrome Update ...",
+          "fullMatchingImages": [],
+          "partialMatchingImages": []
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=nRC5bdAzsL8",
+          "pageTitle": "CHROME UPDATE RETAIL MEGA BOXES ARE FINALLY HERE ...",
+          "fullMatchingImages": [],
+          "partialMatchingImages": []
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=ILorVJtKFyQ",
+          "pageTitle": "*THE ULTIMATE $8,000 RISK! 2025 TOPPS CHROME UPDATE ...",
+          "fullMatchingImages": [],
+          "partialMatchingImages": []
+        },
+        {
+          "url": "https://www.ebay.com/shop/topps-chrome-basketball-hobby-box?_nkw=topps+chrome+basketball+hobby+box",
+          "pageTitle": "Topps Chrome Basketball Hobby Box - eBay",
+          "fullMatchingImages": [],
+          "partialMatchingImages": [
+            {
+              "url": "https://i.ebayimg.com/images/g/tsUAAeSwPXdqmDKR/s-l300.jpg"
+            }
+          ]
+        },
+        {
+          "url": "https://www.dacardworld.com/sports-cards/2025-26-topps-chrome-update-basketball-hobby-12-box-case",
+          "pageTitle": "2025/26 Topps Chrome Update Series Basketball Hobby 12-Box Case",
+          "fullMatchingImages": [],
+          "partialMatchingImages": [
+            {
+              "url": "https://assets.dacw.co/itemimages/977854_001_080426.jpg"
+            },
+            {
+              "url": "https://dacardworld1.imgix.net/977854_004_080426.jpg?auto=format%2Ccompress&fm=jpg&h=1800&ixlib=php-3.3.1&w=1800&s=941b7603cf54ce2a8d2798ed6938ded7"
+            }
+          ]
+        }
+      ],
+      "referenceState": "retrieved"
+    },
+    "comparison": {
+      "physical_detail_needed": null,
+      "candidates": [
+        {
+          "category": "sports cards",
+          "brand": "Topps",
+          "family": "Topps Chrome Update Series Basketball",
+          "model": "2025/26 Topps Chrome Update Series Basketball Hobby Box",
+          "year": "",
+          "issue_number": "",
+          "catalog_number": "",
+          "unit": "box",
+          "variant": "Hobby Box",
+          "decision": "match",
+          "same_unit": true,
+          "physical_ambiguity": false,
+          "conflicts": [],
+          "matches": [
+            {
+              "reference_id": "ref1",
+              "feature": "layout",
+              "photo_detail": "Due giocatori e marchio Topps Chrome Update Series sul fronte",
+              "reference_detail": "Due giocatori e marchio Topps Chrome Update Series sul fronte",
+              "agrees": true,
+              "reference_evidence": "image"
+            },
+            {
+              "reference_id": "ref1",
+              "feature": "text",
+              "photo_detail": "2025/26, Cooper Flagg, Victor Wembanyama",
+              "reference_detail": "Stessa grafica con Cooper Flagg e Victor Wembanyama",
+              "agrees": true,
+              "reference_evidence": "image"
+            },
+            {
+              "reference_id": "ref1",
+              "feature": "configuration",
+              "photo_detail": "Box singola sigillata con 1 autograph in ogni box",
+              "reference_detail": "“Each Box contains 1 Autograph”",
+              "agrees": true,
+              "reference_evidence": "description"
+            },
+            {
+              "reference_id": "ref1",
+              "feature": "color",
+              "photo_detail": "Grafica blu scuro, argento, rosso, oro e bianco",
+              "reference_detail": "Stessa combinazione cromatica osservabile",
+              "agrees": true,
+              "reference_evidence": "image"
+            }
+          ],
+          "fields": [
+            {
+              "field": "brand",
+              "value": "Topps",
+              "reference_id": "ref1",
+              "quote": "Topps",
+              "scope": "target",
+              "number_kind": "none"
+            },
+            {
+              "field": "family",
+              "value": "Topps Chrome Update Series Basketball",
+              "reference_id": "ref1",
+              "quote": "2025/26 Topps Chrome Update Series Basketball Hobby Box",
+              "scope": "target",
+              "number_kind": "none"
+            },
+            {
+              "field": "model",
+              "value": "2025/26 Topps Chrome Update Series Basketball Hobby Box",
+              "reference_id": "ref1",
+              "quote": "2025/26 Topps Chrome Update Series Basketball Hobby Box",
+              "scope": "target",
+              "number_kind": "none"
+            },
+            {
+              "field": "variant",
+              "value": "Hobby Box",
+              "reference_id": "ref1",
+              "quote": "Hobby Box",
+              "scope": "target",
+              "number_kind": "none"
+            }
+          ],
+          "identity_level": "exact",
+          "specimen_notes": []
+        },
+        {
+          "category": "sports cards",
+          "brand": "Topps",
+          "family": "Topps Chrome Basketball",
+          "model": "2025 2026 Topps Chrome Basketball Hobby Box",
+          "year": "",
+          "issue_number": "",
+          "catalog_number": "",
+          "unit": "panel",
+          "variant": "Hobby Box",
+          "decision": "different",
+          "same_unit": false,
+          "physical_ambiguity": false,
+          "conflicts": [
+            {
+              "scope": "target",
+              "reason": "La fonte mostra un pannello/display aperto con più confezioni, non il box singolo fotografato."
+            }
+          ],
+          "matches": [
+            {
+              "reference_id": "ref2",
+              "feature": "appearance",
+              "photo_detail": "Grafica frontale con gli stessi due giocatori e colori",
+              "reference_detail": "Pannello con grafica frontale corrispondente",
+              "agrees": true,
+              "reference_evidence": "image"
+            },
+            {
+              "reference_id": "ref3",
+              "feature": "configuration",
+              "photo_detail": "Box singola sigillata",
+              "reference_detail": "Display aperto con più box",
+              "agrees": false,
+              "reference_evidence": "image"
+            }
+          ],
+          "fields": [
+            {
+              "field": "brand",
+              "value": "Topps",
+              "reference_id": "ref2",
+              "quote": "Topps",
+              "scope": "target",
+              "number_kind": "none"
+            },
+            {
+              "field": "family",
+              "value": "Topps Chrome Basketball",
+              "reference_id": "ref2",
+              "quote": "2025 2026 Topps Chrome Basketball Hobby Box",
+              "scope": "target",
+              "number_kind": "none"
+            },
+            {
+              "field": "variant",
+              "value": "Hobby Box",
+              "reference_id": "ref2",
+              "quote": "Hobby Box",
+              "scope": "target",
+              "number_kind": "none"
+            }
+          ],
+          "identity_level": "family",
+          "specimen_notes": []
+        }
+      ]
+    },
+    "references": [
+      {
+        "id": "ref1",
+        "url": "https://www.dacardworld.com/sports-cards/2025-26-topps-chrome-update-basketball-hobby-box",
+        "title": "2025/26 Topps Chrome Update Series Basketball Hobby Box",
+        "text": "2025/26 Topps Chrome Update Series Basketball Hobby Box | DA Card World Labor Day Office Hours The Dave and Adam's Card World offices will be closed Monday, September 7th in observance of Labor Day Orders placed after 3:00 pm EST on September 4th will ship Tuesday, September 8th when our normal customer service and shipping schedule resumes. 1-888-440-9787 We Ship Internationally FREE Gifts with orders $100+ About Us Contact Blog Login/Register Level Up and Unlock automatic rewards with every dollar you spend Learn More Free Gifts on orders $100+ We Ship Internationally! Order confidently today! Same Day Shipping order by 3 PM EST Daily Deals Deals added daily Always Buying Get paid within 48 hours Best Deals Save on hundreds of items! Explore Sports New Releases Presells Baseball Cards Boxes, Cases, Packs, & Sets 2026 2025 2024 2023 2022 2021 2020 2010 - 2019 2000 - 2009 1990 - 1999 1989 and Earlier Complete Sets New Baseball Releases Presells All Boxes, Cases, Packs & Sets Singles Basketball Cards Boxes, Cases, Packs, & Sets 2025/26 2024/25 2023/24 2022/23 2021/22 2020/21 2019/20 2010/11 - 2018/19 2000/01 - 2009/10 1990/91 - 1999/00 1989/90 and Earlier Complete Sets New Basketball Releases Presells All Boxes, Cases, Packs & Sets Singles Football Cards Boxes, Cases, Packs, & Sets 2026 2025 2024 2023 2022 2021 2020 2019 2010 - 2018 2000 - 2009 1990 - 1999 1989 and Earlier New Football Releases Presells All Boxes, Cases, Packs & Sets Single Football Cards Hockey Cards 2026/27 2025/26 2024/25 2023/24 2022/23 2021/22 2020/21 2010/11 - 2019/20 2000/01 - 2009/10 1990/91 - 1999/00 1989/90 and Earlier New Hockey Releases Presells All Boxes, Cases, Packs & Sets Singles Soccer Cards World Cup Soccer 2026 2025 2024 2023 2022 2021 2020 2019 2018 2017 and earlier New Soccer Releases Presells Singles Racing Cards UFC and MMA Cards Wrestling Golf Cards Multisport/Other Sports Cards Release Calendar Back in Stock Hit Parade Reed's Buys Live Breaks Trading Card Supplies 2025/26 Topps Chrome Update Series Basketball Hobby Box Your Price $1,169.95 USD Max 6 per person Please select a size Product Highlights 1 Autograph Per Box! Search For NBA Debut Patch Autographs! Look For Minions NBA Case Hit Inserts! Find Helix Case Hit Inserts! Look For Rookie Autographs Lava Lamp! More Details... Key Rookies Cooper Flagg Dylan Harper VJ Edgecombe Kon Knueppel Ace Bailey More Rookies... Related Items 2025/26 Topps Chrome Basketball Blaster 40-Box Case $3,164.95 USD Add to Cart 2025/26 Topps Chrome Basketball Hobby 12-Box Case $13,999.95 USD Add to Cart 2025/26 Topps Chrome Basketball Hanger 64-Box Case $4,049.95 USD Add to Cart 2025/26 Topps Chrome Basketball Blaster Box $79.95 USD Add to Cart 2025/26 Topps Chrome Basketball Hanger Box $64.95 USD Add to Cart Shop more Topps Chrome Basketball Item Description Item Details 2025/26 Topps Chrome Update Series Basketball Hobby Box Each Box contains 1 Autograph, on average! 2025/26 Topps Chrome Updates Basketball is headlined by one of the most coveted cards in the hobby: NBA Debut Patch Autographs, making their Topps Basketball debut. Considered a pinnacle chase across The Hobby, these 1-of-1 grails, featuring game-worn NBA Debut patches, arrive for the first time in basketball with standout rookies like Cooper Flagg, Kon Knueppel, and Dylan Harper leading the charge. The chase is rounded out by superstars such as Stephen Curry, LeBron James, Victor Wembanyama, Anthony Edwards, Nikola Jokic and Shai Gilgeous-Alexander and more across major SSPs and Autographs. The 200-card base set features refreshed imagery for the rookies, vets and legends, all showcased in updated, in-season photography featuring Statement, City and Classic Edition uniforms and of course, a deep rainbow of Chrome parallels. Collectors can also hunt a wide range of new inserts including New Edition, Stratospheric Stars, No Limit, and Moment in Time, highlighting iconic NBA moments like Curry's \"Ring Me\" celebration in the NBA Finals. Beyond the NBA Debut Patch Autographs, chase elements run deep with exciting case hits like the NBA's first Alter Egos SSPs, an epic 10-card set that transforms each player into a dynamic, illustrated, super-powered persona. Minions NBA are SSPs that reimagine NBA stars as Minions in collaboration with Illumination for a fun, highly collectible crossover insert. In addition, look out for the Denim Tears SSP parallel, and newly added Captains, Celebracion case hit inserts. Autograph collectors can chase a robust lineup of Topps Chrome Autographs, including special appearances from Druski and Spike Lee. The 1980-81 Topps Basketball Autographs deliver another loaded checklist, while the ultra-cool Lava Lamp Rookie Autographs add a groovy twist. Chrome Updates Basketball is a must-have release, bursting with star power, innovation, and true hobby heat. PRODUCT BREAKDOWN: Base Cards Parallels: - Base Refractors - Magenta - #'d /399 - Teal - #'d /299 - Yellow - #'d /275 - Pink - #'d /250 - Aqua - #'",
+        "text_origin": "retrieved_page",
+        "image_url": "https://dacardworld1.imgix.net/977854_004_080426.jpg?auto=format%2Ccompress&fm=jpg&h=1800&ixlib=php-3.3.1&w=1800&s=941b7603cf54ce2a8d2798ed6938ded7",
+        "image_data": "diagnostic-image-presence-marker"
+      },
+      {
+        "id": "ref2",
+        "url": "https://www.ebay.com/shop/2025-2026-topps-chrome-basketball-hobby-box?_nkw=2025+2026+topps+chrome+basketball+hobby+box",
+        "title": "2025 2026 Topps Chrome Basketball Hobby Box - eBay",
+        "text": "2025 2026 Topps Chrome Basketball Hobby Box - eBay",
+        "text_origin": "google_indexed_title",
+        "image_url": "https://i.ebayimg.com/images/g/tsUAAeSwPXdqmDKR/s-l300.jpg",
+        "image_data": "diagnostic-image-presence-marker"
+      },
+      {
+        "id": "ref3",
+        "url": "https://www.ebay.com/shop/topps-chrome-basketball-hobby-box?_nkw=topps+chrome+basketball+hobby+box",
+        "title": "Topps Chrome Basketball Hobby Box - eBay",
+        "text": "Topps Chrome Basketball Hobby Box - eBay",
+        "text_origin": "google_indexed_title",
+        "image_url": "https://i.ebayimg.com/images/g/tsUAAeSwPXdqmDKR/s-l300.jpg",
+        "image_data": "diagnostic-image-presence-marker"
+      }
+    ]
+  },
+  "remote": {
+    "vision": {
+      "status": "uncertain",
+      "kind": "object",
+      "title": "Philips smart TV remote control, model unverified",
+      "category": "TV remote control",
+      "brand": "Philips",
+      "family": "Philips Smart TV remote control",
+      "model": "",
+      "variant": "Black remote with voice control and dedicated Netflix button",
+      "condition": "Used; visibly worn and scratched",
+      "category_confidence": 99,
+      "brand_confidence": 84,
+      "family_confidence": 78,
+      "model_confidence": 0,
+      "model_verified": false,
+      "market_ready": false,
+      "candidate_models": [],
+      "visual_fingerprint": "Slim black Philips-style TV remote with circular power key, PAIR marking, three rows of labeled shortcut buttons including TV GUIDE, VOICE, TOP PICKS, SOURCES, EXIT, INFO and OPTIONS; central circular OK/navigation pad, four colored keys, Netflix button, vertical volume/channel rockers, numeric keypad, SUBTITLE/TEXT and media controls.",
+      "distinctive_terms": [
+        "TOP PICKS",
+        "TV GUIDE",
+        "PAIR",
+        "VOICE",
+        "SUBTITLE",
+        "TEXT",
+        "NETFLIX",
+        "OPTIONS",
+        "SOURCES",
+        "SETTINGS",
+        "INFO",
+        "HOME"
+      ],
+      "search_terms": [
+        "TOP PICKS",
+        "TV GUIDE",
+        "PAIR",
+        "VOICE",
+        "SUBTITLE",
+        "TEXT"
+      ],
+      "identifier_hints": [],
+      "layout_signature": [
+        {
+          "term": "PAIR",
+          "position": "upper right",
+          "relation": "above SETTINGS"
+        },
+        {
+          "term": "TV GUIDE",
+          "position": "second row left",
+          "relation": "left of VOICE"
+        },
+        {
+          "term": "VOICE",
+          "position": "second row center",
+          "relation": "left of TOP PICKS"
+        },
+        {
+          "term": "TOP PICKS",
+          "position": "second row right",
+          "relation": "right of VOICE"
+        },
+        {
+          "term": "SOURCES",
+          "position": "third row left",
+          "relation": "left of central OK pad"
+        },
+        {
+          "term": "OPTIONS",
+          "position": "above right side of navigation pad",
+          "relation": "opposite INFO"
+        },
+        {
+          "term": "NETFLIX",
+          "position": "below colored keys",
+          "relation": "between vertical volume/channel controls"
+        },
+        {
+          "term": "SUBTITLE",
+          "position": "lower left of numeric keypad",
+          "relation": "opposite TEXT"
+        }
+      ],
+      "evidence": [
+        "The remote visibly has the literal labels PAIR, TOP PICKS, VOICE, TV GUIDE, SOURCES, OPTIONS, SUBTITLE, TEXT and NETFLIX.",
+        "The button arrangement and shortcut labels strongly match a Philips smart-TV remote layout.",
+        "No model, part number, serial number, or rear label is visible.",
+        "The casing and buttons show substantial use and surface wear."
+      ],
+      "missing_information": [
+        "Exact model or part number",
+        "Rear label and battery-compartment markings",
+        "Philips logo or other definitive branding"
+      ],
+      "next_photo_request": "Photograph the back, battery compartment, and any model/part-number label in sharp focus.",
+      "user_text_consistent": true,
+      "normalized_query": "",
+      "verification_summary": "Likely Philips Smart TV remote based on distinctive button layout and labels, but the exact model cannot be verified from the front alone.",
+      "photo_clues": [
+        {
+          "text": "PAIR",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": null
+        },
+        {
+          "text": "TV GUIDE",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": null
+        },
+        {
+          "text": "VOICE",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": null
+        },
+        {
+          "text": "TOP PICKS",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": null
+        },
+        {
+          "text": "SOURCES",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": null
+        },
+        {
+          "text": "OPTIONS",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": null
+        },
+        {
+          "text": "NETFLIX",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": null
+        },
+        {
+          "text": "SUBTITLE",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": null
+        },
+        {
+          "text": "TEXT",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": null
+        }
+      ],
+      "physical_observations": [
+        {
+          "feature": "configuration",
+          "text": "Slim black handheld remote with central navigation pad and numeric keypad",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "count",
+          "text": "Four colored shortcut keys arranged red, green, yellow, blue",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "layout",
+          "text": "Dedicated Netflix key centered between vertical volume and channel controls",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "pattern",
+          "text": "Brushed vertical texture around the upper power-button area",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "finish",
+          "text": "Glossy and heavily scuffed surface around navigation controls",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "configuration",
+          "text": "Separate media-control row with stop, pause, record and playback icons",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        }
+      ],
+      "printing_detail_regions": [],
+      "object_region": {
+        "image_index": 1,
+        "x": 0.373,
+        "y": 0.027,
+        "width": 0.317,
+        "height": 0.965,
+        "certain": true
+      },
+      "object_regions": [
+        {
+          "image_index": 1,
+          "x": 0.373,
+          "y": 0.027,
+          "width": 0.317,
+          "height": 0.965,
+          "certain": true
+        }
+      ],
+      "object_unit": "single",
+      "pokemon_printing": null
+    },
+    "budget": {
+      "maxUsd": 0.025,
+      "spentOrReservedUsd": 0.01954154,
+      "entries": [
+        {
+          "kind": "vision",
+          "reservedUsd": 0.007772,
+          "actualUsd": 0.00196862,
+          "status": "usage_returned"
+        },
+        {
+          "kind": "visual",
+          "reservedUsd": 0.0035,
+          "actualUsd": 0.0035,
+          "status": "usage_returned",
+          "costBasis": "google_web_detection_list_price_2026-09-06"
+        },
+        {
+          "kind": "text",
+          "reservedUsd": 0.01282525,
+          "actualUsd": 0.01407292,
+          "status": "usage_returned"
+        }
+      ],
+      "estimated": true,
+      "includesIdentificationAndMarket": true
+    },
+    "provider": {
+      "bestGuessLabels": [
+        {
+          "label": "mobile phone"
+        }
+      ],
+      "partialMatchingImages": [],
+      "pagesWithMatchingImages": [],
+      "referenceState": "no_linked_images"
+    }
+  },
+  "pele": {
+    "vision": {
+      "status": "uncertain",
+      "kind": "card",
+      "title": "Brazil football player portrait sticker panel featuring Garrincha and Pelé",
+      "category": "vintage football collectible sticker/card panel",
+      "brand": "",
+      "family": "Brazil national football player portrait panel",
+      "model": "",
+      "variant": "",
+      "condition": "Used vintage panel in a plastic holder; condition partially obscured",
+      "category_confidence": 96,
+      "brand_confidence": 18,
+      "family_confidence": 65,
+      "model_confidence": 20,
+      "model_verified": false,
+      "market_ready": false,
+      "candidate_models": [
+        {
+          "model": "Vintage Brazil football sticker panel, Garrincha and Pelé",
+          "confidence": 65,
+          "reason": "Names, paired portraits, and distinctive red/blue panel layout are clearly visible, but year, publisher, and set are absent."
+        },
+        {
+          "model": "Brazil football collectible card/sticker from an unidentified vintage set",
+          "confidence": 35,
+          "reason": "The exact publisher and issue cannot be determined from the visible front."
+        }
+      ],
+      "visual_fingerprint": "Two adjacent painted football portraits on one horizontal panel, separated by a vertical divider; pale blue inner portrait frames, thick red outer border, cream name strips, and transparent plastic holder. Left label reads MANOEL FRANCISCO SANTOS; right label reads EDVALDO ALVES SANTAROSA with quoted PELÉ.",
+      "distinctive_terms": [
+        "MANOEL FRANCISCO SANTOS",
+        "EDVALDO ALVES SANTAROSA",
+        "PELÉ"
+      ],
+      "search_terms": [
+        "MANOEL FRANCISCO SANTOS",
+        "EDVALDO ALVES SANTAROSA",
+        "PELÉ"
+      ],
+      "identifier_hints": [],
+      "layout_signature": [
+        {
+          "term": "MANOEL FRANCISCO SANTOS",
+          "position": "bottom left under portrait",
+          "relation": "paired with left portrait"
+        },
+        {
+          "term": "EDVALDO ALVES SANTAROSA",
+          "position": "bottom right under portrait",
+          "relation": "paired with right portrait"
+        },
+        {
+          "term": "PELÉ",
+          "position": "far right of bottom-right name strip",
+          "relation": "nickname printed after EDVALDO ALVES SANTAROSA"
+        }
+      ],
+      "evidence": [
+        "Two football player portraits are printed side by side on a single red-bordered panel.",
+        "The left name is visibly printed as MANOEL FRANCISCO SANTOS.",
+        "The right name is visibly printed as EDVALDO ALVES SANTAROSA, followed by quoted PELÉ.",
+        "No publisher, year, set name, card number, or catalog code is legible."
+      ],
+      "missing_information": [
+        "Publisher or brand",
+        "Set and year",
+        "Card/sticker number or catalog identifier"
+      ],
+      "next_photo_request": "Photograph the full front and back outside the plastic holder, including all corners and any tiny publisher/year text.",
+      "user_text_consistent": true,
+      "normalized_query": "",
+      "verification_summary": "The player identities are readable, but the exact vintage issue or publisher is not verified.",
+      "photo_clues": [
+        {
+          "text": "MANOEL FRANCISCO SANTOS",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.135,
+            "y": 0.575,
+            "width": 0.248,
+            "height": 0.016,
+            "certain": true
+          }
+        },
+        {
+          "text": "EDVALDO ALVES SANTAROSA",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.438,
+            "y": 0.575,
+            "width": 0.255,
+            "height": 0.016,
+            "certain": true
+          }
+        },
+        {
+          "text": "PELÉ",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.706,
+            "y": 0.575,
+            "width": 0.051,
+            "height": 0.016,
+            "certain": true
+          }
+        }
+      ],
+      "physical_observations": [
+        {
+          "feature": "configuration",
+          "text": "Two portrait panels joined side by side",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "color",
+          "text": "Red outer border with pale blue portrait frames",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "layout",
+          "text": "Cream name strips beneath both portraits",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "finish",
+          "text": "Printed panel enclosed in a transparent rigid plastic holder",
+          "certainty": "clear",
+          "entity": "holder",
+          "image_index": 1
+        }
+      ],
+      "printing_detail_regions": [],
+      "object_region": {
+        "image_index": 1,
+        "x": 0.03,
+        "y": 0.347,
+        "width": 0.946,
+        "height": 0.31,
+        "certain": true
+      },
+      "object_regions": [
+        {
+          "image_index": 1,
+          "x": 0.03,
+          "y": 0.347,
+          "width": 0.946,
+          "height": 0.31,
+          "certain": true
+        }
+      ],
+      "object_unit": "panel",
+      "pokemon_printing": null
+    },
+    "budget": {
+      "maxUsd": 0.025,
+      "spentOrReservedUsd": 0.01944455,
+      "entries": [
+        {
+          "kind": "vision",
+          "reservedUsd": 0.007772,
+          "actualUsd": 0.0025934499999999997,
+          "status": "usage_returned"
+        },
+        {
+          "kind": "visual",
+          "reservedUsd": 0.0035,
+          "actualUsd": 0.0035,
+          "status": "usage_returned",
+          "costBasis": "google_web_detection_list_price_2026-09-06"
+        },
+        {
+          "kind": "text",
+          "reservedUsd": 0.012718,
+          "actualUsd": 0.013351100000000001,
+          "status": "usage_returned"
+        }
+      ],
+      "estimated": true,
+      "includesIdentificationAndMarket": true
+    },
+    "provider": {
+      "bestGuessLabels": [
+        {
+          "label": "picture frame"
+        }
+      ],
+      "partialMatchingImages": [
+        {
+          "url": "https://d2tt46f3mh26nl.cloudfront.net/public/Lots/202601-2121-2711-59494650-12a5-4f47-a482-1172219203d7/1210f6f8-7853-4a1c-9680-55bbd45902ba@2x"
+        },
+        {
+          "url": "https://retrolotta.blog/wp-content/uploads/2024/02/2.item_3294461_839b4e7b2a-kopia.jpg?w=1024"
+        },
+        {
+          "url": "https://images.blocketcdn.se/dynamic/1600w/item/21484872/a9bf2a12-d49b-45a7-a9e7-9ac540526aed"
+        },
+        {
+          "url": "https://i.ebayimg.com/images/g/iGwAAeSwlOZqZYqj/s-l300.jpg"
+        },
+        {
+          "url": "https://images.blocketcdn.se/dynamic/960w/item/21484872/f418fef1-e7e8-40cf-9805-460c1b031568"
+        }
+      ],
+      "pagesWithMatchingImages": [
+        {
+          "url": "https://www.youtube.com/watch?v=80qMQnYRgBA",
+          "pageTitle": "Probably the fanciest picture frame you'll ever see. - YouTube",
+          "fullMatchingImages": [],
+          "partialMatchingImages": []
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=Any5uH2Jyu8",
+          "pageTitle": "How To Choose The Right Picture Frame - YouTube",
+          "fullMatchingImages": [],
+          "partialMatchingImages": []
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=OTPy0WAtJx8",
+          "pageTitle": "DIY Picture Frame 🖼️ | The Home Depot + ‪@food52‬ - YouTube",
+          "fullMatchingImages": [],
+          "partialMatchingImages": []
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=avMyB7ouan4",
+          "pageTitle": "CHEAP & EASY DIY Picture Frames - YouTube",
+          "fullMatchingImages": [],
+          "partialMatchingImages": []
+        },
+        {
+          "url": "https://www.amazon.com/live/video/0df5fa363c314bdcb4a56ce296940a0d",
+          "pageTitle": "Large Digital Photo Frame Digital Picture Frames - Amazon.com",
+          "fullMatchingImages": [],
+          "partialMatchingImages": []
+        },
+        {
+          "url": "https://us.amazon.com/Picture-Frames-Home-D%C3%A9cor-Products-Kitchen/s?keywords=Picture+Frames&rh=n%3A1063278%2Cp_n_deal_type%3A210906365011&c=ts&ts_id=1063278",
+          "pageTitle": "Picture Frames - Buy More, Save More / Home Décor Products",
+          "fullMatchingImages": [],
+          "partialMatchingImages": []
+        },
+        {
+          "url": "https://us.amazon.com/Picture-Frames-Home-D%C3%A9cor-Products-Kitchen/s?keywords=Picture+Frames&rh=n%3A1063278%2Cp_n_sb_certificate_id%3A98614993011&c=ts&ts_id=1063278",
+          "pageTitle": "Amazon.com: Picture Frames - Small Business / Home Décor Products",
+          "fullMatchingImages": [],
+          "partialMatchingImages": []
+        },
+        {
+          "url": "https://us.amazon.com/Picture-Frames-Home-Kitchen/s?keywords=Picture+Frames&rh=n%3A1055398&c=ts&ts_id=1055398",
+          "pageTitle": "Shop Amazon Home Products",
+          "fullMatchingImages": [],
+          "partialMatchingImages": []
+        }
+      ],
+      "referenceState": "no_linked_images"
+    },
+    "references": [
+      {
+        "id": "ref1",
+        "url": "https://auctionet.com/en/2056645-pele-collector-s-photo-from-tidningen-rekord-no-37-1958?cookie_consent_settings=true",
+        "title": "PELÈ, collector's photo from Tidningen Rekord, no. 37 1958. Books, Maps & Manuscripts - Other - Auctionet",
+        "text": "PELÈ, collector's photo from Tidningen Rekord, no. 37 1958. Books, Maps & Manuscripts - Other - Auctionet PELÈ, collector's photo from Tidningen Rekord, no. 37 1958. This auction is closed, but maybe you like the following items? 2056645. PELÈ, collector's photo from Tidningen Rekord, no. 37 1958. Images 2056645. PELÈ, collector's photo from Tidningen Rekord, no. 37 1958. Description Uncut collector's photo of Pelé and Manoel Francisco Santos on the front. On the back of the cards there is information in Swedish about both stars. Curious; The name given to Pelé on the collector's photo is wrong, Edvaldo Alves Santarosa was a completely different footballer, Pelé's real name was Edson Arantes do Nascimento. Santarosa was Pelé's teammate Dida. Dimensions of newspaper approx. 30x21 cm, dimensions of Pelé's picture approx. 5.2x3.7 cm. Show more Condition Newspaper with stains, bent corners and slightly yellowed pages from aging. Front with yellow spots and tufted edges. The collector's image of Pelé: misses in printing that are visible through minimal points, i.a. a small black dot outside the image as well as the lower right corner and two yellow-brown \"spots\" in the lower left corner between the edge and the neck. It can be noted that the coloring of the face is different from other images, judged to be natural from printing. Slight pressure damage in Pelé's hair. Item details have been automatically translated. We are not responsible for translation errors. Hide the original Swedish texts. Show original in Swedish. Do you have something similar to sell? Get your items valued free of charge! Bidding Loading… Got something similar to sell? Have your item valued free of charge. 2056645. PELÈ, collector's photo from Tidningen Rekord, no. 37 1958. Description Uncut collector's photo of Pelé and Manoel Francisco Santos on the front. On the back of the cards there is information in Swedish about both stars. Curious; The name given to Pelé on the collector's photo is wrong, Edvaldo Alves Santarosa was a completely different footballer, Pelé's real name was Edson Arantes do Nascimento. Santarosa was Pelé's teammate Dida. Dimensions of newspaper approx. 30x21 cm, dimensions of Pelé's picture approx. 5.2x3.7 cm. Show more Condition Newspaper with stains, bent corners and slightly yellowed pages from aging. Front with yellow spots and tufted edges. The collector's image of Pelé: misses in printing that are visible through minimal points, i.a. a small black dot outside the image as well as the lower right corner and two yellow-brown \"spots\" in the lower left corner between the edge and the neck. It can be noted that the coloring of the face is different from other images, judged to be natural from printing. Slight pressure damage in Pelé's hair. Item details have been automatically translated. We are not responsible for translation errors. Hide the original Swedish texts. Show original in Swedish. Do you have something similar to sell? Get your items valued free of charge! Details House Ekenbergs Visits: 2,612 We use cookies This service is part of the Auctionet platform. Some cookies are necessary to provide the service, while you can manage or withdraw your consent for those used to: Personalise features and content from how you use the platform. Develop and improve the platform. Promote news and content to you on external web sites. You can read more in our privacy policy and manage your cookie settings below. Cookie settings Accept all Back Cookie settings Below are the types of cookies used across the Auctionet platform. You can choose which types you give consent to. You can read more in our privacy policy and manage your cookie settings below. Necessary cookies Always active These cookies are necessary for Auctionet to function properly. Auctionet saves information to identify you during your visit. This is used, for example, to keep you logged in. Auctionet saves your current cookie settings. Enhanced experience Functionality storageOffOn Cookies used to remember your preferences, such as language and currency, on the Auctionet platform. Auctionet saves your visit history so you can easily find your way back to items you have visited. Auctionet saves information about which language and currency should be used. Performance Statistics storageOffOn These cookies are used to collect pseudonymised statistics to improve the platform's performance and features for all users. Auctionet analyses user behaviour to improve the service. Auctionet regularly tests new features and improvements. Marketing Ad storageOffOn These cookies are used to display relevant content on other websites. Auctionet analyses how you use the service to be able to suggest relevant content on other websites. Reject all Accept all Save settings",
+        "text_origin": "retrieved_page",
+        "image_url": "https://images.auctionet.com/thumbs/large_item_2056645_ba2c29d8a7.jpg",
+        "image_data": "diagnostic-image-presence-marker"
+      },
+      {
+        "id": "ref2",
+        "url": "https://cartophilic-info-exch.blogspot.com/2013/10/rekord-magasinet-sportsmen.html",
+        "title": "Football Cartophilic Info Exchange: Rekord magasinet - Sportsmen",
+        "text": "Football Cartophilic Info Exchange: Rekord magasinet - Sportsmen Pages Home Books My Wants Help Links If you've left a Comment or sent me an e-mail, PLEASE read this... Friday, 11 October 2013 Rekord magasinet - Sportsmen 1956-1965 Sportsmen Rekord Magasinet Sweden Unknown number For almost 10 years Rekord magazine in Sweden printed two cut-out sportsmen on the front cover on most of their weekly magazines. There could be as many as a 1000 to collect. UPDATE (20-04-2023 11:41): David Strong has provided a list of boxers not yet featured in the checklist, these are listed at the bottom. 1956 - issue 17 .. Sixten Jernberg .. Ingemar Johansson (Boxing) 1956 - issue 27 .. Bertil Nilsson .. Floyd Patterson (Boxer) 1956 - issue 30 .. Joe Louis (Boxing) .. Sylve Bengtsson (Football) 1956 - issue 31 .. Olle Nygren .. Jesse Owens (Athletics) 1956 - issue 32 .. Kjill Carlsson .. Lasse Nordvhal 1956 - issue 34 .. Rocky Marciano (Boxing) .. Yngve Brodd (Football) 1956 - issue 43 .. Bob Richards .. Roger Moens 1957 - issue 43 .. Sugar Ray Robinson .. Henry \"Garvis\" Carlsson 1958 - issue ?? .. Floyd Patterson (Boxing) .. Eddie Machen 1958 - issue 07 .. Carmen Basilio .. Ingemar Johansson (Boxing) 1958 - issue 13 .. Oleg Gontjarenko .. Gosta Stockis Kihlgard 1958 - issue 29 .. Sandor Kocsis .. Harry Bild 1958 - issue 33 .. Jose Joao Altafini .. Waldir Pereira 'Didi' 1958 - issue 34 .. Djalma Santos .. Gilmar Dos Santos 1958 - issue 35 .. Colin McDonald (Burnley) & Boris Kouznetsov (USSR) - added 30-11-2020 - thanks to Michael McIntyre 1958 - issue 36 .. Serquei Salnikov .. Billy Wright 1958 - issue 37 .. Manoel Francisco Santos (Garrincha) .. Edvaldo Alves Santarosa \"Pele\" 1958 - issue 38 .. Nilton De Sordi .. Hidraldo Luiz Bellini 1958 - issue 39 .. Nilton Santos (Brazil) .. Helmuth Rahn (Germany) 1958 - issue 40 .. Fritz Walter (West Germany) .. Herbert Erhardt 1958 - issue 43 .. Juste Fontaine (France) .. Gunnar Kämpedahl (Sweden – Handball) 1958 - issue 45 .. Edvaldo Izidio Neto 'Vava' (Brazil) .. Sergei Popov (Russia – Marathon) 1958 - issue 46 .. Frans 'Sammy' Jakobsson .. Orlando Carvalho 1958 - issue 47 .. Ronald \"Ronnie\" Clayton .. John Haynes 1958 - issue 48 .. John Charles (Juventus) .. Gunnar Tjornebo (Athletics) - updated 03-12-2020 - thanks to Tom Lawrie 1958 - issue 50 .. Peter Brabrook .. Brian Dougles (sic) - added 28-04-2023 1958 - issue 51 .. none 1958 - issue 52 .. none 1959 - issue 04 .. Lew Hoad (Tennis) .. Karl-Erik Sodergren 1959 - issue 07 .. Per-Olof Brogren .. Max Schmeling (Boxing) 1959 - issue 08 .. Inge Limberg (Cross-Country Ski-ing); Raymond Kopasewski \"Kopa\" - added 12-01-2021 - thanks to Marc Luesebrink 1959 - issue 10 .. Roland Mattson .. Henry Cooper (Boxing) 1959 - issue 11 .. Primo Carnera (Boxing) .. Hasse Sjolund 1959 - issue 13 .. Floyd Patterson (Boxing) .. Ingemar Johansson (Boxing) 1959 - issue 23 .. Johnny Haynes .. Prawitz Obero 1959 - issue 28 .. Zora Folley .. Nils-Berger Soderqvist 1961 - issue 01 .. 465. Abebe Bikila (Athletics) .. 466. Maurice \"Rocket\" Richard (Ice Hockey) 1961 - issue 02 .. Bobby Hull (Chicago Black Hawks) .. Uno Wennerholm 1961 - issue 03 .. Alejandro Lavorante .. Henk van der Grift 1961 - issue 16 .. Gyula Grosics .. Ura Murchison 1961 - issue 19 .. Laszlo Kubala (Barcelona) .. Gento (Real Mdrid) 1961 - issue 20 .. Zoltan Czibor (Barcelona) .. Canario (Real Madrid) 1961 - issue 22 .. Bobby Smith (Tottenham Hotspur) .. Chet Jastremski 1961 - issue 23 .. Johnny Haynes (Fulham) .. Prawitz Oberg 1961 - issue 25 .. Ron Springett .. Harald Gronningen 1961 - issue 26 .. Jimmy Greaves .. Jens Söderberg 1961 - issue 27 .. Lev Jasijn (Lev Yashin) .. Ove Grahn 1961 - issue 29 .. Bo Borg .. Jack Dempsey (Boxing) 1961 - issue 30 .. Ted Drake (Arsenal) .. Jose Maria Bravo 'Vidal' 1961 - issue 32 .. Lasse Raberg .. Gene Tunney (Boxer) 1961 - issue 40 .. Santamaria (Real Madrid) .. Erich Schoppner (Boxing) 1962 - issue ?? .. John Caldwell .. Bertil Eng 1962 - issue 02 .. Eddie Machen (Boxing) .. Tommy Bjorkman 1962 - issue 03 .. Alejandro Lavorante (Boxer - Argentina) .. Henk van der Grift 1962 - issue 05 .. Cassius Clay (Boxing) .. Kjell Jarelnius 1962 - issue 08 .. Bo Högberg .. Tore Carbe 1962 - issue 12 .. Kjell Edlund (Cycling) .. Joey Brown (Boxing) 1962 - issue 13 .. Sonny Liston (Boxer) .. Dave Charnley (Boxer) 1962 - issue 15 .. Karl Mildenberger (Boxing) .. Adrian Metcalfe (Athletics) 1962 - issue 18 .. Willie Pep (Boxing) .. Bjorn Nordqvist (IFK Norrköping) 1962 - issue 22 .. Bobby Smith (Tottenham Hotspur) .. Chet Jastremski 1962 - issue 23 .. Johnny Haynes .. Prawitz Oberg 1962 - issue 27 .. Ove Grahn .. Lev Yashin (Lev Jasjin) (Russia) 1962 - issue 30 .. Dick Richardson (Boxing) .. Ingvar Perrson 1962 - issue 32 .. Ingvar Persson .. Dick Richardson 1963 - issue 01 .. Ewy Rosqvist .. Eusebio da Silva Ferreira 1963 - issue 05 .. none 1963 - issue 06 .. none 1963 - issue 33 .. none 1964 - issue 05 .. none 1965 - issue 03 .. Jonny Nilsson .. Leif Aronsson ??",
+        "text_origin": "retrieved_page",
+        "image_url": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh0iM6va9krVKi-rKKVsaZdCdME4rFiec8NvDQJbcIdNOll8irYPuTmioGtazaSpQNWRJywNNGM6iv0rDCsW7O96IjYXqCwEIj2O9OlPcvl_tE75uaVvsoxdIFGl1LcmOdFBC23Bw-PkPq5/s400/50s+Rekord+Sweden+-005.JPG",
+        "image_data": "diagnostic-image-presence-marker"
+      }
+    ]
+  },
+  "doncic": {
+    "vision": {
+      "status": "identified",
+      "kind": "card",
+      "title": "Luka Dončić 2018-19 Panini Prizm #280 Green Prizm",
+      "category": "Basketball trading card",
+      "brand": "Panini",
+      "family": "2018-19 Panini Prizm Basketball",
+      "model": "Luka Dončić #280",
+      "variant": "Green Prizm",
+      "condition": "Near Mint appearance; in protective holder",
+      "category_confidence": 99,
+      "brand_confidence": 99,
+      "family_confidence": 99,
+      "model_confidence": 98,
+      "model_verified": true,
+      "market_ready": true,
+      "candidate_models": [],
+      "visual_fingerprint": "Luka Dončić Dallas Mavericks rookie card, 2018-19 Panini Prizm Basketball #280. Front shows blue Mavericks uniform, Prizm logo, RC shield and highly reflective green geometric parallel design. Back confirms card number, set, player biography and Panini copyright.",
+      "distinctive_terms": [
+        "NO. 280",
+        "2018-19 PANINI PRIZM BASKETBALL",
+        "LUKA DONCIC",
+        "PRIZM",
+        "DALLAS MAVERICKS",
+        "REAL MADRID",
+        "PANINI"
+      ],
+      "search_terms": [
+        "NO. 280",
+        "2018-19 PANINI PRIZM BASKETBALL",
+        "LUKA DONCIC",
+        "PRIZM",
+        "DALLAS MAVERICKS"
+      ],
+      "identifier_hints": [
+        "NO. 280"
+      ],
+      "layout_signature": [
+        {
+          "term": "NO. 280",
+          "position": "top left on reverse",
+          "relation": "card number"
+        },
+        {
+          "term": "PRIZM",
+          "position": "top right on front and reverse",
+          "relation": "set branding"
+        },
+        {
+          "term": "LUKA DONCIC",
+          "position": "bottom front and reverse",
+          "relation": "player name"
+        },
+        {
+          "term": "DALLAS MAVERICKS",
+          "position": "below player name on front",
+          "relation": "team label"
+        },
+        {
+          "term": "RC shield",
+          "position": "top left on front",
+          "relation": "rookie designation"
+        }
+      ],
+      "evidence": [
+        "Reverse visibly states “2018-19 PANINI PRIZM BASKETBALL”.",
+        "Reverse visibly shows “NO. 280” and Luka Dončić biography/statistics.",
+        "Front visibly shows Luka Dončić in Dallas Mavericks uniform with RC shield.",
+        "Front has a reflective green geometric Prizm parallel pattern.",
+        "Panini branding and NBA logo are visible on the reverse."
+      ],
+      "missing_information": [
+        "No serial number is visible.",
+        "No professional grading company or grade is visible.",
+        "Exact green parallel subtype is inferred from the visual pattern."
+      ],
+      "next_photo_request": "Provide a sharp close-up of the front parallel pattern and any slab label, if present.",
+      "user_text_consistent": true,
+      "normalized_query": "2018-19 Panini Prizm Basketball Luka Doncic #280 Green Prizm",
+      "verification_summary": "Set, player, team and card number are directly verified from the card images; Green Prizm variant is visually identified but not textually confirmed.",
+      "photo_clues": [
+        {
+          "text": "LUKA DONCIC",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.52,
+            "y": 0.75,
+            "width": 0.34,
+            "height": 0.05,
+            "certain": true
+          }
+        },
+        {
+          "text": "DALLAS MAVERICKS",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.54,
+            "y": 0.8,
+            "width": 0.3,
+            "height": 0.04,
+            "certain": true
+          }
+        },
+        {
+          "text": "NO. 280",
+          "role": "collector_number",
+          "certainty": "clear",
+          "image_index": 2,
+          "region": {
+            "image_index": 2,
+            "x": 0.06,
+            "y": 0.08,
+            "width": 0.18,
+            "height": 0.04,
+            "certain": true
+          }
+        },
+        {
+          "text": "2018-19 PANINI PRIZM BASKETBALL",
+          "role": "season",
+          "certainty": "clear",
+          "image_index": 2,
+          "region": {
+            "image_index": 2,
+            "x": 0.1,
+            "y": 0.82,
+            "width": 0.42,
+            "height": 0.05,
+            "certain": true
+          }
+        },
+        {
+          "text": "PRIZM",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.64,
+            "y": 0.1,
+            "width": 0.2,
+            "height": 0.05,
+            "certain": true
+          }
+        },
+        {
+          "text": "PANINI",
+          "role": "copyright",
+          "certainty": "clear",
+          "image_index": 2,
+          "region": {
+            "image_index": 2,
+            "x": 0.69,
+            "y": 0.88,
+            "width": 0.13,
+            "height": 0.04,
+            "certain": true
+          }
+        }
+      ],
+      "physical_observations": [
+        {
+          "feature": "color",
+          "text": "reflective green, blue and silver front parallel",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "pattern",
+          "text": "geometric diagonal striping with dotted green foil sections",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "layout",
+          "text": "player centered in vertical action photograph",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "configuration",
+          "text": "single basketball card shown front and back",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "finish",
+          "text": "high-gloss reflective foil finish",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        }
+      ],
+      "printing_detail_regions": [],
+      "object_region": {
+        "image_index": 1,
+        "x": 0.02,
+        "y": 0.14,
+        "width": 0.96,
+        "height": 0.74,
+        "certain": true
+      },
+      "object_regions": [
+        {
+          "image_index": 1,
+          "x": 0.02,
+          "y": 0.14,
+          "width": 0.96,
+          "height": 0.74,
+          "certain": true
+        },
+        {
+          "image_index": 2,
+          "x": 0.05,
+          "y": 0.16,
+          "width": 0.9,
+          "height": 0.72,
+          "certain": true
+        }
+      ],
+      "object_unit": "single",
+      "pokemon_printing": null
+    },
+    "budget": {
+      "maxUsd": 0.025,
+      "spentOrReservedUsd": 0.0030952999999999996,
+      "entries": [
+        {
+          "kind": "vision",
+          "reservedUsd": 0.009828,
+          "actualUsd": 0.0030952999999999996,
+          "status": "usage_returned"
+        }
+      ],
+      "estimated": true,
+      "includesIdentificationAndMarket": true
+    },
+    "provider": {
+      "bestGuessLabels": null,
+      "partialMatchingImages": null,
+      "pagesWithMatchingImages": null,
+      "referenceState": null
+    }
+  },
+  "incomplete": {
+    "provider": "openai",
+    "kind": "vision",
+    "startedAt": 1788719466404,
+    "state": "incomplete",
+    "responseStatus": "incomplete",
+    "incompleteReason": "max_output_tokens",
+    "httpStatus": 200,
+    "elapsedMs": 34691
+  }
+}

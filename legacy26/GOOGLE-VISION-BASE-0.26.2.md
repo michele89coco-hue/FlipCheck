@@ -87,3 +87,42 @@ Per la stampa Pokémon il recupero è pianificato per ciascun dettaglio mancante
 Per il soggetto di una carta/pannello, quando il valore generato non coincide con la citazione, può essere conservata la breve descrizione letterale citata invece del valore discordante. Questo recupero richiede citazione presente nella fonte, testo del soggetto osservato in foto e confronto visivo corrispondente sulla stessa fonte. La diagnostica marca recovered_from=cited_subject_description. Nessun numero di inserzione è aggiunto al numero carta; originalità e condizioni restano non certificate.
 
 Dopo la conferma titolo, modello e richieste residue vengono sincronizzati. Un’identità fotografica già letta viene conservata separatamente quando la variante resta aperta. La diagnostica registra ordine dei passaggi, tutte le foto preparate, copertura dei dettagli e confronti eseguiti. I test includono riproduzioni delle risposte testuali reali 168 e casi sintetici; non sono nuove letture delle fotografie né test API a pagamento. Nessuna promessa di accuratezza al 100%.
+
+## Build 170 — evidence and response budget
+
+Authorized cap: EUR 0.03 per scan, using the configured USD/EUR planning factor.
+The previous default of 0.025 migrates to 0.03; smaller custom caps are retained.
+The budget includes Google, OpenAI, recovery attempts and market lookup, with
+unknown billing retained as a reservation. Reservations are estimates, not a
+provider-side spending limit. The scan deadline is 120 seconds.
+
+Before confirmation, an explicit subtype doubt remains pending even if the model
+returns a high confidence and market_ready. Card expansion names inferred from a
+collector number or symbol require catalogue evidence unless the series name is
+printed on the photo/slab. Confirmed catalogue fields must be cited; no card-name
+or product-specific tables were added.
+
+At least two image features are still required in assisted comparison. Literal
+source descriptions may complete quantities/specifications; normalized numbers,
+units and per-unit bases must agree. A cited model title may supply the season.
+Incidental surface descriptions are not mandatory matches for every object.
+Colour/pattern remain relevant when distinguishing uncertain card parallels.
+
+Queries include the observed category and prioritize printed identifiers,
+quantities and texts over incidental textures. Native page extraction removes
+navigation and related products before selecting images, preserves paragraph
+boundaries and includes Product structured data. Excerpts prioritize identifiers
+and quantities rather than menu text.
+
+Initial Vision now uses low reasoning, 4500 maximum output tokens and concise
+arrays. Resolver output allows 2600 tokens; comparison allows 2200, or 1800 with a
+single compact reference when needed. At most ONE response-completion attempt
+per scan is permitted, with preflight budget and cancellation checks. Initial
+Vision may retry at 6000 tokens. Truncated web output can be reconstructed from
+complete collected source metadata without another web search. Truncated image
+comparison may retry at 3600 tokens. Partial JSON is never accepted as identity.
+
+Validation: sanitized build 169 diagnostics replay box rejection and Doncic
+uncertainty; negative tests cover invented citations, wrong quantity/container,
+missing images, family-only matches and conflicting variants. Browser tests use
+synthetic images and intercepted API responses. No paid recognition tests.
