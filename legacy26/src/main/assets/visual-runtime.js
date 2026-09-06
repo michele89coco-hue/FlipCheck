@@ -292,7 +292,7 @@ async function finishIdentity171(value,ctx){
  return syncIdentity169(value);
 }
 resolveIdentificationCheap=async function(base,user){
- base=enforceIdentificationPolicy(base);
+ if(active164())base=V164.auditIdentity(base);
  if(scan164&&!V164.cataloguePending(base)&&enforceIdentificationPolicy(base)?.printing_check?.complete===false){base=await resolvePrinting168(base,scan164);if(base.printing_check?.complete===false||V164.ready(base))return base;}
  if(!active164()||!scan164)return priorResolve164(base,user);
  const ctx=scan164,p=V164.plan(lastVisionReading||base,ctx.queries);ctx.userHint=user||'';let result=base;
