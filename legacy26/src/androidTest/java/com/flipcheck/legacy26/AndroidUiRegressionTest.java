@@ -44,6 +44,8 @@ public final class AndroidUiRegressionTest {
         try {
             screenshot("launch-before-web-ready.png");
             waitForJs("typeof diagnostic26 === 'function'", 45000);
+            // Wait for document/window focus as well as script readiness before input.
+            waitForJs("document.hasFocus()", 15000);
             eval("window.fetch = function(){throw new Error('NETWORK_FORBIDDEN_IN_UI_TEST')}; true");
             int fullHeight = webHeight();
             assertViewportAboveNavigation();
@@ -51,7 +53,7 @@ public final class AndroidUiRegressionTest {
             eval("window.scrollTo(0,document.body.scrollHeight);true");
             assertViewportAboveNavigation(); screenshot("settings-three-buttons.png");
             tap("tabScan"); waitForJs("!$('scanPage').classList.contains('hide')", 5000);
-            tap("tabSettings");
+            tap("tabSettings"); waitForJs("!$('settingsPage').classList.contains('hide') && document.hasFocus()", 5000);
             eval("$('apiKey').scrollIntoView({block:'center'});true"); tap("apiKey");
             waitForJs("document.activeElement === $('apiKey')", 5000);
             instrumentation.runOnMainSync(() -> {
@@ -179,9 +181,14 @@ public final class AndroidUiRegressionTest {
         JSONObject p=new JSONObject(eval("(()=>{let r=$('"+id+"').getBoundingClientRect();return {x:r.x+r.width/2,y:r.y+r.height/2,w:innerWidth}})()"));
         int[] location=new int[2];int[] width={0};instrumentation.runOnMainSync(()->{web.getLocationOnScreen(location);width[0]=web.getWidth();});
         float scale=(float)(width[0]/p.getDouble("w"));float x=location[0]+(float)p.getDouble("x")*scale,y=location[1]+(float)p.getDouble("y")*scale;
-        long now=SystemClock.uptimeMillis();MotionEvent down=MotionEvent.obtain(now,now,MotionEvent.ACTION_DOWN,x,y,0),up=MotionEvent.obtain(now,now+60,MotionEvent.ACTION_UP,x,y,0);
-        down.setSource(android.view.InputDevice.SOURCE_TOUCHSCREEN);up.setSource(android.view.InputDevice.SOURCE_TOUCHSCREEN);
-        assertTrue(instrumentation.getUiAutomation().injectInputEvent(down,true));assertTrue(instrumentation.getUiAutomation().injectInputEvent(up,true));down.recycle();up.recycle();
+        long now=SystemClock.uptimeMillis();MotionEvent down=MotionEvent.obtain(now,now,MotionEvent.ACTION_DOWN,x,y,0);
+        down.setSource(android.view.InputDevice.SOURCE_TOUCHSCREEN);
+        assertTrue(instrumentation.getUiAutomation().injectInputEvent(down,true));down.recycle();
+        // Use a real press duration, not a release event dated in the future.
+        SystemClock.sleep(60);
+        MotionEvent up=MotionEvent.obtain(now,SystemClock.uptimeMillis(),MotionEvent.ACTION_UP,x,y,0);
+        up.setSource(android.view.InputDevice.SOURCE_TOUCHSCREEN);
+        assertTrue(instrumentation.getUiAutomation().injectInputEvent(up,true));up.recycle();
         instrumentation.waitForIdleSync();SystemClock.sleep(120);
     }
     private Uri createPhoto(int color) throws Exception {
