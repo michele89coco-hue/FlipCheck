@@ -83,3 +83,11 @@ test('PDF manuals remain eligible references and observed season mismatches bloc
  const x={photo_clues:[{text:'ZX-430',role:'model',certainty:'clear'}]};assert.equal(V.rankSources([{url:'https://acme.example/manual.pdf',text:'ZX-430 manual'}],x).length,1);
  const season={...base,photo_clues:[{text:'2025/26',role:'season',certainty:'clear'}]};assert.equal(V.validate(season,{candidates:[candidate]},[reference]).market_ready,false);
 });
+
+test('same catalogue name with different year or physical variant remains ambiguous',()=>{
+ for(const change of [{year:'1959'},{variant:'Different printing'}]) {
+  const out=V.validate(base,{candidates:[candidate,{...candidate,...change}]},[reference]);
+  assert.equal(out.market_ready,false);assert.equal(out.assistance_state,'ambiguous');
+ }
+ const duplicate=V.validate(base,{candidates:[candidate,structuredClone(candidate)]},[reference]);assert.equal(duplicate.market_ready,true);
+});

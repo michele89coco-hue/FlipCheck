@@ -106,7 +106,7 @@ function validate(base,reply,references){
   const accepted=decision&&c.identity_level!=='family'&&sameUnit&&named&&featureKinds.length>=2&&imageSources.length>0&&codesMatch&&configurationMatch&&seasonMatch&&!ambiguity&&!conflicts.length;
   return {...c,model:name||c.model,matches,fields,identity_conflicts:conflicts,accepted,rejection:accepted?'':!sameUnit?'unit_mismatch':!named?'catalogue_not_cited':!codesMatch?'physical_identifier_not_matched':!configurationMatch?'configuration_not_matched':!seasonMatch?'season_not_matched':ambiguity?'physical_ambiguity':conflicts.length?'contradiction':'insufficient_visual_comparison'};
  });
- const selected=[...new Map(candidates.filter(c=>c.accepted).map(c=>[[norm(c.model),c.unit].join('|'),c])).values()];
+ const selected=[...new Map(candidates.filter(c=>c.accepted).map(c=>[canonical(c),c])).values()];
  if(selected.length!==1)return {...base,visual_candidates:candidates,assistance_state:selected.length>1?'ambiguous':reply?.physical_detail_needed?'physical_detail_needed':'unidentified',next_photo_request:reply?.physical_detail_needed||null};
  const c=selected[0],fields=c.fields.map(f=>({...f,origin:'catalogue',source:refs.find(r=>r.id===f.reference_id).url}));
  const value=name=>fields.find(f=>f.field===name)?.value||'';
