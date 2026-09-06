@@ -8,8 +8,8 @@ android {
         applicationId 'com.flipcheck.beta.legacy26fix'
         minSdk 23
         targetSdk 36
-        versionCode 159
-        versionName '0.26.2-android-ui'
+        versionCode 161
+        versionName '0.26.4-photo-detail-web'
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         buildConfigField 'String', 'SOURCE_COMMIT', '"' + (System.getenv('GIT_COMMIT') ?: 'local') + '"'
     }

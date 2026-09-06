@@ -22,7 +22,7 @@
 <div style="height:10px"></div><div class="label">Prezzo richiesto <b>· facoltativo</b></div><div class="row"><input id="price" inputmode="decimal" placeholder="0,00"><select id="currency"><option>EUR</option><option>USD</option><option>GBP</option></select></div>
 <button class="btn" id="identifyBtn">IDENTIFICA</button>
 <div id="runStatus" class="status hide"></div>
-<div id="liveCost" class="status hide"></div><div class="note" style="margin-top:8px">Identificazione v0.26: confidenza calibrata e fonti pertinenti. 1 Vision + massimo 1 Web Search; nessuna fonte irrilevante può alzare da sola la confidenza del modello.</div>
+<div id="liveCost" class="status hide"></div><div class="note" style="margin-top:8px">Foto ad alta risoluzione e rilettura dei dettagli. Verifica di numeri, serie e codici con massimo 2 ricerche web.</div>
 </div>
 <div id="identPanel" class="panel hide">
 <div class="label">Identificazione</div><div id="identTitle" class="ident-title"></div><div id="tags"></div><div class="meter"><div id="confBar"></div></div><div id="identNote" class="note"></div>
@@ -513,4 +513,4 @@ $('resultPanel').innerHTML=`<div class="resultHead"><div class="verdict ${klass}
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function showPaywall(){$('resultPanel').classList.remove('hide');$('resultPanel').innerHTML=`<div class="resultHead"><div class="verdict data">PROVA TERMINATA</div><p class="sub">Starter Pack previsto: <b>3 FlipCheck a €0,99</b>.</p></div><div class="status">Google Play Billing non e' attivo nella Beta tecnica. Usa “Reset prova Beta” nelle impostazioni per continuare i test interni.</div><button class="btn secondary" onclick="switchTab('settings')">IMPOSTAZIONI BETA</button>`}
 updateTrial();updateUsage();renderTelemetry();
-</script><script src="editions.js"></script><script src="targeted-fixes.js"></script></body></html>
+</script><script src="editions.js"></script><script src="targeted-fixes.js"></script><script src="photo-detail.js"></script><script src="identity-web.js"></script><script src="detail-runtime.js"></script></body></html>

@@ -22,6 +22,7 @@ First Edition e Shadowless sono due attributi separati: il timbro non dimostra d
   const clean = value => String(value || '').trim();
   const norm = value => clean(value).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
   const strip = value => clean(value)
+    .replace(/\b(?:non|not|no)\s+(?:1st\s*edition|first\s*edition|prima\s*edizione|1[ªa°]\s*edizione)\b/gi,'')
     .replace(/\b(?:1st\s*edition|first\s*edition|prima\s*edizione|1[ªa°]\s*edizione|shadowless|shadowed|unlimited)\b/gi,'')
     .replace(/\s*([|·,])\s*(?=[|·,]|$)/g,'').replace(/^[|·,\s]+|[|·,\s]+$/g,'').replace(/\s+/g,' ').trim();
   function evaluate(p, count) {
