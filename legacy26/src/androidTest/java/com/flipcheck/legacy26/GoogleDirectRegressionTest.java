@@ -51,14 +51,15 @@ public final class GoogleDirectRegressionTest {
     @Test public void pdfReferencesRenderOnlyThreePagesAndCleanTemporaryFiles() throws Exception {
         java.io.File cache=androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().getTargetContext().getCacheDir();
         java.io.ByteArrayOutputStream bytes=new java.io.ByteArrayOutputStream();
-        try(android.graphics.pdf.PdfDocument doc=new android.graphics.pdf.PdfDocument()) {
+        android.graphics.pdf.PdfDocument doc=new android.graphics.pdf.PdfDocument();
+        try {
             int[] colors={android.graphics.Color.RED,android.graphics.Color.GREEN,android.graphics.Color.BLUE,android.graphics.Color.BLACK};
             for(int i=0;i<4;i++) {
                 android.graphics.pdf.PdfDocument.Page page=doc.startPage(new android.graphics.pdf.PdfDocument.PageInfo.Builder(300,400,i+1).create());
                 page.getCanvas().drawColor(colors[i]);doc.finishPage(page);
             }
             doc.writeTo(bytes);
-        }
+        }finally{doc.close();}
         JSONObject result=GoogleVisionBridge.pdfData(bytes.toByteArray(),cache);
         assertEquals(4,result.getInt("page_count"));assertEquals("[1,2,3]",result.getJSONArray("pages_rendered").toString());
         String encoded=result.getString("image_data").split(",",2)[1];
