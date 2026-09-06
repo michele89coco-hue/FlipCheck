@@ -218,4 +218,30 @@ test('Google references with the same image are downloaded and compared once',as
  await reset();await upload();const result=await page.evaluate(async()=>FlipCheckDirect.references({state:'ok',pagesWithMatchingImages:[{url:'https://catalog.example/a',pageTitle:'Entry A',fullMatchingImages:[{url:'https://catalog.example/item.png'}]},{url:'https://catalog.example/b',pageTitle:'Entry B',fullMatchingImages:[{url:'https://catalog.example/item.png'}]}]},{}));
  assert.equal(result.references.length,1);assert.equal(googleRequests.filter(r=>r.action==='image').length,1);
 });
+
+
+test('build171 Machamp audited catalogue gap cannot be skipped by raw Vision readiness',async()=>{
+ await reset();vision=structuredClone(require('./fixtures/diagnostics-171.json').machamp.vision);providerMode='no_images';resolverMode='catalogue';comparison={physical_detail_needed:null,candidates:[]};
+ await upload();await identify();assert.equal(requests[1].text.format.name,'flipcheck_resolver');assert.equal(requests.filter(r=>r.tools?.length).length,1);assert.notEqual(await page.evaluate(()=>ident.market_ready),true);
+});
+test('build171 Politoed searches catalogue before an uncertain printing detail and keeps candidate names',async()=>{
+ await reset();vision=structuredClone(require('./fixtures/diagnostics-171.json').politoed.vision);providerMode='no_images';resolverMode='catalogue';comparison={physical_detail_needed:null,candidates:[]};
+ await upload();await identify();assert.ok(!requests.some(r=>r.text.format.name==='flipcheck_printing_detail'));assert.ok(requests.some(r=>r.text.format.name==='flipcheck_resolver'));
+ const model='Documented candidate';const out=await page.evaluate(model=>{scan164.candidateArchive=[];syncIdentity169({kind:'object',market_ready:false,candidate_models:[{model,verified:false}]});return syncIdentity169({kind:'object',market_ready:false,candidate_models:[]});},model);assert.equal(out.candidate_models[0].model,model);assert.equal(out.market_ready,false);
+});
+test('build171 current Doncic missing parallel confirmation triggers assistance and retains core identity',async()=>{
+ await reset();vision=structuredClone(require('./fixtures/diagnostics-171.json').doncic.vision);providerMode='no_images';resolverMode='catalogue';comparison={physical_detail_needed:null,candidates:[]};
+ await upload();await identify();assert.equal(googleRequests.filter(r=>r.action==='detect').length,1);assert.notEqual(await page.evaluate(()=>ident.market_ready),true);assert.ok(await page.evaluate(()=>ident.core_identity?.model));
+});
+test('catalogue download continues past three missing pages and passes PDF observation terms',async()=>{
+ await reset();const out=await page.evaluate(async()=>{
+  const previous=window.FlipCheckGoogle,requests=[];window.FlipCheckGoogle={request(id,action,payload){const p=JSON.parse(payload);requests.push({action,...p});queueMicrotask(()=>FlipCheckDirect.receive(id,action==='image'?{status:200,image_data:'image marker'}:p.url.endsWith('/3')?{status:200,text:'Reference object',images:['https://fourth.example/image.jpg']}:{status:200,text:'Reference object',images:[]}));},cancel(){}};
+  try{return {result:await FlipCheckDirect.catalogueReferences(Array.from({length:4},(_,i)=>({url:'https://source'+i+'.example/'+i,title:'Reference object'})),{}, {category:'controller',photo_clues:[{text:'PAIR',role:'text',certainty:'clear'}]}),requests};}finally{window.FlipCheckGoogle=previous;}
+ });assert.equal(out.result.references.length,1);assert.equal(out.result.referenceAttempts,4);assert.ok(out.requests[0].terms.includes('PAIR'));
+});
+test('indexed title is not combined with an unrelated retrieved page and source gap hides target photo button',async()=>{
+ await reset();const refs=await page.evaluate(async()=>{const previous=window.FlipCheckGoogle;window.FlipCheckGoogle={request(id,action){queueMicrotask(()=>FlipCheckDirect.receive(id,action==='image'?{status:200,image_data:'image marker'}:{status:200,text:'Insurance agency general services',images:[]}));},cancel(){}};try{return await FlipCheckDirect.references({state:'ok',pagesWithMatchingImages:[{url:'https://example.com/item',pageTitle:'Machamp Fossil Rare Card 8/102',fullMatchingImages:[{url:'https://example.com/card.jpg'}]}]},{});}finally{window.FlipCheckGoogle=previous;}});assert.equal(refs.references.length,0);
+ await page.evaluate(()=>renderIdent({...ident,kind:'object',title:'Candidate',market_ready:false,model_confidence:50,assistance_state:'source_detail_needed',next_photo_request:null,candidate_models:[{model:'Candidate A'}]}));assert.match(await page.locator('#visualResult').textContent(),/Candidate A/);assert.equal(await page.locator('#addConfirmPhoto').isVisible(),false);
+});
+
 test('no unhandled browser errors',()=>assert.deepEqual(errors,[]));

@@ -91,4 +91,30 @@ public final class GoogleDirectRegressionTest {
         try{GoogleVisionBridge.pdfData("not PDF".getBytes(),cache);fail();}catch(IOException expected){}
     }
 
+    @Test public void oldTableAndLazyImagesRemainUsableWithoutTreatingDetailAsCollection() throws Exception {
+        String html="<html><head><title>Catalog entry Example</title></head><body><table><tr><td><img class='logo' src='/logo.png'><img width='16' height='16' src='/tiny.png'><img alt='Example card' data-src='/front.jpg' src='/placeholder.png'><img data-srcset='/small.jpg 300w, /large.jpg 1200w'></td></tr></table><a href='/next'><img src='/next.jpg'></a><a href='/previous'><img src='/previous.jpg'></a></body></html>";
+        JSONObject result=GoogleVisionBridge.pageData(html,"https://catalog.example/entry",new org.json.JSONArray().put("Example card"));
+        assertEquals("https://catalog.example/front.jpg",result.getJSONArray("images").getString(0));
+        assertTrue(result.getJSONArray("images").toString().contains("large.jpg"));
+        assertFalse(result.getJSONArray("images").toString().contains("tiny.png"));assertFalse(result.getBoolean("is_collection"));
+    }
+    @Test public void manualSelectionFindsObservedControlsBeyondFirstThreePages() throws Exception {
+        java.io.File cache=androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().getTargetContext().getCacheDir();
+        java.io.ByteArrayOutputStream bytes=new java.io.ByteArrayOutputStream();
+        android.graphics.pdf.PdfDocument doc=new android.graphics.pdf.PdfDocument();
+        android.graphics.Paint paint=new android.graphics.Paint();paint.setColor(android.graphics.Color.BLACK);paint.setTextSize(16);
+        try{
+            for(int n=1;n<=10;n++){
+                android.graphics.pdf.PdfDocument.Page page=doc.startPage(new android.graphics.pdf.PdfDocument.PageInfo.Builder(400,500,n).create());
+                page.getCanvas().drawText(n==7?"Controller PAIR TOP PICKS SUBTITLE":"Installation and warranty",20,60,paint);doc.finishPage(page);
+            }
+            doc.writeTo(bytes);
+        }finally{doc.close();}
+        JSONObject result=GoogleVisionBridge.pdfData(bytes.toByteArray(),cache,new org.json.JSONArray().put("PAIR").put("TOP PICKS").put("SUBTITLE"));
+        assertEquals("observed_text_match",result.getString("page_selection"));
+        assertEquals("[7]",result.getJSONArray("pages_rendered").toString());
+        assertTrue(result.getString("text").contains("TOP PICKS"));assertEquals(10,result.getInt("pages_scanned"));
+        assertEquals(0,cache.listFiles((dir,name)->name.startsWith("reference-")&&name.endsWith(".pdf")).length);
+    }
+
 }

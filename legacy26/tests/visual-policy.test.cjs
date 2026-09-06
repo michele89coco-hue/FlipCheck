@@ -164,3 +164,33 @@ test('build170 box completes its missing specification from an exact entry witho
  for(const change of [{snippet:'2 autographs in every box.'},{title:'A different product, hobby box'},{title:'2024-25 Topps Chrome Update Series Basketball Hobby, Box'}])assert.notEqual(V.completeComparison(f.vision,reply,refs,[{...source,...change}]).market_ready,true);
  assert.notEqual(V.completeComparison(f.vision,reply,f.references,[source]).market_ready,true);
 });
+
+const recorded171=require('./fixtures/diagnostics-171.json');
+test('build171 explicit parallel doubt stays open despite physical_evidence and 96 percent',()=>{
+ const x=recorded171.doncic.vision;assert.equal(x.market_ready,true);assert.equal(V.variantPending(x),true);assert.equal(V.ready(V.auditIdentity(x)),false);
+ assert.equal(V.variantPending({...x,variant:'Base',missing_information:[],verification_summary:'Read completely',unresolved_identity_fields:['variant']}),true);
+ assert.equal(V.variantPending({...x,variant:'Base',missing_information:['Condition should be confirmed'],verification_summary:'Read completely'}),false);
+});
+test('build171 subject in family does not bypass catalogue and generic card unit is not a mismatch',()=>{
+ const x=recorded171.politoed.vision;assert.equal(V.cataloguePending(x),true);
+ const reply=recorded171.politoed.phases.find(p=>p.stage==='flipcheck_visual_comparison').result;
+ const out=V.validate(x,reply,recorded171.politoed.references.map(r=>({...r,image_data:'provided reference marker'})));
+ assert.ok(out.visual_candidates.every(c=>c.rejection!=='unit_mismatch'));assert.notEqual(out.market_ready,true);
+ assert.equal(V.validate({...base,object_unit:'panel'},{candidates:[{...candidate,unit:'single'}]},[reference]).market_ready,false);
+});
+test('build171 catalogue retrieval diversifies domains and uses candidate names only to discover sources',()=>{
+ const f=recorded171.pele,ranked=V.rankSources(f.identity.raw_web_results,f.vision,f.identity.candidate_models);
+ assert.notEqual(new URL(ranked[0].url).hostname,new URL(ranked[1].url).hostname);
+ const p=recorded171.politoed,q=V.plan(p.vision).query,r=V.rankSources(p.identity.raw_web_results,p.vision,p.identity.candidate_models);
+ assert.ok(r.some(s=>/tcgcollector|serebii/.test(s.url)));assert.equal(V.plan(p.vision).query,q);assert.equal(V.ready(p.vision),false);
+});
+test('reference image label facts require a readable same-image text match and never borrow listing IDs',()=>{
+ const c={...candidate,fields:[{field:'model',scope:'target',evidence:'image',value:'Historical portrait panel',reference_id:'ref1',quote:'Historical portrait panel'}],matches:[candidate.matches[0],{...candidate.matches[1],reference_detail:'Historical portrait panel'}]};
+ const r={...reference,text:'Indexed page title only'};assert.equal(V.validate(base,{candidates:[c]},[r]).market_ready,true);
+ for(const changes of [{matches:[candidate.matches[0]]},{fields:[{...c.fields[0],scope:'listing'}]},{fields:[{...c.fields[0],quote:'Another entry',value:'Another entry'}]}])assert.equal(V.validate(base,{candidates:[{...c,...changes}]},[r]).market_ready,false);
+ assert.equal(V.validate(base,{candidates:[c]},[{...r,image_data:''}]).market_ready,false);
+});
+test('missing manual figure is a source deficit, not a request for a new target photo',()=>{
+ const f=recorded171.remote,reply=f.phases.find(p=>p.stage==='flipcheck_visual_comparison').result;
+ const out=V.validate(f.vision,reply,f.catalogueRetrieval.references||[]);assert.equal(out.assistance_state,'source_detail_needed');assert.equal(out.next_photo_request,null);
+});

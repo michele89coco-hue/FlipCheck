@@ -59,6 +59,7 @@ async function references(found,options){
    catch(_){} // Discovery can continue through the text query if a detail page is unavailable.
   }
   // Collection text must not be paired with an arbitrary product image on that page.
+  if(document?.text&&!document.is_collection&&!titleSupported(p.pageTitle,document.text))return null;
   const text=document?.is_collection?(link?.title||''):document?.text||p.pageTitle;
   if(!text)return null;
   return {id:'ref'+(i+1),url:referenceUrl,title,text:text.slice(0,5000),text_origin:document?.is_collection?'linked_image_title':document?.text?'retrieved_page':'google_indexed_title',image_url:image.url,image_data:data.image_data};
@@ -66,19 +67,44 @@ async function references(found,options){
  const refs=results.filter(r=>r.status==='fulfilled'&&r.value).map(r=>r.value);
  return {...found,references:refs,referenceAttempts:pages.length,referenceState:!pages.length?'no_linked_images':refs.length?'retrieved':'downloads_unavailable',state:pages.length&&!refs.length?'references_unavailable':'ok'};
 }
-async function catalogueReferences(sources,options,base){
- const pages=list(sources).filter(s=>url(s.url)).slice(0,3);
- const results=await Promise.allSettled(pages.map(async(s,i)=>{
-  const page=await call('page',{url:s.url},options);
-  if(page.document_type==='pdf'&&page.image_data){const text=[s.title,s.text||s.snippet].filter(Boolean).join(' ').slice(0,5000);if(!text)return null;return {id:'ref'+(i+1),url:s.url,title:s.title,text,text_origin:'web_indexed_document',pages_rendered:page.pages_rendered,page_count:page.page_count,image_url:s.url,image_data:page.image_data};}
-  if(!page.text||page.is_collection)return null;
-  const image=list(page.images).map(url).find(u=>u&&FlipCheckVisual.referenceImageUseful(u));if(!image)return null;
-  const picture=await call('image',{url:image},options);if(!picture.image_data)return null;
-  return {id:'ref'+(i+1),url:s.url,title:page.title||s.title,text:page.text.slice(0,5000),text_origin:'retrieved_page',image_url:image,image_data:picture.image_data};
- }));
- const refs=results.filter(r=>r.status==='fulfilled'&&r.value).map(r=>r.value).filter((r,i,a)=>a.findIndex(x=>imageKey(x.image_url)===imageKey(r.image_url))===i);
- return {state:'ok',references:refs,referenceAttempts:pages.length,referenceState:refs.length?'retrieved':'no_accessible_page_images'};
+function titleSupported(title,text){
+ const words=String(title||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().match(/[a-z0-9]{4,}/g)||[];
+ const useful=[...new Set(words)].filter(w=>!['https','www','html','shop','ebay','sale','buy','item','card','holo','rare','with','and','the','product','catalogue','entry'].includes(w));
+ const body=String(text||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+ return !useful.length||useful.some(w=>body.includes(w));
 }
+async function catalogueReferences(sources,options,base){
+ const pages=list(sources).filter(s=>url(s.url)).slice(0,6),refs=[],attempts=[];
+ const terms=[base?.category,...FlipCheckVisual.evidence(base||{}).map(c=>c.text)].filter(Boolean).slice(0,12);
+ async function retrieve(s,i){
+  const attempt={url:s.url,state:'requested'};attempts.push(attempt);
+  try{
+   const page=await call('page',{url:s.url,terms},options);attempt.status=page.status||0;
+   if(page.status!==200){attempt.state='page_unavailable';return null;}
+   if(page.document_type==='pdf'&&page.image_data){
+    const text=(page.text||[s.title,s.text||s.snippet].filter(Boolean).join(' ')).slice(0,5000);
+    attempt.state='retrieved_pdf';attempt.pages_rendered=page.pages_rendered;attempt.page_selection=page.page_selection;
+    if(!text)return null;
+    return {id:'ref'+(i+1),url:s.url,title:s.title,text,text_origin:page.text?'retrieved_pdf_pages':'web_indexed_document',pages_rendered:page.pages_rendered,page_count:page.page_count,page_selection:page.page_selection,image_url:s.url,image_data:page.image_data};
+   }
+   if(!page.text||page.is_collection){attempt.state=page.is_collection?'collection_page':'no_page_text';return null;}
+   if(!titleSupported(s.title,page.text)){attempt.state='page_content_mismatch';return null;}
+   const images=list(page.images).map(url).filter(u=>u&&FlipCheckVisual.referenceImageUseful(u)).slice(0,2);
+   for(const image of images){
+    const picture=await call('image',{url:image},options);if(!picture.image_data)continue;
+    attempt.state='retrieved_image';return {id:'ref'+(i+1),url:page.url||s.url,title:page.title||s.title,text:page.text.slice(0,5000),text_origin:'retrieved_page',image_url:image,image_data:picture.image_data};
+   }
+   attempt.state=images.length?'image_unavailable':'no_linked_images';return null;
+  }catch(error){attempt.state=options?.signal?.aborted?'retrieval_timeout':'download_unavailable';return null;}
+ }
+ // A bounded second group recovers other domains when the first pages contain no useful image.
+ for(let offset=0;offset<pages.length&&refs.length<3&&!options?.signal?.aborted;offset+=3){
+  const results=await Promise.allSettled(pages.slice(offset,offset+3).map((s,i)=>retrieve(s,offset+i)));
+  for(const result of results)if(result.status==='fulfilled'&&result.value&&!refs.some(r=>imageKey(r.image_url)===imageKey(result.value.image_url)))refs.push(result.value);
+ }
+ return {state:'ok',references:refs.slice(0,3),referenceAttempts:attempts.length,attempts,referenceState:refs.length?'retrieved':'no_accessible_page_images'};
+}
+
 function imageKey(value){try{const u=new URL(value);for(const key of ['width','height','w','h','quality'])u.searchParams.delete(key);return u.href;}catch(_){return '';}}
 root.FlipCheckDirect={call,receive,normalize,references,catalogueReferences,url};
 })(typeof window==='undefined'?globalThis:window);

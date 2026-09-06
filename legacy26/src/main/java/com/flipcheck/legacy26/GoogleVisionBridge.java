@@ -109,7 +109,7 @@ public final class GoogleVisionBridge {
                 if ("detect".equals(action)) r=googleRequest(p);
                 else if ("page".equals(action) || "image".equals(action)) r=referenceRequest(p.optString("url"));
                 else throw new IOException("invalid_action");
-                execute(id,action,r,0);
+                execute(id,action,r.newBuilder().tag(JSONObject.class,p).build(),0);
             } catch (Exception e) {
                 String state="invalid_api_key".equals(e.getMessage())?"invalid_api_key":"invalid_request";
                 deliver(id,json("state",state,"status",0,"attempted",false));
@@ -130,7 +130,7 @@ public final class GoogleVisionBridge {
                     if (!"detect".equals(action) && code>=300 && code<400 && redirects<2) {
                         HttpUrl next=r.request().url().resolve(r.header("Location",""));
                         if(next==null) throw new IOException("invalid_redirect");
-                        Request redirected=referenceRequest(next.toString());
+                        Request redirected=referenceRequest(next.toString()).newBuilder().tag(JSONObject.class,request.tag(JSONObject.class)).build();
                         synchronized(calls) { if(calls.get(id)!=c) return; execute(id,action,redirected,redirects+1); }
                         return;
                     }
@@ -141,7 +141,8 @@ public final class GoogleVisionBridge {
                     else if ("page".equals(action)) {
                         boolean pdf=r.header("Content-Type","").toLowerCase().contains("application/pdf") || r.request().url().encodedPath().toLowerCase().endsWith(".pdf");
                         byte[] data=read(r,pdf?6000000:600000);
-                        result=pdf?pdfData(data,referenceCache):pageData(new String(data,StandardCharsets.UTF_8),r.request().url().toString());
+                        JSONObject context=request.tag(JSONObject.class);JSONArray terms=context==null?new JSONArray():context.optJSONArray("terms");
+                        result=pdf?pdfData(data,referenceCache,terms):pageData(new String(data,StandardCharsets.UTF_8),r.request().url().toString(),terms);
                     } else {
                         byte[] data=read(r,4000000);String mime=imageType(data);
                         if(mime.isEmpty()) throw new IOException("invalid_image");
@@ -160,7 +161,8 @@ public final class GoogleVisionBridge {
         if(error instanceof java.net.ConnectException)return "connection_error";
         return error instanceof java.io.InterruptedIOException?"timeout":"network_error";
     }
-    static JSONObject pageData(String html, String pageUrl) {
+    static JSONObject pageData(String html, String pageUrl) {return pageData(html,pageUrl,new JSONArray());}
+    static JSONObject pageData(String html, String pageUrl, JSONArray terms) {
         Document doc=Jsoup.parse(html,pageUrl);
         LinkedHashSet<String> images=new LinkedHashSet<>();
         StringBuilder productText=new StringBuilder();
@@ -183,18 +185,27 @@ public final class GoogleVisionBridge {
             }catch(IOException ignored){}
             if(imageLinks.length()>=60)break;
         }
-        // Only images explicitly linked by this page. Global search images are never relabelled as its evidence.
-        for(Element el:doc.select("meta[property=og:image],meta[property=og:image:secure_url],meta[name=twitter:image],link[rel=image_src],main img[src],article img[src]")) {
-            String attr=el.tagName().equals("meta")?"content":el.tagName().equals("link")?"href":"src";
-            try { images.add(publicUrl(el.absUrl(attr)).toString()); } catch(IOException ignored) {}
-            if(images.size()>=3)break;
+        // Include old table layouts and lazy image attributes; only URLs explicitly present in this page.
+        java.util.LinkedHashMap<String,Integer> rankedImages=new java.util.LinkedHashMap<>();
+        for(Element el:doc.select("meta[property=og:image],meta[property=og:image:secure_url],meta[name=twitter:image],link[rel=image_src],img")) {
+            String label=el.attr("alt")+" "+el.attr("title");
+            if((el.attr("class")+" "+label).matches("(?i).*(?:logo|favicon|avatar|tracking|spinner|icon).*"))continue;
+            int width=number(el.attr("width")),height=number(el.attr("height"));
+            if(width>0&&width<80||height>0&&height<80)continue;
+            int score=(el.tagName().equals("meta")||el.tagName().equals("link")?20:0)+relevance(label,terms)+(width>=200||height>=200?4:0);
+            for(String attr:el.tagName().equals("meta")?new String[]{"content"}:el.tagName().equals("link")?new String[]{"href"}:new String[]{"data-src","data-original","data-lazy-src","src","data-srcset","srcset"}) {
+                String value=el.attr(attr);if(attr.endsWith("srcset")){String[] choices=value.split(",");value=choices[choices.length-1].trim().split("\\s+")[0];}
+                if(value.isEmpty())continue;
+                try{String absolute=publicUrl(new java.net.URL(new java.net.URL(pageUrl),value).toString()).toString();rankedImages.merge(absolute,score,Math::max);}catch(Exception ignored){}
+            }
         }
+        rankedImages.entrySet().stream().sorted((a,b)->Integer.compare(b.getValue(),a.getValue())).limit(6).forEach(e->images.add(e.getKey()));
         doc.select("script,style,noscript,svg,nav,header,footer").remove();
         Element main=doc.selectFirst("main,article,[role=main],[itemtype$=/Product]");
         Element content=main==null?doc.body():main;
         for(Element block:content.select("p,li,h1,h2,h3,section,div,br"))block.appendText("\n");
         String text=(doc.title()+"\n"+productText+"\n"+content.wholeText()).replaceAll("[\\t\\x0B\\f\\r ]+"," ").replaceAll(" *\n *","\n").replaceAll("\n{3,}","\n\n").trim();
-        return json("status",200,"url",pageUrl,"title",doc.title(),"text",text.substring(0,Math.min(5000,text.length())),"images",new JSONArray(images),"image_links",imageLinks,"is_collection",productText.length()==0&&linkedPages.size()>1);
+        return json("status",200,"url",pageUrl,"title",doc.title(),"text",text.substring(0,Math.min(5000,text.length())),"images",new JSONArray(images),"image_links",imageLinks,"is_collection",productText.length()==0&&linkedPages.size()>1&&(doc.title().matches("(?i).*(?:all products|search results|gallery|catalogue list).*")||pageUrl.matches("(?i).*/(?:shop|search|collection|category|gallery)[^/]*[/?].*")));
     }
     private static void productFacts(Object value,StringBuilder out,int depth) {
         if(depth>6||out.length()>2200)return;
@@ -208,23 +219,56 @@ public final class GoogleVisionBridge {
         }
         if(item.has("@graph"))productFacts(item.opt("@graph"),out,depth+1);
     }
-    static synchronized JSONObject pdfData(byte[] data, File cache) throws Exception {
+    private static int number(String value){try{return Integer.parseInt(value);}catch(Exception e){return 0;}}
+    private static String normalized(String value){return java.text.Normalizer.normalize(value,java.text.Normalizer.Form.NFD).replaceAll("\\p{M}","").toLowerCase(java.util.Locale.ROOT).replaceAll("[^a-z0-9]+"," ").trim();}
+    private static int relevance(String text,JSONArray terms){
+        if(terms==null)return 0;String hay=" "+normalized(text)+" ";int score=0;
+        LinkedHashSet<String> words=new LinkedHashSet<>();
+        for(int i=0;i<Math.min(12,terms.length());i++){
+            String term=normalized(terms.optString(i));if(term.length()<3)continue;
+            if(hay.contains(" "+term+" "))score+=6;
+            for(String word:term.split(" "))if(word.length()>=4&&words.add(word)&&hay.contains(" "+word+" "))score++;
+        }
+        return score;
+    }
+    static JSONObject pdfData(byte[] data,File cache) throws Exception {return pdfData(data,cache,new JSONArray());}
+    static synchronized JSONObject pdfData(byte[] data, File cache,JSONArray terms) throws Exception {
         if(data.length<5 || data.length>6000000 || !new String(data,0,5,StandardCharsets.US_ASCII).equals("%PDF-"))throw new IOException("invalid_pdf");
         File file=File.createTempFile("reference-",".pdf",cache);Bitmap sheet=null;
         try {
             try(FileOutputStream out=new FileOutputStream(file)){out.write(data);}
             try(ParcelFileDescriptor fd=ParcelFileDescriptor.open(file,ParcelFileDescriptor.MODE_READ_ONLY);PdfRenderer renderer=new PdfRenderer(fd)) {
-                int count=Math.min(3,renderer.getPageCount());if(count==0)throw new IOException("empty_pdf");
+                int total=renderer.getPageCount();if(total==0)throw new IOException("empty_pdf");
+                java.util.Map<Integer,String> pageTexts=new java.util.HashMap<>();
+                java.util.Map<Integer,Integer> scores=new java.util.HashMap<>();
+                String selection="first_pages_no_text_selection";int scanned=0;
+                if(android.os.Build.VERSION.SDK_INT>=35&&terms!=null&&terms.length()>0){
+                    long until=android.os.SystemClock.elapsedRealtime()+4000;
+                    for(int n=0;n<Math.min(total,128)&&android.os.SystemClock.elapsedRealtime()<until;n++)try(PdfRenderer.Page page=renderer.openPage(n)){
+                        StringBuilder text=new StringBuilder();
+                        for(android.graphics.pdf.content.PdfPageTextContent part:page.getTextContents()) {text.append(part.getText()).append(' ');if(text.length()>16000)break;}
+                        pageTexts.put(n,text.toString());scanned++;int score=relevance(text.toString(),terms);
+                        if(normalized(text.toString()).startsWith("contents")||normalized(text.toString()).startsWith("table of contents"))score=0;
+                        if(score>0)scores.put(n,score);
+                    }
+                    selection=scores.isEmpty()?"first_pages_no_text_match":"observed_text_match";
+                }
+                java.util.List<Integer> selected=new java.util.ArrayList<>(scores.keySet());
+                selected.sort((a,b)->{int c=Integer.compare(scores.get(b),scores.get(a));return c!=0?c:Integer.compare(a,b);});
+                if(selected.size()>3)selected=new java.util.ArrayList<>(selected.subList(0,3));
+                if(selected.isEmpty())for(int n=0;n<Math.min(3,total);n++)selected.add(n);
+                java.util.Collections.sort(selected);int count=selected.size();
                 sheet=Bitmap.createBitmap(768*count,1024,Bitmap.Config.ARGB_8888);sheet.eraseColor(Color.WHITE);Canvas canvas=new Canvas(sheet);
-                JSONArray pages=new JSONArray();
-                for(int i=0;i<count;i++)try(PdfRenderer.Page page=renderer.openPage(i)) {
+                JSONArray pages=new JSONArray();StringBuilder extracted=new StringBuilder();
+                for(int i=0;i<count;i++)try(PdfRenderer.Page page=renderer.openPage(selected.get(i))) {
                     float scale=Math.min(768f/page.getWidth(),1024f/page.getHeight());
                     int w=Math.max(1,Math.round(page.getWidth()*scale)),h=Math.max(1,Math.round(page.getHeight()*scale));
                     Bitmap bitmap=Bitmap.createBitmap(w,h,Bitmap.Config.ARGB_8888);
-                    try{bitmap.eraseColor(Color.WHITE);page.render(bitmap,null,null,PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);canvas.drawBitmap(bitmap,null,new Rect(i*768,0,i*768+w,h),null);pages.put(i+1);}finally{bitmap.recycle();}
+                    try{bitmap.eraseColor(Color.WHITE);page.render(bitmap,null,null,PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);canvas.drawBitmap(bitmap,null,new Rect(i*768,0,i*768+w,h),null);pages.put(selected.get(i)+1);}finally{bitmap.recycle();}
+                    String text=pageTexts.getOrDefault(selected.get(i),"");if(!text.isEmpty())extracted.append("Page ").append(selected.get(i)+1).append(": ").append(text.substring(0,Math.min(1500,text.length()))).append('\n');
                 }
                 ByteArrayOutputStream out=new ByteArrayOutputStream();sheet.compress(Bitmap.CompressFormat.JPEG,92,out);
-                return json("status",200,"document_type","pdf","page_count",renderer.getPageCount(),"pages_rendered",pages,"image_data","data:image/jpeg;base64,"+Base64.encodeToString(out.toByteArray(),Base64.NO_WRAP));
+                return json("status",200,"document_type","pdf","page_count",total,"pages_rendered",pages,"page_selection",selection,"pages_scanned",scanned,"text",extracted.toString(),"image_data","data:image/jpeg;base64,"+Base64.encodeToString(out.toByteArray(),Base64.NO_WRAP));
             }
         }finally{if(sheet!=null)sheet.recycle();file.delete();}
     }

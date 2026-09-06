@@ -105,11 +105,13 @@ public final class AndroidUiRegressionTest {
                 assertEquals(3,launched.get().getIntExtra(MediaStore.EXTRA_PICK_IMAGES_MAX,0));
                 assertTrue(launched.get().getBooleanExtra(Intent.EXTRA_ALLOW_MULTIPLE,false));
                 assertEquals("true",eval("photoEvents.at(-1).selected === 3 && photoEvents.at(-1).loaded === 3"));
+                assertEquals("true",eval("JSON.parse(FlipCheckHost.photoPickerInfo()).multiple_requested && JSON.parse(FlipCheckHost.photoPickerInfo()).received === 3 && JSON.parse(FlipCheckHost.photoPickerInfo()).delivered === 3"));
                 eval("removePhoto(0);removePhoto(1);removePhoto(2);$('addPhotoFiles').scrollIntoView({block:'center'});true");launched.set(null);
                 tap("addPhotoFiles");waitForJs("validImageCount() === 3 && !photoBusy",15000);
                 assertEquals(Intent.ACTION_OPEN_DOCUMENT,launched.get().getAction());
                 assertTrue(launched.get().getBooleanExtra(Intent.EXTRA_ALLOW_MULTIPLE,false));
                 assertEquals("true",eval("photoEvents.at(-1).selected === 3 && photoEvents.at(-1).loaded === 3"));
+                assertEquals("true",eval("JSON.parse(FlipCheckHost.photoPickerInfo()).multiple_requested && JSON.parse(FlipCheckHost.photoPickerInfo()).received === 3 && JSON.parse(FlipCheckHost.photoPickerInfo()).delivered === 3"));
             } finally { instrumentation.removeMonitor(monitor); }
 
             // Also open the real system picker. URI delivery above is deterministic via an

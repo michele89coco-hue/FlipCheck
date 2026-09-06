@@ -35,6 +35,8 @@ public final class MainActivity extends Activity {
     private GoogleVisionBridge googleVision;
     private ValueCallback<Uri[]> pickerCallback;
     private boolean pickerMultiple;
+    private volatile String pickerInfo="{}";
+    private String pickerAction="";
     private volatile Boolean requestedPickerMultiple;
     private volatile boolean requestedDocumentPicker;
     private boolean pickerDocuments;
@@ -132,14 +134,14 @@ public final class MainActivity extends Activity {
                 picker.putExtra(MediaStore.EXTRA_PICK_IMAGES_MAX, Math.min(3, MediaStore.getPickImagesMaxLimit()));
                 if (Build.VERSION.SDK_INT >= 35) picker.putExtra(MediaStore.EXTRA_PICK_IMAGES_IN_ORDER, true);
             }
-            try { startActivityForResult(picker, PICK_IMAGES); return; }
+            try { pickerAction=picker.getAction(); startActivityForResult(picker, PICK_IMAGES); return; }
             catch (ActivityNotFoundException ignored) { }
         }
         Intent document = new Intent(Intent.ACTION_OPEN_DOCUMENT).setType("image/*");
         document.addCategory(Intent.CATEGORY_OPENABLE);
         document.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, pickerMultiple);
         document.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        try { startActivityForResult(document, PICK_IMAGES); }
+        try { pickerAction=document.getAction(); startActivityForResult(document, PICK_IMAGES); }
         catch (ActivityNotFoundException e) { finishPicker(null); }
     }
 
@@ -162,6 +164,7 @@ public final class MainActivity extends Activity {
                 }
                 else if (data.getData() != null && "content".equals(data.getData().getScheme())) values.add(data.getData());
             }
+            pickerInfo=GoogleVisionBridge.json("action",pickerAction,"multiple_requested",pickerMultiple,"received",data==null?0:data.getClipData()!=null?data.getClipData().getItemCount():data.getData()!=null?1:0,"delivered",values.size(),"cancelled",resultCode!=RESULT_OK).toString();
             finishPicker(values.isEmpty() ? null : values.toArray(new Uri[0]));
         } else if (requestCode == SAVE_DIAGNOSTIC) {
             String payload = pendingDiagnostic;
@@ -176,6 +179,7 @@ public final class MainActivity extends Activity {
     }
 
     public final class DiagnosticBridge {
+        @JavascriptInterface public String photoPickerInfo() {return pickerInfo;}
         @JavascriptInterface public void preparePhotoPicker(boolean multiple) {
             requestedDocumentPicker = false;
             requestedPickerMultiple = multiple;

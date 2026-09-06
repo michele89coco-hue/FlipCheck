@@ -19,12 +19,16 @@ const appearanceFeatures=['color','pattern','finish'];
 function variantPending(base){
  if(base?.catalogue_verified===true)return false;
  const doubts=[...list(base?.missing_information),base?.verification_summary||''];
- return base?.variant_needs_verification===true||base?.identity_basis?.variant==='inferred'||/likely|probab|uncertain|da verificare|unconfirmed|possib|incert/i.test(base?.variant||'')||
-  doubts.some(t=>/variant|parallel|subtype|sottotipo/i.test(t)&&/infer|dedott|uncertain|unverified|not verified|da verificare|non confermat/i.test(t))||
+ return list(base?.unresolved_identity_fields).includes('variant')||base?.variant_needs_verification===true||base?.identity_basis?.variant==='inferred'||/likely|probab|uncertain|da verificare|unconfirmed|possib|incert/i.test(base?.variant||'')||
+  doubts.some(t=>/variant|parallel|subtype|sottotipo/i.test(t)&&/infer|dedott|uncertain|unverified|not verified|da verificare|non confermat|(?:should|must) be confirmed|needs? (?:to be )?confirm|not printed|da confermare/i.test(t))||
   (base?.variant_needs_verification!==false&&base?.kind==='card'&&!base.market_ready&&Number(base.model_confidence)>=90&&physical(base).some(o=>appearanceFeatures.includes(o.feature)));
 }
 function cataloguePending(base){
- if(!base||base.catalogue_verified===true||base.kind!=='card'||empty(base.family))return false;
+ if(!base||base.catalogue_verified===true||base.kind!=='card')return false;
+ if(list(base.unresolved_identity_fields).includes('family'))return true;
+ if(empty(base.family))return false;
+ // A subject copied into the series field does not establish a catalogue series.
+ if(empty(base.model)&&clues(base).some(c=>c.role==='text'&&norm(c.text)===norm(base.family)))return true;
  if(base.identity_basis?.family==='inferred')return true;
  // A collector number identifies an entry, not its expansion. Slab/back text may provide the expansion directly.
  return identifiers(base).some(c=>c.role==='collector_number')&&!clues(base).some(c=>has(c.text,base.family)||has(base.family,c.text)&&c.role==='text'&&norm(c.text).split(' ').length>=2)&&!has(base.pokemon_printing?.slab_text,base.family);
@@ -79,13 +83,19 @@ function groundChecks(checks,base,sources){
   return {...c,matched_terms:matched,conflicting_terms:conflicts,conflict_evidence:evidence,match_evidence:groundedMatches,requires_visual_check:unsupported||missingConfiguration,complete_observed_match:completeObservedMatch};
  });
 }
-function rankSources(sources,base){
+function rankSources(sources,base,candidates=[]){
  const clear=evidence(base);
- return list(sources).filter(s=>url(s.url)).map((s,i)=>{
+ const ranked=list(sources).filter(s=>url(s.url)).map((s,i)=>{
   const text=[s.title,s.text,s.snippet].filter(Boolean).join(' '),hits=clear.filter(c=>has(text,c.text));
   const identifier=hits.some(c=>['model','collector_number','barcode'].includes(c.role));
-  return {...s,_order:i,_rank:hits.reduce((n,c)=>n+(configuration(c)?3:1),0),_useful:hits.length>=2||identifier};
- }).filter(s=>s._useful).sort((a,b)=>b._rank-a._rank||a._order-b._order).filter((s,i,a)=>a.findIndex(t=>url(t.url)===url(s.url))===i).slice(0,3);
+  // Candidate names guide retrieval only; they are not added to photographed evidence or confidence.
+  const candidateHit=list(candidates).some(c=>[...new Set(norm(c.model).split(' '))].filter(w=>w.length>=4||/\d/.test(w)&&w.length>=3).filter(w=>has(s.title,w)).length>=2);
+  const collection=/\/(?:search|shop|category|gallery|person)(?:[/?]|\.cfm)/i.test(new URL(s.url).pathname);
+  return {...s,_order:i,_rank:hits.reduce((n,c)=>n+(configuration(c)?3:1),0)-(collection?3:0),_useful:hits.length>=2||identifier||candidateHit};
+ }).filter(s=>s._useful).sort((a,b)=>b._rank-a._rank||a._order-b._order).filter((s,i,a)=>a.findIndex(t=>url(t.url)===url(s.url))===i);
+ const domains=new Set(),first=[],rest=[];
+ for(const s of ranked){const host=new URL(s.url).hostname.replace(/^www\./,'');if(domains.has(host))rest.push(s);else{domains.add(host);first.push(s);}}
+ return [...first,...rest].slice(0,6);
 }
 function listingNumber(value,ref){
  const n=String(value||'');if(!/^\d{5,}$/.test(n))return false;
@@ -97,7 +107,11 @@ function validFields(c,refs,base,matches=[]){return list(c.fields).map(f=>{
   return {...f,value:f.quote,recovered_from:'cited_subject_description'};
  return f;
  }).filter(f=>{
- const ref=refs.find(r=>r.id===f.reference_id);if(!ref||!['model','subject','family','brand','year','issue_number','catalog_number','variant'].includes(f.field)||empty(f.value)||f.quote?.length<8||!has(ref.text,f.quote)||!has(f.quote,f.value))return false;
+ const ref=refs.find(r=>r.id===f.reference_id);
+ // A label read in the supplied reference image is distinct from a quote in the page text.
+ const imageQuote=f.evidence==='image'&&ref?.image_data&&f.quote?.length>=2&&matches.some(m=>m.reference_id===f.reference_id&&['text','code'].includes(m.feature)&&has(m.reference_detail,f.quote));
+ const textQuote=f.evidence!=='image'&&f.quote?.length>=8&&has(ref?.text,f.quote);
+ if(!ref||!['model','subject','family','brand','year','issue_number','catalog_number','variant'].includes(f.field)||empty(f.value)||(!textQuote&&!imageQuote)||!has(f.quote,f.value))return false;
  if(f.scope&&f.scope!=='target'&&!(f.scope==='parent'&&['brand','family','year','issue_number'].includes(f.field)))return false;
  if(f.field==='catalog_number'&&(listingNumber(f.value,ref)||f.number_kind&&!['card_number','catalog_number'].includes(f.number_kind)))return false;
  if(f.field==='issue_number'&&f.number_kind&&f.number_kind!=='issue_number')return false;
@@ -137,7 +151,7 @@ function validate(base,reply,references){
   const imageSources=[...new Set(matches.map(m=>m.reference_id))];
   const featureKinds=[...new Set(matches.map(m=>m.feature))];
   const named=!!name;
-  const unit=base.object_unit||'unknown';
+  const unit=base.kind==='card'&&base.object_unit==='object'?'unknown':base.object_unit||'unknown';
   const sameUnit=c.same_unit===true&&(unit==='unknown'||unit===c.unit);
   const explicitIds=identifiers(base);
   const codesMatch=explicitIds.every(o=>matches.some(m=>m.feature==='code'&&has(m.photo_detail,o.text)&&has(m.reference_detail,o.text)));
@@ -156,7 +170,8 @@ function validate(base,reply,references){
   return {...c,model:name||c.model,matches,description_matches:descriptions,fields,identity_conflicts:conflicts,accepted,rejection:accepted?'':!sameUnit?'unit_mismatch':!named||!familyMatch?'catalogue_not_cited':!codesMatch?'physical_identifier_not_matched':!configurationMatch?'configuration_not_matched':!seasonMatch?'season_not_matched':!appearanceMatch||!variantMatch?'appearance_not_matched':ambiguity?'physical_ambiguity':conflicts.length?'contradiction':'insufficient_visual_comparison'};
  });
  const selected=[...new Map(candidates.filter(c=>c.accepted).map(c=>[canonical(c),c])).values()];
- if(selected.length!==1)return {...base,visual_candidates:candidates,assistance_state:selected.length>1?'ambiguous':reply?.physical_detail_needed?'physical_detail_needed':'unidentified',next_photo_request:reply?.physical_detail_needed||null};
+ const referenceMissing=reply?.detail_needed_from==='reference'||/immagini (?:della|delle) font|(?:source|reference) (?:images|pictures)|figura (?:del|nel) manuale/i.test(reply?.physical_detail_needed||'');
+ if(selected.length!==1)return {...base,visual_candidates:candidates,assistance_state:selected.length>1?'ambiguous':referenceMissing?'source_detail_needed':reply?.physical_detail_needed?'physical_detail_needed':'unidentified',next_photo_request:referenceMissing?null:reply?.physical_detail_needed||null};
  const c=selected[0],fields=c.fields.map(f=>({...f,origin:'catalogue',source:refs.find(r=>r.id===f.reference_id).url}));
  const value=name=>fields.find(f=>f.field===name)?.value||'';
  const sources=refs.filter(r=>[...c.matches,...list(c.description_matches)].some(m=>m.reference_id===r.id)||fields.some(f=>f.reference_id===r.id)).map(r=>({title:r.title||r.url,url:r.url,image_url:r.image_url}));
@@ -238,6 +253,8 @@ candidateSchema.properties.conflicts={type:'array',maxItems:4,items:{type:'objec
 candidateSchema.required.push('identity_level','specimen_notes');
 const matchSchema=candidateSchema.properties.matches.items;matchSchema.properties.reference_evidence={type:'string',enum:['image','description']};matchSchema.required.push('reference_evidence');
 const fieldSchema=candidateSchema.properties.fields.items;
+schema.properties.detail_needed_from={type:'string',enum:['none','target','reference']};schema.required.push('detail_needed_from');
+fieldSchema.properties.evidence={type:'string',enum:['text','image']};fieldSchema.required.push('evidence');
 fieldSchema.properties.field.enum.push('subject','variant');matchSchema.properties.feature.enum.push('appearance','color','pattern','finish');fieldSchema.properties.scope={type:'string',enum:['target','parent','holder','listing']};
 fieldSchema.properties.number_kind={type:'string',enum:['none','model_number','card_number','catalog_number','issue_number','year','season','serial','listing_id']};fieldSchema.required.push('scope','number_kind');
 const api={completeComparison,auditIdentity,cataloguePending,quantityPairs,quantityMatches,printingPlan,identifierValue,seasonValue,variantPending,googleFirst,appearanceFeatures,compactReference,referenceImageUseful,clues,identifiers,seasonLike,physical,evidence,plan,configuration,observed,resolverPrompt,groundChecks,rankSources,validFields,catalogueName,ready,canonical,mergeCandidates,validate,Budget,schema,url,empty};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckVisual=api;
