@@ -396,7 +396,7 @@ test('Google preflight budget exhaustion keeps the independently requested physi
  assert.equal(requests.length,0);assert.equal(googleRequests.length,0);assert.equal(out.assistance_state,'budget_exhausted');assert.match(out.next_photo_request,/battery/);
  assert.equal(await page.locator('#addConfirmPhoto').isVisible(),true);
 });
-test('legacy confidence policy and repeated render preserve an independently verified core model',async()=>{
+test('legacy confidence policy and repeated render preserve verified core confidence while the variant blocks market use',async()=>{
  await reset();await upload();const out=await page.evaluate(d=>{
   scan164=newContext164();lastVisionReading={...d.vision,kind:'card',model_confidence:0,variant:'',identity_basis:{family:'inferred',variant:'inferred'},unresolved_identity_fields:['family','variant']};
   const refs=d.references.map(r=>({...r,image_data:images.find(Boolean)})),c={...d.candidates[2],variant:'',fields:d.candidates[2].fields.filter(f=>f.field!=='variant')};
@@ -404,7 +404,7 @@ test('legacy confidence policy and repeated render preserve an independently ver
   return value;
  },require('./fixtures/identity-cases.cjs').panel);
  assert.equal(out.catalogue_core_verified,true);assert.match(out.model,/Sports Journal/);assert.match(await page.locator('#identTitle').textContent(),/Sports Journal/);
- assert.equal(out.model_confidence,0);assert.equal(out.market_ready,false);assert.equal(out.normalized_query,'');assert.equal(requests.length,0);
+ assert.ok(out.model_confidence>=90);assert.equal(out.status,'identified');assert.equal(out.core_identity.status,'confirmed');assert.equal(out.variant_check,'pending');assert.equal(out.market_ready,false);assert.equal(out.normalized_query,'');assert.equal(requests.length,0);
 });
 test('discovery slab OCR waits for an attributed catalogue before spending on image comparison',async()=>{
  await reset();const out=await page.evaluate(d=>{
