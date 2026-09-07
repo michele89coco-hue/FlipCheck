@@ -45,14 +45,34 @@ First Edition e Shadowless sono due attributi separati: il timbro non dimostra d
     const facts=identity.core_identity?.fields||identity.catalogue_data||[];
     if(printing.is_pokemon&&identity.catalogue_core_verified&&norm(set_name)==='base'&&
       facts.some(f=>f.field==='catalog_number'&&/^\d+\s*\/\s*102$/.test(clean(f.value))))set_name='Base Set';
-    return {...printing,set_name};
+    const result={...printing,set_name};
+    delete result.stamp_policy;
+    // Edition availability is catalogue/era knowledge, not a photo observation.
+    // Western 2003+ releases postdate the original 1st Edition programme. This
+    // rule deliberately excludes Japanese, Korean and unspecified languages.
+    const western=/^(english|inglese|en|italian|italiano|it|french|francais|francese|fr|german|deutsch|tedesco|de|spanish|espanol|spagnolo|es|portuguese|portugues|portoghese|pt|dutch|nederlands|olandese|nl)$/.test(norm(printing.language));
+    const sourceDates=facts.filter(f=>f.field==='year'&&f.origin==='catalogue'&&['year','season'].includes(f.number_kind));
+    const sourceYears=[...new Set(sourceDates.map(f=>clean(f.value).match(/\b(?:19|20)\d{2}\b/)?.[0]).filter(Boolean))];
+    const photoYears=[...new Set(clean(printing.copyright_text).match(/\b(?:19|20)\d{2}\b/g)||[])];
+    const year=sourceYears.length===1?Number(sourceYears[0]):sourceYears.length===0&&photoYears.length===1&&printing.copyright_image>=1?Number(photoYears[0]):0;
+    if(identity.catalogue_core_verified&&western&&clean(set_name)&&year>=2003&&year<=2099&&!photoYears.some(y=>Number(y)>year))
+      result.stamp_policy={state:'not_applicable',rule:'western_release_after_2002',year,origin:sourceYears.length?'catalogue_release':'verified_series_and_observed_copyright',evidence:sourceYears.length?sourceDates:printing.copyright_text,source:'https://www.psacard.com/articles/articleview/9498/psa-set-registry-collecting-2002-poke-mon-neo-destiny-1st-edition'};
+    return result;
+  }
+  function observedFinish(identity){
+    const reads=(identity.physical_observations||[]).filter(o=>o.entity==='target'&&o.certainty==='clear'&&['finish','pattern'].includes(o.feature)&&o.image_index>=1);
+    const negative=t=>/non[- ]?holo|not holographic|non olograf|matte|opaca/i.test(t);
+    const positive=t=>/holo|olograf/i.test(t)&&!negative(t);
+    if(reads.some(o=>positive(o.text))&&!reads.some(o=>negative(o.text)||/reverse|invers/i.test(o.text)))return 'Holo';
+    return '';
   }
   function evaluate(p, count) {
     if (!p || p.is_pokemon !== true) return null;
     const located = (i, location) => Number.isInteger(i) && i >= 1 && i <= count && clean(location).length > 0;
     const stampLocated = located(p.stamp_image, p.stamp_location);
     const validStampText = /(?:edition|edizione|édition)/i.test(clean(p.stamp_text));
-    const stamp = stampLocated && p.first_edition_stamp === 'present' && validStampText ? 'present'
+    const excluded=p.stamp_policy?.state==='not_applicable';
+    const stamp = excluded&&p.first_edition_stamp!=='present'?'not_applicable':stampLocated && p.first_edition_stamp === 'present' && validStampText ? 'present'
       : stampLocated && p.first_edition_stamp === 'absent' ? 'absent'
       : p.first_edition_stamp === 'not_applicable' ? 'not_applicable' : 'unclear';
     const language = norm(p.language);
@@ -84,10 +104,11 @@ First Edition e Shadowless sono due attributi separati: il timbro non dimostra d
       ? 'bordo destro del riquadro e riga copyright in basso' : 'riga copyright in basso: il solo bordo non distingue questa stampa');
     const slab = located(p.slab_image,'label') ? clean(p.slab_text) : '';
     const slabNorm = norm(slab);
-    const contradiction = !!slab && ((/shadowless/.test(slabNorm) && shadow === 'present')
+    const contradiction = excluded&&p.first_edition_stamp==='present'||!!slab && ((/shadowless/.test(slabNorm) && shadow === 'present')
       || /(?:1st|first|prima)\s*(?:edition|edizione)/.test(slabNorm) && stamp === 'absent'
       || /unlimited/.test(slabNorm) && (stamp === 'present' || shadow === 'absent'));
-    return {stamp,shadow,applicable,labels,missing,slab,contradiction,
+    if(excluded&&p.first_edition_stamp==='present')missing.push('timbro di edizione incompatibile con la serie e l’anno verificati');
+    return {stamp,shadow,applicable,labels,missing,slab,contradiction,...(p.stamp_policy?{stamp_policy:p.stamp_policy}:{}),
       complete:missing.length === 0 && !contradiction,
       stampLocation:clean(p.stamp_location), shadowLocation:clean(p.shadow_location), copyright};
   }
@@ -98,6 +119,11 @@ First Edition e Shadowless sono due attributi separati: il timbro non dimostra d
     const out = Object.assign({},identity);
     // Keep the original v26 core identity and confidence. Only printing assertions are adjusted.
     for (const key of ['title','model','variant','normalized_query']) out[key] = strip(out[key]);
+    const finish=observedFinish(identity);
+    if(finish&&(!out.variant||/^(?:rare\s+)?holo(?:graphic|foil)?(?:\s*\/\s*e-card)?$/i.test(out.variant))){
+      if(out.variant&&out.variant!==finish)out.observed_variant_text=identity.observed_variant_text||out.variant;
+      out.variant=finish;
+    }
     if(result.complete)out.variant=out.variant.replace(/(?:^|[;/|·])\s*(?:non determinabile dai dati osservati|edition unclear|printing unresolved)\s*(?=$|[;/|·])/gi,'').replace(/[;/|·\s]+$/,'').trim();
     out.variant = [out.variant,...result.labels].filter(Boolean).join(' · ');
     if (out.normalized_query) out.normalized_query = [out.normalized_query,...result.labels].join(' ');
@@ -136,7 +162,7 @@ First Edition e Shadowless sono due attributi separati: il timbro non dimostra d
         ?{...f,verification:result.complete?'confirmed_physical':'pending_physical'}:f);
     return out;
   }
-  const api = {schema,prompt,evaluate,apply,isOriginalBaseSet,contradictsPrinting,cataloguePrinting};
+  const api = {schema,prompt,evaluate,apply,isOriginalBaseSet,contradictsPrinting,cataloguePrinting,observedFinish};
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.FlipCheckEditions = api;
 })(typeof window !== 'undefined' ? window : globalThis);
