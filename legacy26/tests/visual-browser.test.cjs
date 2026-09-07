@@ -271,9 +271,13 @@ test('Google first with no match can use one text fallback and never repeat the 
 test('Google preflight reserves room for verification before spending on detection',async()=>{
  await reset();await upload();const result=await page.evaluate(async()=>{scan164=newContext164();scan164.budget.maxUsd=.004;const photos=await targetPhotos169({},scan164);return googleResolve169({market_ready:false},scan164,photos);});assert.equal(result.assistance_state,'budget_exhausted');assert.equal(googleRequests.length,0);assert.equal(requests.length,0);
 });
-test('recorded uncertain shadow region also sends the full card instead of copyright alone',async()=>{
+test('recorded uncertain shadow region sends a contextual artwork window and separate copyright crop',async()=>{
  await reset();printingCard();const recorded=require('./fixtures/diagnostics-168.json').mach;vision.printing_detail_regions=recorded.vision.printing_detail_regions;vision.object_region=recorded.vision.object_region;
- await upload();await identify();const p=await page.evaluate(()=>diagnostic26().visualAssistance.printingRecovery);assert.equal(p.images.length,2);assert.ok(p.coverage.some(r=>r.detail==='shadow'&&r.fallback));assert.ok(p.images.some(r=>r.rect.height>=590));assert.equal(googleRequests.length,0);
+ await upload();await identify();const p=await page.evaluate(()=>diagnostic26().visualAssistance.printingRecovery);assert.equal(p.images.length,2);
+ const shadowIndex=p.coverage.findIndex(r=>r.detail==='shadow');assert.ok(shadowIndex>=0);assert.equal(p.coverage[shadowIndex].fallback,false);
+ const shadow=p.images[shadowIndex];assert.equal(shadow.searchWindow,true);assert.equal(shadow.cropped,true);assert.equal(shadow.source,'original_file');assert.equal(shadow.mimeType,'image/png');
+ assert.equal(shadow.rect.x,0);assert.equal(shadow.rect.y,0);assert.equal(shadow.rect.width,400);assert.ok(shadow.rect.height>=444&&shadow.rect.height<600);assert.equal(shadow.sentWidth,shadow.rect.width);assert.equal(shadow.sentHeight,shadow.rect.height);
+ const copyrightIndex=p.coverage.findIndex(r=>r.detail==='copyright');assert.ok(copyrightIndex>=0);assert.ok(p.images[copyrightIndex].rect.y>=550);assert.equal(googleRequests.length,0);
 });
 test('confirmed Hobby identity clears the old Blaster title and obsolete SKU request',async()=>{
  await reset();const recorded=require('./fixtures/diagnostics-168.json').box.identity;const out=await page.evaluate(value=>syncIdentity169(value),recorded);assert.match(out.title,/Hobby/);assert.doesNotMatch(out.title,/Blaster/);assert.deepEqual(out.missing_information,[]);assert.equal(out.market_ready,true);

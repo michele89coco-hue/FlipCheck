@@ -9,6 +9,7 @@
     card_type:{type:'string',enum:['pokemon','trainer','energy','other']},
     first_edition_stamp:state, stamp_image:image, stamp_location:string, stamp_text:string,
     artwork_shadow:state, shadow_image:image, shadow_location:string,
+    shadow_edges:{type:'object',additionalProperties:false,properties:{right:state,lower:state},required:['right','lower']},
     copyright_text:string, copyright_image:image,
     slab_text:string, slab_image:image
   };
@@ -17,7 +18,7 @@
 Restituisci pokemon_printing=null per oggetti, carte sportive e altri TCG. Per Pokemon usa i campi dello schema. is_pokemon deve riferirsi alla carta fotografata.
 Leggi lingua e set; osserva separatamente il timbro 1st Edition, l'ombra STAMPATA a destra/in basso del riquadro illustrazione e l'intera riga copyright. Present/absent richiedono la zona nitida e scoperta; se tagliata, coperta da slab/riflesso o troppo piccola usa unclear. Non trasformare una zona non leggibile in assenza. Indici immagine 1..3; 0 se non osservato. Indica posizione e testo/simbolo letterale, non quello dell'annuncio o dell'interfaccia telefono.
 Timbro: sulle Pokemon vintage occidentali cerca sotto l'illustrazione a sinistra; sulle Energie in alto a destra, sugli Allenatori in basso a sinistra. Per stampe giapponesi usa la posizione e il simbolo appropriati alla serie, non il modello occidentale. Un numero 1 isolato nel testo, nello stadio evolutivo o nei danni NON e' il timbro. Su altri TCG non applicare queste regole.
-Shadowless: la distinzione qui riguarda il Base Set inglese originale. Non dedurla dalla sola assenza del timbro, dalla rarita', dal nome del Pokemon o dalla luminosita'. Riporta l'ombra del riquadro e il copyright come prove indipendenti. Non generalizzare ad altre lingue/set/riproduzioni moderne. Per Allenatori/Energie il criterio dell'ombra del riquadro non basta: usa unclear/not_applicable e trascrivi il copyright.
+Shadowless: la distinzione qui riguarda il Base Set inglese originale. Non dedurla dalla sola assenza del timbro, dalla rarita', dal nome del Pokemon o dalla luminosita'. shadow_edges osserva SEPARATAMENTE right e lower: present significa banda scura STAMPATA e sfalsata all'esterno della cornice, absent significa bordo visibile senza questa banda, unclear se la zona non permette di distinguerla. La sottile linea nera della cornice, lo sfondo scuro dell'illustrazione, l'ombra della custodia e un riflesso NON sono l'ombra stampata. Descrivi in shadow_location i due margini osservati. artwork_shadow deve concordare con entrambe le letture. Riporta copyright e timbro indipendentemente. Non generalizzare ad altre lingue/set/riproduzioni moderne. Per Allenatori/Energie il criterio dell'ombra del riquadro non basta: usa unclear/not_applicable e trascrivi il copyright.
 First Edition e Shadowless sono due attributi separati: il timbro non dimostra da solo l'assenza d'ombra, e l'assenza d'ombra non dimostra il timbro. Non dedurre Unlimited da una zona coperta. Conserva in slab_text SOLO le parole di edizione/stampa LETTE sulla slab con il relativo indice; non usarle come se fossero un timbro visto sulla carta. Se vedi chiaramente le prove, descrivi la variante; altrimenti conserva marca/set/nome/numero e indica solo la zona di edizione incerta.`;
   const clean = value => String(value || '').trim();
   const norm = value => clean(value).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
@@ -68,6 +69,9 @@ First Edition e Shadowless sono due attributi separati: il timbro non dimostra d
     if (applicable) {
       shadow = p.card_type === 'pokemon' && borderLocated && p.artwork_shadow === 'present' ? 'present'
         : p.card_type === 'pokemon' && borderLocated && p.artwork_shadow === 'absent' && earlyCopyright ? 'absent' : 'unclear';
+      // New readings must agree on both edges. Legacy records retain their old
+      // schema; absent new evidence is never manufactured during replay.
+      if(p.shadow_edges&&(!['present','absent'].includes(shadow)||p.shadow_edges.right!==shadow||p.shadow_edges.lower!==shadow))shadow='unclear';
     }
     const labels = [];
     if (stamp === 'present') labels.push('1st Edition');
@@ -94,6 +98,7 @@ First Edition e Shadowless sono due attributi separati: il timbro non dimostra d
     const out = Object.assign({},identity);
     // Keep the original v26 core identity and confidence. Only printing assertions are adjusted.
     for (const key of ['title','model','variant','normalized_query']) out[key] = strip(out[key]);
+    if(result.complete)out.variant=out.variant.replace(/(?:^|[;/|·])\s*(?:non determinabile dai dati osservati|edition unclear|printing unresolved)\s*(?=$|[;/|·])/gi,'').replace(/[;/|·\s]+$/,'').trim();
     out.variant = [out.variant,...result.labels].filter(Boolean).join(' · ');
     if (out.normalized_query) out.normalized_query = [out.normalized_query,...result.labels].join(' ');
     out.printing_check = result;
