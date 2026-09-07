@@ -23,6 +23,7 @@ public final class GoogleDirectRegressionTest {
             assertTrue("Bundled OCR should work without a model download",done.await(25,java.util.concurrent.TimeUnit.SECONDS));
             assertEquals("ok",output.get().getString("state"));assertEquals("on_device_reference_ocr",output.get().getString("origin"));
             assertTrue(output.get().getString("text").contains("ZX-430"));assertTrue(output.get().getString("text").contains("2018"));
+            org.json.JSONArray lines=output.get().getJSONArray("lines");assertTrue(lines.length()>=2);assertTrue(lines.getJSONObject(0).getDouble("width")>0);assertTrue(lines.getJSONObject(0).getDouble("x")>=0);
         }
     }
     @Test public void localOcrBoundsBitmapMemoryAndRejectsNonImages() throws Exception {
@@ -101,14 +102,15 @@ public final class GoogleDirectRegressionTest {
         }finally{doc.close();}
         JSONObject result=GoogleVisionBridge.pdfData(bytes.toByteArray(),cache);
         assertEquals(4,result.getInt("page_count"));assertEquals("[1,2,3]",result.getJSONArray("pages_rendered").toString());
-        String encoded=result.getString("image_data").split(",",2)[1];
-        byte[] jpeg=android.util.Base64.decode(encoded,android.util.Base64.DEFAULT);
-        android.graphics.Bitmap bitmap=android.graphics.BitmapFactory.decodeByteArray(jpeg,0,jpeg.length);
-        try{assertEquals(2304,bitmap.getWidth());assertEquals(1024,bitmap.getHeight());
-            assertTrue(android.graphics.Color.red(bitmap.getPixel(384,512))>240);
-            assertTrue(android.graphics.Color.green(bitmap.getPixel(1152,512))>240);
-            assertTrue(android.graphics.Color.blue(bitmap.getPixel(1920,512))>240);
-        }finally{bitmap.recycle();}
+        org.json.JSONArray pageImages=result.getJSONArray("page_images");assertEquals(3,pageImages.length());
+        for(int i=0;i<3;i++){
+            JSONObject image=pageImages.getJSONObject(i);assertEquals(i+1,image.getInt("page_number"));
+            byte[] jpeg=android.util.Base64.decode(image.getString("image_data").split(",",2)[1],android.util.Base64.DEFAULT);
+            android.graphics.Bitmap bitmap=android.graphics.BitmapFactory.decodeByteArray(jpeg,0,jpeg.length);
+            try{assertEquals(1536,bitmap.getWidth());assertEquals(2048,bitmap.getHeight());
+                int pixel=bitmap.getPixel(768,1024);assertTrue((i==0?android.graphics.Color.red(pixel):i==1?android.graphics.Color.green(pixel):android.graphics.Color.blue(pixel))>240);
+            }finally{bitmap.recycle();}
+        }
         assertEquals(0,cache.listFiles((dir,name)->name.startsWith("reference-")&&name.endsWith(".pdf")).length);
         try{GoogleVisionBridge.pdfData("not PDF".getBytes(),cache);fail();}catch(IOException expected){}
     }
@@ -137,6 +139,19 @@ public final class GoogleDirectRegressionTest {
         assertEquals("[7]",result.getJSONArray("pages_rendered").toString());
         assertTrue(result.getString("text").contains("TOP PICKS"));assertEquals(10,result.getInt("pages_scanned"));
         assertEquals(0,cache.listFiles((dir,name)->name.startsWith("reference-")&&name.endsWith(".pdf")).length);
+    }
+
+    @Test public void ocrDoesNotHalveAnImageJustAbove2048() throws Exception {
+        android.graphics.Bitmap original=android.graphics.Bitmap.createBitmap(2304,1024,android.graphics.Bitmap.Config.ARGB_8888);
+        java.io.ByteArrayOutputStream bytes=new java.io.ByteArrayOutputStream();original.compress(android.graphics.Bitmap.CompressFormat.PNG,100,bytes);original.recycle();
+        android.graphics.Bitmap decoded=LocalReferenceOcr.decode("data:image/png;base64,"+android.util.Base64.encodeToString(bytes.toByteArray(),android.util.Base64.NO_WRAP));
+        try{assertEquals(2048,decoded.getWidth());assertTrue(decoded.getHeight()>900);}finally{decoded.recycle();}
+    }
+    @Test public void imageCaptionsDiscriminateVariantsAndRemainAttachedToTheirImage() throws Exception {
+        String html="<html><head><title>Acme range</title><meta property='og:image' content='/generic.jpg'></head><body><main><h1>Acme range</h1><figure><img width='400' src='/exact.jpg' alt='ZX-430'><figcaption>Blue unit, 2 batteries</figcaption></figure><figure><img width='400' src='/other.jpg' alt='ZX-600'></figure></main></body></html>";
+        JSONObject result=GoogleVisionBridge.pageData(html,"https://catalog.example/range",new org.json.JSONArray().put("ZX-430").put("2 batteries"));
+        assertEquals("https://catalog.example/exact.jpg",result.getJSONArray("images").getString(0));
+        JSONObject detail=result.getJSONArray("image_details").getJSONObject(0);assertEquals("https://catalog.example/exact.jpg",detail.getString("image_url"));assertTrue(detail.getString("caption").contains("2 batteries"));assertFalse(detail.getString("caption").contains("ZX-600"));
     }
 
 }

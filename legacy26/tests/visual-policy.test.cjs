@@ -235,3 +235,40 @@ test('missing manual figure is a source deficit, not a request for a new target 
  const f=recorded171.remote,reply=f.phases.find(p=>p.stage==='flipcheck_visual_comparison').result;
  const out=V.validate(f.vision,reply,f.catalogueRetrieval.references||[]);assert.equal(out.assistance_state,'source_detail_needed');assert.equal(out.next_photo_request,null);
 });
+
+const recorded173=require('./fixtures/diagnostics-173.json');
+function history173(name){const d=recorded173[name],refs=replayRefs(d.references);return d.phases.map(p=>({reply:p.result,references:refs.filter(r=>p.result.candidates.some(c=>c.matches.some(m=>m.reference_id===r.id)))}));}
+test('173 evidence from two actual readings combines publisher, subject, year and issue, excluding the slab number',()=>{
+ const out=V.fuseComparisons(V.auditIdentity(recorded173.pele.vision),history173('pele'));
+ assert.equal(out.catalogue_verified,true);assert.match(out.model,/1958.*REKORD JOURNAL.*n\. 37/);assert.doesNotMatch(out.model,/63022351|n\. nº/);
+ assert.equal(out.variant,'');assert.equal(new Set(out.catalogue_data.map(f=>f.reference_id)).size,2);assert.ok(out.catalogue_data.every(f=>f.source&&f.origin==='catalogue'));
+});
+test('173 Machamp preserves a cited core identity but its unresolved physical printing stays open',()=>{
+ const out=V.fuseComparisons(V.auditIdentity(recorded173.machamp.vision),history173('machamp'));
+ assert.equal(out.catalogue_core_verified,true);assert.equal(out.core_identity.status,'confirmed');assert.equal(out.family,'Base Set');assert.match(out.model,/8\/102/);assert.notEqual(out.market_ready,true);assert.ok(out.visual_candidates[0].blocking_fields.includes('appearance_not_matched'));
+ const printing=require('../src/main/assets/editions.js').evaluate(recorded173.machamp.vision.pokemon_printing,1);assert.equal(printing.applicable,true);assert.equal(printing.shadow,'unclear');assert.equal(printing.complete,false);
+});
+test('173 apparent parallel confidence cannot erase its own explicit confirmation request',()=>{
+ const out=V.auditIdentity(recorded173.doncic.vision);assert.equal(V.ready(out),false);assert.equal(out.variant_needs_verification,true);
+ const certain={...recorded173.doncic.vision,next_photo_request:null,missing_information:[],verification_summary:'All printing details directly verified'};assert.equal(V.ready(certain),true);
+});
+test('173 generic remote candidates retain separate evidence and contradictions',()=>{
+ const out=V.fuseComparisons(V.auditIdentity(recorded173.remote.vision),history173('remote'));
+ assert.equal(out.visual_candidates.length,2);assert.equal(out.visual_candidates[0].identity_conflicts.length,0);assert.equal(out.visual_candidates[1].identity_conflicts.length,1);assert.notEqual(out.market_ready,true);assert.ok(out.visual_candidates.every(c=>!c.fields.some(f=>f.field==='family'&&f.value==='Remote Control')));
+});
+test('173 Politoed OCR supplies its matching HP while the actual number/finish mismatch still blocks exact identity',()=>{
+ const out=V.fuseComparisons(V.auditIdentity(recorded173.politoed.vision),history173('politoed')),c=out.visual_candidates[0];
+ assert.ok(c.description_matches.some(m=>m.recovered_from==='same_reference_ocr'&&m.reference_detail==='110 PV'));assert.ok(!c.blocking_fields.includes('configuration_not_matched'));assert.ok(c.blocking_fields.includes('contradiction'));assert.notEqual(out.market_ready,true);
+});
+test('173 series text is not a season, and a disputed unit requires a new comparison',()=>{
+ const x=recorded173.box.vision;assert.equal(V.clues(x).find(c=>c.text==='UPDATE SERIES').role,'text');
+ const out=V.fuseComparisons(V.auditIdentity(x),history173('box'));assert.ok(out.visual_candidates[0].blocking_fields.includes('unit_mismatch'));assert.notEqual(out.market_ready,true);
+});
+test('a reread can reject its own earlier match but cannot erase another reference',()=>{
+ const x=recorded173.pele.vision,h=history173('pele').slice(0,1),bad=structuredClone(h[0]);bad.reply.candidates.forEach(c=>{c.decision='different';c.conflicts=[{scope:'target',reason:'Different photographed text'}];});
+ assert.notEqual(V.fuseComparisons(x,[...h,bad]).catalogue_verified,true);
+});
+test('a long bare reference number needs an identifier label or physical agreement',()=>{
+ const r={...reference,text:'Catalog number 12345678',ocr:{state:'ok',text:'12345678 MINT'}},f={field:'catalog_number',value:'12345678',quote:'12345678',reference_id:r.id,evidence:'image',scope:'target',number_kind:'card_number'};
+ assert.equal(V.validFields({fields:[f]},[r],base).length,0);assert.equal(V.validFields({fields:[{...f,quote:'Catalog number 12345678',evidence:'text'}]},[r],base).length,1);
+});

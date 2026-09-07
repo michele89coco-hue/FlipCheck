@@ -32,7 +32,7 @@ First Edition e Shadowless sono due attributi separati: il timbro non dimostra d
     const stamp = stampLocated && p.first_edition_stamp === 'present' && validStampText ? 'present'
       : stampLocated && p.first_edition_stamp === 'absent' ? 'absent'
       : p.first_edition_stamp === 'not_applicable' ? 'not_applicable' : 'unclear';
-    const language = norm(p.language), set = norm(p.set_name);
+    const language = norm(p.language), set = norm(clean(p.set_name).replace(/\s*\((?:inferred|inference|dedotto|dedotta|ipotizzato|ipotesi)\)\s*$/i,''));
     const english = /^(english|inglese|en)$/.test(language);
     const base = /^(?:pokemon\s+)?(?:base\s*set|set\s*(?:di\s*)?base)(?:\s*(?:1999|original|originale))?$/.test(set);
     const applicable = english && base;

@@ -1,0 +1,2553 @@
+{
+  "box": {
+    "vision": {
+      "status": "uncertain",
+      "kind": "object",
+      "title": "2025/26 Topps Chrome Basketball Update Series box",
+      "category": "basketball trading card box",
+      "brand": "Topps",
+      "family": "Topps Chrome Update Series Basketball",
+      "model": "",
+      "variant": "",
+      "condition": "sealed, visible packaging in good condition",
+      "category_confidence": 99,
+      "brand_confidence": 99,
+      "family_confidence": 96,
+      "model_confidence": 72,
+      "model_verified": false,
+      "market_ready": false,
+      "candidate_models": [
+        {
+          "model": "2025/26 Topps Chrome Basketball Update Series hobby box",
+          "confidence": 55,
+          "reason": "Front text states “1 AUTOGRAPH IN EVERY BOX”; exact format is not fully visible."
+        },
+        {
+          "model": "2025/26 Topps Chrome Basketball Update Series retail box",
+          "confidence": 25,
+          "reason": "Packaging format may be a retail configuration, but product details are insufficient."
+        }
+      ],
+      "visual_fingerprint": "Sealed basketball trading-card box with blue metallic Topps Chrome design, pictured Victor Wembanyama in a San Antonio Spurs uniform and Cooper Flagg in a Dallas Mavericks uniform. Large “UPDATE SERIES” badge, repeated Topps branding, 2025/26 season, and “1 AUTOGRAPH IN EVERY BOX!” at bottom.",
+      "distinctive_terms": [
+        "1 AUTOGRAPH IN EVERY BOX!",
+        "Topps Chrome",
+        "UPDATE SERIES",
+        "2025/26",
+        "COOPER FLAGG"
+      ],
+      "search_terms": [
+        "1 AUTOGRAPH IN EVERY BOX!",
+        "Topps Chrome",
+        "UPDATE SERIES",
+        "2025/26",
+        "COOPER FLAGG"
+      ],
+      "identifier_hints": [],
+      "layout_signature": [
+        {
+          "term": "Topps Chrome",
+          "position": "lower center",
+          "relation": "large logo above UPDATE SERIES badge"
+        },
+        {
+          "term": "UPDATE SERIES",
+          "position": "lower center",
+          "relation": "directly below Topps Chrome logo"
+        },
+        {
+          "term": "2025/26",
+          "position": "left vertical edge",
+          "relation": "beside vertical product title"
+        },
+        {
+          "term": "COOPER FLAGG",
+          "position": "right vertical edge",
+          "relation": "beside pictured Dallas Mavericks player"
+        },
+        {
+          "term": "1 AUTOGRAPH IN EVERY BOX!",
+          "position": "bottom front",
+          "relation": "below main artwork and product badge"
+        }
+      ],
+      "evidence": [
+        "Visible front packaging reads “Topps Chrome” and “UPDATE SERIES”.",
+        "Visible season text reads “2025/26”.",
+        "Visible player label reads “COOPER FLAGG”; Victor Wembanyama is pictured and labeled.",
+        "Bottom packaging visibly states “1 AUTOGRAPH IN EVERY BOX!”."
+      ],
+      "missing_information": [
+        "Exact box configuration or product SKU",
+        "Whether this is hobby, retail, blaster, or another sealed format",
+        "Reverse and side-panel product identifiers"
+      ],
+      "next_photo_request": "Photograph the back, side panels, and bottom of the sealed box straight-on, especially any barcode, SKU, or format label.",
+      "user_text_consistent": true,
+      "normalized_query": "",
+      "verification_summary": "Topps Chrome Basketball Update Series 2025/26 is strongly identified from visible packaging text, but the exact commercial box format is not verified.",
+      "photo_clues": [
+        {
+          "text": "Topps Chrome",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.42,
+            "y": 0.52,
+            "width": 0.3,
+            "height": 0.12,
+            "certain": true
+          }
+        },
+        {
+          "text": "UPDATE SERIES",
+          "role": "season",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.43,
+            "y": 0.63,
+            "width": 0.3,
+            "height": 0.08,
+            "certain": true
+          }
+        },
+        {
+          "text": "2025/26",
+          "role": "season",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.28,
+            "y": 0.48,
+            "width": 0.07,
+            "height": 0.2,
+            "certain": true
+          }
+        },
+        {
+          "text": "COOPER FLAGG",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.77,
+            "y": 0.2,
+            "width": 0.06,
+            "height": 0.19,
+            "certain": true
+          }
+        },
+        {
+          "text": "1 AUTOGRAPH IN EVERY BOX!",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.43,
+            "y": 0.74,
+            "width": 0.36,
+            "height": 0.06,
+            "certain": true
+          }
+        }
+      ],
+      "physical_observations": [
+        {
+          "feature": "configuration",
+          "text": "sealed single retail box/package",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "color",
+          "text": "blue metallic front with silver, red, and gold accent lines",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "pattern",
+          "text": "repeated Topps security-style diagonal bands across packaging",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "count",
+          "text": "two prominent basketball players pictured on front",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        }
+      ],
+      "printing_detail_regions": [],
+      "object_region": {
+        "image_index": 1,
+        "x": 0.21,
+        "y": 0.01,
+        "width": 0.67,
+        "height": 0.77,
+        "certain": true
+      },
+      "object_regions": [
+        {
+          "image_index": 1,
+          "x": 0.21,
+          "y": 0.01,
+          "width": 0.67,
+          "height": 0.77,
+          "certain": true
+        }
+      ],
+      "object_unit": "box",
+      "identity_basis": {
+        "family": "printed",
+        "variant": "inferred"
+      },
+      "unresolved_identity_fields": [
+        "variant"
+      ],
+      "pokemon_printing": null
+    },
+    "phases": [
+      {
+        "stage": "flipcheck_visual_comparison",
+        "result": {
+          "physical_detail_needed": null,
+          "candidates": [
+            {
+              "category": "basketball trading card box",
+              "brand": "Topps Chrome®",
+              "family": "Topps Chrome® Updates Basketball",
+              "model": "",
+              "year": "2025-26",
+              "issue_number": "",
+              "catalog_number": "",
+              "unit": "box",
+              "variant": "Hobby Box",
+              "decision": "possible",
+              "same_unit": false,
+              "physical_ambiguity": true,
+              "conflicts": [
+                {
+                  "scope": "target",
+                  "reason": "La foto mostra una confezione singola sigillata; la fonte mostra un espositore/cartone aperto con più confezioni."
+                }
+              ],
+              "matches": [
+                {
+                  "reference_id": "ref4",
+                  "feature": "layout",
+                  "photo_detail": "Due giocatori NBA sul fronte, Cooper Flagg a destra e Victor Wembanyama a sinistra, con logo Topps Chrome Update Series in basso.",
+                  "reference_detail": "La stessa composizione frontale con due giocatori, logo Topps Chrome Update Series e grafica blu è visibile nell’immagine della fonte.",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                },
+                {
+                  "reference_id": "ref4",
+                  "feature": "color",
+                  "photo_detail": "Fronte blu metallico con linee decorative argento, rosse e dorate.",
+                  "reference_detail": "Il pannello frontale della fonte mostra la stessa combinazione blu, argento, rosso e oro.",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                },
+                {
+                  "reference_id": "ref4",
+                  "feature": "pattern",
+                  "photo_detail": "Bande diagonali ripetute tipo sicurezza sulla confezione.",
+                  "reference_detail": "La confezione della fonte presenta bande diagonali ripetute nello stesso stile grafico.",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                }
+              ],
+              "fields": [
+                {
+                  "field": "brand",
+                  "value": "Topps Chrome®",
+                  "reference_id": "ref4",
+                  "quote": "2025-26 Topps Chrome® Updates Basketball - Hobby Box",
+                  "evidence": "text",
+                  "scope": "target",
+                  "number_kind": "none"
+                },
+                {
+                  "field": "family",
+                  "value": "Topps Chrome® Updates Basketball",
+                  "reference_id": "ref4",
+                  "quote": "2025-26 Topps Chrome® Updates Basketball - Hobby Box",
+                  "evidence": "text",
+                  "scope": "target",
+                  "number_kind": "none"
+                },
+                {
+                  "field": "year",
+                  "value": "2025-26",
+                  "reference_id": "ref4",
+                  "quote": "2025-26 Topps Chrome® Updates Basketball - Hobby Box",
+                  "evidence": "text",
+                  "scope": "target",
+                  "number_kind": "year"
+                },
+                {
+                  "field": "variant",
+                  "value": "Hobby Box",
+                  "reference_id": "ref4",
+                  "quote": "2025-26 Topps Chrome® Updates Basketball - Hobby Box",
+                  "evidence": "text",
+                  "scope": "target",
+                  "number_kind": "none"
+                }
+              ],
+              "identity_level": "exact",
+              "specimen_notes": [
+                "La fonte descrive “1 autograph per box”, coerente con la scritta osservata sulla confezione originale."
+              ]
+            }
+          ],
+          "detail_needed_from": "none"
+        },
+        "webCalls": 0,
+        "usage": {
+          "input_tokens": 4298,
+          "input_tokens_details": {
+            "cache_write_tokens": 4295,
+            "cached_tokens": 0
+          },
+          "output_tokens": 1074,
+          "output_tokens_details": {
+            "reasoning_tokens": 491
+          },
+          "total_tokens": 5372
+        }
+      }
+    ],
+    "references": [
+      {
+        "id": "ref1",
+        "url": "https://rbicru7.com/collections/nfl-boxes/premium",
+        "title": "Football Boxes – premium - RbiCru7 Collectibles",
+        "text": "Football Boxes\n\nSorry, there are no products in this collection",
+        "text_origin": "retrieved_page",
+        "image_url": "https://rbicru7.com/cdn/shop/files/Scan_2_33212c66-28ec-49e1-8ef5-d47abd01f38a_480x480.jpg?v=1785946935",
+        "ocr": {
+          "state": "ok",
+          "origin": "on_device_reference_ocr",
+          "script": "latin",
+          "text": "9a/saoa\nDALLAS\n32\nChromne\nLJPDATE\nAUTOGRAPH\nIN EVERY BXI\nOPER PLRGO",
+          "width": 290,
+          "height": 480
+        }
+      },
+      {
+        "id": "ref2",
+        "url": "https://dacardworld1.imgix.net/977854_004_080426.jpg?auto=compress&bg-remove=true&fit=max&fm=png&h=400&ixlib=php-3.3.1&trim=alpha&trim-tol=0&w=400&s=bed8d147e847efe60688177337b28273",
+        "title": "Immagine trovata da Google · pagina non attribuita",
+        "text": "",
+        "text_origin": "unattributed_image",
+        "discovery_only": true,
+        "image_url": "https://dacardworld1.imgix.net/977854_004_080426.jpg?auto=compress&bg-remove=true&fit=max&fm=png&h=400&ixlib=php-3.3.1&trim=alpha&trim-tol=0&w=400&s=bed8d147e847efe60688177337b28273",
+        "ocr": {
+          "state": "ok",
+          "origin": "on_device_reference_ocr",
+          "script": "latin",
+          "text": "BASKE3ALL\nEPPS2025/s\nviETOR wEMBnMn\nDAU AS\n32\nchrone\nUPDATE\nAUTOAPH\"",
+          "width": 254,
+          "height": 400
+        }
+      },
+      {
+        "id": "ref3",
+        "url": "https://makeshop-multi-images.akamaized.net/cfshibuya3f/itemimages/0000000257962_LHgrDrp.jpg",
+        "title": "Immagine trovata da Google · pagina non attribuita",
+        "text": "",
+        "text_origin": "unattributed_image",
+        "discovery_only": true,
+        "image_url": "https://makeshop-multi-images.akamaized.net/cfshibuya3f/itemimages/0000000257962_LHgrDrp.jpg",
+        "ocr": {
+          "state": "ok",
+          "origin": "on_device_reference_ocr",
+          "script": "latin",
+          "text": "372KEEBAL\n2025/26\nDALLAS\n32\nchrome\nUPDAT\nLOOK FOR\nNBA\nDEBUT\nPATCH\nAUTOGDE\neRAPHBIe\nONROL NCISARY\nDEARS AND ENTY",
+          "width": 720,
+          "height": 720
+        }
+      },
+      {
+        "id": "ref4",
+        "url": "https://launches.topps.com/en-US/launch/2025-26-topps-chromer-updates-basketball-hobby-box",
+        "title": "2025-26 Topps Chrome® Updates Basketball - Hobby Box",
+        "text": "2025-26 Topps Chrome® Updates Basketball - Hobby Box\n\n2025-26 Topps Chrome® Updates Basketball - Hobby Box\n\n2025-26 Topps Chrome® Updates Basketball - Hobby Box\nUS$549.99\nMaximum of 2 per customer\n\nHow do EQL launches work?Free to enter\nOne entry per person\nNo bots\nThe EQLizer\n\nFree to enter\nOne entry per person\nNo bots\nThe EQLizer\nRead the FAQs for more info on EQL launches.\n\n4 Cards Per Pack. 20 Packs Per Box.\n1 autograph per box.\n2025–26 Topps Chrome Updates Basketball is headlined by one of the most coveted cards in the hobby: Rookie Debut Patch Autographs, making their Topps Basketball debut. Widely regarded as one of The Hobby's premier collectibles, these 1-of-1 grails feature game-worn NBA Debut patches and arrive in basketball for the first time, highlighted by standout rookies Cooper Flagg, Kon Knueppel, and Dylan Harper. The release also showcases superstars including Stephen Curry, LeBron James, Victor Wembanyama, Anthony Edwards, Nikola Jokić, Shai Gilgeous-Alexander, and more across major SSPs and autograph content.\nThe 200-card base set features refreshed imagery of rookies, veterans, and legends, all presented with updated in-season photography in Statement, City, and Classic Edition uniforms, alongside a deep rainbow of Chrome parallels. Look for new inserts such as New Edition, Stratospheric Stars, No Limit, and Moment in Time, a set that highlights iconic NBA moments like Curry's \"Ring Me\" celebration in the NBA Finals.\nThe excitement extends well beyond Rookie Debut Patch Autographs. The release introduces the NBA's first Alter Egos SSPs, an imaginative 10-card set that transforms each player into a dynamic, illustrated, super-powered persona. Minions NBA are SSPs that reimagine NBA stars as Minions in collaboration with Illumination for a fun, highly collectible crossover insert. In addition, look out for the Denim Tears SSP parallel, and newly added Captains, Celebración short print inserts.\nAutograph content is equally impressive with a robust lineup of Topps Chrome Autographs, including special appearances from Druski and Spike Lee. The 1980–81 Topps Basketball Autographs deliver another loaded checklist, while the ultra-cool Lava Lamp Rookie Autographs add a groovy twist. Chrome Updates Basketball is a must-have release, bursting with star power, innovation, and true hobby heat.\nChecklist:\n\nhttps://cdn.shopify.com/s/files/1/0662/9749/5709/files/Final_CheckList_26CUBK.pdf?v=1783360479\nOdds:\n\nhttps://cdn.shopify.com/s/files/1/0662/9749/5709/files/2025-26_Topps_Chrome_Updates_Basketball_odds.pdf?v=1786020446\nEducation Sheet:\n\nhttps://cdn.shopify.com/s/files/1/0662/9749/5709/files/2025-26_Topps_Chrome_Updates_BK_-_Education_Sheet-_FINAL.pdf?v=1785357877\nSKU: FGC006720-DB\n\nHow do EQL launches work?Free to enter\nOne entry per person\nNo bots\nThe EQLizer\n\nFree to enter\nOne entry per person\nNo bots\nThe EQLizer\nRead the FAQs for more info on EQL launches.\n\n4 Cards Per Pack. 20 Packs Per Box.\n1 autograph per box.\n2025–26 Topps Chrome Updates Basketball is headlined by one of the most coveted cards in the hobby: Rookie Debut Patch Autographs, making their Topps Basketball debut. Widely regarded as one of The Hobby's premier collectibles, these 1-of-1 grails feature game-worn NBA Debut patches and arrive in basketball for the first time, highlighted by standout rookies Cooper Flagg, Kon Knueppel, and Dylan Harper. The release also showcases superstars including Stephen Curry, LeBron James, Victor Wembanyama, Anthony Edwards, Nikola Jokić, Shai Gilgeous-Alexander, and more across major SSPs and autograph content.\nThe 200-card base set features refreshed imagery of rookies, veterans, and legends, all presented with updated in-season photography in Statement, City, and Classic Edition uniforms, alongside a deep rainbow of Chrome parallels. Look for new inserts such as New Edition, Stratospheric Stars, No Limit, and Moment in Time, a set that highlights iconic NBA moments like Curry's \"Ring Me\" celebration in the NBA Finals.\nThe excitement extends well beyond Rookie Debut Patch Autographs. The release introduces the NBA's first Alter Egos SSPs, an imaginative 10-card set that transforms each player into a dynamic, illustrated, super-powered persona. Minions NBA are SSPs that reimagine NBA stars as Minions in collaboration with Illumination for a fun, highly collectible crossover insert. In addition, look out for the Denim Tears SSP parallel, and newly added Captains, Celebración short print inserts.\nAutograph content is equally impressive with a robust lineup of Topps Chrome Autographs, including special appearances from Druski and Spike Lee. The 1980–81 Topps Basketball Autographs deliver another loaded checklist, while the ultra-cool Lava Lamp Rookie Autographs add a groovy twist. Chrome Updates Basketball is a must-have release, bursting with star power, innovation, and true hobby heat.\nChecklist:\n\nhttps://cdn.shopify.com/s/files/1/0662/9749/5709/files/Final_CheckList_26CUBK.pdf?v=1783360479\nOdds",
+        "text_origin": "retrieved_page",
+        "image_url": "https://cdn.eql.media/draw-api/9201f031-26db-4f29-ad0a-8df9f073c959/17bd88f6-7779-47e7-946f-ebeac1034ced.png",
+        "ocr": {
+          "state": "ok",
+          "origin": "on_device_reference_ocr",
+          "script": "latin",
+          "text": "9a/sZ02\nFa RAIRTING ROCIIES\nCHRSE SP ISERTS\nSanArtnio\nhime\nDALLAS\n32\nChronme\nUPDATE\nAUTOGRAPH*\nIN EVERY BOX!\nPRCHASE NECESSAR\ncOOPER FLI\nchromes\nUPDATE\nPERRNR",
+          "width": 885,
+          "height": 1246
+        }
+      },
+      {
+        "id": "ref5",
+        "url": "https://ripped.topps.com/2025-26-topps-chrome-updates-basketball-box-guide/",
+        "title": "2025–26 Topps Chrome Updates Box Guide - Topps Ripped",
+        "text": "2025–26 Topps Chrome Updates Box Guide - Topps Ripped\n\nDiscover 2025-26 Topps Chrome Updates Basketball\n\nDate: Jul 30, 2026\n\nTopics: 2025-26 Topps Chrome Updates Basketball, Basketball, NBA, SKU Guide, What Box is Best?\n\nLength: 1565 Words\n\nReading Time: ~8 Minutes\n\n2025–26 Topps Chrome Updates Basketball expands the Chrome lineup with updated player photography, rookies in their new NBA uniforms, new team combinations, and one of the release’s biggest new features: Rookie Debut Patch Autographs.\n\nEach one-of-one Rookie Debut Patch Autograph pairs a rookie signature with the NBA Debut patch taken from the jersey worn during that player’s first NBA game. The checklist includes Cooper Flagg, Kon Knueppel, Dylan Harper, Ace Bailey, Cedric Coward, Derik Queen, Egor Demin, and other members of the rookie class.\n\nCollectors can choose from five primary configurations: Hobby, Jumbo, Delight, Value, and Mega. Each format offers a different balance of autographs, parallels, inserts, exclusives, pack volume, and total cards.\n\nHobby is the best all-around 2025–26 Topps Chrome Updates Basketball box for most collectors. Choose Jumbo when guaranteed autographs are the priority, Delight for a concentrated two-autograph opening, Value for an accessible retail format with exclusive color, or Mega for X-Fractors and a stronger rookie-focused retail experience.\n\n2025-26 Topps Chrome Updates Basketball Box Comparison\n\nBoxConfigurationKey DrawBest ForHobby20 packs, four cards per packOne autograph and a broad chase lineupBalanced collecting experienceJumbo12 packs, 11 cards per packThree guaranteed autographsAutograph collectors and larger ripsDelightOne pack, 12 cards per packGeometric autographs and parallelsFast, focused openingsValueSeven packs, four cards per packRed, White and Blue and Basketball RefractorsAccessible retail collectingMegaSeven packs, six cards per pack10 X-FractorsParallel and rookie collectors\n\nDISCOVER NOW\n\n2025-26 Topps Chrome Updates Basketball Hobby Box\n\nA Hobby Box contains 20 packs with four cards per pack and guarantees one autograph.\n\nHobby’s greatest strength is variety. It delivers the traditional pack-opening experience while offering access to autographs, Refractors, numbered parallels, inserts, and premium short-print cards.\n\nThe autograph checklist includes Topps Chrome Autographs, 1980–81 Topps Basketball Autographs, Rookie Lava Lamp Autographs, and special cards featuring personalities such as Druski and Spike Lee.\n\nCollectors can also find inserts including Helix, Alter Egos, Celebración, Captains, and Radiating Rookies. Additional highlights include the Denim Tears SSP parallel and Rookie Debut Patch Autographs.\n\nWho should buy a Hobby Box?\n\nHobby is the strongest choice for collectors who want to experience the release’s full personality. The 20-pack format provides a satisfying opening for set builders, while the guaranteed autograph and broad card selection give autograph and parallel collectors plenty to explore.\n\nChoose Hobby if you want the most balanced mix of cards, variety, and premium content.\n\nDISCOVER NOW\n\n2025-26 Topps Chrome Updates Basketball Jumbo Box\n\nA Jumbo Box contains 12 packs with 11 cards per pack and guarantees three autographs.\n\nWith 132 total cards, Jumbo provides the largest opening experience among the featured configurations. Its defining feature is the three-autograph guarantee, which emphasizes signatures while still providing Refractors, inserts, parallels, and numbered cards.\n\nThe autograph lineup can include rookie signatures, current players, legends, and several themed autograph designs. Jumbo therefore gives collectors multiple opportunities to find an important rookie signature or a notable veteran autograph in one box.\n\nWho should buy a Jumbo Box?\n\nJumbo is designed for autograph collectors, group breakers, and anyone planning a substantial opening. It costs more than a standard Hobby Box, but the three guaranteed autographs make its core value proposition easy to understand.\n\nChoose Jumbo when autographs are your top priority.\n\nDISCOVER NOW\n\n2025-26 Topps Chrome Updates Basketball Delight Box\n\nA Delight Box delivers two autographs in one concentrated pack.\n\nThe format centers on Geometric content. Each box includes one Chrome autograph and one Geometric autograph, while the parallel checklist features exclusive Geometric Refractors. The rarest listed versions include White Geometric Refractors numbered to two.\n\nDelight also provides opportunities to find premium inserts such as Captains, Celebración, and Radiating Rookies.\n\nWho should buy a Delight Box?\n\nDelight is best suited to collectors who prefer immediate autograph reveals over a longer pack-opening experience. It is also a natural fit for breakers and parallel specialists interested in the exclusive Geometric designs.\n\nThe tradeoff is lower base-card volume than Hobby or Jumbo, so this is not the strongest format for set building.\n\nChoose Delight for two autographs, exclusive Geometric par",
+        "text_origin": "retrieved_page",
+        "image_url": "https://ripped.topps.com/wp-content/uploads/2026/07/Untitled-design-10.webp",
+        "ocr": {
+          "state": "ok",
+          "origin": "on_device_reference_ocr",
+          "script": "latin",
+          "text": "202S/26\nBASKE\nHALY\nVICTOR WEMBANYAMA\nRPOIRTI\nchime\nDALLAS\n32\nChrome\nUPDATE\nAUTOGRAPH#\nIN EVERY BOK!\n\"Hay contain tedemption cards with epiation dates, (NO PURCHASE NECESSA PY, VIST TOPPS(OM/NPN FOR OETARLS AND ENTRY)\nPPCKE\nhromes\nUPDATE\nE S\nChr\nRERAe\nPACKS WIS CAROS",
+          "width": 1536,
+          "height": 2048
+        }
+      }
+    ]
+  },
+  "machamp": {
+    "vision": {
+      "status": "identified",
+      "kind": "card",
+      "title": "Machamp 8/102",
+      "category": "Pokémon TCG card",
+      "brand": "Wizards of the Coast",
+      "family": "Pokémon Base Set",
+      "model": "Machamp 8/102",
+      "variant": "1st Edition holographic",
+      "condition": "Raw; visibly played/worn",
+      "category_confidence": 99,
+      "brand_confidence": 95,
+      "family_confidence": 82,
+      "model_confidence": 94,
+      "model_verified": true,
+      "market_ready": true,
+      "candidate_models": [
+        {
+          "model": "Machamp 8/102 Base Set 1st Edition Holo",
+          "confidence": 94,
+          "reason": "Visible name, 1st Edition stamp, holographic artwork and 8/102 number."
+        },
+        {
+          "model": "Machamp 8/102 Base Set unlimited",
+          "confidence": 2,
+          "reason": "Card number and artwork match, but visible 1st Edition stamp contradicts this variant."
+        }
+      ],
+      "visual_fingerprint": "English vintage Pokémon Machamp Stage 2, 100 HP Fighting type, holographic rainbow-confetti artwork, 1st Edition stamp left below illustration, Base Set-style layout, attacks Pokémon Power: Strikes Back and Seismic Toss 60, card number 8/102.",
+      "distinctive_terms": [
+        "Machamp",
+        "1st Edition",
+        "Pokémon Power: Strikes Back",
+        "Seismic Toss",
+        "8/102"
+      ],
+      "search_terms": [
+        "Machamp",
+        "1st Edition",
+        "Seismic Toss",
+        "8/102"
+      ],
+      "identifier_hints": [
+        "8/102"
+      ],
+      "layout_signature": [
+        {
+          "term": "1st Edition",
+          "position": "left below artwork",
+          "relation": "stamp beside flavor text header"
+        },
+        {
+          "term": "Machamp",
+          "position": "top center",
+          "relation": "large name text above artwork"
+        },
+        {
+          "term": "Pokémon Power: Strikes Back",
+          "position": "middle lower text box",
+          "relation": "ability heading above rules text"
+        },
+        {
+          "term": "Seismic Toss",
+          "position": "lower center",
+          "relation": "attack name above bottom stat line"
+        },
+        {
+          "term": "8/102",
+          "position": "bottom right",
+          "relation": "set number beside copyright line"
+        }
+      ],
+      "evidence": [
+        "Visible card name “Machamp” and 100 HP.",
+        "Visible “1st Edition” stamp at lower-left of artwork.",
+        "Visible holographic artwork and Base Set-style yellow border.",
+        "Visible copyright line includes “© 1995, 96, 98, 99 Nintendo, Creatures/GAMEFREAK © 1999 Wizards”.",
+        "Visible card number “8/102” at bottom right."
+      ],
+      "missing_information": [
+        "Set name is not printed on the card; Base Set identification is inferred from design and numbering.",
+        "Shadow/shadowless status is not sufficiently clear from this image alone.",
+        "Back of card and surface details are unavailable."
+      ],
+      "next_photo_request": "Provide a sharp, straight-on photo of the lower artwork border and full back of the card.",
+      "user_text_consistent": true,
+      "normalized_query": "1999 Wizards of the Coast Pokémon Base Set 1st Edition Machamp holographic 8/102",
+      "verification_summary": "Card identity and 1st Edition variant are strongly supported by visible text, stamp, artwork and number; Base Set family is inferred rather than explicitly printed.",
+      "photo_clues": [
+        {
+          "text": "Machamp",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.255,
+            "y": 0.081,
+            "width": 0.23,
+            "height": 0.045,
+            "certain": true
+          }
+        },
+        {
+          "text": "STAGE 2",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.094,
+            "y": 0.064,
+            "width": 0.1,
+            "height": 0.035,
+            "certain": true
+          }
+        },
+        {
+          "text": "1st Edition",
+          "role": "edition",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.075,
+            "y": 0.544,
+            "width": 0.073,
+            "height": 0.044,
+            "certain": true
+          }
+        },
+        {
+          "text": "8/102",
+          "role": "collector_number",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.857,
+            "y": 0.963,
+            "width": 0.048,
+            "height": 0.022,
+            "certain": true
+          }
+        },
+        {
+          "text": "© 1995, 96, 98, 99 Nintendo, Creatures/GAMEFREAK © 1999 Wizards",
+          "role": "copyright",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.26,
+            "y": 0.964,
+            "width": 0.595,
+            "height": 0.022,
+            "certain": true
+          }
+        }
+      ],
+      "physical_observations": [
+        {
+          "feature": "color",
+          "text": "Yellow card border with multicolor holographic artwork",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "configuration",
+          "text": "Single card with 1st Edition stamp",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "pattern",
+          "text": "Rainbow confetti-style holographic background",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "layout",
+          "text": "Vintage Base Set-style Pokémon card layout",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "finish",
+          "text": "Holographic foil visible across artwork",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        }
+      ],
+      "printing_detail_regions": [
+        {
+          "detail": "stamp",
+          "region": {
+            "image_index": 1,
+            "x": 0.075,
+            "y": 0.544,
+            "width": 0.073,
+            "height": 0.044,
+            "certain": true
+          }
+        },
+        {
+          "detail": "shadow",
+          "region": {
+            "image_index": 1,
+            "x": 0.13,
+            "y": 0.16,
+            "width": 0.74,
+            "height": 0.37,
+            "certain": false
+          }
+        },
+        {
+          "detail": "copyright",
+          "region": {
+            "image_index": 1,
+            "x": 0.26,
+            "y": 0.964,
+            "width": 0.595,
+            "height": 0.022,
+            "certain": true
+          }
+        }
+      ],
+      "object_region": {
+        "image_index": 1,
+        "x": 0.02,
+        "y": 0.004,
+        "width": 0.975,
+        "height": 0.993,
+        "certain": true
+      },
+      "object_regions": [
+        {
+          "image_index": 1,
+          "x": 0.02,
+          "y": 0.004,
+          "width": 0.975,
+          "height": 0.993,
+          "certain": true
+        }
+      ],
+      "object_unit": "single",
+      "identity_basis": {
+        "family": "inferred",
+        "variant": "physical_evidence"
+      },
+      "unresolved_identity_fields": [
+        "family"
+      ],
+      "pokemon_printing": {
+        "is_pokemon": true,
+        "language": "English",
+        "set_name": "Base Set (inferred)",
+        "card_type": "pokemon",
+        "first_edition_stamp": "present",
+        "stamp_image": 1,
+        "stamp_location": "left below illustration",
+        "stamp_text": "1st Edition",
+        "artwork_shadow": "unclear",
+        "shadow_image": 1,
+        "shadow_location": "right/lower edge of illustration frame",
+        "copyright_text": "© 1995, 96, 98, 99 Nintendo, Creatures/GAMEFREAK © 1999 Wizards",
+        "copyright_image": 1,
+        "slab_text": "",
+        "slab_image": 0
+      }
+    },
+    "phases": [
+      {
+        "stage": "flipcheck_visual_comparison",
+        "result": {
+          "physical_detail_needed": null,
+          "candidates": [
+            {
+              "category": "Pokémon TCG card",
+              "brand": "",
+              "family": "Base Set",
+              "model": "",
+              "year": "",
+              "issue_number": "",
+              "catalog_number": "8/102",
+              "unit": "single",
+              "variant": "Cosmos Holofoil",
+              "decision": "match",
+              "same_unit": true,
+              "physical_ambiguity": false,
+              "conflicts": [],
+              "matches": [
+                {
+                  "reference_id": "ref4",
+                  "feature": "layout",
+                  "photo_detail": "Vintage Base Set-style Pokémon card layout",
+                  "reference_detail": "Machamp (Base Set 8)",
+                  "agrees": true,
+                  "reference_evidence": "description"
+                },
+                {
+                  "reference_id": "ref4",
+                  "feature": "text",
+                  "photo_detail": "Machamp",
+                  "reference_detail": "Machamp",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                },
+                {
+                  "reference_id": "ref4",
+                  "feature": "code",
+                  "photo_detail": "8/102",
+                  "reference_detail": "8/102",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                },
+                {
+                  "reference_id": "ref4",
+                  "feature": "configuration",
+                  "photo_detail": "Single card with 1st Edition stamp",
+                  "reference_detail": "A 1st Edition version of this card",
+                  "agrees": true,
+                  "reference_evidence": "description"
+                },
+                {
+                  "reference_id": "ref4",
+                  "feature": "pattern",
+                  "photo_detail": "Rainbow confetti-style holographic background",
+                  "reference_detail": "Cosmos Holofoil treatment",
+                  "agrees": true,
+                  "reference_evidence": "description"
+                },
+                {
+                  "reference_id": "ref4",
+                  "feature": "subject",
+                  "photo_detail": "Machamp artwork",
+                  "reference_detail": "Machamp LV.67",
+                  "agrees": true,
+                  "reference_evidence": "description"
+                }
+              ],
+              "fields": [
+                {
+                  "field": "family",
+                  "value": "Base Set",
+                  "reference_id": "ref4",
+                  "quote": "Machamp (Base Set 8)",
+                  "evidence": "text",
+                  "scope": "target",
+                  "number_kind": "none"
+                },
+                {
+                  "field": "subject",
+                  "value": "Machamp",
+                  "reference_id": "ref4",
+                  "quote": "Machamp LV.67",
+                  "evidence": "text",
+                  "scope": "target",
+                  "number_kind": "none"
+                },
+                {
+                  "field": "catalog_number",
+                  "value": "8/102",
+                  "reference_id": "ref4",
+                  "quote": "8/102",
+                  "evidence": "text",
+                  "scope": "target",
+                  "number_kind": "card_number"
+                },
+                {
+                  "field": "variant",
+                  "value": "Cosmos Holofoil",
+                  "reference_id": "ref4",
+                  "quote": "Cosmos Holofoil treatment",
+                  "evidence": "text",
+                  "scope": "target",
+                  "number_kind": "none"
+                }
+              ],
+              "identity_level": "exact",
+              "specimen_notes": []
+            }
+          ],
+          "detail_needed_from": "none"
+        },
+        "webCalls": 0,
+        "usage": {
+          "input_tokens": 4311,
+          "input_tokens_details": {
+            "cache_write_tokens": 4308,
+            "cached_tokens": 0
+          },
+          "output_tokens": 840,
+          "output_tokens_details": {
+            "reasoning_tokens": 337
+          },
+          "total_tokens": 5151
+        }
+      }
+    ],
+    "references": [
+      {
+        "id": "ref1",
+        "url": "https://www.ebay.co.uk/b/bn_63134928",
+        "title": "First Edition Pokémon Individual Trading Card Base Sets - eBay UK",
+        "text": "First Edition Pokémon Individual Trading Card Base Sets - eBay UK",
+        "text_origin": "google_indexed_title",
+        "image_url": "https://i.ebayimg.com/images/g/AyEAAeSwCqtqjz5a/s-l1200.webp",
+        "ocr": {
+          "state": "ok",
+          "origin": "on_device_reference_ocr",
+          "script": "latin",
+          "text": "1999 POKEMON GAME\nMACHAMP- HOLO\n1ST EDITION\nSTAGE 2\nPSA\nEvolves from Machoke\nMachamp\nweakness\nISuperpower Pokémon. Length: 5' 3\", Weight: 287 b\nPut Machamp on the Stare I card\nPokemon Power: Strikes Bace Whenever your\nopponen's attack damages Machamp (even if Machamp\nis Knocked Out), this power does 10 darmage to the\nattacking Pokénon (Don't apDly Weakness and Resstance)\nThis power can't be used if Machamp is atready Asleep\nConfused, or Paralyzed when your opponent attacks.\nSeismic Toss\nresistance\n23535589\nI00 HP\nGA\n#8\nMINT\n60\nUsng it omeng muscles, it throws powerful punches that\ncon knack its victim cleer over the harizon LK 67\nretreat cost",
+          "width": 1200,
+          "height": 1200
+        }
+      },
+      {
+        "id": "ref2",
+        "url": "https://www.ebay.com/b/Pokemon-TCG-1st-Edition-Holo-Rare-Individual-Collectible-Card-Game-Cards/183454/bn_56894820",
+        "title": "Pokémon TCG 1st Edition Holo Rare Individual Collectible Card ...",
+        "text": "Pokémon TCG 1st Edition Holo Rare Individual Collectible Card ...",
+        "text_origin": "google_indexed_title",
+        "image_url": "https://i.ebayimg.com/images/g/2v4AAOSwxOZnaQ-r/s-l400.jpg",
+        "ocr": {
+          "state": "ok",
+          "origin": "on_device_reference_ocr",
+          "script": "latin",
+          "text": "STAGE 2\nEvolves frem Machake\nweakness\nMachamp\nPut Machap on the Stage i card\nSn Superpower Pokémon. Length: 5' 3\", Weight: 287 lbs.\nPokémon Power: Strikes Back Whenever your\nopponent's attack damages Machamp feven f Mochamp is\nKrocked O, this power does 10 damage to the attacking\nPolkemon. (Don't oppy Weakness and Resistonce) This\npower can't be used Machamp is already Asleep,\nConfused, or Paralyzed when your opponent attacks.\nKes Suglr\nSeismic Toss\n100 HP\nresistance\n60\nretreat cost\nUing its amazing muscles, it throwr powerful punches that\ncan knock lts victim clear over the horinon. LÝ 67 m88",
+          "width": 297,
+          "height": 400
+        }
+      },
+      {
+        "id": "ref3",
+        "url": "https://www.uk-66.co.jp/goods.php?s=32812885201100",
+        "title": "First edition Pokémon Machamp card holographic",
+        "text": "First edition Pokémon Machamp card holographic",
+        "text_origin": "google_indexed_title",
+        "image_url": "https://i.etsystatic.com/32117404/r/il/668d55/3360921390/il_fullxfull.3360921390_k850.jpg",
+        "ocr": {
+          "state": "ok",
+          "origin": "on_device_reference_ocr",
+          "script": "latin",
+          "text": "STAGE 2\nEvolves from Machoke\nweakness\nMachamp\nPut Machamp on the Stage I card\nT Superpower Pokémon. Length: 5' 3\", Weight: 287 lbs.\nPokémon Power: Strikes Back Whenever your\nopponent's attack damages Machamp (even if\nKnocked Out), this power does 10 damcnamp is\nattacking\nPokémon. (Don't apply Weakness and Resistance.) This\npower can't be used if Machamp is already Asleep.\nConfused, or Paralyzed when your opponent attacks.\nSeismic Toss\nresistance\n100 HP\nUsing its amazing muscles, it throws\n60\nretreat cost\ncan knock its victim clear over theeTu punches that\nLV. 67 68\nMlus, Ken Sugimori O1995, 96, 98 Nintendo, Creatures, GAMEFREAK OI99 Ward\n8/102",
+          "width": 729,
+          "height": 1500
+        }
+      },
+      {
+        "id": "ref4",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/Machamp_%28Base_Set_8%29",
+        "title": "Machamp (Base Set 8) - Bulbapedia, the community-driven Pokémon encyclopedia",
+        "text": "Machamp (Base Set 8) - Bulbapedia, the community-driven Pokémon encyclopedia\n\nMore\n\nMachamp LV.67\n\nカイリキー Kairiky\n\nIllus. Ken Sugimori\n\nEvolution stage\n\nStage 2 Pokémon\n\nEvolves from Machoke\n\nCard name\n\nMachamp\n\nType\n\nFighting\n\nHP\n\n100\n\nweakness\n\n×2\n\nresistance\n\nNone\n\nretreat cost\n\nEnglish expansion\n\nBase Set\n\nRarity\n\nEnglish card no.\n\n8/102\n\nJapanese expansion\n\nExpansion Pack\n\nJapanese rarity\n\nTCG GB1 set\n\nEvolution\n\nTCG GB1 ID\n\nB28\n\nTCG GB2 set\n\nBeginning Pokémon\n\nTCG GB2 ID\n\nA36\n\nExpansion\n\nLegendary Collection\n\nRarity\n\nEnglish card no.\n\n15/110\n\nFor more information on this Pokémon's species, see Machamp.\n\nMachamp (Japanese: カイリキー Kairiky) is a Fighting-type Stage 2 Pokémon card. It was first released as part of the Base Set.\n\nCard text\n\nBase Set print\n\nPokémon Power:\n\nStrikes Backはんげき\n\nWhenever your opponent's attack damages Machamp (even if Machamp is Knocked Out), this power does 10 damage to the attacking Pokémon. (Don't apply Weakness and Resistance.) This power can't be used if Machamp is already Asleep, Confused, or Paralyzed when your opponent attacks.\n\nSeismic Tossちきゅうなげ\n\n60\n\nLegendary Collection print\n\nPokémon Power:\n\nStrikes Backはんげき\n\nWhenever your opponent's attack damages Machamp (even if Machamp is Knocked Out), this power does 10 damage to the attacking Pokémon. (Don't apply Weakness and Resistance.) This power can't be used if Machamp is already affected by a Special Condition when your opponent attacks.\n\nSeismic Tossちきゅうなげ\n\n60\n\nPokédex data\n\nMachamp - Superpower Pokémon\n\nNo.\n\n068\n\nHeight\n\n5'3\" (1.6 m)\n\nWeight\n\n287 lbs. (130.0 kg)\n\nPokédex entry\nUsing its amazing muscles, it throws powerful punches that can knock its victim clear over the horizon.\n発達した４本の腕は、２秒間に１０００発のパンチをくりだすことができる。\n\nRelease information\n\nThis card was included in the Base Set, first released in the Japanese Expansion Pack. A 1st Edition version of this card was included in the 2-Player Starter Set, with the Shadowless variant being available in the first (Shadowless) print of the Set and the non-Shadowless being available in the second print. While an Unlimited Edition version of the Base Set print of this card was never officially released, a Non Holofoil version of this card lacking the 1st Edition stamp was included in the Trainer Deck A, distributed to prototype Pokémon Leagues before the TCG officially launched in North America. Like the rest of the cards included in the deck, this print has a red border and \"Trainer Deck A\" printed on the back. Another 1st Edition Base Set version of this card, with the Cosmos Holofoil treatment, was included in the 2-Player CD-ROM Starter Set released alongside Base Set 2, which was only released outside of Japan. This card was reprinted in the Legendary Collection expansion, which was also only released outside of Japan.\n\nGallery\n\nTCG GB1 Evolution sprite\n\nTCG GB2 Beginning Pokémon sprite\n\n[[File:|200px|center]]\n\n[[(TCG)|]] print\n\nIllus. [[]]\n\n[[File:|200px|center]]\n\n[[(TCG)|]] print\n\nIllus. [[]]\n\n[[File:|200px|center]]\n\n[[(TCG)|]] print\n\nIllus. [[]]\n\n[[File:|200px|center]]\n\n[[(TCG)|]] print\n\nIllus. [[]]\n\n[[File:|200px|center]]\n\n[[(TCG)|]] print\n\nIllus. [[]]\n\n[[File:|200px|center]]\n\n[[(TCG)|]] print\n\nIllus. [[]]\n\n[[File:|200px|center]]\n\n[[(TCG)|]] print\n\nIllus. [[]]\n\n[[File:|200px|center]]\n\n[[(TCG)|]] print\n\nIllus. [[]]\n\n[[File:|200px|center]]\n\n[[(TCG)|]] print\n\nIllus. [[]]\n\n[[File:|200px|center]]\n\n[[(TCG)|]] print\n\nIllus. [[]]\n\n[[File:|200px|center]]\n\n[[(TCG)|]] print\n\nIllus. [[]]\n\n[[File:|200px|center]]\n\n[[(TCG)|]] print\n\nIllus. [[]]\n\n[[File:|200px|center]]\n\n[[(TCG)|]] print\n\nIllus. [[]]\n\n[[File:|200px|center]]\n\n[[(TCG)|]] print\n\nIllus. [[]]\n\n[[File:|200px|center]]\n\n[[(TCG)|]] print\n\nIllus. [[]]\n\n[[File:|200px|center]]\n\n[[(TCG)|]] print\n\nIllus. [[]]\n\nTrivia\n\nOrigin\n\nStrikes Back's Japanese name is that of Counterattack, a skill later introduced in Pokémon Shuffle. Seismic Toss is a move in the Pokémon games that Machamp can learn. This card's English Pokédex entry comes from Pokémon Red and Blue, though it is slightly reworded. The Japanese entry comes from Pokémon Red and Green.\n\nThis article is part of Project TCG, a Bulbapedia project that aims to report on every aspect of the Pokémon Trading Card Game.\n\nRetrieved from \"https://bulbapedia.bulbagarden.net/w/index.php?title=Machamp_(Base_Set_8)&oldid=4608495\"\n\nCategoriesCards\nPokémon cards\nMachamp (TCG)\nPokémon cards with 100 HP\nPokémon cards with a Retreat Cost of 3\nStage 2 Pokémon cards\nEvolution cards\nFighting-type Pokémon cards\nCards with Seismic Toss\nPokémon cards with attack damage 60\nBase Set cards\nExpansion Pack cards\nLegendary Collection cards\nIllus. by Ken Sugimori\nHolographic cards",
+        "text_origin": "retrieved_page",
+        "image_url": "https://archives.bulbagarden.net/media/upload/2/22/MachampBaseSet8.jpg",
+        "ocr": {
+          "state": "ok",
+          "origin": "on_device_reference_ocr",
+          "script": "latin",
+          "text": "STAGE 2\nEvolves from Machoke\nweakness\nMachamp\nPut Machamp on the Stage I card\nSuperpower Pokémon. Length: 5' 3\", Weight: 287 lbs.\nPokémon Power: Strikes Back Whenever your\nopponent's attack damages Machamp (even if Machamp is\nKnocked Out), this power does 10 damage to the attacking\nPokémon. (Don't apply Weakness and Resistance,) This\npower can't be used if Machamp is already Asleep,\nConfused, or Paralyzed when your opponent attacks.\nSeismic Toss\n100 HP\nresistance\n60\nretreat cost\nUsing its amazing muscles, it throws powerful punches that\ncan knock its victim clear over the horizon. LV. 67 #68\nTHus. Ken Sugimori\nO1995, 96. 98 Nintendo, Creatures, GAMEFREAK O1999 VNiards 8/102 *",
+          "width": 736,
+          "height": 1033
+        }
+      },
+      {
+        "id": "ref5",
+        "url": "https://t206cards.com/checklists/pokemon-base-set/machamp",
+        "title": "Machamp - 1999 Pokemon Base Set #8/102 | T206 Cards",
+        "text": "Machamp - 1999 Pokemon Base Set #8/102 | T206 Cards\nMachamp - Pokemon Base Set #8/102\nMachamp - 1999 Pokemon Base Set card #8/102 (Rare Holo). 1st Edition, Shadowless, Unlimited and 1999-2000 variant images, how to tell them apart, card data and live TCGplayer prices.\n\nHome\n\nMachamp — Base Set #8/102\nFighting Rare Holo · Holofoil · Stage 2\nThe Machamp is card #8/102 in the 1999 Pokemon Game Base Set (Wizards of the Coast) — the set that launched the Pokemon Trading Card Game. It is a rare holo Fighting-type Stage 2 card, issued across four printings: 1st Edition, Shadowless, Unlimited and the 1999-2000 (4th) print. Across PSA and SGC, roughly 43,689 copies have been graded, with only 448 earning a PSA 10 (Gem Mint) — a sense of how scarce top-grade examples are.\nPrint variants & how to tell them apart\n\n1st Edition (Shadowless)\nMachamp only. The first-print 2-Player Starter Set Machamp — carries the 1st Edition stamp AND has no drop shadow.\n\n1st Edition (Shadowed)\nMachamp only. Later 2-Player Starter Set Machamp — STILL carries the 1st Edition stamp but now has the Unlimited-style drop shadow. There is no no-stamp Unlimited Machamp.\n\nGraded population (PSA & SGC)\nGraderTotal109872–61Auth1st Edition (Shadowless)PSA7,548174521,0011,1094,7522143SGC145051623100011st Edition (Shadowed)PSA35,1914295,9467,1084,79116,28861019SGC80525516914741877\nPSA & SGC graded population by printing & grade. PSA Unlimited includes copies graded before PSA flagged the 1st Edition / Shadowless varieties; SGC does not separate the 1999-2000 print.\nCard details\nType\nFighting\n\nStage\nStage 2\n\nHP\n100\n\nEvolves from\nMachoke\n\nWeakness\nPsychic ×2\n\nRetreat\n3\n\nArtist\nKen Sugimori\n\nPokedex #\n68\n\nAttacks\n60Seismic Toss [Fighting Fighting Fighting Colorless]\n\nPokémon Power: Strikes BackWhenever your opponent's attack damages Machamp (even if Machamp is Knocked Out), this power does 10 damage to the attacking Pokémon. (Don't apply Weakness and Resistance.) This power can't be used if Machamp is Asleep, Confused, or Paralyzed when your opponent attacks.\n\nUsing its amazing muscles, it throws powerful punches that can knock its victim clear over the horizon.\nPrices & where to buy\nVariantMarketTCGplayereBay1st Edition (Shadowless)$77.15TCGplayereBay1st Edition (Shadowed)$32.77TCGplayereBayMarket values are live TCGplayer prices for each printing. A dash means TCGplayer has no separate or active listing for that variant (e.g. 1999-2000). As an eBay Partner & affiliate we may earn from qualifying purchases.\nShop our Pokemon inventory\nNotable variant / error\nStarter-set exclusive (2-Player Starter Set). ALWAYS carries the 1st Edition stamp; exists shadowless (first print) and shadowed (later). No no-stamp Unlimited Machamp. A no-stamp non-holo Machamp exists only in the prototype Trainer Deck A.\nAbout the print variants\nBase Set cards come in four printings: 1st Edition (Edition-1 stamp), Shadowless (no stamp, no drop shadow, the extra '99' in the copyright), Unlimited (drop shadow, most common), and the 1999-2000 (4th print) (like Unlimited but the copyright reads (c)1999-2000). Machamp is the exception -- it is always 1st-Edition-stamped.\nFrequently asked questions\nWhat is the 1999 Pokemon Base Set Machamp card?The Machamp is card #8/102 in the 1999 Pokemon Game Base Set by Wizards of the Coast, the first English Pokemon Trading Card Game set. It is a rare holo Fighting-type card and exists in four printings: 1st Edition, Shadowless, Unlimited and the 1999-2000 print.\nHow can I tell which printing of the Machamp I have?Check three tells: a 1st Edition has the black 'Edition 1' stamp at the lower-left of the artwork; a Shadowless has no stamp AND no drop shadow on the right of the art box (plus an extra '99' in the copyright line); Unlimited has the drop shadow and is by far the most common; the 1999-2000 print looks like Unlimited but its copyright reads (c)1999-2000.\nHow rare is a graded Machamp?Across PSA and SGC, roughly 43,689 copies of the Machamp have been graded, of which only 448 earned a PSA 10 (Gem Mint). Mid-grade copies are obtainable, but gem-mint examples are genuinely scarce.\nWhich printing of the Machamp is most valuable?1st Edition copies command the highest premium, followed by Shadowless, with Unlimited the most affordable. See the live per-printing TCGplayer prices above.\n\nMore Fighting-type Base Set cards\nHitmonchan\nDugtrio\nMachoke\nDiglett\nMachop\nOnix\nSandshrew\n\nSources: pokemontcg.io, PSA & SGC population reports, and live TCGplayer market data. Card data, variants & population compiled and maintained by T206Cards.com. Page last updated 2026-06-30.\n← Back to the full interactive checklist\n\nOK",
+        "text_origin": "retrieved_page",
+        "image_url": "https://t206cards.com/content/pokemon-base-set/images/fronts/machamp-1st-shadowless/8.png",
+        "ocr": {
+          "state": "ok",
+          "origin": "on_device_reference_ocr",
+          "script": "latin",
+          "text": "STAGE 2\nEvolves from Machoke\nMachamp\nPut Machamp on the Stage I card\nweakness\nn Superpower Pokémon. Length: 5' 3\", Weight: 287 lbs.\nPokémon Power: Strikes BackWhenever your\nopponents attack damages Machamp (even if Machamp\nis Knocked Out), this power does l0 damage to the\nattacking Pokémon. (Don't apply Weakness and Resistance.)\nThis power can't be used if Machamp is already Asleep,\nConfused, or Paralyzed when your opponent attacks.\n100 HP\nSeismic Toss\nresistance\n60\nretreat cost\nUsing its amazing muscles, it throws powerful punches that\ncan knock its victim clear over the horizon. LV. 67 #68\nIllus. Ken Sugimori\n1995,96,98,99 Ninterndo, Creatures, GAMEFREAK I999Wizards. 8/102 *",
+          "width": 600,
+          "height": 825
+        }
+      }
+    ]
+  },
+  "doncic": {
+    "vision": {
+      "status": "identified",
+      "kind": "card",
+      "title": "Luka Dončić 2018-19 Panini Prizm Rookie #280 Green Pulsar Prizm",
+      "category": "basketball trading card",
+      "brand": "Panini",
+      "family": "2018-19 Panini Prizm Basketball",
+      "model": "#280 Luka Dončić",
+      "variant": "Green Pulsar Prizm",
+      "condition": "raw, displayed in plastic holder; condition not graded",
+      "category_confidence": 99,
+      "brand_confidence": 99,
+      "family_confidence": 99,
+      "model_confidence": 96,
+      "model_verified": true,
+      "market_ready": true,
+      "candidate_models": [],
+      "visual_fingerprint": "Luka Dončić Dallas Mavericks rookie card, front showing purple uniform #77 with green holographic Pulsar-style border and PRIZM logo; reverse confirms NO. 280, 2018-19 PANINI - PRIZM BASKETBALL and Luka Dončić biography/statistics.",
+      "distinctive_terms": [
+        "NO. 280",
+        "2018-19 PANINI - PRIZM BASKETBALL",
+        "LUKA DONCIC",
+        "DALLAS MAVERICKS",
+        "PRIZM"
+      ],
+      "search_terms": [
+        "NO. 280",
+        "2018-19 PANINI - PRIZM BASKETBALL",
+        "LUKA DONCIC",
+        "DALLAS MAVERICKS",
+        "PRIZM"
+      ],
+      "identifier_hints": [
+        "NO. 280"
+      ],
+      "layout_signature": [
+        {
+          "term": "NO. 280",
+          "position": "top left on reverse",
+          "relation": "above card image"
+        },
+        {
+          "term": "PRIZM",
+          "position": "top right on front and reverse",
+          "relation": "set branding"
+        },
+        {
+          "term": "LUKA DONCIC",
+          "position": "bottom front and upper reverse",
+          "relation": "below player image"
+        },
+        {
+          "term": "DALLAS MAVERICKS",
+          "position": "bottom front",
+          "relation": "below player name"
+        },
+        {
+          "term": "2018-19 PANINI - PRIZM BASKETBALL",
+          "position": "lower reverse",
+          "relation": "above copyright and licensing text"
+        }
+      ],
+      "evidence": [
+        "Reverse visibly states NO. 280.",
+        "Reverse visibly identifies 2018-19 PANINI - PRIZM BASKETBALL.",
+        "Front and reverse both show Luka Doncic in Dallas Mavericks uniform number 77.",
+        "Front has a green holographic patterned parallel appearance consistent with Green Pulsar Prizm."
+      ],
+      "missing_information": [
+        "Exact grading/condition cannot be assessed reliably from the holder photographs.",
+        "Parallel designation is based on visible green Pulsar-style pattern rather than a printed parallel label."
+      ],
+      "next_photo_request": "Optional: provide a glare-free close-up of the front border to confirm the exact green parallel pattern.",
+      "user_text_consistent": true,
+      "normalized_query": "2018-19 Panini Prizm Basketball Luka Doncic #280 Green Pulsar Prizm",
+      "verification_summary": "Player, card number, set, season and team are directly confirmed by the photographed front and reverse; the green parallel is visually identified.",
+      "photo_clues": [
+        {
+          "text": "LUKA DONCIC",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.52,
+            "y": 0.75,
+            "width": 0.42,
+            "height": 0.06,
+            "certain": true
+          }
+        },
+        {
+          "text": "DALLAS MAVERICKS",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.53,
+            "y": 0.81,
+            "width": 0.35,
+            "height": 0.04,
+            "certain": true
+          }
+        },
+        {
+          "text": "NO. 280",
+          "role": "collector_number",
+          "certainty": "clear",
+          "image_index": 2,
+          "region": {
+            "image_index": 2,
+            "x": 0.07,
+            "y": 0.2,
+            "width": 0.2,
+            "height": 0.04,
+            "certain": true
+          }
+        },
+        {
+          "text": "2018-19 PANINI - PRIZM BASKETBALL",
+          "role": "season",
+          "certainty": "clear",
+          "image_index": 2,
+          "region": {
+            "image_index": 2,
+            "x": 0.1,
+            "y": 0.78,
+            "width": 0.45,
+            "height": 0.04,
+            "certain": true
+          }
+        },
+        {
+          "text": "PRIZM",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.65,
+            "y": 0.15,
+            "width": 0.2,
+            "height": 0.05,
+            "certain": true
+          }
+        }
+      ],
+      "physical_observations": [
+        {
+          "feature": "color",
+          "text": "green holographic border with blue-purple reflective areas",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "pattern",
+          "text": "repeating dotted and geometric Pulsar-style foil pattern",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "configuration",
+          "text": "single basketball card photographed front and reverse",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "color",
+          "text": "purple Dallas Mavericks uniform with white number 77",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        }
+      ],
+      "printing_detail_regions": [],
+      "object_region": {
+        "image_index": 1,
+        "x": 0.02,
+        "y": 0.14,
+        "width": 0.96,
+        "height": 0.77,
+        "certain": true
+      },
+      "object_regions": [
+        {
+          "image_index": 1,
+          "x": 0.02,
+          "y": 0.14,
+          "width": 0.96,
+          "height": 0.77,
+          "certain": true
+        },
+        {
+          "image_index": 2,
+          "x": 0.04,
+          "y": 0.17,
+          "width": 0.91,
+          "height": 0.76,
+          "certain": true
+        }
+      ],
+      "object_unit": "single",
+      "identity_basis": {
+        "family": "printed",
+        "variant": "physical_evidence"
+      },
+      "unresolved_identity_fields": [],
+      "pokemon_printing": null
+    },
+    "phases": [],
+    "references": []
+  },
+  "politoed": {
+    "vision": {
+      "status": "uncertain",
+      "kind": "card",
+      "title": "Politoed Pokémon card",
+      "category": "Pokémon TCG",
+      "brand": "Nintendo",
+      "family": "",
+      "model": "Politoed",
+      "variant": "holographic foil",
+      "condition": "Raw; condition not assessable from image",
+      "category_confidence": 99,
+      "brand_confidence": 85,
+      "family_confidence": 35,
+      "model_confidence": 95,
+      "model_verified": false,
+      "market_ready": false,
+      "candidate_models": [
+        {
+          "model": "Politoed 22/64",
+          "confidence": 78,
+          "reason": "Visible Italian Politoed card layout and apparent 22/64 numbering; set name is not clearly readable."
+        },
+        {
+          "model": "Politoed from another Italian vintage printing",
+          "confidence": 22,
+          "reason": "Set and exact printing are not sufficiently legible."
+        }
+      ],
+      "visual_fingerprint": "Italian Pokémon card featuring Politoed, 110 PV, yellow border, blue text area, large holographic artwork with green Politoed, attacks Crescita Improvvisa, Ranabalzo and Spruzza, apparent 22/64 numbering.",
+      "distinctive_terms": [
+        "Politoed",
+        "Crescita Improvvisa",
+        "Ranabalzo",
+        "Spruzza",
+        "110 PV"
+      ],
+      "search_terms": [
+        "Politoed",
+        "Crescita Improvvisa",
+        "Ranabalzo",
+        "Spruzza",
+        "110 PV"
+      ],
+      "identifier_hints": [
+        "22/64"
+      ],
+      "layout_signature": [
+        {
+          "term": "Politoed",
+          "position": "top center",
+          "relation": "name beside 110 PV"
+        },
+        {
+          "term": "110 PV",
+          "position": "top right",
+          "relation": "beside water symbol"
+        },
+        {
+          "term": "Crescita Improvvisa",
+          "position": "middle upper",
+          "relation": "first attack"
+        },
+        {
+          "term": "Ranabalzo",
+          "position": "middle",
+          "relation": "second attack above 30+"
+        },
+        {
+          "term": "Spruzza",
+          "position": "middle lower",
+          "relation": "third attack above 70"
+        }
+      ],
+      "evidence": [
+        "Visible Pokémon card front with the name Politoed and 110 PV.",
+        "Italian text is clearly visible, including Crescita Improvvisa, Ranabalzo and Spruzza.",
+        "Holographic foil effect is visible across the artwork.",
+        "Copyright line visibly begins with © 2001 Pokémon / Nintendo.",
+        "A bottom-right card number appears to read 22/64, but is not fully clear."
+      ],
+      "missing_information": [
+        "Exact set name",
+        "Clear card number confirmation",
+        "Edition stamp status is not fully resolvable from this image"
+      ],
+      "next_photo_request": "Provide a sharp, straight-on close-up of the bottom edge and the area below the artwork to confirm the set symbol, number and edition details.",
+      "user_text_consistent": true,
+      "normalized_query": "",
+      "verification_summary": "Politoed is clearly identified, but the exact set/printing is not verified because the set name and card number are insufficiently legible.",
+      "photo_clues": [
+        {
+          "text": "Politoed",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.32,
+            "y": 0.06,
+            "width": 0.28,
+            "height": 0.06,
+            "certain": true
+          }
+        },
+        {
+          "text": "110 PV",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.7,
+            "y": 0.06,
+            "width": 0.17,
+            "height": 0.06,
+            "certain": true
+          }
+        },
+        {
+          "text": "Crescita Improvvisa",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.34,
+            "y": 0.52,
+            "width": 0.3,
+            "height": 0.05,
+            "certain": true
+          }
+        },
+        {
+          "text": "Ranabalzo",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.34,
+            "y": 0.59,
+            "width": 0.22,
+            "height": 0.05,
+            "certain": true
+          }
+        },
+        {
+          "text": "Spruzza",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.34,
+            "y": 0.69,
+            "width": 0.2,
+            "height": 0.05,
+            "certain": true
+          }
+        },
+        {
+          "text": "22/64",
+          "role": "collector_number",
+          "certainty": "uncertain",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.76,
+            "y": 0.9,
+            "width": 0.12,
+            "height": 0.05,
+            "certain": false
+          }
+        },
+        {
+          "text": "© 2001 Pokémon / Nintendo",
+          "role": "copyright",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.22,
+            "y": 0.91,
+            "width": 0.25,
+            "height": 0.04,
+            "certain": true
+          }
+        }
+      ],
+      "physical_observations": [
+        {
+          "feature": "color",
+          "text": "Yellow border with blue text panel",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "finish",
+          "text": "Holographic foil visible across the artwork",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "configuration",
+          "text": "Three listed attacks with water and colorless energy symbols",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "pattern",
+          "text": "Green Politoed artwork against sparkling foliage background",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        }
+      ],
+      "printing_detail_regions": [
+        {
+          "detail": "stamp",
+          "region": {
+            "image_index": 1,
+            "x": 0.75,
+            "y": 0.88,
+            "width": 0.15,
+            "height": 0.1,
+            "certain": false
+          }
+        },
+        {
+          "detail": "shadow",
+          "region": {
+            "image_index": 1,
+            "x": 0.18,
+            "y": 0.12,
+            "width": 0.75,
+            "height": 0.36,
+            "certain": false
+          }
+        },
+        {
+          "detail": "copyright",
+          "region": {
+            "image_index": 1,
+            "x": 0.2,
+            "y": 0.89,
+            "width": 0.3,
+            "height": 0.07,
+            "certain": true
+          }
+        }
+      ],
+      "object_region": {
+        "image_index": 1,
+        "x": 0.07,
+        "y": 0,
+        "width": 0.87,
+        "height": 0.98,
+        "certain": true
+      },
+      "object_regions": [
+        {
+          "image_index": 1,
+          "x": 0.07,
+          "y": 0,
+          "width": 0.87,
+          "height": 0.98,
+          "certain": true
+        }
+      ],
+      "object_unit": "single",
+      "identity_basis": {
+        "family": "inferred",
+        "variant": "physical_evidence"
+      },
+      "unresolved_identity_fields": [
+        "family"
+      ],
+      "pokemon_printing": {
+        "is_pokemon": true,
+        "language": "Italian",
+        "set_name": "",
+        "card_type": "pokemon",
+        "first_edition_stamp": "unclear",
+        "stamp_image": 1,
+        "stamp_location": "lower right area; not sufficiently legible",
+        "stamp_text": "",
+        "artwork_shadow": "unclear",
+        "shadow_image": 1,
+        "shadow_location": "right/lower edge of illustration frame",
+        "copyright_text": "© 2001 Pokémon / Nintendo",
+        "copyright_image": 1,
+        "slab_text": "",
+        "slab_image": 0
+      }
+    },
+    "phases": [
+      {
+        "stage": "flipcheck_visual_comparison",
+        "result": {
+          "physical_detail_needed": null,
+          "candidates": [
+            {
+              "category": "Pokémon TCG",
+              "brand": "Pokémon",
+              "family": "Skyridge",
+              "model": "",
+              "year": "2003",
+              "issue_number": "",
+              "catalog_number": "H23",
+              "unit": "single",
+              "variant": "holographic",
+              "decision": "possible",
+              "same_unit": true,
+              "physical_ambiguity": false,
+              "conflicts": [
+                {
+                  "scope": "target",
+                  "reason": "La foto mostra una finitura olografica e sfondo scintillante; la foto della fonte mostra una versione non olografica."
+                },
+                {
+                  "scope": "target",
+                  "reason": "La fonte riporta anche \"25/144\", in conflitto con \"H23\" nel titolo catalografico."
+                }
+              ],
+              "matches": [
+                {
+                  "reference_id": "ref1",
+                  "feature": "layout",
+                  "photo_detail": "Carta singola con bordo giallo, fascia superiore blu e tre attacchi in pannello blu.",
+                  "reference_detail": "Carta Pokémon Fase 2 di tipo Acqua con tre attacchi elencati nella stessa struttura.",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                },
+                {
+                  "reference_id": "ref1",
+                  "feature": "text",
+                  "photo_detail": "\"Crescita Improvvisa\", \"Ranabalzo\" e \"Spruzza Energia\".",
+                  "reference_detail": "\"Crescita Improvvisa\"; \"Ranabalzo\"; \"Spruzza Energia\".",
+                  "agrees": true,
+                  "reference_evidence": "description"
+                },
+                {
+                  "reference_id": "ref1",
+                  "feature": "subject",
+                  "photo_detail": "Politoed verde raffigurato nella vegetazione.",
+                  "reference_detail": "Politoed raffigurato nella vegetazione.",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                }
+              ],
+              "fields": [
+                {
+                  "field": "subject",
+                  "value": "Politoed",
+                  "reference_id": "ref1",
+                  "quote": "Politoed",
+                  "evidence": "text",
+                  "scope": "target",
+                  "number_kind": "none"
+                },
+                {
+                  "field": "family",
+                  "value": "Skyridge",
+                  "reference_id": "ref1",
+                  "quote": "Politoed (Skyridge H23)",
+                  "evidence": "text",
+                  "scope": "target",
+                  "number_kind": "none"
+                },
+                {
+                  "field": "catalog_number",
+                  "value": "H23",
+                  "reference_id": "ref1",
+                  "quote": "H23",
+                  "evidence": "text",
+                  "scope": "target",
+                  "number_kind": "catalog_number"
+                },
+                {
+                  "field": "year",
+                  "value": "2003",
+                  "reference_id": "ref1",
+                  "quote": "2003",
+                  "evidence": "image",
+                  "scope": "target",
+                  "number_kind": "year"
+                },
+                {
+                  "field": "brand",
+                  "value": "Pokémon",
+                  "reference_id": "ref1",
+                  "quote": "Pokémon",
+                  "evidence": "text",
+                  "scope": "target",
+                  "number_kind": "none"
+                }
+              ],
+              "identity_level": "exact",
+              "specimen_notes": [
+                "La finitura olografica osservata è compatibile con una variante parallela, ma la fonte fotografica non mostra la stessa finitura."
+              ]
+            }
+          ],
+          "detail_needed_from": "none"
+        },
+        "webCalls": 0,
+        "usage": {
+          "input_tokens": 5220,
+          "input_tokens_details": {
+            "cache_write_tokens": 5217,
+            "cached_tokens": 0
+          },
+          "output_tokens": 1100,
+          "output_tokens_details": {
+            "reasoning_tokens": 516
+          },
+          "total_tokens": 6320
+        }
+      }
+    ],
+    "references": [
+      {
+        "id": "ref1",
+        "url": "https://wiki.pokemoncentral.it/Politoed_%28Skyridge_25%29",
+        "title": "Politoed (Skyridge H23) - Pokémon Central Wiki",
+        "text": "Politoed (Skyridge H23) - Pokémon Central Wiki\n\nPolitoed (Skyridge H23)\n\nda Pokémon Central Wiki, l'enciclopedia Pokémon in italiano.\n\n(Reindirizzamento da Politoed (Skyridge 25))\n\nVai alla navigazione\nVai alla ricerca\n\n← Piloswine (Skyridge H22)\n\n Skyridge \n\nPoliwrath (Skyridge H24) →\n\n← Piloswine (Skyridge 24)\n\n Skyridge \n\nPoliwrath (Skyridge 26) →\n\nPolitoed\nEN: Politoed\nJA: ニョロトノ\n\nIllus. Atsuko Nishida\n\nStadio evolutivo\n\nPokémon Fase 2\nSi evolve da Poliwhirl\n\nNome della carta\n\nPolitoed\n\nTipo\n\nAcqua\n\nPunti Salute\n\n110\n\nDebolezza\n\n×2\n\nResistenza\n\nNessuna\n\nCosto di ritirata\n\nEspansione\n\nSkyridge\n\nRarità\n\nNumero della carta\n\nH23/H32\n\nEspansione giapponese\n\nSaketa daichi\n\nRarità giapponese\n\nNumero della carta giapponese\n\n031/088\n\nEspansione\n\nSkyridge\n\nRarità\n\nNumero della carta\n\n25/144\n\nEspansione giapponese\n\nSaketa daichi\n\nRarità giapponese\n\nNumero della carta giapponese\n\n030/088\n\nPer informazioni sulla specie di Pokémon, si veda Politoed.\n\nPolitoed è una carta Pokémon Fase 2 di tipo Acqua. Fa parte dell'espansione Skyridge.\n\nTesto\n\nCrescita Improvvisaきゅうせいちょう\n\nAssegna quante carte Energia Base vuoi dalla tua mano a Politoed.\n\nRanabalzoかえるとび\n\n30+\n\nLancia una moneta. Se ece testa, questo attacco infligge 30 danni più altri 20 danni.\n\nSpruzza Energiaエネスプラッシュ\n\n70\n\nSposta 2 carte Energia assegnate a Politoed su I o 2 dei tuoi Pokémon in Panchina (puoi assegnare le carte Energia a un solo Pokémon o a due diversi). Se non hai Pokémon in Panchina,ignora questo effetto.\n\nDati e-Reader\n\nL'ID della carta della stampa Olografica è E-62. L'ID della carta della stampa Non Olografica è E-62-#. Sulla stampa Non Olografica, la striscia corta contiene informazioni Pokédex e un breve riepilogo della carta e informazioni sul contenuto della striscia lunga. La specie, l'altezza e il peso sono presenti sulla stampa Olografica.\n\nDati Pokédex\n\nAcquaAcquaPolitoed - Pokémon Rana\n\nN.186\n\nAltezza\n1,1 m\n\nPeso\n33,9 kg\n\nDati Pokédex\nI Poliwag e i Poliwhirl si riuniscono subito se odono il verso rauco che emette con la gola.\n\nなきごえが　ひびきわたると　あちこちから　ニョロモや　ニョロゾたちが　あつまってくる。\n\nConstruction: Action\n\nLa striscia lunga contiene i dati della mappa per l'applicazione Construction: Action.\n\nCuriosità\n\nOrigine\n\nI dati Pokédex e-Reader della versione inglese di questa carta provengono da Pokémon Cristallo, mentre quelli della versione giapponese provengono da Pokémon Oro.\n\nEstratto da \"https://wiki.pokemoncentral.it/index.php?title=Politoed_(Skyridge_H23)&oldid=1868418\"\n\nCategorie: Carte Pokémon (GCC)\nPolitoed (GCC)\nCarte Pokémon di tipo Acqua (GCC)\nCarte Pokémon di Fase 2 (GCC)\nCarte Evoluzione (GCC)\nCarte Pokémon con 110 PS (GCC)\nCarte Pokémon con costo di ritirata pari a 2 (GCC)\nCarte con l'attacco Crescita Improvvisa (GCC)\nCarte con l'attacco Ranabalzo (GCC)\nCarte con 30+ di attacco (GCC)\nCarte con l'attacco Spruzza Energia (GCC)\nCarte con 70 di attacco (GCC)\nCarte Skyridge\nCarte Saketa daichi\nIllus. di Atsuko Nishida (GCC)\nCarte olografiche (GCC)",
+        "text_origin": "retrieved_page",
+        "image_url": "https://media.pokemoncentral.it/wiki/a/a5/PolitoedSkyridge25.jpg",
+        "ocr": {
+          "state": "ok",
+          "origin": "on_device_reference_ocr",
+          "script": "latin",
+          "text": "FASE 2\ndebolezza\nEvolve da Polwhir\nPolitoed\nMetti Poltoed silla earta diFa\nresistenza\n2003 Pokémon /Nintendo\n110 PV\nCrescita Improvvisa Assegna quante\ncarte Energia Base vuoi dalla tua mano a Politoed.\nRanabalzo Lancia una moneta. Se\nPokémon di Fase 2\nesce testa, questo attacco infligge 30\ndanni più altri 20 danni.\nSpruzza Energia Sposta 2 carte Energia\nS assegnate a Politoed su Io 2 dei tuoi\nPokémon in Panchina (puoi assegnare le carte\nEnergia a un solo Pokémon o a due diversi), Se\nnon hai Pokémon in Panchina, ignora questo\neffetto.\nAtsuka Nishida\ncosto di ritirata\n1D: E-62-#\n**\n30+\n25/144\n70",
+          "width": 1008,
+          "height": 1382
+        }
+      },
+      {
+        "id": "ref2",
+        "url": "https://wiki.pokemoncentral.it/Politoed",
+        "title": "Politoed - Pokémon Central Wiki",
+        "text": "Politoed - Pokémon Central Wiki\n\nPolitoed\n\nda Pokémon Central Wiki, l'enciclopedia Pokémon in italiano.\n\nVai alla navigazione\nVai alla ricerca\n\n←  #0185: Sudowoodo\n\nPolitoed\n\n #0187: Hoppip →\n\n#0186Politoed\nEN: Politoed\nJA: ニョロトノ\n\nPokémon Rana\nPer altre immagini di Politoed si veda Politoed/Immagini\n\nTipo\nAcqua\n\nAbilità\n\nAssorbacquaPrima abilità\n\nUmiditàSeconda abilità\n\nPiovischioAbilità speciale\n\nSesso\n\n50.00% ♂, 50.00% ♀\n\nAltezza\n\n1,1 m\n\nPeso\n\n33,9 kg\n\nTasso di cattura\n\n45 (11.9%)\n\nUovo\n\nGruppo Uova\n\nAcqua 1\n\n20 cicli(minimo 2560 passi)\n\nPokédex regionali\nJohto\n#075Kalos\n#036Alola\n#185Armatura\n#145Nordivia\n#42\n\nNavigatori\n\nFiore\nR-055\n\nOblivia\nR-239\n\nOblivia (passato)\nN-125\n\nTasso di allevamento\n\nMedio-Lento\n\nEsperienza base ceduta\n\nSconosciutaII-IV/225V+\n\nPunti base ceduti\nTotale: 3\n\n—PS\n\n—Att.\n\n—Dif.\n\n—A.Sp.\n\n3D.Sp.\n\n—Vel.\n\nColore Pokédex\n\nVerde\n\nVerso\n\nhttps://wiki.pokemoncentral.it/File:Verso_0186.mp3▶\n\nSagoma\n\nImpronta\n\nAffetto di base\n\nSconosciuto\n\nAltre risorse (in inglese)\n\nSul Pokédex di Smogon:\nSeconda generazione\n\nTerza generazione\n\nQuarta generazione\n\nQuinta generazione\n\nSesta generazione\n\nSettima generazione\n\nOttava generazione\n\nNona generazione\n\nSu Wolfram Alpha\n\nSu Bulbagarden Archives\n\nPolitoed è un Pokémon di tipo Acqua introdotto in seconda generazione.\n\nSi evolve da Poliwhirl quando scambiato mentre tiene una Roccia di re. È una delle evoluzioni finali di Poliwag, l'altra è Poliwrath.\n\nBiologia\n\nFisionomia\n\nI Politoed sono rane dalla pelle color verde chiaro, tranne la pancia, la mascella, le zampe anteriori e le dita delle zampe posteriori che sono di colore giallo, mentre sulla pancia ha una spirale verde chiaro a indicare la posizione dell'intestino. Il Pokémon ha inoltre le macchie sulle guance di colore rosa, grandi occhi castani e un lungo ciuffo azzurro sulla testa arricciato.\n\nDifferenze tra i sessi\nLe macchie rosa sulle guance sono più piccole nella femmina.\n\nAbilità speciali\n\nOltre ad avere le abilità basiche della maggior parte dei Pokémon di tipo Acqua, i Politoed hanno anche la capacità di poter attaccare usando la voce sfruttando mosse come Ultimocanto o Coro. Oltre a questo possiedono una grande capacità di salto. Anche se fisicamente sono più deboli dei Poliwrath, sono più forti quando attaccano specialmente.\n\nComportamento\n\nI Politoed sono spesso a capo dei branchi di Poliwag, Poliwhirl e talvolta anche Poliwrath, che loro richiameranno con il loro gracchiare, nel caso in cui si dovessero incontrare due Politoed, il leader verrà deciso dal gracchiare. Nonostante ciò sono anche astuti predatori e sfruttano la loro lunga lingua per catturare gli insetti, possono inoltre sfruttare il ciuffo sulla testa per mimetizzarsi fra le alghe.\n\nHabitat\n\nI Politoed sono estremamente rari in natura in quanto un Poliwhirl necessità dell'intervento dell'uomo per evolversi, tuttavia loro vivono nei laghi e negli stagni, li si può vedere sopra delle foglie di ninfea.\n\nDieta\n\nArticolo principale: Cibo Pokémon\nI Politoed non solo assorbono sostanze nutritive dell'acqua tramite la pelle, ma possono anche cacciare Pokémon insetto con la loro lingua lunga e appiccicosa.\n\nDati di gioco\n\nResistenze e vulnerabilità\n\nDebolezze2×\nElettro\nErba\n\nDanno normale1×\nBuio\nColeot\nDrago\nFolletto\nLotta\nNormale\nPsico\nRoccia\nSpettro\nTerra\nVeleno\nVolante\n\nResistenze½×\nAcciaio\nAcqua\nFuoco\nGhiaccio\n\nSe questo Pokémon ha Assorbacqua l'efficacia delle mosse di tipo Acqua è pari a 0×.\n\nSe questo Pokémon è teracristallizzato, l'efficacia delle mosse di tipo Astrale è pari a 2×.\n\nEvoluzioni\n\nForma Base\n\nPoliwag\n\nAcqua\n\nLivello 25\n→↓\n\nPrima evoluzione\n\nPoliwhirl\n\nAcqua\n\nScambiotenendo Roccia di Re\n\n→↓\n\nSeconda evoluzione\n\nPolitoed\n\nAcqua\n\nZone\n\nQuesto Pokémon non esisteva prima della seconda generazione.\nSeconda generazione\n\nOro\n\nArgento\n\nEvolvendo Poliwhirl\n\nCristallo\n\nEvolvendo Poliwhirl\n\nTerza generazione\n\nRubino\n\nZaffiro\n\nScambio\n\nSmeraldo\n\nScambio\n\nRosso Fuoco\n\nVerde Foglia\n\nEvolvendo Poliwhirl\n\nQuarta generazione\n\nDiamante\n\nPerla\n\nEvolvendo Poliwhirl\n\nPlatino\n\nEvolvendo Poliwhirl\n\nHeartGold\n\nSoulSilver\n\nEvolvendo Poliwhirl\n\nParco Amici\n\nLago\n\nQuinta generazione\n\nNero\n\nBianco\n\nPercorso 6 (vortici d'acqua)\n\nNero 2\n\nBianco 2\n\nPercorsi 6, 19, 20, Fattoria di Venturia, Bosco Smarrimento, Via Vittoria (vortici d'acqua)\n\nSesta generazione\n\nX\n\nY\n\nPercorso 19 (Super Amo)\n\nRubino Omega\n\nZaffiro Alpha\n\nScambio\n\nSettima generazione\n\nSole\n\nLuna\n\nGiardino di Malie (Pokémon alleato sotto la pioggia)Notte\n\nUltrasole\n\nUltraluna\n\nGiardino di Malie (Pokémon alleato sotto la pioggia)Notte\n\nLet's Go, Pikachu!\n\nLet's Go, Eevee!\n\nNon presente in questi giochi\n\nOttava generazione\n\nSpada\n\nScudo\n\nScambio1.2.0+\n\nIsola dell'Armatura\n\nAcquitrino Fresco\n\nDiamante Lucente\n\nPerla Splendente\n\nEvolvendo Poliwhirl\n\nLeggende Arceus\n\nNon presente in questo gioco\n\nNona generazione\n\nScarlatto\n\nVioletto\n\nScambio2.0.1+\n\nMaschera turchese\n\nRaid Teracristal (5★, 6★)\n\nLeggende Z-A\n\nNon presente in questo gioco\n\nStrumenti tenuti\n\nQuinta generazione\n\nNero\n\nBia",
+        "text_origin": "retrieved_page",
+        "image_url": "https://media.pokemoncentral.it/wiki/c/ca/Artwork0186_HGSS.png",
+        "ocr": {
+          "state": "ok",
+          "origin": "on_device_reference_ocr",
+          "script": "latin",
+          "text": "",
+          "width": 1080,
+          "height": 1080
+        }
+      }
+    ]
+  },
+  "pele": {
+    "vision": {
+      "status": "uncertain",
+      "kind": "card",
+      "title": "Manoel Francisco Santos and Edvaldo Alves Santarosa “Pelé” portrait panel",
+      "category": "football collectible card/sticker panel",
+      "brand": "",
+      "family": "",
+      "model": "",
+      "variant": "Two-portrait panel in plastic holder",
+      "condition": "Used; visible wear and holder scratches",
+      "category_confidence": 93,
+      "brand_confidence": 0,
+      "family_confidence": 10,
+      "model_confidence": 0,
+      "model_verified": false,
+      "market_ready": false,
+      "candidate_models": [],
+      "visual_fingerprint": "Vintage-style football portrait panel with two illustrated headshots in separate blue-bordered boxes, red outer border and pale blue background. Left caption reads MANOEL FRANCISCO SANTOS; right caption reads EDVALDO ALVES SANTAROSA “PELÉ”. Housed in a clear rigid plastic holder.",
+      "distinctive_terms": [
+        "EDVALDO ALVES SANTAROSA",
+        "MANOEL FRANCISCO SANTOS",
+        "“PELÉ”"
+      ],
+      "search_terms": [
+        "EDVALDO ALVES SANTAROSA",
+        "MANOEL FRANCISCO SANTOS",
+        "“PELÉ”"
+      ],
+      "identifier_hints": [],
+      "layout_signature": [
+        {
+          "term": "MANOEL FRANCISCO SANTOS",
+          "position": "bottom left",
+          "relation": "caption beneath left portrait"
+        },
+        {
+          "term": "EDVALDO ALVES SANTAROSA",
+          "position": "bottom right",
+          "relation": "caption beneath right portrait"
+        },
+        {
+          "term": "“PELÉ”",
+          "position": "bottom right",
+          "relation": "nickname printed after right player name"
+        }
+      ],
+      "evidence": [
+        "Two footballer portraits are visibly printed side by side in one red-bordered panel.",
+        "The left caption visibly reads MANOEL FRANCISCO SANTOS.",
+        "The right caption visibly reads EDVALDO ALVES SANTAROSA followed by “PELÉ”.",
+        "No publisher, set name, year, card number, or catalog code is legible."
+      ],
+      "missing_information": [
+        "Publisher/brand",
+        "Set or series name",
+        "Year/season or album context of the panel"
+      ],
+      "next_photo_request": "Photograph the front flat and closer, including all borders and any reverse-side text, to reveal publisher, series, year, or numbering.",
+      "user_text_consistent": true,
+      "normalized_query": "",
+      "verification_summary": "The two player names are readable, but the issuing series and exact collectible model are not identifiable from this image.",
+      "photo_clues": [
+        {
+          "text": "MANOEL FRANCISCO SANTOS",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.115,
+            "y": 0.674,
+            "width": 0.25,
+            "height": 0.035,
+            "certain": true
+          }
+        },
+        {
+          "text": "EDVALDO ALVES SANTAROSA",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.445,
+            "y": 0.674,
+            "width": 0.27,
+            "height": 0.035,
+            "certain": true
+          }
+        },
+        {
+          "text": "“PELÉ”",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.718,
+            "y": 0.674,
+            "width": 0.09,
+            "height": 0.035,
+            "certain": true
+          }
+        }
+      ],
+      "physical_observations": [
+        {
+          "feature": "count",
+          "text": "Two illustrated football-player portraits side by side",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "configuration",
+          "text": "Single rectangular panel divided into two portrait sections",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "color",
+          "text": "Red outer border with pale blue portrait backgrounds and dark blue inner borders",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "finish",
+          "text": "Paper-like printed panel inside a clear rigid plastic holder",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        }
+      ],
+      "printing_detail_regions": [],
+      "object_region": {
+        "image_index": 1,
+        "x": 0.023,
+        "y": 0.36,
+        "width": 0.895,
+        "height": 0.405,
+        "certain": true
+      },
+      "object_regions": [
+        {
+          "image_index": 1,
+          "x": 0.023,
+          "y": 0.36,
+          "width": 0.895,
+          "height": 0.405,
+          "certain": true
+        }
+      ],
+      "object_unit": "panel",
+      "identity_basis": {
+        "family": "not_applicable",
+        "variant": "physical_evidence"
+      },
+      "unresolved_identity_fields": [
+        "family"
+      ],
+      "pokemon_printing": null
+    },
+    "phases": [
+      {
+        "stage": "flipcheck_visual_comparison",
+        "result": {
+          "physical_detail_needed": null,
+          "candidates": [
+            {
+              "category": "football collectible card/sticker panel",
+              "brand": "",
+              "family": "REKORD JOURNAL – HAND CUT",
+              "model": "",
+              "year": "1958",
+              "issue_number": "",
+              "catalog_number": "63022351",
+              "unit": "panel",
+              "variant": "",
+              "decision": "match",
+              "same_unit": true,
+              "physical_ambiguity": false,
+              "conflicts": [],
+              "matches": [
+                {
+                  "reference_id": "ref1",
+                  "feature": "layout",
+                  "photo_detail": "Single rectangular panel divided into two portrait sections",
+                  "reference_detail": "Two portrait sections separated by a vertical line",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                },
+                {
+                  "reference_id": "ref1",
+                  "feature": "color",
+                  "photo_detail": "Red outer border with pale blue portrait backgrounds and dark blue inner borders",
+                  "reference_detail": "Red outer border, pale blue backgrounds and blue inner borders",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                },
+                {
+                  "reference_id": "ref1",
+                  "feature": "text",
+                  "photo_detail": "MANOEL FRANCISCO SANTOS; EDVALDO ALVES SANTAROSA “PELÉ”",
+                  "reference_detail": "MANOEL FRANCISCO SANTOS; EDVALDO ALVES SANTAROSA “PELE”",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                }
+              ],
+              "fields": [
+                {
+                  "field": "family",
+                  "value": "REKORD JOURNAL – HAND CUT",
+                  "reference_id": "ref1",
+                  "quote": "REKORD JOURNAL – HAND CUT",
+                  "evidence": "image",
+                  "scope": "target",
+                  "number_kind": "none"
+                },
+                {
+                  "field": "year",
+                  "value": "1958",
+                  "reference_id": "ref1",
+                  "quote": "1958 SWEDISH",
+                  "evidence": "image",
+                  "scope": "target",
+                  "number_kind": "year"
+                },
+                {
+                  "field": "catalog_number",
+                  "value": "63022351",
+                  "reference_id": "ref1",
+                  "quote": "63022351",
+                  "evidence": "image",
+                  "scope": "target",
+                  "number_kind": "card_number"
+                },
+                {
+                  "field": "subject",
+                  "value": "M.SANTOS/PELE",
+                  "reference_id": "ref1",
+                  "quote": "M.SANTOS/PELE",
+                  "evidence": "image",
+                  "scope": "target",
+                  "number_kind": "none"
+                }
+              ],
+              "identity_level": "exact",
+              "specimen_notes": [
+                "La fonte mostra il pannello in una custodia PSA diversa da quella fotografata."
+              ]
+            },
+            {
+              "category": "football collectible card/sticker panel",
+              "brand": "",
+              "family": "",
+              "model": "",
+              "year": "",
+              "issue_number": "",
+              "catalog_number": "",
+              "unit": "panel",
+              "variant": "",
+              "decision": "possible",
+              "same_unit": false,
+              "physical_ambiguity": true,
+              "conflicts": [
+                {
+                  "scope": "parent",
+                  "reason": "La fonte mostra il pannello inserito in una pubblicazione/confezione più ampia, non come pannello separato."
+                }
+              ],
+              "matches": [
+                {
+                  "reference_id": "ref2",
+                  "feature": "layout",
+                  "photo_detail": "Due ritratti affiancati in un unico pannello rettangolare",
+                  "reference_detail": "Due ritratti affiancati in un riquadro rettangolare",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                },
+                {
+                  "reference_id": "ref2",
+                  "feature": "text",
+                  "photo_detail": "MANOEL FRANCISCO SANTOS; EDVALDO ALVES SANTAROSA “PELÉ”",
+                  "reference_detail": "MANOEL FRANCISCO SANTOS; EDVALDO ALVES SANTAROSA “PELE”",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                },
+                {
+                  "reference_id": "ref2",
+                  "feature": "color",
+                  "photo_detail": "Bordo esterno rosso e sfondi azzurri",
+                  "reference_detail": "Pagina circostante rossa, riquadro del pannello chiaro con sfondi azzurri",
+                  "agrees": false,
+                  "reference_evidence": "image"
+                }
+              ],
+              "fields": [
+                {
+                  "field": "subject",
+                  "value": "MANOEL FRANCISCO SANTOS",
+                  "reference_id": "ref2",
+                  "quote": "MANOEL FRANCISCO SANTOS",
+                  "evidence": "image",
+                  "scope": "target",
+                  "number_kind": "none"
+                },
+                {
+                  "field": "subject",
+                  "value": "EDVALDO ALVES SANTAROSA \"PELE",
+                  "reference_id": "ref2",
+                  "quote": "EDVALDO ALVES SANTAROSA \"PELE",
+                  "evidence": "image",
+                  "scope": "target",
+                  "number_kind": "none"
+                }
+              ],
+              "identity_level": "family",
+              "specimen_notes": []
+            }
+          ],
+          "detail_needed_from": "none"
+        },
+        "webCalls": 0,
+        "usage": {
+          "input_tokens": 5537,
+          "input_tokens_details": {
+            "cache_write_tokens": 5534,
+            "cached_tokens": 0
+          },
+          "output_tokens": 1235,
+          "output_tokens_details": {
+            "reasoning_tokens": 371
+          },
+          "total_tokens": 6772
+        }
+      },
+      {
+        "stage": "flipcheck_visual_comparison",
+        "result": {
+          "physical_detail_needed": null,
+          "candidates": [
+            {
+              "category": "football collectible card/sticker panel",
+              "brand": "",
+              "family": "foto de colección",
+              "model": "",
+              "year": "1958",
+              "issue_number": "nº 37",
+              "catalog_number": "",
+              "unit": "panel",
+              "variant": "",
+              "decision": "match",
+              "same_unit": true,
+              "physical_ambiguity": false,
+              "conflicts": [],
+              "matches": [
+                {
+                  "reference_id": "ref3",
+                  "feature": "configuration",
+                  "photo_detail": "Single rectangular panel divided into two portrait sections",
+                  "reference_detail": "dos retratos lado a lado",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                },
+                {
+                  "reference_id": "ref3",
+                  "feature": "color",
+                  "photo_detail": "Red outer border with pale blue portrait backgrounds and dark blue inner borders",
+                  "reference_detail": "fondo rojo, retratos con fondo azul claro y bordes azules",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                },
+                {
+                  "reference_id": "ref3",
+                  "feature": "text",
+                  "photo_detail": "MANOEL FRANCISCO SANTOS / EDVALDO ALVES SANTAROSA \"PELÉ\"",
+                  "reference_detail": "MANOEL FRANCISCO SANTOS / EDVALDO ALVES SANTAROSA \"' PELE\"",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                }
+              ],
+              "fields": [
+                {
+                  "field": "family",
+                  "value": "foto de colección",
+                  "reference_id": "ref3",
+                  "quote": "Foto de colección sin cortes de Pelé y Manoel Francisco Santos en el frente.",
+                  "evidence": "text",
+                  "scope": "target",
+                  "number_kind": "none"
+                },
+                {
+                  "field": "year",
+                  "value": "1958",
+                  "reference_id": "ref3",
+                  "quote": "nº 37 1958",
+                  "evidence": "text",
+                  "scope": "parent",
+                  "number_kind": "year"
+                },
+                {
+                  "field": "issue_number",
+                  "value": "nº 37",
+                  "reference_id": "ref3",
+                  "quote": "nº 37 1958",
+                  "evidence": "text",
+                  "scope": "parent",
+                  "number_kind": "issue_number"
+                },
+                {
+                  "field": "subject",
+                  "value": "Pelé y Manoel Francisco Santos",
+                  "reference_id": "ref3",
+                  "quote": "Foto de colección sin cortes de Pelé y Manoel Francisco Santos en el frente.",
+                  "evidence": "text",
+                  "scope": "target",
+                  "number_kind": "none"
+                }
+              ],
+              "identity_level": "exact",
+              "specimen_notes": [
+                "El texto atribuye erróneamente a Pelé el nombre «Edvaldo Alves Santarosa»; la fuente confirma la misma rotulación."
+              ]
+            }
+          ],
+          "detail_needed_from": "none"
+        },
+        "webCalls": 0,
+        "usage": {
+          "input_tokens": 5088,
+          "input_tokens_details": {
+            "cache_write_tokens": 5085,
+            "cached_tokens": 0
+          },
+          "output_tokens": 969,
+          "output_tokens_details": {
+            "reasoning_tokens": 469
+          },
+          "total_tokens": 6057
+        }
+      }
+    ],
+    "references": [
+      {
+        "id": "ref1",
+        "url": "https://d2tt46f3mh26nl.cloudfront.net/public/Lots/202601-2121-2711-59494650-12a5-4f47-a482-1172219203d7/1210f6f8-7853-4a1c-9680-55bbd45902ba@2x",
+        "title": "Immagine trovata da Google · pagina non attribuita",
+        "text": "",
+        "text_origin": "unattributed_image",
+        "discovery_only": true,
+        "image_url": "https://d2tt46f3mh26nl.cloudfront.net/public/Lots/202601-2121-2711-59494650-12a5-4f47-a482-1172219203d7/1210f6f8-7853-4a1c-9680-55bbd45902ba@2x",
+        "ocr": {
+          "state": "ok",
+          "origin": "on_device_reference_ocr",
+          "script": "latin",
+          "text": "MANOEL FRANCISCo SANTOS\nEDVALDO ALVES SANTAROSA PELE'\n63022351\nREKORD JOURNAL – HAND CUT\n9\nM.SANTOS/PELE\n1958 SWEDISH\nMINT",
+          "width": 1007,
+          "height": 592
+        }
+      },
+      {
+        "id": "ref2",
+        "url": "https://images.blocketcdn.se/dynamic/1600w/item/21484872/a9bf2a12-d49b-45a7-a9e7-9ac540526aed",
+        "title": "Immagine trovata da Google · pagina non attribuita",
+        "text": "",
+        "text_origin": "unattributed_image",
+        "discovery_only": true,
+        "image_url": "https://images.blocketcdn.se/dynamic/1600w/item/21484872/a9bf2a12-d49b-45a7-a9e7-9ac540526aed",
+        "ocr": {
+          "state": "ok",
+          "origin": "on_device_reference_ocr",
+          "script": "latin",
+          "text": "45 ÖRE\nMACHEN\nTARDASTE\nVITARE\nMANOEL FRANCISCO SANTOS\nEDVALDO ALVES SANTAROSA \"PELE",
+          "width": 1600,
+          "height": 883
+        }
+      },
+      {
+        "id": "ref3",
+        "url": "https://auctionet.com/es/2658196-pele-foto-de-coleccion-de-tidningen-rekord-n-37-1958",
+        "title": "PELÈ, foto de colección de Tidningen Rekord, nº 37 1958. Libros, mapas y manuscritos - Otros - Auctionet",
+        "text": "PELÈ, foto de colección de Tidningen Rekord, nº 37 1958. Libros, mapas y manuscritos - Otros - Auctionet\n\nPELÈ, foto de colección de Tidningen Rekord, nº 37 1958.\nLa subasta ya ha terminado, ¿pero quizás te interesan estos otros lotes?\n \n\n2658196. PELÈ, foto de colección de Tidningen Rekord, nº 37 1958.\n\nImágenes\n\n2658196. PELÈ, foto de colección de Tidningen Rekord, nº 37 1958.\n\nDescripción\nFoto de colección sin cortes de Pelé y Manoel Francisco Santos en el frente. En el reverso de las cartas hay información en sueco sobre ambas estrellas.\n\nCurioso; El nombre que le dieron a Pelé en la foto de coleccionista está mal, Edvaldo Alves Santarosa era un futbolista completamente diferente, el verdadero nombre de Pelé era Edson Arantes do Nascimento. Santarosa era Dida, compañera de Pelé.\n\nDimensiones del periódico aproximadamente 30x21 cm, dimensiones de la imagen de Pelé aproximadamente 5,2x3,7 cm.\nMuestra más\nInforme de estado\nPeriódico con manchas, esquinas dobladas y páginas amarillentas por el paso del tiempo. Frente con manchas amarillas y bordes copetudos. De vuelta con daños.\n\nLa imagen de coleccionista de Pelé: marca de pliegue en la cara en el lado izquierdo por encima de la oreja, el ojo y la frente. Errores menores en la impresión visibles a través de puntos mínimos.\n\nEl título, la descripción y el informe de estado son resultado de una traducción automática. Auctionet.com no se hace responsable de los posibles errores de la misma. Ocultar el texto original en sueco.Mostrar original en sueco.\n\n¿Tienes algún objeto similar para vender? ¡Pídenos una valoración gratuita!\n\nPuja\n\nCargando…\n\n¿Tienes algún objeto similar para vender?\n\n¡Solicita una estimación gratuita!\n\n2658196. PELÈ, foto de colección de Tidningen Rekord, nº 37 1958.\n\nDescripción\nFoto de colección sin cortes de Pelé y Manoel Francisco Santos en el frente. En el reverso de las cartas hay información en sueco sobre ambas estrellas.\n\nCurioso; El nombre que le dieron a Pelé en la foto de coleccionista está mal, Edvaldo Alves Santarosa era un futbolista completamente diferente, el verdadero nombre de Pelé era Edson Arantes do Nascimento. Santarosa era Dida, compañera de Pelé.\n\nDimensiones del periódico aproximadamente 30x21 cm, dimensiones de la imagen de Pelé aproximadamente 5,2x3,7 cm.\nMuestra más\nInforme de estado\nPeriódico con manchas, esquinas dobladas y páginas amarillentas por el paso del tiempo. Frente con manchas amarillas y bordes copetudos. De vuelta con daños.\n\nLa imagen de coleccionista de Pelé: marca de pliegue en la cara en el lado izquierdo por encima de la oreja, el ojo y la frente. Errores menores en la impresión visibles a través de puntos mínimos.\n\nEl título, la descripción y el informe de estado son resultado de una traducción automática. Auctionet.com no se hace responsable de los posibles errores de la misma. Ocultar el texto original en sueco.Mostrar original en sueco.\n\n¿Tienes algún objeto similar para vender? ¡Pídenos una valoración gratuita!\n\nDetalles\nCasaEkenbergs\n\nNúmero de visitas: 930\n\nUsamos cookies\nAlgunas cookies son necesarias para utilizar el servicio. Las cookies que tú mismo puedes gestionar se utilizan para:\n\nPersonalizar el contenido y las funciones según cómo utilices el sitio web.\n\nDesarrollar y mejorar Auctionet.\n\nMostrarte y promocionar noticias y contenidos en sitios web externos.\n\nEncontrarás más información en nuestra Política de privacidad.\n\nConfiguración de cookiesAceptarlas todas\n\nBackConfiguración de cookies\n\nA continuación se detallan los diferentes tipos de cookies utilizadas en Auctionet.com, con una descripción de lo que hacen. Puedes elegir qué tipos de cookies aceptas.\nEncontrarás más información en nuestra Política de privacidad.\nCookies necesariasSiempre activas\n\nEstas cookies son necesarias para que Auctionet funcione correctamente.\nAuctionet guarda información para identificarte mientras visitas nuestro sitio web. Esto se utiliza, por ejemplo, para mantener la sesión iniciada.\n\nAuctionet guarda tu configuración actual para las cookies.\n\nExperiencia mejoradaFunctionality storageporEn\n\nCookies utilizadas para personalizar el contenido y las funciones de Auctionet.\nAuctionet guarda tu historial de visitas para que puedas encontrar fácilmente los lotes que ya has visitado.\n\nAuctionet guarda información sobre qué idioma y qué moneda debe utilizarse.\n\nPrestacionesStatistics storageporEn\n\nEstas cookies se utilizan para desarrollar y mejorar Auctionet mediante la recopilación de estadísticas.\nAuctionet analiza el comportamiento de los usuarios para mejorar el servicio.\n\nAuctionet prueba periódicamente nuevas funciones y mejoras.\n\nMarketingAd storageporEn\n\nEstas cookies se utilizan para mostrar contenido relevante en otros sitios web.\nAuctionet analiza cómo utilizas el servicio para poder recomendarte contenido relevante en otros sitios web.\n\nRechazarlas todasAceptarlas todasGuardar preferencias",
+        "text_origin": "retrieved_page",
+        "image_url": "https://images.auctionet.com/thumbs/large_item_2658196_c1ba4f224e.jpg",
+        "ocr": {
+          "state": "ok",
+          "origin": "on_device_reference_ocr",
+          "script": "latin",
+          "text": "MANOEL FRANCISCO SANTOS\nEDVALDO ALVES SANTAROSA \"' PELE\"",
+          "width": 1290,
+          "height": 1290
+        }
+      },
+      {
+        "id": "ref4",
+        "url": "https://www.sportsamlaren.se/onewebmedia/Register.pdf",
+        "title": "| 1956  |  |  | 1957  |",
+        "text": "Page 2: 1958 1959\r\n1 Lennart Andersson Thord Flodqvist Hasse Svedberg Gert Blomé\r\n2 Ingemar Clarin Gunnar Ström Gösta Westerlund ”Plåtis” Vilgot Larsson\r\n3 Per-Olof Söderman Rune Sörmander Nils Wikman Gunnar Ring\r\n4 Nils Nilsson Valter Åhlén Lew Hoad Karl-Erik Södergren\r\n5 Anders ”Akka” Andersson Einar Ask Joachim Bonnier Herb Elliott\r\n6 Sture Grahn Stig Gunnarsson Rink Babka Kurt Andersson\r\n7 Eilert ”Garvis” Määttä Carmen Basilio Per-Olof Brogren Max Schmeling\r\n8 Reino Börjesson Willie Pastrano Inge Limberg Raymond Kopasewski ”Kopa”\r\n9 Leif ”Leffe” Fredblad Gösta ”Lill-Lulle” Johansson Toni Sailer Tony Larsson\r\n10 Roland Stoltz Carl-Göran ”Lill-Stöveln” Öberg Roland Mattsson Henry Cooper\r\n11 Nils Liedholm Viking Palm Primo Carnera Hasse Sjölund\r\n12 Åke Rydberg Rolf Junefelt Sören Nordin Sten Åkerstedt\r\n13 Oleg Gontjarenko Gösta ”Stockis” Kihlgård Floyd Patterson (56/27) Ingemar Johansson (56/17)\r\n14 Åke ”Plutten” Andersson Vladimir Sjilikovskij Carl-Erik Stockenberg Tord Grip (60/22)\r\n15 Bengt ”Bingen” Larsson Harrison Dillard Åke Reimer Per-Agne Karlström\r\n16 Gyula Grosics Ira Murchison Knut Johannesen Lars Boström\r\n17 Karl-Sören Hedlund Eje Lindström Åke Moberg Zdzislaw Krzyszkowiak\r\n18 Bror Mellberg Ove Ohlsson Kurt Andersson Yngve Johansson\r\n19 Rune Börjesson Holger Nyman Gustav Sjöberg Henry Christensson\r\n20 Derek Ibbotson Gunnar Kämpendahl (58/43) Sigvard Pettersson Arthur Rowe\r\n21 Rune Larsson Kurre Liander Nils ”Tidan” Johansson John Thomas\r\n22 Arne Selmosson (57/15) Gerhard\n",
+        "text_origin": "retrieved_pdf_pages",
+        "pages_rendered": [
+          2
+        ],
+        "page_count": 4,
+        "page_selection": "observed_text_match",
+        "image_url": "https://www.sportsamlaren.se/onewebmedia/Register.pdf",
+        "ocr": {
+          "state": "ok",
+          "origin": "on_device_reference_ocr",
+          "script": "latin",
+          "text": "",
+          "width": 768,
+          "height": 1024
+        }
+      },
+      {
+        "id": "ref5",
+        "url": "https://www.barnebys.se/auktioner/objekt/pele-samlarbild-tidningen-rekord-nr-37-1958-StrB6QV-620369061",
+        "title": "PELÈ, SAMLARBILD Tidningen Rekord, nr 37 1958.",
+        "text": "objekt/pele samlarbild tidningen rekord nr 37 1958 StrB6QV 620369061 / Till salu\nobjekt/pele samlarbild tidningen rekord nr 37 1958 StrB6QV 620369061\nTill saluSlutpriser\n\nobjekt/pele samlarbild tidningen rekord nr 37 1958 StrB6QV 620369061\nTill saluSlutpriser\n\nNå samlare över hela världen med din auktion!\nLista er auktion",
+        "text_origin": "retrieved_page",
+        "image_url": "https://bbys.imgix.net/2755/6b0e38a39da7506ee218cc3b6d192fabfae1c8a7538a6d4d14ab8642bb073c1b.jpg",
+        "ocr": {
+          "state": "ok",
+          "origin": "on_device_reference_ocr",
+          "script": "latin",
+          "text": ": ÖRE\nMACHEN\nHARDASTE\nVIKTARE\nMANOEL FRANCISCO SANTOS\nEDVALDO ALVES SANTAROSA PELE'",
+          "width": 1178,
+          "height": 1080
+        }
+      }
+    ]
+  },
+  "remote": {
+    "vision": {
+      "status": "uncertain",
+      "kind": "object",
+      "title": "Philips smart TV remote control",
+      "category": "television remote control",
+      "brand": "Philips",
+      "family": "Philips smart TV remote family",
+      "model": "",
+      "variant": "",
+      "condition": "Used, visibly worn buttons and surface scratches",
+      "category_confidence": 99,
+      "brand_confidence": 78,
+      "family_confidence": 55,
+      "model_confidence": 0,
+      "model_verified": false,
+      "market_ready": false,
+      "candidate_models": [],
+      "visual_fingerprint": "Black elongated Philips-style TV remote with top power button, blue indicator, PAIR text, three-column upper shortcut grid, central circular OK/navigation pad, NETFLIX key, colored red/green/yellow/blue keys, numeric keypad, SUBTITLE/TEXT, and playback controls.",
+      "distinctive_terms": [
+        "PAIR",
+        "TOP PICKS",
+        "NETFLIX",
+        "SUBTITLE",
+        "TEXT"
+      ],
+      "search_terms": [
+        "PAIR",
+        "TOP PICKS",
+        "NETFLIX",
+        "SUBTITLE",
+        "TEXT"
+      ],
+      "identifier_hints": [],
+      "layout_signature": [
+        {
+          "term": "PAIR",
+          "position": "upper right",
+          "relation": "above SETTINGS"
+        },
+        {
+          "term": "TOP PICKS",
+          "position": "upper right-middle",
+          "relation": "below SETTINGS and right of VOICE"
+        },
+        {
+          "term": "NETFLIX",
+          "position": "center-lower",
+          "relation": "between vertical volume controls"
+        },
+        {
+          "term": "SUBTITLE",
+          "position": "lower numeric keypad left",
+          "relation": "left of 0"
+        },
+        {
+          "term": "TEXT",
+          "position": "lower numeric keypad right",
+          "relation": "right of 0"
+        }
+      ],
+      "evidence": [
+        "Visible PAIR label and Philips-like smart-TV shortcut layout.",
+        "Visible NETFLIX, TOP PICKS, SUBTITLE and TEXT labels.",
+        "Three colored shortcut keys plus central OK/navigation control and numeric keypad.",
+        "No model, part number, or rear label is visible."
+      ],
+      "missing_information": [
+        "Exact model or part number",
+        "Rear battery-compartment label",
+        "TV compatibility/model"
+      ],
+      "next_photo_request": "Photograph the back, battery compartment, and any label or printed model/part number clearly.",
+      "user_text_consistent": true,
+      "normalized_query": "",
+      "verification_summary": "Brand and remote family are plausible from the layout, but the exact model cannot be verified without a rear label or part number.",
+      "photo_clues": [
+        {
+          "text": "PAIR",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.59,
+            "y": 0.13,
+            "width": 0.06,
+            "height": 0.03,
+            "certain": true
+          }
+        },
+        {
+          "text": "TOP PICKS",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.58,
+            "y": 0.21,
+            "width": 0.09,
+            "height": 0.04,
+            "certain": true
+          }
+        },
+        {
+          "text": "NETFLIX",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.48,
+            "y": 0.56,
+            "width": 0.1,
+            "height": 0.04,
+            "certain": true
+          }
+        },
+        {
+          "text": "SUBTITLE",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.42,
+            "y": 0.79,
+            "width": 0.08,
+            "height": 0.03,
+            "certain": true
+          }
+        },
+        {
+          "text": "TEXT",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.61,
+            "y": 0.79,
+            "width": 0.05,
+            "height": 0.03,
+            "certain": true
+          }
+        }
+      ],
+      "physical_observations": [
+        {
+          "feature": "configuration",
+          "text": "Single black handheld remote with integrated numeric keypad and playback section",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "layout",
+          "text": "Three-column shortcut grid above a large central diamond-shaped navigation pad",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "color",
+          "text": "Four colored red, green, yellow and blue keys in one row",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "finish",
+          "text": "Brushed-texture dark upper face with visibly worn glossy lower buttons",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        }
+      ],
+      "printing_detail_regions": [],
+      "object_region": {
+        "image_index": 1,
+        "x": 0.35,
+        "y": 0.03,
+        "width": 0.34,
+        "height": 0.94,
+        "certain": true
+      },
+      "object_regions": [
+        {
+          "image_index": 1,
+          "x": 0.35,
+          "y": 0.03,
+          "width": 0.34,
+          "height": 0.94,
+          "certain": true
+        }
+      ],
+      "object_unit": "object",
+      "identity_basis": {
+        "family": "inferred",
+        "variant": "not_applicable"
+      },
+      "unresolved_identity_fields": [
+        "family",
+        "variant"
+      ],
+      "pokemon_printing": null
+    },
+    "phases": [
+      {
+        "stage": "flipcheck_visual_comparison",
+        "result": {
+          "physical_detail_needed": null,
+          "candidates": [
+            {
+              "category": "television remote control",
+              "brand": "",
+              "family": "Remote Control",
+              "model": "",
+              "year": "",
+              "issue_number": "",
+              "catalog_number": "",
+              "unit": "object",
+              "variant": "",
+              "decision": "match",
+              "same_unit": true,
+              "physical_ambiguity": false,
+              "conflicts": [],
+              "matches": [
+                {
+                  "reference_id": "ref2",
+                  "feature": "configuration",
+                  "photo_detail": "Telecomando singolo con tastierino numerico, sezione playback e tasto PAIR",
+                  "reference_detail": "Remote Control con sezione numerica, playback e tasto PAIR visibili nella figura",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                },
+                {
+                  "reference_id": "ref2",
+                  "feature": "layout",
+                  "photo_detail": "Tre colonne di tasti sopra un grande pad direzionale romboidale centrale",
+                  "reference_detail": "Figura con tre colonne di tasti e grande pad direzionale centrale",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                },
+                {
+                  "reference_id": "ref2",
+                  "feature": "color",
+                  "photo_detail": "Quattro tasti rosso, verde, giallo e blu in una fila",
+                  "reference_detail": "\"Colour keys\" con quattro tasti colorati",
+                  "agrees": true,
+                  "reference_evidence": "description"
+                },
+                {
+                  "reference_id": "ref2",
+                  "feature": "text",
+                  "photo_detail": "Scritta NETFLIX leggibile sul telecomando",
+                  "reference_detail": "\"NETFLIX\"",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                }
+              ],
+              "fields": [
+                {
+                  "field": "family",
+                  "value": "Remote Control",
+                  "reference_id": "ref2",
+                  "quote": "Remote Control",
+                  "evidence": "text",
+                  "scope": "target",
+                  "number_kind": "none"
+                },
+                {
+                  "field": "subject",
+                  "value": "To open the Netflix App directly.",
+                  "reference_id": "ref2",
+                  "quote": "To open the Netflix App directly.",
+                  "evidence": "text",
+                  "scope": "target",
+                  "number_kind": "none"
+                }
+              ],
+              "identity_level": "exact",
+              "specimen_notes": [
+                "La finitura usurata del campione non è valutabile nella figura della fonte."
+              ]
+            },
+            {
+              "category": "television remote control",
+              "brand": "",
+              "family": "Remote Control",
+              "model": "",
+              "year": "",
+              "issue_number": "",
+              "catalog_number": "",
+              "unit": "object",
+              "variant": "",
+              "decision": "different",
+              "same_unit": true,
+              "physical_ambiguity": false,
+              "conflicts": [
+                {
+                  "scope": "target",
+                  "reason": "La figura mostra una configurazione differente nella sezione dei tasti superiori e non mostra il tasto VOICE/PAIR come nel campione."
+                }
+              ],
+              "matches": [
+                {
+                  "reference_id": "ref1",
+                  "feature": "configuration",
+                  "photo_detail": "Tastierino numerico e sezione playback inferiori",
+                  "reference_detail": "Figura con tastierino numerico e tasti playback inferiori",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                },
+                {
+                  "reference_id": "ref1",
+                  "feature": "layout",
+                  "photo_detail": "Pad direzionale centrale romboidale",
+                  "reference_detail": "Figura con pad direzionale centrale",
+                  "agrees": true,
+                  "reference_evidence": "image"
+                },
+                {
+                  "reference_id": "ref1",
+                  "feature": "text",
+                  "photo_detail": "Scritta NETFLIX leggibile",
+                  "reference_detail": "\"To open the Netflix App directly.\"",
+                  "agrees": true,
+                  "reference_evidence": "description"
+                }
+              ],
+              "fields": [
+                {
+                  "field": "family",
+                  "value": "Remote Control",
+                  "reference_id": "ref1",
+                  "quote": "Remote Control",
+                  "evidence": "text",
+                  "scope": "target",
+                  "number_kind": "none"
+                }
+              ],
+              "identity_level": "family",
+              "specimen_notes": []
+            }
+          ],
+          "detail_needed_from": "none"
+        },
+        "webCalls": 0,
+        "usage": {
+          "input_tokens": 7213,
+          "input_tokens_details": {
+            "cache_write_tokens": 7210,
+            "cached_tokens": 0
+          },
+          "output_tokens": 1008,
+          "output_tokens_details": {
+            "reasoning_tokens": 303
+          },
+          "total_tokens": 8221
+        }
+      }
+    ],
+    "references": [
+      {
+        "id": "ref1",
+        "url": "https://www.documents.philips.com/assets/20230224/51ebb601d39043468b5dafb300cbe962.pdf",
+        "title": "User Manual",
+        "text": "Page 7: 3\r\nRemote Control\r\n3.1\r\nKey Overview\r\nTop\r\n1 -  Standby / On\r\nTo switch the TV on or back to Standby.\r\n2 - Playback and Record\r\n• Play , to playback.\r\n• Pause , to pause playback\r\n• Stop , to stop playback\r\n• Rewind , to rewind\r\n• Fast forward , to go fast forward\r\n• Record , to start recording\r\n3 -  Ambilight\r\nTo select one of the Ambilight style.\r\n4 -  TV GUIDE\r\nTo open or close the TV Guide.\r\n5 -  LIST\r\nTo open or close the channel list.\r\n6 -  Settings\r\nTo open the Frequent Settings.\r\n7 -  TOP PICKS\r\nTo open the menu with recommended programmes,\r\nVideo on Demand (Rental Videos) or Online TV\r\n(Catch Up TV).\r\nIf available.\r\n8 -  SEARCH\r\nTo open the searches page.\r\nMiddle\r\n1 -  TV Menu\r\nTo open the TV Menu with typical TV functions.\r\n2 -  SOURCES\r\nTo open the Sources menu.\r\n3 -     Colour keys\r\nDirect selection of options.\r\n4 -  INFO\r\nTo open or close programme info. \r\n5 -  BACK\r\nTo switch back to the previous channel you selected.\r\nTo return to previous menu.\r\nTo go back to the previous App/Internet page.\r\n6 -  - EXIT\r\nTo switch back to watch TV. To stop an interactive TV\r\napplication.\r\n7 -  OPTIONS\r\nTo open or close the Options menu.\r\n8 - OK key\r\nTo confirm a selection or setting. To open the channel\r\nlist while watching TV.\r\n9 - Arrow / navigation keys\r\nTo navigate up, down, left or right.\r\n10 -  HOME\r\nTo open the Home menu.\r\nBottom\r\n7 \nPage 8: 1\r\nTo open the Netflix App directly. With the TV switched\r\n - \r\non or from standby.\r\n2 -  Volume\r\nTo adjust the volume level.\r\n3 - Number keys\r\nTo select a channel directly.\r\n4 - SUBTITLE\r\nTo switch subtitles on, off or to show automatically.\r\n5 -  Channel\r\nTo switch to the next or previous channel in the\r\nchannel list. To open the next or previous page in\r\nText/Teletext. To start the next or previous chapter on\r\na disc.\r\n6 -  Mute\r\nTo mute the sound or to restore it.\r\n7 - TEXT\r\nTo open or close Text/Teletext. \r\n3.2\r\nVoice Search\r\nDownload App from Google play\r\nUse your Android smartphone or tablet as a remote\r\nfor your Android TV. Easily switch between d-pad,\r\ntouchpad, and gamepad modes to navigate content\r\nand play games on your Android TV device. Tap the\r\nmicrophone to start a voice search, or use the\r\nkeyboard to input text on Android TV.\r\nTo get started, connect your Android phone or tablet\r\nto the same network as your Android TV device or\r\nfind your Android TV via bluetooth.\r\nWorks with all Android TV devices.\r\n*You need an Android phone or tablet running\r\nAndroid 4.3 or higher to use the Android TV Remote\r\nControl app.\r\nPairing with Your TV\r\nThere is no microphone on your remote control, if you\r\nwant to use voice search, you must install Android\r\nTV Remote Control app on your Android smartphone\r\nor tablet first.\r\n1 - On your Android smartphone or tablet, search\r\n\"Android TV Remote Control\" in Google Play™ Store .\r\n2 - Download and install Android TV Remote\r\nContro\nPage 57: If none of the preferred subtitle languages are\r\navailable, you can select another subtitle language\r\nwhich is available.\r\nTo set the primary and secondary subtitle language…\r\n1 - Press , select All Settings and press OK.\r\n2 - Select Region and Language and\r\npress  (right) to enter the menu.\r\n3 - Select Languages > Primary\r\nSubtitles or Secondary Subtitles.\r\n4 - Select on the language you need.\r\n5 - Press  (left) repeatedly if necessary, to close\r\nthe menu.\r\nSubtitles from Text\r\nIf you tune to an analogue channel, you need to\r\nmake the subtitles available for each channel\r\nmanually.\r\n1 - Switch to a channel and press TEXT to open\r\nText.\r\n2 - Enter the page number for subtitles, usually 888.\r\n3 - Press TEXT again, to close Text. \r\nIf you select On in the Subtitle menu when watching\r\nthis analogue channel, subtitles will be shown if\r\navailable.\r\nText / Teletext Languages\r\nText Pages\r\nTo open Text/Teletext press TEXT, while you are\r\nwatching TV channels.\r\nTo close Text, press TEXT again.\r\nSelect a Text page\r\nTo select a page . . .\r\n1 - Enter the page number with the number keys.\r\n2 - Use the arrow keys to navigate.\r\n3 - Press a colour key to select a colour-coded\r\nsubject at the bottom of the screen.\r\nText sub-pages\r\nA Text page number can hold several subpages. The\r\nsubpage numbers are shown on a bar next to the\r\nmain page number.\r\nTo select a subpage, press  or .\r\nT.O.P. Text pages\r\nSome broadcasters offer T.O.P. Text.\r\nTo open T.O.P. Text pages within Text,\r\npress  OPTI\n",
+        "text_origin": "retrieved_pdf_pages",
+        "pages_rendered": [
+          7,
+          8,
+          57
+        ],
+        "page_count": 94,
+        "page_selection": "observed_text_match",
+        "image_url": "https://www.documents.philips.com/assets/20230224/51ebb601d39043468b5dafb300cbe962.pdf",
+        "ocr": {
+          "state": "ok",
+          "origin": "on_device_reference_ocr",
+          "script": "latin",
+          "text": "Remote Control",
+          "width": 1152,
+          "height": 512
+        }
+      },
+      {
+        "id": "ref2",
+        "url": "https://m.media-amazon.com/images/I/A1MNMCrRKYS.pdf",
+        "title": "User Manual",
+        "text": "Page 7: 3\r\nRemote Control\r\n3.1\r\nKey Overview\r\nTop\r\n1 -  Standby / On\r\nTo switch the TV on or back to Standby.\r\n2 - VOICE microphone\r\n3 -  LIST\r\nTo open or close the channel list.\r\n4 -  AMBILIGHT\r\nTo select one of the Ambilight style.\r\n5 -  TV GUIDE\r\nTo open or close the TV Guide.\r\n6 -  SETTINGS\r\n• To open the quick settings menu.\r\n• To pair the remote control to the TV.\r\n7 -  TOP PICKS\r\nTo open the menu with recommended programmes,\r\nVideo on Demand (Rental Videos) or Online TV\r\n(Catch Up TV).\r\nIf available.\r\n8 -  Google Assistant™\r\nTo launch the Google Assistant™.\r\nMiddle\r\n1 -  TV Menu\r\nTo open the TV Menu with typical TV functions.\r\n2 -  SOURCES\r\nTo open or close the Sources menu.\r\n3 -  INFO\r\nTo open or close programme info.\r\n4 -  BACK\r\n• To switch back to the previous channel you\r\nselected.\r\n• To return to previous menu.\r\n5 -     Colour keys\r\nDirect selection of options.\r\n6 -  EXIT\r\nTo switch back to watching TV.\r\n7 -  OPTIONS\r\nTo open or close the options menu.\r\n8 - OK key\r\nTo confirm a selection or setting.\r\n9 - Arrow / navigation keys\r\nTo navigate up, down, left or right.\r\n10 -  HOME\r\nTo open the Home menu.\r\nBottom\r\n7 \nPage 8: 1\r\nTo open the Netflix App directly.\r\n - \r\n2 -  Volume\r\nTo adjust the volume level.\r\n3 - Number keys\r\nTo select a channel directly.\r\n4 - SUBTITLE\r\nTo switch Subtitles on, off or on during mute.\r\n5 - Playback and Record\r\n• Play , to playback.\r\n• Pause , to pause playback\r\n• Stop , to stop playback\r\n• Rewind , to rewind\r\n• Fast forward , to go fast forward\r\n• Record , to start recording\r\n6 -  Channel\r\nTo switch to the next or previous channel in the\r\nchannel list.\r\nTo open the next or previous page in Text/Teletext.\r\n7 -  Mute\r\nTo mute the sound or to restore it.\r\n8 - TEXT\r\nTo open or close Text/Teletext. \r\n3.2\r\nPair Your Remote Control to\r\nTV\r\nThis remote control uses both Bluetooth and IR\r\n(infrared) to send its commands to the TV.\r\n• You can use this remote control via IR (infrared) for\r\nmost operations.\r\n• To use advanced operation like voice search and\r\nremote control keyboard, you need to pair (link) the\r\nTV with the remote control. \r\nWhen you started the initial TV installation, the TV\r\ninvited you to long press the PAIR key, and by\r\ndoing so, the pairing was done. \r\nNote: \r\n1 - Once the remote control has entered pairing\r\nmode successfully, the blue LED indicator ring around\r\nthe microphone on the front side of the remote\r\ncontrol starts blinking.\r\n2 - The remote control must be kept close to the TV\r\n(within 1m distance) during pairing in order to ensure\r\nsuccess.\r\n3 - If the TV does not launch the voice control\r\nfield when press  , pairing was unsuccessful.\r\nPage 9: for the results to appear.\r\n3 - In the list of search results, you can select the\r\nitem you want.\r\nSet the language you like to use with voice\r\ninteraction\r\n Settings > Android\r\nsettings > Preferences > Speech\r\n3.4\r\nKeyboard\r\nOverview\r\nOverview of a Qwerty/Azerty keyboard\r\n1 - Azerty character\r\nCharacter position if the keyboard layout is set to\r\nAzerty.\r\n2 -  Shift\r\nTo type uppercase characters.\r\n3 - Fn key\r\nTo type a number or punctuation character.\r\n4 -  Spacebar\r\n5 - Navigation and OK\r\n6 -  Share this\r\nTo share online what you are watching at the\r\nmoment.\r\nNote: You need to pair the remote control to the TV\r\nbefore use remote control keyboard.\r\nWriting Text\r\nWith the keyboard on the back of the remote control,\r\nyou can write text in any text field on screen.\r\nTo write text…\r\n1 - Select a text field if it is not yet selected.\r\n2 - Turn the remote control keyboard facing upwards\r\nto activate the keyboard keys. Hold the remote\r\ncontrol with two hands and type with both thumbs.\r\n3 - To hide the on screen keyboard, press  BACK.\r\nPress OK to confirm the text.\r\nOn-screen Keyboard\r\nIf you use the on-screen keyboard to enter text, you\r\ncan configure the keyboard layout to a layout you are\r\nused to.\r\nTo open these settings…\r\nPress  HOME, select  Settings and press OK.\r\n5 - Select Android Settings and press OK.\r\n6 - Select Device Preferences > Keyboard and\r\npress OK.\r\n7 - Select Gboard Settings > Language and\r\npress OK. You can set your language keyboard\r\nlayout here.\r\n8 - Pr\n",
+        "text_origin": "retrieved_pdf_pages",
+        "pages_rendered": [
+          7,
+          8,
+          9
+        ],
+        "page_count": 90,
+        "page_selection": "observed_text_match",
+        "image_url": "https://m.media-amazon.com/images/I/A1MNMCrRKYS.pdf",
+        "ocr": {
+          "state": "ok",
+          "origin": "on_device_reference_ocr",
+          "script": "latin",
+          "text": "Remote Control",
+          "width": 1152,
+          "height": 512
+        }
+      },
+      {
+        "id": "ref3",
+        "url": "https://cdn-cms.bookingexperts.com/media/3843/11/glamping___notice_utilisation_tv___toutes_langues_9223dca9-2dee-44d0-b21d-9c54d7d2db48.pdf",
+        "title": "Remote Control",
+        "text": "Page 93: English - 8 -\r\nRemote Control\r\n27\r\n28\r\nInserting the Batteries into the Remote\r\nThe remote may have a screw that secures the battery \r\ncompartment cover onto the remote control (or this may \r\nbe in a separate bag). Remove the screw, if the cover \r\nis screwed on previously. Then remove the battery \r\ncompartment cover to reveal the battery compartment. \r\nInsert two 1.5V - size AAA batteries. Make sure the (+) \r\nand (-) signs match (observing correct polarity). Do not \r\nmix old and new batteries. Replace only with same or \r\nequivalent type. Place the cover back on. Secure the \r\ncover again with the screw, if any.\r\nStandby Button\r\nPress and hold the Standby button on the remote \r\ncontrol. Power off dialogue will appear on the screen. \r\nHighlight OK and press the OK button. The TV will \r\nswitch into standby mode. Press briefly and release \r\nto switch the TV into quick standby mode or to switch \r\non the TV when in quick standby or standby mode.\r\n1. Standby: Quick Standby / Standby / On\r\n2. Numeric buttons: Switches the channel in Live TV \r\nmode, enters a number in the text box on the screen\r\n3. Language: Switches among sound modes (analogue \r\nTV), displays and changes audio language (digital TV, \r\nwhere available)\r\n4. Mute: Completely turns off the volume of the TV\r\n5. Volume +/-: Increases/decreases the volume level\r\n6. Guide: Displays the electronic programme guide for \r\nLive TV channels\r\n7. Directional buttons: Navigates menus, setting options, \r\nmoves the focus or cursor, etc. \nPage 107: English - 22 -\r\nexpressions and movements for people with visual \r\ndisabilities.\r\nSpeaker: Turn this option on if you want to hear \r\nthe audio commentary through the TV speakers.\r\nHeadphone: Turn this option on if you want to \r\nroute the sound of the audio commentary to the \r\nTV’s headphone output.\r\nVolume: Adjust the volume level of the audio \r\ncommentary.\r\nPane and Fade: Turn this option on if you want \r\nto hear the audio commentary more clearly, when \r\nit is available through broadcast.\r\nAudio for the Visually Impaired: Set the audio \r\ntype for visually impaired. Options will be available \r\ndepending on the selected broadcast.\r\nFader Control: Adjust the volume balance \r\nbetween the main TV audio (Main) and audio \r\ncommentary (AD).\r\nRestart: A confirmation message will be displayed, \r\nselect Restart to proceed with restarting. The TV will \r\nswitch off/on first. Select Cancel to exit.\r\nRemotes and Accessories\r\nYou can use wireless accessories, such as your remote \r\ncontrol (depends on the model of the remote control), \r\nheadphones, keyboards or game controllers with your \r\nAndroid TV. Add devices to use them with your TV. \r\nSelect this option and press OK to start searching \r\navailable devices in order to pair them with your TV. If \r\navailable highlight Add accessory option and press \r\nOK to start the search. Set your device to pairing mode. \r\nAvailable devices will be recognised and listed or \r\npairing request will be displayed. To start pairing, select \r\nyour device from t\nPage 111: English - 26 -\r\nRotate: Rotate the image. The image will be rotated \r\n90 degrees clockwise each time you press OK. You \r\ncan also press the Green button to rotate. This option \r\nwill not be available if the slide show is not paused.\r\nEffect: Apply various effects to the slide show. \r\nHighlight an option and press OK to change the setting. \r\nYou can also press the Yellow button to set. This option \r\nwill not be available if the slide show is paused.\r\nZoom: Zoom in on the image that is currently being \r\ndisplayed. Highlight an option and press OK to change \r\nthe setting. You can also press the Yellow button to \r\nzoom in. This option will not be available if the slide \r\nshow is not paused.\r\nFont: Set the font options. Size, style and colour can \r\nbe set according to your preferences. \r\nShow Info: Display the extended information.\r\nPhoto Frame Image: Set the currently displayed \r\nimage as photo frame image. This image will be \r\ndisplayed if the One Photo mode option is selected \r\ninstead of the connected storage device while \r\nactivating the photo frame feature.\r\nHide/Show Spectrum: Hide or show the spectrum \r\nif available.\r\nLyric Options: Display lyric options if available.\r\nPicture Off: Open the power menu of your TV. You \r\ncan use the Picture off option here to turn the screen \r\noff. Press a button on the remote or on the TV to turn \r\nthe screen on again.\r\nScreen Mode: Set the aspect ratio option.\r\nPicture Settings: Display the picture settings menu.\r\nSound Settings: Display t\n",
+        "text_origin": "retrieved_pdf_pages",
+        "pages_rendered": [
+          93,
+          107,
+          111
+        ],
+        "page_count": 166,
+        "page_selection": "observed_text_match",
+        "image_url": "https://cdn-cms.bookingexperts.com/media/3843/11/glamping___notice_utilisation_tv___toutes_langues_9223dca9-2dee-44d0-b21d-9c54d7d2db48.pdf",
+        "ocr": {
+          "state": "ok",
+          "origin": "on_device_reference_ocr",
+          "script": "latin",
+          "text": "",
+          "width": 1152,
+          "height": 512
+        }
+      }
+    ]
+  }
+}

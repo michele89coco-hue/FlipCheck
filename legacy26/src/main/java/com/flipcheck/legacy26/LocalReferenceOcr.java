@@ -33,9 +33,13 @@ final class LocalReferenceOcr implements AutoCloseable {
         BitmapFactory.decodeByteArray(bytes,0,bytes.length,bounds);
         if(bounds.outWidth<=0||bounds.outHeight<=0)throw new IOException("invalid_image");
         BitmapFactory.Options options=new BitmapFactory.Options();options.inSampleSize=1;
-        while(bounds.outWidth/options.inSampleSize>2048||bounds.outHeight/options.inSampleSize>2048)options.inSampleSize*=2;
+        while(bounds.outWidth/options.inSampleSize>4096||bounds.outHeight/options.inSampleSize>4096||
+            (long)(bounds.outWidth/options.inSampleSize)*(bounds.outHeight/options.inSampleSize)>8000000L)options.inSampleSize*=2;
         Bitmap bitmap=BitmapFactory.decodeByteArray(bytes,0,bytes.length,options);
-        if(bitmap==null)throw new IOException("invalid_image");return bitmap;
+        if(bitmap==null)throw new IOException("invalid_image");
+        int largest=Math.max(bitmap.getWidth(),bitmap.getHeight());
+        if(largest>2048){float scale=2048f/largest;Bitmap resized=Bitmap.createScaledBitmap(bitmap,Math.max(1,Math.round(bitmap.getWidth()*scale)),Math.max(1,Math.round(bitmap.getHeight()*scale)),true);if(resized!=bitmap)bitmap.recycle();bitmap=resized;}
+        return bitmap;
     }
     synchronized void read(String id,String image,Result callback) {
         if(closed||jobs.size()>=3||jobs.containsKey(id)){callback.accept(GoogleVisionBridge.json("state","ocr_unavailable"));return;}
@@ -48,7 +52,12 @@ final class LocalReferenceOcr implements AutoCloseable {
                 recognizer.process(InputImage.fromBitmap(bitmap,0)).addOnCompleteListener(worker,task->{
                     try {
                         String text=task.isSuccessful()?task.getResult().getText():"";
-                        finish(id,cancelled,callback,GoogleVisionBridge.json("state",task.isSuccessful()?"ok":"ocr_unavailable","origin","on_device_reference_ocr","script","latin","text",text.substring(0,Math.min(2400,text.length())),"width",bitmap.getWidth(),"height",bitmap.getHeight()));
+                        org.json.JSONArray lines=new org.json.JSONArray();
+                        if(task.isSuccessful())for(com.google.mlkit.vision.text.Text.TextBlock block:task.getResult().getTextBlocks())for(com.google.mlkit.vision.text.Text.Line line:block.getLines()){
+                            android.graphics.Rect box=line.getBoundingBox();if(box==null||lines.length()>=100)continue;
+                            lines.put(GoogleVisionBridge.json("text",line.getText(),"x",Math.max(0,box.left)/(double)bitmap.getWidth(),"y",Math.max(0,box.top)/(double)bitmap.getHeight(),"width",box.width()/(double)bitmap.getWidth(),"height",box.height()/(double)bitmap.getHeight()));
+                        }
+                        finish(id,cancelled,callback,GoogleVisionBridge.json("state",task.isSuccessful()?"ok":"ocr_unavailable","origin","on_device_reference_ocr","script","latin","text",text.substring(0,Math.min(4800,text.length())),"lines",lines,"width",bitmap.getWidth(),"height",bitmap.getHeight()));
                     } finally {bitmap.recycle();shutdownIfIdle();}
                 });
             } catch(Exception e){bitmap.recycle();finish(id,cancelled,callback,GoogleVisionBridge.json("state","ocr_unavailable"));}

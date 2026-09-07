@@ -272,4 +272,30 @@ test('a missing cited code can use one focused comparison without another web or
  const out=await page.evaluate(async c=>{scan164=newContext164();lastVisionReading={kind:'object',market_ready:false,object_unit:'object',photo_clues:[{text:'ZX-430',role:'model',certainty:'clear',image_index:1,region:null}]};const ref={id:'ref1',url:'https://catalog.example/item',image_url:'https://catalog.example/item.png',text:'Catalogue entry: Documented model.',text_origin:'retrieved_page',image_data:images.find(Boolean)};const incomplete=structuredClone(c);incomplete.matches=incomplete.matches.filter(m=>m.feature!=='code');const reply={candidates:[incomplete]};scan164.lastComparison={reply,references:[ref]};const base=FlipCheckVisual.validate(lastVisionReading,reply,[ref]);return finishComparison173(base,scan164);},comparison.candidates[0]);
  assert.equal(out.market_ready,true);assert.equal(requests.length,1);assert.equal(requests[0].tools,undefined);assert.match(JSON.stringify(requests[0].input),/RILETTURA MIRATA/);assert.equal(googleRequests.length,0);
 });
+
+
+test('uncertain localization uses OCR coordinates on the original instead of suppressing the reread',async()=>{
+ await reset();await upload();detailReply={details:[{clue_index:0,text:'23/144',role:'collector_number',certainty:'clear'}]};
+ const out=await page.evaluate(async()=>{scan164=newContext164();lastVisionReading={kind:'card',market_ready:false,photo_clues:[{text:'2?/144',role:'collector_number',certainty:'uncertain',image_index:1,region:{image_index:1,x:.7,y:.9,width:.2,height:.04,certain:false}}]};scan164.photoOcr=[{image_index:1,state:'ok',meta:{originalWidth:400,originalHeight:600,rect:{x:0,y:0,width:400,height:600}},lines:[{text:'23/144',x:.72,y:.90,width:.17,height:.04}]}];const result=await rereadPhotoDetails173(lastVisionReading,scan164);return {result,detail:scan164.detailReread};});
+ assert.equal(requests.length,1);assert.equal(out.result.photo_clues[0].text,'23/144');assert.equal(out.detail.regions[0].origin,'local_ocr_region');assert.equal(out.detail.images[0].cropped,true);assert.ok(out.detail.images[0].sentHeight<60);
+});
+test('focused reference recovery fits the residual budget seen in build173',async()=>{
+ await reset();await upload();const fixture=require('./fixtures/diagnostics-173.json').machamp;
+ comparison=structuredClone(fixture.phases[0].result);
+ const out=await page.evaluate(async d=>{
+  lastVisionReading=d.vision;scan164=newContext164();scan164.budget.reserve('vision',.02206327);scan164.budget.visionCalls=2;
+  const refs=d.references.filter(r=>r.id==='ref4').map(r=>({...r,image_data:images.find(Boolean)})),reply=d.phases[0].result;
+  scan164.lastComparison={reply,references:refs};scan164.comparisonHistory=[scan164.lastComparison];
+  const base=FlipCheckVisual.validate(FlipCheckVisual.auditIdentity(lastVisionReading),reply,refs);const result=await finishComparison173(base,scan164);
+  return {result,review:scan164.focusedReview,budget:scan164.budget.spent()};
+ },fixture);
+ assert.equal(requests.length,1);assert.equal(requests[0].tools,undefined);assert.ok(requests[0].max_output_tokens<=1600);assert.equal(out.review.state,'completed');assert.ok(out.budget<=.03);assert.equal(googleRequests.length,0);assert.ok(out.result.core_identity?.model);
+});
+test('PDF pages are separate references with their own page text and parent context',async()=>{
+ await reset();const out=await page.evaluate(async()=>{
+  const old=window.FlipCheckGoogle;window.FlipCheckGoogle={request(id,action,payload){if(action!=='page')throw new Error('Unexpected image download');FlipCheckDirect.receive(id,{status:200,document_type:'pdf',page_count:30,image_data:'first marker',text:'Whole document',document_context:'Manufacturer ACME TV model ZX-900',page_images:[{page_number:7,text:'Remote diagram A',image_data:'A'},{page_number:8,text:'Remote diagram B',image_data:'B'}]});},cancel(){}};
+  try{return await FlipCheckDirect.catalogueReferences([{url:'https://catalog.example/manual.pdf',title:'Manual'}],{},{});}finally{window.FlipCheckGoogle=old;}
+ });assert.equal(out.references.length,2);assert.deepEqual(out.references.map(r=>r.pages_rendered),[[7],[8]]);assert.equal(out.references[0].text,'Remote diagram A');assert.match(out.references[1].image_url,/#page=8/);assert.match(out.references[0].document_context,/ZX-900/);
+});
+
 test('no unhandled browser errors',()=>assert.deepEqual(errors,[]));

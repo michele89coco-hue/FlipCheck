@@ -66,7 +66,7 @@ async function references(found,options){
  }));
  const refs=results.filter(r=>r.status==='fulfilled'&&r.value).map(r=>r.value);
  // Global image matches have no attributed page. Retain them for visual discovery, without inventing one.
- const direct=[...list(found.fullMatchingImages),...list(found.partialMatchingImages)].filter((item,i,all)=>url(item.url)&&FlipCheckVisual.referenceImageUseful(item.url)&&all.findIndex(x=>imageKey(x.url)===imageKey(item.url))===i&&!refs.some(r=>imageKey(r.image_url)===imageKey(item.url))).slice(0,3-refs.length);
+ const direct=[...list(found.fullMatchingImages),...list(found.partialMatchingImages),...(!refs.length&&!list(found.fullMatchingImages).length&&!list(found.partialMatchingImages).length?list(found.visuallySimilarImages):[])].filter((item,i,all)=>url(item.url)&&FlipCheckVisual.referenceImageUseful(item.url)&&all.findIndex(x=>imageKey(x.url)===imageKey(item.url))===i&&!refs.some(r=>imageKey(r.image_url)===imageKey(item.url))).slice(0,3-refs.length);
  const downloads=await Promise.allSettled(direct.map(async(item,i)=>{const picture=await call('image',{url:item.url},options);return picture.image_data?{id:'ref'+(pages.length+i+1),url:item.url,title:'Immagine trovata da Google · pagina non attribuita',text:'',text_origin:'unattributed_image',discovery_only:true,image_url:item.url,image_data:picture.image_data}:null;}));
  for(const download of downloads)if(download.status==='fulfilled'&&download.value)refs.push(download.value);
  const attempts=pages.length+direct.length;
@@ -90,24 +90,28 @@ async function catalogueReferences(sources,options,base){
     const text=(page.text||[s.title,s.text||s.snippet].filter(Boolean).join(' ')).slice(0,5000);
     attempt.state='retrieved_pdf';attempt.pages_rendered=page.pages_rendered;attempt.page_selection=page.page_selection;
     if(!text)return null;
+    if(page.page_images?.length)return page.page_images.slice(0,3).map(p=>({id:'ref'+(i+1)+'p'+p.page_number,url:s.url,title:s.title,text:p.text||text,text_origin:p.text?'retrieved_pdf_pages':'web_indexed_document',document_context:page.document_context||'',pages_rendered:[p.page_number],page_count:page.page_count,page_selection:page.page_selection,image_url:s.url+'#page='+p.page_number,image_data:p.image_data}));
     return {id:'ref'+(i+1),url:s.url,title:s.title,text,text_origin:page.text?'retrieved_pdf_pages':'web_indexed_document',pages_rendered:page.pages_rendered,page_count:page.page_count,page_selection:page.page_selection,image_url:s.url,image_data:page.image_data};
    }
    if(!page.text||page.is_collection){attempt.state=page.is_collection?'collection_page':'no_page_text';return null;}
    if(!titleSupported(s.title,page.text)){attempt.state='page_content_mismatch';return null;}
    const images=list(page.images).map(url).filter(u=>u&&FlipCheckVisual.referenceImageUseful(u)).slice(0,2);
+   const pictures=[];
    for(const image of images){
     const picture=await call('image',{url:image},options);if(!picture.image_data)continue;
-    attempt.state='retrieved_image';return {id:'ref'+(i+1),url:page.url||s.url,title:page.title||s.title,text:page.text.slice(0,5000),text_origin:'retrieved_page',image_url:image,image_data:picture.image_data};
+    const detail=list(page.image_details).find(d=>imageKey(d.image_url)===imageKey(image));
+    pictures.push({id:'ref'+(i+1)+'i'+pictures.length,url:page.url||s.url,title:page.title||s.title,text:page.text.slice(0,5000),text_origin:'retrieved_page',image_caption:detail?.caption||'',image_url:image,image_data:picture.image_data});
    }
+   if(pictures.length){attempt.state='retrieved_image';return pictures;}
    attempt.state=images.length?'image_unavailable':'no_linked_images';return null;
   }catch(error){attempt.state=options?.signal?.aborted?'retrieval_timeout':'download_unavailable';return null;}
  }
  // A bounded second group recovers other domains when the first pages contain no useful image.
  for(let offset=0;offset<pages.length&&refs.length<3&&!options?.signal?.aborted;offset+=3){
   const results=await Promise.allSettled(pages.slice(offset,offset+3).map((s,i)=>retrieve(s,offset+i)));
-  for(const result of results)if(result.status==='fulfilled'&&result.value&&!refs.some(r=>imageKey(r.image_url)===imageKey(result.value.image_url)))refs.push(result.value);
+  for(const result of results)if(result.status==='fulfilled'&&result.value)for(const ref of Array.isArray(result.value)?result.value:[result.value])if(!refs.some(r=>imageKey(r.image_url)===imageKey(ref.image_url)))refs.push(ref);
  }
- return {state:'ok',references:refs.slice(0,3),referenceAttempts:attempts.length,attempts,referenceState:refs.length?'retrieved':'no_accessible_page_images'};
+ return {state:'ok',references:refs.slice(0,6),referenceAttempts:attempts.length,attempts,referenceState:refs.length?'retrieved':'no_accessible_page_images'};
 }
 
 function imageKey(value){try{const u=new URL(value);for(const key of ['width','height','w','h','quality'])u.searchParams.delete(key);return u.href;}catch(_){return '';}}

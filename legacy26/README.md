@@ -53,3 +53,12 @@ No paid live API scan or phone installation is part of these automated checks.
 - Follow the product link attached to a matching Google image where available. Do not attach a whole collection's text to one product; remove duplicate image references and excess page whitespace.
 - Send explicit native batch/single picker modes. The main button and empty slots support three photos; a separate File selector also supports multiple photos. Cancellation preserves the loaded images.
 - Regression fixtures from build 170 contain diagnostics only. Browser responses and images are synthetic; these tests do not establish live recognition accuracy. No live AI requests are part of the release checks.
+
+## Build 174: evidence fusion and focused rereading
+
+- Preserve separately cited facts across actual image comparisons; compose a card identity from series, subject and number/year without requiring an invented full-title quote or every brand/year field. Keep core identity separate from unresolved physical printing.
+- Do not merge anonymous candidates from different references, transfer bare slab/listing numbers to card numbers, or accept a parallel while its own reading requests confirmation.
+- Use bundled local OCR on original object images when assistance is needed. Retain text coordinates to select uncertain details; fall back to the full original object when localization is uncertain. OCR alone does not convert a guess into a confirmed observation.
+- Render PDF pages individually at up to 1536 x 2048; retain page attribution and document context separately. Preserve image captions and up to two product images per HTML source. Avoid power-of-two over-reduction in the OCR decoder.
+- Use a compact, single-candidate visual review for a specific unresolved field. Reuse previous evidence, preserve the global 0.03 budget and log skipped recoveries. Existing successful photo-only identification remains available.
+- Regression checks use the recorded build173 responses plus synthetic browser/native images, without paid live recognition. APK accuracy still requires user testing with the original photographs.
