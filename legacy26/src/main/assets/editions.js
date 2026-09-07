@@ -103,6 +103,9 @@ First Edition e Shadowless sono due attributi separati: il timbro non dimostra d
       out.variant_check='confirmed';
       out.unresolved_identity_fields=(identity.unresolved_identity_fields||[]).filter(f=>!['variant','family'].includes(f));
     }
+    if(Array.isArray(out.catalogue_data))out.catalogue_data=out.catalogue_data.map(f=>
+      ['model','variant'].includes(f.field)&&/\b(?:1st\s*edition|first\s*edition|shadowless|shadowed|unlimited)\b/i.test(f.value)
+        ?{...f,verification:result.complete?'confirmed_physical':'pending_physical'}:f);
     return out;
   }
   const api = {schema,prompt,evaluate,apply,isOriginalBaseSet,contradictsPrinting};

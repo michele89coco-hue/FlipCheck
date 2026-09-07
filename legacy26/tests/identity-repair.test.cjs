@@ -10,6 +10,7 @@ test('A Base Set printing catalogue family still requires an independently read 
  const d=data.machamp,out=E.apply({...d.vision,...d.identification},{...d.vision.pokemon_printing,set_name:d.identification.family},1);
  assert.equal(out.printing_check.applicable,true);assert.equal(out.printing_check.shadow,'unclear');
  assert.equal(out.printing_check.complete,false);assert.equal(out.market_ready,false);assert.equal(out.normalized_query,'');
+ assert.ok(out.catalogue_data.some(f=>/Shadowed/.test(f.value)&&f.verification==='pending_physical'));
 });
 test('Base Set catalogue aliases keep printing checks without extending them to other sets',()=>{
  for(const set_name of ['Pokemon Game Base Set','1999 Pokémon Game Base Set','Pokémon TCG Base Set','Base Set (1999)'])

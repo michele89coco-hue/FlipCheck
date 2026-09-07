@@ -345,4 +345,12 @@ test('source failure keeps a separately requested battery label actionable in th
  assert.match(await page.locator('#visualResult').textContent(),/battery compartment/);
  assert.equal(await page.locator('#addConfirmPhoto').isVisible(),true);
 });
+test('unread physical printing does not display a catalogue Shadowed assertion as recovered fact',async()=>{
+ await reset();await upload();await page.evaluate(d=>{
+  lastVisionReading=d.vision;
+  const value=enforceIdentificationPolicy({...d.vision,...d.identification,assistance_state:'physical_detail_needed'});
+  $('identPanel').classList.remove('hide');renderIdent(value);
+ },require('./fixtures/identity-cases.cjs').machamp);
+ assert.doesNotMatch(await page.locator('#visualResult').textContent(),/Shadowed/);
+});
 test('no unhandled browser errors',()=>assert.deepEqual(errors,[]));
