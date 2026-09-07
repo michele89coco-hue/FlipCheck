@@ -10,9 +10,10 @@ test('box closes from the exact guarantee while pack counts have their own denom
  assert.equal(out.market_ready,true);assert.equal(out.variant,'Hobby');assert.match(out.model,/2031-32.*Hobby/);assert.equal(out.next_photo_request,null);assert.equal(out.specification_check.origin,'photo_configuration_and_catalogue');
 });
 test('confidence and source count do not substitute a wrong format, series, year or guarantee',()=>{
- for(const mode of ['series','year','count','chance','per_case','uncited','unit','mixed']){
+ for(const mode of ['brand','series','year','count','chance','per_case','uncited','unit','mixed']){
   const p=box(),r={...boxRef},e=entry();
   if(mode==='series')r.title=r.title.replace('Updates','Black');
+  if(mode==='brand')r.title=r.title.replace('Example','Different Manufacturer');
   if(mode==='year')r.title=r.title.replace('2031-32','2030-31');
   if(mode==='count')e.section_quote=e.section_quote.replace('one autograph','three autographs');
   if(mode==='chance')e.section_quote='A Hobby Box may contain one autograph.';

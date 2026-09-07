@@ -842,7 +842,7 @@ function specificationClosure184(base,photo,reply,refs){
  for(const entry of list(reply?.entries)){
   const r=refs.find(r=>r.id===entry.reference_id),quote=entry.section_quote||'';
   if(!trustedReferenceText(r)||quote.length<12||quote.length>1800||quote.includes('…')||!has(referenceText(r),quote)||entry.unit!==(isBox?'box':'single'))continue;
-  if(!familyAgrees184(core.fields.find(f=>f.field==='family')?.value||photo.family,r.title,photo.brand))continue;
+  if(!empty(photo.brand)&&!has(r.title,photo.brand)||!familyAgrees184(core.fields.find(f=>f.field==='family')?.value||photo.family,r.title,photo.brand))continue;
   const year=core.fields.find(f=>f.field==='year')?.value;
   if(!year||seasonValue(r.title)!==seasonValue(year))continue;
   if(!entry.variant||!has(quote,entry.variant)||/\b(?:no|not|without|may|chance|possible|or fewer|fino a)\b/i.test(quote))continue;
