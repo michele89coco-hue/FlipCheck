@@ -70,7 +70,7 @@ test('181 full resolution uses photographed OCR keys despite an empty model, unc
  },pokemon);
  assert.equal(out.result.catalogue_core_verified,true,JSON.stringify({pokemon,...out,requests:requests.map(r=>r.text.format.name)}));assert.equal(out.result.market_ready,true,JSON.stringify({pokemon,...out}));assert.match(out.result.model,/Summit.*Rivermon/);assert.equal(out.result.source_confirmed_year,'');
  assert.equal(out.photo.ocr_number_readings[0].text,'H7/H32');assert.equal(out.result.photo_clues[1].certainty,'uncertain');assert.equal(out.keys.state,'confirmed');assert.equal(out.route,'text_first');
- assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_photo_detail','flipcheck_resolver','flipcheck_card_keys',...(pokemon?['flipcheck_printing_detail']:[])]);assert.equal(googleRequests.some(r=>r.action==='detect'),false);assert.ok(out.budget<=.03);
+ assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_photo_detail','flipcheck_resolver','flipcheck_card_keys']);if(pokemon){assert.equal(out.result.printing_check.stamp,'not_applicable');assert.equal(out.result.pokemon_printing.first_edition_stamp,'unclear');}assert.equal(googleRequests.some(r=>r.action==='detect'),false);assert.ok(out.budget<=.03);
  }
 });
 test('181 equivalent subject extraction keeps the publication fields and closes the panel in production',async()=>{
@@ -535,7 +535,7 @@ test('a card with one catalogue image match repairs that reference before readin
  comparisonQueue=[{candidates:[{...c,matches:c.matches.filter(m=>m.feature==='code')}]},{candidates:[{...c,matches:c.matches.filter(m=>m.feature==='layout')}]}];
  printingReply={...d.vision.pokemon_printing,artwork_shadow:'absent',shadow_location:'right and lower border visible'};
  await upload();await identify();const out=await page.evaluate(()=>diagnostic26());
- assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_identification','flipcheck_resolver','flipcheck_visual_comparison','flipcheck_visual_comparison','flipcheck_printing_detail']);
+ assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_identification','flipcheck_resolver','flipcheck_card_keys','flipcheck_visual_comparison','flipcheck_visual_comparison','flipcheck_printing_detail']);
  assert.equal(googleRequests.filter(r=>r.action==='detect').length,0,JSON.stringify({route:out.visualAssistance.route,provider:out.visualAssistance.provider,review:out.visualAssistance.focusedReview}));assert.equal(out.visualAssistance.focusedReview.reason,'insufficient_visual_comparison');assert.equal(out.visualAssistance.printingRecovery.attempted,true);assert.equal(out.identification.market_ready,true);assert.match(out.identification.variant,/Shadowless/);assert.ok(out.visualAssistance.budget.visionCalls<=4);assert.ok(out.visualAssistance.budget.spentOrReservedUsd<=.03);
 });
 test('compact comparison keeps complementary images when the full response would exceed the remaining budget',async()=>{
@@ -586,3 +586,30 @@ test('a cold runtime displays a saved result without loading photos or repeating
  assert.match(await page.locator('#savedScan178').textContent(),/Saved model.*Blue.*confermata/);assert.equal(requests.length,0);assert.equal(await page.evaluate(()=>validImageCount()),0);
 });
 test('no unhandled browser errors',()=>assert.deepEqual(errors,[]));
+
+test('183 a photographed name and number close against a web release year without a comparison or another photo',async()=>{
+ await reset();await upload();resolverMode='catalogue_identity';providerMode='placeholder';catalogTitle='2031 Prism Alex Rivera #73';catalogText=catalogTitle+'. Release year 2031.';
+ cardKeysReply={entries:[{scope:'exact_entry',fields:[['family','Prism','none'],['subject','Alex Rivera','none'],['catalog_number','73','card_number'],['year','2031','year']].map(([field,value,number_kind])=>({field,value,quote:value,number_kind,reference_id:'page1',scope:'target',evidence:'text'}))}]};
+ const out=await page.evaluate(async()=>{
+  scan164=newContext164();lastVisionReading={kind:'card',object_unit:'single',category:'sports card',brand:'Example',family:'Guessed series',title:'Alex Rivera card',model:'',model_confidence:55,market_ready:false,variant:'',variant_scope:'none',identity_basis:{family:'inferred',variant:'not_applicable'},unresolved_identity_fields:['family'],photo_clues:[{text:'Alex Rivera',role:'subject',certainty:'clear',image_index:1},{text:'NO. 73',role:'collector_number',certainty:'clear',image_index:1}],physical_observations:[]};scan164.photoOcr=[];
+  const result=await resolveIdentificationCheap(lastVisionReading,'');return {result,keys:scan164.cardKeyVerification};
+ });
+ assert.equal(out.result.market_ready,true,JSON.stringify(out));assert.equal(out.result.source_confirmed_year,'2031');assert.equal(out.result.identity_keys.date,null);assert.equal(out.keys.state,'confirmed');assert.equal(out.result.next_photo_request,null);
+ assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_resolver','flipcheck_card_keys']);assert.equal(googleRequests.some(r=>r.action==='detect'),false);
+});
+test('183 complete initial Pokemon result keeps terminal and core states consistent in the exported diagnostic',async()=>{
+ await reset();vision={...structuredClone(known),kind:'card',category:'Pokemon TCG',brand:'Pokemon',family:'Garden',family_confidence:98,model:'Bloommon 15/64',title:'Bloommon',variant:'1st Edition',variant_scope:'commercial',identity_basis:{family:'printed',variant:'physical_evidence'},unresolved_identity_fields:[],model_confidence:98,market_ready:true,normalized_query:'Garden Bloommon 15/64 1st Edition',photo_clues:[{text:'Bloommon',role:'subject',certainty:'clear',image_index:1},{text:'15/64',role:'collector_number',certainty:'clear',image_index:1},{text:'Garden set symbol',role:'symbol',certainty:'clear',image_index:1},{text:'©1995 Nintendo ©1999 Wizards',role:'copyright',certainty:'clear',image_index:1}],pokemon_printing:{is_pokemon:true,language:'English',set_name:'Garden',card_type:'pokemon',first_edition_stamp:'present',stamp_image:1,stamp_location:'left below artwork',stamp_text:'1st Edition',artwork_shadow:'not_applicable',shadow_image:0,shadow_location:'',shadow_edges:{right:'not_applicable',lower:'not_applicable'},copyright_text:'©1995 Nintendo ©1999 Wizards',copyright_image:1,slab_text:'',slab_image:0}};
+ await upload();await identify();const d=await page.evaluate(()=>diagnostic26());assert.equal(d.identification.market_ready,true);assert.equal(d.identification.identity_status,'confirmed');assert.equal(d.identification.exact_identity_status,'confirmed');assert.equal(d.identification.core_identity.status,'confirmed');assert.deepEqual(d.identification.core_identity.pending_fields,[]);assert.equal(d.visualAssistance.coreIdentityState,'confirmed');assert.equal(requests.length,1);
+});
+test('183 catalogue repair preserves two separately named subjects on one panel and removes a generic variant placeholder',async()=>{
+ await reset();await upload();const quote='Uncut panel of Alex Rivera and Morgan Vale.',f=(field,value,scope,kind='none',q=value)=>({field,value,scope,number_kind:kind,quote:q,evidence:'text',reference_id:'ref1'});
+ catalogueFieldsReply={entry_scope:'exact_entry',fields:[f('family','Northern Record','parent'),f('year','1955','parent','year'),f('issue_number','17','parent','issue_number'),f('subject','Alex Rivera','target','none',quote),f('subject','Morgan Vale','target','none',quote)]};
+ const out=await page.evaluate(async quote=>{
+  scan164=newContext164();lastVisionReading={kind:'card',object_unit:'panel',category:'portrait panel',variant:'Two-portrait printed panel',variant_scope:'physical_description',identity_basis:{family:'inferred',variant:'physical_evidence'},unresolved_identity_fields:['family','variant'],market_ready:false,model_confidence:0,photo_clues:['Alex Rivera','Morgan Vale'].map(text=>({text,role:'subject',certainty:'clear',image_index:1})),physical_observations:[{feature:'color',text:'Blue portrait backgrounds with white captions',entity:'target',certainty:'clear',image_index:1}]};
+  const ref={id:'ref1',url:'https://catalog.example/panel',title:'Northern Record, issue 17, 1955',text:'Northern Record, issue 17, 1955. '+quote,text_origin:'retrieved_page',image_data:images.find(Boolean)};
+  const candidate={unit:'panel',decision:'match',identity_level:'exact',variant_status:'identified',ambiguity_scope:'none',same_unit:true,physical_ambiguity:false,conflicts:[],matches:['layout','text'].map(feature=>({reference_id:'ref1',feature,photo_detail:'Two portraits Alex Rivera and Morgan Vale',reference_detail:'Two portraits Alex Rivera and Morgan Vale',agrees:true,reference_evidence:'image'})),fields:[{field:'year',value:'1955',quote:'1955',scope:'listing',number_kind:'year',evidence:'text',reference_id:'ref1'}]};
+  const reply={candidates:[candidate],detail_needed_from:'none',physical_detail_needed:null};scan164.lastComparison={reply,references:[ref]};scan164.comparisonHistory=[scan164.lastComparison];
+  return {result:await finishComparison173(FlipCheckVisual.validate(lastVisionReading,reply,[ref]),scan164),repair:scan164.fieldRepair};
+ },quote);
+ assert.equal(out.repair.state,'completed');assert.equal(out.result.market_ready,true);assert.match(out.result.model,/Alex Rivera \/ Morgan Vale/);assert.equal(out.result.catalogue_data.filter(f=>f.field==='subject').length,2);assert.equal(requests.length,1);assert.equal(googleRequests.length,0);
+});
