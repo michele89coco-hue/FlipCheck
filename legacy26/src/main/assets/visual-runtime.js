@@ -627,7 +627,8 @@ async function finishIdentity171(value,ctx){
  value=V164.releaseEvidence184(value,ctx.textReferences||[]);
  value=enforceIdentificationPolicy(value);
  if((value?.catalogue_verified||value?.catalogue_core_verified)&&value.printing_check?.complete===false)value=await resolvePrinting168(value,ctx);
- const printingOnly=value?.catalogue_core_verified&&value.pokemon_printing?.is_pokemon&&value.printing_check?.complete&&value.visual_candidates?.some(c=>c.core_accepted&&!c.identity_conflicts?.length&&(c.ambiguity_scope==='variant'||c.accepted||V164.physicalVariantProof(value))&&c.blocking_fields.every(f=>['physical_ambiguity','appearance_not_matched','insufficient_visual_comparison'].includes(f)));
+ const retainedPhysical=value?.core_identity?.status==='confirmed'&&V164.physicalVariantProof(value)&&!value.visual_candidates?.some(c=>!c.superseded&&c.identity_conflicts?.length);
+ const printingOnly=value?.catalogue_core_verified&&value.pokemon_printing?.is_pokemon&&value.printing_check?.complete&&(retainedPhysical||value.visual_candidates?.some(c=>c.core_accepted&&!c.identity_conflicts?.length&&(c.ambiguity_scope==='variant'||c.accepted||V164.physicalVariantProof(value))&&c.blocking_fields.every(f=>['physical_ambiguity','appearance_not_matched','insufficient_visual_comparison'].includes(f))));
  if(printingOnly){
   value={...value,catalogue_verified:true,model_verified:true,model_confidence:Math.max(90,value.model_confidence||0),variant_needs_verification:false,identity_basis:{...value.identity_basis,variant:'physical_evidence'},unresolved_identity_fields:(value.unresolved_identity_fields||[]).filter(f=>!['family','variant'].includes(f)),printing_resolution:{origin:'original_photo',labels:value.printing_check.labels,core_preserved:true},verification_summary:'Identità catalografica confermata; stampa verificata nella foto originale.'};
   value=FlipCheckEditions.apply(value,value.pokemon_printing,validImageCount());
