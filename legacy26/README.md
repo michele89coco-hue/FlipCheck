@@ -91,3 +91,13 @@ Retrieved page text survives missing images; known placeholders are excluded bef
 Catalogue fields are repaired after focused comparisons as well as before them, retaining valid existing fields. Short format quotes require literal existing title context. Critical, uncorroborated package quantities outrank uncertain secondary names for an original-photo reread; website text never overwrites photographed evidence. Border colour is separated from centre and jersey colours in discovery queries.
 
 The original inline engine, native background lifecycle and original-resolution crop path are retained. Version code 180; version name 0.26.4-card-keys. CI runs all policy, mocked browser and 18 native Android checks without paid recognition API requests. New regression fixtures use generic identities, not uploaded user logs or photos.
+
+## Build 181: reconcile photographic evidence and complete the verified entry
+
+Photographed subject names no longer depend on a populated inferred model. Native OCR collector readings retain their original image and region, stay provisional, and can corroborate a specific catalogue entry while an uncertain Vision transcription stays in the record. Conflicting clear readings, multiple OCR alternatives, unrelated catalogue lists and mismatched years remain blocking. A full fractional number plus subject and cited series can establish the entry when its page omits a year; observed copyright dates remain separate constraints, never fabricated source quotations or release seasons.
+
+Equivalent subject refinements from the same literal quotation merge with cited publication/year/issue fields instead of discarding the repair. Commercial parallel verification is independent of the initial market-ready flag; simple physically observed finishes and separately checked Pokemon printing retain their provenance. Printing rereads supersede contradictory earlier candidate decisions without inventing a new image match.
+
+Missing package guarantees receive an original-image crop even if the first response omitted the clue. Catalogue retrieval precedes unhelpful unattributed box comparisons. Actual reference-image OCR influences ranking, duplicate thumbnail resolutions and known company logos are excluded, and focused recovery attempts a smaller complete request when necessary. The total configured budget is unchanged.
+
+Version code 181; version name 0.26.5-evidence-closure. CI includes evidence-closure.test.cjs and production browser regressions for these failure shapes, plus the existing Android lifecycle checks. The original inline engine, native background implementation and original-file crop quality remain unchanged. Tests use saved or simulated responses and do not claim a new live recognition accuracy score.

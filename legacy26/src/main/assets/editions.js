@@ -98,6 +98,20 @@ First Edition e Shadowless sono due attributi separati: il timbro non dimostra d
     if (out.normalized_query) out.normalized_query = [out.normalized_query,...result.labels].join(' ');
     out.printing_check = result;
     out.pokemon_printing = printing;
+    if(result.complete&&(identity.catalogue_core_verified||identity.catalogue_verified)){
+      const updated=(identity.visual_candidates||[]).map(c=>{
+        if(c.superseded)return c;
+        const contradicted=contradictsPrinting(c.variant,result);
+        const oldPrintingRejection=c.decision==='different'&&!contradicted&&(c.conflicts||[]).length>0&&c.conflicts.every(f=>f.scope==='variant'&&/shadow|ombra|edition|edizione/i.test(f.reason||''));
+        if(!contradicted&&!oldPrintingRejection)return c;
+        return {...c,accepted:false,superseded:true,superseded_reason:'original_photo_printing',previous_decision:c.decision,printing_verification:contradicted?'contradicted_by_original':'prior_rejection_superseded'};
+      });
+      if(identity.visual_candidates)out.visual_candidates=updated;
+      if(updated.some(c=>c.superseded))out.printing_resolution={...identity.printing_resolution,origin:'original_photo',labels:result.labels,superseded_candidate_count:updated.filter(c=>c.superseded).length};
+      if(identity.candidate_models)out.candidate_models=identity.candidate_models.filter(c=>!contradictsPrinting(c.model,result));
+      out.variant_proof={origin:'original_photo',kind:'pokemon_printing',labels:result.labels,stamp_image:printing.stamp_image,shadow_image:printing.shadow_image,copyright_image:printing.copyright_image};
+      out.identity_basis={...identity.identity_basis,variant:'physical_evidence'};
+    }
     if (!result.complete) { out.market_ready = false; out.normalized_query = ''; out.variant_check='pending'; }
     if (identity.catalogue_verified && result.complete) {
       // Web labels cannot override the independently located stamp, border and copyright.

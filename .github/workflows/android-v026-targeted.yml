@@ -1,7 +1,7 @@
 name: FlipCheck 26 targeted fixes
 on:
   push:
-    branches: [codex/v0262-google-visual, codex/v0262-evidence-recovery-177, codex/v0262-background-quality-178, codex/v0262-photo-evidence-179, codex/v0262-key-evidence-180]
+    branches: [codex/v0262-google-visual, codex/v0262-evidence-recovery-177, codex/v0262-background-quality-178, codex/v0262-photo-evidence-179, codex/v0262-key-evidence-180, codex/v0262-evidence-181]
   workflow_dispatch:
 permissions:
   contents: read
@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: '22'
       - name: Targeted policy checks without live API
-        run: node --test legacy26/tests/editions.test.cjs legacy26/tests/visual-policy.test.cjs legacy26/tests/identity-repair.test.cjs legacy26/tests/evidence-regression.test.cjs legacy26/tests/evidence-priority.test.cjs legacy26/tests/card-keys.test.cjs
+        run: node --test legacy26/tests/editions.test.cjs legacy26/tests/visual-policy.test.cjs legacy26/tests/identity-repair.test.cjs legacy26/tests/evidence-regression.test.cjs legacy26/tests/evidence-priority.test.cjs legacy26/tests/card-keys.test.cjs legacy26/tests/evidence-closure.test.cjs
       - name: Browser integration without live API
         run: |
           npm install --prefix /tmp/flipcheck26-tests playwright@1.62.1 --no-audit --no-fund
@@ -46,12 +46,12 @@ jobs:
         run: |
           ./gradlew :legacy26:assembleDebug :legacy26:assembleDebugAndroidTest --no-daemon --console=plain
           mkdir -p artifact
-          cp legacy26/build/outputs/apk/debug/legacy26-debug.apk artifact/FlipCheck-v0.26.4-GoogleFix-180.apk
-          sha256sum artifact/FlipCheck-v0.26.4-GoogleFix-180.apk > artifact/FlipCheck-v0.26.4-GoogleFix-180.sha256
-          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose --print-certs artifact/FlipCheck-v0.26.4-GoogleFix-180.apk > artifact/apksigner-report.txt
+          cp legacy26/build/outputs/apk/debug/legacy26-debug.apk artifact/FlipCheck-v0.26.5-GoogleFix-181.apk
+          sha256sum artifact/FlipCheck-v0.26.5-GoogleFix-181.apk > artifact/FlipCheck-v0.26.5-GoogleFix-181.sha256
+          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose --print-certs artifact/FlipCheck-v0.26.5-GoogleFix-181.apk > artifact/apksigner-report.txt
           grep -q 'Signer #1 certificate SHA-256 digest: d4d02478ea31cb6bd83228047e9accd7dfb191ed991a4c8e8c06a228e54614c7' artifact/apksigner-report.txt
-          "$ANDROID_HOME/build-tools/36.0.0/aapt" dump badging artifact/FlipCheck-v0.26.4-GoogleFix-180.apk > artifact/apk-analyzer-report.txt
-          grep -q "package: name='com.flipcheck.beta.legacy26fix' versionCode='180' versionName='0.26.4-card-keys'" artifact/apk-analyzer-report.txt
+          "$ANDROID_HOME/build-tools/36.0.0/aapt" dump badging artifact/FlipCheck-v0.26.5-GoogleFix-181.apk > artifact/apk-analyzer-report.txt
+          grep -q "package: name='com.flipcheck.beta.legacy26fix' versionCode='181' versionName='0.26.5-evidence-closure'" artifact/apk-analyzer-report.txt
           cp /tmp/flipcheck26-printing.png artifact/browser-printing.png
       - name: Enable emulator acceleration
         run: sudo chmod a+rw /dev/kvm

@@ -27,7 +27,7 @@ test('a cited name, full typed number and date close the entry core without refe
 });
 test('missing, conflicting, mistyped or non-entry evidence cannot close by keys',()=>{
  const changes=[
-  d=>d.candidate.fields=d.fields.filter(f=>f.field!=='year'),
+  d=>{d.base.photo_clues[2]=clue('2003 Example Summit','season');d.candidate.fields=d.fields.filter(f=>f.field!=='year');},
   d=>{d.fields[3].value=d.fields[3].quote='2004';d.ref.text+=' 2004';},
   d=>{d.fields[2].value=d.fields[2].quote='H8/H32';d.ref.text+=' H8/H32';},
   d=>d.fields[2].number_kind='serial',d=>d.fields[2].scope='listing',
@@ -42,7 +42,7 @@ test('missing, conflicting, mistyped or non-entry evidence cannot close by keys'
 });
 test('copyright dates are preserved as such and multiple years cannot stand in for a season',()=>{
  const d=fixture();assert.equal(V.cardKeyFacts(d.base).date.kind,'copyright');
- d.base.photo_clues[2].text='© 1995, 96, 98, 99 Example © 1999 Publisher';assert.equal(V.cardKeyFacts(d.base).date,null);
+ d.base.photo_clues[2].text='© 1995, 96, 98, 99 Example © 1999 Publisher';assert.equal(V.cardKeyFacts(d.base).date.value,null);assert.deepEqual(V.cardKeyFacts(d.base).date.values,['1995','1999']);assert.equal(V.cardKeyFacts(d.base).date.kind,'copyright');
  d.base.photo_clues.push(clue('2031-32 Example Summit','season'));assert.equal(V.cardKeyFacts(d.base).date.value,'2031-32');
 });
 test('three-letter photographed names remain usable with a full collector key',()=>{
@@ -78,7 +78,7 @@ test('queries use the border colour without borrowing the jersey or centre colou
 test('known no-image placeholders cannot count as visual matches',()=>{
  for(const name of ['no-image-new.jpg','no_image.png','noimage.gif','image-not-found.png','logo.png'])assert.equal(V.referenceImageUseful('https://catalog.example/'+name),false,name);
  assert.equal(V.referenceImageUseful('https://catalog.example/card-280-green.jpg'),true);
- const d=fixture();d.candidate.fields=d.fields.filter(f=>f.field!=='year');d.ref.image_url='https://catalog.example/no-image-new.jpg';d.ref.image_data='synthetic';
+ const d=fixture();d.candidate.fields=d.fields.filter(f=>f.field!=='family');d.ref.image_url='https://catalog.example/no-image-new.jpg';d.ref.image_data='synthetic';
  d.candidate.matches=['layout','subject'].map(feature=>({reference_id:'ref1',feature,photo_detail:'Rivermon card',reference_detail:'Rivermon card',agrees:true,reference_evidence:'image'}));
  const out=evaluate(d);assert.equal(out.visual_candidates[0].matches.length,0);assert.notEqual(out.catalogue_core_verified,true);
 });

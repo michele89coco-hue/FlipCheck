@@ -178,7 +178,7 @@ test('description is supplementary evidence, never a substitute for images or an
  assert.equal(V.quantityMatches('2 batteries 4 chargers','4 batteries 2 chargers'),false);
 });
 test('recorded Doncic confidence cannot bypass its own explicit subtype uncertainty',()=>{
- const x=V.auditIdentity(recorded169.doncic.vision);assert.equal(V.ready(x),false);assert.equal(x.market_ready,false);assert.equal(x.variant_needs_verification,true);assert.equal(V.googleFirst(x),true);assert.equal(x.model,recorded169.doncic.vision.model);
+ const x=V.auditIdentity(recorded169.doncic.vision);assert.equal(V.ready(x),false);assert.equal(x.market_ready,false);assert.equal(x.variant_needs_verification,true);assert.equal(V.googleFirst(x),false,'observed card keys now retrieve catalogue text before image discovery');assert.equal(x.model,recorded169.doncic.vision.model);
 });
 test('a remembered expansion requires a cited catalogue family and can be corrected without a product rule',()=>{
  const x={...base,model:'Visible name A12',family:'Guessed Series',market_ready:true,model_confidence:98,normalized_query:'Guessed Series Visible name A12',photo_clues:[{text:'Visible name',role:'text',certainty:'clear'},{text:'A12',role:'collector_number',certainty:'clear'}]};

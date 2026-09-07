@@ -54,6 +54,55 @@ before(async()=>{
  await reset();const image=await page.evaluate(()=>{const c=document.createElement('canvas');c.width=400;c.height=600;c.getContext('2d').fillStyle='red';c.getContext('2d').fillRect(0,0,400,600);return c.toDataURL('image/png').split(',')[1];});photos=[{name:'synthetic-object.png',mimeType:'image/png',buffer:Buffer.from(image,'base64')}];
 });
 after(async()=>{await browser?.close();if(server)await new Promise(r=>server.close(r));});
+test('181 full resolution uses photographed OCR keys despite an empty model, uncertain reread and unavailable reference image',async()=>{
+ for(const pokemon of [false,true]){
+ await reset();await upload();resolverMode='catalogue_identity';providerMode='placeholder';
+ catalogTitle='Summit Rivermon H7';catalogText='Summit Rivermon H7. Card number H7/H32.';
+ const fields=[['subject','Rivermon','none'],['family','Summit','none'],['catalog_number','H7/H32','card_number']].map(([field,value,number_kind])=>({field,value,quote:value,number_kind,reference_id:'page1',scope:'target',evidence:'text'}));
+ cardKeysReply={entries:[{scope:'exact_entry',fields}]};detailReply={details:[{clue_index:1,text:'H7/132',role:'collector_number',certainty:'uncertain'}]};
+ printingReply={is_pokemon:true,language:'Italian',set_name:'Summit',card_type:'pokemon',first_edition_stamp:'not_applicable',stamp_image:1,stamp_location:'Edition area visible below illustration',stamp_text:'',artwork_shadow:'not_applicable',shadow_image:1,shadow_location:'Artwork border',copyright_image:1,copyright_text:'© 2003 Example',slab_image:0,slab_text:''};
+ const out=await page.evaluate(async pokemon=>{
+  scan164=newContext164();
+  lastVisionReading={kind:'card',object_unit:'single',category:'trading card',brand:'Example',title:'Rivermon card',model:'',family:'Guessed series',model_confidence:60,market_ready:false,variant:'Holographic',variant_scope:'commercial',identity_basis:{family:'inferred',variant:'physical_evidence'},unresolved_identity_fields:['family','variant'],photo_clues:[{text:'Rivermon',role:'text',certainty:'clear',image_index:1},{text:'H7/132',role:'collector_number',certainty:'uncertain',image_index:1,region:{image_index:1,x:.7,y:.9,width:.2,height:.03,certain:false}},{text:'© 2003 Example',role:'copyright',certainty:'clear',image_index:1}],physical_observations:[{feature:'finish',text:'Holographic foil artwork area',entity:'target',certainty:'clear',image_index:1}]};
+  if(pokemon)lastVisionReading.pokemon_printing={is_pokemon:true,language:'Italian',set_name:'Guessed series',card_type:'pokemon',first_edition_stamp:'unclear',stamp_image:1,stamp_location:'Edition area',stamp_text:'',artwork_shadow:'unclear',shadow_image:1,shadow_location:'Artwork border',copyright_image:1,copyright_text:'© 2003 Example',slab_image:0,slab_text:''};
+  scan164.photoOcr=[{state:'ok',image_index:1,meta:{originalWidth:400,originalHeight:600,rect:{x:0,y:0,width:400,height:600}},lines:[{text:'H7/H32',x:.72,y:.91,width:.15,height:.02}]}];
+  const result=await resolveIdentificationCheap(lastVisionReading,'');return {result,keys:scan164.cardKeyVerification,photo:scan164.photoEvidence,route:scan164.route,budget:scan164.budget.spent()};
+ },pokemon);
+ assert.equal(out.result.catalogue_core_verified,true);assert.equal(out.result.market_ready,true);assert.match(out.result.model,/Summit.*Rivermon/);assert.equal(out.result.source_confirmed_year,'');
+ assert.equal(out.photo.ocr_number_readings[0].text,'H7/H32');assert.equal(out.result.photo_clues[1].certainty,'uncertain');assert.equal(out.keys.state,'confirmed');assert.equal(out.route,'text_first');
+ assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_photo_detail','flipcheck_resolver','flipcheck_card_keys',...(pokemon?['flipcheck_printing_detail']:[])]);assert.equal(googleRequests.some(r=>r.action==='detect'),false);assert.ok(out.budget<=.03);
+ }
+});
+test('181 equivalent subject extraction keeps the publication fields and closes the panel in production',async()=>{
+ await reset();await upload();
+ const quote='Uncut picture of Alex and Morgan on the front.',f=(field,value,scope,number_kind='none',q=value)=>({field,value,scope,number_kind,quote:q,evidence:'text',reference_id:'ref1'});
+ catalogueFieldsReply={entry_scope:'exact_entry',fields:[f('subject','Alex and Morgan','target','none',quote),f('family','Northern Record','parent'),f('year','1955','parent','year'),f('issue_number','17','parent','issue_number')]};
+ const out=await page.evaluate(async quote=>{
+  scan164=newContext164();lastVisionReading={kind:'object',category:'collectible portrait panel',object_unit:'panel',variant:'two portraits',variant_scope:'physical_description',market_ready:false,model_confidence:39,photo_clues:[{text:'Alex',role:'text',certainty:'clear',image_index:1}]};
+  const ref={id:'ref1',url:'https://catalog.example/panel',title:'Northern Record, issue 17, 1955',text:'Northern Record, issue 17, 1955. '+quote,text_origin:'retrieved_page',image_data:images.find(Boolean)};
+  const candidate={unit:'panel',decision:'match',identity_level:'exact',variant_status:'not_applicable',same_unit:true,physical_ambiguity:false,conflicts:[],matches:['layout','text'].map(feature=>({reference_id:'ref1',feature,photo_detail:'two portraits Alex and Morgan',reference_detail:'two portraits Alex and Morgan',agrees:true,reference_evidence:'image'})),fields:[{field:'subject',value:quote,quote,scope:'target',number_kind:'none',evidence:'text',reference_id:'ref1',recovered_from:'cited_subject_description'},{field:'year',value:'1955',quote:'1955',scope:'listing',number_kind:'year',evidence:'text',reference_id:'ref1'}]};
+  const reply={candidates:[candidate],detail_needed_from:'none',physical_detail_needed:null};scan164.lastComparison={reply,references:[ref]};scan164.comparisonHistory=[scan164.lastComparison];
+  const base=FlipCheckVisual.validate(lastVisionReading,reply,[ref]),result=await finishComparison173(base,scan164);return {result,repair:scan164.fieldRepair};
+ },quote);
+ assert.equal(out.result.market_ready,true);assert.equal(out.repair.state,'completed');assert.equal(out.result.catalogue_data.length,4);assert.equal(out.result.catalogue_data.find(f=>f.field==='subject').value,'Alex and Morgan');assert.equal(requests.length,1);assert.equal(requests[0].text.format.name,'flipcheck_catalogue_fields');assert.equal(googleRequests.length,0);
+});
+test('181 omitted box guarantee creates a new original-photo clue instead of skipping the crop',async()=>{
+ await reset();await upload();detailReply={details:[{clue_index:1,text:'1 autograph in every box',role:'text',certainty:'clear'}]};
+ const out=await page.evaluate(async()=>{
+  scan164=newContext164();lastVisionReading={kind:'object',object_unit:'box',category:'sealed box',market_ready:false,photo_clues:[{text:'Example Chrome',role:'text',certainty:'clear',image_index:1}],missing_information:['Complete quantity/autograph text'],object_region:{image_index:1,x:.1,y:.01,width:.8,height:.9,certain:true}};
+  scan164.photoOcr=[{state:'ok',image_index:1,meta:{originalWidth:400,originalHeight:600,rect:{x:0,y:0,width:400,height:600}},lines:[{text:'IN EVERYY',x:.4,y:.82,width:.2,height:.02}]}];
+  const result=await rereadPhotoDetails173(lastVisionReading,scan164);return {result,recovery:scan164.detailReread};
+ });
+ assert.equal(out.result.photo_clues[1].text,'1 autograph in every box');assert.equal(out.result.photo_clues[1].origin,'focused_photo_reread');assert.equal(out.recovery.images[0].cropped,true);assert.ok(out.recovery.regions[0].region.width>=.8);assert.match(JSON.stringify(requests[0].input),/complete printed quantity/);assert.equal(requests.length,1);
+});
+test('181 a high-confidence commercial parallel stays pending while its photographed entry is retained',async()=>{
+ await reset();await upload();const d=require('./fixtures/diagnostics-170.json').doncic;
+ const out=await page.evaluate(d=>{
+  scan164=newContext164();lastVisionReading={...d.vision,market_ready:true,unresolved_identity_fields:[],missing_information:[],next_photo_request:null,variant:'Green Prizm',variant_scope:'commercial',identity_basis:{...d.vision.identity_basis,variant:'physical_evidence'},verification_summary:''};
+  return syncIdentity169(enforceIdentificationPolicy(lastVisionReading));
+ },d);
+ assert.equal(out.market_ready,false);assert.equal(out.variant_check,'pending');assert.equal(out.core_identity.status,'confirmed');assert.equal(requests.length,0);assert.equal(googleRequests.length,0);
+});
 test('180 card keys survive a failed image source through the production identity policy',async()=>{
  await reset();await upload();
  const fields=[['subject','Rivermon','none'],['family','Summit','none'],['catalog_number','H7/H32','card_number'],['year','2003','year']].map(([field,value,number_kind])=>({field,value,quote:value,number_kind,reference_id:'page1',scope:'target',evidence:'text'}));
