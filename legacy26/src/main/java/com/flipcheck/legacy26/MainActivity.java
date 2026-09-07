@@ -12,16 +12,11 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.view.WindowInsets;
 import android.view.WindowInsetsController;
-import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Toast;
 import android.widget.FrameLayout;
-import java.io.ByteArrayInputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -32,7 +27,7 @@ public final class MainActivity extends Activity {
     private static final int PICK_IMAGES = 26, SAVE_DIAGNOSTIC = 27;
     private static final String ORIGIN = "https://flipcheck.local/";
     private WebView web;
-    private GoogleVisionBridge googleVision;
+    private ScanSession session;
     private ValueCallback<Uri[]> pickerCallback;
     private boolean pickerMultiple;
     private volatile String pickerInfo="{}";
@@ -56,40 +51,9 @@ public final class MainActivity extends Activity {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
         }
-        web = new WebView(this);
-        web.setFocusable(true);
-        web.setFocusableInTouchMode(true);
-        web.setBackgroundColor(0xff0b1020);
-        web.getSettings().setJavaScriptEnabled(true);
-        web.getSettings().setDomStorageEnabled(true);
-        web.getSettings().setAllowFileAccess(false);
-        web.getSettings().setAllowContentAccess(true);
-        web.addJavascriptInterface(new DiagnosticBridge(), "FlipCheckHost");
-        googleVision = new GoogleVisionBridge(web);
-        web.addJavascriptInterface(googleVision, "FlipCheckGoogle");
-        web.setWebViewClient(new WebViewClient() {
-            @Override public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-                Uri uri = request.getUrl();
-                if (!"https".equals(uri.getScheme()) || !"flipcheck.local".equals(uri.getHost())) return null;
-                String path = uri.getPath();
-                if (path == null || path.equals("/")) path = "/index.html";
-                if (!path.matches("/(index\\.html|editions\\.js|targeted-fixes\\.js|visual-policy\\.js|visual-runtime\\.js|google-direct\\.js)"))
-                    return new WebResourceResponse("text/plain", "UTF-8", 404, "Not Found", null, new ByteArrayInputStream(new byte[0]));
-                try {
-                    return new WebResourceResponse(path.endsWith(".js") ? "application/javascript" : "text/html", "UTF-8", getAssets().open(path.substring(1)));
-                } catch (Exception e) {
-                    return new WebResourceResponse("text/plain", "UTF-8", 404, "Not Found", null, new ByteArrayInputStream(new byte[0]));
-                }
-            }
-            @Override public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                Uri uri = request.getUrl();
-                if (uri.toString().equals(ORIGIN + "index.html")) return false;
-                if ("https".equals(uri.getScheme()) || "http".equals(uri.getScheme())) {
-                    try { startActivity(new Intent(Intent.ACTION_VIEW, uri)); } catch (ActivityNotFoundException ignored) { }
-                }
-                return true;
-            }
-        });
+        session = ScanSession.obtain(getApplicationContext());
+        session.attach(this);
+        web = session.web;
         web.setWebChromeClient(new WebChromeClient() {
             @Override public boolean onShowFileChooser(WebView view, ValueCallback<Uri[]> callback, FileChooserParams params) {
                 finishPicker(null);
@@ -123,7 +87,7 @@ public final class MainActivity extends Activity {
         });
         setContentView(container);
         container.requestApplyInsets();
-        web.loadUrl(ORIGIN + "index.html");
+        if (!session.loaded) { session.loaded = true; web.loadUrl(ORIGIN + "index.html"); }
     }
 
     private void launchPhotoPicker() {
@@ -178,38 +142,30 @@ public final class MainActivity extends Activity {
         }
     }
 
-    public final class DiagnosticBridge {
-        @JavascriptInterface public String photoPickerInfo() {return pickerInfo;}
-        @JavascriptInterface public void preparePhotoPicker(boolean multiple) {
-            requestedDocumentPicker = false;
-            requestedPickerMultiple = multiple;
-        }
-        @JavascriptInterface public void prepareDocumentPicker() {
-            requestedDocumentPicker = true;
-            requestedPickerMultiple = true;
-        }
-        @JavascriptInterface public String buildInfo() {
-            return "{\"versionCode\":" + BuildConfig.VERSION_CODE + ",\"versionName\":\"" + BuildConfig.VERSION_NAME + "\",\"sourceCommit\":\"" + BuildConfig.SOURCE_COMMIT + "\"}";
-        }
-        @JavascriptInterface public void saveDiagnostic(String json) {
-            if (json == null || json.length() > 300000) return;
-            runOnUiThread(() -> {
-                if (!ORIGIN.concat("index.html").equals(web.getUrl()) || pendingDiagnostic != null) return;
-                pendingDiagnostic = json;
-                Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                intent.setType("application/json");
-                intent.putExtra(Intent.EXTRA_TITLE, "FlipCheck-26Fix-diagnostica.json");
-                try { startActivityForResult(intent, SAVE_DIAGNOSTIC); }
-                catch (ActivityNotFoundException e) { pendingDiagnostic = null; }
-            });
+    String photoPickerInfo() { return pickerInfo; }
+    void preparePhotoPicker(boolean multiple) { requestedDocumentPicker = false; requestedPickerMultiple = multiple; }
+    void prepareDocumentPicker() { requestedDocumentPicker = true; requestedPickerMultiple = true; }
+    void saveDiagnostic(String json) {
+        if (json == null || json.length() > 400000 || pendingDiagnostic != null) return;
+        pendingDiagnostic = json;
+        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE); intent.setType("application/json");
+        intent.putExtra(Intent.EXTRA_TITLE, "FlipCheck-26Fix-diagnostica.json");
+        try { startActivityForResult(intent, SAVE_DIAGNOSTIC); }
+        catch (ActivityNotFoundException e) { pendingDiagnostic = null; }
+    }
+    void requestScanNotifications() {
+        if (Build.VERSION.SDK_INT >= 33 && checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != android.content.pm.PackageManager.PERMISSION_GRANTED
+            && !getSharedPreferences(ScanSession.PREFS, MODE_PRIVATE).getBoolean("notificationAsked", false)) {
+            getSharedPreferences(ScanSession.PREFS, MODE_PRIVATE).edit().putBoolean("notificationAsked", true).apply();
+            requestPermissions(new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 178);
         }
     }
-
+    @Override protected void onResume() { super.onResume(); if (session != null) session.visible(this, true); }
+    @Override protected void onStop() { if (session != null) session.visible(this, false); super.onStop(); }
     @Override protected void onDestroy() {
         finishPicker(null);
-        if (googleVision != null) googleVision.close();
-        if (web != null) { web.removeJavascriptInterface("FlipCheckGoogle"); web.removeJavascriptInterface("FlipCheckHost"); web.destroy(); }
+        if (session != null) session.detach(this);
         super.onDestroy();
     }
 }

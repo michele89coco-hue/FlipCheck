@@ -1,7 +1,7 @@
 name: FlipCheck 26 targeted fixes
 on:
   push:
-    branches: [codex/v0262-google-visual, codex/v0262-evidence-recovery-177]
+    branches: [codex/v0262-google-visual, codex/v0262-evidence-recovery-177, codex/v0262-background-quality-178]
   workflow_dispatch:
 permissions:
   contents: read
@@ -46,16 +46,16 @@ jobs:
         run: |
           ./gradlew :legacy26:assembleDebug :legacy26:assembleDebugAndroidTest --no-daemon --console=plain
           mkdir -p artifact
-          cp legacy26/build/outputs/apk/debug/legacy26-debug.apk artifact/FlipCheck-v0.26.2-GoogleFix-177.apk
-          sha256sum artifact/FlipCheck-v0.26.2-GoogleFix-177.apk > artifact/FlipCheck-v0.26.2-GoogleFix-177.sha256
-          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose --print-certs artifact/FlipCheck-v0.26.2-GoogleFix-177.apk > artifact/apksigner-report.txt
+          cp legacy26/build/outputs/apk/debug/legacy26-debug.apk artifact/FlipCheck-v0.26.2-GoogleFix-178.apk
+          sha256sum artifact/FlipCheck-v0.26.2-GoogleFix-178.apk > artifact/FlipCheck-v0.26.2-GoogleFix-178.sha256
+          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose --print-certs artifact/FlipCheck-v0.26.2-GoogleFix-178.apk > artifact/apksigner-report.txt
           grep -q 'Signer #1 certificate SHA-256 digest: d4d02478ea31cb6bd83228047e9accd7dfb191ed991a4c8e8c06a228e54614c7' artifact/apksigner-report.txt
-          "$ANDROID_HOME/build-tools/36.0.0/aapt" dump badging artifact/FlipCheck-v0.26.2-GoogleFix-177.apk > artifact/apk-analyzer-report.txt
-          grep -q "package: name='com.flipcheck.beta.legacy26fix' versionCode='177' versionName='0.26.2-evidence-recovery'" artifact/apk-analyzer-report.txt
+          "$ANDROID_HOME/build-tools/36.0.0/aapt" dump badging artifact/FlipCheck-v0.26.2-GoogleFix-178.apk > artifact/apk-analyzer-report.txt
+          grep -q "package: name='com.flipcheck.beta.legacy26fix' versionCode='178' versionName='0.26.2-background-quality'" artifact/apk-analyzer-report.txt
           cp /tmp/flipcheck26-printing.png artifact/browser-printing.png
       - name: Enable emulator acceleration
         run: sudo chmod a+rw /dev/kvm
-      - name: Android 16 navigation and photo-picker checks without API
+      - name: Android 16 background, navigation and photo-picker checks without API
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 36

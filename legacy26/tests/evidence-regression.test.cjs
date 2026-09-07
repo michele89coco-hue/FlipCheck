@@ -128,3 +128,32 @@ test('a newly rejected image identifier retracts even a previously verified core
  const out=V.fuseComparisons(d.vision,[{reply:{candidates:[first]},references:refs},{reply:{candidates:[next]},references:refs,purpose:'focused_reference_reread'}]);
  assert.notEqual(out.catalogue_core_verified,true);assert.equal(out.market_ready,false);assert.equal(out.core_retained_from,undefined);
 });
+function citedCard(){
+ const d=copy(cases.machamp),refs=d.references.map(r=>({...r,image_data:'synthetic marker'}));
+ const c={...d.candidates[0],matches:[d.candidates[0].matches[0],{reference_id:'ref1',feature:'text',photo_detail:'Examplemon',reference_detail:'Examplemon',reference_evidence:'image',agrees:true},{reference_id:'ref1',feature:'code',photo_detail:'9/102',reference_detail:'9/102',reference_evidence:'description',agrees:true}]};
+ return {base:d.vision,refs,c};
+}
+test('a physical collector number agrees with a cited typed catalogue number without a second visual transcription',()=>{
+ const {base,refs,c}=citedCard(),out=V.validate(base,{candidates:[c]},refs);
+ assert.equal(out.catalogue_core_verified,true);assert.equal(out.catalogue_verified,true);
+ const proof=out.visual_candidates[0].identifier_agreements[0];assert.equal(proof.reference_evidence,'catalogue_text');assert.equal(proof.photo_value,'9/102');assert.equal(proof.agrees,true);
+ assert.equal(out.photo_clues[1].text,base.photo_clues[1].text);assert.ok(!out.visual_candidates[0].matches.some(m=>m.feature==='code'));
+});
+test('catalogue number agreement still requires independent images, matching number type and attributed text',()=>{
+ const {base,refs,c}=citedCard();
+ for(const bad of [{...c,matches:c.matches.filter(m=>m.feature!=='text')},{...c,fields:c.fields.map(f=>f.field==='catalog_number'?{...f,number_kind:'listing_number'}:f)},{...c,fields:c.fields.map(f=>f.field==='catalog_number'?{...f,value:'10/102',quote:'10/102'}:f)}])assert.notEqual(V.validate(base,{candidates:[bad]},refs).catalogue_core_verified,true);
+ assert.notEqual(V.validate(base,{candidates:[c]},refs.map(r=>({...r,discovery_only:true,text_origin:'unattributed_image'}))).catalogue_core_verified,true);
+});
+test('a visible reference number disagreement overrides the matching number in its page title',()=>{
+ const {base,refs,c}=citedCard();c.matches.push({reference_id:'ref1',feature:'code',photo_detail:'9/102',reference_detail:'10/102',reference_evidence:'image',agrees:false});
+ const out=V.validate(base,{candidates:[c]},refs);assert.notEqual(out.catalogue_core_verified,true);assert.ok(out.visual_candidates[0].blocking_fields.includes('physical_identifier_not_matched'));assert.equal(out.visual_candidates[0].identifier_agreements[0].contradicted,true);
+});
+test('a reference catalogue keeps the photographed language when verifying the shared card entry',()=>{
+ const {base,refs,c}=citedCard(),italian={...base,pokemon_printing:{...base.pokemon_printing,language:'Italian'}};
+ const out=V.validate(italian,{candidates:[c]},refs);assert.equal(out.catalogue_core_verified,true);assert.equal(out.pokemon_printing.language,'Italian');assert.match(out.normalized_query,/Italian/);
+});
+test('explicitly assessed absence of variants can close a physical description without erasing commercial doubts',()=>{
+ const {base,refs,c}=panel(),description={...base,variant:'two-player portrait panel',variant_scope:'physical_description'};
+ assert.equal(V.validate(description,{candidates:[{...c,variant_status:'not_applicable'}]},refs).market_ready,true);
+ for(const scope of ['commercial','unknown',undefined])assert.equal(V.validate({...description,variant:'Green parallel, unconfirmed',variant_scope:scope},{candidates:[{...c,variant_status:'not_applicable'}]},refs).market_ready,false);
+});

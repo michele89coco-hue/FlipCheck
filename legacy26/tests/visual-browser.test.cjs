@@ -10,7 +10,7 @@ async function reset(enabled=true){detailReply={details:[]};usageOverrides={};re
 async function upload(){await page.locator('#photoBatch').setInputFiles(photos);await page.waitForFunction(()=>!photoBusy);}
 async function identify(){await page.locator('#identifyBtn').click();await page.waitForFunction(()=>!apiBusy,{},{timeout:12000});}
 before(async()=>{
- server=http.createServer((req,res)=>{const name=req.url==='/'?'index.html':req.url.slice(1);if(!['index.html','editions.js','targeted-fixes.js','visual-policy.js','visual-runtime.js','google-direct.js'].includes(name)){res.writeHead(404);return res.end();}res.setHeader('Content-Type',name.endsWith('.js')?'application/javascript':'text/html');res.end(fs.readFileSync(path.join(root,name)));});await new Promise(r=>server.listen(0,'127.0.0.1',r));origin='http://127.0.0.1:'+server.address().port;
+ server=http.createServer((req,res)=>{const name=req.url==='/'?'index.html':req.url.slice(1);if(!['index.html','editions.js','targeted-fixes.js','visual-policy.js','visual-runtime.js','google-direct.js','background-runtime.js'].includes(name)){res.writeHead(404);return res.end();}res.setHeader('Content-Type',name.endsWith('.js')?'application/javascript':'text/html');res.end(fs.readFileSync(path.join(root,name)));});await new Promise(r=>server.listen(0,'127.0.0.1',r));origin='http://127.0.0.1:'+server.address().port;
  browser=await chromium.launch({headless:true,args:['--no-sandbox']});page=await browser.newPage({viewport:{width:412,height:915}});page.on('pageerror',e=>errors.push(e.message));
  await page.addInitScript(()=>{window.FlipCheckGoogle={request(id,action,payload){fetch('https://native.example/'+action,{method:'POST',body:payload}).then(r=>r.json()).then(result=>window.FlipCheckDirect.receive(id,result));},cancel(){}};});
  await page.route('**/*',async route=>{
@@ -433,5 +433,33 @@ test('compact comparison keeps complementary images when the full response would
 test('diagnostics export the actual native build metadata instead of a stale JavaScript version',async()=>{
  await reset();const d=await page.evaluate(()=>{const old=window.FlipCheckHost;window.FlipCheckHost={buildInfo:()=>JSON.stringify({versionCode:777,versionName:'future-native-build',sourceCommit:'synthetic-native-commit'})};try{return diagnostic26();}finally{window.FlipCheckHost=old;}});
  assert.equal(d.versionCode,777);assert.equal(d.versionName,'future-native-build');assert.equal(d.sourceCommit,'synthetic-native-commit');
+});
+test('initial vision uses the original at 2048 pixels while previews stay small and text crops avoid recompression',async()=>{
+ await reset();vision=known;
+ await page.evaluate(async()=>{const canvas=document.createElement('canvas');canvas.width=1800;canvas.height=3000;const ctx=canvas.getContext('2d');ctx.fillStyle='white';ctx.fillRect(0,0,1800,3000);ctx.fillStyle='black';ctx.font='22px sans-serif';ctx.fillText('SYNTHETIC 17/144',250,2450);const blob=await new Promise(r=>canvas.toBlob(r,'image/png'));await loadSelectedPhotos([new File([blob],'synthetic-large.png',{type:'image/png'})]);});
+ await identify();const sent=requests[0].input.flatMap(m=>m.content).find(c=>c.type==='input_image');
+ const out=await page.evaluate(async uri=>{const dimensions=data=>new Promise(r=>{const image=new Image();image.onload=()=>r([image.width,image.height]);image.src=data;});const crop=await visualPhoto164({object_region:{image_index:1,x:.1,y:.79,width:.7,height:.06,certain:true},detail_crop:true});return {initial:diagnostic26().visualAssistance.initialImagePreparations[0],sent:await dimensions(uri),preview:await dimensions(images[0]),crop:crop.meta,mime:crop.data.slice(0,22)};},sent.image_url);
+ assert.equal(sent.detail,'high');assert.equal(out.initial.originalHeight,3000);assert.equal(out.initial.sentHeight,2048);assert.equal(out.initial.jpegQuality,.94);assert.equal(out.initial.source,'original_file');assert.equal(out.sent[1],2048);assert.equal(out.preview[1],1280);assert.equal(out.crop.originalHeight,3000);assert.equal(out.crop.mimeType,'image/png');assert.equal(out.crop.jpegQuality,null);assert.match(out.mime,/data:image\/png/);
+});
+test('small originals are never upscaled to manufacture extra image detail',async()=>{
+ await reset();vision=known;await upload();await identify();const p=await page.evaluate(()=>diagnostic26().visualAssistance.initialImagePreparations[0]);assert.equal(p.originalWidth,400);assert.equal(p.originalHeight,600);assert.equal(p.sentWidth,400);assert.equal(p.sentHeight,600);
+});
+async function installSyntheticBackground(mode){
+ await page.evaluate(mode=>{window.nativeEnds=[];window.FlipCheckHost={beginScan(token){queueMicrotask(()=>{if(mode==='cancel')FlipCheckBackground.cancel(token);FlipCheckBackground.started(token,mode!=='reject',mode==='reject'?'synthetic_service_failure':'');});},endScan(token,snapshot,state){nativeEnds.push({snapshot:JSON.parse(snapshot),state});},backgroundInfo:()=>'{"synthetic":true}',lastScan:()=>'{}'};},mode);
+ await page.addScriptTag({url:origin+'/background-runtime.js'});
+}
+test('a failed native service start makes no analysis request and releases the UI lock',async()=>{
+ await reset(false);await upload();await installSyntheticBackground('reject');await identify();
+ assert.equal(requests.length,0);assert.equal(googleRequests.length,0);assert.deepEqual(await page.evaluate(()=>nativeEnds.map(e=>e.state)),['failed']);
+ assert.equal(await page.evaluate(()=>apiBusy),false);assert.match(await page.locator('body').textContent(),/synthetic_service_failure/);
+});
+test('a cancellation before the native start acknowledgement sends no paid request',async()=>{
+ await reset(false);await upload();await installSyntheticBackground('cancel');await identify();
+ assert.equal(requests.length,0);assert.deepEqual(await page.evaluate(()=>nativeEnds.map(e=>e.state)),['cancelled']);assert.equal(await page.evaluate(()=>apiBusy),false);
+});
+test('native completion saves the actual result without request bodies or image payloads',async()=>{
+ await reset(false);vision=known;await upload();await installSyntheticBackground('ok');await identify();
+ const end=await page.evaluate(()=>nativeEnds[0]);assert.equal(end.state,'completed');assert.equal(end.snapshot.identification.model,'Known model');assert.equal(requests.length,1);
+ assert.equal(end.snapshot.visualAssistance,undefined);assert.doesNotMatch(JSON.stringify(end),/fake-openai|data:image|Authorization/);
 });
 test('no unhandled browser errors',()=>assert.deepEqual(errors,[]));

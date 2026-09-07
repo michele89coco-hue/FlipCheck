@@ -130,7 +130,7 @@ function plan(base,previous=[]){
 // Quantities and specifications discriminate many product types. Years are not quantities.
 function configuration(c){return !['edition','season','copyright','serial','slab_certificate','issue_number','collector_number','model','barcode','card_stat'].includes(clueRoleWithoutQuantity(c))&&quantityPairs(c.text).pairs.length>0;}
 function clueRoleWithoutQuantity(c){return c.role==='copyright'&&clueRole(c)==='season'?'season':c.role;}
-function observed(base){return {category:base.category||'',object_unit:base.object_unit||'unknown',photo_clues:clues(base).map(c=>({text:c.text,role:c.role,image_index:c.image_index,...(['collector_number','season'].includes(c.role)?{value:c.role==='season'?seasonValue(c.text):identifierValue(c)}:{})})),physical_observations:physical(base)};}
+function observed(base){return {category:base.category||'',object_unit:base.object_unit||'unknown',variant_context:{value:base.variant||'',scope:base.variant_scope||'unknown'},photo_clues:clues(base).map(c=>({text:c.text,role:c.role,image_index:c.image_index,...(['collector_number','season'].includes(c.role)?{value:c.role==='season'?seasonValue(c.text):identifierValue(c)}:{})})),physical_observations:physical(base)};}
 function quantityPairs(text){
  const stem=t=>t.replace(/ies$/,'y').replace(/s$/,''),s=String(text||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase(),pairs=[...s.matchAll(/\b(\d+(?:[.,]\d+)?)\s*([a-z][a-z-]*)\b/g)].filter(m=>! /^(st|nd|rd|th|in|per|of|and|x|by)$/.test(m[2])&&!/^(?:19|20)\d{2}$/.test(m[1])).map(m=>({amount:String(Number(m[1].replace(',','.'))),unit:stem(m[2])}));
  const per=s.match(/\b(?:per|each|every)\s+([a-z]+)/);return {pairs,per:per?stem(per[1]):''};
@@ -304,7 +304,15 @@ function validate(base,reply,references){
   const unit=targetUnit(base),candidateUnit=targetUnit({...c,kind:base.kind,object_unit:c.unit});
   const sameUnit=c.same_unit===true&&(unit==='unknown'||unit===candidateUnit);
   const explicitIds=identifiers(base);
-  const codesMatch=explicitIds.every(o=>matches.some(m=>has(m.photo_detail,o.text)&&has(m.reference_detail,o.text)));
+  const identifierAgreements=explicitIds.map(o=>{
+   const contradicted=list(c.matches).some(m=>m.agrees===false&&m.feature==='code'&&m.reference_evidence!=='description'&&refs.some(r=>r.id===m.reference_id&&r.image_data)&&has(m.photo_detail,o.text));
+   const visual=matches.find(m=>has(m.photo_detail,o.text)&&has(m.reference_detail,o.text));
+   // The original supplies the physical number; an attributed, typed catalogue field can
+   // corroborate it when that reference image also has independent visual agreement.
+   const cited=o.role==='collector_number'&&fields.find(f=>f.field==='catalog_number'&&['card_number','catalog_number'].includes(f.number_kind)&&norm(f.value)===norm(o.text)&&f.evidence==='text'&&trustedReferenceText(refs.find(r=>r.id===f.reference_id))&&new Set(matches.filter(m=>m.reference_id===f.reference_id).map(m=>m.feature)).size>=2);
+   return {photo_value:o.text,role:o.role,agrees:!contradicted&&!!(visual||cited),reference_id:visual?.reference_id||cited?.reference_id||null,reference_evidence:visual?'image':cited?'catalogue_text':null,contradicted};
+  });
+  const codesMatch=identifierAgreements.every(o=>o.agrees);
   const quantities=evidence(base).filter(o=>['text','configuration'].includes(o.role)&&configuration(o));
   const configurationMatch=quantities.every(o=>[...matches,...descriptions].some(m=>m.feature==='configuration'&&(has(m.photo_detail,o.text)||quantityMatches(o.text,m.photo_detail))&&quantityMatches(o.text,m.reference_detail)));
   const seasons=clues(base).filter(o=>o.role==='season');
@@ -315,7 +323,7 @@ function validate(base,reply,references){
   const appearances=physical(base).filter(o=>appearanceFeatures.includes(o.feature));
   const criticalAppearance=appearances.some(o=>['color','pattern'].includes(o.feature))?appearances.filter(o=>['color','pattern'].includes(o.feature)):appearances.filter(o=>! /worn|scuff|scratch|usur|graffi/i.test(o.text));
   const appearanceMatch=base.kind!=='card'||!variantPending(base)||criticalAppearance.every(o=>matches.some(m=>m.feature===o.feature||m.feature==='appearance'&&has(m.photo_detail,o.text)));
-  const noVariant=c.variant_status==='not_applicable'&&empty(base.variant)&&!base.pokemon_printing&&appearanceMatch;
+  const noVariant=c.variant_status==='not_applicable'&&(empty(base.variant)||base.variant_scope==='physical_description'||base.variant_scope==='none')&&!base.pokemon_printing&&appearanceMatch;
   const variantMatch=!variantPending(base)||noVariant||(base.kind!=='card'&&quantities.length>0&&configurationMatch&&named)||(fields.some(f=>f.field==='variant'&&has(c.variant,f.value))&&(base.kind!=='card'||criticalAppearance.length>0&&appearanceMatch));
   const externalOnly=list(c.conflicts).length>0&&!conflicts.length&&c.identity_level==='exact';
   const ambiguity=c.physical_ambiguity&&!externalOnly;
@@ -323,7 +331,7 @@ function validate(base,reply,references){
   const accepted=decision&&c.identity_level!=='family'&&sameUnit&&named&&familyMatch&&featureKinds.length>=2&&imageSources.length>0&&codesMatch&&configurationMatch&&seasonMatch&&appearanceMatch&&variantMatch&&!ambiguity&&!conflicts.length;
   const blockers=[!sameUnit&&'unit_mismatch',(!named||!familyMatch)&&'catalogue_not_cited',!codesMatch&&'physical_identifier_not_matched',!configurationMatch&&'configuration_not_matched',!seasonMatch&&'season_not_matched',(!appearanceMatch||!variantMatch)&&'appearance_not_matched',ambiguity&&'physical_ambiguity',conflicts.length>0&&'contradiction',(!decision||c.identity_level==='family'||featureKinds.length<2||!imageSources.length)&&'insufficient_visual_comparison'].filter(Boolean);
   const coreAccepted=collectible(base)&&sameUnit&&named&&familyMatch&&codesMatch&&configurationMatch&&seasonMatch&&decision&&c.identity_level!=='family'&&featureKinds.length>=2&&imageSources.length>0&&!ambiguity&&!conflicts.length;
-  return {...c,model:name||c.model,matches,description_matches:descriptions,fields,identity_conflicts:conflicts,accepted,core_accepted:coreAccepted,blocking_fields:blockers,rejection:accepted?'':blockers[0]};
+  return {...c,model:name||c.model,matches,description_matches:descriptions,fields,identifier_agreements:identifierAgreements,identity_conflicts:conflicts,accepted,core_accepted:coreAccepted,blocking_fields:blockers,rejection:accepted?'':blockers[0]};
  });
  const selected=[...new Map(candidates.filter(c=>c.accepted).map(c=>[canonical(c),c])).values()];
  const referenceMissing=reply?.detail_needed_from==='reference'||/immagini (?:della|delle) font|(?:source|reference) (?:images|pictures)|figura (?:del|nel) manuale/i.test(reply?.physical_detail_needed||'');
