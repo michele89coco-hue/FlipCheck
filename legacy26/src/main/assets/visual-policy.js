@@ -4,6 +4,52 @@
 const list=x=>Array.isArray(x)?x:[], norm=x=>String(x||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
 const empty=x=>!norm(x)||/^(unknown|unresolved|none|not visible|not readable|non leggibile|non visibile|sconosciuto|null|undefined)$/.test(norm(x));
 const has=(text,value)=>!empty(value)&&(' '+norm(text)+' ').includes(' '+norm(value)+' ');
+// Aliases compare identities, never rewrite a photographic reading or a citation.
+function letterAlias187(a,b){
+ if(a===b)return true;
+ if(Math.min(a.length,b.length)<3||Math.abs(a.length-b.length)!==1||/\d/.test(a+b))return false;
+ const [short,long]=a.length<b.length?[a,b]:[b,a];
+ for(let i=0;i<long.length;i++)if(long.slice(0,i)+long.slice(i+1)===short)return true;
+ return false;
+}
+function nameAlias187(a,b){
+ if(norm(a)&&norm(a)===norm(b))return true;
+ const words=s=>norm(s).split(' ').filter(Boolean),aa=words(a),bb=words(b);
+ if(!aa.length||!bb.length)return false;
+ const [short,long]=aa.length<=bb.length?[aa,bb]:[bb,aa],used=new Set();let exact=0,typos=0;
+ for(const word of short){
+  const at=long.findIndex((other,i)=>!used.has(i)&&other===word),match=at>=0?at:long.findIndex((other,i)=>!used.has(i)&&letterAlias187(word,other));
+  if(match<0)return false;used.add(match);if(at>=0)exact++;else typos++;
+ }
+ return typos<=1&&(exact>0||short.length===1&&short[0].length>=6)&&short.some(w=>w.length>=4);
+}
+function subjectSpan187(name,text){
+ const tokens=[...String(text).matchAll(/[\p{L}\p{M}]+/gu)],wanted=norm(name).split(' ').filter(Boolean),positions=[];
+ for(const word of wanted){const at=tokens.findIndex((t,i)=>!positions.includes(i)&&letterAlias187(word,norm(t[0])));if(at<0)return '';positions.push(at);}
+ if(!positions.length||Math.max(...positions)-Math.min(...positions)>wanted.length+1)return '';
+ const first=tokens[Math.min(...positions)],last=tokens[Math.max(...positions)],value=text.slice(first.index,last.index+last[0].length);
+ return nameAlias187(name,value)?value:'';
+}
+const protectedFamilies187=['mosaic','choice','fast break','sapphire','optic','chrome','prizm','select','noir','national treasures','metal universe','skybox','bowman'];
+function familyTokens187(value,brand=''){
+ const optional=new Set(norm(brand+' series set tm card cards trading soccer football basketball baseball hockey').split(' '));
+ const text=String(value||'').replace(/\b(?:19|20)\d{2}\s*[-/]\s*\d{2,4}\b/g,'').replace(/^\s*(?:19|20)\d{2}\b\s*/,'');
+ return norm(text).split(' ').map(w=>/^20\d{2}$/.test(w)?w.slice(2):w==='updates'?'update':w).filter(w=>w&&!optional.has(w));
+}
+function familyConflict187(a,b){
+ const protectedWords=s=>protectedFamilies187.filter(w=>has(s,w));
+ const aa=protectedWords(a),bb=protectedWords(b);
+ if(aa.length&&bb.length&&[...aa,...bb].some(w=>aa.includes(w)!==bb.includes(w)))return true;
+ const sports=['soccer','basketball','baseball','hockey'],sa=sports.filter(w=>has(a,w)),sb=sports.filter(w=>has(b,w));
+ return sa.length&&sb.length&&!sa.some(w=>sb.includes(w));
+}
+function catalogueHeading187(ref,photo){
+ const keys=cardKeyFacts(photo);if(!keys||!trustedReferenceText(ref))return ref.title||'';
+ const explicit=line=>line.length<=240&&!/copyright|website|©|\blist(?:ing|ed)\b/i.test(line)&&subjectSpan187(keys.subject.value,line)&&familyAgrees184(photo.family,line,photo.brand)&&
+  /\b(?:19|20)\d{2}\b/.test(line)&&[...line.matchAll(/(?:#|\bno\.?\s+)([a-z]{0,3}\d{1,4}(?:\/[a-z]{0,3}\d{1,4})?)/gi)].some(m=>numberKey185(m[1])===numberKey185(keys.number.value));
+ if(explicit(ref.title||''))return ref.title;
+ return referenceText(ref).split(/\n/).map(l=>l.trim()).find(explicit)||ref.title||'';
+}
 const collectible=base=>base?.kind==='card'||base?.object_unit==='panel'&&!/\b(?:box|boxed|confezione|scatola|carton)\b/i.test(base?.category||'');
 const remote=base=>/\b(?:remote control|telecomando)\b/i.test(base?.category||'');
 const url=x=>{try{const u=new URL(x);return u.protocol==='https:'&&!u.username&&!u.password?u.href.replace(/#.*$/,''):'';}catch(_){return '';}};
@@ -144,7 +190,7 @@ function physicalVariantProof(base){
  return observed?{origin:'photo',kind:'observed_finish',quote:observed.text,image_index:observed.image_index}:null;
 }
 function variantPending(base){
- if(base?.catalogue_verified===true)return false;
+ if(base?.catalogue_verified===true||base?.slab_verification?.state==='confirmed')return false;
  if(physicalVariantProof(base))return false;
  const doubts=[...list(base?.missing_information),base?.verification_summary||'',base?.next_photo_request||''];
  const descriptionOnly=base?.variant_scope==='physical_description'&&base?.identity_basis?.variant==='physical_evidence'&&!/parallel|variant|subtype|sottotipo|edition|edizione|shadowless|shadowed/i.test(base.variant||'');
@@ -153,6 +199,7 @@ function variantPending(base){
   (base?.variant_needs_verification!==false&&base?.kind==='card'&&!base.market_ready&&Number(base.model_confidence)>=90&&physical(base).some(o=>appearanceFeatures.includes(o.feature)));
 }
 function cataloguePending(base){
+ if(base?.slab_verification?.state==='confirmed')return false;
  if(!base||base.catalogue_verified===true||base.catalogue_core_verified===true||!collectible(base))return false;
  if(list(base.unresolved_identity_fields).includes('family'))return true;
  if(empty(base.family))return false;
@@ -163,7 +210,7 @@ function cataloguePending(base){
  return identifiers(base).some(c=>c.role==='collector_number')&&!clues(base).some(c=>has(c.text,base.family)||has(base.family,c.text)&&c.role==='text'&&norm(c.text).split(' ').length>=2)&&!has(base.pokemon_printing?.slab_text,base.family);
 }
 function auditIdentity(base){
- if(!base||base.catalogue_verified===true)return base;
+ if(!base||base.catalogue_verified===true||base.slab_verification?.state==='confirmed')return base;
  base=preservePhotoIdentity(base,base);
  const variant=variantPending(base),catalogue=cataloguePending(base);
  if(!variant&&!catalogue)return base;
@@ -242,20 +289,22 @@ function detailRequests(base,ocr,count,disputed=[]){
  }).filter(c=>c.recovery_priority>0&&(!disputed.length||disputed.includes(c.clue_index))).sort((a,b)=>b.recovery_priority-a.recovery_priority);
  return requests.filter(c=>c.recovery_priority>=80||requests[0]?.recovery_priority<80).slice(0,2);
 }
-const familyKey=value=>norm(value).replace(/\s+set$/,'');
+const familyKey=value=>familyTokens187(String(value||'').replace(/\b(?:panini|topps|pok[eé]mon|upper deck|wizards of the coast)\b/gi,'')).join(' ');
 function keyEvidence(base,fields,refs){
  const keys=cardKeyFacts(base);if(!keys)return null;
  const results=[];
  for(const ref of refs){
   if(!trustedReferenceText(ref)||ref.is_collection)continue;
+  if(!catalogueScope186(base,ref,true).eligible)continue;
+  const heading=catalogueHeading187(ref,base);
   const own=fields.filter(f=>f.reference_id===ref.id&&f.evidence==='text'),value=k=>own.find(f=>f.field===k)?.value;
   const years=keys.date?.values||[keys.date?.value],sourceYear=value('year');
   // A copyright is not a release season. An exact full-fraction catalogue entry
   // may omit a year; preserve the observed copyright without inventing a source year.
   const datedEntry=sourceYear&&own.some(f=>f.field==='year'&&f.scope==='target'&&['year','season'].includes(f.number_kind)&&
-   (has(ref.title,sourceYear)||/\b(?:release[d]?|publication|published|uscita|pubblicazione|edizione)\b/i.test(f.quote)));
+   (has(heading,sourceYear)||/\b(?:release[d]?|publication|published|uscita|pubblicazione|edizione)\b/i.test(f.quote)));
   const dateMatch=sourceYear?(keys.date?years.includes(seasonValue(sourceYear)):!!datedEntry):keys.date?.kind==='copyright'&&keys.number.value.includes('/');
-  if(!catalogueTuple(base,own,keys)||norm(value('subject'))!==norm(keys.subject.value)||numberKey185(value('catalog_number'))!==numberKey185(keys.number.value)||!dateMatch)continue;
+  if(!catalogueTuple(base,own,keys)||!nameAlias187(value('subject'),keys.subject.value)||numberKey185(value('catalog_number'))!==numberKey185(keys.number.value)||!dateMatch)continue;
   if(['subject','catalog_number'].some(k=>own.find(f=>f.field===k)?.scope!=='target'))continue;
   if(base.identity_basis?.family==='printed'&&!familyAgrees184(base.family,value('family'),base.brand))continue;
   // Co-occurrence in a catalogue list is not a single entry. Require name, series and
@@ -264,15 +313,15 @@ function keyEvidence(base,fields,refs){
   const subjectField=own.find(f=>f.field==='subject'),numberField=own.find(f=>f.field==='catalog_number');
   const row=subjectField&&numberField&&checklistSection186(ref,subjectField.quote,base)&&norm(subjectField.quote)===norm(numberField.quote)&&subjectField.quote.length<=240&&checklistRow186(subjectField.quote,keys)&&
    referenceText(ref).split(/\n/).some(line=>line.trim().length<=240&&has(line,subjectField.quote)&&checklistRow186(line,keys));
-  if(!familyAgrees184(value('family'),ref.title,base.brand)||!(has(ref.title,keys.subject.value)&&has(ref.title,number)||row&&datedEntry))continue;
+  if(!familyAgrees184(value('family'),heading,base.brand)||!(subjectSpan187(keys.subject.value,heading)&&has(heading,number)||row&&datedEntry))continue;
   if(own.some(f=>own.some(g=>g.field===f.field&&norm(g.value)!==norm(f.value))))continue;
-  results.push({reference_id:ref.id,fields:own.filter(f=>f.field!=='variant'),date_kind:keys.date?.kind||'catalogue_release',date_check:sourceYear?(keys.date?'agrees':'catalogue_only'):'not_stated_in_entry',number_origin:keys.number.origin,origin:'photo_and_catalogue_keys'});
+  results.push({reference_id:ref.id,fields:own.filter(f=>f.field!=='variant'),date_kind:keys.date?.kind||'catalogue_release',date_check:sourceYear?(keys.date?'agrees':'catalogue_only'):'not_stated_in_entry',number_origin:keys.number.origin,origin:'photo_and_catalogue_keys',alias_matches:norm(value('subject'))!==norm(keys.subject.value)?[{field:'subject',observed:keys.subject.value,catalogue:value('subject'),rule:'same_set_date_number_name_alias'}]:[]});
  }
  if(new Set(results.map(r=>familyKey(r.fields.find(f=>f.field==='family').value))).size!==1)return null;
  return results[0]||null;
 }
 function checklistRow186(line,keys){
- if(!keys||line.length>240||!has(line,keys.subject.value))return false;
+ if(!keys||line.length>240||!subjectSpan187(keys.subject.value,line))return false;
  const escape=x=>String(x).replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),number=escape(keys.number.value.replace(/^#+/,''));
  // A single short row, with number first or last; never join neighbouring card rows.
  return new RegExp('^\\s*#?0*'+number+'(?:\\s|[|.,:–—-])+','i').test(line)||new RegExp('(?:#|\\bno\\.?\\s*|[|–—]\\s*)0*'+number+'\\s*$','i').test(line);
@@ -297,12 +346,13 @@ function checklistEntries186(photo,refs){
   const family=ref.title.replace(/^(?:19|20)\d{2}(?:[-/]\d{2,4})?\s*/,'').replace(new RegExp('^'+String(photo.brand||'').replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\s+','i'),'').replace(/\s+(?:cards?\s+)?checklist.*$/i,'').trim();
   if(!family||has(family,keys.subject.value))return []; // Product checklists only; individual titles use the extractor.
   const row=referenceText(ref).split(/\n/).find(line=>checklistRow186(line,keys)&&checklistSection186(ref,line,photo));if(!row)return [];
-  const fields=[['family',family,ref.title,'none'],['year',year,ref.title,'season'],['subject',keys.subject.value,row,'none'],['catalog_number',keys.number.value,row,'card_number']].map(([field,value,quote,number_kind])=>({field,value,quote,number_kind,reference_id:ref.id,evidence:'text',scope:'target'}));
+  const fields=[['family',family,ref.title,'none'],['year',year,ref.title,'season'],['subject',subjectSpan187(keys.subject.value,row),row,'none'],['catalog_number',keys.number.value,row,'card_number']].map(([field,value,quote,number_kind])=>({field,value,quote,number_kind,reference_id:ref.id,evidence:'text',scope:'target'}));
   return [{scope:'exact_entry',fields}];
  });
 }
 function preservePhotoIdentity(value,photo){
  if(!value)return value;
+ if(value.slab_verification?.state==='confirmed')return value;
  const keys=cardKeyFacts(photo);
  if(keys)value={...value,identity_keys:{...keys,status:keys.date?'observed':'incomplete',origin:'photo'}};
  const core=photoIdentity(photo)||boxIdentity(photo);
@@ -644,7 +694,8 @@ function validate(base,reply,references){
   const codesMatch=identifierAgreements.every(o=>o.agrees);
   const quantities=evidence(base).filter(o=>['text','configuration'].includes(o.role)&&configuration(o));
   const quantityConflicts=quantities.flatMap(o=>refs.filter(r=>trustedReferenceText(r)&&matches.some(m=>m.reference_id===r.id)&&fields.some(f=>f.reference_id===r.id)).flatMap(r=>referenceText(r).split(/\n+|(?<=[.!?])\s+/).filter(t=>t.length<=500&&quantityContradicts(o.text,t)).map(quote=>({photo_value:o.text,reference_id:r.id,quote}))));
-  const configurationMatch=!quantityConflicts.length&&quantities.every(o=>[...matches,...descriptions].some(m=>m.feature==='configuration'&&(has(m.photo_detail,o.text)||quantityMatches(o.text,m.photo_detail))&&quantityMatches(o.text,m.reference_detail)));
+  const unreadConfiguration=unit==='box'&&list(base.photo_clues).some(o=>o.certainty==='uncertain'&&/autograph|packs?\b|cards? per|every.*box|ogni.*scatol/i.test(o.text));
+  const configurationMatch=!unreadConfiguration&&!quantityConflicts.length&&quantities.every(o=>[...matches,...descriptions].some(m=>m.feature==='configuration'&&(has(m.photo_detail,o.text)||quantityMatches(o.text,m.photo_detail))&&quantityMatches(o.text,m.reference_detail)));
   const seasons=clues(base).filter(o=>o.role==='season');
   const seasonMatch=seasons.every(o=>fields.some(f=>['year','model','family'].includes(f.field)&&seasonValue(f.value)===seasonValue(o.text))||matches.some(m=>has(m.photo_detail,o.text)&&has(m.reference_detail,o.text))||
    // Labels often catalogue a season under its first year. Require both printed brand AND series,
@@ -860,16 +911,26 @@ function slabFacts185(base){
  const printing=base.pokemon_printing,variant=norm(p.variant);
  if(printing&&(printing.first_edition_stamp==='absent'&&/\b(?:1st|first) edition\b/.test(variant)||printing.first_edition_stamp==='present'&&/\bunlimited\b/.test(variant)||printing.artwork_shadow==='present'&&/\bshadowless\b/.test(variant)||printing.artwork_shadow==='absent'&&/\bshadowed\b/.test(variant)))return null;
  if(clues(base).filter(c=>c.role==='season').some(c=>seasonValue(c.text)!==seasonValue(p.year)&&!seasonValue(c.text).startsWith(seasonValue(p.year)+'-')))return null;
- const values=['subject','family','model','card_number','variant','grade','certificate'];
+ const values=['subject','family','model','card_number','variant'];
  if(values.some(k=>!empty(p[k])&&!has(p.label_text,p[k])))return null;
- if(base.kind==='card'&&(empty(p.subject)||empty(p.card_number)))return null;
+ if(base.kind==='card'&&empty(p.subject))return null;
  if(base.kind!=='card'&&empty(p.model))return null;
  // An independently transcribed card number/name cannot be overwritten by a holder label.
  const ids=list(base.photo_clues).filter(c=>c.role==='collector_number'&&c.certainty==='clear');
- if(ids.some(c=>numberKey185(c.text)!==numberKey185(p.card_number)))return null;
+ if(p.card_number&&ids.some(c=>numberKey185(c.text)!==numberKey185(p.card_number)&&!(base.pokemon_printing?.is_pokemon&&/^no\.?\s*\d{3}$/i.test(c.text))))return null;
  const subject=observedSubject(base);
- if(subject&&!has(p.subject,subject.text)&&!has(subject.text,p.subject)&&base.kind==='card')return null;
+ const cleanName=s=>norm(s).replace(/\b(?:holo|holographic|reverse|foil)\b/g,'').trim();
+ if(subject&&!nameAlias187(cleanName(p.subject),cleanName(subject.text))&&base.kind==='card')return null;
  return {...p,origin:'photo_slab_label'};
+}
+function slabDiscrepancy187(base){
+ const p=base?.slab_reading;if(!p?.present||p.certainty!=='clear')return '';
+ if(p.object_match==='conflict')return p.match_details||'Oggetto e titolo della slab non corrispondono.';
+ if(!slabFacts185(base)&&p.object_match==='matches'){
+  const ids=list(base.photo_clues).filter(c=>c.role==='collector_number'&&c.certainty==='clear'&&!(base.pokemon_printing?.is_pokemon&&/^no\.?\s*\d{3}$/i.test(c.text)));
+  if(p.card_number&&ids.some(c=>numberKey185(c.text)!==numberKey185(p.card_number)))return 'Numero leggibile sulla carta diverso dal numero sull’etichetta.';
+ }
+ return '';
 }
 function cataloguePlan185(base,previous=[],fallback=false){
  const slab=slabFacts185(base),keys=cardKeyFacts(base),text=[base.pokemon_printing?.is_pokemon?'Pokemon':'',base.brand,base.category,base.family].join(' ');
@@ -884,12 +945,12 @@ function cataloguePlan185(base,previous=[],fallback=false){
  const grader=slab&&graderDomains[norm(slab.grader)],official_domains=route?.[1]||[],fallback_domains=route?.[2]||[],domains=[...new Set([...official_domains,...fallback_domains,...(slab&&grader?[grader]:[])])];
  const publisherYear=keys?.date?.kind==='copyright'&&keys.date.quote.match(/(?:©|\bcopyright)\s*((?:19|20)\d{2})\s*(?:Wizards|Panini|Topps|Upper Deck)\b/i)?.[1];
  const year=slab?.year||keys?.date?.value||publisherYear||'',subject=slab?.subject||keys?.subject.value||'',number=slab?.card_number||keys?.number.value||'';
- const serial=serialEvidence184(base),colors=physical(base).filter(o=>o.feature==='color').flatMap(o=>visualColors.filter(c=>has(visualWords(o.text),c))).filter((c,i,a)=>a.indexOf(c)===i).slice(0,2);
+ const serial=serialEvidence184(base),colors=borderColors187(base);
  const seasonClue=clues(base).find(c=>c.role==='season'&&has(c.text,base.family));
  const product=seasonClue?.text||[base.brand,year,slab?.family||base.family].filter((v,i,a)=>v&&!a.some((other,j)=>j!==i&&other&&other.length>v.length&&has(other,v))).join(' ');
- const terms=[base.pokemon_printing?.is_pokemon&&!/pok[eé]mon/i.test(product)?'Pokemon':'',product,subject,number?'#'+String(number).replace(/^\s*#+\s*/,''):'',cardLevel185(base),serial?'/'+serial.print_run:'',base.pokemon_printing?.language].filter(Boolean);
+ const terms=[base.pokemon_printing?.is_pokemon&&!/pok[eé]mon/i.test(product)?'Pokemon':'',product,subject,number?'#'+String(number).replace(/^\s*#+\s*/,''):'',slab?.variant||'',slab?'':cardLevel185(base),!slab&&colors.length?(colors.length>1?'('+colors.join(' OR ')+')':colors[0]):'',serial?'/'+serial.print_run:'',base.pokemon_printing?.language].filter(Boolean);
  // Use the label's identity, never spend the sole useful query on a certificate form.
- // Colour stays a physical constraint for parallel resolution, not a guessed query name.
+ // Search the observed border colours; multiple colours are alternatives, not a guessed parallel.
  const search=terms.concat(serial?'checklist parallels':'checklist');
  const selected=fallback?[]:domains;
  const query=[...search,...(selected.length?['('+selected.map(d=>'site:'+d).join(' OR ')+')']:[])].join(' ').slice(0,500);
@@ -899,6 +960,7 @@ function catalogueScope186(base,source,retrieved=false){
  if(base?.kind!=='card'||!cataloguePlan185(base))return {eligible:true,reason:'general_discovery'};
  const slab=slabFacts185(base),family=slab?.family||base.family||'',title=source.title||'',text=[title,source.text,source.snippet].filter(Boolean).join('\n');
  const grounded=!!slab||base.identity_basis?.family==='printed';
+ if(grounded&&familyConflict187(family,title))return {eligible:false,reason:'different_product_line'};
  const cardNumber=slab?.card_number||cardKeyFacts(base)?.number.value;
  const titleNumbers=[...title.matchAll(/(?:#|\bno\.?\s+)([a-z]{0,3}\d{1,4}(?:\s*\/\s*[a-z]{0,3}\d{1,4})?)(?!\d)/gi)].map(m=>numberKey185(m[1]));
  if(cardNumber&&titleNumbers.length===1){
@@ -907,7 +969,7 @@ function catalogueScope186(base,source,retrieved=false){
  }
  const stop=new Set(norm([base.brand,'pokemon pokémon card cards trading set checklist guide details base soccer football basketball baseball hockey road to the and of collection'].join(' ')).split(' '));
  const tokens=norm(family).split(' ').filter(w=>w.length>1&&!stop.has(w)&&!/^\d+$/.test(w));
- const familyMatch=t=>tokens.length?tokens.every(w=>has(t,w)||w==='updates'&&has(t,'update')||w==='update'&&has(t,'updates')):has(t,family);
+ const familyMatch=t=>tokens.length?tokens.every(w=>has(t,w)||norm(t).split(' ').some(v=>letterAlias187(w,v))||w==='updates'&&has(t,'update')||w==='update'&&has(t,'updates')):has(t,family);
  const familyInTitle=familyMatch(title),familyInText=familyMatch(text);
  if(grounded&&!familyInTitle&&/\bstickers?\b|figurine|sticker album/i.test(title)&&!/sticker|figurine/i.test(base.category))return {eligible:false,reason:'different_product_type'};
  if(grounded&&tokens.length&&!familyInText)return {eligible:false,reason:'different_or_missing_product_family'};
@@ -945,6 +1007,44 @@ function slabClosure185(base,photo,refs){
   core_identity:{status:'confirmed',model,origin:'photo_slab_label',fields,pending_fields:[]},catalogue_core_verified:true,catalogue_verified:true,model_verified:true,market_ready:true,status:'identified',identity_status:'confirmed',exact_identity_status:'confirmed',model_confidence:Math.max(90,Number(base.model_confidence)||0),variant_needs_verification:false,variant_check:'confirmed',catalogue_needs_verification:false,unresolved_identity_fields:[],missing_information:[],next_photo_request:null,assistance_state:'confirmed',candidate_models:[],
   identity_basis:{family:'slab_label',variant:'slab_label'},slab_verification:{state:'confirmed',origin:'photo_slab_label_and_web',reference_id:hit.id,source:hit.url,label_text:slab.label_text,scope:'label_description',certificate_verified:false},authenticity_status:'not_assessed',normalized_query:[model,slab.variant,slab.grader,slab.grade,photo.pokemon_printing?.language].filter(Boolean).join(' '),verification_summary:'Identità letta sull’etichetta della slab e riscontrata nel catalogo.'},photo);
 }
+function slabClosure187(base,photo,refs,web={}){
+ const slab=slabFacts185(photo);if(!slab)return base;
+ if(web.attempted!==true||web.completed!==true)return {...base,market_ready:false,normalized_query:'',slab_verification:{state:'web_pending'}};
+ // The photo has already checked label versus contained object. Search misses or
+ // a different catalogue numbering convention cannot retract that observation.
+ const hit=list(refs).find(r=>url(r.url)&&[r.title,r.text,r.snippet].some(t=>t&&subjectSpan187(slab.subject||slab.model,t)&&
+  (has(t,slab.family||slab.model)||has(t,slab.year))));
+ const model=[slab.year,slab.family||slab.model,slab.card_number?'#'+slab.card_number.replace(/^\s*#+\s*/,''):'',slab.subject].filter(Boolean).join(' · ');
+ const fields=[['year',slab.year],['family',slab.family||slab.model],['subject',slab.subject],['catalog_number',slab.card_number]].filter(([,v])=>v).map(([field,value])=>({field,value,quote:slab.label_text,origin:'photo_slab_label',image_index:slab.image_index,...(field==='catalog_number'?{number_kind:'grader_catalogue_number'}:{})}));
+ return withSerial184({...base,model,title:model,family:slab.family||slab.model,variant:slab.variant||'',condition:[slab.grader,slab.grade].filter(Boolean).join(' '),slab_reading:slab,
+  core_identity:{status:'confirmed',model,origin:'photo_slab_label',fields,pending_fields:[]},catalogue_core_verified:false,catalogue_verified:false,model_verified:true,market_ready:true,status:'identified',model_confidence:Math.max(90,Number(base.model_confidence)||0),identity_status:'confirmed',exact_identity_status:'confirmed',variant_needs_verification:false,variant_check:'confirmed',catalogue_needs_verification:false,unresolved_identity_fields:[],missing_information:[],next_photo_request:null,assistance_state:'confirmed',candidate_models:[],visual_candidates:[],candidate_checks:[],printing_check:undefined,
+  identity_basis:{family:'slab_label',variant:'slab_label'},slab_verification:{state:'confirmed',origin:'photo_slab_label_and_visual_coherence',scope:'label_description',reference_id:hit?.id||null,source:hit?.url||null,web_check:{attempted:true,completed:true,corroborated:!!hit},label_text:slab.label_text,certificate_verified:false},authenticity_status:'not_assessed',normalized_query:[model,slab.variant,slab.grader,slab.grade,photo.pokemon_printing?.language].filter(Boolean).join(' '),verification_summary:hit?'Identità dell’etichetta coerente con l’oggetto e riscontrata con ricerca sommaria.':'Identità dell’etichetta confermata dalla coerenza visiva; ricerca completata senza riscontro catalografico sufficiente.'},photo);
+}
+function borderColors187(photo){return [...new Set(physical(photo).filter(o=>o.feature==='color'&&/border|bordo|cornice|frame/i.test(o.text)).flatMap(o=>visualColors.filter(c=>has(visualWords(o.text),c))))].slice(0,3);}
+function literalSpecifications187(photo,refs){
+ const serial=serialEvidence184(photo),colors=borderColors187(photo),level=cardLevel185(photo),entries=[];
+ if(!serial||!colors.length)return {entries};
+ for(const ref of list(refs)){
+  if(!trustedReferenceText(ref)||!catalogueScope186(photo,ref,true).eligible)continue;
+  const text=referenceText(ref),lines=text.split('\n');let offset=0,section=null;
+  for(const line of lines){
+   const trimmed=line.trim();
+   if(trimmed.length<=100&&/^(?:base(?:\b|\s*[–—-])|.*\b(?:autographs?|signatures?|memorabilia|inserts?)\s*(?:checklist|parallels)?$)/i.test(trimmed)){
+    section={start:offset,heading:trimmed,base:/^base\b/i.test(trimmed)};
+   }
+   const row=trimmed.match(/^([a-z][a-z &-]{1,55})\s*(?:[–—-]\s*)?(?:\/|numbered (?:to|out of))\s*(\d+)$/i);
+   if(row&&Number(row[2])===serial.print_run&&section?.base){
+    const rowColors=visualColors.filter(c=>has(visualWords(row[1]),c)),sectionLevel=norm(section.heading).match(/\b(?:terrace|mezzanine|field level)\b/)?.[0];
+    const quote=text.slice(section.start,offset+line.length).trim();
+    if(rowColors.length&&rowColors.every(c=>colors.includes(c))&&(!sectionLevel||sectionLevel===level)&&(!level||has(quote,level))&&quote.length<=1800)
+     entries.push({reference_id:ref.id,unit:'single',scope:'base',variant:row[1].trim().replace(/[–—-]\s*$/,''),section_quote:quote,variant_quote:trimmed});
+   }
+   offset+=line.length+1;
+  }
+ }
+ const ambiguous=new Set(entries.map(e=>norm(e.variant))).size>1;
+ return {entries:ambiguous?[]:entries,ambiguous,candidates:entries.map(e=>({reference_id:e.reference_id,variant:e.variant,quote:e.variant_quote}))};
+}
 function preserveObservedYear185(base,photo){
  if(!base?.catalogue_core_verified||list(base.core_identity?.fields).some(f=>f.field==='year')||base.observed_year)return base;
  const date=cardKeyFacts(photo)?.date;if(!date?.value)return base;
@@ -966,8 +1066,9 @@ function withSerial184(value,photo=value){
  return {...value,physical_serial:serial,serial_number:serial.value,print_run:serial.print_run,normalized_query:value.normalized_query&&!has(value.normalized_query,'/'+serial.print_run)?value.normalized_query+' /'+serial.print_run:value.normalized_query};
 }
 function familyAgrees184(observed,cited,brand=''){
- const words=s=>norm(s).split(' ').map(w=>/^20\d{2}$/.test(w)?w.slice(2):w==='updates'?'update':w).filter(w=>w&&!['series','set','tm'].includes(w)&&!has(brand,w));
- const a=words(observed),b=words(cited);return a.length>0&&a.every(w=>b.includes(w));
+ if(familyConflict187(observed,cited))return false;
+ const a=familyTokens187(observed,brand),b=familyTokens187(cited,brand);
+ let typos=0;return a.length>0&&a.every(w=>b.includes(w)||!protectedFamilies187.includes(w)&&b.some(v=>letterAlias187(w,v))&&++typos<=1);
 }
 function citedSources184(raw,checks,photo){
  const cited=list(checks).flatMap(c=>list(c.match_evidence).map(e=>({url:url(e.source_url),title:c.model||'',text:'',discovery_only:true,origin:'resolver_citation_url'}))).filter(s=>s.url);
@@ -1060,5 +1161,5 @@ schema.properties.detail_needed_from={type:'string',enum:['none','target','refer
 fieldSchema.properties.evidence={type:'string',enum:['text','image']};fieldSchema.required.push('evidence');
 fieldSchema.properties.field.enum.push('subject','variant');matchSchema.properties.feature.enum.push('appearance','color','pattern','finish');fieldSchema.properties.scope={type:'string',enum:['target','parent','holder','listing']};
 fieldSchema.properties.number_kind={type:'string',enum:['none','model_number','card_number','catalog_number','issue_number','year','season','serial','listing_id']};fieldSchema.required.push('scope','number_kind');
-const api={checklistEntries186,checklistRow186,catalogueScope186,numberKey185,cardLevel185,cataloguePlan185,slabFacts185,slabClosure185,preserveObservedYear185,sportsCard184,parseSerial184,serialEvidence184,withSerial184,familyAgrees184,citedSources184,releaseEvidence184,specificationClosure184,familyKey,boxIdentity,observedSubject,reconcilePhotoOcr,collectorReadings,keySignature,physicalVariantProof,mergeCatalogueFields,referenceImageKey,cardKeyFacts,keyEvidence,detailRequests,photoIdentity,preservePhotoIdentity,catalogueTuple,referenceText,ambiguityScope,detailRegion,applyPhotoDetails,collectible,queryHypotheses,recoverableComparison,referenceRelevant,sharedObservedFacts,fuseComparisons,genericIdentity,harvestCode,rankReferences,targetUnit,trustedReferenceText,fallbackPlan,clueRole,completeComparison,auditIdentity,cataloguePending,quantityPairs,quantityMatches,printingPlan,identifierValue,seasonValue,variantPending,googleFirst,appearanceFeatures,compactReference,referenceImageUseful,clues,identifiers,seasonLike,physical,evidence,plan,configuration,observed,resolverPrompt,groundChecks,rankSources,validFields,catalogueName,ready,canonical,mergeCandidates,validate,Budget,schema,url,empty};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckVisual=api;
+const api={slabDiscrepancy187,letterAlias187,nameAlias187,subjectSpan187,familyConflict187,catalogueHeading187,borderColors187,slabClosure187,literalSpecifications187,checklistEntries186,checklistRow186,catalogueScope186,numberKey185,cardLevel185,cataloguePlan185,slabFacts185,slabClosure185,preserveObservedYear185,sportsCard184,parseSerial184,serialEvidence184,withSerial184,familyAgrees184,citedSources184,releaseEvidence184,specificationClosure184,familyKey,boxIdentity,observedSubject,reconcilePhotoOcr,collectorReadings,keySignature,physicalVariantProof,mergeCatalogueFields,referenceImageKey,cardKeyFacts,keyEvidence,detailRequests,photoIdentity,preservePhotoIdentity,catalogueTuple,referenceText,ambiguityScope,detailRegion,applyPhotoDetails,collectible,queryHypotheses,recoverableComparison,referenceRelevant,sharedObservedFacts,fuseComparisons,genericIdentity,harvestCode,rankReferences,targetUnit,trustedReferenceText,fallbackPlan,clueRole,completeComparison,auditIdentity,cataloguePending,quantityPairs,quantityMatches,printingPlan,identifierValue,seasonValue,variantPending,googleFirst,appearanceFeatures,compactReference,referenceImageUseful,clues,identifiers,seasonLike,physical,evidence,plan,configuration,observed,resolverPrompt,groundChecks,rankSources,validFields,catalogueName,ready,canonical,mergeCandidates,validate,Budget,schema,url,empty};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckVisual=api;
 })(typeof window!=='undefined'?window:globalThis);

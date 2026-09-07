@@ -612,7 +612,7 @@ test('184 a footer serial is reread, catalogue row verified, parallel closed and
  });
  assert.equal(out.result.market_ready,true,JSON.stringify(out));assert.match(out.result.model,/#21.*Alex Rivera/);assert.equal(out.result.serial_number,'2/5');assert.equal(out.result.print_run,5);assert.equal(out.result.variant,'Green');assert.equal(out.detail.requested[0].role,'serial');assert.equal(out.result.next_photo_request,null);
  assert.match(await page.locator('#specimenSerial184').textContent(),/Numero carta nel set: 21.*2\/5.*Tiratura: 5/);
- assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_photo_detail','flipcheck_resolver','flipcheck_specifications']);
+ assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_photo_detail','flipcheck_resolver']);
 });
 test('184 a matched catalogue release date disables an inapplicable stamp despite a different copyright reading',async()=>{
  await reset();await upload();const out=await page.evaluate(async()=>{
@@ -711,4 +711,26 @@ test('186 recorded Machamp printing response preserves Shadowless when two crops
  assert.ok(out.recovery.imageRemapping.some(m=>m.field==='shadow_image'&&m.to===1));
  const schema=requests.find(r=>r.text.format.name==='flipcheck_printing_detail').text.format.schema.properties.pokemon_printing;
  assert.deepEqual(schema.properties.shadow_image.enum,[0,1]);assert.equal(requests.length,1);
+});
+const actual186=require('./fixtures/diagnostics-186.json');
+test('187 recorded Charizard uses label identity, one quick web and no certificate or printing chase',async()=>{
+ await reset();await upload();vision=structuredClone(actual186.charizard.photo);usageOverrides=structuredClone(actual186.charizard.usageByStage);
+ resolverMode='catalogue_identity';catalogTitle='Unnumbered Promotional cards';catalogText='Charizard — Pokémon Song Best Collection CD insert (January 1, 1999)';
+ await identify();const d=await page.evaluate(()=>diagnostic26());
+ assert.equal(d.identification.market_ready,true);assert.match(d.identification.model,/1999.*CD PROMO.*#6/);assert.equal(d.visualAssistance.route,'slab_label');assert.equal(d.identification.slab_verification.certificate_verified,false);
+ assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_identification','flipcheck_resolver']);assert.equal(googleRequests.length,0);assert.equal(d.identification.next_photo_request,null);
+ const query=d.visualAssistance.queries.join(' ');assert.doesNotMatch(query,/64613920/);assert.ok(d.visualAssistance.budget.spentOrReservedUsd<=.03);
+});
+test('187 coherent slab stays confirmed after an empty search, while a physical mismatch cannot close',async()=>{
+ await reset();await upload();vision=structuredClone(actual186.charizard.photo);resolverMode='empty_complete';
+ await identify();let d=await page.evaluate(()=>diagnostic26());assert.equal(d.identification.market_ready,true);assert.equal(d.identification.slab_verification.web_check.corroborated,false);assert.equal(requests.length,2);
+ await reset();await upload();vision=structuredClone(actual186.charizard.photo);vision.slab_reading.object_match='conflict';vision.slab_reading.match_details='The contained card shows a different character';
+ await identify();d=await page.evaluate(()=>diagnostic26());assert.equal(d.identification.market_ready,false);assert.equal(d.identification.slab_verification.state,'physical_conflict');assert.equal(requests.length,1);
+});
+test('187 actual Boniface checklist text closes 2/5 without specifications or image-comparison API calls',async()=>{
+ await reset();await upload();vision=structuredClone(actual186.boniface.mergedPhoto);vision.photo_clues=vision.photo_clues.map(c=>({...c,image_index:1,region:c.region?{...c.region,image_index:1}:null}));
+ resolverMode='catalogue_identity';providerMode='placeholder';const ref=actual186.boniface.references.find(r=>r.id==='page2');catalogTitle=ref.title;catalogText=ref.text;
+ usageOverrides=structuredClone(actual186.boniface.usageByStage);await identify();const d=await page.evaluate(()=>diagnostic26());
+ assert.equal(d.identification.market_ready,true,JSON.stringify(d.identification));assert.equal(d.identification.variant,'Green');assert.equal(d.identification.serial_number,'2/5');assert.equal(d.visualAssistance.specificationVerification.method,'literal_parallel_sections');
+ assert.equal(requests.some(r=>['flipcheck_specifications','flipcheck_visual_comparison'].includes(r.text.format.name)),false);assert.equal(requests.filter(r=>r.text.format.name==='flipcheck_resolver').length,1);assert.ok(d.visualAssistance.budget.spentOrReservedUsd<=.03);
 });

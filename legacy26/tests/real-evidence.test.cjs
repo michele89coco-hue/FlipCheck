@@ -2,6 +2,7 @@
 const test=require('node:test'),assert=require('node:assert/strict');
 const V=require('../src/main/assets/visual-policy.js'),E=require('../src/main/assets/editions.js');
 const reports=require('./fixtures/diagnostics-185.json'),photo=name=>structuredClone(reports[name].photo);
+const actual186=require('./fixtures/diagnostics-186.json');
 const reference=(title,text=title)=>({id:'page1',url:'https://catalog.example/checklist',title,text,text_origin:'retrieved_page'});
 const sportsRef=()=>reference('2025-26 Panini Select Road to FIFA World Cup 2026 Soccer Checklist','2025-26 Panini Select Road to FIFA World Cup 2026 Soccer Checklist\nBase Terrace\n21 Victor Boniface – Nigeria\nBase Terrace Parallels\nGreen /5\nGold /10');
 const validate=(p,refs)=>V.validate(p,{candidates:V.checklistEntries186(p,refs).map(e=>({unit:'single',decision:'match',same_unit:true,identity_level:'exact',physical_ambiguity:true,ambiguity_scope:'variant',variant_status:'unresolved',matches:[],conflicts:[],fields:e.fields})),detail_needed_from:'none'},refs);
@@ -66,4 +67,53 @@ test('2002 post-Neo western releases exclude stamps without excluding Neo Destin
  assert.equal(E.cataloguePrinting({...identity,family:'Neo Destiny'}, {...p.pokemon_printing,set_name:'Neo Destiny'}).stamp_policy,undefined);
  assert.equal(E.cataloguePrinting(identity,{...p.pokemon_printing,language:'Japanese'}).stamp_policy,undefined);
  assert.equal(E.evaluate(E.cataloguePrinting(identity,{...p.pokemon_printing,first_edition_stamp:'present',stamp_text:'1st Edition'}),1).contradiction,true);
+});
+test('187 actual Charizard label closes after one web attempt despite unnumbered promo terminology',()=>{
+ const d=actual186.charizard,p=structuredClone(d.photo),out=V.slabClosure187(V.auditIdentity(p),p,d.rawSources,{attempted:true,completed:true});
+ assert.equal(V.ready(out),true);assert.match(out.model,/1999.*CD PROMO.*#6.*CHARIZARD/);assert.equal(out.slab_verification.certificate_verified,false);
+ assert.equal(out.core_identity.origin,'photo_slab_label');assert.equal(out.catalogue_core_verified,false);assert.equal(E.apply(out,p.pokemon_printing,1).printing_check.complete,true);
+ assert.equal(V.ready(V.slabClosure187(V.auditIdentity(p),p,[],{attempted:false,completed:false})),false);
+});
+test('187 slab certificate, grade and missing catalogue number do not obstruct the readable title',()=>{
+ const p=structuredClone(actual186.charizard.photo);p.slab_reading.certificate='unreadable';p.slab_reading.grade='';p.slab_reading.card_number='';
+ const out=V.slabClosure187(p,p,[],{attempted:true,completed:true});assert.equal(V.ready(out),true);assert.doesNotMatch(V.plan(p).query,/64613920|unreadable/);
+ assert.equal(out.slab_verification.web_check.corroborated,false);assert.equal(out.slab_verification.certificate_verified,false);
+});
+test('187 a visibly different slab object or same-role card number is still blocking',()=>{
+ for(const mode of ['object','number']){
+  const p=structuredClone(actual186.charizard.photo);if(mode==='object'){p.slab_reading.object_match='conflict';p.slab_reading.match_details='Different character inside the slab';}else p.photo_clues.find(c=>c.text==='#6').text='#7';
+  assert.ok(V.slabDiscrepancy187(p));assert.equal(V.slabFacts185(p),null);assert.notEqual(V.slabClosure187({...p,market_ready:false},p,[],{attempted:true,completed:true}).market_ready,true);
+ }
+});
+test('187 aliases accept accents, partial names and one missing letter with exact catalogue anchors',()=>{
+ for(const [a,b] of [['Dončić','Doncic'],['Luka Donci','Luka Doncic'],['Doncic','Luka Doncic'],['Kob Bryant','Kobe Bryant']])assert.equal(V.nameAlias187(a,b),true,a);
+ for(const [a,b] of [['Mew','Mewtwo'],['Devin Booker','Devon Booker'],['Luka Doncic','Luka Samanic'],['280','28']])assert.equal(V.nameAlias187(a,b),false,a);
+ assert.equal(V.familyAgrees184('2018-19 Panini Prizm Basketball','Panini Prizm','Panini'),true);
+ assert.equal(V.familyAgrees184('Topps Chrome Updates','Topps Chrome Update Series','Topps'),true);
+ for(const line of ['Prizm Mosaic','Prizm Choice','Prizm Fast Break'])assert.equal(V.familyAgrees184('Prizm Basketball',line,'Panini'),false,line);
+});
+test('187 actual Doncic exact inner heading supplies the core while Mosaic is filtered out',()=>{
+ const d=actual186.doncic,p=structuredClone(d.mergedPhoto),fields=d.replies.flipcheck_card_keys.entries[0].fields;
+ assert.ok(V.keyEvidence(p,fields,d.references));assert.equal(V.catalogueScope186(p,d.references.find(r=>/mosaic/i.test(r.title)),true).eligible,false);
+ p.photo_clues.find(c=>c.role==='subject').text='Luka Donci';assert.ok(V.keyEvidence(p,fields,d.references));
+ p.photo_clues.find(c=>c.role==='collector_number').text='NO. 281';assert.equal(V.keyEvidence(p,fields,d.references),null);
+ const q=structuredClone(d.mergedPhoto);q.photo_clues.find(c=>c.role==='season').text='2019-20 Panini Prizm Basketball';assert.equal(V.keyEvidence(q,fields,d.references),null);
+});
+test('187 actual Boniface pages close Green 2/5 from literal sections without generated quotations',()=>{
+ const d=actual186.boniface,p=d.mergedPhoto,base={...V.auditIdentity(p),catalogue_core_verified:true,core_identity:d.core};
+ assert.notEqual(V.specificationClosure184(base,p,d.replies.flipcheck_specifications,d.references).market_ready,true);
+ const literal=V.literalSpecifications187(p,d.references),out=V.specificationClosure184(base,p,literal,d.references);
+ assert.equal(out.market_ready,true);assert.equal(out.variant,'Green');assert.equal(out.serial_number,'2/5');assert.ok(literal.entries.every(e=>d.references.find(r=>r.id===e.reference_id).text.includes(e.section_quote)));
+ const query=V.plan(p).query;assert.match(query,/2025-26.*BONIFACE.*#21.*green.*\/5/i);
+});
+test('187 literal parallel sections retain ambiguous print runs and reject another level',()=>{
+ const p=actual186.boniface.mergedPhoto,title='2025-26 Panini Select Road to FIFA World Cup 2026 Soccer Checklist';
+ const r=reference(title,title+'\nBase Terrace Parallels\nGreen /5\nGreen Ice /5');assert.equal(V.literalSpecifications187(p,[r]).ambiguous,true);
+ r.text=title+'\nBase Mezzanine Parallels\nGreen /5';assert.equal(V.literalSpecifications187(p,[r]).entries.length,0);
+ r.text=title+'\nAutographs\nGreen /5';assert.equal(V.literalSpecifications187(p,[r]).entries.length,0);
+});
+test('187 actual unresolved Topps guarantee blocks a commercial format despite a lookalike box',()=>{
+ const d=actual186.topps,p=d.photo,reply=d.replies.flipcheck_visual_comparison;
+ const refs=reply.candidates.flatMap(c=>c.fields).map(f=>({id:f.reference_id,url:'https://catalog.example/'+f.reference_id,title:'2025/26 Topps Chrome Update Series Basketball Hobby Box',text:'2025/26 Topps Chrome Update Series Basketball Hobby Box. Product Highlights 1 Autograph Per Box! Sapphire Edition Update Series 2025-26',image_data:'data:image/png;base64,mock',text_origin:'retrieved_page'}));
+ const out=V.validate(p,reply,refs);assert.notEqual(out.market_ready,true);assert.ok(out.visual_candidates.some(c=>c.blocking_fields.includes('configuration_not_matched')));
 });
