@@ -232,7 +232,7 @@ function deferGoogleComparison173(base,refs){
 async function rereadPhotoDetails173(base,ctx){
  if(ctx.detailReread||V164.ready(base)||ctx.budget.visionCalls>=3)return base;
  const original=lastVisionReading||base;
- const requests=(original.photo_clues||[]).map((c,i)=>({...c,clue_index:i})).filter(c=>c.certainty==='uncertain'&&c.image_index>=1&&c.image_index<=validImageCount()&&!['serial','slab_certificate'].includes(c.role)).sort((a,b)=>Number(['model','collector_number','barcode'].includes(b.role))-Number(['model','collector_number','barcode'].includes(a.role))).slice(0,2);
+ const requests=(original.photo_clues||[]).map((c,i)=>({...c,clue_index:i})).filter(c=>c.certainty==='uncertain'&&c.image_index>=1&&c.image_index<=validImageCount()&&!['serial','slab_certificate'].includes(c.role)&&(c.region||['model','collector_number','barcode','issue_number','edition','season','copyright'].includes(c.role))).sort((a,b)=>Number(['model','collector_number','barcode'].includes(b.role))-Number(['model','collector_number','barcode'].includes(a.role))).slice(0,2);
  if(!requests.length)return base;
  ctx.detailReread={attempted:false,requested:requests.map(c=>({clue_index:c.clue_index,role:c.role,imageIndex:c.image_index})),updates:[]};
  const pictures=[];ctx.detailReread.regions=[];for(const c of requests){const selection=detailRegion174(c,original,ctx);ctx.detailReread.regions.push({clue_index:c.clue_index,...selection});pictures.push(await visualPhoto164({object_region:selection.region,detail_crop:true}));guard164(ctx);}
