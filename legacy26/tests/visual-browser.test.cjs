@@ -298,4 +298,51 @@ test('PDF pages are separate references with their own page text and parent cont
  });assert.equal(out.references.length,2);assert.deepEqual(out.references.map(r=>r.pages_rendered),[[7],[8]]);assert.equal(out.references[0].text,'Remote diagram A');assert.match(out.references[1].image_url,/#page=8/);assert.match(out.references[0].document_context,/ZX-900/);
 });
 
+test('A Base Set catalogue alias triggers one printing reread and reconciles Shadowless through production wiring',async()=>{
+ await reset();await upload();const d=require('./fixtures/identity-cases.cjs').machamp;
+ printingReply={...d.vision.pokemon_printing,artwork_shadow:'absent',shadow_location:'right and lower artwork frame clearly visible'};
+ const out=await page.evaluate(async d=>{
+  lastVisionReading=d.vision;scan164=newContext164();
+  const refs=d.references.map(r=>({...r,image_data:images.find(Boolean)}));
+  const base=FlipCheckVisual.validate(FlipCheckVisual.auditIdentity(lastVisionReading),{candidates:d.candidates},refs);
+  const result=await finishIdentity171(base,scan164);
+  return {result,recovery:scan164.printingRecovery,ready:FlipCheckVisual.ready(result)};
+ },d);
+ assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_printing_detail']);assert.equal(googleRequests.length,0);
+ assert.equal(out.recovery.attempted,true);assert.equal(out.ready,true);assert.match(out.result.variant,/Shadowless/);
+ assert.equal(out.result.variant_check,'confirmed');assert.equal(out.result.core_identity.status,'confirmed');
+ assert.ok(out.result.catalogue_data.every(f=>!/Shadowed/.test(f.value)));assert.doesNotMatch(out.result.normalized_query,/Shadowed/);
+});
+test('A panel remains a discovery after anonymous images and closes when its cited publication arrives',async()=>{
+ await reset();await upload();const out=await page.evaluate(d=>{
+  lastVisionReading=d.vision;scan164=newContext164();
+  const refs=d.references.map(r=>({...r,image_data:images.find(Boolean)}));
+  const first=rememberComparison174(lastVisionReading,{candidates:d.candidates.slice(0,2)},refs.filter(r=>['ref1','ref2'].includes(r.id)),scan164);
+  const final=rememberComparison174(first,{candidates:d.candidates.slice(2)},refs.filter(r=>r.id==='ref3'),scan164);
+  return {firstReady:FlipCheckVisual.ready(first),finalReady:FlipCheckVisual.ready(final),final,fusion:scan164.evidenceFusion};
+ },require('./fixtures/identity-cases.cjs').panel);
+ assert.equal(out.firstReady,false);assert.equal(out.finalReady,true);assert.match(out.final.model,/12/);
+ assert.equal(out.fusion.phases,2);assert.equal(out.final.next_photo_request,null);assert.deepEqual(out.final.missing_information,[]);
+});
+test('A rejected box gets one focused presentation comparison within the recorded residual budget',async()=>{
+ await reset();await upload();const d=require('./fixtures/identity-cases.cjs').box;
+ comparison={detail_needed_from:'none',physical_detail_needed:null,candidates:d.candidates.map(c=>({...c,decision:'match',same_unit:true,unit:'box',conflicts:[]}))};
+ const out=await page.evaluate(async d=>{
+  lastVisionReading=d.vision;scan164=newContext164();scan164.budget.reserve('vision',.0222);scan164.budget.visionCalls=2;
+  const refs=d.references.filter(r=>r.id==='ref4').map(r=>({...r,image_data:images.find(Boolean)}));
+  const reply={candidates:d.candidates};scan164.lastComparison={reply,references:refs};scan164.comparisonHistory=[scan164.lastComparison];scan164.referencePool=refs;
+  const base=FlipCheckVisual.validate(lastVisionReading,reply,refs),result=await finishComparison173(base,scan164);
+  return {result,review:scan164.focusedReview,spent:scan164.budget.spent()};
+ },d);
+ assert.equal(requests.length,1);assert.equal(requests[0].tools,undefined);assert.equal(googleRequests.length,0);
+ assert.equal(out.review.state,'completed');assert.deepEqual(out.review.referenceIds,['ref4']);assert.equal(out.result.market_ready,true);assert.ok(out.spent<=.03);
+});
+test('source failure keeps a separately requested battery label actionable in the result screen',async()=>{
+ await reset();await upload();await page.evaluate(d=>{
+  const value=FlipCheckVisual.validate(d.vision,{candidates:[],detail_needed_from:'reference',physical_detail_needed:'Source manual image'},[]);
+  $('identPanel').classList.remove('hide');renderIdent(value);
+ },require('./fixtures/identity-cases.cjs').remote);
+ assert.match(await page.locator('#visualResult').textContent(),/battery compartment/);
+ assert.equal(await page.locator('#addConfirmPhoto').isVisible(),true);
+});
 test('no unhandled browser errors',()=>assert.deepEqual(errors,[]));

@@ -231,9 +231,9 @@ test('reference image label facts require a readable same-image text match and n
  for(const changes of [{matches:[candidate.matches[0]]},{fields:[{...c.fields[0],scope:'listing'}]},{fields:[{...c.fields[0],quote:'Another entry',value:'Another entry'}]}])assert.equal(V.validate(base,{candidates:[{...c,...changes}]},[r]).market_ready,false);
  assert.equal(V.validate(base,{candidates:[c]},[{...r,image_data:''}]).market_ready,false);
 });
-test('missing manual figure is a source deficit, not a request for a new target photo',()=>{
+test('missing manual figure preserves an independently requested target label without requesting the figure from the user',()=>{
  const f=recorded171.remote,reply=f.phases.find(p=>p.stage==='flipcheck_visual_comparison').result;
- const out=V.validate(f.vision,reply,f.catalogueRetrieval.references||[]);assert.equal(out.assistance_state,'source_detail_needed');assert.equal(out.next_photo_request,null);
+ const out=V.validate(f.vision,reply,f.catalogueRetrieval.references||[]);assert.equal(out.assistance_state,'source_detail_needed');assert.equal(out.next_photo_request,f.vision.next_photo_request);assert.doesNotMatch(out.next_photo_request,/manual|source|reference/);
 });
 
 const recorded173=require('./fixtures/diagnostics-173.json');

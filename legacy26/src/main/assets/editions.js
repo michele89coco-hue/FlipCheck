@@ -24,6 +24,19 @@ First Edition e Shadowless sono due attributi separati: il timbro non dimostra d
   const strip = value => clean(value)
     .replace(/\b(?:1st\s*edition|first\s*edition|prima\s*edizione|1[ªa°]\s*edizione|shadowless|shadowed|unlimited)\b/gi,'')
     .replace(/\s*([|·,])\s*(?=[|·,]|$)/g,'').replace(/^[|·,\s]+|[|·,\s]+$/g,'').replace(/\s+/g,' ').trim();
+  function isOriginalBaseSet(value) {
+    const set=norm(value).replace(/\s*\((?:inferred|inference|dedotto|dedotta|ipotizzato|ipotesi)\)\s*$/i,'')
+      .replace(/[™®:·,()]/g,' ').replace(/\s+/g,' ').trim();
+    // Catalogue prefixes vary; keep the whole-string match so Base Set 2 and reprints stay excluded.
+    return /^(?:1999\s+)?(?:pokemon\s+(?:(?:game|tcg|trading card game)\s+)?)?(?:base\s*set|set\s*(?:di\s*)?base)(?:\s*(?:1999|original|originale))?$/.test(set);
+  }
+  function contradictsPrinting(value,result) {
+    const text=norm(value);
+    return (/\bshadowless\b/.test(text)&&result.shadow==='present')
+      || (/\bshadowed\b/.test(text)&&result.shadow==='absent')
+      || (/\b(?:1st|first|prima)\s*(?:edition|edizione)\b/.test(text)&&result.stamp==='absent')
+      || (/\bunlimited\b/.test(text)&&(result.stamp==='present'||result.shadow==='absent'));
+  }
   function evaluate(p, count) {
     if (!p || p.is_pokemon !== true) return null;
     const located = (i, location) => Number.isInteger(i) && i >= 1 && i <= count && clean(location).length > 0;
@@ -32,9 +45,9 @@ First Edition e Shadowless sono due attributi separati: il timbro non dimostra d
     const stamp = stampLocated && p.first_edition_stamp === 'present' && validStampText ? 'present'
       : stampLocated && p.first_edition_stamp === 'absent' ? 'absent'
       : p.first_edition_stamp === 'not_applicable' ? 'not_applicable' : 'unclear';
-    const language = norm(p.language), set = norm(clean(p.set_name).replace(/\s*\((?:inferred|inference|dedotto|dedotta|ipotizzato|ipotesi)\)\s*$/i,''));
+    const language = norm(p.language);
     const english = /^(english|inglese|en)$/.test(language);
-    const base = /^(?:pokemon\s+)?(?:base\s*set|set\s*(?:di\s*)?base)(?:\s*(?:1999|original|originale))?$/.test(set);
+    const base = isOriginalBaseSet(p.set_name);
     const applicable = english && base;
     const borderLocated = located(p.shadow_image,p.shadow_location);
     const copyrightLocated = Number.isInteger(p.copyright_image) && p.copyright_image >= 1 && p.copyright_image <= count;
@@ -76,10 +89,23 @@ First Edition e Shadowless sono due attributi separati: il timbro non dimostra d
     if (out.normalized_query) out.normalized_query = [out.normalized_query,...result.labels].join(' ');
     out.printing_check = result;
     out.pokemon_printing = printing;
-    if (!result.complete) { out.market_ready = false; out.normalized_query = ''; }
+    if (!result.complete) { out.market_ready = false; out.normalized_query = ''; out.variant_check='pending'; }
+    if (identity.catalogue_verified && result.complete) {
+      // Web labels cannot override the independently located stamp, border and copyright.
+      // Retain rejected assertions for diagnostics instead of displaying them as recovered facts.
+      const rejected=(identity.catalogue_data||[]).filter(f=>['model','variant'].includes(f.field)&&contradictsPrinting(f.value,result));
+      if(rejected.length){
+        out.excluded_catalogue_fields=[...(identity.excluded_catalogue_fields||[]),...rejected];
+        out.catalogue_data=identity.catalogue_data.filter(f=>!rejected.includes(f));
+        out.printing_resolution={origin:'original_photo',labels:result.labels,catalogue_conflict_corrected:true};
+      }
+      if(identity.core_identity)out.core_identity={...identity.core_identity,model:strip(identity.core_identity.model),fields:(identity.core_identity.fields||[]).filter(f=>!contradictsPrinting(f.value,result))};
+      out.variant_check='confirmed';
+      out.unresolved_identity_fields=(identity.unresolved_identity_fields||[]).filter(f=>!['variant','family'].includes(f));
+    }
     return out;
   }
-  const api = {schema,prompt,evaluate,apply};
+  const api = {schema,prompt,evaluate,apply,isOriginalBaseSet,contradictsPrinting};
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.FlipCheckEditions = api;
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -62,3 +62,12 @@ No paid live API scan or phone installation is part of these automated checks.
 - Render PDF pages individually at up to 1536 x 2048; retain page attribution and document context separately. Preserve image captions and up to two product images per HTML source. Avoid power-of-two over-reduction in the OCR decoder.
 - Use a compact, single-candidate visual review for a specific unresolved field. Reuse previous evidence, preserve the global 0.03 budget and log skipped recoveries. Existing successful photo-only identification remains available.
 - Regression checks use the recorded build173 responses plus synthetic browser/native images, without paid live recognition. APK accuracy still requires user testing with the original photographs.
+
+## Build 175: identity recovery from build174 diagnostics
+
+- Recognize catalogue aliases of the original English Base Set, including Pokemon Game Base Set. An unread artwork border must trigger the existing focused printing read. Physical stamp, border and copyright remain independent; a proved printing removes incompatible catalogue assertions from displayed facts while retaining their diagnostic history.
+- Compose collectible panel identities even when the initial kind is object. Keep subject/publication/year/issue provenance. Anonymous image matches remain discovery leads until an attributed catalogue entry supports identity.
+- Revisit a box presentation dispute once within the budget. This schedules a real comparison, never turns a rejected candidate into a match by itself. Preserve separately corroborated brand/year facts; incompatible case quantities, identifiers and seasons remain blocked.
+- Retain small printed symbols in the initial observation schema. A guessed brand can guide object search as an explicit hypothesis, never as OCR. Remotes with useful control labels use text search first and unrelated reference images are filtered before paid comparison.
+- Preserve a concrete target detail request when source retrieval fails. Clear obsolete variant/core state and redraw the final synchronized result.
+- Public regression cases are synthetic. Uploaded build174 diagnostics remain outside git and can be replayed locally with FLIPCHECK_RECORDED_FIXTURE. These checks and mocked browser wiring do not call paid APIs or prove accuracy on real photos.
