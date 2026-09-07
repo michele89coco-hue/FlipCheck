@@ -228,9 +228,10 @@ public final class GoogleVisionBridge {
         for(int i=0;terms!=null&&i<Math.min(12,terms.length());i++){
             String term=terms.optString(i).trim().toLowerCase(java.util.Locale.ROOT);if(term.length()<3)continue;
             int from=0,seen=0;
-            while(seen++<3){int at=lower.indexOf(term,from);if(at<0)break;from=at+term.length();
-                int start=Math.max(0,at-240),end=Math.min(text.length(),at+term.length()+460);
-                int line=text.lastIndexOf('\n',at);if(line>=start)start=line+1;
+            while(seen++<2){int at=lower.indexOf(term,from);if(at<0)break;from=at+term.length();
+                int start=Math.max(0,at-850),end=Math.min(text.length(),at+term.length()+360);
+                // Keep the preceding subset/table heading, not just the hit's own line.
+                int line=text.lastIndexOf('\n',start);if(line>=0)start=line+1;
                 int finish=text.indexOf('\n',end);if(finish>=0&&finish-end<120)end=finish;
                 boolean covered=false;for(int[] w:windows)if(start>=w[0]&&end<=w[1])covered=true;
                 if(!covered)windows.add(new int[]{start,end});

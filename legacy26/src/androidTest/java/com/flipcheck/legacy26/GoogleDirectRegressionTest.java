@@ -20,8 +20,10 @@ public final class GoogleDirectRegressionTest {
     @Test public void excerptsPreserveLiteralTextAndDoNotFuseSeparateChecklistRows() throws Exception {
         StringBuilder text=new StringBuilder("Example catalogue\n");for(int i=0;i<500;i++)text.append("Background information.\n");
         text.append("72 Other Athlete\n73 Alex Rivera\n74 Someone Else\n");
-        String selected=GoogleVisionBridge.selectPageText(text.toString(),new org.json.JSONArray().put("Alex Rivera"));
+        text.append("Base Terrace Parallels\n");for(int i=0;i<12;i++)text.append("Other documented parallel specifications\n");text.append("Green /5\n");
+        String selected=GoogleVisionBridge.selectPageText(text.toString(),new org.json.JSONArray().put("73 Alex Rivera").put("Green /5"));
         assertTrue(selected.contains("72 Other Athlete\n73 Alex Rivera\n74 Someone Else"));assertFalse(selected.contains("72 Alex Rivera"));assertTrue(selected.length()<=5000);
+        assertTrue(selected.contains("Base Terrace Parallels"));assertTrue(selected.contains("Green /5"));
     }
     @Test public void bundledOcrReadsAReferenceLabelWithoutApiCredentials() throws Exception {
         android.graphics.Bitmap bitmap=android.graphics.Bitmap.createBitmap(1100,400,android.graphics.Bitmap.Config.ARGB_8888);

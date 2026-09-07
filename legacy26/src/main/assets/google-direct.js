@@ -81,7 +81,8 @@ function titleSupported(title,text){
 async function catalogueReferences(sources,options,base){
  const pages=list(sources).filter(s=>url(s.url)).slice(0,6),refs=[],attempts=[],textReferences=[];
  const subject=FlipCheckVisual.observedSubject(base||{}),serial=FlipCheckVisual.serialEvidence184(base),colors=FlipCheckVisual.physical(base||{}).filter(o=>o.feature==='color').map(o=>o.text.match(/\b(?:green|red|blue|gold|silver|black|white|purple)\b/i)?.[0]).filter(Boolean);
- const terms=[subject?.text,...(serial?colors.map(c=>c+' /'+serial.print_run):[]),...FlipCheckVisual.identifiers(base||{}).map(c=>c.text),base?.family,...FlipCheckVisual.evidence(base||{}).filter(FlipCheckVisual.configuration).map(c=>c.text),...colors,...FlipCheckVisual.evidence(base||{}).map(c=>c.text)].filter(Boolean).slice(0,12);
+ const number=FlipCheckVisual.cardKeyFacts(base)?.number.value;
+ const terms=[number&&subject?number+' '+subject.text:'',...(serial?colors.map(c=>c+' /'+serial.print_run):[]),subject?.text,...FlipCheckVisual.identifiers(base||{}).map(c=>c.text),base?.family,...FlipCheckVisual.evidence(base||{}).filter(FlipCheckVisual.configuration).map(c=>c.text),...colors,...FlipCheckVisual.evidence(base||{}).map(c=>c.text)].filter(Boolean).slice(0,12);
  async function retrieve(s,i){
   const attempt={url:s.url,state:'requested'};attempts.push(attempt);
   try{
