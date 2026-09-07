@@ -41,7 +41,13 @@ async function boundedFetch164(url,options,ctx,ms){
 window.fetch=async function(url,options={}){
  if(String(url)!=='https://api.openai.com/v1/responses'||!scan164)return priorFetch164(url,options);
  const ctx=scan164,body=JSON.parse(options.body),web=!!body.tools?.length;
- if(active164()&&body.text?.format?.name==='flipcheck_identification'){body.max_output_tokens=Math.max(2150,body.max_output_tokens||0);body.reasoning={effort:'low'};options={...options,body:JSON.stringify(body)};}
+ if(active164()&&body.text?.format?.name==='flipcheck_identification'){
+  body.max_output_tokens=Math.max(2150,body.max_output_tokens||0);body.reasoning={effort:'low'};
+  // The printing wrapper adds its schema after the assisted prompt wrapper.
+  // Bound the final payload too, including those later-injected image fields.
+  const bound=node=>{if(!node||typeof node!=='object')return;for(const [key,value] of Object.entries(node)){if((key==='image_index'||/_image$/.test(key))&&value?.type==='integer')value.maximum=Math.max(1,validImageCount());else bound(value);}};bound(body.text.format.schema);
+  options={...options,body:JSON.stringify(body)};
+ }
  const kind=web?(ctx.phase==='market'?'market':'text'):JSON.stringify(body.input).includes('input_image')?'vision':'recovery';
  let reservation;try{
  const requestKey=kind+':'+JSON.stringify(body.input);if(web&&ctx.requestKeys.has(requestKey))throw new Error('duplicate_request');
