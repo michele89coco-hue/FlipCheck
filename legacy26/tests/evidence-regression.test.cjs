@@ -17,7 +17,7 @@ test('collector crop chooses an alphanumeric fraction, never a stage label',()=>
  assert.equal(selection.origin,'local_ocr_region');assert.ok(selection.region.y>.87);assert.equal(selection.region.image_index,1);
  assert.equal(selection.region.x,(50+.72*900)/1000);
  const onlyStage=[{...ocr[0],lines:ocr[0].lines.slice(0,1)}];
- assert.equal(V.detailRegion(clue,{},onlyStage).origin,'whole_object_fallback');
+ const fallback=V.detailRegion(clue,{},onlyStage);assert.equal(fallback.origin,'expanded_vision_region');assert.equal(fallback.search_window,true);assert.equal(fallback.region.certain,false);assert.ok(fallback.region.y<clue.region.y);assert.ok(fallback.region.width>clue.region.width);
 });
 test('copyright gets its own local region; ambiguous unlocated numbers use the whole object',()=>{
  const meta={originalWidth:400,originalHeight:600,rect:{x:0,y:0,width:400,height:600}};
@@ -75,4 +75,56 @@ test('short Base catalogue label preserves Shadowless checks only with a verifie
  assert.equal(E.evaluate(E.cataloguePrinting(identity,p),1).applicable,true);
  for(const changed of [{...identity,catalogue_core_verified:false},{...identity,core_identity:{fields:[{field:'catalog_number',value:'9/130'}]}},{...identity,family:'Base Set 2'}])assert.equal(E.evaluate(E.cataloguePrinting(changed,p),1).applicable,false);
  assert.equal(identity.family,'Base');
+});
+test('OCR separator errors locate a collector crop without asserting a corrected identifier',()=>{
+ const clue={text:'17/120',role:'collector_number',certainty:'uncertain',image_index:1,region:{image_index:1,x:.7,y:.9,width:.15,height:.03,certain:false}};
+ for(const text of ['H17IH40','H17lH40','H17|H40','H17\\H40']){
+  const ocr=[{image_index:1,state:'ok',meta:{originalWidth:400,originalHeight:600,rect:{x:0,y:0,width:400,height:600}},lines:[{text,x:.72,y:.91,width:.18,height:.02}]}];
+  const selection=V.detailRegion(clue,{},ocr);assert.equal(selection.origin,'local_ocr_region',text);assert.ok(selection.region.y>.9);
+  assert.equal(clue.text,'17/120');assert.equal(clue.certainty,'uncertain');assert.equal(V.identifiers({kind:'card',photo_clues:[clue]}).length,0);
+ }
+});
+test('expanded uncertain search windows stay on the requested photo and inside its bounds',()=>{
+ const clue={text:'unclear',role:'copyright',image_index:2,region:{image_index:2,x:.85,y:.96,width:.15,height:.04,certain:false}};
+ const selected=V.detailRegion(clue,{},[]);assert.equal(selected.search_window,true);assert.equal(selected.region.image_index,2);assert.equal(selected.region.certain,false);assert.ok(selected.region.x+selected.region.width<=1);assert.ok(selected.region.y+selected.region.height<=1);
+ assert.equal(V.detailRegion({...clue,region:{...clue.region,image_index:1}},{},[]).origin,'whole_object_fallback');
+});
+test('card HP and PV remain useful observations without becoming packaging quantities',()=>{
+ const base={kind:'card',photo_clues:[{text:'110 PV',role:'text',certainty:'clear'},{text:'90 HP',role:'text',certainty:'clear'}]};
+ assert.equal(V.clues(base).length,2);assert.equal(V.evidence(base).filter(V.configuration).length,0);
+ assert.ok(V.evidence(cases.box.vision).filter(V.configuration).some(c=>/AUTOGRAPH/.test(c.text)));
+});
+function boxReview(){
+ const d=copy(cases.box),refs=d.references.map(r=>({...r,image_data:'synthetic marker'}));
+ const first={...d.candidates[0],unit:'box',decision:'possible',same_unit:false,conflicts:[{scope:'unmeasured',reason:'Open versus sealed presentation'}],variant_status:'identified'};
+ first.matches.push({reference_id:'ref4',feature:'configuration',photo_detail:'1 AUTOGRAPH IN EVERY BOX!',reference_detail:'1 autograph per box!',reference_evidence:'description',agrees:true});
+ const next={...first,decision:'match',same_unit:true,conflicts:[],matches:first.matches.filter(m=>m.feature!=='text')};
+ return {base:d.vision,refs,first,next};
+}
+test('focused unit repair preserves an omitted image observation and closes only with sufficient evidence',()=>{
+ const {base,refs,first,next}=boxReview();assert.equal(V.validate(base,{candidates:[first]},refs).market_ready,false);
+ assert.equal(V.validate(base,{candidates:[next]},refs).market_ready,false);
+ const out=V.fuseComparisons(base,[{reply:{candidates:[first]},references:refs},{reply:{candidates:[next]},references:refs,purpose:'focused_reference_reread'}]);
+ assert.equal(out.market_ready,true);assert.equal(out.catalogue_verified,true);assert.ok(out.visual_candidates[0].matches.some(m=>m.feature==='text'&&m.retained_from==='prior_image_comparison'));
+});
+test('negative reassessments, changed catalogue facts and target conflicts cannot inherit old image agreement',()=>{
+ const {base,refs,first,next}=boxReview();
+ const negative={...first.matches.find(m=>m.feature==='text'),agrees:false};
+ for(const changed of [{...next,matches:[...next.matches,negative]},{...next,decision:'different'},{...next,conflicts:[{scope:'target',reason:'Different configuration'}]},{...next,fields:next.fields.map(f=>f.field==='variant'?{...f,value:'Retail Box',quote:'Retail Box'}:f)}]){
+  const out=V.fuseComparisons(base,[{reply:{candidates:[first]},references:refs},{reply:{candidates:[changed]},references:refs.map(r=>({...r,text:r.text+' Retail Box'})),purpose:'focused_reference_reread'}]);
+  assert.equal(out.market_ready,false);assert.ok(!out.visual_candidates.some(c=>c.matches.some(m=>m.retained_from==='prior_image_comparison')));
+ }
+});
+test('one genuine image match can request repair but never closes identity by itself',()=>{
+ const d=copy(cases.machamp),refs=d.references.map(r=>({...r,image_data:'synthetic marker'})),c={...d.candidates[0],variant_status:'identified',matches:d.candidates[0].matches.filter(m=>m.feature==='code')};
+ const out=V.validate(d.vision,{candidates:[c]},refs),candidate=out.visual_candidates[0];
+ assert.equal(out.market_ready,false);assert.equal(candidate.rejection,'insufficient_visual_comparison');assert.equal(V.recoverableComparison(candidate),true);
+ for(const bad of [{...candidate,identity_level:'family'},{...candidate,decision:'different'},{...candidate,physical_ambiguity:true},{...candidate,matches:[]},{...candidate,identity_conflicts:[{scope:'target',reason:'Wrong code'}],conflicts:[{scope:'target',reason:'Wrong code'}]}])assert.equal(V.recoverableComparison(bad),false);
+});
+test('a newly rejected image identifier retracts even a previously verified core',()=>{
+ const d=copy(cases.machamp),refs=d.references.map(r=>({...r,image_data:'synthetic marker'})),first=d.candidates[0];
+ assert.equal(V.validate(d.vision,{candidates:[first]},refs).catalogue_core_verified,true);
+ const next={...first,matches:first.matches.filter(m=>m.feature==='code').map(m=>({...m,agrees:false}))};
+ const out=V.fuseComparisons(d.vision,[{reply:{candidates:[first]},references:refs},{reply:{candidates:[next]},references:refs,purpose:'focused_reference_reread'}]);
+ assert.notEqual(out.catalogue_core_verified,true);assert.equal(out.market_ready,false);assert.equal(out.core_retained_from,undefined);
 });

@@ -101,7 +101,7 @@ test('existing catalogue images are verified before spending on Google; uncertai
 });
 test('comparison selects only as many references as remaining budget can fund',async()=>{
  await reset();await page.evaluate(()=>{$('scanBudget').value='.025';});textObject();resolverMode='catalogue_cost';vision.photo_clues.push({text:'Rectangular body',role:'text',certainty:'clear',image_index:1,region:null});
- await upload();await identify();const d=await page.evaluate(()=>diagnostic26());assert.equal(d.visualAssistance.comparison.availableReferences,3);assert.ok(d.visualAssistance.comparison.referenceIds.length<3);assert.ok(d.visualAssistance.comparison.referenceIds.length>=1);assert.ok(d.visualAssistance.budget.spentOrReservedUsd<=.025);assert.equal(await page.evaluate(()=>ident.market_ready),true);assert.equal(googleRequests.filter(r=>r.action==='detect').length,0);
+ await upload();await identify();const d=await page.evaluate(()=>diagnostic26());assert.equal(d.visualAssistance.comparison.availableReferences,3);assert.ok(d.visualAssistance.comparison.referenceIds.length<=3);if(d.visualAssistance.comparison.referenceIds.length===3)assert.equal(d.visualAssistance.comparison.compactRequest,true);assert.ok(d.visualAssistance.comparison.referenceIds.length>=1);assert.ok(d.visualAssistance.budget.spentOrReservedUsd<=.025);assert.equal(await page.evaluate(()=>ident.market_ready),true);assert.equal(googleRequests.filter(r=>r.action==='detect').length,0);
 });
 
 
@@ -389,5 +389,49 @@ test('verified short Base core rereads the original printing before any focused 
  },d);
  assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_printing_detail']);assert.equal(out.recovery.attempted,true);assert.equal(out.result.printing_check.applicable,true);assert.equal(out.result.printing_check.shadow,'absent');assert.match(out.result.variant,/Shadowless/);
  assert.equal(out.result.catalogue_core_verified,true);assert.equal(out.result.market_ready,false);assert.equal(googleRequests.length,0);
+});
+test('ambiguous OCR separators focus the original number without accepting uncertain text',async()=>{
+ await reset();await upload();detailReply={details:[{clue_index:0,text:'H17/H40',role:'collector_number',certainty:'uncertain'}]};
+ const out=await page.evaluate(async()=>{
+  scan164=newContext164();lastVisionReading={kind:'card',market_ready:false,photo_clues:[{text:'17/120',role:'collector_number',certainty:'uncertain',image_index:1,region:{image_index:1,x:.7,y:.9,width:.2,height:.03,certain:false}}]};
+  scan164.photoOcr=[{image_index:1,state:'ok',meta:{originalWidth:400,originalHeight:600,rect:{x:0,y:0,width:400,height:600}},lines:[{text:'H17IH40',x:.72,y:.91,width:.17,height:.02}]}];
+  const result=await rereadPhotoDetails173(lastVisionReading,scan164);return {result,detail:scan164.detailReread};
+ });
+ assert.equal(requests.length,1);assert.equal(out.detail.regions[0].origin,'local_ocr_region');assert.ok(out.detail.images[0].sentHeight<50);assert.equal(out.result.photo_clues[0].text,'17/120');assert.deepEqual(out.detail.updates,[]);
+});
+test('uncertain localized text gets an expanded search crop while unlocated duplicate requests share one image',async()=>{
+ await reset();await upload();const out=await page.evaluate(async()=>{
+  const clue={text:'© unclear',role:'copyright',certainty:'uncertain',image_index:1,region:{image_index:1,x:.3,y:.9,width:.4,height:.04,certain:false}};
+  scan164=newContext164();lastVisionReading={kind:'card',market_ready:false,photo_clues:[clue]};await rereadPhotoDetails173(lastVisionReading,scan164);const expanded=scan164.detailReread;
+  scan164=newContext164();lastVisionReading={kind:'card',market_ready:false,photo_clues:[{...clue,region:null},{...clue,text:'unknown number',role:'collector_number',region:null}]};await rereadPhotoDetails173(lastVisionReading,scan164);
+  return {expanded,shared:scan164.detailReread};
+ });
+ assert.equal(out.expanded.regions[0].region.certain,false);assert.equal(out.expanded.images[0].searchWindow,true);assert.ok(out.expanded.images[0].sentHeight<150);
+ assert.equal(out.shared.requested.length,2);assert.equal(out.shared.images.length,1);assert.deepEqual([...out.shared.images[0].clueIndexes].sort(),[0,1]);
+ assert.equal(requests[1].input[0].content.filter(c=>c.type==='input_image').length,1);
+});
+test('a card with one catalogue image match repairs that reference before reading original printing',async()=>{
+ await reset();const d=structuredClone(require('./fixtures/identity-cases.cjs').machamp);
+ vision={...structuredClone(unknown),...d.vision,market_ready:true};resolverMode='catalogue';catalogText=d.references[0].text.replaceAll('Shadowed','Shadowless');catalogTitle=catalogText;
+ const c={...d.candidates[0],variant:'1st Edition (Shadowless)',variant_status:'identified',fields:d.candidates[0].fields.map(f=>({...f,value:f.value.replaceAll('Shadowed','Shadowless'),quote:f.quote.replaceAll('Shadowed','Shadowless')}))};
+ comparisonQueue=[{candidates:[{...c,matches:c.matches.filter(m=>m.feature==='code')}]},{candidates:[{...c,matches:c.matches.filter(m=>m.feature==='layout')}]}];
+ printingReply={...d.vision.pokemon_printing,artwork_shadow:'absent',shadow_location:'right and lower border visible'};
+ await upload();await identify();const out=await page.evaluate(()=>diagnostic26());
+ assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_identification','flipcheck_resolver','flipcheck_visual_comparison','flipcheck_visual_comparison','flipcheck_printing_detail']);
+ assert.equal(googleRequests.filter(r=>r.action==='detect').length,0);assert.equal(out.visualAssistance.focusedReview.reason,'insufficient_visual_comparison');assert.equal(out.visualAssistance.printingRecovery.attempted,true);assert.equal(out.identification.market_ready,true);assert.match(out.identification.variant,/Shadowless/);assert.ok(out.visualAssistance.budget.visionCalls<=4);assert.ok(out.visualAssistance.budget.spentOrReservedUsd<=.03);
+});
+test('compact comparison keeps complementary images when the full response would exceed the remaining budget',async()=>{
+ await reset();await upload();const out=await page.evaluate(async()=>{
+  scan164=newContext164();lastVisionReading={kind:'object',market_ready:false,photo_clues:[]};
+  const photos=await targetPhotos169(lastVisionReading,scan164),refs=['ref1','ref2'].map(id=>({id,url:'https://catalog.example/'+id,image_data:images.find(Boolean),text:'Catalogue entry: Documented model.',text_origin:'retrieved_page'}));
+  const full=estimate164(comparisonBody169(lastVisionReading,photos,refs,2600)),compact=estimate164(focusedBody174(lastVisionReading,photos,refs,scan164,1800,'Verifica una sola identità usando i riferimenti forniti; confronta ogni immagine specifica prima di attribuirle un numero o una variante.'));
+  scan164.budget.maxUsd=(full+compact)/2;await compareReferences167(lastVisionReading,scan164,photos,refs);
+  return {full,compact,comparison:scan164.comparison,spent:scan164.budget.spent(),max:scan164.budget.maxUsd};
+ });
+ assert.ok(out.compact<out.full);assert.equal(out.comparison.compactRequest,true);assert.deepEqual(out.comparison.referenceIds,['ref1','ref2']);assert.equal(requests[0].input[0].content.filter(c=>c.type==='input_image').length,3);assert.ok(out.spent<=out.max);
+});
+test('diagnostics export the actual native build metadata instead of a stale JavaScript version',async()=>{
+ await reset();const d=await page.evaluate(()=>{const old=window.FlipCheckHost;window.FlipCheckHost={buildInfo:()=>JSON.stringify({versionCode:777,versionName:'future-native-build',sourceCommit:'synthetic-native-commit'})};try{return diagnostic26();}finally{window.FlipCheckHost=old;}});
+ assert.equal(d.versionCode,777);assert.equal(d.versionName,'future-native-build');assert.equal(d.sourceCommit,'synthetic-native-commit');
 });
 test('no unhandled browser errors',()=>assert.deepEqual(errors,[]));

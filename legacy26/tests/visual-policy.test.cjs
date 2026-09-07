@@ -256,9 +256,9 @@ test('173 generic remote candidates retain separate evidence and contradictions'
  const out=V.fuseComparisons(V.auditIdentity(recorded173.remote.vision),history173('remote'));
  assert.equal(out.visual_candidates.length,2);assert.equal(out.visual_candidates[0].identity_conflicts.length,0);assert.equal(out.visual_candidates[1].identity_conflicts.length,1);assert.notEqual(out.market_ready,true);assert.ok(out.visual_candidates.every(c=>!c.fields.some(f=>f.field==='family'&&f.value==='Remote Control')));
 });
-test('173 Politoed OCR supplies its matching HP while the actual number/finish mismatch still blocks exact identity',()=>{
+test('173 card HP is not a packaging requirement; actual number/finish mismatch still blocks exact identity',()=>{
  const out=V.fuseComparisons(V.auditIdentity(recorded173.politoed.vision),history173('politoed')),c=out.visual_candidates[0];
- assert.ok(c.description_matches.some(m=>m.recovered_from==='same_reference_ocr'&&m.reference_detail==='110 PV'));assert.ok(!c.blocking_fields.includes('configuration_not_matched'));assert.ok(c.blocking_fields.includes('contradiction'));assert.notEqual(out.market_ready,true);
+ assert.equal(V.clues(recorded173.politoed.vision).find(c=>c.text==='110 PV').role,'card_stat');assert.ok(!c.blocking_fields.includes('configuration_not_matched'));assert.ok(c.blocking_fields.includes('contradiction'));assert.notEqual(out.market_ready,true);
 });
 test('173 series text is not a season, and a disputed unit requires a new comparison',()=>{
  const x=recorded173.box.vision;assert.equal(V.clues(x).find(c=>c.text==='UPDATE SERIES').role,'text');

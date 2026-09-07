@@ -10,7 +10,7 @@ const url=x=>{try{const u=new URL(x);return u.protocol==='https:'&&!u.username&&
 function clues(base){
  const rich=list(base.photo_clues).filter(c=>!empty(c.text)&&c.certainty==='clear');
  const raw=Array.isArray(base.photo_clues)?rich:list(base.layout_signature).map(c=>({text:c.term,role:'text',certainty:'clear',location:c.position}));
- return raw.map(c=>({...c,role:base.kind==='card'&&c.role==='model'&&!/\d/.test(c.text)?'text':clueRole(c)})).filter(c=>!empty(c.text)&&!['serial','slab_certificate'].includes(c.role)&&(norm(c.text).length>=4||['model','collector_number','barcode','symbol'].includes(c.role)))
+ return raw.map(c=>({...c,role:base.kind==='card'&&/^\s*\d+\s*(?:HP|PV)\s*$/i.test(c.text)?'card_stat':base.kind==='card'&&c.role==='model'&&!/\d/.test(c.text)?'text':clueRole(c)})).filter(c=>!empty(c.text)&&!['serial','slab_certificate'].includes(c.role)&&(norm(c.text).length>=4||['model','collector_number','barcode','symbol'].includes(c.role)))
   .filter((c,i,a)=>a.findIndex(v=>norm(v.text)===norm(c.text))===i);
 }
 const seasonLike=x=>/^(?:19|20)\d{2}(?:\s*[-/]\s*(?:\d{2}|(?:19|20)\d{2}))?$/.test(String(x||'').trim());
@@ -23,13 +23,20 @@ function clueRole(c){
  return c.role;
 }
 function identifierValue(c){return c.role==='collector_number'?String(c.text).replace(/^\s*(?:NO\.?|N[°º.]|NUMBER|NUMERO|#)\s*/i,'').trim():c.text;}
+function expandedDetailRegion(region,index){
+ if(!region||region.image_index!==index||![region.x,region.y,region.width,region.height].every(Number.isFinite)||region.x<0||region.y<0||region.width<=0||region.height<=0||region.x+region.width>1.001||region.y+region.height>1.001)return null;
+ const px=Math.max(.04,region.width*.25),py=Math.max(.035,region.height*.5),x=Math.max(0,region.x-px),y=Math.max(0,region.y-py);
+ return {image_index:index,x,y,width:Math.min(1,region.x+region.width+px)-x,height:Math.min(1,region.y+region.height+py)-y,certain:false};
+}
 function detailRegion(clue,base,ocr=[]){
  if(clue.region?.certain&&clue.region.image_index===clue.image_index)return {region:clue.region,origin:'vision_region'};
  const local=list(ocr).find(p=>p.image_index===clue.image_index&&p.state==='ok'),role=clueRole(clue);
  const fraction=/\b[A-Z]{0,3}\d{1,4}\s*\/\s*[A-Z]{0,3}\d{1,4}\b/i;
+ // OCR may read the separator as I/l/|. This selects a crop only; it never corrects the identifier.
+ const uncertainFraction=/\b[A-Z]{0,3}\d{1,4}\s*[Il|\\]\s*[A-Z]{0,3}\d{1,4}\b/i;
  const eligible=text=>{
   if(/^(?:stage|fase|stadio|lv\.?|hp|pv)\s*\d+\s*$/i.test(text))return false;
-  if(role==='collector_number')return fraction.test(text)||/^\s*(?:no\.?|number|numero|#)\s*[:#.-]?\s*[a-z]{0,3}\d{1,4}\s*$/i.test(text);
+  if(role==='collector_number')return fraction.test(text)||uncertainFraction.test(text)||/^\s*(?:no\.?|number|numero|#)\s*[:#.-]?\s*[a-z]{0,3}\d{1,4}\s*$/i.test(text);
   if(role==='copyright')return /©|copyright|\b(?:19|20)\d{2}\b.*(?:Nintendo|Wizards|Creatures|Pok[eé]mon|rights)/i.test(text);
   if(role==='barcode')return /^\s*\d[\d -]{6,16}\d\s*$/.test(text);
   if(!['model','issue_number'].includes(role))return false;
@@ -41,6 +48,8 @@ function detailRegion(clue,base,ocr=[]){
   const expected=clue.region,rank=l=>(role==='collector_number'&&!fraction.test(l.text)?2:0)+(expected?Math.abs(convert(l).y-expected.y)+Math.abs(convert(l).x-expected.x):0);
   if(expected||lines.length===1)return {region:convert([...lines].sort((a,b)=>rank(a)-rank(b))[0]),origin:'local_ocr_region'};
  }
+ const expanded=expandedDetailRegion(clue.region,clue.image_index);
+ if(expanded)return {region:expanded,origin:'expanded_vision_region',search_window:true};
  return {region:list(base.object_regions).find(r=>r.image_index===clue.image_index)||(base.object_region?.image_index===clue.image_index?base.object_region:{image_index:clue.image_index,certain:false}),origin:'whole_object_fallback'};
 }
 function applyPhotoDetails(base,details,requests,selections){
@@ -119,7 +128,7 @@ function plan(base,previous=[]){
  return {query,hypotheses,useful:terms.some(t=>norm(t).split(' ').length>=2)||terms.length>=2,duplicate:previous.some(q=>norm(q)===norm(query)),terms};
 }
 // Quantities and specifications discriminate many product types. Years are not quantities.
-function configuration(c){return !['edition','season','copyright','serial','slab_certificate','issue_number','collector_number','model','barcode'].includes(clueRoleWithoutQuantity(c))&&quantityPairs(c.text).pairs.length>0;}
+function configuration(c){return !['edition','season','copyright','serial','slab_certificate','issue_number','collector_number','model','barcode','card_stat'].includes(clueRoleWithoutQuantity(c))&&quantityPairs(c.text).pairs.length>0;}
 function clueRoleWithoutQuantity(c){return c.role==='copyright'&&clueRole(c)==='season'?'season':c.role;}
 function observed(base){return {category:base.category||'',object_unit:base.object_unit||'unknown',photo_clues:clues(base).map(c=>({text:c.text,role:c.role,image_index:c.image_index,...(['collector_number','season'].includes(c.role)?{value:c.role==='season'?seasonValue(c.text):identifierValue(c)}:{})})),physical_observations:physical(base)};}
 function quantityPairs(text){
@@ -247,6 +256,7 @@ function referenceSpecifications(base,c,fields,refs,matches){
 function identityConflicts(c){return list(c.conflicts).filter(x=>typeof x==='string'||!['holder','parent','authenticity','condition','unmeasured'].includes(x.scope));}
 function recoverableComparison(c){
  if(!c.fields?.length)return false;
+ if(c.rejection==='insufficient_visual_comparison')return c.identity_level==='exact'&&c.decision==='match'&&c.same_unit&&!c.physical_ambiguity&&!identityConflicts(c).length&&list(c.matches).some(m=>m.agrees&&m.reference_evidence!=='description');
  // Re-open a presentation dispute, never an explicit identifier/quantity/season mismatch.
  if(c.decision==='different')return c.rejection==='unit_mismatch'&&targetUnit({...c,object_unit:c.unit})==='box'&&!list(c.blocking_fields).some(f=>['physical_identifier_not_matched','configuration_not_matched','season_not_matched'].includes(f));
  return ['catalogue_not_cited','physical_identifier_not_matched','configuration_not_matched','appearance_not_matched','unit_mismatch','contradiction','physical_ambiguity'].includes(c.rejection);
@@ -363,9 +373,24 @@ function fuseComparisons(base,history){
   if(previous?.catalogue_core_verified)stableCore=previous;
   for(const r of list(phase.references)){const at=refs.findIndex(x=>x.id===r.id);if(at<0)refs.push(r);else refs[at]={...refs[at],...r};}
   const evaluated=new Set(list(phase.references).map(r=>r.id));
-  // Replace the assessment; a partial focused reread can retain the separately verified core.
+  const incoming=list(phase.reply?.candidates).map(c=>({...c,matches:[...list(c.matches)],fields:validFields(c,refs,base,c.matches)}));
+  if(phase.purpose==='focused_reference_reread')for(const next of incoming){
+   if(next.decision==='different'||!next.same_unit||identityConflicts(next).length)continue;
+   const nextIds=new Set([...next.fields,...next.matches].map(x=>x.reference_id));
+   const prior=readings.filter(c=>!identityConflicts(c).length&&list(c.matches).some(m=>evaluated.has(m.reference_id)&&nextIds.has(m.reference_id))&&
+    ['model','family','brand','subject','catalog_number','issue_number','year','variant'].every(key=>{
+     const before=list(c.fields).filter(f=>f.field===key),after=next.fields.filter(f=>f.field===key);
+     return !before.length||!after.length||before.some(a=>after.some(b=>norm(a.value)===norm(b.value)));
+    }));
+   // Omission or a supplementary description does not retract an earlier image observation.
+   // A new visual assessment of that feature (including agrees=false) does replace it.
+   const retained=prior.flatMap(c=>list(c.matches)).filter(m=>m.agrees&&m.reference_evidence!=='description'&&evaluated.has(m.reference_id)&&nextIds.has(m.reference_id)&&
+    !next.matches.some(n=>n.reference_id===m.reference_id&&n.feature===m.feature&&(n.reference_evidence!=='description'||n.agrees===false)));
+   next.matches=[...next.matches,...retained.map(m=>({...m,retained_from:'prior_image_comparison'}))].filter((m,i,a)=>a.findIndex(n=>n.reference_id===m.reference_id&&n.feature===m.feature&&n.photo_detail===m.photo_detail&&n.reference_detail===m.reference_detail&&n.reference_evidence===m.reference_evidence)===i);
+  }
+  // Replace the decision while retaining only observations the focused reread did not contradict.
   for(let i=readings.length-1;i>=0;i--)if(list(readings[i].matches).some(m=>evaluated.has(m.reference_id)))readings.splice(i,1);
-  readings.push(...list(phase.reply?.candidates).map(c=>({...c,fields:validFields(c,refs,base,c.matches)})));
+  readings.push(...incoming);
  }
  const positive=c=>c.decision==='match'&&c.same_unit&&!c.physical_ambiguity&&!identityConflicts(c).length&&new Set(list(c.matches).filter(m=>m.agrees&&m.reference_evidence!=='description').map(m=>m.feature)).size>=2;
  const values=(c,key)=>list(c.fields).filter(f=>f.field===key).map(f=>f.value);
@@ -391,7 +416,7 @@ function fuseComparisons(base,history){
  if(result.catalogue_core_verified||!stableCore||list(history).at(-1)?.purpose!=='focused_reference_reread')return result;
  const facts=stableCore.core_identity.fields,sourceIds=new Set(facts.map(f=>f.reference_id));
  const revisited=combined.filter(c=>list(c.fields).some(f=>sourceIds.has(f.reference_id)));
- const consistent=revisited.length>0&&revisited.every(c=>c.decision!=='different'&&c.same_unit&&targetUnit({...c,kind:base.kind,object_unit:c.unit})===targetUnit(base)&&!identityConflicts(c).length&&
+ const consistent=revisited.length>0&&revisited.every(c=>c.decision!=='different'&&c.same_unit&&targetUnit({...c,kind:base.kind,object_unit:c.unit})===targetUnit(base)&&!identityConflicts(c).length&&!list(c.matches).some(m=>m.agrees===false&&m.reference_evidence!=='description')&&
   list(c.fields).filter(f=>['family','brand','subject','catalog_number','issue_number','year'].includes(f.field)).every(f=>!facts.some(old=>old.field===f.field&&norm(old.value)!==norm(f.value))));
  if(!consistent)return result;
  return {...result,model:stableCore.core_identity.model,title:stableCore.core_identity.model,family:stableCore.family,catalogue_core_verified:true,core_identity:stableCore.core_identity,catalogue_data:stableCore.catalogue_data,identity_basis:stableCore.identity_basis,catalogue_needs_verification:false,unresolved_identity_fields:list(result.unresolved_identity_fields).filter(f=>f!=='family'),variant_check:'pending',market_ready:false,normalized_query:'',assistance_state:result.assistance_state==='unidentified'?'core_confirmed':result.assistance_state,core_retained_from:'prior_verified_comparison'};
