@@ -462,4 +462,9 @@ test('native completion saves the actual result without request bodies or image 
  const end=await page.evaluate(()=>nativeEnds[0]);assert.equal(end.state,'completed');assert.equal(end.snapshot.identification.model,'Known model');assert.equal(requests.length,1);
  assert.equal(end.snapshot.visualAssistance,undefined);assert.doesNotMatch(JSON.stringify(end),/fake-openai|data:image|Authorization/);
 });
+test('a cold runtime displays a saved result without loading photos or repeating a request',async()=>{
+ await reset(false);await page.evaluate(()=>{window.FlipCheckHost={beginScan(){throw Error('UNEXPECTED_START');},endScan(){},backgroundInfo:()=>'{}',lastScan:()=>JSON.stringify({state:'completed',snapshot:JSON.stringify({identification:{model:'Saved model',variant:'Blue',market_ready:true}})})};});
+ await page.addScriptTag({url:origin+'/background-runtime.js'});
+ assert.match(await page.locator('#savedScan178').textContent(),/Saved model.*Blue.*confermata/);assert.equal(requests.length,0);assert.equal(await page.evaluate(()=>validImageCount()),0);
+});
 test('no unhandled browser errors',()=>assert.deepEqual(errors,[]));
