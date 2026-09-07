@@ -71,3 +71,13 @@ No paid live API scan or phone installation is part of these automated checks.
 - Retain small printed symbols in the initial observation schema. A guessed brand can guide object search as an explicit hypothesis, never as OCR. Remotes with useful control labels use text search first and unrelated reference images are filtered before paid comparison.
 - Preserve a concrete target detail request when source retrieval fails. Clear obsolete variant/core state and redraw the final synchronized result.
 - Public regression cases are synthetic. Uploaded build174 diagnostics remain outside git and can be replayed locally with FLIPCHECK_RECORDED_FIXTURE. These checks and mocked browser wiring do not call paid APIs or prove accuracy on real photos.
+
+## Build 179: photographic core and retained evidence
+
+- A clearly photographed card number, product season, printed series and subject establish a photo-origin core. Unrelated catalogue pictures cannot erase it. The commercial parallel and Pokemon printing remain separate checks; number/year alone, statistics, copyright and serials do not establish this tuple.
+- Compact prompts retain a separate original source text for citation/quantity validation. Written quantities such as "one guaranteed autograph per box" normalize with their units; conflicting amounts per unit still block.
+- Scope printing ambiguity separately from the card entry. Route a remaining border/stamp/copyright question to the original image; complete identity only after the actual focused printing response confirms the required details.
+- Repair missing or invalid catalogue fields with one bounded text-only extraction from existing sources. Reuse the recorded image comparisons without inventing new ones. Preserve rejected fields and repair provenance in diagnostics.
+- A printed card tuple uses text search first. Search queries include unresolved observed appearance; unrelated product thumbnails are excluded. Never replace an unresolved photographed parallel with a resolver's unverified Base label.
+- Budget planning preserves a minimal decisive comparison within the existing 0.03 ceiling. If the core is established, comparison can select the side showing the parallel and retain the other side's previously read facts as context.
+- Original-resolution uploads, detail crops and the native background session from build178 remain in place. Tests are synthetic/offline and Android lifecycle tests use no live recognition services. User photos and diagnostic exports are not committed.
