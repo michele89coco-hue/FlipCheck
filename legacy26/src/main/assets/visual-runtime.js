@@ -157,8 +157,13 @@ candidateFingerprintScore=function(c,signature,hasSources){const score=priorScor
 function syncIdentity169(value){
  if(value&&active164()&&scan164?.keyCore){
   const keys=V164.cardKeyFacts(lastVisionReading||value),signature=JSON.stringify(keys&&[keys.subject.value,keys.number.value,keys.date?.value,keys.date?.kind]);
-  if(signature!==scan164.keyCore.signature)scan164.keyCore=null;
-  else if(!value.catalogue_core_verified)value={...value,...scan164.keyCore.identity,market_ready:false,normalized_query:'',core_retained_from:'verified_card_keys'};
+  const saved=scan164.keyCore.identity,sameFamily=(a,b)=>String(a||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim()===String(b||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+  const alternate=(value.visual_candidates||[]).some(c=>c.key_evidence&&!sameFamily(c.fields?.find(f=>f.field==='family')?.value,saved.family));
+  if(signature!==scan164.keyCore.signature){scan164.keyCore=null;scan164.coreState=null;}
+  else if(alternate){
+   scan164.keyCore=null;scan164.coreState=null;
+   value={...value,catalogue_verified:false,catalogue_core_verified:false,market_ready:false,model_verified:false,model_confidence:89,normalized_query:'',family:'',identity_basis:{...value.identity_basis,family:'inferred'},unresolved_identity_fields:[...new Set([...(value.unresolved_identity_fields||[]),'family'])],core_identity:{status:'partial',origin:'photo',model:[keys.subject.value,'#'+keys.number.value].join(' · '),pending_fields:['family']},assistance_state:'ambiguous',next_photo_request:null};
+  }else if(!value.catalogue_core_verified||!sameFamily(value.family,saved.family))value={...value,...saved,catalogue_verified:false,market_ready:false,normalized_query:'',core_retained_from:'verified_card_keys'};
  }
  value=active164()?V164.auditIdentity(value):value;
  if(active164())value=V164.preservePhotoIdentity(value,lastVisionReading||value);

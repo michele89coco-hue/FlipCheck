@@ -132,3 +132,25 @@ test('the card key extraction request is text-only and establishes no visual obs
  env.openai=async body=>{assert.equal(body.text.format.name,'flipcheck_card_keys');assert.equal(body.tools,undefined);assert.equal(typeof body.input,'string');return {entries:[{scope:'exact_entry',fields:d.fields}]};};
  const out=await env.verifyCardKeys180(d.base,ctx,[d.ref]);assert.equal(out.catalogue_core_verified,true);assert.equal(out.market_ready,false);assert.equal(out.core_identity.origin,'photo_and_catalogue_keys');assert.equal(ctx.cardKeyVerification.imageComparisons,0);
 });
+function syncFixture(){
+ const d=fixture(),{env,ctx}=runtime(d.base),saved=evaluate(d);saved.core_identity.origin='photo_and_catalogue_keys';
+ const keys=V.cardKeyFacts(d.base);ctx.keyCore={signature:JSON.stringify([keys.subject.value,keys.number.value,keys.date.value,keys.date.kind]),identity:saved};ctx.coreState=saved;
+ Object.assign(env,{active164:()=>true,canonTerm:s=>String(s||'').toLowerCase()});
+ vm.runInContext(source.slice(source.indexOf('function syncIdentity169('),source.indexOf('mergeResolvedFingerprint=function')),env);
+ return {d,env,ctx,saved};
+}
+test('a corrected photo key invalidates both cached identity states',()=>{
+ const {d,env,ctx}=syncFixture();d.base.photo_clues[1].text='H8/H32';
+ const out=env.syncIdentity169({...d.base,core_identity:null,catalogue_core_verified:false});
+ assert.equal(ctx.keyCore,null);assert.equal(ctx.coreState,null);assert.notEqual(out.catalogue_core_verified,true);assert.equal(out.identity_keys.number.value,'H8/H32');
+});
+test('a later competing key-proven series reopens only series identification',()=>{
+ const {d,env,ctx,saved}=syncFixture();
+ const alternate={...d.candidate,core_accepted:true,key_evidence:{reference_id:'other'},fields:d.fields.map(f=>f.field==='family'?{...f,value:'Coast'}:f)};
+ const out=env.syncIdentity169({...saved,family:'Coast',visual_candidates:[alternate]});
+ assert.equal(ctx.keyCore,null);assert.equal(out.assistance_state,'ambiguous');assert.equal(out.core_identity.status,'partial');assert.equal(out.market_ready,false);assert.equal(out.catalogue_core_verified,false);assert.ok(out.unresolved_identity_fields.includes('family'));assert.equal(out.identity_keys.subject.value,'Rivermon');
+});
+test('a different series suggested only by images cannot replace the key-proven entry',()=>{
+ const {env,saved}=syncFixture(),out=env.syncIdentity169({...saved,model:'Wrong visual suggestion',family:'Coast',catalogue_verified:true,catalogue_core_verified:true,visual_candidates:[]});
+ assert.equal(out.family,'Summit');assert.equal(out.core_identity.status,'confirmed');assert.equal(out.catalogue_verified,false);assert.equal(out.market_ready,false);
+});
