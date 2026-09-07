@@ -87,4 +87,8 @@ test('catalogue printing completion closes the production identity without anoth
  const env={V164:V,FlipCheckEditions:E,validImageCount:()=>1,syncIdentity169:x=>x,enforceIdentificationPolicy:x=>E.apply(x,E.cataloguePrinting(x,x.pokemon_printing),1),resolvePrinting168:()=>{throw Error('unnecessary paid printing reread');}};
  vm.createContext(env);vm.runInContext(runtime.slice(runtime.indexOf('async function finishIdentity171('),runtime.indexOf('resolveIdentificationCheap=async function')),env);
  const out=await env.finishIdentity171(base,{});assert.equal(out.market_ready,true);assert.equal(out.variant,'Holo');assert.match(out.normalized_query,/Holo/);assert.equal(out.pokemon_printing.first_edition_stamp,'unclear');
+ const retained={...base,variant:'Holo',visual_candidates:[{core_accepted:false,ambiguity_scope:'none',identity_conflicts:[],blocking_fields:['catalogue_not_cited']}]};
+ assert.equal((await env.finishIdentity171(retained,{})).market_ready,true);
+ retained.visual_candidates[0].identity_conflicts=[{scope:'target',reason:'Different printed card number'}];
+ assert.notEqual((await env.finishIdentity171(retained,{})).market_ready,true);
 });
