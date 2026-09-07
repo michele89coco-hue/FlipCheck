@@ -133,3 +133,13 @@ Fixes observed in the build 183 diagnostics: retrieve resolver citation URLs as 
 Sports specimen serials are separate from catalogue numbers. A suspicious small footer reading receives a bounded original-photo crop; only a clearly read numerator/denominator becomes specimen numbering. A numbered colour parallel can close against its base-level catalogue specification. The renderer shows card number, specimen serial and print run separately. Initial image indexes are bounded to the uploaded photo count.
 
 Regression checks include positive closures and wrong-series, wrong-year, wrong-unit, mixed-format, wrong-subset and unresolved-serial failures. API responses in tests are simulated; no new paid recognition scans were run. These checks are not a live photo-recognition accuracy score.
+
+## Build 185 — checklist routing, slab labels and edge serials
+
+Based on build 184 commit a7e484ad3a4a8a3662bf3adf159fd654fb2f960e. Card queries retain manufacturer/game, set, observed season, subject, full card number, language, subset and serial denominator. Official domains are searched first with a single bounded fallback retaining the same identity keys. Exact text checks run before reference-image downloads; unknown objects retain the existing discovery route.
+
+A full, legible grading label with matching contained object receives one quick catalogue lookup. Label-origin identity, grade and variant remain distinct from direct card observations and authenticity. Conflicting card numbers, unreadable labels, missing variant declarations and unmatched entries do not obtain automatic exact closure. Japanese catalogue-confirmed releases before 2001 exclude the unavailable first-edition stamp; contradictions stay explicit.
+
+Sports cards with an unresolved parallel and no serial OCR candidate receive original-image views of both rotated vertical edges and top/bottom on each selected side. Only an actually transcribed valid fraction becomes a specimen serial. A photographed subset can qualify a full product checklist without replacing the product family; PRIZM is not a subset. Leading zero equivalents in catalogue numbers retain literal observations. Observed copyright dates remain visible without inventing a catalogue release year.
+
+Local validation: 195 policy/unit tests and 105 browser integration tests passed. These tests are synthetic/offline; no new live paid recognition accuracy is claimed. Android compilation, device instrumentation and signed APK generation remain pending. VersionCode 185; versionName 0.26.9-checklist-slab-serial. Existing signing key/package and cost ceiling retained.

@@ -79,7 +79,7 @@ function titleSupported(title,text){
  return !useful.length||useful.some(w=>body.includes(w));
 }
 async function catalogueReferences(sources,options,base){
- const pages=list(sources).filter(s=>url(s.url)).slice(0,6),refs=[],attempts=[],textReferences=[];
+ const pages=list(sources).filter(s=>url(s.url)).slice(0,options?.textOnly?3:6),refs=[],attempts=[],textReferences=[];
  const subject=FlipCheckVisual.observedSubject(base||{}),serial=FlipCheckVisual.serialEvidence184(base),colors=FlipCheckVisual.physical(base||{}).filter(o=>o.feature==='color').map(o=>o.text.match(/\b(?:green|red|blue|gold|silver|black|white|purple)\b/i)?.[0]).filter(Boolean);
  const number=FlipCheckVisual.cardKeyFacts(base)?.number.value;
  const terms=[number&&subject?number+' '+subject.text:'',...(serial?colors.map(c=>c+' /'+serial.print_run):[]),subject?.text,...FlipCheckVisual.identifiers(base||{}).map(c=>c.text),base?.family,...FlipCheckVisual.evidence(base||{}).filter(FlipCheckVisual.configuration).map(c=>c.text),...colors,...FlipCheckVisual.evidence(base||{}).map(c=>c.text)].filter(Boolean).slice(0,12);
@@ -98,6 +98,7 @@ async function catalogueReferences(sources,options,base){
    if(!page.text||page.is_collection){attempt.state=page.is_collection?'collection_page':'no_page_text';return null;}
    if(!s.discovery_only&&!titleSupported(s.title,page.text)){attempt.state='page_content_mismatch';return null;}
    textReferences.push({id:'page'+(i+1),url:page.url||s.url,title:page.title||s.title,text:page.text.slice(0,5000),text_origin:'retrieved_page'});
+   if(options?.textOnly){attempt.state='retrieved_text';return null;}
    const images=list(page.images).map(url).filter(u=>u&&FlipCheckVisual.referenceImageUseful(u)).slice(0,2);
    const pictures=[];
    for(const image of images){

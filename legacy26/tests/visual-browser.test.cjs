@@ -291,9 +291,9 @@ test('incomplete initial Vision gets one bounded retry with a larger response an
 test('two incomplete Vision responses stop without loops or invented identification',async()=>{
  await reset();initialMode='always';await upload();await identify();const d=await page.evaluate(()=>diagnostic26());assert.equal(requests.length,2);assert.equal(d.identification,null);assert.equal(d.visualAssistance.state,'response_incomplete');assert.equal(d.usage.requests,2);assert.equal(await page.evaluate(()=>apiBusy),false);
 });
-test('recorded high confidence subtype uncertainty reaches Google instead of closing early',async()=>{
+test('185 recorded high confidence subtype uncertainty uses a targeted checklist and stays unresolved',async()=>{
  await reset();vision=structuredClone(require('./fixtures/diagnostics-169.json').doncic.vision);vision.object_regions=[];vision.object_region=null;providerMode='no_images';resolverMode='catalogue';comparison={physical_detail_needed:null,candidates:[]};await page.evaluate(()=>{$('scanBudget').value='.03';});
- await upload();await identify();const d=await page.evaluate(()=>diagnostic26());assert.equal(d.visualAssistance.closures[0].closure_result,false);assert.equal(googleRequests.filter(r=>r.action==='detect').length,1);assert.equal(d.identification.market_ready,false);assert.equal(d.identification.variant_needs_verification,true);assert.ok(d.visualAssistance.budget.spentOrReservedUsd<=.03);
+ await upload();await identify();const d=await page.evaluate(()=>diagnostic26());assert.equal(d.visualAssistance.closures[0].closure_result,false);assert.equal(googleRequests.filter(r=>r.action==='detect').length,0);assert.ok(requests.some(r=>r.text.format.name==='flipcheck_resolver'));assert.equal(d.identification.market_ready,false);assert.equal(d.identification.variant_needs_verification,true);assert.ok(d.visualAssistance.budget.spentOrReservedUsd<=.03);
 });
 test('recorded box closes from Google reference comparison without a subsequent text search',async()=>{
  await reset();const fixture=require('./fixtures/diagnostics-169.json').box;vision=structuredClone(fixture.vision);comparison=structuredClone(fixture.comparison);catalogText=fixture.references[0].text;catalogTitle=fixture.references[0].title;await page.evaluate(()=>{$('scanBudget').value='.03';});
@@ -308,11 +308,11 @@ test('default budget migration raises the previous ceiling and preserves a delib
  await page.evaluate(()=>localStorage.setItem('flipcheck_visual_config',JSON.stringify({scanBudget:.01,budgetFx:1,enabled:true})));await page.reload();assert.equal(await page.evaluate(()=>visualConfig164().maxEur),.01);
 });
 
-test('build170 two-photo Google failure permits the actual text request within 0.03',async()=>{
+test('185 two-photo keyed sports lookup skips unavailable Google and retains the budget',async()=>{
  await reset();const f=require('./fixtures/diagnostics-170.json').doncic;vision=structuredClone(f.vision);usageOverrides.flipcheck_identification=f.phases[0].usage;providerMode='network';resolverMode='catalogue';comparison={physical_detail_needed:null,candidates:[]};
  const back=await page.evaluate(()=>{const c=document.createElement('canvas');c.width=420;c.height=600;c.getContext('2d').fillStyle='blue';c.getContext('2d').fillRect(0,0,420,600);return c.toDataURL('image/png').split(',')[1];});
  await page.locator('#photoBatch').setInputFiles([photos[0],{name:'back.png',mimeType:'image/png',buffer:Buffer.from(back,'base64')}]);await page.waitForFunction(()=>!photoBusy);await identify();
- const d=await page.evaluate(()=>diagnostic26());assert.equal(d.uploadedImageCount,2);assert.equal(requests.filter(r=>r.tools?.length).length,1);assert.equal(googleRequests.filter(r=>r.action==='detect').length,1);assert.equal(d.visualAssistance.calls.find(c=>c.provider==='google').failureReason,'dns_error');assert.equal(d.visualAssistance.continuationBudget.strategy,'preserve_decisive_comparison');assert.ok(d.visualAssistance.budget.spentOrReservedUsd<=.03);assert.equal(d.identification.market_ready,false);
+ const d=await page.evaluate(()=>diagnostic26());assert.equal(d.uploadedImageCount,2);assert.equal(requests.filter(r=>r.tools?.length).length,1);assert.equal(googleRequests.filter(r=>r.action==='detect').length,0);assert.equal(d.visualAssistance.calls.some(c=>c.provider==='google'),false);assert.equal(d.visualAssistance.continuationBudget.strategy,'preserve_decisive_comparison');assert.ok(d.visualAssistance.budget.spentOrReservedUsd<=.03);assert.equal(d.identification.market_ready,false);
 });
 test('build170 box defers comparison until the specification query and closes using both sets of evidence',async()=>{
  await reset();const f=require('./fixtures/diagnostics-170.json').box;vision=structuredClone(f.vision);comparison=structuredClone(f.phases.find(p=>p.stage==='flipcheck_visual_comparison').result);
@@ -340,7 +340,7 @@ test('Google references with the same image are downloaded and compared once',as
 
 test('build171 Machamp audited catalogue gap cannot be skipped by raw Vision readiness',async()=>{
  await reset();vision=structuredClone(require('./fixtures/diagnostics-171.json').machamp.vision);providerMode='no_images';resolverMode='catalogue';comparison={physical_detail_needed:null,candidates:[]};
- await upload();await identify();assert.equal(requests[1].text.format.name,'flipcheck_resolver');assert.equal(requests.filter(r=>r.tools?.length).length,1);assert.notEqual(await page.evaluate(()=>ident.market_ready),true);
+ await upload();await identify();assert.equal(requests[1].text.format.name,'flipcheck_resolver');assert.equal(requests.filter(r=>r.tools?.length).length,2);assert.ok(await page.evaluate(()=>!!scan164.catalogueFallback));assert.equal(googleRequests.filter(r=>r.action==='detect').length,0);assert.notEqual(await page.evaluate(()=>ident.market_ready),true);
 });
 test('build171 Politoed searches catalogue before an uncertain printing detail and keeps candidate names',async()=>{
  await reset();vision=structuredClone(require('./fixtures/diagnostics-171.json').politoed.vision);providerMode='no_images';resolverMode='catalogue';comparison={physical_detail_needed:null,candidates:[]};
@@ -349,7 +349,7 @@ test('build171 Politoed searches catalogue before an uncertain printing detail a
 });
 test('build171 current Doncic missing parallel confirmation triggers assistance and retains core identity',async()=>{
  await reset();vision=structuredClone(require('./fixtures/diagnostics-171.json').doncic.vision);providerMode='no_images';resolverMode='catalogue';comparison={physical_detail_needed:null,candidates:[]};
- await upload();await identify();assert.equal(googleRequests.filter(r=>r.action==='detect').length,1);assert.notEqual(await page.evaluate(()=>ident.market_ready),true);assert.ok(await page.evaluate(()=>ident.core_identity?.model));
+ await upload();await identify();assert.equal(googleRequests.filter(r=>r.action==='detect').length,0);assert.ok(requests.some(r=>r.text.format.name==='flipcheck_resolver'));assert.notEqual(await page.evaluate(()=>ident.market_ready),true);assert.ok(await page.evaluate(()=>ident.core_identity?.model));
 });
 test('catalogue download continues past three missing pages and passes PDF observation terms',async()=>{
  await reset();const out=await page.evaluate(async()=>{
@@ -653,4 +653,27 @@ test('183 catalogue repair preserves two separately named subjects on one panel 
   return {result:await finishComparison173(FlipCheckVisual.validate(lastVisionReading,reply,[ref]),scan164),repair:scan164.fieldRepair};
  },quote);
  assert.equal(out.repair.state,'completed');assert.equal(out.result.market_ready,true);assert.match(out.result.model,/Alex Rivera \/ Morgan Vale/);assert.equal(out.result.catalogue_data.filter(f=>f.field==='subject').length,2);assert.equal(requests.length,1);assert.equal(googleRequests.length,0);
+});
+test('185 slab uses one quick web check and no photo comparison or printing reread',async()=>{
+ await reset();await upload();resolverMode='catalogue_identity';
+ catalogTitle='1997 Japanese Fossil Ghostmon Holo #94';catalogText=catalogTitle;
+ vision={...unknown,kind:'card',object_unit:'single',category:'Pokemon card',brand:'Pokemon',family:'Fossil',title:'Ghostmon',model:'Ghostmon',variant:'Holo',variant_scope:'commercial',model_confidence:95,identity_basis:{family:'printed',variant:'physical_evidence'},unresolved_identity_fields:['variant'],photo_clues:[{text:'Ghostmon',role:'subject',certainty:'clear',image_index:1},{text:'#94',role:'collector_number',certainty:'clear',image_index:1},{text:'No. 094',role:'collector_number',certainty:'clear',image_index:1}],slab_reading:{present:true,certainty:'clear',image_index:1,grader:'PSA',label_text:'1997 JAPANESE FOSSIL #94 GHOSTMON HOLO MINT 9 12345678',subject:'Ghostmon',family:'Fossil',model:'',year:'1997',card_number:'94',variant:'HOLO',grade:'MINT 9',certificate:'12345678',object_match:'matches',match_details:'Visible subject and layout agree.'},pokemon_printing:{is_pokemon:true,language:'Japanese',set_name:'Fossil',first_edition_stamp:'unclear',artwork_shadow:'not_applicable'}};
+ await identify();
+ const out=await page.evaluate(()=>({result:ident,scan:{slab:scan164.slabVerification,calls:scan164.calls}}));
+ assert.equal(out.result.market_ready,true,JSON.stringify(out));assert.equal(out.result.exact_identity_status,'confirmed');assert.equal(out.result.next_photo_request,null);assert.equal(out.result.slab_verification.state,'confirmed');
+ assert.equal(requests.filter(r=>r.text.format.name==='flipcheck_resolver').length,1);
+ assert.equal(requests.filter(r=>['flipcheck_visual_comparison','flipcheck_printing_detail','flipcheck_photo_detail'].includes(r.text.format.name)).length,0);
+ assert.equal(googleRequests.filter(r=>r.action==='detect'||r.action==='image').length,0);
+});
+test('185 original-side serial recovery creates rotated edge views and retains photo origin',async()=>{
+ await reset();await upload();
+ const out=await page.evaluate(async()=>{
+  scan164=newContext164();
+  lastVisionReading={kind:'card',object_unit:'single',category:'soccer trading card',brand:'Panini',family:'Select',variant:'Green parallel unconfirmed',variant_scope:'commercial',model_confidence:94,market_ready:false,photo_clues:[{text:'Alex Rivera',role:'subject',certainty:'clear',image_index:1},{text:'No. 21',role:'collector_number',certainty:'clear',image_index:1}],object_regions:[{image_index:1,x:0,y:0,width:1,height:1,certain:true}],physical_observations:[]};
+  const req=FlipCheckVisual.detailRequests(lastVisionReading,[],1);
+  window.serialRequestIndex185=req[0].clue_index;
+  const result=await rereadPhotoDetails173(lastVisionReading,scan164);return {result,recovery:scan164.detailReread};
+ });
+ assert.equal(out.recovery.attempted,true);assert.equal(out.recovery.images[0].view,'both_vertical_edges_rotated_top_and_bottom');assert.equal(out.result.physical_serial,undefined);
+ assert.equal(requests.filter(r=>r.text.format.name==='flipcheck_photo_detail').length,1);
 });

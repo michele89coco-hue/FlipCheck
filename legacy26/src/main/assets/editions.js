@@ -57,6 +57,8 @@ First Edition e Shadowless sono due attributi separati: il timbro non dimostra d
     const year=sourceYears.length===1?Number(sourceYears[0]):sourceYears.length===0&&photoYears.length===1&&printing.copyright_image>=1?Number(photoYears[0]):0;
     if(identity.catalogue_core_verified&&western&&clean(set_name)&&year>=2003&&year<=2099&&!photoYears.some(y=>Number(y)>year))
       result.stamp_policy={state:'not_applicable',rule:'western_release_after_2002',year,origin:sourceYears.length?'catalogue_release':'verified_series_and_observed_copyright',evidence:sourceYears.length?sourceDates:printing.copyright_text,source:'https://www.psacard.com/articles/articleview/9498/psa-set-registry-collecting-2002-poke-mon-neo-destiny-1st-edition'};
+    const japanese=/^(japanese|giapponese|ja|jp)$/.test(norm(printing.language));
+    if(identity.catalogue_core_verified&&japanese&&year>=1996&&year<2001&&clean(set_name))result.stamp_policy={state:'not_applicable',rule:'japanese_release_before_2001',year,origin:sourceYears.length?'catalogue_release':'verified_series_and_observed_copyright',evidence:sourceYears.length?sourceDates:printing.copyright_text,source:'https://www.cgccards.com/news/article/10262/pokemon-first-editions/'};
     return result;
   }
   function observedFinish(identity){
@@ -116,6 +118,9 @@ First Edition e Shadowless sono due attributi separati: il timbro non dimostra d
     if (!identity || identity.kind !== 'card') return identity;
     const result = evaluate(printing,count);
     if (!result) return identity;
+    if(identity.slab_verification?.state==='confirmed'&&!result.contradiction){
+      return {...identity,pokemon_printing:printing,printing_check:{...result,complete:true,missing:[],origin:'slab_label',physical_check:result},variant_proof:{origin:'photo_slab_label',quote:identity.slab_reading.label_text,image_index:identity.slab_reading.image_index}};
+    }
     const out = Object.assign({},identity);
     // Keep the original v26 core identity and confidence. Only printing assertions are adjusted.
     for (const key of ['title','model','variant','normalized_query']) out[key] = strip(out[key]);
