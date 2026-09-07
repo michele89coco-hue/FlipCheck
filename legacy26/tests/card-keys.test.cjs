@@ -36,7 +36,7 @@ test('missing, conflicting, mistyped or non-entry evidence cannot close by keys'
   d=>d.base.photo_clues[1].certainty='uncertain',
   d=>d.base.photo_clues.push(clue('H8/H32','collector_number')),
   d=>{d.base.photo_clues[2]={...clue('2003 career totals PTS 100','season')};d.candidate.fields=d.fields.filter(f=>f.field!=='year');},
-  d=>{d.base.family='Printed Other Series';d.base.identity_basis.family='printed';},
+  d=>{d.base.family='Printed Other Series';d.base.identity_basis.family='printed';d.base.photo_clues.push(clue('Printed Other Series','text'));},
  ];
  for(const mutate of changes){const d=fixture();mutate(d);assert.notEqual(evaluate(d).catalogue_core_verified,true,mutate.toString());}
 });

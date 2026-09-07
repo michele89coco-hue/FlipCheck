@@ -93,7 +93,7 @@ test('reference ranking uses actual image numbers and deduplicates thumbnail res
  const references=[{...ref,id:'wrong',image_url:'https://media.example/wiki/a/card.jpg',ocr:{text:'25/144'},text:ref.text.repeat(3)},
   {...ref,id:'duplicate',image_url:'https://media.example/wiki/thumb/a/card.jpg/800px-card.jpg',ocr:{text:'25/144'}},
   {...ref,id:'right',image_url:'https://media.example/h7.jpg',ocr:{text:'H7/H32'},text:''}];
- const ranked=V.rankReferences(references,photo);assert.equal(ranked[0].id,'right');assert.equal(ranked.length,2);
+ const ranked=V.rankReferences(references,photo);assert.equal(ranked[0].id,'right');assert.equal(ranked.length,1);
  assert.equal(V.referenceImageUseful('https://images.example/uploads/mini_auction_company_x.jpg'),false);
 });
 test('original printing recovery supersedes both a wrong match and its stale rejection',()=>{
@@ -140,8 +140,8 @@ test('a specific reference for the observed border outranks an unrelated paralle
  const silver={...common,id:'silver',title:'Alex Rivera Silver Prism 73',ocr:{state:'ok',text:'NO. 73'}};
  const green={...common,id:'green',title:'Alex Rivera Green Prism 73',image_url:'https://storage.googleapis.com/images.pricecharting.com/example/240.jpg'};
  const large={...green,id:'large',image_url:'https://storage.googleapis.com/images.pricecharting.com/example/1600.jpg'};
- assert.deepEqual(V.rankReferences([silver,green,large],b).map(r=>r.id),['green','silver']);
- const wrong={...green,id:'wrong',ocr:{state:'ok',text:'NO. 74'}};assert.notEqual(V.rankReferences([wrong,silver],b)[0].id,'wrong');
+ assert.deepEqual(V.rankReferences([silver,green,large],b).map(r=>r.id),['green']);
+ const wrong={...green,id:'wrong',ocr:{state:'ok',text:'NO. 74'}};assert.deepEqual(V.rankReferences([wrong,silver],b),[]);
 });
 function box182(){return {kind:'object',object_unit:'box',category:'basketball trading card sealed box',brand:'Aurora',family:'Chrome Update Series',brand_confidence:99,family_confidence:96,model_confidence:72,identity_basis:{family:'printed',variant:'inferred'},variant_scope:'commercial',variant:'sealed box',model:'',title:'Chrome box',market_ready:false,photo_clues:[clue('Aurora Chrome'),clue('UPDATE SERIES'),clue('2031/32','season'),clue('1 AUTOGRAPH* IN EVERY BOX!')],physical_observations:[]};}
 function boxEntry182(variant='Hobby',amount=1,id='box'){

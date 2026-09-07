@@ -10,6 +10,16 @@ import static org.junit.Assert.*;
 
 /** Actual production request construction and network guards, with zero HTTP calls. */
 public final class GoogleDirectRegressionTest {
+    @Test public void commentArticleCannotReplaceTheActualChecklistBody() throws Exception {
+        String html="<html><head><title>2031 Example Prism Checklist</title></head><body>"+
+            "<article class='comment'>How can you tell a silver card?</article>"+
+            "<div class='entry-content'><h1>2031 Example Prism Checklist</h1><h2>Base Set Checklist</h2>"+
+            "<p>72 Other Player</p><p>73 Alex Rivera</p><p>74 Someone Else</p>"+
+            "<h2>Base Parallels</h2><ul><li>Green</li><li>Gold /10</li></ul></div></body></html>";
+        String text=GoogleVisionBridge.pageData(html,"https://catalog.example/checklist",new org.json.JSONArray().put("73 Alex Rivera").put("Green")).getString("text");
+        assertTrue(text.contains("73 Alex Rivera"));assertTrue(text.contains("Base Set Checklist"));assertTrue(text.contains("Gold /10"));
+        assertFalse(text.contains("How can you tell a silver card?"));
+    }
     @Test public void lateChecklistRowsSurviveThePageTextLimit() throws Exception {
         StringBuilder html=new StringBuilder("<html><head><title>2031 Example Select Soccer Checklist</title></head><body><main><h1>Base Terrace</h1>");
         for(int i=0;i<180;i++)html.append("<p>Background introduction and general collector information.</p>");

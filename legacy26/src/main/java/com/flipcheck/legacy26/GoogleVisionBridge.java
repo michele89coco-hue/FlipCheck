@@ -212,8 +212,18 @@ public final class GoogleVisionBridge {
         }
         rankedImages.entrySet().stream().sorted((a,b)->Integer.compare(b.getValue(),a.getValue())).limit(6).forEach(e->images.add(e.getKey()));
         doc.select("script,style,noscript,svg,nav,header,footer").remove();
-        Element main=doc.selectFirst("main,article,[role=main],[itemtype$=/Product]");
-        Element content=main==null?doc.body():main;
+        // A comment can be the first <article> while the actual checklist lives
+        // in a div. Choose the relevant content root rather than the first tag.
+        Element content=doc.body();int bestContentScore=Integer.MIN_VALUE;
+        java.util.List<Element> roots=new java.util.ArrayList<>(doc.select("main,article,[role=main],[itemtype$=/Product],[itemprop=articleBody],.entry-content,.post-content"));
+        roots.add(doc.body());
+        for(Element root:roots){
+            String context=root.className()+" "+root.id()+" "+root.attr("itemprop");
+            if(context.matches("(?i).*(?:comment|review|recommend|related).*")||root.closest("#comments,.comments,.comment-list")!=null)continue;
+            String words=root.text();
+            int score=relevance(words,terms)*100+Math.min(words.length(),20000)/100-(root==doc.body()?30:0);
+            if(score>bestContentScore){content=root;bestContentScore=score;}
+        }
         // Preserve checklist cell and row boundaries even in minified HTML tables.
         for(Element cell:content.select("th,td"))cell.appendText(" ");
         for(Element row:content.select("tr"))row.appendText("\n");

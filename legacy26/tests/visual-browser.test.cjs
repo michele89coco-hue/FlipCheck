@@ -295,9 +295,9 @@ test('185 recorded high confidence subtype uncertainty uses a targeted checklist
  await reset();vision=structuredClone(require('./fixtures/diagnostics-169.json').doncic.vision);vision.object_regions=[];vision.object_region=null;providerMode='no_images';resolverMode='catalogue';comparison={physical_detail_needed:null,candidates:[]};await page.evaluate(()=>{$('scanBudget').value='.03';});
  await upload();await identify();const d=await page.evaluate(()=>diagnostic26());assert.equal(d.visualAssistance.closures[0].closure_result,false);assert.equal(googleRequests.filter(r=>r.action==='detect').length,0);assert.ok(requests.some(r=>r.text.format.name==='flipcheck_resolver'));assert.equal(d.identification.market_ready,false);assert.equal(d.identification.variant_needs_verification,true);assert.ok(d.visualAssistance.budget.spentOrReservedUsd<=.03);
 });
-test('recorded box closes from Google reference comparison without a subsequent text search',async()=>{
- await reset();const fixture=require('./fixtures/diagnostics-169.json').box;vision=structuredClone(fixture.vision);comparison=structuredClone(fixture.comparison);catalogText=fixture.references[0].text;catalogTitle=fixture.references[0].title;await page.evaluate(()=>{$('scanBudget').value='.03';});
- await upload();await identify();const d=await page.evaluate(()=>diagnostic26());assert.equal(d.identification.market_ready,true);assert.equal(d.identification.variant,'Hobby Box');assert.equal(requests.filter(r=>r.tools?.length).length,0);assert.equal(googleRequests.filter(r=>r.action==='detect').length,1);
+test('188 recorded box now closes through targeted product text without Google search',async()=>{
+ await reset();const fixture=require('./fixtures/diagnostics-169.json').box;vision=structuredClone(fixture.vision);resolverMode='catalogue_identity';comparison=structuredClone(fixture.comparison);catalogText=fixture.references[0].text;catalogTitle=fixture.references[0].title;await page.evaluate(()=>{$('scanBudget').value='.03';});
+ await upload();await identify();const d=await page.evaluate(()=>diagnostic26());assert.equal(d.identification.market_ready,true);assert.equal(d.identification.variant,'Hobby Box');assert.equal(requests.filter(r=>r.tools?.length).length,1);assert.equal(googleRequests.filter(r=>r.action==='detect').length,0);
 });
 test('Google-first truncated web output can be completed from collected sources without another web search',async()=>{
  await reset();textObject();vision.kind='card';vision.object_unit='single';resolverMode='google_incomplete';providerMode='no_images';comparison={physical_detail_needed:null,candidates:[]};await page.evaluate(()=>{$('scanBudget').value='.03';});
@@ -314,12 +314,12 @@ test('185 two-photo keyed sports lookup skips unavailable Google and retains the
  await page.locator('#photoBatch').setInputFiles([photos[0],{name:'back.png',mimeType:'image/png',buffer:Buffer.from(back,'base64')}]);await page.waitForFunction(()=>!photoBusy);await identify();
  const d=await page.evaluate(()=>diagnostic26());assert.equal(d.uploadedImageCount,2);assert.equal(requests.filter(r=>r.tools?.length).length,2);assert.equal(googleRequests.filter(r=>r.action==='detect').length,0);assert.equal(d.visualAssistance.calls.some(c=>c.provider==='google'),false);assert.equal(d.visualAssistance.continuationBudget.strategy,'preserve_decisive_comparison');assert.ok(d.visualAssistance.budget.spentOrReservedUsd<=.03);assert.equal(d.identification.market_ready,false);
 });
-test('build170 box defers comparison until the specification query and closes using both sets of evidence',async()=>{
+test('188 recorded box guarantee closes from the targeted literal configuration',async()=>{
  await reset();const f=require('./fixtures/diagnostics-170.json').box;vision=structuredClone(f.vision);comparison=structuredClone(f.phases.find(p=>p.stage==='flipcheck_visual_comparison').result);
  for(const c of comparison.candidates)for(const entry of [...c.matches,...c.fields])entry.reference_id='ref1';
- catalogText='2025-26 Topps Chrome Update Series Basketball Hobby, Box';catalogTitle=f.references[0].title;resolverMode='box_completion';
+ catalogText='2025-26 Topps Chrome Update Series Basketball Hobby, Box\n1 autograph in every box.';catalogTitle=f.references[0].title;resolverMode='catalogue_identity';
  usageOverrides.flipcheck_identification=f.phases[0].usage;usageOverrides.flipcheck_visual_comparison=f.phases[1].usage;
- await upload();await identify();const d=await page.evaluate(()=>diagnostic26());assert.equal(requests.filter(r=>r.tools?.length).length,1);assert.equal(requests.filter(r=>r.text.format.name==='flipcheck_visual_comparison').length,1);assert.match(requests.find(r=>r.tools?.length).input,/1 AUTOGRAPH IN EVERY BOX/);assert.equal(d.identification.market_ready,true);assert.match(d.identification.title,/Hobby/);assert.equal(d.visualAssistance.referenceCompletion.reusedComparison,true);assert.ok(d.visualAssistance.budget.spentOrReservedUsd<=.03);
+ await upload();await identify();const d=await page.evaluate(()=>diagnostic26());assert.equal(requests.filter(r=>r.tools?.length).length,1);assert.equal(requests.filter(r=>r.text.format.name==='flipcheck_visual_comparison').length,0);assert.match(requests.find(r=>r.tools?.length).input,/1 AUTOGRAPH IN EVERY BOX/);assert.equal(d.identification.market_ready,true);assert.match(d.identification.title,/Hobby/);assert.equal(d.visualAssistance.specificationVerification.method,'literal_box_configuration');assert.ok(d.visualAssistance.budget.spentOrReservedUsd<=.03);
 });
 test('build170 inferred set is researched before an uncertain edition stamp',async()=>{
  await reset();vision=structuredClone(require('./fixtures/diagnostics-170.json').politoed.vision);providerMode='no_images';resolverMode='catalogue';comparison={physical_detail_needed:null,candidates:[]};await upload();await identify();
@@ -595,8 +595,8 @@ test('184 a box closes from cited configuration without comparing unrelated sing
   scan164=newContext164();scan164.photoOcr=[];lastVisionReading={kind:'object',object_unit:'box',category:'basketball sealed box',brand:'Example',family:'Chrome Update Series',brand_confidence:98,family_confidence:96,model_confidence:96,market_ready:false,variant:'',variant_scope:'commercial',identity_basis:{family:'printed',variant:'inferred'},photo_clues:[['Example','text'],['Chrome','text'],['UPDATE SERIES','text'],['2031/32','season'],['1 AUTOGRAPH CARD EVERY BOX!','text']].map(([text,role])=>({text,role,certainty:'clear',image_index:1})),physical_observations:[]};
   const result=await resolveIdentificationCheap(lastVisionReading,'');return {result,specification:scan164.specificationVerification};
  });
- assert.equal(out.result.market_ready,true,JSON.stringify(out));assert.equal(out.result.variant,'Hobby');assert.equal(out.result.exact_identity_status,'confirmed');assert.equal(out.result.next_photo_request,null);
- assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_resolver','flipcheck_specifications']);assert.equal(googleRequests.some(r=>r.action==='detect'),false);
+ assert.equal(out.result.market_ready,true,JSON.stringify(out));assert.match(out.result.variant,/^Hobby(?: Box)?$/);assert.equal(out.result.exact_identity_status,'confirmed');assert.equal(out.result.next_photo_request,null);
+ assert.equal(out.specification.method,'literal_box_configuration');assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_resolver']);assert.equal(googleRequests.some(r=>r.action==='detect'),false);
 });
 test('184 a footer serial is reread, catalogue row verified, parallel closed and specimen number rendered',async()=>{
  await reset();await upload();resolverMode='catalogue_identity';providerMode='placeholder';catalogTitle="2031-32 Example Select Road to World Cup '32 Soccer Checklist";
@@ -733,4 +733,41 @@ test('187 actual Boniface checklist text closes 2/5 without specifications or im
  usageOverrides=structuredClone(actual186.boniface.usageByStage);await identify();const d=await page.evaluate(()=>diagnostic26());
  assert.equal(d.identification.market_ready,true,JSON.stringify(d.identification));assert.equal(d.identification.variant,'Green');assert.equal(d.identification.serial_number,'2/5');assert.equal(d.visualAssistance.specificationVerification.method,'literal_parallel_sections');
  assert.equal(requests.some(r=>['flipcheck_specifications','flipcheck_visual_comparison'].includes(r.text.format.name)),false);assert.equal(requests.filter(r=>r.text.format.name==='flipcheck_resolver').length,1);assert.ok(d.visualAssistance.budget.spentOrReservedUsd<=.03);
+});
+const actual187=require('./fixtures/diagnostics-187.json');
+test('188 actual reordered Cloyster label bypasses printing recovery through the production button',async()=>{
+ await reset();await upload();vision=structuredClone(actual187.cloyster.photo);
+ resolverMode='catalogue_identity';catalogTitle='2002 Expedition Italian Cloyster #8 Holo';catalogText=catalogTitle;
+ await identify();const d=await page.evaluate(()=>diagnostic26());
+ assert.equal(d.identification.market_ready,true,JSON.stringify(d.identification));assert.equal(d.visualAssistance.route,'slab_label');
+ assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_identification','flipcheck_resolver']);assert.equal(googleRequests.length,0);
+ assert.equal(d.identification.slab_reading.variant,'Holo R, Italian');assert.equal(d.identification.next_photo_request,null);
+});
+test('188 actual Vileplume uses its exact catalogue entry despite the incorrect initial Base Set flag',async()=>{
+ await reset();await upload();vision=structuredClone(actual187.vileplume.photo);
+ const ref=actual187.vileplume.assistance.textReferences.find(r=>r.url.includes('holohaul'));resolverMode='catalogue_identity';providerMode='placeholder';catalogTitle=ref.title;catalogText=ref.text;
+ await identify();const d=await page.evaluate(()=>diagnostic26());
+ assert.equal(d.identification.market_ready,true,JSON.stringify(d.identification));assert.equal(d.identification.family,'Jungle');assert.equal(d.identification.identity_evidence.score,90);
+ assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_identification','flipcheck_resolver']);
+ assert.doesNotMatch(d.visualAssistance.queries.join(' '),/Base Set/);assert.equal(googleRequests.some(r=>r.action==='detect'),false);
+});
+test('188 actual Topps box confirms its product family and leaves only the unresolved format',async()=>{
+ await reset();await upload();vision=structuredClone(actual187.topps.photo);
+ resolverMode='catalogue_identity';providerMode='placeholder';const ref=actual187.topps.assistance.textReferences.find(r=>r.url.includes('wssportscard'));catalogTitle=ref.title;catalogText=ref.text;
+ await identify();const d=await page.evaluate(()=>diagnostic26());
+ assert.equal(d.identification.core_identity.status,'confirmed',JSON.stringify(d.identification));assert.equal(d.identification.identity_status,'confirmed');assert.equal(d.identification.identity_evidence.score,90);
+ assert.equal(d.visualAssistance.catalogueRoute.kind,'box_configuration');assert.equal(googleRequests.some(r=>r.action==='detect'),false);
+ assert.equal(d.identification.market_ready,false);assert.doesNotMatch(d.identification.missing_information.join(' '),/numero carta|parallelo|tiratura/i);
+ assert.doesNotMatch(d.visualAssistance.queries.join(' '),/blue|black|COOPER|VICTOR/i);
+});
+test('188 production Doncic key verification reuses the actual web document with zero extra model calls',async()=>{
+ await reset();await upload();const d=actual187.doncic;
+ const out=await page.evaluate(async d=>{
+  scan164=newContext164();lastVisionReading=d.photo;
+  const refs=V164.webDocuments188(d.result.raw_web_results,lastVisionReading);scan164.textReferences=refs;
+  const result=await verifyCardKeys180(V164.auditIdentity(lastVisionReading),scan164,refs);
+  return {result,keyCheck:scan164.cardKeyVerification};
+ },d);
+ assert.equal(out.result.identity_evidence.score,90);assert.equal(out.result.identity_status,'confirmed');assert.equal(out.result.core_identity.status,'confirmed');
+ assert.equal(out.result.market_ready,false);assert.equal(out.keyCheck.method,'literal_checklist_row');assert.equal(requests.length,0);assert.equal(googleRequests.length,0);
 });

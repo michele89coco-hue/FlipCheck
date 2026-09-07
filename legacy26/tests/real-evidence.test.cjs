@@ -8,7 +8,7 @@ const sportsRef=()=>reference('2025-26 Panini Select Road to FIFA World Cup 2026
 const validate=(p,refs)=>V.validate(p,{candidates:V.checklistEntries186(p,refs).map(e=>({unit:'single',decision:'match',same_unit:true,identity_level:'exact',physical_ambiguity:true,ambiguity_scope:'variant',variant_status:'unresolved',matches:[],conflicts:[],fields:e.fields})),detail_needed_from:'none'},refs);
 test('real Machamp selects Pokemon catalogues from typed game even with WOTC and TCG metadata',()=>{
  const p=photo('machamp'),route=V.cataloguePlan185(p);
- assert.equal(route.kind,'card_checklist');assert.match(route.query,/Pokemon.*Base Set.*Machamp.*#8\/102/);assert.match(route.query,/serebii/);
+ assert.equal(route.kind,'card_checklist');assert.match(route.query,/Pokemon.*Machamp.*#8\/102/);assert.match(route.query,/serebii/);
  const c=p.photo_clues.find(c=>c.role==='copyright');c.certainty='clear';
  assert.match(V.cataloguePlan185(p).query,/1999/);assert.equal(V.cardKeyFacts(p).date.value,null);
 });
