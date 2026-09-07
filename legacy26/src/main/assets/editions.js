@@ -57,9 +57,25 @@ First Edition e Shadowless sono due attributi separati: il timbro non dimostra d
     const year=sourceYears.length===1?Number(sourceYears[0]):sourceYears.length===0&&photoYears.length===1&&printing.copyright_image>=1?Number(photoYears[0]):0;
     if(identity.catalogue_core_verified&&western&&clean(set_name)&&year>=2003&&year<=2099&&!photoYears.some(y=>Number(y)>year))
       result.stamp_policy={state:'not_applicable',rule:'western_release_after_2002',year,origin:sourceYears.length?'catalogue_release':'verified_series_and_observed_copyright',evidence:sourceYears.length?sourceDates:printing.copyright_text,source:'https://www.psacard.com/articles/articleview/9498/psa-set-registry-collecting-2002-poke-mon-neo-destiny-1st-edition'};
+    // Set-specific release knowledge is needed during 2002; Neo Destiny still has 1st Edition.
+    const postNeo=/^(?:2002 )?(?:expedition(?: base set)?|legendary collection)$/.test(norm(set_name));
+    if(identity.catalogue_core_verified&&western&&postNeo&&year===2002)
+      result.stamp_policy={state:'not_applicable',rule:'western_post_neo_2002_release',year,origin:'verified_series',source:'https://www.psacard.com/articles/articleview/9498/psa-set-registry-collecting-2002-poke-mon-neo-destiny-1st-edition'};
     const japanese=/^(japanese|giapponese|ja|jp)$/.test(norm(printing.language));
     if(identity.catalogue_core_verified&&japanese&&year>=1996&&year<2001&&clean(set_name))result.stamp_policy={state:'not_applicable',rule:'japanese_release_before_2001',year,origin:sourceYears.length?'catalogue_release':'verified_series_and_observed_copyright',evidence:sourceYears.length?sourceDates:printing.copyright_text,source:'https://www.cgccards.com/news/article/10262/pokemon-first-editions/'};
     return result;
+  }
+  function remapCropImages186(printing,originalIndexes){
+    if(!printing)return {printing,remapped:[]};
+    const out={...printing},valid=new Set(originalIndexes),remapped=[];
+    // Multiple crops of ONE photo are unambiguous. Never guess between different originals.
+    if(valid.size===1)for(const key of ['stamp_image','shadow_image','copyright_image','slab_image']){
+      const index=out[key];
+      if(Number.isInteger(index)&&index>=1&&index<=originalIndexes.length&&!valid.has(index)){
+        out[key]=originalIndexes[index-1];remapped.push({field:key,from:index,to:out[key],origin:'crop_to_original'});
+      }
+    }
+    return {printing:out,remapped};
   }
   function observedFinish(identity){
     const reads=(identity.physical_observations||[]).filter(o=>o.entity==='target'&&o.certainty==='clear'&&['finish','pattern'].includes(o.feature)&&o.image_index>=1);
@@ -167,7 +183,7 @@ First Edition e Shadowless sono due attributi separati: il timbro non dimostra d
         ?{...f,verification:result.complete?'confirmed_physical':'pending_physical'}:f);
     return out;
   }
-  const api = {schema,prompt,evaluate,apply,isOriginalBaseSet,contradictsPrinting,cataloguePrinting,observedFinish};
+  const api = {schema,prompt,evaluate,apply,isOriginalBaseSet,contradictsPrinting,cataloguePrinting,observedFinish,remapCropImages186};
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.FlipCheckEditions = api;
 })(typeof window !== 'undefined' ? window : globalThis);

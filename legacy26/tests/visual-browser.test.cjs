@@ -28,7 +28,7 @@ before(async()=>{
     const sources=catalogue?Array.from({length:resolverMode==='catalogue_cost'?3:1},(_,i)=>({url:'https://catalog.example/entry'+i+(resolverMode==='catalogue_pdf'?'.pdf':''),title:resolverMode==='catalogue_identity'?catalogTitle:'Catalogue entry: Documented model.',snippet:resolverMode==='catalogue_identity'?catalogText:'Two round controls. Rectangular body. Catalogue entry: Documented model.'})):withSource?[source]:[];
     const output=[{type:'web_search_call',status:'completed',action:{type:'search',sources},results:sources},{type:'message',content:[{type:'output_text',text:resolverMode==='malformed'?'{':JSON.stringify({candidate_checks:[],verification_summary:'Mock response',missing_information:[]})}]}];
     const incomplete=!['malformed','complete_source','box_completion','empty_complete'].includes(resolverMode)&&!catalogue;
-    return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({status:incomplete?'incomplete':'completed',...(incomplete?{incomplete_details:{reason:'max_output_tokens'}}:{}),output,usage:resolverMode==='expensive'?{input_tokens:60000,output_tokens:1500}:resolverMode==='catalogue_cost'?{input_tokens:24000,output_tokens:400}:{input_tokens:100,output_tokens:100}})});
+    return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({status:incomplete?'incomplete':'completed',...(incomplete?{incomplete_details:{reason:'max_output_tokens'}}:{}),output,usage:usageOverrides[body.text.format.name]||(resolverMode==='expensive'?{input_tokens:60000,output_tokens:1500}:resolverMode==='catalogue_cost'?{input_tokens:24000,output_tokens:400}:{input_tokens:100,output_tokens:100})})});
    }
    if(waitApi){const pending=waitApi;await pending;}
    return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({status:'completed',output:[{type:'message',content:[{type:'output_text',text:JSON.stringify(payload)}]}],usage:usageOverrides[body.text.format.name]||{input_tokens:100,output_tokens:100}})});
@@ -312,7 +312,7 @@ test('185 two-photo keyed sports lookup skips unavailable Google and retains the
  await reset();const f=require('./fixtures/diagnostics-170.json').doncic;vision=structuredClone(f.vision);usageOverrides.flipcheck_identification=f.phases[0].usage;providerMode='network';resolverMode='catalogue';comparison={physical_detail_needed:null,candidates:[]};
  const back=await page.evaluate(()=>{const c=document.createElement('canvas');c.width=420;c.height=600;c.getContext('2d').fillStyle='blue';c.getContext('2d').fillRect(0,0,420,600);return c.toDataURL('image/png').split(',')[1];});
  await page.locator('#photoBatch').setInputFiles([photos[0],{name:'back.png',mimeType:'image/png',buffer:Buffer.from(back,'base64')}]);await page.waitForFunction(()=>!photoBusy);await identify();
- const d=await page.evaluate(()=>diagnostic26());assert.equal(d.uploadedImageCount,2);assert.equal(requests.filter(r=>r.tools?.length).length,1);assert.equal(googleRequests.filter(r=>r.action==='detect').length,0);assert.equal(d.visualAssistance.calls.some(c=>c.provider==='google'),false);assert.equal(d.visualAssistance.continuationBudget.strategy,'preserve_decisive_comparison');assert.ok(d.visualAssistance.budget.spentOrReservedUsd<=.03);assert.equal(d.identification.market_ready,false);
+ const d=await page.evaluate(()=>diagnostic26());assert.equal(d.uploadedImageCount,2);assert.equal(requests.filter(r=>r.tools?.length).length,2);assert.equal(googleRequests.filter(r=>r.action==='detect').length,0);assert.equal(d.visualAssistance.calls.some(c=>c.provider==='google'),false);assert.equal(d.visualAssistance.continuationBudget.strategy,'preserve_decisive_comparison');assert.ok(d.visualAssistance.budget.spentOrReservedUsd<=.03);assert.equal(d.identification.market_ready,false);
 });
 test('build170 box defers comparison until the specification query and closes using both sets of evidence',async()=>{
  await reset();const f=require('./fixtures/diagnostics-170.json').box;vision=structuredClone(f.vision);comparison=structuredClone(f.phases.find(p=>p.stage==='flipcheck_visual_comparison').result);
@@ -612,7 +612,7 @@ test('184 a footer serial is reread, catalogue row verified, parallel closed and
  });
  assert.equal(out.result.market_ready,true,JSON.stringify(out));assert.match(out.result.model,/#21.*Alex Rivera/);assert.equal(out.result.serial_number,'2/5');assert.equal(out.result.print_run,5);assert.equal(out.result.variant,'Green');assert.equal(out.detail.requested[0].role,'serial');assert.equal(out.result.next_photo_request,null);
  assert.match(await page.locator('#specimenSerial184').textContent(),/Numero carta nel set: 21.*2\/5.*Tiratura: 5/);
- assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_photo_detail','flipcheck_resolver','flipcheck_card_keys','flipcheck_specifications']);
+ assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_photo_detail','flipcheck_resolver','flipcheck_specifications']);
 });
 test('184 a matched catalogue release date disables an inapplicable stamp despite a different copyright reading',async()=>{
  await reset();await upload();const out=await page.evaluate(async()=>{
@@ -676,4 +676,39 @@ test('185 original-side serial recovery creates rotated edge views and retains p
  });
  assert.equal(out.recovery.attempted,true);assert.equal(out.recovery.images[0].view,'both_vertical_edges_rotated_top_and_bottom');assert.equal(out.result.physical_serial,undefined);
  assert.equal(requests.filter(r=>r.text.format.name==='flipcheck_photo_detail').length,1);
+});
+const real185=require('./fixtures/diagnostics-185.json');
+test('186 recorded Cloyster slab closes through production click with real usage and one identity search',async()=>{
+ await reset();await upload();vision=structuredClone(real185.cloyster.photo);usageOverrides=structuredClone(real185.cloyster.usageByStage);
+ resolverMode='catalogue_identity';catalogTitle='2002 Expedition Checklist';catalogText=catalogTitle+'\n8 Cloyster Holo Rare\n9 Another Creature';
+ await identify();const out=await page.evaluate(()=>({result:ident,slab:scan164.slabVerification,budget:scan164.budget.spent()}));
+ assert.equal(out.result.market_ready,true,JSON.stringify(out));assert.equal(out.slab.state,'confirmed');assert.equal(out.result.next_photo_request,null);assert.ok(out.budget<.03);
+ assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_identification','flipcheck_resolver']);
+ assert.equal(googleRequests.some(r=>['image','detect'].includes(r.action)),false);
+});
+test('186 recorded Boniface unreadable mark reaches rotated recovery then checklist and parallel closure',async()=>{
+ await reset();await upload();
+ const back=await page.evaluate(()=>{const c=document.createElement('canvas');c.width=1080;c.height=2340;const g=c.getContext('2d');g.fillStyle='blue';g.fillRect(0,0,c.width,c.height);return c.toDataURL('image/png').split(',')[1];});
+ await page.locator('#photoBatch').setInputFiles([{name:'back.png',mimeType:'image/png',buffer:Buffer.from(back,'base64')}]);await page.waitForFunction(()=>!photoBusy);
+ resolverMode='catalogue_identity';providerMode='placeholder';usageOverrides=structuredClone(real185.boniface.usageByStage);
+ catalogTitle='2025-26 Panini Select Road to FIFA World Cup 2026 Soccer Checklist';const quote='Base Terrace Parallels\nGreen /5\nGold /10';catalogText=catalogTitle+'\nBase Terrace\n21 Victor Boniface – Nigeria\n'+quote;
+ detailReply={details:[{clue_index:6,text:'2/5',role:'serial',certainty:'clear'}]};
+ specificationReply={entries:[{reference_id:'page1',unit:'single',scope:'base',variant:'Green',section_quote:quote,variant_quote:'Green /5'}]};
+ vision=structuredClone(real185.boniface.photo);await identify();const out=await page.evaluate(()=>({result:ident,detail:scan164.detailReread,keys:scan164.cardKeyVerification,budget:scan164.budget.spent()}));
+ assert.equal(out.detail.images[0].view,'both_vertical_edges_rotated_top_and_bottom');assert.equal(out.detail.images[0].imageIndex,2);
+ assert.equal(out.result.market_ready,true,JSON.stringify(out));assert.equal(out.result.serial_number,'2/5');assert.equal(out.result.variant,'Green');assert.equal(out.keys.method,'literal_checklist_row');assert.ok(out.budget<.03);
+ assert.equal(requests.filter(r=>r.text.format.name==='flipcheck_resolver').length,1);assert.equal(requests.some(r=>r.text.format.name==='flipcheck_visual_comparison'),false);assert.equal(googleRequests.some(r=>['image','detect'].includes(r.action)),false);
+ assert.match(await page.locator('#specimenSerial184').textContent(),/2\/5/);
+});
+test('186 recorded Machamp printing response preserves Shadowless when two crops came from photo one',async()=>{
+ await reset();await upload();printingReply=structuredClone(real185.machamp.printingReply);
+ const out=await page.evaluate(async photo=>{
+  scan164=newContext164();lastVisionReading=photo;
+  const value={...photo,catalogue_core_verified:true,catalogue_verified:true,core_identity:{status:'confirmed',model:'1999 Base Set Machamp #8/102',fields:[{field:'family',value:'Base Set'},{field:'catalog_number',value:'8/102'}]},model:'1999 Base Set Machamp #8/102'};
+  const result=await finishIdentity171(value,scan164);return {result,recovery:scan164.printingRecovery};
+ },real185.machamp.photo);
+ assert.equal(out.result.printing_check.complete,true,JSON.stringify(out));assert.equal(out.result.market_ready,true);assert.match(out.result.variant,/Shadowless/);assert.equal(out.result.next_photo_request,null);
+ assert.ok(out.recovery.imageRemapping.some(m=>m.field==='shadow_image'&&m.to===1));
+ const schema=requests.find(r=>r.text.format.name==='flipcheck_printing_detail').text.format.schema.properties.pokemon_printing;
+ assert.deepEqual(schema.properties.shadow_image.enum,[0,1]);assert.equal(requests.length,1);
 });

@@ -1,0 +1,1366 @@
+{
+  "cloyster": {
+    "photo": {
+      "status": "identified",
+      "kind": "card",
+      "title": "Cloyster Holo R #8",
+      "category": "Pokémon trading card",
+      "brand": "Wizards of the Coast",
+      "family": "Expedition",
+      "model": "Cloyster Holo R #8",
+      "variant": "Italian holographic",
+      "condition": "BGS 9 MINT",
+      "category_confidence": 99,
+      "brand_confidence": 95,
+      "family_confidence": 99,
+      "model_confidence": 99,
+      "model_verified": true,
+      "market_ready": true,
+      "candidate_models": [],
+      "visual_fingerprint": "Italian Pokémon Expedition Cloyster holographic card, yellow border, #8, graded Beckett 9. Label explicitly reads “2002 EXPEDITION ITALIAN #8 CLOYSTER HOLO R”; artwork shows Cloyster emerging from dark crystalline water.",
+      "distinctive_terms": [
+        "2002 EXPEDITION",
+        "ITALIAN",
+        "#8 CLOYSTER HOLO R",
+        "BECKETT",
+        "MINT"
+      ],
+      "search_terms": [
+        "2002 EXPEDITION",
+        "ITALIAN",
+        "#8 CLOYSTER HOLO R"
+      ],
+      "identifier_hints": [
+        "#8",
+        "0014436473"
+      ],
+      "layout_signature": [
+        {
+          "term": "Cloyster",
+          "position": "upper center",
+          "relation": "below FASE I and left of 80 PV"
+        },
+        {
+          "term": "2002 EXPEDITION",
+          "position": "slab label upper center",
+          "relation": "above ITALIAN"
+        },
+        {
+          "term": "#8 CLOYSTER HOLO R",
+          "position": "slab label upper center",
+          "relation": "below ITALIAN"
+        },
+        {
+          "term": "BECKETT",
+          "position": "slab label upper left",
+          "relation": "left of card identification text"
+        },
+        {
+          "term": "9",
+          "position": "slab label upper right",
+          "relation": "above MINT"
+        }
+      ],
+      "evidence": [
+        "Beckett slab label visibly identifies the card as “2002 EXPEDITION ITALIAN #8 CLOYSTER HOLO R”.",
+        "The card face visibly shows Italian text, Cloyster, 80 PV and holographic artwork.",
+        "Beckett label visibly shows grade 9 MINT and certificate 0014436473."
+      ],
+      "missing_information": [
+        "First Edition status is not visibly established.",
+        "Shadow/shadowless printing status is not reliably determinable from this image."
+      ],
+      "next_photo_request": "None needed for identity; a sharp unobstructed card-face close-up could verify printing details.",
+      "user_text_consistent": true,
+      "normalized_query": "2002 Pokémon Expedition Italian Cloyster Holo R #8 BGS 9",
+      "verification_summary": "The slab label directly verifies the Expedition Italian #8 Cloyster Holo R identity and Beckett grade.",
+      "photo_clues": [
+        {
+          "text": "2002 EXPEDITION",
+          "role": "season",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.32,
+            "y": 0.105,
+            "width": 0.25,
+            "height": 0.022,
+            "certain": true
+          }
+        },
+        {
+          "text": "ITALIAN",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.32,
+            "y": 0.126,
+            "width": 0.16,
+            "height": 0.018,
+            "certain": true
+          }
+        },
+        {
+          "text": "#8 CLOYSTER HOLO R",
+          "role": "model",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.32,
+            "y": 0.143,
+            "width": 0.25,
+            "height": 0.019,
+            "certain": true
+          }
+        },
+        {
+          "text": "Cloyster",
+          "role": "subject",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.35,
+            "y": 0.29,
+            "width": 0.18,
+            "height": 0.035,
+            "certain": true
+          }
+        },
+        {
+          "text": "© 2002 Pokémon / Nintendo",
+          "role": "copyright",
+          "certainty": "uncertain",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.27,
+            "y": 0.71,
+            "width": 0.25,
+            "height": 0.018,
+            "certain": false
+          }
+        }
+      ],
+      "physical_observations": [
+        {
+          "feature": "configuration",
+          "text": "single card enclosed in a Beckett grading slab",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "color",
+          "text": "yellow card border with blue water-toned holographic artwork",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "pattern",
+          "text": "dark crystalline water scene around Cloyster",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        }
+      ],
+      "printing_detail_regions": [],
+      "object_region": {
+        "image_index": 1,
+        "x": 0.035,
+        "y": 0.067,
+        "width": 0.91,
+        "height": 0.797,
+        "certain": true
+      },
+      "object_regions": [
+        {
+          "image_index": 1,
+          "x": 0.035,
+          "y": 0.067,
+          "width": 0.91,
+          "height": 0.797,
+          "certain": true
+        }
+      ],
+      "object_unit": "single",
+      "variant_scope": "commercial",
+      "identity_basis": {
+        "family": "printed",
+        "variant": "printed"
+      },
+      "slab_reading": {
+        "grader": "BECKETT",
+        "label_text": "2002 EXPEDITION ITALIAN #8 CLOYSTER HOLO R; 9 MINT; CENTERING 9.5; CORNERS 9.5; EDGES 9.5; SURFACE 8.5; 0014436473",
+        "subject": "Cloyster",
+        "family": "EXPEDITION",
+        "model": "#8 CLOYSTER HOLO R",
+        "year": "2002",
+        "card_number": "#8",
+        "variant": "HOLO R",
+        "grade": "9 MINT",
+        "certificate": "0014436473",
+        "match_details": "Label subject, number, language and holographic Cloyster artwork visibly correspond to the card.",
+        "present": true,
+        "certainty": "clear",
+        "image_index": 1,
+        "object_match": "matches"
+      },
+      "unresolved_identity_fields": [
+        "variant"
+      ],
+      "pokemon_printing": {
+        "is_pokemon": true,
+        "language": "Italian",
+        "set_name": "Expedition",
+        "card_type": "pokemon",
+        "first_edition_stamp": "unclear",
+        "stamp_image": 1,
+        "stamp_location": "lower-left area beneath artwork is partly small/obscured by slab",
+        "stamp_text": "",
+        "artwork_shadow": "unclear",
+        "shadow_image": 1,
+        "shadow_location": "right and lower artwork borders are too small and affected by slab visibility",
+        "shadow_edges": {
+          "right": "unclear",
+          "lower": "unclear"
+        },
+        "copyright_text": "© 2002 Pokémon / Nintendo",
+        "copyright_image": 1,
+        "slab_text": "",
+        "slab_image": 0
+      }
+    },
+    "imageCount": 1,
+    "printingReply": null,
+    "sources": [
+      {
+        "url": "https://www.beckett.com/?locale=en_US",
+        "title": "Trading Card Grading, Authentication and Pricing - Beckett Collectibles",
+        "snippet": "citeturn0search0 [wordlim: 200] Crawled: 5 days ago; Verify the validity of Beckett certificates by entering the cert number. ... Image: $5.2 MLN ... 2003-04 LeBron James Upper Deck Exquisite Collection Rookie Patch Autograph #78 Image: READY FOR THE REVEAL? # READY FOR THE REVEAL? ### A NEW ERA HAS BEGUN Go to Submission Center ## EXPLORE OUR SERVICES Image: CARDS ###### CARDS Read moreSubmit Image: AUTOGRAPHS ###### AUTOGRAPHS Read moreSubmit Image: MANGA ###### MANGA Read moreSubmit Image: GRID BASED LAYOUT # NEW & IMPROVED LABEL * GRID BASED LAYOUT * ADVANCED SECURITY FEATURES * NEW AUTOGRAPH GRADE DESIGNATION * CONSISTENT ECOSYSTEM We"
+      },
+      {
+        "url": "https://www.beckett.com/",
+        "title": "Trading Card Grading, Authentication and Pricing - Beckett Collectibles",
+        "snippet": "citeturn0search1 [wordlim: 200] Crawled: today; Verify the validity of Beckett certificates by entering the cert number. ... Image: $5.2 MLN ... 2003-04 LeBron James Upper Deck Exquisite Collection Rookie Patch Autograph #78 Image: READY FOR THE REVEAL? # READY FOR THE REVEAL? ### A NEW ERA HAS BEGUN Go to Submission Center ## EXPLORE OUR SERVICES Image: CARDS ###### CARDS Read moreSubmit Image: AUTOGRAPHS ###### AUTOGRAPHS Read moreSubmit Image: MANGA ###### MANGA Read moreSubmit Image: TICKETS ###### TICKETS Read moreSubmit Image: MAGAZINES & MEDIA ###### MAGAZINES & MEDIA Read more Image: ONLINE PRICE GUIDE ###### ONLINE PRICE GUIDE Rea"
+      },
+      {
+        "url": "https://beckett.com/",
+        "title": "Trading Card Grading, Authentication and Pricing - Beckett Collectibles",
+        "snippet": "citeturn0search2 [wordlim: 200] Crawled: today; Verify the validity of Beckett certificates by entering the cert number. ... Image: $5.2 MLN ... 2003-04 LeBron James Upper Deck Exquisite Collection Rookie Patch Autograph #78 Image: READY FOR THE REVEAL? # READY FOR THE REVEAL? ### A NEW ERA HAS BEGUN Go to Submission Center ## EXPLORE OUR SERVICES Image: CARDS ###### CARDS Read moreSubmit Image: AUTOGRAPHS ###### AUTOGRAPHS Read moreSubmit Image: MANGA ###### MANGA Read moreSubmit Image: TICKETS ###### TICKETS Read moreSubmit Image: MAGAZINES & MEDIA ###### MAGAZINES & MEDIA Read more Image: ONLINE PRICE GUIDE ###### ONLINE PRICE GUIDE Rea"
+      },
+      {
+        "url": "https://www.beckett.com/?c=2_0",
+        "title": "Trading Card Grading, Authentication and Pricing - Beckett Collectibles",
+        "snippet": "citeturn0search3 [wordlim: 200] Crawled: 2 days ago; Verify the validity of Beckett certificates by entering the cert number. ... Image: $5.2 MLN ... 2003-04 LeBron James Upper Deck Exquisite Collection Rookie Patch Autograph #78 Image: READY FOR THE REVEAL? # READY FOR THE REVEAL? ### A NEW ERA HAS BEGUN Go to Submission Center ## EXPLORE OUR SERVICES Image: CARDS ###### CARDS Read moreSubmit Image: AUTOGRAPHS ###### AUTOGRAPHS Read moreSubmit Image: MANGA ###### MANGA Read moreSubmit Image: GRID BASED LAYOUT # NEW & IMPROVED LABEL * GRID BASED LAYOUT * ADVANCED SECURITY FEATURES * NEW AUTOGRAPH GRADE DESIGNATION * CONSISTENT ECOSYSTEM We"
+      },
+      {
+        "url": "https://www.beckett.com/?afsrc=1",
+        "title": "Trading Card Grading, Authentication and Pricing - Beckett Collectibles",
+        "snippet": "citeturn0search4 [wordlim: 200] Crawled: last month; Verify the validity of Beckett certificates by entering the cert number. ... 2003-04 LeBron James Upper Deck Exquisite Collection Rookie Patch Autograph #78 ... Buy Now: Pitch Black's Entire Playable TCG Core Costs Under $2 Beckett Updates, Pokemon Read more Image: Buy Now: Pitch Black's Entire Playable TCG Core Costs Under $2 Read moreSubmit Image: TICKETS ###### TICKETS Read moreSubmit Image: MAGAZINES & MEDIA ###### MAGAZINES & MEDIA Read more Image: ONLINE PRICE GUIDE ###### ONLINE PRICE GUIDE Read more Image: GRID BASED LAYOUT # NEW & IMPROVED LABEL * GRID BASED LAYOUT * ADVANCED SE"
+      },
+      {
+        "url": "https://www.beckett-authentication.com/verify-certificate",
+        "title": "Certificate Verification| Beckett Authentication Services",
+        "snippet": "citeturn0search5 [wordlim: 200] Published: 2.7 years ago; Crawled: today; # Beckett Authentication Certification Verification # Beckett Authentication Certification Verification Disclaimer: This certificate is for display purposes only and is not considered authentication for your item. ## To verify the authenticity of your certified item, enter the certification number in the field below. ## Verify Another * [Input: Certification Number/Serial Number] Note: When entering the alphanumeric certification number, there is no space between the letter and the numbering. Image Current as of January 2024 Past Security Labels"
+      }
+    ],
+    "baseline": {
+      "ready": false,
+      "printing": {
+        "stamp": "unclear",
+        "shadow": "not_applicable",
+        "applicable": false,
+        "labels": [],
+        "missing": [
+          "zona del timbro di edizione sul fronte"
+        ],
+        "slab": "",
+        "contradiction": false,
+        "complete": false,
+        "stampLocation": "lower-left area beneath artwork is partly small/obscured by slab",
+        "shadowLocation": "right and lower artwork borders are too small and affected by slab visibility",
+        "copyright": "© 2002 Pokémon / Nintendo"
+      }
+    },
+    "usageByStage": {
+      "flipcheck_identification": {
+        "input_tokens": 11327,
+        "input_tokens_details": {
+          "cache_write_tokens": 11324,
+          "cached_tokens": 0
+        },
+        "output_tokens": 1391,
+        "output_tokens_details": {
+          "reasoning_tokens": 81
+        },
+        "total_tokens": 12718
+      },
+      "flipcheck_resolver": {
+        "input_tokens": 14220,
+        "input_tokens_details": {
+          "cache_write_tokens": 5862,
+          "cached_tokens": 0
+        },
+        "output_tokens": 608,
+        "output_tokens_details": {
+          "reasoning_tokens": 157
+        },
+        "total_tokens": 14828
+      }
+    }
+  },
+  "machamp": {
+    "photo": {
+      "status": "identified",
+      "kind": "card",
+      "title": "Machamp 8/102 Pokémon card",
+      "category": "TCG card",
+      "brand": "Wizards of the Coast",
+      "family": "Base Set",
+      "model": "Machamp 8/102",
+      "variant": "1st Edition",
+      "condition": "Raw; apparent wear and surface scratching",
+      "category_confidence": 99,
+      "brand_confidence": 98,
+      "family_confidence": 90,
+      "model_confidence": 97,
+      "model_verified": false,
+      "market_ready": true,
+      "candidate_models": [
+        {
+          "model": "Machamp 8/102 Base Set 1st Edition",
+          "confidence": 97,
+          "reason": "Visible Machamp name, 1st Edition stamp, and 8/102 collector number."
+        }
+      ],
+      "visual_fingerprint": "English vintage Pokémon Machamp holo with yellow Base Set frame, 100 HP, holographic fighting-type artwork, visible 1st Edition stamp at lower-left of artwork, and collector number 8/102.",
+      "distinctive_terms": [
+        "Machamp",
+        "1st Edition",
+        "8/102",
+        "Strikes Back",
+        "Seismic Toss"
+      ],
+      "search_terms": [
+        "Machamp",
+        "1st Edition",
+        "8/102"
+      ],
+      "identifier_hints": [
+        "8/102"
+      ],
+      "layout_signature": [
+        {
+          "term": "Machamp",
+          "position": "top center",
+          "relation": "above holographic artwork"
+        },
+        {
+          "term": "100 HP",
+          "position": "top right",
+          "relation": "beside Fighting symbol"
+        },
+        {
+          "term": "1st Edition",
+          "position": "lower left of artwork",
+          "relation": "above Pokémon Power text"
+        },
+        {
+          "term": "8/102",
+          "position": "bottom right",
+          "relation": "beside copyright line"
+        }
+      ],
+      "evidence": [
+        "The card visibly reads “Machamp” and “100 HP”.",
+        "A visible “1st Edition” stamp appears at lower left beneath the artwork.",
+        "The bottom-right collector number is visibly “8/102”."
+      ],
+      "missing_information": [
+        "Set identity is inferred from the card layout and number, not explicitly printed.",
+        "Shadowless status cannot be confirmed with certainty from this image."
+      ],
+      "next_photo_request": "Provide a sharp, glare-free close-up of the artwork’s right and lower borders and the bottom copyright/number area.",
+      "user_text_consistent": true,
+      "normalized_query": "Machamp 8/102 Base Set 1st Edition holo Pokémon card",
+      "verification_summary": "The visible name, 1st Edition stamp, holo artwork, and 8/102 number strongly identify this card; shadowless status remains unconfirmed.",
+      "photo_clues": [
+        {
+          "text": "Machamp",
+          "role": "subject",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.25,
+            "y": 0.1,
+            "width": 0.3,
+            "height": 0.06,
+            "certain": true
+          }
+        },
+        {
+          "text": "1st Edition",
+          "role": "edition",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.06,
+            "y": 0.54,
+            "width": 0.07,
+            "height": 0.05,
+            "certain": true
+          }
+        },
+        {
+          "text": "8/102",
+          "role": "collector_number",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.86,
+            "y": 0.96,
+            "width": 0.08,
+            "height": 0.025,
+            "certain": true
+          }
+        },
+        {
+          "text": "© 1995,96,98,99 Nintendo, Creatures, GAMEFREAK © 1999 Wizards",
+          "role": "copyright",
+          "certainty": "uncertain",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.25,
+            "y": 0.96,
+            "width": 0.58,
+            "height": 0.025,
+            "certain": false
+          }
+        },
+        {
+          "text": "100 HP",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.65,
+            "y": 0.1,
+            "width": 0.16,
+            "height": 0.06,
+            "certain": true
+          }
+        }
+      ],
+      "physical_observations": [
+        {
+          "feature": "color",
+          "text": "Yellow vintage Pokémon card border",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "pattern",
+          "text": "Holographic artwork background with multicolor star-like reflections",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "finish",
+          "text": "Holographic foil artwork panel",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "layout",
+          "text": "Fighting-type symbol at upper right and three retreat symbols at lower right",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        }
+      ],
+      "printing_detail_regions": [
+        {
+          "detail": "stamp",
+          "region": {
+            "image_index": 1,
+            "x": 0.05,
+            "y": 0.53,
+            "width": 0.1,
+            "height": 0.08,
+            "certain": true
+          }
+        },
+        {
+          "detail": "shadow",
+          "region": {
+            "image_index": 1,
+            "x": 0.12,
+            "y": 0.13,
+            "width": 0.78,
+            "height": 0.42,
+            "certain": false
+          }
+        },
+        {
+          "detail": "copyright",
+          "region": {
+            "image_index": 1,
+            "x": 0.2,
+            "y": 0.95,
+            "width": 0.7,
+            "height": 0.035,
+            "certain": false
+          }
+        }
+      ],
+      "object_region": {
+        "image_index": 1,
+        "x": 0,
+        "y": 0,
+        "width": 0.99,
+        "height": 0.99,
+        "certain": true
+      },
+      "object_regions": [
+        {
+          "image_index": 1,
+          "x": 0,
+          "y": 0,
+          "width": 0.99,
+          "height": 0.99,
+          "certain": true
+        }
+      ],
+      "object_unit": "single",
+      "variant_scope": "commercial",
+      "identity_basis": {
+        "family": "inferred",
+        "variant": "physical_evidence"
+      },
+      "slab_reading": null,
+      "unresolved_identity_fields": [
+        "family",
+        "variant"
+      ],
+      "pokemon_printing": {
+        "is_pokemon": true,
+        "language": "English",
+        "set_name": "Base Set",
+        "card_type": "pokemon",
+        "first_edition_stamp": "present",
+        "stamp_image": 1,
+        "stamp_location": "lower left beneath the artwork",
+        "stamp_text": "1st Edition",
+        "artwork_shadow": "unclear",
+        "shadow_image": 1,
+        "shadow_location": "right and lower artwork-frame edges are not sufficiently clear",
+        "shadow_edges": {
+          "right": "unclear",
+          "lower": "unclear"
+        },
+        "copyright_text": "© 1995,96,98,99 Nintendo, Creatures, GAMEFREAK © 1999 Wizards",
+        "copyright_image": 1,
+        "slab_text": "",
+        "slab_image": 0
+      }
+    },
+    "imageCount": 1,
+    "printingReply": {
+      "is_pokemon": true,
+      "language": "English",
+      "set_name": "Base Set",
+      "card_type": "pokemon",
+      "first_edition_stamp": "present",
+      "stamp_image": 1,
+      "stamp_location": "lower left beneath the artwork",
+      "stamp_text": "EDITION 1",
+      "artwork_shadow": "absent",
+      "shadow_image": 2,
+      "shadow_location": "right and lower artwork-frame edges visible without a printed offset shadow band",
+      "shadow_edges": {
+        "right": "absent",
+        "lower": "absent"
+      },
+      "copyright_text": "© 1995, 96, 98, 99 Nintendo, Creatures, GAMEFREAK © 1999 Wizards",
+      "copyright_image": 2,
+      "slab_text": "",
+      "slab_image": 0
+    },
+    "sources": [
+      {
+        "url": "https://www.ebay.com/itm/317608704703",
+        "title": "Pokémon Machamp 1st Edition 8/102 Holo Rare | eBay",
+        "snippet": "citeturn0search0 [wordlim: 200] Published: 8 months ago; Crawled: 2 weeks ago; Image: Yellow-bordered 1st Edition Pokémon Machamp holo rare with blue Machamp artwork, 100 HP, and move details in attack text.Image: Machamp 1st Edition 8/102 Holo Rare Pokémon card with silver border, yellow frame, and black Machamp icon on front. ... Image: Machamp 1st Edition 8/102 Holo Rare Pokémon card with silver border, yellow frame, and black Machamp icon on front. Image: Yellow-bordered 1st Edition Pokémon Machamp holo rare with blue Machamp artwork, 100 HP, and move details in attack text.Image: Machamp 1st Edition 8/102 Holo Rare Pokémon card with s"
+      },
+      {
+        "url": "https://www.ebay.com/itm/188164611797",
+        "title": "Pokémon card Pokemon Base Set 1st EDITION HOLO MACHAMP 8/102 | eBay",
+        "snippet": "citeturn0search1 [wordlim: 200] Published: 4 months ago; Crawled: yesterday; Image: Yellow-bordered Pokémon Base Set 1st Edition holo Machamp 8/102 card with blue-gold Machamp artwork and attack text.Image: Yellow-bordered Pokémon Base Set 1st Edition holo Machamp card with silver background, 100 HP text, and visible attack text.Image: Base Set 1st Edition holo Machamp Pokémon card with silver ball design, yellow border, and blue HP 8/102 text.Image: Yellow-bordered Pokémon Base Set 1st Edition holo Machamp card with silver background, 100 HP, and visible attack text.Image: Back of Pokémon Base Set 1st Edition holo Machamp card with silver"
+      },
+      {
+        "url": "https://www.ebay.com/itm/334951802797",
+        "title": "Nintendo Pokemon Machamp 8/102 1st Edition Base Set Collectible Trading Card MP | eBay",
+        "snippet": "citeturn0search2 [wordlim: 200] Crawled: 3 days ago; Image: Yellow-bordered Nintendo Pokémon Base Set Machamp 8/102 card with holographic artwork, 100 HP, and moves Seismic Toss.Image: Back of Nintendo Pokémon Base Set Machamp 8/102 card with blue border, silver ball, and bold purple “Pokémon” text. ... # Nintendo Pokemon Machamp 8/102 1st Edition Base Set Collectible Trading Card MP Image: Yellow-bordered Nintendo Pokémon Base Set Machamp 8/102 card with holographic artwork, 100 HP, and moves Seismic Toss.Image: Back of Nintendo Pokémon Base Set Machamp 8/102 card with blue border, silver ball, and bold purple “Pokémon” text. ## Yellow-bo"
+      },
+      {
+        "url": "https://www.ebay.com/itm/127608179244",
+        "title": "Pokémon Machamp 8/102 Base Set 1st Edition Holo Rare 100 HP Exclusive | eBay",
+        "snippet": "citeturn0search3 [wordlim: 200] Published: 2 months ago; Crawled: 2 weeks ago; Image: Yellow-bordered Pokémon Base Set Machamp card with holo rare treatment, 100 HP, and “Seismic Toss” attack text.Image: Yellow-bordered Pokémon Base Set Machamp 8/102 holo rare card with 100 HP, seismic toss attack text, and silver Machamp icon.Image: Back of Pokémon Base Set Machamp 8/102 holo rare card with silver ball design and orange-blue swirling background.Image: Machamp 8/102 Base Set 1st Edition holo rare Pokémon card with 100 HP, yellow border, and visible attack text. ... Image: Machamp 8/102 Base Set 1st Edition holo rare Pokémon card with 100 H"
+      },
+      {
+        "url": "https://www.ebay.com/itm/384132145820",
+        "title": "1999 Pokemon 1st Edition Shadow Base Machamp Holo - 8/102 | eBay",
+        "snippet": "citeturn0search4 [wordlim: 200] Published: 5 months ago; Crawled: 2 days ago; Image: 1999 Pokémon 1st Ed Shadow Base Machamp holo 8/102 with gold border, Machamp attacking, 100 HP.Image: 1999 Pokémon 1st Ed.Shadow Base Machamp holo card with yellow border, silver Machamp icon, and blue-white swirl background. Image: 1999 Pokémon 1st Ed Shadow Base Machamp holo 8/102 with gold border, Machamp attacking, 100 HP.Image: 1999 Pokémon 1st Ed. Shadow Base Machamp holo card with yellow border, silver Machamp icon, and blue-white swirl background. ## 1999 Pokémon 1st Ed Shadow Base Machamp holo 8/102 with gold border, Machamp attacking, 100 HP. Ima"
+      },
+      {
+        "url": "https://www.ebay.com/itm/233974759670",
+        "title": "First Ed Machamp 8/102 Pokemon Base Set 1st Edition Shadowless Holographic WotC | eBay",
+        "snippet": "citeturn0search5 [wordlim: 200] Published: 5.4 years ago; Crawled: today; Image: Yellow-bordered 1st Ed Machamp holo WotC Pokémon card, blue muscular figure, gold HP 100, attack text “Seismic Toss.”Image: First Ed Machamp 8/102 Pokémon Base Set 1st Edition Shadowless holographic WotC card with silver ball on blue border.Image: Yellow-bordered 8/102 First Ed Machamp holo WotC Pokémon card with blue muscular figure, gold star, and attack text. Image: Yellow-bordered 1st Ed Machamp holo WotC Pokémon card, blue muscular figure, gold HP 100, attack text “Seismic Toss.”Image: First Ed Machamp 8/102 Pokémon Base Set 1st Edition Shadowless hologra"
+      }
+    ],
+    "baseline": {
+      "ready": false,
+      "printing": {
+        "stamp": "present",
+        "shadow": "unclear",
+        "applicable": true,
+        "labels": [
+          "1st Edition"
+        ],
+        "missing": [
+          "bordo destro del riquadro e riga copyright in basso"
+        ],
+        "slab": "",
+        "contradiction": false,
+        "complete": false,
+        "stampLocation": "lower left beneath the artwork",
+        "shadowLocation": "right and lower artwork-frame edges are not sufficiently clear",
+        "copyright": "© 1995, 96, 98, 99 Nintendo, Creatures, GAMEFREAK © 1999 Wizards"
+      }
+    },
+    "usageByStage": {
+      "flipcheck_identification": {
+        "input_tokens": 10146,
+        "input_tokens_details": {
+          "cache_write_tokens": 10143,
+          "cached_tokens": 0
+        },
+        "output_tokens": 1428,
+        "output_tokens_details": {
+          "reasoning_tokens": 136
+        },
+        "total_tokens": 11574
+      },
+      "flipcheck_photo_detail": {
+        "input_tokens": 321,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0
+        },
+        "output_tokens": 185,
+        "output_tokens_details": {
+          "reasoning_tokens": 125
+        },
+        "total_tokens": 506
+      },
+      "flipcheck_resolver": {
+        "input_tokens": 13996,
+        "input_tokens_details": {
+          "cache_write_tokens": 999,
+          "cached_tokens": 4646
+        },
+        "output_tokens": 822,
+        "output_tokens_details": {
+          "reasoning_tokens": 209
+        },
+        "total_tokens": 14818
+      },
+      "flipcheck_card_keys": {
+        "input_tokens": 1374,
+        "input_tokens_details": {
+          "cache_write_tokens": 1371,
+          "cached_tokens": 0
+        },
+        "output_tokens": 621,
+        "output_tokens_details": {
+          "reasoning_tokens": 277
+        },
+        "total_tokens": 1995
+      },
+      "flipcheck_printing_detail": {
+        "input_tokens": 3217,
+        "input_tokens_details": {
+          "cache_write_tokens": 3214,
+          "cached_tokens": 0
+        },
+        "output_tokens": 468,
+        "output_tokens_details": {
+          "reasoning_tokens": 312
+        },
+        "total_tokens": 3685
+      },
+      "flipcheck_visual_comparison": {
+        "input_tokens": 5793,
+        "input_tokens_details": {
+          "cache_write_tokens": 5790,
+          "cached_tokens": 0
+        },
+        "output_tokens": 893,
+        "output_tokens_details": {
+          "reasoning_tokens": 301
+        },
+        "total_tokens": 6686
+      }
+    }
+  },
+  "topps": {
+    "photo": {
+      "status": "identified",
+      "kind": "object",
+      "title": "2025/26 Topps Chrome Update Series Basketball Box",
+      "category": "basketball trading card box",
+      "brand": "Topps",
+      "family": "Topps Chrome Update Series",
+      "model": "",
+      "variant": "",
+      "condition": "sealed-looking box",
+      "category_confidence": 99,
+      "brand_confidence": 99,
+      "family_confidence": 95,
+      "model_confidence": 0,
+      "model_verified": false,
+      "market_ready": false,
+      "candidate_models": [],
+      "visual_fingerprint": "Tall blue Topps Chrome Update Series basketball box featuring Victor Wembanyama in a San Antonio uniform and Cooper Flagg in a Dallas uniform; vertical 2025/26 branding, shrink-wrapped packaging, NBA logos, and promise text near the bottom.",
+      "distinctive_terms": [
+        "Topps Chrome",
+        "UPDATE SERIES",
+        "2025/26",
+        "COOPER FLAGG",
+        "VICTOR WEMBANYAMA-AMG?M"
+      ],
+      "search_terms": [
+        "Topps Chrome",
+        "UPDATE SERIES",
+        "2025/26",
+        "COOPER FLAGG"
+      ],
+      "identifier_hints": [],
+      "layout_signature": [
+        {
+          "term": "2025/26",
+          "position": "left vertical edge",
+          "relation": "beside vertical Topps branding"
+        },
+        {
+          "term": "UPDATE SERIES",
+          "position": "lower center",
+          "relation": "below Topps Chrome logo"
+        },
+        {
+          "term": "COOPER FLAGG",
+          "position": "upper right",
+          "relation": "beside Cooper Flagg portrait"
+        },
+        {
+          "term": "VICTOR WEMBANYAMA-AMG?M",
+          "position": "left of center",
+          "relation": "beside Victor Wembanyama portrait"
+        }
+      ],
+      "evidence": [
+        "Topps logo and literal “Topps Chrome UPDATE SERIES” are visible on the box.",
+        "The printed season “2025/26” and basketball imagery are visible.",
+        "The box visibly features Victor Wembanyama and Cooper Flagg."
+      ],
+      "missing_information": [
+        "Exact retail format or box subtype is not legible.",
+        "The bottom quantity/autograph promise is partially cropped and too small for reliable full transcription."
+      ],
+      "next_photo_request": "Photograph the full front and bottom text straight-on at higher resolution, plus any side or rear product code.",
+      "user_text_consistent": true,
+      "normalized_query": "",
+      "verification_summary": "Topps Chrome Update Series 2025/26 basketball box identified; exact retail subtype remains unverified.",
+      "photo_clues": [
+        {
+          "text": "Topps Chrome",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.44,
+            "y": 0.67,
+            "width": 0.27,
+            "height": 0.09,
+            "certain": true
+          }
+        },
+        {
+          "text": "UPDATE SERIES",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.43,
+            "y": 0.75,
+            "width": 0.3,
+            "height": 0.07,
+            "certain": true
+          }
+        },
+        {
+          "text": "2025/26",
+          "role": "season",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.3,
+            "y": 0.48,
+            "width": 0.06,
+            "height": 0.18,
+            "certain": true
+          }
+        },
+        {
+          "text": "COOPER FLAGG",
+          "role": "subject",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.75,
+            "y": 0.2,
+            "width": 0.13,
+            "height": 0.2,
+            "certain": true
+          }
+        },
+        {
+          "text": "VICTOR WEMBANYAMA-AMG?M",
+          "role": "subject",
+          "certainty": "uncertain",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.39,
+            "y": 0.48,
+            "width": 0.1,
+            "height": 0.27,
+            "certain": false
+          }
+        }
+      ],
+      "physical_observations": [
+        {
+          "feature": "count",
+          "text": "Two basketball player portraits on the front: Victor Wembanyama and Cooper Flagg.",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "color",
+          "text": "Blue, silver, red and gold graphic packaging.",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "finish",
+          "text": "Glossy shrink-wrapped box with reflective highlights.",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        }
+      ],
+      "printing_detail_regions": [],
+      "object_region": {
+        "image_index": 1,
+        "x": 0.27,
+        "y": 0.01,
+        "width": 0.61,
+        "height": 0.8,
+        "certain": true
+      },
+      "object_regions": [
+        {
+          "image_index": 1,
+          "x": 0.27,
+          "y": 0.01,
+          "width": 0.61,
+          "height": 0.8,
+          "certain": true
+        }
+      ],
+      "object_unit": "box",
+      "variant_scope": "unknown",
+      "identity_basis": {
+        "family": "printed",
+        "variant": "inferred"
+      },
+      "slab_reading": null,
+      "unresolved_identity_fields": [
+        "variant"
+      ],
+      "pokemon_printing": null
+    },
+    "imageCount": 1,
+    "printingReply": null,
+    "sources": [
+      {
+        "url": "https://launches.topps.com/en-US/launch/2025-26-topps-chromer-updates-basketball-hobby-box-pre-order",
+        "title": "2025-26 Topps Chrome® Updates Basketball Hobby Box - Pre-order",
+        "snippet": "citeturn0search0 [wordlim: 200] Crawled: 3 days ago; 1 autograph per box!2025-26 Topps Chrome Updates Basketball is headlined by one of the most coveted cards in the hobby: Rookie Debut Patch Autographs, making their Topps Basketball debut.Considered a pinnacle chase across The Hobby, these 1-of-1 grails, featuring game-worn NBA Debut patches, arrive for the first time in basketball with standout rookies like Cooper Flagg, Kon Knueppel, and Dylan Harper leading the charge."
+      },
+      {
+        "url": "https://launches.topps.com/en-US/launch/2025-26-topps-chromer-updates-basketball-hobby-box",
+        "title": "2025-26 Topps Chrome® Updates Basketball - Hobby Box",
+        "snippet": "citeturn0search1 [wordlim: 200] Crawled: today; 1 autograph per box.2025–26 Topps Chrome Updates Basketball is headlined by one of the most coveted cards in the hobby: Rookie Debut Patch Autographs, making their Topps Basketball debut.Widely regarded as one of The Hobby's premier collectibles, these 1-of-1 grails feature game-worn NBA Debut patches and arrive in basketball for the first time, highlighted by standout rookies Cooper Flagg, Kon Knueppel, and Dylan Harper."
+      },
+      {
+        "url": "https://www.topps.com/pages/topps-chrome-updates-basketball",
+        "title": "Topps Chrome® Updates Basketball",
+        "snippet": "citeturn0search2 [wordlim: 200] Crawled: 2 weeks ago; 2025–26 Topps Chrome Updates Basketball is headlined by one of the most coveted cards in the hobby: Rookie Debut Patch Autographs, making their Topps Basketball debut.Widely regarded as one of The Hobby's premier collectibles, these 1-of-1 grails feature game-worn NBA Debut patches and arrive in basketball for the first time, highlighted by standout rookies Cooper Flagg, Kon Knueppel, and Dylan Harper. ... Autograph content is equally impressive with a robust lineup of Topps Chrome Autographs, including special appearances from Druski and Spike Lee."
+      },
+      {
+        "url": "https://ripped.topps.com/2025-26-topps-chrome-updates-basketball-box-guide/",
+        "title": "2025–26 Topps Chrome Updates Box Guide - Topps Ripped",
+        "snippet": "citeturn0search3 [wordlim: 200] Published: last month; Crawled: yesterday; The checklist includes Cooper Flagg, Kon Knueppel, Dylan Harper, Ace Bailey, Cedric Coward, Derik Queen, Egor Demin, and other members of the rookie class. ... The 10 X-Fractors establish a recognizable theme in every box, while the six-card packs provide more total cards than the Value configuration. ... * A 2025–26 Topps Chrome Updates Basketball Hobby Box guarantees one autograph."
+      },
+      {
+        "url": "https://www.topps.com/products/2025-26-topps-chrome%C2%AE-updates-basketball-mega-box-1",
+        "title": "2025-26 Topps Chrome® Updates Basketball - Mega Box",
+        "snippet": "citeturn0search4 [wordlim: 200] Crawled: today; ## 2025-26 Topps Chrome® Updates Basketball - Mega Box ... 2025–26 Topps Chrome Updates Basketball is headlined by one of the most coveted cards in the hobby: Rookie Debut Patch Autographs, making their Topps Basketball debut.Widely regarded as one of The Hobby's premier collectibles, these 1-of-1 grails feature game-worn NBA Debut patches and arrive in basketball for the first time, highlighted by standout rookies Cooper Flagg, Kon Knueppel, and Dylan Harper."
+      },
+      {
+        "url": "https://www.topps.com/products/2025-26-topps-chrome%C2%AE-basketball-hobby-box",
+        "title": "2025-26 Topps Chrome® Basketball - Hobby Box",
+        "snippet": "citeturn0search5 [wordlim: 200] Crawled: today; ## 2025-26 Topps Chrome® Basketball - Hobby Box ... Plus, chase autographs from some of the hottest names in the game—Cooper Flagg, Dylan Harper, Ace Bailey, LeBron James, Stephen Curry, Victor Wembanyama, and more. ... Look for on-card 1-of-1 autograph variations—the crown jewel of the collection."
+      }
+    ],
+    "baseline": {
+      "ready": true,
+      "printing": null
+    },
+    "usageByStage": {
+      "flipcheck_identification": {
+        "input_tokens": 10859,
+        "input_tokens_details": {
+          "cache_write_tokens": 10856,
+          "cached_tokens": 0
+        },
+        "output_tokens": 1141,
+        "output_tokens_details": {
+          "reasoning_tokens": 166
+        },
+        "total_tokens": 12000
+      },
+      "flipcheck_photo_detail": {
+        "input_tokens": 487,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0
+        },
+        "output_tokens": 99,
+        "output_tokens_details": {
+          "reasoning_tokens": 57
+        },
+        "total_tokens": 586
+      },
+      "flipcheck_resolver": {
+        "input_tokens": 14147,
+        "input_tokens_details": {
+          "cache_write_tokens": 967,
+          "cached_tokens": 4646
+        },
+        "output_tokens": 652,
+        "output_tokens_details": {
+          "reasoning_tokens": 223
+        },
+        "total_tokens": 14799
+      },
+      "flipcheck_specifications": {
+        "input_tokens": 2762,
+        "input_tokens_details": {
+          "cache_write_tokens": 2759,
+          "cached_tokens": 0
+        },
+        "output_tokens": 418,
+        "output_tokens_details": {
+          "reasoning_tokens": 344
+        },
+        "total_tokens": 3180
+      },
+      "flipcheck_visual_comparison": {
+        "input_tokens": 5065,
+        "input_tokens_details": {
+          "cache_write_tokens": 5062,
+          "cached_tokens": 0
+        },
+        "output_tokens": 1219,
+        "output_tokens_details": {
+          "reasoning_tokens": 402
+        },
+        "total_tokens": 6284
+      }
+    }
+  },
+  "boniface": {
+    "photo": {
+      "status": "uncertain",
+      "kind": "card",
+      "title": "Victor Boniface No. 21 Terrace",
+      "category": "sports trading card",
+      "brand": "Panini",
+      "family": "Select Road to FIFA World Cup 2026 Soccer",
+      "model": "",
+      "variant": "green holographic border/pattern",
+      "condition": "raw",
+      "category_confidence": 99,
+      "brand_confidence": 99,
+      "family_confidence": 96,
+      "model_confidence": 0,
+      "model_verified": false,
+      "market_ready": false,
+      "candidate_models": [],
+      "visual_fingerprint": "Panini Select soccer card featuring Victor Boniface in Nigeria white kit, green/gold holographic architectural border, front text ROAD TO FIFA WORLD CUP 2026, No. 21 TERRACE, reverse Nigerian Football Federation crest and descriptive biography.",
+      "distinctive_terms": [
+        "2025-26 PANINI - SELECT ROAD TO FIFA WORLD CUP 2026™ SOCCER",
+        "VICTOR BONIFACE",
+        "No. 21",
+        "TERRACE",
+        "ROAD TO FIFA WORLD CUP 2026"
+      ],
+      "search_terms": [
+        "2025-26 PANINI - SELECT ROAD TO FIFA WORLD CUP 2026™ SOCCER",
+        "VICTOR BONIFACE",
+        "No. 21",
+        "TERRACE",
+        "ROAD TO FIFA WORLD CUP 2026"
+      ],
+      "identifier_hints": [
+        "21"
+      ],
+      "layout_signature": [
+        {
+          "term": "No. 21",
+          "position": "top center on reverse",
+          "relation": "above TERRACE"
+        },
+        {
+          "term": "TERRACE",
+          "position": "top center on reverse",
+          "relation": "below No. 21"
+        },
+        {
+          "term": "ROAD TO FIFA WORLD CUP 2026",
+          "position": "center front",
+          "relation": "below player image"
+        },
+        {
+          "term": "VICTOR BONIFACE",
+          "position": "bottom front and upper reverse",
+          "relation": "player nameplate/front and biography heading/reverse"
+        }
+      ],
+      "evidence": [
+        "Front visibly shows Victor Boniface and Nigeria, with green/gold holographic treatment.",
+        "Reverse visibly identifies Panini Select and prints the 2025-26 product line and No. 21 TERRACE.",
+        "A vertical serial-like marking is visible near the right reverse edge but is not legible enough to transcribe."
+      ],
+      "missing_information": [
+        "Exact commercial parallel name",
+        "Readable serial numbering, if present"
+      ],
+      "next_photo_request": "Provide a sharp close-up of the right reverse edge and full front border.",
+      "user_text_consistent": true,
+      "normalized_query": "",
+      "verification_summary": "Panini Select Road to FIFA World Cup 2026 card of Victor Boniface, No. 21 Terrace; exact parallel remains unverified.",
+      "photo_clues": [
+        {
+          "text": "VICTOR BONIFACE",
+          "role": "subject",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.31,
+            "y": 0.73,
+            "width": 0.39,
+            "height": 0.04,
+            "certain": true
+          }
+        },
+        {
+          "text": "NIGERIA",
+          "role": "team",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.42,
+            "y": 0.69,
+            "width": 0.16,
+            "height": 0.03,
+            "certain": true
+          }
+        },
+        {
+          "text": "ROAD TO FIFA WORLD CUP 2026",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 1,
+          "region": {
+            "image_index": 1,
+            "x": 0.41,
+            "y": 0.58,
+            "width": 0.22,
+            "height": 0.07,
+            "certain": true
+          }
+        },
+        {
+          "text": "No. 21",
+          "role": "collector_number",
+          "certainty": "clear",
+          "image_index": 2,
+          "region": {
+            "image_index": 2,
+            "x": 0.47,
+            "y": 0.11,
+            "width": 0.12,
+            "height": 0.03,
+            "certain": true
+          }
+        },
+        {
+          "text": "TERRACE",
+          "role": "text",
+          "certainty": "clear",
+          "image_index": 2,
+          "region": {
+            "image_index": 2,
+            "x": 0.47,
+            "y": 0.15,
+            "width": 0.12,
+            "height": 0.02,
+            "certain": true
+          }
+        },
+        {
+          "text": "2025-26 PANINI - SELECT ROAD TO FIFA WORLD CUP 2026™ SOCCER",
+          "role": "season",
+          "certainty": "clear",
+          "image_index": 2,
+          "region": {
+            "image_index": 2,
+            "x": 0.25,
+            "y": 0.78,
+            "width": 0.46,
+            "height": 0.03,
+            "certain": true
+          }
+        },
+        {
+          "text": "serial-like vertical marking, unreadable",
+          "role": "serial",
+          "certainty": "uncertain",
+          "image_index": 2,
+          "region": {
+            "image_index": 2,
+            "x": 0.72,
+            "y": 0.43,
+            "width": 0.04,
+            "height": 0.18,
+            "certain": false
+          }
+        }
+      ],
+      "physical_observations": [
+        {
+          "feature": "color",
+          "text": "green and gold holographic border",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "pattern",
+          "text": "architectural geometric border pattern",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "layout",
+          "text": "player centered in full-body portrait",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        },
+        {
+          "feature": "finish",
+          "text": "reflective foil finish",
+          "certainty": "clear",
+          "entity": "target",
+          "image_index": 1
+        }
+      ],
+      "printing_detail_regions": [],
+      "object_region": {
+        "image_index": 1,
+        "x": 0.11,
+        "y": 0.3,
+        "width": 0.78,
+        "height": 0.54,
+        "certain": true
+      },
+      "object_regions": [
+        {
+          "image_index": 1,
+          "x": 0.11,
+          "y": 0.3,
+          "width": 0.78,
+          "height": 0.54,
+          "certain": true
+        },
+        {
+          "image_index": 2,
+          "x": 0.13,
+          "y": 0.32,
+          "width": 0.75,
+          "height": 0.54,
+          "certain": true
+        }
+      ],
+      "object_unit": "single",
+      "variant_scope": "unknown",
+      "identity_basis": {
+        "family": "printed",
+        "variant": "physical_evidence"
+      },
+      "slab_reading": null,
+      "unresolved_identity_fields": [
+        "variant"
+      ],
+      "pokemon_printing": null
+    },
+    "imageCount": 2,
+    "printingReply": null,
+    "sources": [
+      {
+        "url": "https://www.paniniamerica.net/1st-off-the-line-2025-26-panini-select-road-to-fifa-world-cup-2026tm-trading-card-box",
+        "title": "Panini America Online Store | Shop Sports Trading Cards",
+        "snippet": "citeturn0search0 [wordlim: 200] Published: last week; Crawled: 4 days ago; Last updated at: Sun Aug 30 2026 ... * Pi Ahill 0056 26nascar Galaxyauto ... * Reebokpanini Pszn94l Seta 11 5 Last updated at: Sun Aug 30 2026 # Panini America Online Store | Shop Sports Trading Cards & Memorabilia ## Football Trading Cards, NIL, Basketball, BIG3, English Football League EFL Trading Cards * ## WELCOME TO PANINI AMERICA * * my account * claim panini reward code ### quick links * verify box authenticity * panini News * PANINI STICKER SWAP EVENTS * panini events * Locate Panini Authorized Retailers * contact us * FAQS * Collectible resources * Panini D"
+      },
+      {
+        "url": "https://www.paniniamerica.net/2025-26-panini-select-road-to-fifa-world-cup-2026tm-trading-card-box-hobby-international",
+        "title": "Panini America Online Store | Shop Sports Trading Cards",
+        "snippet": "citeturn0search1 [wordlim: 200] Published: 3 weeks ago; Crawled: 3 weeks ago; You need to enable Javascript to run this app.Link to products in Panini America Link to products in Panini America Link to products in Panini America Link to products in Panini America Link to products in Panini America Link to products in Panini America Link to products in Panini America Link to products in Panini America Link to products in Panini America Link to products in Panini America Link to products in Panini America Link to products in Panini America Link to products in Panini America Link to products in Panini America Link to products in Panini Americ"
+      },
+      {
+        "url": "https://blog.paniniamerica.net/level-up-with-the-fifa-world-cup-2026-official-sticker-collection-update-set/",
+        "title": "Level Up with the FIFA World Cup 2026™ Official Sticker Collection Update Set – The Knight's Lance",
+        "snippet": "citeturn0search2 [wordlim: 200] Published: 2 months ago; Crawled: today; # Level Up with the FIFA World Cup 2026™ Official Sticker Collection Update SetJune 26, 2026How is your FIFA World Cup 2026™ Official Sticker Album looking? ... Whatever that status might be, Panini is here to expand the fun. ... Below is the full checklist, followed by the Update Set checklist ... Sweden | Victor | Nilsson Lindelöf | DF # Level Up with the FIFA World Cup 2026™ Official Sticker Collection Update Set June 26, 2026 How is your FIFA World Cup 2026™ Official Sticker Album looking? Still nearly empty? Just about full? Somewhere in the middle? Whatever that"
+      },
+      {
+        "url": "https://www.paniniamerica.net/checklist.html",
+        "title": "Panini America | Search Checklist",
+        "snippet": "citeturn0search3 [wordlim: 200] Published: yesterday; Crawled: today; Last updated at: Sun Sep 06 2026# Panini America | Search Checklist ... Select Sport Last updated at: Sun Sep 06 2026 # Panini America | Search Checklist ## Football Trading Cards, NIL, Basketball, BIG3, English Football League EFL Trading Cards ## Use our free Checklists to help complete your collections Select Sport [Input: Search] * Selected B a s e b a l l * Selected B a s k e t b a l l * Selected E n t e r t a i n m e n t * Selected F i g h t * Selected F o o t b a l l * Selected G o l f * Selected H o c k e y * Selected M i s c e l l a n e o u s * Selected R a c i "
+      },
+      {
+        "url": "https://www.paniniamerica.net/1st-off-the-line-2025-26-panini-select-road-to-fifa-world-cup-2026tm-trading-card-box.html",
+        "title": "Panini America Online Store | Shop Sports Trading Cards",
+        "snippet": "citeturn0search4 [wordlim: 200] Published: last week; Crawled: last week; You need to enable Javascript to run this app.Link to products in Panini America Link to products in Panini America Link to products in Panini America Link to products in Panini America Link to products in Panini America Link to products in Panini America Link to products in Panini America Link to products in Panini America Link to products in Panini America Link to products in Panini America Link to products in Panini America Link to products in Panini America Link to products in Panini America Link to products in Panini America Link to products in Panini America Li"
+      },
+      {
+        "url": "https://www.paniniamerica.net/2025-26-panini-national-treasures-road-to-fifa-world-cup-2026-trading-card-box-hobby.html",
+        "title": "2025-26 Panini National Treasures Road to FIFA World Cup",
+        "snippet": "citeturn0search5 [wordlim: 200] Published: today; Crawled: today; Image: Detailed Image of 2025-26 Panini National Treasures Road to FIFA World Cup 2026™ Trading Card Box (Hobby) ... • National Treasures returns to soccer on the Road to the FIFA World Cup 2026™! * Image: Panini wallet icon For trading cards and sticker items, we have a no-return policy in place. All Sales Are Final. ## product details • National Treasures returns to soccer on the Road to the FIFA World Cup 2026™! This worldwide program features over 30 national teams spanning the globe. • Find a 150-card base set featuring all the top stars, hot prospects and more from fan"
+      }
+    ],
+    "baseline": {
+      "ready": false,
+      "printing": null
+    },
+    "usageByStage": {
+      "flipcheck_identification": {
+        "input_tokens": 13632,
+        "input_tokens_details": {
+          "cache_write_tokens": 13629,
+          "cached_tokens": 0
+        },
+        "output_tokens": 1341,
+        "output_tokens_details": {
+          "reasoning_tokens": 145
+        },
+        "total_tokens": 14973
+      },
+      "flipcheck_photo_detail": {
+        "input_tokens": 473,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0
+        },
+        "output_tokens": 147,
+        "output_tokens_details": {
+          "reasoning_tokens": 105
+        },
+        "total_tokens": 620
+      },
+      "flipcheck_resolver": {
+        "input_tokens": 13715,
+        "input_tokens_details": {
+          "cache_write_tokens": 1164,
+          "cached_tokens": 4646
+        },
+        "output_tokens": 725,
+        "output_tokens_details": {
+          "reasoning_tokens": 250
+        },
+        "total_tokens": 14440
+      },
+      "flipcheck_card_keys": {
+        "input_tokens": 875,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0
+        },
+        "output_tokens": 55,
+        "output_tokens_details": {
+          "reasoning_tokens": 39
+        },
+        "total_tokens": 930
+      },
+      "flipcheck_visual_comparison": {
+        "input_tokens": 7453,
+        "input_tokens_details": {
+          "cache_write_tokens": 7450,
+          "cached_tokens": 0
+        },
+        "output_tokens": 452,
+        "output_tokens_details": {
+          "reasoning_tokens": 159
+        },
+        "total_tokens": 7905
+      }
+    }
+  }
+}

@@ -8,7 +8,7 @@ const ref={id:'page1',url:'https://catalog.example/card',title:'1997 Japanese Fo
 test('slab confirms from full label and one matching entry without inventing stamp or authentication',()=>{
  const p=slab(),out=V.slabClosure185(p,p,[ref]);assert.equal(out.market_ready,true);assert.equal(out.slab_verification.state,'confirmed');assert.equal(out.authenticity_status,'not_assessed');assert.equal(out.slab_verification.certificate_verified,false);
  const printed=E.apply(out,p.pokemon_printing,1);assert.equal(printed.printing_check.complete,true);assert.equal(printed.printing_check.physical_check.complete,false);assert.equal(printed.variant_proof.origin,'photo_slab_label');assert.equal(printed.next_photo_request,null);
- assert.equal(V.cardKeyFacts(p).number.value,'94');assert.match(V.plan(p).query,/12345678.*site:psacard.com/);
+ assert.equal(V.cardKeyFacts(p).number.value,'94');assert.match(V.plan(p).query,/1997.*Fossil.*Ghostmon.*#94/);assert.doesNotMatch(V.plan(p).query,/12345678|cert verification/);assert.match(V.plan(p).query,/site:psacard.com/);
 });
 test('slab rejects mismatched card, uncertain label, wrong year/number/source and uncited values',()=>{
  for(const mode of ['conflict','unclear','number','year','uncited','unknown_source','wrong_reference','wrong_card','missing_variant']){

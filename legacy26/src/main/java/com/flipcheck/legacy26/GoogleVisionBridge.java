@@ -214,6 +214,9 @@ public final class GoogleVisionBridge {
         doc.select("script,style,noscript,svg,nav,header,footer").remove();
         Element main=doc.selectFirst("main,article,[role=main],[itemtype$=/Product]");
         Element content=main==null?doc.body():main;
+        // Preserve checklist cell and row boundaries even in minified HTML tables.
+        for(Element cell:content.select("th,td"))cell.appendText(" ");
+        for(Element row:content.select("tr"))row.appendText("\n");
         for(Element block:content.select("p,li,h1,h2,h3,section,div,br"))block.appendText("\n");
         String text=(doc.title()+"\n"+productText+"\n"+content.wholeText()).replaceAll("[\\t\\x0B\\f\\r ]+"," ").replaceAll(" *\n *","\n").replaceAll("\n{3,}","\n\n").trim();
         return json("status",200,"url",pageUrl,"title",doc.title(),"text",selectPageText(text,terms),"text_selection","observed_terms","images",new JSONArray(images),"image_details",new JSONArray(images.stream().map(imageDetails::get).collect(java.util.stream.Collectors.toList())),"image_links",imageLinks,"is_collection",productText.length()==0&&linkedPages.size()>1&&(doc.title().matches("(?i).*(?:all products|search results|gallery|catalogue list).*")||pageUrl.matches("(?i).*/(?:shop|search|collection|category|gallery)[^/]*[/?].*")));

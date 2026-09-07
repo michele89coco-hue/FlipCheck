@@ -24,6 +24,9 @@ public final class GoogleDirectRegressionTest {
         String selected=GoogleVisionBridge.selectPageText(text.toString(),new org.json.JSONArray().put("73 Alex Rivera").put("Green /5"));
         assertTrue(selected.contains("72 Other Athlete\n73 Alex Rivera\n74 Someone Else"));assertFalse(selected.contains("72 Alex Rivera"));assertTrue(selected.length()<=5000);
         assertTrue(selected.contains("Base Terrace Parallels"));assertTrue(selected.contains("Green /5"));
+        String table="<html><head><title>2031 Example Checklist</title></head><body><main><h2>Base Terrace</h2><table><tr><td>72</td><td>Other Athlete</td></tr><tr><td>73</td><td>Alex Rivera</td></tr><tr><td>74</td><td>Someone Else</td></tr></table></main></body></html>";
+        String rows=GoogleVisionBridge.pageData(table,"https://catalog.example/checklist",new org.json.JSONArray().put("73 Alex Rivera")).getString("text");
+        assertTrue(rows.contains("72 Other Athlete\n73 Alex Rivera\n74 Someone Else"));assertFalse(rows.contains("72Other Athlete73Alex"));
     }
     @Test public void bundledOcrReadsAReferenceLabelWithoutApiCredentials() throws Exception {
         android.graphics.Bitmap bitmap=android.graphics.Bitmap.createBitmap(1100,400,android.graphics.Bitmap.Config.ARGB_8888);

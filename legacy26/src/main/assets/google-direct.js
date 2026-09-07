@@ -97,6 +97,8 @@ async function catalogueReferences(sources,options,base){
    }
    if(!page.text||page.is_collection){attempt.state=page.is_collection?'collection_page':'no_page_text';return null;}
    if(!s.discovery_only&&!titleSupported(s.title,page.text)){attempt.state='page_content_mismatch';return null;}
+   const scope=FlipCheckVisual.catalogueScope186(base,{title:page.title||s.title,text:page.text,url:page.url||s.url},true);
+   if(!scope.eligible){attempt.state='excluded_catalogue_scope';attempt.reason=scope.reason;return null;}
    textReferences.push({id:'page'+(i+1),url:page.url||s.url,title:page.title||s.title,text:page.text.slice(0,5000),text_origin:'retrieved_page'});
    if(options?.textOnly){attempt.state='retrieved_text';return null;}
    const images=list(page.images).map(url).filter(u=>u&&FlipCheckVisual.referenceImageUseful(u)).slice(0,2);
