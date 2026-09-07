@@ -21,6 +21,7 @@ function clueRole(c){
  if(c.role==='copyright'&&!/[©®]|copyright|rights reserved/i.test(c.text)&&/\b(?:19|20)\d{2}\s*[-/]\s*\d{2,4}\b/.test(c.text))return 'season';
  if(c.role==='season'&&!/\b(?:19|20)\d{2}\b/.test(c.text))return 'text';
  if(c.role==='season'&&/\b(?:statistics|statistiche|career totals|international totals|pts|rpg|ppg|fg%)\b/i.test(c.text))return 'card_stat';
+ if(c.role==='season'&&/\b(?:world cup|olympic|olympics|olimpiadi)\b/i.test(c.text)&&! /\b(?:19|20)\d{2}\s*[-/]\s*\d{2,4}\b/.test(c.text))return 'event_year';
  return c.role;
 }
 function identifierValue(c){return c.role==='collector_number'?String(c.text).replace(/^\s*(?:NO\.?|N[°º.]|NUMBER|NUMERO|#)\s*/i,'').trim():c.text;}
@@ -60,6 +61,9 @@ function reconcilePhotoOcr(base,ocr){
  for(const local of list(ocr).filter(o=>o.state==='ok'))for(const line of list(local.lines)){
   const values=collectorReadings(line.text,true),region=ocrRegion(line,local);if(values.length!==1||!region)continue;
   const nearby=original.find(c=>c.image_index===local.image_index&&(!c.region||Math.abs(c.region.y-region.y)<.15&&Math.abs(c.region.x-region.x)<.3));
+  // A separate stamped fraction is not a second catalogue number on a sports card.
+  if(!nearby&&sportsCard184(base)&&original.some(c=>c.certainty==='clear'&&!identifierValue(c).includes('/')))continue;
+  if(list(base.photo_clues).some(c=>c.role==='serial'&&c.image_index===local.image_index&&norm(c.text)===norm(line.text)))continue;
   // An unlabelled number without a typed region is admissible only in a card footer.
   if(!nearby&&(!observedSubject(base)||line.y<.7||!values[0].includes('/')))continue;
   alternatives.push({text:values[0],quote:line.text,role:'collector_number',image_index:local.image_index,region,origin:'on_device_photo_ocr',certainty:'provisional',vision_text:nearby?.text||'',vision_certainty:nearby?.certainty||'missing'});
@@ -103,7 +107,8 @@ function applyPhotoDetails(base,details,requests,selections){
   if(!prior||seen.has(d.clue_index)||d.certainty!=='clear'||empty(d.text)||d.text.length>180)continue;
   seen.add(d.clue_index);
   // A stage label cannot replace a requested collector number. Keep the original uncertain.
-  if(['model','collector_number','barcode','issue_number','copyright'].includes(prior.role)&&d.role!==prior.role)continue;
+  if(['model','collector_number','barcode','issue_number','copyright','serial'].includes(prior.role)&&d.role!==prior.role)continue;
+  if(d.role==='serial'&&!parseSerial184(d.text))continue;
   const changed=norm(prior.text)!==norm(d.text);
   out.photo_clues[d.clue_index]={...out.photo_clues[d.clue_index],text:d.text,role:d.role,image_index:prior.image_index,certainty:'clear',origin:'focused_photo_reread',region:selection?.region||null,...(changed&&prior.text?{superseded_text:prior.text}:{})};
   updates.push({clue_index:d.clue_index,before:prior.text,after:d.text,role:d.role});
@@ -202,7 +207,7 @@ function cardKeyFacts(base){
 }
 const keySignature=base=>{const k=cardKeyFacts(base);return JSON.stringify(k&&[k.subject.value,k.number.value,k.date?.value||k.date?.values,k.date?.kind]);};
 function detailRequests(base,ocr,count,disputed=[]){
- const critical=['model','collector_number','barcode','issue_number','season','copyright'];
+ const critical=['model','collector_number','barcode','issue_number','season','copyright','serial'];
  const inputs=list(base.photo_clues).map((c,i)=>({...c,clue_index:i}));
  const missing=[...list(base.missing_information),base.visual_fingerprint||''].join(' ');
  if(!disputed.length&&base.kind!=='card'&&targetUnit(base)==='box'&&!inputs.some(configuration)&&/quantity|configuration|autograph|conteggio|contenuto|quantit|packs? per|cards? per/i.test(missing)){
@@ -213,7 +218,12 @@ function detailRequests(base,ocr,count,disputed=[]){
   const region=anchor?{image_index:local.image_index,x:object?.x||0,y,width:object?.width||1,height:bottom-y,certain:true}:object;
   inputs.push({text:'',role:'text',certainty:'uncertain',image_index:region?.image_index||1,region,clue_index:inputs.length,missing_configuration:true,requested_detail:'Read the complete printed quantity guarantee, including count and denominator. Do not guess.'});
  }
- const requests=inputs.filter(c=>c.image_index>=1&&c.image_index<=count&&!['serial','slab_certificate'].includes(c.role)).map(c=>{
+ if(!disputed.length&&sportsCard184(base)&&variantPending(base)&&!serialEvidence184(base)&&!inputs.some(c=>c.role==='serial')){
+  const candidates=list(ocr).filter(o=>o.state==='ok').flatMap(o=>list(o.lines).filter(l=>l.y>=.65&&l.width<=.28&&/^\s*\d{1,4}(?:\s*[/Il|] ?\s*\d{1,4})?\s*$/.test(l.text)&&!seasonLike(l.text)).map(l=>({local:o,line:l,region:ocrRegion(l,o)}))).filter(c=>c.region);
+  const one=candidates.find(c=>/[/Il|]/.test(c.line.text))||candidates.find(c=>/\d{2,4}/.test(c.line.text));
+  if(one)inputs.push({text:one.line.text,role:'serial',certainty:'uncertain',image_index:one.local.image_index,region:expandedDetailRegion(one.region,one.local.image_index),clue_index:inputs.length,requested_detail:'Check the small stamped specimen serial in this original region. Read numerator and denominator only if a separator is actually visible; OCR may have merged digits. Do not convert a plain number into a fraction by guessing.'});
+ }
+ const requests=inputs.filter(c=>c.image_index>=1&&c.image_index<=count&&c.role!=='slab_certificate').map(c=>{
   const config=base.kind!=='card'&&configuration(c),local=list(ocr).find(o=>o.image_index===c.image_index&&o.state==='ok');
   const corroborated=config&&String(local?.text||'').split(/\n/).some(t=>quantityMatches(c.text,t));
   const priority=disputed.includes(c.clue_index)?120:c.missing_configuration?110:c.certainty==='uncertain'&&critical.includes(c.role)?100:config&&c.region&&!corroborated?80:c.certainty==='uncertain'&&(c.region||c.role==='edition')?10:0;
@@ -236,11 +246,14 @@ function keyEvidence(base,fields,refs){
   const dateMatch=sourceYear?(keys.date?years.includes(seasonValue(sourceYear)):!!datedEntry):keys.date?.kind==='copyright'&&keys.number.value.includes('/');
   if(!catalogueTuple(base,own,keys)||norm(value('subject'))!==norm(keys.subject.value)||norm(value('catalog_number'))!==norm(keys.number.value)||!dateMatch)continue;
   if(['subject','catalog_number'].some(k=>own.find(f=>f.field===k)?.scope!=='target'))continue;
-  if(base.identity_basis?.family==='printed'&&!has(value('family'),base.family)&&!has(base.family,value('family')))continue;
+  if(base.identity_basis?.family==='printed'&&!familyAgrees184(base.family,value('family'),base.brand))continue;
   // Co-occurrence in a catalogue list is not a single entry. Require name, series and
   // collector number in its title; a fraction's full value must still be cited above.
   const number=keys.number.value.split('/')[0];
-  if(!has(ref.title,keys.subject.value)||!has(ref.title,value('family'))||!has(ref.title,number))continue;
+  const subjectField=own.find(f=>f.field==='subject'),numberField=own.find(f=>f.field==='catalog_number');
+  const row=subjectField&&numberField&&norm(subjectField.quote)===norm(numberField.quote)&&subjectField.quote.length<=240&&has(subjectField.quote,keys.subject.value)&&has(subjectField.quote,keys.number.value)&&
+   referenceText(ref).split(/\n/).some(line=>line.trim().length<=240&&has(line,subjectField.quote)&&new RegExp('^\\s*#?'+keys.number.value.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?:\\s|[.,:–—-])+','i').test(line));
+  if(!familyAgrees184(value('family'),ref.title,base.brand)||!(has(ref.title,keys.subject.value)&&has(ref.title,number)||row&&datedEntry))continue;
   if(own.some(f=>own.some(g=>g.field===f.field&&norm(g.value)!==norm(f.value))))continue;
   results.push({reference_id:ref.id,fields:own.filter(f=>f.field!=='variant'),date_kind:keys.date?.kind||'catalogue_release',date_check:sourceYear?(keys.date?'agrees':'catalogue_only'):'not_stated_in_entry',number_origin:keys.number.origin,origin:'photo_and_catalogue_keys'});
  }
@@ -276,7 +289,7 @@ function plan(base,previous=[]){
  const appearance=physical(base).filter(o=>appearanceFeatures.includes(o.feature)&&! /worn|scuff|scratch|usur|graffi/i.test(o.text)).slice(0,1);
  const terms=[...clear,...counts,...appearance].filter(c=>!/^(pokemon|card|carta|holo|box|sealed|nintendo|topps|panini|on off|settings|home)$/i.test(norm(c.text)))
   .filter(c=>!clear.some(other=>other!==c&&norm(other.text)!==norm(c.text)&&has(other.text,c.text)&&norm(c.text).split(' ').length===1&&!['model','collector_number','barcode'].includes(c.role)))
-  .map((c,i)=>({c,i,priority:['model','collector_number','barcode'].includes(c.role)?6:configuration(c)?5:c.role==='season'?4:c.role==='copyright'?-2:appearanceFeatures.includes(c.feature)?-1:c.role==='configuration'?-1:2}))
+  .map((c,i)=>({c,i,priority:['model','collector_number','barcode'].includes(c.role)?6:c.semantic_role==='subject'&&base.kind==='card'?5.5:configuration(c)?5:c.role==='season'?4:c.role==='copyright'?-2:appearanceFeatures.includes(c.feature)?-1:c.role==='configuration'?-1:2}))
   .sort((a,b)=>b.priority-a.priority||a.i-b.i).map(({c})=>c.text);
  const category=Number(base.category_confidence)>=80&&!/^(object|oggetto|card|carta|unknown)$/i.test(base.category||'')?String(base.category||'').slice(0,65):'';
  // Keep literal names/codes ahead of verbose appearance descriptions and generic categories.
@@ -783,6 +796,88 @@ function compactReference(ref,base,max=1800){
  return {...ref,source_text:source,text:selected.sort((a,b)=>a.i-b.i).map(p=>p.t).join('\n')||raw.slice(0,max)};
 }
 
+function sportsCard184(base){return base?.kind==='card'&&!base.pokemon_printing?.is_pokemon&&/sport|soccer|football|basketball|baseball|hockey|nba|nfl/i.test(base.category||'');}
+function parseSerial184(text){
+ const m=String(text||'').trim().match(/^(?:serial(?:\s*(?:no\.?|number))?\s*[:#]?\s*)?(\d{1,6})\s*\/\s*(\d{1,6})$/i);
+ return m&&Number(m[1])>=1&&Number(m[1])<=Number(m[2])&&!seasonLike(text)?{value:Number(m[1])+'/'+Number(m[2]),specimen:Number(m[1]),print_run:Number(m[2])}:null;
+}
+function serialEvidence184(base){
+ const reads=list(base?.photo_clues).filter(c=>c.role==='serial'&&c.certainty==='clear'&&c.image_index>=1&&c.image_index<=3).map(c=>{const p=parseSerial184(c.text);return p&&{...p,quote:c.text,image_index:c.image_index,region:c.region||null,origin:c.origin||'photo'};}).filter(Boolean);
+ return new Set(reads.map(r=>r.value)).size===1?reads[0]:null;
+}
+function withSerial184(value,photo=value){
+ if(!value||value.kind!=='card')return value;
+ const serial=serialEvidence184(photo);if(!serial)return value;
+ return {...value,physical_serial:serial,serial_number:serial.value,print_run:serial.print_run,normalized_query:value.normalized_query&&!has(value.normalized_query,'/'+serial.print_run)?value.normalized_query+' /'+serial.print_run:value.normalized_query};
+}
+function familyAgrees184(observed,cited,brand=''){
+ const words=s=>norm(s).split(' ').map(w=>/^20\d{2}$/.test(w)?w.slice(2):w==='updates'?'update':w).filter(w=>w&&!['series','set','tm'].includes(w)&&!has(brand,w));
+ const a=words(observed),b=words(cited);return a.length>0&&a.every(w=>b.includes(w));
+}
+function citedSources184(raw,checks,photo){
+ const cited=list(checks).flatMap(c=>list(c.match_evidence).map(e=>({url:url(e.source_url),title:c.model||'',text:'',discovery_only:true,origin:'resolver_citation_url'}))).filter(s=>s.url);
+ const first=cited.filter(s=>targetUnit(photo)!=='box'||familyAgrees184(photo.family,s.title,photo.brand));
+ return [...first,...list(raw)].filter((s,i,a)=>url(s.url)&&a.findIndex(x=>url(x.url)===url(s.url))===i).slice(0,12);
+}
+function releaseEvidence184(base,refs){
+ if(!base.catalogue_core_verified||!base.pokemon_printing?.is_pokemon)return base;
+ const facts=list(base.core_identity?.fields),subject=facts.find(f=>f.field==='subject')?.value,number=facts.find(f=>f.field==='catalog_number')?.value;
+ if(!subject||!number||facts.some(f=>f.field==='year'))return base;
+ const releases=[];
+ for(const r of list(refs)){
+  if(!trustedReferenceText(r)||!has(r.title,subject)||!has(r.title,base.family)||!has(r.title,number.split('/')[0]))continue;
+  const text=referenceText(r),pattern=/(?:release(?:d| date)?|publication|published|date de sortie(?: de la carte)?|data di uscita|pubblicazione|veroffentlicht|erscheinungsdatum)[^\d]{0,100}(?:\d{1,2}[^\d]{1,20})?((?:19|20)\d{2})/gi;
+  for(const m of text.matchAll(pattern))releases.push({field:'year',value:m[1],quote:m[0],reference_id:r.id,evidence:'text',scope:'target',number_kind:'year',origin:'catalogue',source:r.url});
+ }
+ if(new Set(releases.map(f=>f.value)).size!==1)return base;
+ const year=releases[0];return {...base,source_confirmed_year:year.value,catalogue_data:[...list(base.catalogue_data),year],core_identity:{...base.core_identity,fields:[...facts,year]},release_resolution:{origin:'matched_catalogue_entry',reference_id:year.reference_id,quote:year.quote,observed_copyright_preserved:true}};
+}
+// Exact text specifications can identify a format or numbered colour parallel.
+// Every assertion remains tied to one literal passage of a retrieved page.
+function specificationClosure184(base,photo,reply,refs){
+ const isBox=targetUnit(photo)==='box',serial=serialEvidence184(photo),core=isBox?boxIdentity(photo):base.catalogue_core_verified&&base.core_identity;
+ if(!core||!isBox&&!serial)return base;
+ const accepted=[];
+ for(const entry of list(reply?.entries)){
+  const r=refs.find(r=>r.id===entry.reference_id),quote=entry.section_quote||'';
+  if(!trustedReferenceText(r)||quote.length<12||quote.length>1800||quote.includes('…')||!has(referenceText(r),quote)||entry.unit!==(isBox?'box':'single'))continue;
+  if(!familyAgrees184(core.fields.find(f=>f.field==='family')?.value||photo.family,r.title,photo.brand))continue;
+  const year=core.fields.find(f=>f.field==='year')?.value;
+  if(!year||seasonValue(r.title)!==seasonValue(year))continue;
+  if(!entry.variant||!has(quote,entry.variant)||/\b(?:no|not|without|may|chance|possible|or fewer|fino a)\b/i.test(quote))continue;
+  if(isBox){
+   const quantities=evidence(photo).filter(configuration);
+   if(!quantities.length||!has(quote,'box')||!quantities.every(c=>configurationMatches184(c.text,quote)))continue;
+   // Mixed-format passages cannot transfer one format's guarantee to another.
+   const formats=['hobby','jumbo','mega','blaster','value','retail','delight'].filter(f=>has(quote,f));
+   if(formats.length>1||formats.length===1&&!has(entry.variant,formats[0]))continue;
+   if(quantities.some(c=>/autograph/i.test(c.text))&&!/guarantee|every box|each box|per box|box (?:contains|includes|delivers)/i.test(quote))continue;
+  }else{
+   const level=clues(photo).filter(c=>c.role==='edition');
+   if(entry.scope!=='base'||!/\bbase\b/i.test(quote)||level.some(c=>!has(quote,c.text)))continue;
+   const row=entry.variant_quote||'';
+   if(!row||row.length>180||!has(quote,row)||!has(row,entry.variant)||!new RegExp('(?:/|numbered to|numbered out of)\\s*0*'+serial.print_run+'(?:\\b|$)','i').test(row))continue;
+   const observedColors=physical(photo).filter(o=>o.feature==='color'&&/border|bordo|cornice/i.test(o.text)).flatMap(o=>visualColors.filter(c=>has(visualWords(o.text),c)));
+   const colors=visualColors.filter(c=>has(visualWords(entry.variant),c)),other=visualWords(entry.variant).split(' ').filter(w=>!colors.includes(w)&&!['prizm','prism','refractor','parallel'].includes(w));
+   if(!colors.length||other.length||!colors.every(c=>observedColors.includes(c)))continue;
+  }
+  accepted.push({...entry,source:r.url,title:r.title});
+ }
+ const variants=[...new Set(accepted.map(e=>norm(e.variant)))];if(variants.length!==1)return {...base,specification_check:{state:variants.length>1?'ambiguous':'unverified',accepted}};
+ const selected=accepted[0],field={field:'variant',value:selected.variant,quote:selected.section_quote,reference_id:selected.reference_id,scope:'target',evidence:'text',origin:'catalogue',source:selected.source};
+ const fields=[...core.fields,field],model=isBox?[core.fields.find(f=>f.field==='year')?.value,photo.family,selected.variant,'Box'].filter(Boolean).join(' · '):core.model;
+ return withSerial184({...base,model,title:model,variant:selected.variant,market_ready:true,status:'identified',model_verified:true,model_confidence:Math.max(95,Number(base.model_confidence)||0),catalogue_verified:true,catalogue_core_verified:true,core_identity:{...core,model,status:'confirmed',pending_fields:[]},catalogue_data:fields,identity_basis:{...base.identity_basis,variant:'catalogue'},variant_needs_verification:false,catalogue_needs_verification:false,unresolved_identity_fields:[],variant_check:'confirmed',normalized_query:[model,selected.variant].join(' '),assistance_state:'confirmed',missing_information:[],next_photo_request:null,candidate_models:[],identification_sources:[...list(base.identification_sources),...accepted.map(e=>({title:e.title,url:e.source}))],specification_check:{state:'confirmed',origin:isBox?'photo_configuration_and_catalogue':'photo_serial_colour_and_catalogue',accepted},verification_summary:isBox?'Formato verificato con la configurazione fotografata e documentata nella fonte.':'Numero carta, parallelo e tiratura verificati con foto e catalogo.'},photo);
+}
+
+function configurationMatches184(photo,quote){
+ const a=quantityPairs(photo),b=quantityPairs(quote);
+ if(!a.pairs.length||!a.pairs.every(x=>b.pairs.some(y=>x.unit===y.unit&&x.amount===y.amount)&&!b.pairs.some(y=>x.unit===y.unit&&x.amount!==y.amount)))return false;
+ return a.pairs.every(x=>{
+  const per=String(quote).toLowerCase().match(new RegExp('\\b'+x.unit+'s?(?:\\s+cards?)?\\s+(?:in\\s+(?:each|every)|per|each|every)\\s+(box|pack|case|carton)s?\\b'));
+  return !a.per||per?(!a.per||!per||per[1]===a.per):a.per==='box'&&/\bbox\b/i.test(quote);
+ });
+}
+
 class Budget {
  constructor({maxEur=.03,usdPerEur=1,deadlineMs=150000,now=()=>Date.now()}={}){this.maxUsd=Math.min(.03,maxEur)*usdPerEur;this.now=now;this.deadline=now()+deadlineMs;this.entries=[];this.textCalls=0;this.visualCalls=0;this.visionCalls=0;this.cancelled=false;}
  spent(){return this.entries.reduce((n,e)=>n+(e.actualUsd??e.reservedUsd),0);}
@@ -809,5 +904,5 @@ schema.properties.detail_needed_from={type:'string',enum:['none','target','refer
 fieldSchema.properties.evidence={type:'string',enum:['text','image']};fieldSchema.required.push('evidence');
 fieldSchema.properties.field.enum.push('subject','variant');matchSchema.properties.feature.enum.push('appearance','color','pattern','finish');fieldSchema.properties.scope={type:'string',enum:['target','parent','holder','listing']};
 fieldSchema.properties.number_kind={type:'string',enum:['none','model_number','card_number','catalog_number','issue_number','year','season','serial','listing_id']};fieldSchema.required.push('scope','number_kind');
-const api={familyKey,boxIdentity,observedSubject,reconcilePhotoOcr,collectorReadings,keySignature,physicalVariantProof,mergeCatalogueFields,referenceImageKey,cardKeyFacts,keyEvidence,detailRequests,photoIdentity,preservePhotoIdentity,catalogueTuple,referenceText,ambiguityScope,detailRegion,applyPhotoDetails,collectible,queryHypotheses,recoverableComparison,referenceRelevant,sharedObservedFacts,fuseComparisons,genericIdentity,harvestCode,rankReferences,targetUnit,trustedReferenceText,fallbackPlan,clueRole,completeComparison,auditIdentity,cataloguePending,quantityPairs,quantityMatches,printingPlan,identifierValue,seasonValue,variantPending,googleFirst,appearanceFeatures,compactReference,referenceImageUseful,clues,identifiers,seasonLike,physical,evidence,plan,configuration,observed,resolverPrompt,groundChecks,rankSources,validFields,catalogueName,ready,canonical,mergeCandidates,validate,Budget,schema,url,empty};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckVisual=api;
+const api={sportsCard184,parseSerial184,serialEvidence184,withSerial184,familyAgrees184,citedSources184,releaseEvidence184,specificationClosure184,familyKey,boxIdentity,observedSubject,reconcilePhotoOcr,collectorReadings,keySignature,physicalVariantProof,mergeCatalogueFields,referenceImageKey,cardKeyFacts,keyEvidence,detailRequests,photoIdentity,preservePhotoIdentity,catalogueTuple,referenceText,ambiguityScope,detailRegion,applyPhotoDetails,collectible,queryHypotheses,recoverableComparison,referenceRelevant,sharedObservedFacts,fuseComparisons,genericIdentity,harvestCode,rankReferences,targetUnit,trustedReferenceText,fallbackPlan,clueRole,completeComparison,auditIdentity,cataloguePending,quantityPairs,quantityMatches,printingPlan,identifierValue,seasonValue,variantPending,googleFirst,appearanceFeatures,compactReference,referenceImageUseful,clues,identifiers,seasonLike,physical,evidence,plan,configuration,observed,resolverPrompt,groundChecks,rankSources,validFields,catalogueName,ready,canonical,mergeCandidates,validate,Budget,schema,url,empty};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckVisual=api;
 })(typeof window!=='undefined'?window:globalThis);

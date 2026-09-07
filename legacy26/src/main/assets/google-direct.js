@@ -80,7 +80,8 @@ function titleSupported(title,text){
 }
 async function catalogueReferences(sources,options,base){
  const pages=list(sources).filter(s=>url(s.url)).slice(0,6),refs=[],attempts=[],textReferences=[];
- const terms=[base?.category,...FlipCheckVisual.evidence(base||{}).map(c=>c.text)].filter(Boolean).slice(0,12);
+ const subject=FlipCheckVisual.observedSubject(base||{}),serial=FlipCheckVisual.serialEvidence184(base),colors=FlipCheckVisual.physical(base||{}).filter(o=>o.feature==='color').map(o=>o.text.match(/\b(?:green|red|blue|gold|silver|black|white|purple)\b/i)?.[0]).filter(Boolean);
+ const terms=[subject?.text,...(serial?colors.map(c=>c+' /'+serial.print_run):[]),...FlipCheckVisual.identifiers(base||{}).map(c=>c.text),base?.family,...FlipCheckVisual.evidence(base||{}).filter(FlipCheckVisual.configuration).map(c=>c.text),...colors,...FlipCheckVisual.evidence(base||{}).map(c=>c.text)].filter(Boolean).slice(0,12);
  async function retrieve(s,i){
   const attempt={url:s.url,state:'requested'};attempts.push(attempt);
   try{
@@ -94,7 +95,7 @@ async function catalogueReferences(sources,options,base){
     return {id:'ref'+(i+1),url:s.url,title:s.title,text,text_origin:page.text?'retrieved_pdf_pages':'web_indexed_document',pages_rendered:page.pages_rendered,page_count:page.page_count,page_selection:page.page_selection,image_url:s.url,image_data:page.image_data};
    }
    if(!page.text||page.is_collection){attempt.state=page.is_collection?'collection_page':'no_page_text';return null;}
-   if(!titleSupported(s.title,page.text)){attempt.state='page_content_mismatch';return null;}
+   if(!s.discovery_only&&!titleSupported(s.title,page.text)){attempt.state='page_content_mismatch';return null;}
    textReferences.push({id:'page'+(i+1),url:page.url||s.url,title:page.title||s.title,text:page.text.slice(0,5000),text_origin:'retrieved_page'});
    const images=list(page.images).map(url).filter(u=>u&&FlipCheckVisual.referenceImageUseful(u)).slice(0,2);
    const pictures=[];
@@ -108,7 +109,7 @@ async function catalogueReferences(sources,options,base){
   }catch(error){attempt.state=options?.signal?.aborted?'retrieval_timeout':'download_unavailable';return null;}
  }
  // A bounded second group recovers other domains when the first pages contain no useful image.
- for(let offset=0;offset<pages.length&&refs.length<3&&!options?.signal?.aborted;offset+=3){
+ for(let offset=0;offset<pages.length&&(refs.length<3||textReferences.length<3)&&!options?.signal?.aborted;offset+=3){
   const results=await Promise.allSettled(pages.slice(offset,offset+3).map((s,i)=>retrieve(s,offset+i)));
   for(const result of results)if(result.status==='fulfilled'&&result.value)for(const ref of Array.isArray(result.value)?result.value:[result.value])if(!refs.some(r=>imageKey(r.image_url)===imageKey(ref.image_url)))refs.push(ref);
  }

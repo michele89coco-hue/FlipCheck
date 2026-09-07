@@ -216,7 +216,32 @@ public final class GoogleVisionBridge {
         Element content=main==null?doc.body():main;
         for(Element block:content.select("p,li,h1,h2,h3,section,div,br"))block.appendText("\n");
         String text=(doc.title()+"\n"+productText+"\n"+content.wholeText()).replaceAll("[\\t\\x0B\\f\\r ]+"," ").replaceAll(" *\n *","\n").replaceAll("\n{3,}","\n\n").trim();
-        return json("status",200,"url",pageUrl,"title",doc.title(),"text",text.substring(0,Math.min(5000,text.length())),"images",new JSONArray(images),"image_details",new JSONArray(images.stream().map(imageDetails::get).collect(java.util.stream.Collectors.toList())),"image_links",imageLinks,"is_collection",productText.length()==0&&linkedPages.size()>1&&(doc.title().matches("(?i).*(?:all products|search results|gallery|catalogue list).*")||pageUrl.matches("(?i).*/(?:shop|search|collection|category|gallery)[^/]*[/?].*")));
+        return json("status",200,"url",pageUrl,"title",doc.title(),"text",selectPageText(text,terms),"text_selection","observed_terms","images",new JSONArray(images),"image_details",new JSONArray(images.stream().map(imageDetails::get).collect(java.util.stream.Collectors.toList())),"image_links",imageLinks,"is_collection",productText.length()==0&&linkedPages.size()>1&&(doc.title().matches("(?i).*(?:all products|search results|gallery|catalogue list).*")||pageUrl.matches("(?i).*/(?:shop|search|collection|category|gallery)[^/]*[/?].*")));
+    }
+    // Select literal passages before imposing the transfer limit. A checklist row
+    // near the end of a page must not disappear behind its introductory article.
+    static String selectPageText(String text,JSONArray terms) {
+        if(text.length()<=5000)return text;
+        java.util.List<int[]> windows=new java.util.ArrayList<>();
+        windows.add(new int[]{0,Math.min(850,text.length())});
+        String lower=text.toLowerCase(java.util.Locale.ROOT);
+        for(int i=0;terms!=null&&i<Math.min(12,terms.length());i++){
+            String term=terms.optString(i).trim().toLowerCase(java.util.Locale.ROOT);if(term.length()<3)continue;
+            int from=0,seen=0;
+            while(seen++<3){int at=lower.indexOf(term,from);if(at<0)break;from=at+term.length();
+                int start=Math.max(0,at-240),end=Math.min(text.length(),at+term.length()+460);
+                int line=text.lastIndexOf('\n',at);if(line>=start)start=line+1;
+                int finish=text.indexOf('\n',end);if(finish>=0&&finish-end<120)end=finish;
+                boolean covered=false;for(int[] w:windows)if(start>=w[0]&&end<=w[1])covered=true;
+                if(!covered)windows.add(new int[]{start,end});
+            }
+        }
+        if(windows.size()==1)return text.substring(0,5000);
+        java.util.List<int[]> selected=new java.util.ArrayList<>();int size=0;
+        for(int[] w:windows){int amount=w[1]-w[0]+7;if(size+amount>5000)continue;selected.add(w);size+=amount;}
+        selected.sort((a,b)->Integer.compare(a[0],b[0]));StringBuilder out=new StringBuilder();int previous=-1;
+        for(int[] w:selected){if(w[1]<=previous)continue;int start=Math.max(w[0],previous);if(out.length()>0&&start>previous)out.append("\n[…]\n");out.append(text,start,w[1]);previous=w[1];}
+        return out.toString();
     }
     private static void productFacts(Object value,StringBuilder out,int depth) {
         if(depth>6||out.length()>2200)return;

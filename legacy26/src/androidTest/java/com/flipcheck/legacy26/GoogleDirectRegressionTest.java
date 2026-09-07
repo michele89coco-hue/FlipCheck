@@ -10,6 +10,19 @@ import static org.junit.Assert.*;
 
 /** Actual production request construction and network guards, with zero HTTP calls. */
 public final class GoogleDirectRegressionTest {
+    @Test public void lateChecklistRowsSurviveThePageTextLimit() throws Exception {
+        StringBuilder html=new StringBuilder("<html><head><title>2031 Example Select Soccer Checklist</title></head><body><main><h1>Base Terrace</h1>");
+        for(int i=0;i<180;i++)html.append("<p>Background introduction and general collector information.</p>");
+        html.append("<p>21 Alex Rivera, Elsewhere</p><h2>Base Terrace Parallels</h2><p>Green /5</p><p>Gold /10</p></main></body></html>");
+        JSONObject page=GoogleVisionBridge.pageData(html.toString(),"https://catalog.example/checklist",new org.json.JSONArray().put("Alex Rivera").put("Green /5"));
+        String text=page.getString("text");assertTrue(text.length()<=5000);assertTrue(text.contains("21 Alex Rivera, Elsewhere"));assertTrue(text.contains("Base Terrace Parallels"));assertTrue(text.contains("Green /5"));assertTrue(text.contains("[…]"));
+    }
+    @Test public void excerptsPreserveLiteralTextAndDoNotFuseSeparateChecklistRows() throws Exception {
+        StringBuilder text=new StringBuilder("Example catalogue\n");for(int i=0;i<500;i++)text.append("Background information.\n");
+        text.append("72 Other Athlete\n73 Alex Rivera\n74 Someone Else\n");
+        String selected=GoogleVisionBridge.selectPageText(text.toString(),new org.json.JSONArray().put("Alex Rivera"));
+        assertTrue(selected.contains("72 Other Athlete\n73 Alex Rivera\n74 Someone Else"));assertFalse(selected.contains("72 Alex Rivera"));assertTrue(selected.length()<=5000);
+    }
     @Test public void bundledOcrReadsAReferenceLabelWithoutApiCredentials() throws Exception {
         android.graphics.Bitmap bitmap=android.graphics.Bitmap.createBitmap(1100,400,android.graphics.Bitmap.Config.ARGB_8888);
         android.graphics.Canvas canvas=new android.graphics.Canvas(bitmap);canvas.drawColor(android.graphics.Color.WHITE);

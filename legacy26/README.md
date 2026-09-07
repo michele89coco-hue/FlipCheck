@@ -124,3 +124,12 @@ Final synchronization aligns `status`, `identity_status` and `exact_identity_sta
 - Retain clearly observed holographic finish even when returned under pattern, and finish a resolved printing check without requiring another paid reread. Final core and exact statuses are synchronized; condition/grading requests do not block an established identity.
 - Regression checks use synthetic cards, source statements and API replies. An offline replay of the seven supplied build-182 diagnostics reaches coherent closure with the recorded evidence; this is not a new recognition accuracy measurement. No live paid recognition calls were made for this build.
 - Android release: versionCode 183, versionName 0.26.7-universal-key-closure. Existing signing identity and offline CI gates are retained.
+
+
+## Build 184 — format and specimen numbering
+
+Fixes observed in the build 183 diagnostics: retrieve resolver citation URLs as untrusted discovery, then verify their actual page text; select relevant checklist passages before truncating page text; verify box configuration directly from a cited, product-scoped guarantee; support exact subject/number checklist rows below a set-level title. A matched release date can determine Pokemon stamp applicability while preserving the original copyright observation. Sports product season remains separate from a tournament year.
+
+Sports specimen serials are separate from catalogue numbers. A suspicious small footer reading receives a bounded original-photo crop; only a clearly read numerator/denominator becomes specimen numbering. A numbered colour parallel can close against its base-level catalogue specification. The renderer shows card number, specimen serial and print run separately. Initial image indexes are bounded to the uploaded photo count.
+
+Regression checks include positive closures and wrong-series, wrong-year, wrong-unit, mixed-format, wrong-subset and unresolved-serial failures. API responses in tests are simulated; no new paid recognition scans were run. These checks are not a live photo-recognition accuracy score.
