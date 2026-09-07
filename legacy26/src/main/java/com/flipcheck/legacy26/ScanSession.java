@@ -142,11 +142,11 @@ final class ScanSession {
         return GoogleVisionBridge.json("state", state, "running", running, "foregroundReady", foregroundReady,
             "startedAt", startedAt, "finishedAt", finishedAt, "backgroundTransitions", backgroundTransitions,
             "detachedActivities", detachedActivities, "activityAttached", owner != null, "activityVisible", ownerVisible,
-            "wakeLockHeld", ScanForegroundService.wakeLockHeld(), "failure", failure, "retainedRuntime", true);
+            "wakeLockHeld", ScanForegroundService.wakeLockHeld(), "failure", failure, "retainedRuntime", true).toString();
     }
     public final class HostBridge {
         @JavascriptInterface public String buildInfo() {
-            return GoogleVisionBridge.json("versionCode", BuildConfig.VERSION_CODE, "versionName", BuildConfig.VERSION_NAME, "sourceCommit", BuildConfig.SOURCE_COMMIT);
+            return GoogleVisionBridge.json("versionCode", BuildConfig.VERSION_CODE, "versionName", BuildConfig.VERSION_NAME, "sourceCommit", BuildConfig.SOURCE_COMMIT).toString();
         }
         @JavascriptInterface public String photoPickerInfo() { return owner == null ? "{}" : owner.photoPickerInfo(); }
         @JavascriptInterface public void preparePhotoPicker(boolean multiple) { if (owner != null) owner.preparePhotoPicker(multiple); }
@@ -154,7 +154,7 @@ final class ScanSession {
         @JavascriptInterface public void saveDiagnostic(String json) { main.post(() -> { if (localPage() && owner != null) owner.saveDiagnostic(json); }); }
         @JavascriptInterface public String backgroundInfo() { return info(); }
         @JavascriptInterface public String lastScan() {
-            return GoogleVisionBridge.json("state", prefs.getString("state", "idle"), "snapshot", prefs.getString("snapshot", ""), "finishedAt", prefs.getLong("finishedAt", 0));
+            return GoogleVisionBridge.json("state", prefs.getString("state", "idle"), "snapshot", prefs.getString("snapshot", ""), "finishedAt", prefs.getLong("finishedAt", 0)).toString();
         }
         @JavascriptInterface public void beginScan(String id) {
             if (id == null || !id.matches("[a-zA-Z0-9-]{8,80}")) return;
