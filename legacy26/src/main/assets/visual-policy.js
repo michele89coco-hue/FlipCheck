@@ -342,7 +342,7 @@ function rankSources(sources,base,candidates=[]){
  // corroborate them. Otherwise a useful page is discarded before extraction.
  const clear=[...evidence(base),...list(base.ocr_number_readings)];
  const ranked=list(sources).filter(s=>url(s.url)).map((s,i)=>{
-  const text=[s.title,s.text,s.snippet].filter(Boolean).join(' '),hits=clear.filter(c=>has(text,c.text));
+  const text=[s.title,s.text,s.snippet].filter(Boolean).join(' '),hits=clear.filter(c=>has(text,c.text)||c.role==='collector_number'&&has(text,identifierValue(c)));
   const identifier=hits.some(c=>['model','collector_number','barcode'].includes(c.role));
   // Candidate names guide retrieval only; they are not added to photographed evidence or confidence.
   const candidateHit=list(candidates).some(c=>[...new Set(norm(c.model).split(' '))].filter(w=>w.length>=4||/\d/.test(w)&&w.length>=3).filter(w=>has(s.title,w)).length>=2);

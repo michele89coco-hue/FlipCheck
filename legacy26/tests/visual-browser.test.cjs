@@ -535,7 +535,7 @@ test('a card with one catalogue image match repairs that reference before readin
  comparisonQueue=[{candidates:[{...c,matches:c.matches.filter(m=>m.feature==='code')}]},{candidates:[{...c,matches:c.matches.filter(m=>m.feature==='layout')}]}];
  printingReply={...d.vision.pokemon_printing,artwork_shadow:'absent',shadow_location:'right and lower border visible'};
  await upload();await identify();const out=await page.evaluate(()=>diagnostic26());
- assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_identification','flipcheck_resolver','flipcheck_visual_comparison','flipcheck_visual_comparison','flipcheck_printing_detail']);
+ assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_identification','flipcheck_resolver','flipcheck_card_keys','flipcheck_visual_comparison','flipcheck_visual_comparison','flipcheck_printing_detail']);
  assert.equal(googleRequests.filter(r=>r.action==='detect').length,0,JSON.stringify({route:out.visualAssistance.route,provider:out.visualAssistance.provider,review:out.visualAssistance.focusedReview}));assert.equal(out.visualAssistance.focusedReview.reason,'insufficient_visual_comparison');assert.equal(out.visualAssistance.printingRecovery.attempted,true);assert.equal(out.identification.market_ready,true);assert.match(out.identification.variant,/Shadowless/);assert.ok(out.visualAssistance.budget.visionCalls<=4);assert.ok(out.visualAssistance.budget.spentOrReservedUsd<=.03);
 });
 test('compact comparison keeps complementary images when the full response would exceed the remaining budget',async()=>{
@@ -594,7 +594,7 @@ test('183 a photographed name and number close against a web release year withou
   scan164=newContext164();lastVisionReading={kind:'card',object_unit:'single',category:'sports card',brand:'Example',family:'Guessed series',title:'Alex Rivera card',model:'',model_confidence:55,market_ready:false,variant:'',variant_scope:'none',identity_basis:{family:'inferred',variant:'not_applicable'},unresolved_identity_fields:['family'],photo_clues:[{text:'Alex Rivera',role:'subject',certainty:'clear',image_index:1},{text:'NO. 73',role:'collector_number',certainty:'clear',image_index:1}],physical_observations:[]};scan164.photoOcr=[];
   const result=await resolveIdentificationCheap(lastVisionReading,'');return {result,keys:scan164.cardKeyVerification};
  });
- assert.equal(out.result.market_ready,true);assert.equal(out.result.source_confirmed_year,'2031');assert.equal(out.result.identity_keys.date,null);assert.equal(out.keys.state,'confirmed');assert.equal(out.result.next_photo_request,null);
+ assert.equal(out.result.market_ready,true,JSON.stringify(out));assert.equal(out.result.source_confirmed_year,'2031');assert.equal(out.result.identity_keys.date,null);assert.equal(out.keys.state,'confirmed');assert.equal(out.result.next_photo_request,null);
  assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_resolver','flipcheck_card_keys']);assert.equal(googleRequests.some(r=>r.action==='detect'),false);
 });
 test('183 complete initial Pokemon result keeps terminal and core states consistent in the exported diagnostic',async()=>{

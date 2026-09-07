@@ -12,6 +12,14 @@ function card(){
  return {base,fields,ref,reply};
 }
 const evaluate=d=>V.validate(d.base,d.reply,[d.ref]);
+test('source selection links photographed number labels to catalogue numbers without accepting another number',()=>{
+ const d=card();
+ for(const text of ['NO. 73','N° 73','NUMBER 73','#73']){
+  d.base.photo_clues[1].text=text;
+  assert.equal(V.rankSources([d.ref],d.base).length,1,text);
+  assert.equal(V.rankSources([{...d.ref,title:'2031 Prism Alex Rivera #173',text:'2031 Prism Alex Rivera #173'}],d.base).length,0,text);
+ }
+});
 test('photo name and number plus a dated exact web entry close without inventing a photo year',()=>{
  const d=card(),out=evaluate(d);assert.equal(out.market_ready,true);assert.equal(out.source_confirmed_year,'2031');assert.equal(out.identity_keys.date,null);assert.equal(out.visual_candidates[0].key_evidence.date_check,'catalogue_only');assert.equal(out.visual_candidates[0].matches.length,0);
  d.base.photo_clues.push(clue('2009 career totals PTS 100','season'));assert.equal(evaluate(d).market_ready,true);assert.equal(V.cardKeyFacts(d.base).date,null);
