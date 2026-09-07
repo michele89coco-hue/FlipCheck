@@ -353,4 +353,41 @@ test('unread physical printing does not display a catalogue Shadowed assertion a
  },require('./fixtures/identity-cases.cjs').machamp);
  assert.doesNotMatch(await page.locator('#visualResult').textContent(),/Shadowed/);
 });
+test('Google preflight budget exhaustion keeps the independently requested physical label',async()=>{
+ await reset();await upload();const out=await page.evaluate(async()=>{
+  scan164=newContext164();lastVisionReading={kind:'object',next_photo_request:'Photograph the battery compartment MODEL label.'};
+  const entry=scan164.budget.reserve('text',.027);scan164.budget.settle(entry,.027);
+  const result=await googleResolve169(lastVisionReading,scan164,[]);renderIdent(result);return result;
+ });
+ assert.equal(requests.length,0);assert.equal(googleRequests.length,0);assert.equal(out.assistance_state,'budget_exhausted');assert.match(out.next_photo_request,/battery/);
+ assert.equal(await page.locator('#addConfirmPhoto').isVisible(),true);
+});
+test('legacy confidence policy and repeated render preserve an independently verified core model',async()=>{
+ await reset();await upload();const out=await page.evaluate(d=>{
+  scan164=newContext164();lastVisionReading={...d.vision,kind:'card',model_confidence:0,variant:'',identity_basis:{family:'inferred',variant:'inferred'},unresolved_identity_fields:['family','variant']};
+  const refs=d.references.map(r=>({...r,image_data:images.find(Boolean)})),c={...d.candidates[2],variant:'',fields:d.candidates[2].fields.filter(f=>f.field!=='variant')};
+  let value=FlipCheckVisual.validate(lastVisionReading,{candidates:[c]},refs);value=enforceIdentificationPolicy(syncIdentity169(value));value=enforceIdentificationPolicy(value);renderIdent(value);
+  return value;
+ },require('./fixtures/identity-cases.cjs').panel);
+ assert.equal(out.catalogue_core_verified,true);assert.match(out.model,/Sports Journal/);assert.match(await page.locator('#identTitle').textContent(),/Sports Journal/);
+ assert.equal(out.model_confidence,0);assert.equal(out.market_ready,false);assert.equal(out.normalized_query,'');assert.equal(requests.length,0);
+});
+test('discovery slab OCR waits for an attributed catalogue before spending on image comparison',async()=>{
+ await reset();const out=await page.evaluate(d=>{
+  const base={...d.vision,kind:'card',identity_basis:{family:'inferred',variant:'inferred'},unresolved_identity_fields:['family','variant']};
+  return [deferGoogleComparison173(base,d.references.slice(0,2)),deferGoogleComparison173(base,[d.references[2]])];
+ },require('./fixtures/identity-cases.cjs').panel);
+ assert.deepEqual(out,[true,false]);
+});
+test('verified short Base core rereads the original printing before any focused reference call',async()=>{
+ await reset();await upload();const d=structuredClone(require('./fixtures/identity-cases.cjs').machamp);
+ printingReply={...d.vision.pokemon_printing,artwork_shadow:'absent',shadow_location:'visible right and lower artwork border'};
+ const out=await page.evaluate(async d=>{
+  scan164=newContext164();lastVisionReading=d.vision;
+  const core={...d.vision,family:'Base',model_confidence:20,market_ready:false,catalogue_core_verified:true,catalogue_verified:false,core_identity:{status:'confirmed',origin:'catalogue',model:'Examplemon 9/102',fields:[{field:'catalog_number',value:'9/102'}]},variant_check:'pending'};
+  const result=await finishIdentity171(core,scan164);return {result,recovery:scan164.printingRecovery};
+ },d);
+ assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_printing_detail']);assert.equal(out.recovery.attempted,true);assert.equal(out.result.printing_check.applicable,true);assert.equal(out.result.printing_check.shadow,'absent');assert.match(out.result.variant,/Shadowless/);
+ assert.equal(out.result.catalogue_core_verified,true);assert.equal(out.result.market_ready,false);assert.equal(googleRequests.length,0);
+});
 test('no unhandled browser errors',()=>assert.deepEqual(errors,[]));

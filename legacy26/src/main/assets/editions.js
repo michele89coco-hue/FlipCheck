@@ -37,6 +37,15 @@ First Edition e Shadowless sono due attributi separati: il timbro non dimostra d
       || (/\b(?:1st|first|prima)\s*(?:edition|edizione)\b/.test(text)&&result.stamp==='absent')
       || (/\bunlimited\b/.test(text)&&(result.stamp==='present'||result.shadow==='absent'));
   }
+  function cataloguePrinting(identity,printing) {
+    let set_name=identity.family||printing.set_name;
+    // Some catalogues shorten the original set to "Base". Require a verified entry
+    // in the 102-card set; preserve the literal catalogue quote separately.
+    const facts=identity.core_identity?.fields||identity.catalogue_data||[];
+    if(printing.is_pokemon&&identity.catalogue_core_verified&&norm(set_name)==='base'&&
+      facts.some(f=>f.field==='catalog_number'&&/^\d+\s*\/\s*102$/.test(clean(f.value))))set_name='Base Set';
+    return {...printing,set_name};
+  }
   function evaluate(p, count) {
     if (!p || p.is_pokemon !== true) return null;
     const located = (i, location) => Number.isInteger(i) && i >= 1 && i <= count && clean(location).length > 0;
@@ -108,7 +117,7 @@ First Edition e Shadowless sono due attributi separati: il timbro non dimostra d
         ?{...f,verification:result.complete?'confirmed_physical':'pending_physical'}:f);
     return out;
   }
-  const api = {schema,prompt,evaluate,apply,isOriginalBaseSet,contradictsPrinting};
+  const api = {schema,prompt,evaluate,apply,isOriginalBaseSet,contradictsPrinting,cataloguePrinting};
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.FlipCheckEditions = api;
 })(typeof window !== 'undefined' ? window : globalThis);
