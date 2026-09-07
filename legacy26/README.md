@@ -102,7 +102,7 @@ Missing package guarantees receive an original-image crop even if the first resp
 
 Version code 181; version name 0.26.5-evidence-closure. CI includes evidence-closure.test.cjs and production browser regressions for these failure shapes, plus the existing Android lifecycle checks. The original inline engine, native background implementation and original-file crop quality remain unchanged. Tests use saved or simulated responses and do not claim a new live recognition accuracy score.
 
-## Unreleased: card keys, printing observations and box configuration
+## Build 182: card keys, printing observations and box configuration
 
 Derived from the five build-181 reports. OCR fractions with an I/l/pipe in place of a slash remain provisional alternatives with their verbatim quote and image location. Missing letters are not invented. Specific catalogue entries must corroborate the complete number, subject and date constraints; a generic trailing “Set” does not make otherwise matching catalogue series different.
 
@@ -112,4 +112,4 @@ Boxes with a clearly printed brand, family and season retain a confirmed core. T
 
 New Pokémon observations report the printed shadow separately at the right and lower artwork edges. Both must agree with the printing label; an uncertain edge stays unresolved. The prompt distinguishes the printed offset band from the black frame, artwork and holder shadows, following the existing [CGC printing guide](https://www.cgccards.com/news/article/10262/pokemon-first-editions/). Unlocalized artwork rereads use a contextual window from the original image. Existing recorded observations retain their schema and are not retroactively changed into a correct new visual reading.
 
-Final synchronization aligns `status`, `identity_status` and `exact_identity_status`, with a separate `core_closure_result` in diagnostics. It removes obsolete printing requests only after the corresponding checks complete. No version increment or APK distribution is included in this source change. Regression tests use synthetic fixtures and recorded-response replay; they do not establish live Vision accuracy.
+Final synchronization aligns `status`, `identity_status` and `exact_identity_status`, with a separate `core_closure_result` in diagnostics. It removes obsolete printing requests only after the corresponding checks complete. Version code 182; version name 0.26.6-card-box-closure. The existing signed APK pipeline includes policy, browser and Android lifecycle checks without paid recognition requests. Regression tests use synthetic fixtures and recorded-response replay; they do not establish live Vision accuracy.

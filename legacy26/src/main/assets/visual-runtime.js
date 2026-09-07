@@ -1,4 +1,4 @@
-/* Build 181: reconcile photographic readings and preserve independently verified identity fields. */
+/* Build 182: close card and box cores, reconcile OCR and verify printing independently. */
 'use strict';
 const V164=FlipCheckVisual;
 const priorFetch164=window.fetch.bind(window),priorOpenai164=openai,priorResolve164=resolveIdentificationCheap,priorShould164=shouldResolveOnline,
