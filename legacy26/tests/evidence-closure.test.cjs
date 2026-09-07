@@ -106,3 +106,82 @@ test('focused recovery tries a smaller complete request when the first plan exce
  vm.createContext(env);vm.runInContext(runtime.slice(runtime.indexOf('function comparisonBody169('),runtime.indexOf('function expandFocused174(')),env);
  const planned=env.planComparison179(base,[{data:'synthetic',meta:{imageIndex:1}}],[{...ref,image_data:'synthetic'}],ctx,'Verify the missing field.');assert.equal(planned.body.max_output_tokens,1400);assert.ok(planned.estimatedUsd<=.007);
 });
+
+test('OCR separator repairs remain provisional and preserve the original quote',()=>{
+ const {base,ocr,ref,fields}=fixture();ocr[0].lines[1].text='H7IH32';
+ const out=V.reconcilePhotoOcr(base,ocr),keys=V.cardKeyFacts(out);
+ assert.equal(keys.number.value,'H7/H32');assert.equal(keys.number.quote,'H7IH32');assert.equal(keys.number.certainty,'provisional');
+ assert.equal(out.photo_clues[1].text,'H7/132');assert.equal(evaluate(out,ref,fields).catalogue_core_verified,true);
+ ref.text='Summit Rivermon H7. Card number H7/H33.';
+ assert.notEqual(evaluate(out,ref,fields).catalogue_core_verified,true);
+ assert.deepEqual(V.collectorReadings('2018I19',true),[]);
+});
+test('a lost denominator prefix is not invented during OCR normalization',()=>{
+ const {base,ocr,ref,fields}=fixture();ocr[0].lines[1].text='H7I32';
+ const out=V.reconcilePhotoOcr(base,ocr);assert.equal(V.cardKeyFacts(out).number.value,'H7/32');
+ assert.notEqual(evaluate(out,ref,fields).catalogue_core_verified,true);
+});
+test('two references using the same set name with a generic Set suffix corroborate one entry',()=>{
+ const {base,ocr,ref,fields}=fixture();const ref2={...ref,id:'ref2',url:'https://other.example/card',title:'Summit Set Rivermon H7',text:'Summit Set Rivermon H7. Card number H7/H32.'};
+ const second=fields.map(f=>({...f,reference_id:'ref2',...(f.field==='family'?{value:'Summit Set',quote:'Summit Set'}:{})}));
+ const photo=V.reconcilePhotoOcr(base,ocr);assert.ok(V.keyEvidence(photo,[...fields,...second],[ref,ref2]));
+ ref2.title=ref2.text='Summit Set 2 Rivermon H7. Card number H7/H32.';second.find(f=>f.field==='family').value=second.find(f=>f.field==='family').quote='Summit Set 2';
+ assert.equal(V.keyEvidence(photo,[...fields,...second],[ref,ref2]),null);
+});
+function sport182(){return {kind:'card',object_unit:'single',category:'Basketball card',brand:'Aurora',family:'Prism Basketball',title:'Alex Rivera Prism rookie card',model:'No. 73',model_confidence:94,identity_basis:{family:'printed',variant:'inferred'},variant:'Green Prism parallel',variant_scope:'commercial',photo_clues:[clue('ALEX RIVERA','subject'),clue('CITY FALCONS','subject'),clue('NO. 73','collector_number'),clue('2031-32 AURORA PRISM BASKETBALL','season')],physical_observations:[{feature:'color',text:'Green reflective border',entity:'target',certainty:'clear',image_index:1}]};}
+test('a photographed athlete and team no longer erase the 94-confidence identity tuple',()=>{
+ const b=sport182(),out=V.auditIdentity(b);assert.equal(out.status,'identified');assert.equal(out.core_identity.status,'confirmed');assert.match(out.model,/ALEX RIVERA/);assert.equal(out.model_confidence,94);assert.equal(out.market_ready,false);
+ b.title='Alex Rivera and City Falcons';assert.equal(V.photoIdentity(b),null);
+ b.photo_clues[1].role='team';assert.equal(V.photoIdentity(b).status,'confirmed');
+ b.photo_clues[0].certainty='uncertain';assert.equal(V.photoIdentity(b),null);
+});
+test('a specific reference for the observed border outranks an unrelated parallel with the same number',()=>{
+ const b=sport182(),common={url:'https://catalog.example/card',text:'Alex Rivera 73',text_origin:'retrieved_page',image_data:'synthetic'};
+ const silver={...common,id:'silver',title:'Alex Rivera Silver Prism 73',ocr:{state:'ok',text:'NO. 73'}};
+ const green={...common,id:'green',title:'Alex Rivera Green Prism 73',image_url:'https://storage.googleapis.com/images.pricecharting.com/example/240.jpg'};
+ const large={...green,id:'large',image_url:'https://storage.googleapis.com/images.pricecharting.com/example/1600.jpg'};
+ assert.deepEqual(V.rankReferences([silver,green,large],b).map(r=>r.id),['green','silver']);
+ const wrong={...green,id:'wrong',ocr:{state:'ok',text:'NO. 74'}};assert.notEqual(V.rankReferences([wrong,silver],b)[0].id,'wrong');
+});
+function box182(){return {kind:'object',object_unit:'box',category:'basketball trading card sealed box',brand:'Aurora',family:'Chrome Update Series',brand_confidence:99,family_confidence:96,model_confidence:72,identity_basis:{family:'printed',variant:'inferred'},variant_scope:'commercial',variant:'sealed box',model:'',title:'Chrome box',market_ready:false,photo_clues:[clue('Aurora Chrome'),clue('UPDATE SERIES'),clue('2031/32','season'),clue('1 AUTOGRAPH* IN EVERY BOX!')],physical_observations:[]};}
+function boxEntry182(variant='Hobby',amount=1,id='box'){
+ const title='2031-32 Aurora Chrome Update Series '+variant+' Box',ref={id,url:'https://catalog.example/'+id,title,text:title+'. '+amount+' autograph in every box.',text_origin:'retrieved_page',image_data:'synthetic comparison only'};
+ const fields=[['brand','Aurora','none'],['family','Chrome Update Series','none'],['year','2031-32','season'],['variant',variant,'none']].map(([field,value,number_kind])=>({field,value,number_kind,reference_id:id,quote:title,evidence:'text',scope:'target'}));
+ const candidate={unit:'box',decision:'match',same_unit:true,physical_ambiguity:false,identity_level:'exact',variant,variant_status:'identified',ambiguity_scope:'none',conflicts:[],fields,matches:['layout','color'].map(feature=>({reference_id:id,feature,photo_detail:'matching box design',reference_detail:'matching box design',agrees:true,reference_evidence:'image'}))};
+ return {ref,candidate};
+}
+test('a box preserves printed family and season and searches its guarantee before images',()=>{
+ const b=box182(),out=V.auditIdentity(b);assert.equal(out.core_identity.status,'confirmed');assert.equal(out.market_ready,false);assert.doesNotMatch(out.model,/Hobby/);assert.equal(V.googleFirst(b),false);assert.match(V.plan(b).query,/1 AUTOGRAPH/);
+ const generic={...b,photo_clues:[clue('Aurora'),clue('1 autograph in every box')]};assert.equal(V.boxIdentity(generic),null);
+});
+test('the source can establish a box format without Hobby printed in the photo',()=>{
+ const b=box182(),{ref,candidate}=boxEntry182();
+ const out=V.validate(b,{candidates:[candidate]},[ref]);assert.equal(out.catalogue_verified,true);assert.equal(out.variant,'Hobby');assert.equal(out.market_ready,true);
+ const bad=boxEntry182('Hobby',2);assert.notEqual(V.validate(b,{candidates:[bad.candidate]},[bad.ref]).catalogue_verified,true);
+});
+test('one autograph never chooses Hobby when another format has the same observed guarantee',()=>{
+ const b=box182(),a=boxEntry182(),z=boxEntry182('Collectors',1,'other');
+ const out=V.validate(b,{candidates:[a.candidate,z.candidate]},[a.ref,z.ref]);assert.equal(out.assistance_state,'ambiguous');assert.notEqual(out.catalogue_verified,true);assert.equal(out.core_identity.status,'confirmed');assert.equal(out.market_ready,false);
+});
+test('new printing readings require both frame edges to agree with the printing label',()=>{
+ const p={is_pokemon:true,language:'English',set_name:'Base Set',card_type:'pokemon',first_edition_stamp:'present',stamp_image:1,stamp_location:'left below art',stamp_text:'1st Edition',artwork_shadow:'absent',shadow_image:1,shadow_location:'right and lower outside frame',copyright_text:'©1995,96,98,99 Nintendo ©1999 Wizards',copyright_image:1,shadow_edges:{right:'absent',lower:'absent'}};
+ assert.equal(E.evaluate(p,1).shadow,'absent');assert.equal(E.evaluate({...p,artwork_shadow:'present'},1).shadow,'unclear');
+ assert.equal(E.evaluate({...p,shadow_edges:{right:'absent',lower:'unclear'}},1).complete,false);
+ const out=E.apply({kind:'card',variant:'Holofoil; / non determinabile dai dati osservati'},p,1);assert.equal(out.variant,'Holofoil · 1st Edition · Shadowless');
+});
+test('production final synchronization clears a stale uncertain status after exact closure',()=>{
+ const photo=sport182(),env={V164:V,active164:()=>true,scan164:{},lastVisionReading:photo,canonTerm:s=>String(s).toLowerCase()};
+ vm.createContext(env);vm.runInContext(runtime.slice(runtime.indexOf('function syncIdentity169('),runtime.indexOf('mergeResolvedFingerprint=function')),env);
+ const exact={...photo,core_identity:V.photoIdentity(photo),status:'uncertain',model:'Verified card',catalogue_verified:true,catalogue_core_verified:true,variant_needs_verification:false,catalogue_needs_verification:false,market_ready:true,normalized_query:'Verified card Green',model_verified:true,missing_information:['obsolete printing doubt'],next_photo_request:'obsolete request'};
+ const out=env.syncIdentity169(exact);assert.equal(out.status,'identified');assert.equal(out.identity_status,'confirmed');assert.equal(out.exact_identity_status,'confirmed');assert.equal(out.next_photo_request,null);assert.equal(out.missing_information.length,0);
+ env.scan164={};const pending=env.syncIdentity169(photo);assert.equal(pending.core_identity.status,'confirmed');assert.equal(pending.identity_status,'confirmed');assert.equal(pending.exact_identity_status,'variant_pending');assert.match(pending.verification_summary,/Identità principale verificata/);
+});
+test('production comparison planning keeps the relevant variant when the budget permits only one reference',()=>{
+ const base=sport182(),ctx={comparisonHistory:[],photoOcr:[],budget:new V.Budget()},env={V164:V,lastVisionReading:base,scan164:ctx,schemaFormat:(name,schema)=>({text:{format:{name,schema}}}),estimate164:body=>((JSON.stringify(body).match(/"type":"input_image"/g)||[]).length)*.01};
+ vm.createContext(env);vm.runInContext(runtime.slice(runtime.indexOf('function comparisonBody169('),runtime.indexOf('function expandFocused174(')),env);
+ ctx.budget.maxUsd=.021;
+ const refs=['Silver','Green'].map((variant,i)=>({id:variant,url:'https://catalog.example/'+i,title:'Alex Rivera '+variant+' Prism 73',text:'Alex Rivera 73',text_origin:'retrieved_page',image_data:'synthetic'}));
+ refs[0].ocr={state:'ok',text:'NO. 73'};
+ const result=env.planComparison179(base,[1,2].map(imageIndex=>({meta:{imageIndex},data:'synthetic'})),refs,ctx);
+ assert.ok(result.body);assert.equal(result.refs.length,1);assert.equal(result.refs[0].id,'Green');assert.equal(result.photos.length,1);assert.equal(result.photos[0].meta.imageIndex,1);
+});

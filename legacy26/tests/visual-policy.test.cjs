@@ -135,7 +135,7 @@ test('Vision retries have a four-call ceiling independent of their low billed co
  assert.throws(()=>b.reserve('vision',0),/call_limit/);assert.equal(b.visionCalls,4);assert.equal(b.textCalls,0);assert.equal(b.visualCalls,0);
 });
 test('recorded Machamp recovery covers the unknown border as well as copyright',()=>{
- const m=recorded168.mach,plan=V.printingPlan(m.vision,m.check,1);assert.equal(plan.length,2);assert.equal(plan.find(p=>p.detail==='shadow').fallback,true);assert.equal(plan.find(p=>p.detail==='shadow').object_region.width,.98);assert.equal(plan.find(p=>p.detail==='copyright').detail_crop,true);
+ const m=recorded168.mach,plan=V.printingPlan(m.vision,m.check,1);assert.equal(plan.length,2);const shadow=plan.find(p=>p.detail==='shadow');assert.equal(shadow.search_window,true);assert.equal(shadow.detail_crop,true);assert.ok(shadow.object_region.width>=.98&&shadow.object_region.width<=1);assert.ok(shadow.object_region.height>.4);assert.equal(plan.find(p=>p.detail==='copyright').detail_crop,true);
 });
 test('recorded Pele comparison closes using the cited description without invented name or lot number',()=>{
  const p=recorded168.pele,out=V.validate(p.vision,p.comparison,p.references);assert.equal(out.market_ready,true);assert.match(out.model,/1958.*37.*Pelé y Manoel Francisco Santos/);assert.equal(out.source_confirmed_catalog_number,'');assert.equal(out.catalogue_data.find(f=>f.field==='subject').recovered_from,'cited_subject_description');assert.equal(out.authenticity_status,'not_assessed');
