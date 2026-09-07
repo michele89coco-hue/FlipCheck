@@ -148,7 +148,7 @@ function auditIdentity(base){
  const variant=variantPending(base),catalogue=cataloguePending(base);
  if(!variant&&!catalogue)return base;
  const core=base.core_identity?.status==='confirmed';
- return {...base,market_ready:false,model_verified:core,normalized_query:'',status:core?'identified':'uncertain',model_confidence:core?Math.max(Number(base.model_confidence)||0,base.core_identity.confidence||90):Math.min(Number(base.model_confidence)||0,89),variant_needs_verification:variant,catalogue_needs_verification:catalogue,
+ return {...base,market_ready:false,model_verified:core,normalized_query:'',status:core?'identified':'uncertain',model_confidence:core?Math.max(Number(base.model_confidence)||0,base.core_identity.confidence||90):Math.min(Number(base.model_confidence)||0,89),variant_needs_verification:variant,...(variant?{variant_check:'pending'}:{}),catalogue_needs_verification:catalogue,
   missing_information:[...list(base.missing_information),...(catalogue?['Verifica catalografica della serie']:[]),...(variant?['Verifica del sottotipo o della variante']:[])].filter((v,i,a)=>a.indexOf(v)===i)};
 }
 // A collector number is meaningful with its photographed series, subject and product
@@ -313,7 +313,9 @@ function groundChecks(checks,base,sources){
  });
 }
 function rankSources(sources,base,candidates=[]){
- const clear=evidence(base);
+ // Provisional local readings can select a page to inspect; only keyEvidence may
+ // corroborate them. Otherwise a useful page is discarded before extraction.
+ const clear=[...evidence(base),...list(base.ocr_number_readings)];
  const ranked=list(sources).filter(s=>url(s.url)).map((s,i)=>{
   const text=[s.title,s.text,s.snippet].filter(Boolean).join(' '),hits=clear.filter(c=>has(text,c.text));
   const identifier=hits.some(c=>['model','collector_number','barcode'].includes(c.role));

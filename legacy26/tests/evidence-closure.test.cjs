@@ -30,6 +30,7 @@ test('local OCR participates as a provisional physical reading without overwriti
  assert.equal(out.photo_clues[1].text,'H7/132');assert.equal(out.photo_clues[1].certainty,'uncertain');
  assert.equal(keys.number.value,'H7/H32');assert.equal(keys.number.origin,'on_device_photo_ocr');assert.equal(keys.number.certainty,'provisional');
  assert.equal(out.reading_disagreements[0].vision,'H7/132');assert.match(V.plan(out).query,/H7\/H32/);assert.equal(V.googleFirst(out),false);
+ assert.equal(V.rankSources([ref],out).length,1,'the catalogue page must reach extraction even without a clear Vision number or a source year');
  const result=evaluate(out,ref,fields);assert.equal(result.catalogue_core_verified,true);assert.equal(result.market_ready,true);
  assert.equal(result.visual_candidates[0].key_evidence.date_check,'not_stated_in_entry');assert.equal(result.source_confirmed_year,'');assert.equal(result.identity_keys.date.kind,'copyright');
 });

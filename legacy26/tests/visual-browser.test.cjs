@@ -68,7 +68,7 @@ test('181 full resolution uses photographed OCR keys despite an empty model, unc
   scan164.photoOcr=[{state:'ok',image_index:1,meta:{originalWidth:400,originalHeight:600,rect:{x:0,y:0,width:400,height:600}},lines:[{text:'H7/H32',x:.72,y:.91,width:.15,height:.02}]}];
   const result=await resolveIdentificationCheap(lastVisionReading,'');return {result,keys:scan164.cardKeyVerification,photo:scan164.photoEvidence,route:scan164.route,budget:scan164.budget.spent()};
  },pokemon);
- assert.equal(out.result.catalogue_core_verified,true);assert.equal(out.result.market_ready,true);assert.match(out.result.model,/Summit.*Rivermon/);assert.equal(out.result.source_confirmed_year,'');
+ assert.equal(out.result.catalogue_core_verified,true,JSON.stringify({pokemon,...out,requests:requests.map(r=>r.text.format.name)}));assert.equal(out.result.market_ready,true,JSON.stringify({pokemon,...out}));assert.match(out.result.model,/Summit.*Rivermon/);assert.equal(out.result.source_confirmed_year,'');
  assert.equal(out.photo.ocr_number_readings[0].text,'H7/H32');assert.equal(out.result.photo_clues[1].certainty,'uncertain');assert.equal(out.keys.state,'confirmed');assert.equal(out.route,'text_first');
  assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_photo_detail','flipcheck_resolver','flipcheck_card_keys',...(pokemon?['flipcheck_printing_detail']:[])]);assert.equal(googleRequests.some(r=>r.action==='detect'),false);assert.ok(out.budget<=.03);
  }
