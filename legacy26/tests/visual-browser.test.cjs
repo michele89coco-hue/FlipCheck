@@ -2,12 +2,12 @@
 const {test,before,after}=require('node:test'),assert=require('node:assert/strict'),http=require('node:http'),fs=require('node:fs'),path=require('node:path');
 const {chromium}=require('playwright');
 let server,browser,page,origin,photos,requests=[],googleRequests=[],vision,initialMode='',comparison,comparisonQueue=[],catalogText='',catalogTitle='',printingReply,detailReply,providerMode='ok',resolverMode='',waitApi=null,errors=[],usageOverrides={};
-let catalogueFieldsReply={entry_scope:'unknown',fields:[]};
+let catalogueFieldsReply={entry_scope:'unknown',fields:[]},cardKeysReply={entries:[]};
 const root=path.join(__dirname,'../src/main/assets');
 const unknown={status:'uncertain',kind:'object',title:'Oggetto',category:'object',brand:'',family:'',model:'',variant:'',condition:'raw',category_confidence:70,brand_confidence:0,family_confidence:0,model_confidence:20,model_verified:false,market_ready:false,candidate_models:[],visual_fingerprint:'geometrical outline',distinctive_terms:[],search_terms:[],identifier_hints:[],layout_signature:[],evidence:[],missing_information:['catalogue identity'],next_photo_request:null,user_text_consistent:true,normalized_query:'',verification_summary:'Mock only',pokemon_printing:null,photo_clues:[],object_unit:'object',object_region:{image_index:1,x:.1,y:.1,width:.8,height:.8,certain:true}};
 const known={...unknown,status:'identified',brand:'Example',family:'Series',model:'Known model',title:'Known model',model_confidence:94,market_ready:true,normalized_query:'Example Known model'};
 function candidate(){return {category:'object',brand:'Example',family:'Series',model:'Documented model',year:'',issue_number:'',catalog_number:'',unit:'object',variant:'',identity_level:'exact',specimen_notes:[],decision:'match',same_unit:true,physical_ambiguity:false,conflicts:[],matches:[{reference_id:'ref1',feature:'layout',photo_detail:'two round controls',reference_detail:'two round controls',reference_evidence:'image',agrees:true},{reference_id:'ref1',feature:'shape',photo_detail:'rectangular body',reference_detail:'rectangular body',reference_evidence:'image',agrees:true}],fields:[{field:'model',scope:'target',number_kind:'model_number',value:'Documented model',reference_id:'ref1',quote:'Catalogue entry: Documented model.'}]};}
-async function reset(enabled=true){catalogueFieldsReply={entry_scope:'unknown',fields:[]};detailReply={details:[]};usageOverrides={};requests=[];googleRequests=[];initialMode='';vision=structuredClone(unknown);comparison={physical_detail_needed:null,candidates:[candidate()]};providerMode='ok';resolverMode='';printingReply=null;comparisonQueue=[];catalogText='Catalogue entry: Documented model.';catalogTitle=catalogText;waitApi=null;await page.goto(origin);await page.waitForFunction(()=>typeof newContext164==='function');await page.evaluate(enabled=>{window.FlipCheckTestMode='mock';trial={free:true,attempts:2,credits:0};saveTrial();$('apiKey').value='fake-openai';$('visualEnabled').checked=enabled;$('googleApiKey').value='fake-google-key-1234567890';$('scanBudget').value='.03';$('budgetFx').value='1';},enabled);}
+async function reset(enabled=true){cardKeysReply={entries:[]};catalogueFieldsReply={entry_scope:'unknown',fields:[]};detailReply={details:[]};usageOverrides={};requests=[];googleRequests=[];initialMode='';vision=structuredClone(unknown);comparison={physical_detail_needed:null,candidates:[candidate()]};providerMode='ok';resolverMode='';printingReply=null;comparisonQueue=[];catalogText='Catalogue entry: Documented model.';catalogTitle=catalogText;waitApi=null;await page.goto(origin);await page.waitForFunction(()=>typeof newContext164==='function');await page.evaluate(enabled=>{window.FlipCheckTestMode='mock';trial={free:true,attempts:2,credits:0};saveTrial();$('apiKey').value='fake-openai';$('visualEnabled').checked=enabled;$('googleApiKey').value='fake-google-key-1234567890';$('scanBudget').value='.03';$('budgetFx').value='1';},enabled);}
 async function upload(){await page.locator('#photoBatch').setInputFiles(photos);await page.waitForFunction(()=>!photoBusy);}
 async function identify(){await page.locator('#identifyBtn').click();await page.waitForFunction(()=>!apiBusy,{},{timeout:12000});}
 before(async()=>{
@@ -19,7 +19,7 @@ before(async()=>{
   if(u==='https://api.openai.com/v1/responses'){
    const body=JSON.parse(route.request().postData());requests.push(body);
    if(body.text.format.name==='flipcheck_identification'&&initialMode&&(initialMode==='always'||requests.filter(r=>r.text.format.name==='flipcheck_identification').length===1))return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({status:'incomplete',incomplete_details:{reason:'max_output_tokens'},output:[{type:'message',content:[{type:'output_text',text:'{'}]}],usage:{input_tokens:4000,output_tokens:3200}})});
-   let payload=body.text.format.name==='flipcheck_catalogue_fields'?catalogueFieldsReply:body.text.format.name==='flipcheck_photo_detail'?detailReply:body.text.format.name==='flipcheck_resolver_recovery'?{candidate_checks:[],verification_summary:'Insufficient evidence',missing_information:['Exact model label']}:body.text.format.name==='flipcheck_printing_detail'?{pokemon_printing:printingReply||vision.pokemon_printing}:body.text.format.name==='flipcheck_visual_comparison'?(comparisonQueue.length?comparisonQueue.shift():comparison):body.text.format.name==='flipcheck_market'?{market_status:'insufficient',exact_completed_sales_count:0,active_listings_count:0,market_low:null,market_high:null,quick_sale_price:null,historical_new_price:null,currency:'EUR',market_notes:'No verified comparable sales',source_summary:''}:vision;
+   let payload=body.text.format.name==='flipcheck_card_keys'?cardKeysReply:body.text.format.name==='flipcheck_catalogue_fields'?catalogueFieldsReply:body.text.format.name==='flipcheck_photo_detail'?detailReply:body.text.format.name==='flipcheck_resolver_recovery'?{candidate_checks:[],verification_summary:'Insufficient evidence',missing_information:['Exact model label']}:body.text.format.name==='flipcheck_printing_detail'?{pokemon_printing:printingReply||vision.pokemon_printing}:body.text.format.name==='flipcheck_visual_comparison'?(comparisonQueue.length?comparisonQueue.shift():comparison):body.text.format.name==='flipcheck_market'?{market_status:'insufficient',exact_completed_sales_count:0,active_listings_count:0,market_low:null,market_high:null,quick_sale_price:null,historical_new_price:null,currency:'EUR',market_notes:'No verified comparable sales',source_summary:''}:vision;
    if(body.text.format.name==='flipcheck_resolver'&&resolverMode){
     if(resolverMode==='unauthorized')return route.fulfill({status:401,contentType:'application/json',body:JSON.stringify({error:{message:'API key rejected'}})});
     const source=resolverMode==='box_completion'?{url:'https://catalog.example/box-entry',title:'2025-26 Topps Chrome Update Series Basketball Hobby, Box',snippet:'1 autograph in every box.'}:{url:'https://acme.example/manual/zx-430',title:'Acme ZX-430 water pump product manual',snippet:'Acme ZX-430 water pump. Two round controls, rectangular body. Model ZX-430.'};
@@ -44,7 +44,7 @@ before(async()=>{
     else if(providerMode==='quota')reply={status:429,body:{error:{status:'RESOURCE_EXHAUSTED'}}};
     else {const linked={url:'https://catalog.example/item',pageTitle:catalogTitle,fullMatchingImages:[{url:'https://catalog.example/item.png'}]};const empty=Array.from({length:7},(_,i)=>({url:'https://catalog.example/generic'+i,pageTitle:'Generic page'}));reply={status:200,body:{responses:[{webDetection:{webEntities:[{description:'Documented model',score:.99}],pagesWithMatchingImages:providerMode==='late_images'?[...empty,linked]:providerMode==='no_images'?empty:[linked]}}]}};}
    }else if(action==='page'&&resolverMode==='catalogue_pdf')reply={status:200,document_type:'pdf',text:catalogText,page_count:8,pages_rendered:[1,2,3],image_data:'data:image/png;base64,'+photos[0].buffer.toString('base64')};
-   else if(action==='page')reply={status:200,text:catalogText,images:resolverMode.startsWith('catalogue')?['https://catalog.example/'+(resolverMode==='catalogue_cost'?body.url.split('/').pop():'item')+'.png']:[]};
+   else if(action==='page')reply={status:200,text:catalogText,images:providerMode==='placeholder'?['https://catalog.example/no-image-new.jpg']:resolverMode.startsWith('catalogue')?['https://catalog.example/'+(resolverMode==='catalogue_cost'?body.url.split('/').pop():'item')+'.png']:[]};
    else if(action==='image')reply={status:200,image_data:'data:image/png;base64,'+photos[0].buffer.toString('base64')};
    else throw new Error('Unexpected native action '+action);
    return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(reply)});
@@ -54,6 +54,37 @@ before(async()=>{
  await reset();const image=await page.evaluate(()=>{const c=document.createElement('canvas');c.width=400;c.height=600;c.getContext('2d').fillStyle='red';c.getContext('2d').fillRect(0,0,400,600);return c.toDataURL('image/png').split(',')[1];});photos=[{name:'synthetic-object.png',mimeType:'image/png',buffer:Buffer.from(image,'base64')}];
 });
 after(async()=>{await browser?.close();if(server)await new Promise(r=>server.close(r));});
+test('180 card keys survive a failed image source through the production identity policy',async()=>{
+ await reset();await upload();
+ const fields=[['subject','Rivermon','none'],['family','Summit','none'],['catalog_number','H7/H32','card_number'],['year','2003','year']].map(([field,value,number_kind])=>({field,value,quote:value,number_kind,reference_id:'page1',scope:'target',evidence:'text'}));
+ cardKeysReply={entries:[{scope:'exact_entry',fields}]};
+ const out=await page.evaluate(async()=>{
+  scan164=newContext164();lastVisionReading={kind:'card',object_unit:'single',category:'trading card',brand:'Example',family:'Guessed Series',model:'Rivermon H7/H32',model_confidence:88,market_ready:false,variant:'Green parallel?',variant_scope:'commercial',identity_basis:{family:'inferred',variant:'inferred'},unresolved_identity_fields:['family','variant'],photo_clues:[{text:'Rivermon',role:'text',certainty:'clear',image_index:1},{text:'H7/H32',role:'collector_number',certainty:'clear',image_index:1},{text:'©2003 Example',role:'copyright',certainty:'clear',image_index:1}]};
+  const ref={id:'page1',url:'https://catalog.example/summit-h7',title:'2003 Summit Rivermon H7',text:'2003 Summit Rivermon H7. Card H7/H32.',text_origin:'retrieved_page'};
+  const core=await verifyCardKeys180(lastVisionReading,scan164,[ref]);
+  const failed=syncIdentity169({...core,model:'Unknown',catalogue_core_verified:false,core_identity:null,assistance_state:'source_detail_needed',next_photo_request:null});
+  ident=failed;renderIdent(ident);return {core,failed,keys:scan164.cardKeyVerification,budget:scan164.budget.spent()};
+ });
+ assert.equal(out.core.catalogue_core_verified,true);assert.equal(out.failed.core_identity.status,'confirmed');assert.match(out.failed.model,/Summit.*Rivermon/);assert.equal(out.failed.market_ready,false);assert.equal(out.failed.next_photo_request,null);assert.equal(out.keys.imageComparisons,0);assert.equal(requests.length,1);assert.equal(googleRequests.length,0);assert.ok(out.budget<=.03);assert.match(await page.locator('#visualResult').textContent(),/Identità principale verificata/);
+});
+test('180 catalogue downloads preserve entry text while excluding no-image placeholders',async()=>{
+ await reset();providerMode='placeholder';catalogText='2003 Summit Rivermon H7. Card H7/H32.';
+ const out=await page.evaluate(async()=>{
+  const found=await FlipCheckDirect.catalogueReferences([{url:'https://catalog.example/summit-h7',title:'2003 Summit Rivermon H7'}],{},{kind:'card',photo_clues:[]});
+  return {images:found.references.length,texts:found.textReferences,state:found.referenceState};
+ });
+ assert.equal(out.images,0);assert.equal(out.texts.length,1);assert.match(out.texts[0].text,/H7\/H32/);assert.equal(out.texts[0].text_origin,'retrieved_page');assert.deepEqual(googleRequests.map(r=>r.action),['page']);assert.equal(requests.length,0);
+});
+test('180 rereads the critical box guarantee from an original crop ahead of a secondary name',async()=>{
+ await reset();await upload();detailReply={details:[{clue_index:1,text:'1 autograph in every box',role:'text',certainty:'clear'}]};
+ const out=await page.evaluate(async()=>{
+  scan164=newContext164();const region={image_index:1,x:.4,y:.7,width:.3,height:.07,certain:true};
+  lastVisionReading={kind:'object',object_unit:'box',category:'sealed box',market_ready:false,photo_clues:[{text:'SECONDARY NAME',role:'text',certainty:'uncertain',image_index:1,region},{text:'1 autograph every 8 boxes',role:'text',certainty:'clear',image_index:1,region}]};
+  scan164.photoOcr=[{image_index:1,state:'ok',text:'AUTPOXI IN EVERYY'}];
+  const result=await rereadPhotoDetails173(lastVisionReading,scan164);return {result,recovery:scan164.detailReread};
+ });
+ assert.deepEqual(out.recovery.requested.map(r=>r.clue_index),[1]);assert.equal(out.recovery.images[0].cropped,true);assert.equal(out.result.photo_clues[1].text,'1 autograph in every box');assert.equal(out.result.photo_clues[1].origin,'focused_photo_reread');assert.equal(requests.length,1);assert.equal(requests[0].text.format.name,'flipcheck_photo_detail');assert.equal(googleRequests.length,0);
+});
 test('179 repairs wrongly scoped publication fields from existing text with no new image comparison',async()=>{
  await reset();await upload();
  const fields=[{field:'family',value:'Northern Record',quote:'Northern Record, issue 17, 1955',scope:'parent',number_kind:'none'},{field:'year',value:'1955',quote:'issue 17, 1955',scope:'parent',number_kind:'year'},{field:'issue_number',value:'17',quote:'issue 17, 1955',scope:'parent',number_kind:'issue_number'},{field:'subject',value:'Alex and Morgan',quote:'Alex and Morgan',scope:'target',number_kind:'none'}].map(f=>({...f,evidence:'text',reference_id:'ref1'}));

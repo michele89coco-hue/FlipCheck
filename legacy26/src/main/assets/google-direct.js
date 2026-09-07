@@ -79,7 +79,7 @@ function titleSupported(title,text){
  return !useful.length||useful.some(w=>body.includes(w));
 }
 async function catalogueReferences(sources,options,base){
- const pages=list(sources).filter(s=>url(s.url)).slice(0,6),refs=[],attempts=[];
+ const pages=list(sources).filter(s=>url(s.url)).slice(0,6),refs=[],attempts=[],textReferences=[];
  const terms=[base?.category,...FlipCheckVisual.evidence(base||{}).map(c=>c.text)].filter(Boolean).slice(0,12);
  async function retrieve(s,i){
   const attempt={url:s.url,state:'requested'};attempts.push(attempt);
@@ -95,6 +95,7 @@ async function catalogueReferences(sources,options,base){
    }
    if(!page.text||page.is_collection){attempt.state=page.is_collection?'collection_page':'no_page_text';return null;}
    if(!titleSupported(s.title,page.text)){attempt.state='page_content_mismatch';return null;}
+   textReferences.push({id:'page'+(i+1),url:page.url||s.url,title:page.title||s.title,text:page.text.slice(0,5000),text_origin:'retrieved_page'});
    const images=list(page.images).map(url).filter(u=>u&&FlipCheckVisual.referenceImageUseful(u)).slice(0,2);
    const pictures=[];
    for(const image of images){
@@ -111,7 +112,7 @@ async function catalogueReferences(sources,options,base){
   const results=await Promise.allSettled(pages.slice(offset,offset+3).map((s,i)=>retrieve(s,offset+i)));
   for(const result of results)if(result.status==='fulfilled'&&result.value)for(const ref of Array.isArray(result.value)?result.value:[result.value])if(!refs.some(r=>imageKey(r.image_url)===imageKey(ref.image_url)))refs.push(ref);
  }
- return {state:'ok',references:refs.slice(0,6),referenceAttempts:attempts.length,attempts,referenceState:refs.length?'retrieved':'no_accessible_page_images'};
+ return {state:'ok',references:refs.slice(0,6),textReferences,referenceAttempts:attempts.length,attempts,referenceState:refs.length?'retrieved':'no_accessible_page_images'};
 }
 
 function imageKey(value){try{const u=new URL(value);for(const key of ['width','height','w','h','quality'])u.searchParams.delete(key);return u.href;}catch(_){return '';}}

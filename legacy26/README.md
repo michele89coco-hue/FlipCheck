@@ -81,3 +81,13 @@ No paid live API scan or phone installation is part of these automated checks.
 - A printed card tuple uses text search first. Search queries include unresolved observed appearance; unrelated product thumbnails are excluded. Never replace an unresolved photographed parallel with a resolver's unverified Base label.
 - Budget planning preserves a minimal decisive comparison within the existing 0.03 ceiling. If the core is established, comparison can select the side showing the parallel and retain the other side's previously read facts as context.
 - Original-resolution uploads, detail crops and the native background session from build178 remain in place. Tests are synthetic/offline and Android lifecycle tests use no live recognition services. User photos and diagnostic exports are not committed.
+
+## Build 180: close card keys before physical variant recovery
+
+A typed full collector number, literal subject and observed date can corroborate one cited catalogue entry without requiring downloaded reference images. A series inferred by Vision remains provisional until the entry confirms it; competing sets remain ambiguous. Copyright observations retain their date type. Core identity survives source-image failures, while commercial parallels and required printing details remain separate gates.
+
+Retrieved page text survives missing images; known placeholders are excluded before image downloads and comparison. Focused recovery follows the outstanding physical feature and uses the appearance side after the core is confirmed. A failed source image does not trigger another comparison of that image or a request for the owner's already supplied front.
+
+Catalogue fields are repaired after focused comparisons as well as before them, retaining valid existing fields. Short format quotes require literal existing title context. Critical, uncorroborated package quantities outrank uncertain secondary names for an original-photo reread; website text never overwrites photographed evidence. Border colour is separated from centre and jersey colours in discovery queries.
+
+The original inline engine, native background lifecycle and original-resolution crop path are retained. Version code 180; version name 0.26.4-card-keys. CI runs all policy, mocked browser and 18 native Android checks without paid recognition API requests. New regression fixtures use generic identities, not uploaded user logs or photos.
