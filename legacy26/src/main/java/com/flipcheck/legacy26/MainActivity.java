@@ -146,13 +146,15 @@ public final class MainActivity extends Activity {
     void preparePhotoPicker(boolean multiple) { requestedDocumentPicker = false; requestedPickerMultiple = multiple; }
     void prepareDocumentPicker() { requestedDocumentPicker = true; requestedPickerMultiple = true; }
     void saveDiagnostic(String json) {
-        if (json == null || json.length() > 400000 || pendingDiagnostic != null) return;
+        if (json == null) { Toast.makeText(this, "Nessun report disponibile", Toast.LENGTH_LONG).show(); return; }
+        if (json.length() > 8000000) { Toast.makeText(this, "Report troppo grande: riprova dal pulsante Salva report diagnostico", Toast.LENGTH_LONG).show(); return; }
+        if (pendingDiagnostic != null) { Toast.makeText(this, "Completa o annulla il salvataggio già aperto", Toast.LENGTH_SHORT).show(); return; }
         pendingDiagnostic = json;
         Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE); intent.setType("application/json");
         intent.putExtra(Intent.EXTRA_TITLE, "FlipCheck-26Fix-diagnostica.json");
         try { startActivityForResult(intent, SAVE_DIAGNOSTIC); }
-        catch (ActivityNotFoundException e) { pendingDiagnostic = null; }
+        catch (ActivityNotFoundException e) { pendingDiagnostic = null; Toast.makeText(this, "Nessuna app disponibile per salvare il report", Toast.LENGTH_LONG).show(); }
     }
     void requestScanNotifications() {
         if (Build.VERSION.SDK_INT >= 33 && checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != android.content.pm.PackageManager.PERMISSION_GRANTED

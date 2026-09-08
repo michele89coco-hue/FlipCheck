@@ -143,6 +143,41 @@ public final class AndroidUiRegressionTest {
         }
     }
 
+    @Test public void failedIdentityLargeDiagnosticSavesAfterCancellingPicker() throws Exception {
+        instrumentation = InstrumentationRegistry.getInstrumentation();
+        activity = (MainActivity) instrumentation.startActivitySync(new Intent(instrumentation.getTargetContext(), MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+        instrumentation.runOnMainSync(() -> web = findWeb(activity.getWindow().getDecorView()));
+        AtomicReference<Intent> launched = new AtomicReference<>();
+        AtomicReference<Instrumentation.ActivityResult> result = new AtomicReference<>(new Instrumentation.ActivityResult(Activity.RESULT_CANCELED,null));
+        Instrumentation.ActivityMonitor monitor = new Instrumentation.ActivityMonitor() {
+            @Override public Instrumentation.ActivityResult onStartActivity(Intent intent) {
+                if (Intent.ACTION_CREATE_DOCUMENT.equals(intent.getAction())) { launched.set(new Intent(intent)); return result.get(); }
+                return null;
+            }
+        };
+        Uri file = null;
+        instrumentation.addMonitor(monitor);
+        try {
+            waitForJs("typeof diagnosticPayload197 === 'function'",45000);
+            eval("window.fetch=()=>{throw new Error('NETWORK_FORBIDDEN')};ident=null;lastVisionReading=null;currentScan={status:'technical_error',totals:{}};diagnosticPhases=[{stage:'catalogue_failure',result:{text:'é'.repeat(450000)}}];$('identPanel').classList.add('hide');$('tabScan').click();$('saveScanDiagnostic').scrollIntoView({block:'center'});true");
+            tap("saveScanDiagnostic");waitForIntent(launched);instrumentation.waitForIdleSync();
+            assertEquals("application/json",launched.get().getType());
+            ContentValues values=new ContentValues();values.put(MediaStore.Downloads.DISPLAY_NAME,"flipcheck-failed-report-test.json");values.put(MediaStore.Downloads.MIME_TYPE,"application/json");
+            file=activity.getContentResolver().insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI,values);assertNotNull(file);
+            result.set(new Instrumentation.ActivityResult(Activity.RESULT_OK,new Intent().setData(file)));launched.set(null);
+            tap("saveScanDiagnostic");waitForIntent(launched);instrumentation.waitForIdleSync();
+            String saved;
+            try(java.io.InputStream input=activity.getContentResolver().openInputStream(file)){assertNotNull(input);java.io.ByteArrayOutputStream bytes=new java.io.ByteArrayOutputStream();byte[] buffer=new byte[8192];int count;while((count=input.read(buffer))!=-1)bytes.write(buffer,0,count);saved=bytes.toString("UTF-8");}
+            assertTrue("Old silent 400k rejection must be removed",saved.length()>400000);
+            JSONObject report=new JSONObject(saved);assertEquals(197,report.getInt("versionCode"));assertTrue(report.isNull("identification"));assertEquals("technical_error",report.getString("scanStatus"));
+            assertEquals(450000,report.getJSONArray("phases").getJSONObject(0).getJSONObject("result").getString("text").length());
+        } finally {
+            instrumentation.removeMonitor(monitor);
+            if(file!=null)activity.getContentResolver().delete(file,null,null);
+            instrumentation.runOnMainSync(() -> activity.finish());
+        }
+    }
+
     private void assertViewportAboveNavigation() throws Exception {
         instrumentation.runOnMainSync(() -> {
             View decor=activity.getWindow().getDecorView();

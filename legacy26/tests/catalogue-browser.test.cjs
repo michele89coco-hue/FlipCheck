@@ -19,7 +19,7 @@ before(async()=>{
  server=http.createServer((req,res)=>{const name=req.url==='/'?'index.html':req.url.slice(1);if(!allow.test('/'+name)||!fs.existsSync(path.join(root,name))){res.writeHead(404);return res.end();}res.setHeader('Content-Type',name.endsWith('.js')?'application/javascript':'text/html');res.end(fs.readFileSync(path.join(root,name)));});await new Promise(r=>server.listen(0,'127.0.0.1',r));origin='http://127.0.0.1:'+server.address().port;
  browser=await chromium.launch({executablePath:process.env.FLIPCHECK_BROWSER_EXECUTABLE||undefined,headless:true,args:['--no-sandbox']});page=await browser.newPage({viewport:{width:412,height:915},serviceWorkers:'block'});
  page.on('pageerror',e=>errors.push(e.message));page.on('dialog',d=>d.dismiss());await page.exposeFunction('hostEvent',e=>events.push(e));
- await page.addInitScript(()=>{const send=(id,action,payload)=>fetch('https://offline-native.invalid/'+action,{method:'POST',body:JSON.stringify(payload)}).then(r=>r.json()).then(r=>FlipCheckDirect.receive(id,r));window.FlipCheckGoogle={ocrAvailable(){return true;},request(id,action,payload){send(id,action,JSON.parse(payload));},readText(id,image_data){send(id,'ocr',{image_data});},readTextScript(id,image_data,script){send(id,'ocr',{image_data,script});},cancel(id){hostEvent({kind:'cancel',id});},storeEvidence(kind,data,meta){hostEvent({kind:'evidence',type:kind,bytes:data.length});},evidenceInfo(){return '{}';}};window.FlipCheckHost={buildInfo(){return JSON.stringify({versionCode:193,versionName:'offline',sourceCommit:'offline'});},beginScan(id){hostEvent({kind:'begin',id});queueMicrotask(()=>FlipCheckBackground.started(id,true,''));},endScan(id,snapshot,outcome){hostEvent({kind:'end',id,outcome});},backgroundInfo(){return '{}';},lastScan(){return '{}';},photoPickerInfo(){return '{}';},saveDiagnostic(){}};});
+ await page.addInitScript(()=>{const send=(id,action,payload)=>fetch('https://offline-native.invalid/'+action,{method:'POST',body:JSON.stringify(payload)}).then(r=>r.json()).then(r=>FlipCheckDirect.receive(id,r));window.FlipCheckGoogle={ocrAvailable(){return true;},request(id,action,payload){send(id,action,JSON.parse(payload));},readText(id,image_data){send(id,'ocr',{image_data});},readTextScript(id,image_data,script){send(id,'ocr',{image_data,script});},cancel(id){hostEvent({kind:'cancel',id});},storeEvidence(kind,data,meta){hostEvent({kind:'evidence',type:kind,bytes:data.length});},evidenceInfo(){return '{}';}};window.FlipCheckHost={buildInfo(){return JSON.stringify({versionCode:193,versionName:'offline',sourceCommit:'offline'});},beginScan(id){hostEvent({kind:'begin',id});queueMicrotask(()=>FlipCheckBackground.started(id,true,''));},endScan(id,snapshot,outcome){hostEvent({kind:'end',id,outcome});},backgroundInfo(){return '{}';},lastScan(){return '{}';},photoPickerInfo(){return '{}';},saveDiagnostic(snapshot){hostEvent({kind:'diagnostic',snapshot});}};});
  await page.route('**/*',async route=>{
   const url=route.request().url();if(url.startsWith(origin+'/'))return route.continue();
   if(url==='https://api.openai.com/v1/responses'){
@@ -129,4 +129,29 @@ test('196 evolution text no longer blocks structured Pokemon identity or launche
  packet.features=packet.features.filter(f=>f.field!=='stamp');packet.features.push({field:'stamp',value:'present',description:'1st Edition stamp visible under artwork',certainty:'clear',image_index:1,region:null,zone:'other'});
  await reset('politoed',{packet,noOcr:true,catalogueReply(b){if(/\/cards\?/.test(b.url))return {status:200,body:[{id:'base1-1',localId:'1',name:'Example'}]};if(/\/cards\//.test(b.url))return {status:200,body:{id:'base1-1',localId:'1',name:'Example',set:{id:'base1',name:'Base Set',cardCount:{official:64}},variants:{holo:true}}};return {status:200,body:{releaseDate:'1999-01-09'}};},mutate(d){d.pages=[];}});
  const out=await scan();assert.equal(out.identification.core_identity.status,'confirmed');assert.equal(out.identification.family,'Base Set');assert.ok(!stages().includes('flipcheck_catalogue_search'));assert.equal(out.identification.market_ready,false);assert.deepEqual(out.identification.variant_resolution.pending,['shadow']);
+});
+
+async function exportedFailure(opts){
+ await reset('politoed',opts);const out=await scan();
+ assert.equal(await page.locator('#saveScanDiagnostic').isVisible(),true);assert.equal(await page.locator('#saveScanDiagnostic').isDisabled(),false);
+ await page.locator('#saveScanDiagnostic').click();await page.waitForTimeout(100);
+ const saved=JSON.parse(events.find(e=>e.kind==='diagnostic').snapshot);
+ assert.equal(saved.identification?.exact_identity_status||null,out.identification?.exact_identity_status||null);
+ assert.doesNotMatch(JSON.stringify(saved),/offline-secret-never-export|data:image|Bearer/);return saved;
+}
+test('197 scan-page diagnostic export works after an initial API failure without identity',async()=>{
+ const saved=await exportedFailure({httpError:true});assert.equal(saved.identification,null);assert.equal(saved.scanStatus,'technical_error');assert.ok(saved.visualAssistance);assert.equal(api.length,1);
+});
+test('197 malformed identity responses remain exportable with null identity',async()=>{
+ const saved=await exportedFailure({malformed:true});assert.equal(saved.identification,null);assert.equal(saved.scanStatus,'technical_error');
+});
+test('197 unavailable catalogue report is saved without confirming identity',async()=>{
+ const saved=await exportedFailure({packet:promoPacket(),noOcr:true,mutate(d){d.pages=[];}});assert.equal(saved.identification.market_ready,false);assert.equal(saved.identification.core_identity.status,'partial');assert.ok(saved.visualAssistance.catalogueRequests.length>=2);
+});
+test('197 large reports retain all data beyond the old native 400k limit and cap extreme reports explicitly',async()=>{
+ await reset('politoed');const checks=await page.evaluate(()=>{
+  const normal={identification:null,scanStatus:'technical_error',text:'x'.repeat(500000)},plain=diagnosticPayload197(normal);
+  const large={identification:null,scanStatus:'technical_error',visualAssistance:{state:'service_unavailable',textReferences:[{url:'https://catalog.example/card',text:'x'.repeat(8000000)}]}},bounded=diagnosticPayload197(large);
+  return {lossless:JSON.stringify(JSON.parse(plain))===JSON.stringify(normal),plainLength:plain.length,boundedLength:bounded.length,reduced:JSON.parse(bounded),originalLength:large.visualAssistance.textReferences[0].text.length};
+ });assert.equal(checks.lossless,true);assert.ok(checks.plainLength>400000);assert.ok(checks.boundedLength<8000000);assert.equal(checks.reduced.diagnosticExport.truncated,true);assert.equal(checks.reduced.scanStatus,'technical_error');assert.equal(checks.originalLength,8000000);
 });

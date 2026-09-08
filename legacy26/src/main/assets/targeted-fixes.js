@@ -136,13 +136,35 @@ function diagnostic26() {
   try { if (window.FlipCheckHost) build = JSON.parse(FlipCheckHost.buildInfo()); } catch (_) { }
   return {schema:'flipcheck-v026-targeted-diagnostic-1',...build,baseline:'0.26',
     exportedAt:new Date().toISOString(),uploadedImageCount:validImageCount(),photoEvents,
-    identification:ident,visionResult:lastVisionReading,phases:diagnosticPhases,usage:currentScan?.totals || null};
+    scanStatus:currentScan?.status || 'not_started',identification:ident,visionResult:lastVisionReading,phases:diagnosticPhases,usage:currentScan?.totals || null};
 }
-$('exportDiagnostic').onclick = () => {
-  const payload = JSON.stringify(diagnostic26(),null,2);
-  if (window.FlipCheckHost) { FlipCheckHost.saveDiagnostic(payload); return; }
-  const blob = new Blob([payload],{type:'application/json'}), url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href = url; a.download = 'FlipCheck-26Fix-diagnostica.json'; a.click();
-  setTimeout(() => URL.revokeObjectURL(url),1000);
-};
+// Export is independent of identity/market readiness. Keep ordinary reports
+// lossless; bound exceptionally large snapshots before crossing the native bridge.
+function diagnosticPayload197(snapshot){
+ const pretty=JSON.stringify(snapshot,null,2);
+ if(pretty.length<=7000000)return pretty;
+ const compact=JSON.stringify(snapshot);if(compact.length<=7000000)return compact;
+ let remaining=1000000,nodes=10000,omitted=0;
+ function bounded(value){
+  if(--nodes<0){omitted++;return '[omitted: report size limit]';}
+  if(typeof value==='string'){const max=Math.max(0,Math.min(12000,remaining));if(value.length<=max){remaining-=value.length;return value;}remaining-=max;omitted++;return value.slice(0,max)+' [truncated: report size limit]';}
+  if(Array.isArray(value)){if(value.length>100)omitted+=value.length-100;return value.slice(0,100).map(bounded);}
+  if(value&&typeof value==='object'){const entries=Object.entries(value);if(entries.length>100)omitted+=entries.length-100;return Object.fromEntries(entries.slice(0,100).map(([k,v])=>[k.slice(0,200),bounded(v)]));}
+  return value;
+ }
+ const report=bounded(snapshot);report.diagnosticExport={truncated:true,originalCharacters:compact.length,omittedOrTruncatedValues:omitted,reason:'report_size_limit'};
+ return JSON.stringify(report,null,2);
+}
+function exportDiagnostic197(){
+ try{
+  const payload=diagnosticPayload197(diagnostic26());
+  if(typeof window.FlipCheckHost?.saveDiagnostic==='function'){FlipCheckHost.saveDiagnostic(payload);return;}
+  const blob=new Blob([payload],{type:'application/json'}),url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download='FlipCheck-26Fix-diagnostica.json';document.body.append(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+ }catch(_){status('Impossibile preparare il report diagnostico. Riprova il salvataggio.','error');}
+}
+$('exportDiagnostic').onclick=exportDiagnostic197;
+$('saveScanDiagnostic').onclick=exportDiagnostic197;
+
 lockPhotoControls();
