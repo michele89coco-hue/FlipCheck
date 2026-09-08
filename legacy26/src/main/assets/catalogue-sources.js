@@ -34,7 +34,8 @@ function variantsFromLines(lines,src){
   if(text.length<65&&E.tokens(text,E.COLOR_WORDS).length&&/^[a-z &'-]+$/i.test(text)&&!/^base |^look |^the |^each |^all |cards|box|year|set/i.test(text))out.push({name:text,unnumbered:true,...itemAttributes(text),source:src,quote});
  }
  // Some older checklists describe a numbered parallel in prose, after base rows.
- const joined=lines.join('\n');for(const m of joined.matchAll(/(?:^|\n)#{1,6}[ \t]+([A-Za-z][^\n]{1,80})\n([^#]{0,550}?)(?:all[^.\n]{0,50}(?:are|is) numbered to)\s+(\d{1,6})\b/gi)){if(/checklist|inserts|base set/i.test(m[1]))continue;out.push({name:m[1].trim(),print_run:+m[3],source:src,quote:m[0].trim(),paragraph_parallel:true});}
+ const normalized=lines.map((line,i)=>/^[A-Za-z][A-Za-z &'-]{2,65}$/.test(line)&&/^(?:\d+ cards?\.?|\/\d+)/i.test(lines.slice(i+1).find(t=>t.trim())||'')?'### '+line:line);
+ const joined=normalized.join('\n');for(const m of joined.matchAll(/(?:^|\n)#{1,6}[ \t]+([A-Za-z][^\n]{1,80})\n([^#]{0,550}?)(?:all[^.\n]{0,50}(?:are|is) numbered to)\s+(\d{1,6})\b/gi)){if(/checklist|inserts|base set/i.test(m[1]))continue;out.push({name:m[1].trim(),print_run:+m[3],source:src,quote:m[0].trim(),paragraph_parallel:true});}
  return out;
 }
 function cardRows(p,l){
@@ -44,18 +45,19 @@ function cardRows(p,l){
  const flush=()=>{const variants=/^(?:Unspecified checklist section|Full Checklist|Team Checklist|Complete Checklist)$/i.test(section)?[]:variantsFromLines(sectionLines,src);for(const e of sectionEntries){e.variants=variants.map(v=>({...v}));if(E.subsetKey(e.subset)==='base'&&variants.length&&variants.every(v=>v.print_run)&&variants.some(v=>v.paragraph_parallel))e.variants.unshift({name:'Base',base_printing:true,source:src,quote:sectionLines.find(t=>/^(?:#{1,6}\s*)?Base(?: Set)?(?: Checklist)?$/i.test(t))||'Base'});}sectionLines=[];sectionEntries=[];};
  for(const line of lines){
   const t=line.trim(),heading=t.replace(/^#{1,6}\s+/,'');
-  if(/^Checklist Top$/i.test(t)){flush();section='Unspecified checklist section';sectionKnown=false;continue;}
+  if(/^(?:Checklist Top|Inserts|Autographs|Related articles|Tags.*)$/i.test(t)){flush();section='Unspecified checklist section';sectionKnown=false;continue;}
   const isHeading=t.length<160&&!/^#?\d{1,4}\s+/.test(t)&&(/^(?:Base(?: Set)?|Base\s*[-–]\s*(?:Terrace|Mezzanine|Field Level))$/i.test(t)||/^(?:#{1,6}\s+).*(?:Checklist|Base & Parallel Details)/i.test(t)||/^(?:Base(?: Set)?|[A-Z0-9][A-Za-z0-9 &’'!()/-]{2,140}) Checklist$/.test(t));
   if(isHeading){
    let next=heading;
    if(/autograph|signature|insert|memorabilia|pairing|terrace|terrance|mezzanine|field level/i.test(heading))next=heading;
-   else if(/base|Base & Parallel Details/i.test(heading)||E.norm(heading).includes(E.norm(family)))next='Base';
-   if(next!==null){flush();section=next;sectionKnown=!/^(?:full|team|complete) checklist$/i.test(heading); }
+   else if(/base|Base & Parallel Details/i.test(heading))next='Base';
+   else if(E.norm(heading).includes(E.norm(family)))next=E.familyKey(cleanFamily(heading))===E.familyKey(family)?'Base':'Team Checklist';
+   if(next!==null){flush();section=next;sectionKnown=next!=='Team Checklist'&&!/^(?:full|team|complete) checklist$/i.test(heading); }
   }
   sectionLines.push(t);
   const row=t.match(/^#?([A-Z]{0,8}-?\d+[A-Z]?(?:\/[A-Z]*\d+)?)\s+(.*)$/i);
   if(!row||!k.subject)continue;
-  const name=row[2].split(/\s[-–—|]\s|,\s/)[0].trim();if(!E.subjectMatch(name,k.subject))continue;
+  const rowName=row[2].split(/\s[-–—|]\s|,\s/)[0].trim(),name=rowName.replace(/\s+(?:RC|Rookie Card)$/i,'');if(!E.subjectMatch(name,k.subject))continue;
   const range=(!sectionKnown||section==='Base')&&baseRanges.find(m=>+row[1]>=+m[2]&&+row[1]<=+m[3]),rowSection=range?range[1]:section;
   const e={subject:name,number:row[1],family,year:E.season(p.title||text),brand:l.base.brand||'',language:k.language,subset:/terrace|terrance/i.test(rowSection)?'Terrace':/mezzanine/i.test(rowSection)?'Mezzanine':/field level/i.test(rowSection)?'Field Level':rowSection,subset_known:!!range||sectionKnown,variants:[],source:src,grounded:true,entry_quote:t,coverage:'documented_variants'};
   out.push(e);sectionEntries.push(e);
@@ -110,6 +112,7 @@ function objectEntries(p,l){
  if(!parts.length||!parts.every(v=>E.norm(text).includes(E.norm(v))))return [];
  return [{subject:p.title||family,family,number:'',year:E.season(p.title),brand:l.base.brand,source:source(p),grounded:true,entry_quote:text}];
 }
+function usablePage200(p){const t=pageText(p);return !!p.url&&t.length>0&&!/^Your Trusted Marketplace for Collectible Trading Card Games - TCGplayer\s*$/i.test(t);}
 function records(pages,l){const out=[];for(const p of pages){if(/pokedex|pok[eé]dex/i.test(p.url+' '+p.title))continue;if(!p.url||!(E.sourceTrusted(p.url,l.domain)||l.domain==='generic'&&/^https:\/\//.test(p.url)))continue;for(const e of [...bandaiEntries(p,l),...tableEntries(p,l),...cardRows(p,l),...singleEntry(p,l),...objectEntries(p,l)])if(e.family)out.push(e);}return out;}
 function groundedExtraction(reply,pages,l){
  const accepted=[],rejected=[];
@@ -130,5 +133,5 @@ function rankSources(pages,l){
  const k=E.keyValues(l);return pages.filter(p=>!/(?:pokedex|pok[eé]dex)/i.test(p.url+' '+p.title)).map(p=>{const title=E.norm(p.title+' '+p.url),text=E.norm(pageText(p));return {p,score:(k.subject&&title.includes(E.norm(k.subject))?40:0)+(k.subject&&text.includes(E.norm(k.subject))?15:0)+(k.products.some(v=>E.familyKey(cleanFamily(p.title))===E.familyKey(v))?35:0)+(k.numbers.some(n=>title.includes(E.norm(E.numberParts(n)?.local||n)))?30:0)+(/checklist|cardlist|cards|espansione|expansion/i.test(p.url+' '+p.title)?8:0)+(k.numbers.some(n=>text.includes(E.norm(n)))?5:0)};}).sort((a,b)=>b.score-a.score).map(x=>x.p);
 }
 function directoryLinks(page,l){const k=E.keyValues(l),terms=uniq([k.year,...k.products,...str(l.base.family).split(' ').filter(t=>t.length>3)]).map(E.norm);return list(page.catalogue_links).map(a=>({...a,score:terms.reduce((n,t)=>n+Number(E.norm(a.title+' '+a.url).includes(t)),0)})).filter(a=>a.score>=Math.min(2,terms.length)&&a.score>0).sort((a,b)=>b.score-a.score).slice(0,2);}
-const api={bandaiEntries,rankSources,providers,requestPlan,tcgdexBriefs,tcgdexCard,pageText,cleanFamily,records,groundedExtraction,directoryLinks,itemAttributes,variantsFromLines};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckCatalogueSources=api;
+const api={usablePage200,bandaiEntries,rankSources,providers,requestPlan,tcgdexBriefs,tcgdexCard,pageText,cleanFamily,records,groundedExtraction,directoryLinks,itemAttributes,variantsFromLines};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckCatalogueSources=api;
 })(typeof window==='undefined'?globalThis:window);

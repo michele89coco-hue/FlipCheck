@@ -27,9 +27,9 @@ before(async()=>{
    if(options.hold&&kind==='flipcheck_identification')await new Promise(r=>release=r);
    if(options.httpError&&kind==='flipcheck_identification')return route.fulfill({status:401,json:{error:{message:'Offline unauthorized'}}}).catch(()=>{});
    if(options.incomplete&&kind==='flipcheck_identification'&&api.length===1)return route.fulfill({json:{status:'incomplete',incomplete_details:{reason:'max_output_tokens'},output:[{type:'message',content:[{type:'output_text',text:'{'}]}],usage:{input_tokens:350,output_tokens:150}}});
-   let payload=kind==='flipcheck_identification'?(options.packet||d.vision):kind==='flipcheck_evidence_detail'?{details:options.details||[]} :kind==='flipcheck_catalogue_comparison'?{comparisons:options.coreComparisons||[]}:kind==='flipcheck_variant_comparison'?{comparisons:options.comparisons||[]}:kind==='flipcheck_surface_inspection'?(options.surfaceInspection||{surfaces:[],serial_presence:'unclear',serial:{text:'',certainty:'uncertain',evidence_found:false,image_index:1}}): {entries:options.catalogueEntries||[]};
+   let payload=kind==='flipcheck_identification'?(options.packet||d.vision):kind==='flipcheck_evidence_detail'?{details:options.details||[]} :kind==='flipcheck_catalogue_comparison'?{comparisons:options.coreComparisons||[]}:kind==='flipcheck_variant_comparison'?{comparisons:options.comparisons||[]}:kind==='flipcheck_surface_inspection'?(options.surfaceInspections?.[stages().filter(s=>s==='flipcheck_surface_inspection').length-1]||options.surfaceInspection||{surfaces:[],serial_presence:'unclear',serial:{text:'',certainty:'uncertain',evidence_found:false,image_index:1}}): {entries:options.catalogueEntries||[]};
    if(options.malformed&&kind==='flipcheck_identification'){const r=envelope(payload);r.output[0].content[0].text='bad-json';return route.fulfill({json:r});}
-   const pages=(d.pages||[]).filter(p=>p.url),web=kind==='flipcheck_catalogue_search'?pages.map(p=>({...p,source_text:p.source_text||p.text||'',snippet:p.text||p.source_text||''})):[];
+   const pages=(options.pagesBySearch?.[stages().filter(s=>s==='flipcheck_catalogue_search').length-1]||d.pages||[]).filter(p=>p.url),web=kind==='flipcheck_catalogue_search'?pages.map(p=>({...p,source_text:p.source_text||p.text||'',snippet:p.text||p.source_text||''})):[];
    const reply=envelope(payload,web),record=options.recordedPhases?.find(p=>p.stage===({flipcheck_identification:'vision',flipcheck_catalogue_search:'flipcheck_catalogue_search'})[kind]);if(record?.usage){reply.usage=record.usage;if(record.webCalls===2&&web.length)reply.output.unshift({...reply.output[0]});}
    return route.fulfill({json:reply}).catch(()=>{});
   }
@@ -37,7 +37,7 @@ before(async()=>{
    const action=url.split('/').pop(),b=JSON.parse(route.request().postData());native.push({action,...b});let reply={status:503};
    if(action==='ocr')reply=options.noOcr?{state:'ocr_unavailable'}:d.photoOcr?.[ocrIndex++]||{state:'ok',lines:[],text:''};
    if(action==='page'){
-    const pages=d.pages.filter(p=>p.url===b.url).sort((a,b)=>(b.text||b.source_text||'').length-(a.text||a.source_text||'').length);if(pages.length)reply={status:200,...pages[0]};
+    const pages=(options.pagesBySearch?.[Math.max(0,stages().filter(s=>s==='flipcheck_catalogue_search').length-1)]||d.pages).filter(p=>p.url===b.url).sort((a,b)=>(b.text||b.source_text||'').length-(a.text||a.source_text||'').length);if(pages.length)reply={status:200,...pages[0]};
     if(options.certificate&&/psacard.com\/cert\//.test(b.url))reply={status:200,url:b.url,structured_fields:options.certificate};
    }
    if(action==='catalogue'&&options.tcgdex){if(/\/cards\?/.test(b.url))reply={status:200,body:[{id:'ecard3-H23',localId:'H23',name:'Politoed'}]};else if(/\/cards\//.test(b.url))reply={status:200,body:{id:'ecard3-H23',localId:'H23',name:'Politoed',hp:110,attacks:[{name:'Crescita Improvvisa'},{name:'Ranabalzo'},{name:'Spruzza Energia'}],set:{id:'ecard3',name:'Skyridge'},rarity:'Rare Holo',variants:{holo:true}}};else reply={status:200,body:{releaseDate:'2003-05-12'}};}
@@ -191,4 +191,27 @@ test('199 user can apply green rc after a pending scan with no new API calls and
 });
 test('199 unclear surface check does not close a parallel or request another catalogue search',async()=>{
  const reply=fullSurface199();reply.surfaces[1].legible=false;await reset('doncic',replay198Options(2,{surfaceInspection:reply}));const out=await scan();assert.equal(out.identification.market_ready,false);assert.equal(out.identification.core_identity.status,'confirmed');assert.equal(stages().filter(s=>s==='flipcheck_catalogue_search').length,1);assert.ok(await page.locator('#saveScanDiagnostic').isVisible());
+});
+
+const D199=JSON.parse(require('zlib').gunzipSync(fs.readFileSync(path.join(__dirname,'fixtures/diagnostics-199.json.gz'))));
+function replay199Options(n,extra={}){const r=D199[n];return {packet:r.vision,photoCount:n===3?1:2,recordedPhases:r.phases,catalogueEntries:r.phases.find(p=>p.stage==='flipcheck_catalogue_search')?.result.entries||[],mutate(d){d.pages=r.pages;d.photoOcr=r.photoOcr;},...extra};}
+test('200 real Boniface serial appears in visible identity and exported title',async()=>{
+ await reset('boniface',replay199Options(0,{details:D199[0].phases.find(p=>p.stage==='flipcheck_evidence_detail').result.details}));const out=await scan();assert.equal(out.identification.market_ready,true);assert.match(await page.locator('#identTitle').innerText(),/Green.*Seriale 2\/5/);assert.equal(out.identification.title,out.identification.identity_display);
+});
+test('200 real Doncic retries only the illegible inspection and closes when new original evidence proves absence',async()=>{
+ const first=D199[1].phases.find(p=>p.stage==='flipcheck_surface_inspection').result;
+ await reset('doncic',replay199Options(1,{surfaceInspections:[first,fullSurface199()]}));const out=await scan();assert.equal(out.identification.market_ready,true,JSON.stringify(out.visualAssistance.engine.events));assert.match(await page.locator('#identTitle').innerText(),/Green · RC/);assert.equal(stages().filter(s=>s==='flipcheck_surface_inspection').length,2);assert.equal(stages().filter(s=>s==='flipcheck_catalogue_search').length,1);assert.ok(out.usage.cost<=.03);assert.equal(out.identification.card_identity.rookie_origin,'original_photo');
+});
+test('200 real declared Doncic keeps Green and RC without further vision',async()=>{
+ await reset('doncic',replay199Options(2));await page.locator('#details').fill('Green rc');const out=await scan();assert.equal(out.identification.market_ready,true);assert.match(await page.locator('#identTitle').innerText(),/Green · RC/);assert.ok(!stages().includes('flipcheck_surface_inspection'));
+});
+test('200 real Kobe recovers first-page PMG catalogue and closes after number correction and physical inspection',async()=>{
+ await reset('boniface',replay199Options(4,{details:D199[4].phases.find(p=>p.stage==='flipcheck_evidence_detail').result.details,surfaceInspection:fullSurface199(),mutate(d){d.pages=D199[4].pages.slice(0,17);d.photoOcr=D199[4].photoOcr;}}));const out=await scan();assert.equal(out.identification.market_ready,true,JSON.stringify(out.visualAssistance.engine.events));assert.match(out.identification.title,/#81.*Base/);assert.doesNotMatch(out.identification.title,/RC/);assert.equal(stages().filter(s=>s==='flipcheck_catalogue_search').length,1);assert.ok(out.usage.cost<=.03);
+});
+test('200 Luffy set-code crop runs before retrieval and a newly verified P-110 uses official artwork',async()=>{
+ await reset('politoed',replay199Options(3,{details:[{field:'collector_number',text:'P-110',certainty:'clear',evidence_found:true,image_index:1}],comparisons:[artworkMatch('variant1')],mutate(d){d.pages=D197[1].pages;d.photoOcr=D199[3].photoOcr;}}));const out=await scan();assert.equal(out.identification.market_ready,true,JSON.stringify(out.visualAssistance.engine.events));assert.equal(out.identification.card_identity.number,'P-110');assert.deepEqual(stages().slice(0,2),['flipcheck_identification','flipcheck_evidence_detail']);assert.ok(native.some(n=>n.url?.includes('freewords=P-110')));assert.ok(!native.some(n=>n.url?.includes('freewords=P-010')));assert.equal(out.identification.pokemon_printing,undefined);assert.ok(out.usage.cost<=.03);
+});
+test('200 newly available variants after a later catalogue phase trigger physical inspection',async()=>{
+ const url='https://www.beckett.com/test-later',base={url,title:'2018-19 Prizm Basketball Checklist',text:'Base\n280 Luka Doncic'},rich={...base,text:base.text+'\nGreen\nGreen Pulsar /25'};
+ await reset('doncic',{packet:D199[1].vision,photoCount:2,noOcr:true,pagesBySearch:[[base],[rich]],surfaceInspection:fullSurface199(),mutate(d){d.pages=[];}});const out=await scan();assert.equal(out.identification.market_ready,true,JSON.stringify(out.visualAssistance.engine.events));assert.deepEqual(stages(),['flipcheck_identification','flipcheck_catalogue_search','flipcheck_catalogue_search','flipcheck_surface_inspection']);
 });
