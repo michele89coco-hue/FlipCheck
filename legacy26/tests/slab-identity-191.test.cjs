@@ -20,6 +20,10 @@ test('secondary-text override cannot bypass unreadable primary fields or a label
 test('a valid certificate alone cannot resolve a missing title or mark a certificate verified',()=>{
  const p=specimen();Object.assign(p.slab_reading,{certainty:'uncertain',subject:'',model:'',family:'',card_title:''});const r=S.close(p,S.labelFacts(p));assert.equal(r.grading?.certificate_verified||false,false);assert.equal(r.market_ready,false);assert.match(r.next_photo_request,/titolo/);assert.doesNotMatch(r.next_photo_request,/certificato/);
 });
+test('uncertain grading metadata stays out of a resolved label title and certificate lookup',()=>{
+ const p=specimen();Object.assign(p.slab_reading,{grade_certainty:'uncertain',certificate_certainty:'uncertain'});const facts=S.labelFacts(p),r=S.close(p,facts);
+ assert.equal(r.closure_status,'resolved');assert.equal(r.grading.grade,null);assert.equal(r.grading.certificate,null);assert.doesNotMatch(r.normalized_query,/9 MINT/);assert.equal(S.certificatePlan(facts).state,'number_unreadable');
+});
 test('191 label fallback closes the mixed collector-number regression with grading retained',()=>{
  const p=specimen(),f=S.labelFacts(p),r=S.close(p,f,{state:'unavailable'});
  assert.equal(r.identity_keys.number.value,'8');assert.equal(r.market_ready,true);assert.equal(r.identity_status,'confirmed');assert.equal(r.exact_identity_status,'confirmed');

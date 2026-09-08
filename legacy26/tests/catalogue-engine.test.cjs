@@ -29,7 +29,7 @@ test('affirmative original-photo description repairs an inconsistent unclear enu
  assert.throws(()=>E.assertConsistent(l,{...r,printing_check:{...r.printing_check,stamp:'unclear'}}),/inconsistent_identification_state/);
 });
 test('negated, uncertain, reference-only or unlocated statements cannot confirm a stamp',()=>{
- for(const patch of [{raw:'Stamp 1st Edition non visibile'},{raw:'1st Edition stamp not visible'},{raw:'Timbro forse visibile'},{raw:'Timbro presente nel catalogo'},{raw:'Se il timbro è visibile'},{raw:'Stamp 1st Edition visibile',certainty:'uncertain'},{raw:'Stamp 1st Edition visibile',image_index:0}]){
+ for(const patch of [{raw:'Stamp 1st Edition non visibile'},{raw:'1st Edition stamp not visible'},{raw:'Stamp may be visible'},{raw:'Stamp 1st Edition visibile?'},{raw:'Timbro forse visibile'},{raw:'Timbro presente nel catalogo'},{raw:'Se il timbro è visibile'},{raw:'Stamp 1st Edition visibile',certainty:'uncertain'},{raw:'Stamp 1st Edition visibile',image_index:0}]){
   const {l,entries}=stampCase();l.add('stamp','unclear',{certainty:'clear',image_index:1,...patch});const r=E.reduce(l,entries);assert.equal(r.market_ready,false,JSON.stringify(patch));assert.equal(r.printing_check.stamp,'unclear');
  }
 });
@@ -50,11 +50,11 @@ test('the actual detail handler commits identity and evidence before its promise
   const {l,entries}=stampCase(),ctx={budget:{spent:()=>0,maxUsd:1}},before=E.reduce(l,entries),requests=E.recoveryRequests(l,before);let release;
   const response=new Promise(r=>release=r),sandbox={E193:E,Date,JSON,Math,Object,string193:{type:'string'},enum193:values=>({type:'string',enum:values}),object193:properties=>({type:'object',properties}),schemaFormat:()=>({}),estimate164:()=>0,addUsage(){},guard164(c){if(c.cancelled)throw new Error('scan_cancelled');},visualPhoto164:async()=>({data:'offline-carrier',meta:{imageIndex:1}}),originalOpenai26:async()=>response,parseResponseJSON:x=>x,diagnosticPhases:[]};
   vm.createContext(sandbox);vm.runInContext(production+'\nthis.read=detailRead193;this.commit=commitCatalogue193;',sandbox);
-  sandbox.commit(l,entries,ctx);const revision=ctx.catalogueState.revision,pending=sandbox.read(l,ctx,requests,entries);
+  sandbox.commit(l,entries,ctx);const revision=ctx.catalogueState.revision,previousSnapshot=ctx.engineSnapshot,previousCount=previousSnapshot.observations.length,pending=sandbox.read(l,ctx,requests,entries);
   await new Promise(r=>setImmediate(r));assert.equal(ctx.catalogueIdentity.job_status,'variant_pending');ctx.cancelled=cancelled;
   release({details:[{field:'stamp',text:'present',certainty:'clear',evidence_found:true,image_index:1}]});
   if(cancelled){await assert.rejects(pending,/scan_cancelled/);assert.equal(ctx.catalogueState.revision,revision);assert.equal(l.pick('stamp'),null);}
-  else {await pending.then(result=>{assert.equal(ctx.catalogueIdentity,result);assert.equal(ctx.catalogueState.result,result);assert.equal(ctx.jobStatus,'variant_resolved');assert.equal(ctx.detailReread.committed_revision,ctx.catalogueState.revision);assert.equal(ctx.detailReread.evidence_found,true);assert.ok(ctx.engineSnapshot.observations.some(a=>a.field==='stamp'&&a.value==='present'));});}
+  else {await pending.then(result=>{assert.equal(ctx.catalogueIdentity,result);assert.equal(ctx.catalogueState.result,result);assert.equal(ctx.jobStatus,'variant_resolved');assert.equal(ctx.detailReread.committed_revision,ctx.catalogueState.revision);assert.equal(ctx.detailReread.evidence_found,true);assert.ok(ctx.engineSnapshot.observations.some(a=>a.field==='stamp'&&a.value==='present'));assert.equal(previousSnapshot.observations.length,previousCount);});}
  }
 });
 test('an English catalogue identifies an Italian card while the photo owns its language',()=>{

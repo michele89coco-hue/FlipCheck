@@ -6,7 +6,7 @@ const unique=x=>[...new Set(x.filter(Boolean))],same=(a,b)=>norm(a)===norm(b);
 const presenceFields=['stamp','shadow','rarity_symbol','autograph','patch'];
 function presenceText(field,text){
  const t=norm(text),subject={stamp:/\b(?:stamp|timbro|1st edition|first edition|prima edizione)\b/,shadow:/\b(?:shadow|ombra)\b/,rarity_symbol:/\b(?:rarity|rarita)\b/,autograph:/\b(?:autograph|autografo|firma)\b/,patch:/\b(?:patch|relic|memorabilia)\b/}[field];
- if(!subject?.test(t)||/\b(?:unclear|uncertain|unreadable|illeggibile|possibly|probably|maybe|might|could|would|should|if|se|dubbio|incerto|incerta|forse|possibile|probabile|sembra|potrebbe|dovrebbe|deve|catalogo|catalogue|reference|riferimento|esempio|fonte|source|listing)\b/.test(t))return '';
+ if(str(text).includes('?')||!subject?.test(t)||/\b(?:unclear|uncertain|unreadable|illeggibile|possibly|probably|maybe|may|might|could|would|should|if|se|oppure|dubbio|incerto|incerta|forse|possibile|probabile|sembra|potrebbe|dovrebbe|deve|catalogo|catalogue|reference|riferimento|esempio|fonte|source|listing)\b/.test(t))return '';
  if(/\b(?:assente|absent)\b/.test(t)&&!/\b(?:non|not)\b/.test(t))return 'absent';
  if(/\b(?:presente|present|visibile|visible|leggibile)\b/.test(t)&&!/\b(?:non|not|no|senza|without|cannot|cant)\b/.test(t))return 'present';
  return '';

@@ -45,8 +45,8 @@ function labelFacts(base){
  if(key(out.variant)===key(out.family))out.variant='';
  if(finish&&!copied(out.variant,finish))out.variant=[out.variant,finish].filter(Boolean).join(' · ');
  out.variant=out.variant.replace(/^[,;|·\s]+|[,;|·\s]+$/g,'');
- out.grade=clean(p.grade); // Separate field: never derive a grade from arbitrary label digits.
- out.certificate=clean(p.certificate||p.cert_number).replace(/\s/g,''); // Preserve leading zeroes; do not guess O/0.
+ out.grade=p.grade_certainty==='uncertain'?'':clean(p.grade); // Never derive a grade from arbitrary label digits.
+ out.certificate=p.certificate_certainty==='uncertain'?'':clean(p.certificate||p.cert_number).replace(/\s/g,''); // Preserve leading zeroes; do not guess O/0.
  out.language=clean(p.language)||clean(base.pokemon_printing?.language);
  const literalTitleComplete=!!out.card_title&&p.title_certainty==='clear'&&/\b(?:19|20)\d{2}\b/.test(out.card_title)&&out.card_title.split(/\s+/).length>=3;
  const titleComplete=!!label&&(!!(out.subject||out.model)&&!!out.family&&/^(?:19|20)\d{2}(?:[-/]\d{2,4})?$/.test(out.year)||literalTitleComplete),subgrades=subgradeFacts(p,label);
