@@ -70,3 +70,8 @@ test('missing language remains unresolved at attribute level without a system-la
 test('Pokemon schema and evidence cannot leak into sports or One Piece decisions',()=>{
  for(const domain of ['sports','onepiece']){const base={domain,kind:'card',pokemon_printing:{is_pokemon:false,first_edition_stamp:'present',stamp_image:1,stamp_location:'wrong domain'}};const l=E.ingestVision(new E.Ledger(base),base),r=E.reduce(l,[]);assert.equal(l.values('stamp').length,0);assert.equal(JSON.parse(JSON.stringify(r)).pokemon_printing,undefined);}
 });
+
+test('a truncated checklist cannot donate the following unnamed section variants to base cards',()=>{
+ const l=sport(),page={url:src.url,title:'2018-19 Panini Prizm Basketball Checklist',text:'280 Example\nChecklist Top\nPrizms Parallels:\nChoice Green /8\n3 Example\n### Fireworks Checklist\n280 Example\nGreen'};
+ const records=C.records([page],l);assert.deepEqual(records.find(e=>e.number==='280'&&e.subset==='Base').variants,[]);assert.equal(records.find(e=>e.number==='3').subset,'Unspecified checklist section');
+});

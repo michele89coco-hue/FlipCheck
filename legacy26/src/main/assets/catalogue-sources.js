@@ -40,7 +40,8 @@ function cardRows(p,l){
  const flush=()=>{const variants=variantsFromLines(sectionLines,src);for(const e of sectionEntries)e.variants=variants.map(v=>({...v}));sectionLines=[];sectionEntries=[];};
  for(const line of lines){
   const t=line.trim(),heading=t.replace(/^#{1,6}\s+/,'');
-  const isHeading=t.length<160&&(/^(?:#{1,6}\s+).*(?:Checklist|Base & Parallel Details)/i.test(t)||/^(?:Base(?: Set)?|[A-Z0-9][A-Za-z0-9 &'-]{2,140}) Checklist$/.test(t));
+  if(/^Checklist Top$/i.test(t)){flush();section='Unspecified checklist section';continue;}
+  const isHeading=t.length<160&&(/^(?:#{1,6}\s+).*(?:Checklist|Base & Parallel Details)/i.test(t)||/^(?:Base(?: Set)?|[A-Z0-9][A-Za-z0-9 &’'!()/-]{2,140}) Checklist$/.test(t));
   if(isHeading){
    let next=heading;
    if(/autograph|signature|insert|memorabilia|pairing|terrace|terrance|mezzanine|field level/i.test(heading))next=heading;
