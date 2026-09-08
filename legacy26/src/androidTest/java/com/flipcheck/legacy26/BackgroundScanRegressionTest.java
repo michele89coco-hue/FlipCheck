@@ -57,10 +57,15 @@ public final class BackgroundScanRegressionTest {
     }
     private void startSyntheticScan(int delayMs) throws Exception {
         JSONObject identity = new JSONObject("""
-            {"status":"identified","kind":"object","title":"Example ZX-500","category":"electronic device","brand":"Example","family":"Series","model":"Example ZX-500","variant":"","condition":"raw","category_confidence":99,"brand_confidence":99,"family_confidence":99,"model_confidence":95,"model_verified":true,"market_ready":true,"candidate_models":[],"visual_fingerprint":"two round controls on a rectangular body","distinctive_terms":["ZX-500"],"search_terms":[],"identifier_hints":["ZX-500"],"layout_signature":[],"evidence":["Example ZX-500 printed on label"],"missing_information":[],"next_photo_request":null,"user_text_consistent":true,"normalized_query":"Example ZX-500","verification_summary":"Synthetic lifetime test","pokemon_printing":null}
+            {"domain":"generic","kind":"object","category":"electronic device","language":"","object_unit":"object","object_regions":[],"observations":[{"field":"product","text":"Example ZX-500","certainty":"clear","image_index":1,"region":null,"zone":"label","alternatives":[]}],"features":[],"hypotheses":[],"slab_reading":null}
             """);
-        String response = new JSONObject().put("status", "completed").put("output", new org.json.JSONArray().put(new JSONObject().put("type", "message").put("content", new org.json.JSONArray().put(new JSONObject().put("type", "output_text").put("text", identity.toString())))))
-            .put("usage", new JSONObject().put("input_tokens", 100).put("output_tokens", 100)).toString();
+        String response = envelope(identity,null);
+        JSONObject catalogue=new JSONObject().put("url","https://example.com/catalogue/zx-500").put("title","Example ZX-500").put("text","Example ZX-500 water pump. Model Example ZX-500. Two round controls and rectangular body.");
+        String catalogueResponse=envelope(new JSONObject().put("entries",new org.json.JSONArray()),catalogue);
+        // Keep the production decision engine active. Stub the native IO boundary too:
+        // its HTTP traffic bypasses WebViewClient, so intercepting only Responses is insufficient.
+        instrumentation.runOnMainSync(()->{web.removeJavascriptInterface("FlipCheckGoogle");web.addJavascriptInterface(new OfflineCatalogueIo(catalogue),"FlipCheckGoogle");web.reload();});
+        waitJs("window.FlipCheckGoogle?.offlineAvailable?.() === true",15000);
         requests.set(0);
         // Intercept only transport: preserve production fetch, budget and AbortController wiring.
         instrumentation.runOnMainSync(() -> {
@@ -75,8 +80,8 @@ public final class BackgroundScanRegressionTest {
                         headers.put("Access-Control-Allow-Methods", "POST, OPTIONS");
                         headers.put("Access-Control-Allow-Headers", "authorization, content-type");
                         if ("OPTIONS".equals(request.getMethod())) return new WebResourceResponse("application/json", "UTF-8", 200, "OK", headers, new ByteArrayInputStream(new byte[0]));
-                        requests.incrementAndGet(); SystemClock.sleep(delayMs);
-                        return new WebResourceResponse("application/json", "UTF-8", 200, "OK", headers, new ByteArrayInputStream(response.getBytes(StandardCharsets.UTF_8)));
+                        int attempt=requests.incrementAndGet(); if(attempt==1)SystemClock.sleep(delayMs);
+                        return new WebResourceResponse("application/json", "UTF-8", 200, "OK", headers, new ByteArrayInputStream((attempt==1?response:catalogueResponse).getBytes(StandardCharsets.UTF_8)));
                     }
                     return new WebResourceResponse("text/plain", "UTF-8", 403, "LIVE_NETWORK_FORBIDDEN", null, new ByteArrayInputStream(new byte[0]));
                 }
@@ -103,7 +108,7 @@ public final class BackgroundScanRegressionTest {
         waitReleased();
         context.startActivity(new Intent(context, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
         waitJs("!apiBusy && ident?.market_ready === true", 5000);
-        assertEquals(1, requests.get());
+        assertEquals(2, requests.get());
     }
     @Test public void destroyingActivityKeepsEngineAndFilesUntilBackgroundCompletion() throws Exception {
         startSyntheticScan(6500); WebView original=web;
@@ -112,7 +117,7 @@ public final class BackgroundScanRegressionTest {
         assertTrue(prefs.getBoolean("completedInBackground", false));
         assertFalse(ScanSession.current().ownerVisible); waitReleased();
         launch(); assertSame("Do not recreate the paid scan or its uploaded files", original, web);
-        assertEquals("1", eval("validImageCount()"));assertEquals(1, requests.get());
+        assertEquals("1", eval("validImageCount()"));assertEquals(2, requests.get());
         assertEquals("\"Example ZX-500\"", eval("ident.model"));
     }
     @Test public void notificationCancellationReleasesServiceAndSuppressesLateCompletion() throws Exception {
@@ -133,6 +138,27 @@ public final class BackgroundScanRegressionTest {
         assertEquals("true",eval("$('savedScan178').textContent.includes('Example ZX-500')"));
         assertEquals("0",eval("validImageCount()"));assertEquals("true",eval("scan164 === null && !apiBusy"));
         assertFalse(ScanForegroundService.wakeLockHeld());
+    }
+    private static String envelope(JSONObject payload,JSONObject source) throws Exception {
+        org.json.JSONArray output=new org.json.JSONArray();
+        if(source!=null)output.put(new JSONObject().put("type","web_search_call").put("status","completed").put("action",new JSONObject().put("type","search").put("sources",new org.json.JSONArray().put(source))).put("results",new org.json.JSONArray().put(source)));
+        output.put(new JSONObject().put("type","message").put("content",new org.json.JSONArray().put(new JSONObject().put("type","output_text").put("text",payload.toString()))));
+        return new JSONObject().put("status","completed").put("output",output).put("usage",new JSONObject().put("input_tokens",100).put("output_tokens",100)).toString();
+    }
+    public final class OfflineCatalogueIo {
+        private final JSONObject catalogue;
+        OfflineCatalogueIo(JSONObject catalogue){this.catalogue=catalogue;}
+        @android.webkit.JavascriptInterface public boolean offlineAvailable(){return true;}
+        @android.webkit.JavascriptInterface public boolean ocrAvailable(){return true;}
+        @android.webkit.JavascriptInterface public void readText(String id,String image){deliver(id,GoogleVisionBridge.json("state","ok","text","","lines",new org.json.JSONArray()));}
+        @android.webkit.JavascriptInterface public void readTextScript(String id,String image,String script){readText(id,image);}
+        @android.webkit.JavascriptInterface public void cancel(String id){}
+        @android.webkit.JavascriptInterface public void request(String id,String action,String payload){
+            JSONObject result=GoogleVisionBridge.json("status",503);
+            try{if(action.equals("page")&&new JSONObject(payload).optString("url").equals(catalogue.getString("url")))result=new JSONObject(catalogue.toString()).put("status",200);}catch(Exception ignored){}
+            deliver(id,result);
+        }
+        private void deliver(String id,JSONObject value){String script="FlipCheckDirect.receive("+JSONObject.quote(id)+","+value+");";web.post(()->web.evaluateJavascript(script,null));}
     }
     private void waitState(String state,long timeout) {
         long end=SystemClock.uptimeMillis()+timeout;
