@@ -108,9 +108,9 @@ renderIdent = function(identity) {
   const previous = $('printingPanel'); if (previous) previous.remove();
   const check = identity.printing_check; if (!check) return;
   const panel = document.createElement('div'); panel.id = 'printingPanel'; panel.className = 'status';
-  const stamp = {present:'Timbro 1st Edition visibile',absent:'Timbro 1st Edition assente nella zona leggibile',unclear:'Timbro di edizione da verificare',not_applicable:'Timbro 1st Edition non applicabile'};
+  const stamp = {present:'Timbro 1st Edition visibile',absent:'Timbro 1st Edition assente nella zona leggibile',unclear:'Timbro di edizione da verificare',conflict:'Letture discordanti del timbro di edizione',not_applicable:'Timbro 1st Edition non applicabile'};
   const shadow = {absent:'Shadowless: bordo e copyright coerenti',present:'Ombra del riquadro presente',unclear:'Stampa Shadowless da verificare',not_applicable:'Criterio Shadowless non applicabile a questa lingua/serie'};
-  panel.innerHTML = '<b>Edizione e stampa</b><br>'+esc(stamp[check.stamp])+'<br>'+esc(shadow[check.shadow])
+  panel.innerHTML = '<b>Edizione e stampa</b><br>'+esc(stamp[check.stamp==='confirmed'?check.stamp_presence:check.stamp]||stamp.unclear)+'<br>'+esc(shadow[check.shadow])
     +(check.slab ? '<br><b>Dichiarazione sulla slab:</b> '+esc(check.slab) : '')
     +(check.contradiction ? '<br><span class="warn">Etichetta e dettagli della carta discordanti: verifica la stampa.</span>' : '')
     +(check.missing.length ? '<br><b>Dettaglio da verificare:</b> '+esc(check.missing.join('; ')) : '');

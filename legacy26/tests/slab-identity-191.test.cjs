@@ -2,6 +2,24 @@
 const {test}=require('node:test'),assert=require('node:assert/strict');
 const S=require('../src/main/assets/slab-identity.js'),F=require('../src/main/assets/identity-final.js');
 const specimen=()=>({kind:'card',brand:'Pokemon',model_confidence:99,family_confidence:98,photo_clues:[{text:'#8 CLOYSTER HOLO R',role:'collector_number',certainty:'clear',image_index:1}],pokemon_printing:{is_pokemon:true,language:'Italian',first_edition_stamp:'unclear'},slab_reading:{present:true,certainty:'clear',image_index:1,grader:'Beckett',label_text:'2002 EXPEDITION ITALIAN #8 CLOYSTER HOLO R 9 MINT 0012345678',subject:'Cloyster',family:'Expedition',model:'Cloyster',year:'2002',card_number:'#8',variant:'HOLO R',grade:'9 MINT',certificate:'0012345678',object_match:'matches',match_details:'Label and card agree.'}});
+test('complete BGS primary fields close despite incomplete secondary text and preserve subgrades',()=>{
+ const p=specimen();Object.assign(p.slab_reading,{certainty:'uncertain',secondary_text_incomplete:true,title_certainty:'clear',grade_certainty:'clear',certificate_certainty:'clear',subgrades:[{name:'centering',value:'9.5',certainty:'clear'},{name:'corners',value:'9',certainty:'clear'},{name:'edges',value:'9',certainty:'clear'},{name:'surface',value:'9',certainty:'clear'}]});
+ p.slab_reading.label_text+=' CENTERING 9.5 CORNERS 9 EDGES 9 SURFACE 9';
+ const r=S.close(p,S.labelFacts(p),{state:'unavailable'});
+ assert.equal(r.closure_status,'resolved');assert.equal(r.job_status,'variant_resolved');assert.equal(r.next_photo_request,null);assert.equal(r.grading.subgrades.length,4);assert.equal(r.grading.certificate_format_valid,true);assert.equal(r.grading.certificate_verified,false);
+});
+test('PSA title closure accepts absent subgrades and retains the full literal card title',()=>{
+ const p=specimen();Object.assign(p.slab_reading,{grader:'PSA',certainty:'uncertain',secondary_text_incomplete:true,title_certainty:'clear',card_title:'2002 EXPEDITION ITALIAN #8 CLOYSTER HOLO R',subject:'',family:'',model:'',year:'',subgrades:[]});
+ const r=S.close(p,S.labelFacts(p));assert.equal(r.closure_status,'resolved');assert.equal(r.next_photo_request,null);assert.match(r.title,/2002 EXPEDITION.*CLOYSTER/);assert.deepEqual(r.grading.subgrades,[]);
+});
+test('secondary-text override cannot bypass unreadable primary fields or a label/card conflict',()=>{
+ for(const patch of [{certificate:'00123O5678'},{grade:'11'},{grade:'10'},{title_certainty:'uncertain'},{certificate_certainty:'uncertain'},{object_match:'conflict'},{subgrades:[{name:'surface',value:'10',certainty:'clear'}]}]){
+  const p=specimen();Object.assign(p.slab_reading,{certainty:'uncertain',secondary_text_incomplete:true,...patch});const r=S.close(p,S.labelFacts(p));assert.equal(r.market_ready,false,JSON.stringify(patch));assert.equal(r.closure_status,'pending');
+ }
+});
+test('a valid certificate alone cannot resolve a missing title or mark a certificate verified',()=>{
+ const p=specimen();Object.assign(p.slab_reading,{certainty:'uncertain',subject:'',model:'',family:'',card_title:''});const r=S.close(p,S.labelFacts(p));assert.equal(r.grading?.certificate_verified||false,false);assert.equal(r.market_ready,false);assert.match(r.next_photo_request,/titolo/);assert.doesNotMatch(r.next_photo_request,/certificato/);
+});
 test('191 label fallback closes the mixed collector-number regression with grading retained',()=>{
  const p=specimen(),f=S.labelFacts(p),r=S.close(p,f,{state:'unavailable'});
  assert.equal(r.identity_keys.number.value,'8');assert.equal(r.market_ready,true);assert.equal(r.identity_status,'confirmed');assert.equal(r.exact_identity_status,'confirmed');

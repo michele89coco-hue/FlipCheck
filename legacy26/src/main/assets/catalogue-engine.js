@@ -3,6 +3,32 @@
 'use strict';
 const list=x=>Array.isArray(x)?x:[],str=x=>String(x??'').trim(),clone=x=>JSON.parse(JSON.stringify(x)),norm=x=>str(x).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[’']/g,'').replace(/[^a-z0-9\u3040-\u30ff\u3400-\u9fff]+/g,' ').trim();
 const unique=x=>[...new Set(x.filter(Boolean))],same=(a,b)=>norm(a)===norm(b);
+const presenceFields=['stamp','shadow','rarity_symbol','autograph','patch'];
+function presenceText(field,text){
+ const t=norm(text),subject={stamp:/\b(?:stamp|timbro|1st edition|first edition|prima edizione)\b/,shadow:/\b(?:shadow|ombra)\b/,rarity_symbol:/\b(?:rarity|rarita)\b/,autograph:/\b(?:autograph|autografo|firma)\b/,patch:/\b(?:patch|relic|memorabilia)\b/}[field];
+ if(!subject?.test(t)||/\b(?:unclear|uncertain|unreadable|illeggibile|possibly|probably|maybe|might|could|would|should|if|se|dubbio|incerto|incerta|forse|possibile|probabile|sembra|potrebbe|dovrebbe|deve|catalogo|catalogue|reference|riferimento|esempio|fonte|source|listing)\b/.test(t))return '';
+ if(/\b(?:assente|absent)\b/.test(t)&&!/\b(?:non|not)\b/.test(t))return 'absent';
+ if(/\b(?:presente|present|visibile|visible|leggibile)\b/.test(t)&&!/\b(?:non|not|no|senza|without|cannot|cant)\b/.test(t))return 'present';
+ return '';
+}
+function reconcileVisualEvidence(l){
+ const superseded=new Set(l.atoms.flatMap(a=>list(a.supersedes)));
+ for(const a of [...l.atoms]){
+  if(superseded.has(a.id)||!presenceFields.includes(a.field)||a.level!=='observed'||a.reported_certainty!=='clear'||!['vision','focused_vision'].includes(a.source)||!a.image_index)continue;
+  const value=presenceText(a.field,a.raw);if(!value||a.value===value)continue;
+  l.add(a.field,value,{source:'visual_consistency',certainty:'clear',image_index:a.image_index,region:a.region,raw:a.raw,supersedes:[a.id],derived_from:a.id});
+  // An explicit opposite enumeration remains evidence of a real contradiction.
+  if(['present','absent'].includes(a.value))l.add(a.field,a.value,{source:'visual_conflict',certainty:'clear',image_index:a.image_index,raw:a.value,derived_from:a.id});
+  l.record('visual_state_reconciled',{field:a.field,observation:a.id,from:a.value,to:value});
+ }
+}
+function assertConsistent(l,result){
+ const check=result.printing_check,stamp=result.variant_resolution?.proof?.find(p=>p.field==='stamp');
+ if(check&&stamp&&(check.stamp!=='confirmed'||check.stamp_presence!==stamp.value||result.pokemon_printing?.first_edition_stamp!==stamp.value))throw new Error('inconsistent_identification_state:stamp');
+ if(check?.stamp==='unclear'&&l.pick('stamp')&&['present','absent'].includes(l.pick('stamp').value))throw new Error('inconsistent_identification_state:unmerged_stamp');
+ if(result.exact_identity_status==='confirmed'&&(!result.market_ready||result.variant_resolution?.pending?.length||check?.complete===false||result.next_photo_request||result.job_status!=='variant_resolved'))throw new Error('inconsistent_identification_state:closure');
+ return result;
+}
 const COLOR_WORDS={green:['green','verde'],blue:['blue','blu','azzurro'],red:['red','rosso','rossa'],gold:['gold','golden','oro'],silver:['silver','argento'],black:['black','nero','nera'],white:['white','bianco','bianca'],purple:['purple','viola'],pink:['pink','rosa'],orange:['orange','arancione'],yellow:['yellow','giallo'],teal:['teal'],aqua:['aqua'],bronze:['bronze','bronzo']};
 const PATTERNS={wave:['wave','waves','onde','ondulato'],raywave:['raywave'],ice:['ice','cracked ice','ghiaccio'],mojo:['mojo'],checkerboard:['checker','checkerboard','scacchi','checkered'],pulsar:['pulsar'],shimmer:['shimmer'],mosaic:['mosaic','mosaico'],disco:['disco'],honeycomb:['honeycomb','nido d ape'],snakeskin:['snakeskin'],dragon_scale:['dragon scale'],sparkle:['sparkle'],geometric:['geometric','geometrico'],dots:['dots','puntini'],squares:['squares','square','quadrati']};
 function tokens(value,dictionary){const t=' '+norm(value)+' ';return Object.keys(dictionary).filter(k=>dictionary[k].some(v=>t.includes(' '+v+' ')));}
@@ -26,7 +52,7 @@ function composeSubject(atoms){
 function coreKey(e){return [norm(e.subject),norm(e.family),number(e.number),season(e.year),norm(e.subset||'Base')].join('|');}
 class Ledger {
  constructor(base){this.base=clone(base||{});this.domain=profile(base||{});this.atoms=[];this.events=[];this.candidates=[];this.attempts=new Set();this.sequence=0;}
- add(field,value,meta={}){if(value===null||value===undefined||str(value)==='')return;const atom={id:'e'+(++this.sequence),field,value:str(value),level:meta.level||'observed',certainty:meta.certainty||'uncertain',source:meta.source||'vision',region:region(meta.region),image_index:meta.image_index||meta.region?.image_index||0,raw:meta.raw??str(value),...meta};atom.region=region(atom.region);if(atom.level==='observed'&&!atom.region&&!atom.image_index)atom.level='inferred';if(field==='serial'&&!serial(atom.value))atom.certainty='uncertain';Object.freeze(atom);this.atoms.push(atom);return atom;}
+ add(field,value,meta={}){if(value===null||value===undefined||str(value)==='')return;const atom={id:'e'+(++this.sequence),field,value:str(value),level:meta.level||'observed',certainty:meta.certainty||'uncertain',reported_certainty:meta.certainty||'uncertain',source:meta.source||'vision',region:region(meta.region),image_index:meta.image_index||meta.region?.image_index||0,raw:meta.raw??str(value),...meta};atom.region=region(atom.region);if(atom.level==='observed'&&!atom.region&&!atom.image_index)atom.level='inferred';if(field==='serial'&&!serial(atom.value)||presenceFields.includes(field)&&!['present','absent'].includes(atom.value))atom.certainty='uncertain';Object.freeze(atom);this.atoms.push(atom);return atom;}
  values(field){return this.atoms.filter(a=>a.field===field);}
  evidence(field){const values=this.values(field),replaced=new Set(values.flatMap(a=>list(a.supersedes)));return values.filter(a=>!replaced.has(a.id)&&a.level==='observed'&&a.certainty==='clear');}
  pick(field){const all=this.evidence(field);if(!all.length)return null;if(field==='subject')return composeSubject(all);if(field==='collector_number'){if(all.every(a=>all.every(b=>numbersMatch(a.value,b.value))))return [...all].sort((a,b)=>b.value.length-a.value.length)[0];return null;}return unique(all.map(a=>norm(a.value))).length===1?all[all.length-1]:null;}
@@ -146,7 +172,7 @@ function variantState(l,group){
   const scope=printingScope(l,e),observedFinish=l.pick('finish')?.value;
   fields.printingScope=scope;
   for(const [active,field,positive,negative] of [[scope.firstEdition,'stamp','1st Edition','Unlimited'],[scope.shadow,'shadow','Shadowed','Shadowless'],[scope.noRarity,'rarity_symbol','Rarity Symbol','No Rarity Symbol']])if(active){
-   let read=l.pick(field),value=read?.value;if(field==='stamp'&&!read&&l.evidence('edition_text').some(a=>/1st|first|edition\s*1|1\s*edition/i.test(a.value)))value='present';
+   let read=l.pick(field),value=read?.value;if(field==='stamp'&&!l.evidence('stamp').length){read=l.evidence('edition_text').find(a=>/1st|first|edition\s*1|1\s*edition/i.test(a.value));if(read)value='present';}
    if(['present','absent'].includes(value)){labels.push(value==='present'?positive:negative);proof.push({field,value,observation:read?.id||l.evidence('edition_text')[0]?.id});}else pending.push(field);
   }
   const finishes=unique(options.map(v=>v.finish).filter(Boolean));
@@ -193,7 +219,8 @@ function reduceObject(l,entries,error){
  l.record('reduce',{core:result.core_identity.status,exact:result.exact_identity_status,pending});return result;
 }
 function reduce(l,entries,{error=null}={}){
- if(['sealed','generic'].includes(l.domain))return reduceObject(l,entries,error);
+ reconcileVisualEvidence(l);
+ if(['sealed','generic'].includes(l.domain)){const result=reduceObject(l,entries,error);result.closure_status=result.market_ready?'resolved':'pending';result.job_status=result.market_ready?'variant_resolved':result.core_identity.status==='confirmed'?'variant_pending':'identity_pending';return assertConsistent(l,result);}
  const groups=candidateGroups(l,entries),top=groups[0],k=keyValues(l),base=l.base;
  const uniqueMatch=top&&top.score>=75&&(!groups[1]||top.score-groups[1].score>=12),entry=uniqueMatch?top.entry:null;
  const shared=top?.score>=60&&groups.length&&groups.every(g=>same(g.entry.family,top.entry.family)&&subjectMatch(g.entry.subject,top.entry.subject));
@@ -202,17 +229,25 @@ function reduce(l,entries,{error=null}={}){
  const exact=!!entry&&variation.status==='confirmed',fields=[];
  for(const [field,value] of [['subject',subject],['family',family],['catalog_number',cardNumber],['year',date],['brand',entry?.brand||base.brand]])if(value)fields.push({field,value,origin:entry?'catalogue_and_photo':field==='family'?'catalogue':'photo',source:entry?.source||null});
  const model=[date,family,cardNumber?'#'+cardNumber:'',subject].filter(Boolean).join(' · '),pending=variation.pending;
+ const stampProof=variation.proof.find(p=>p.field==='stamp'),stampObservation=stampProof&&l.atoms.find(a=>a.id===stampProof.observation),stampConflict=unique(l.evidence('stamp').map(a=>a.value)).length>1;
+ const printing={...base.pokemon_printing};
+ if(l.domain==='pokemon'){
+  printing.is_pokemon=true;printing.language=k.language;
+  printing.first_edition_stamp=stampProof?.value||'unclear';
+  if(stampObservation)Object.assign(printing,{stamp_image:stampObservation.image_index,stamp_location:stampObservation.raw,stamp_text:stampObservation.raw});
+  const shadow=l.pick('shadow');if(shadow)Object.assign(printing,{artwork_shadow:shadow.value,shadow_image:shadow.image_index,shadow_location:shadow.raw});
+ }
  const result={engine_version:193,engine_final:true,kind:base.kind||'card',category:base.category||'Carta',brand:entry?.brand||base.brand||'',family,model:entry?model:'',title:model||base.title||'Oggetto da identificare',variant:variation.labels.join(' · '),language:k.language,condition:base.condition||'',
-  status:entry?'identified':'uncertain',identity_status:entry?'confirmed':'partial',exact_identity_status:exact?'confirmed':entry?'variant_pending':'unresolved',market_ready:exact,model_verified:!!entry,catalogue_core_verified:!!entry,catalogue_verified:exact,model_confidence:null,family_confidence:family?90:0,
+  closure_status:exact?'resolved':'pending',job_status:exact?'variant_resolved':entry?'variant_pending':'identity_pending',status:entry?'identified':'uncertain',identity_status:entry?'confirmed':'partial',exact_identity_status:exact?'confirmed':entry?'variant_pending':'unresolved',market_ready:exact,model_verified:!!entry,catalogue_core_verified:!!entry,catalogue_verified:exact,model_confidence:null,family_confidence:family?90:0,
   catalogue_reference_language:language(entry?.language)||null,language_origin:k.language?'original_photo':null,
   core_identity:{status:entry?'confirmed':'partial',origin:'catalogue_engine',model,fields,pending_fields:entry?[]:pending},identity_keys:{subject:{value:subject},number:{value:cardNumber},date:{value:date}},
   source_confirmed_catalog_number:entry?.number||null,source_confirmed_year:entry?.year||null,physical_serial:variation.physical_serial||null,serial_number:variation.physical_serial?.value||null,
-  variant_needs_verification:!exact,variant_check:variation.status,variant_resolution:variation,printing_check:l.domain==='pokemon'&&entry?{complete:variation.status==='confirmed',labels:variation.labels,missing:pending,stamp:variation.printingScope.firstEdition?(l.pick('stamp')?.value||(/1st Edition/.test(variation.labels.join(' '))?'present':'unclear')):'not_applicable',shadow:variation.printingScope.shadow?l.pick('shadow')?.value||'unclear':'not_applicable',contradiction:false}:undefined,
+  variant_needs_verification:!exact,variant_check:variation.status,variant_resolution:variation,printing_check:l.domain==='pokemon'&&entry?{complete:variation.status==='confirmed',labels:variation.labels,missing:pending,stamp:variation.printingScope.firstEdition?(stampConflict?'conflict':stampProof?'confirmed':'unclear'):'not_applicable',stamp_presence:stampProof?.value||(variation.printingScope.firstEdition?'unclear':'not_applicable'),shadow:variation.printingScope.shadow?l.pick('shadow')?.value||'unclear':'not_applicable',contradiction:stampConflict}:undefined,
   assistance_state:exact?'confirmed':error|| (entry?'physical_detail_needed':'unidentified'),missing_information:pending.map(p=>({serial:'Numerazione dell’esemplare',variant:'Variante commerciale',finish:'Finitura',stamp:'Timbro First Edition',shadow:'Ombra dell’illustrazione',rarity_symbol:'Simbolo di rarità',catalogue:'Riscontro catalografico',collector_number:'Numero carta',subject:'Nome'})[p]||p),
   next_photo_request:exact?null:photoRequest(pending,l.domain),verification_summary:exact?'Carta e stampa identificate tramite letture e catalogo.':entry?'Carta identificata. Resta il dettaglio di stampa indicato.':'Letture conservate; identità catalografica da completare.',
-  normalized_query:exact?[model,variation.labels.join(' '),k.language].filter(Boolean).join(' '):'',candidate_models:(entry?[]:groups.slice(0,4)).map(g=>({model:[g.entry.year,g.entry.family,g.entry.number,g.entry.subject].join(' '),score:g.score})),catalogue_data:fields,identification_sources:unique(groups.flatMap(g=>g.entries.map(e=>e.source.url))).map(url=>({url,title:groups.flatMap(g=>g.entries).find(e=>e.source.url===url)?.source.title||url})),evidence:fields.map(f=>f.field+': '+f.value),object_unit:base.object_unit||'single',pokemon_printing:base.pokemon_printing,
+  normalized_query:exact?[model,variation.labels.join(' '),k.language].filter(Boolean).join(' '):'',candidate_models:(entry?[]:groups.slice(0,4)).map(g=>({model:[g.entry.year,g.entry.family,g.entry.number,g.entry.subject].join(' '),score:g.score})),catalogue_data:fields,identification_sources:unique(groups.flatMap(g=>g.entries.map(e=>e.source.url))).map(url=>({url,title:groups.flatMap(g=>g.entries).find(e=>e.source.url===url)?.source.title||url})),evidence:fields.map(f=>f.field+': '+f.value),object_unit:base.object_unit||'single',pokemon_printing:l.domain==='pokemon'?printing:base.pokemon_printing,
   card_identity:{autograph:l.pick('autograph')?.value||'unclear',patch:l.pick('patch')?.value||'unclear',manufacturer:entry?.brand||base.brand||null,subject,set:family,number:cardNumber,date:date||null,language:k.language,variant:variation.labels.join(' · ')||null,rarity:(entry&&(!entry.language||language(entry.language)===k.language)?entry.rarity:null)||l.pick('rarity_text')?.value||null,rarity_symbol:l.pick('rarity_symbol')?.value||'unclear',serial:variation.physical_serial||null}}
- l.record('reduce',{core:result.core_identity.status,exact:result.exact_identity_status,groups:groups.length,selected:top?.id||null,pending});return result;
+ l.record('reduce',{core:result.core_identity.status,exact:result.exact_identity_status,groups:groups.length,selected:top?.id||null,pending});return assertConsistent(l,result);
 }
 function recoveryRequests(l,result){
  const pending=new Set(result?.variant_resolution?.pending||[]),requests=[];
@@ -229,12 +264,13 @@ function recoveryRequests(l,result){
  return requests.slice(0,3);
 }
 function applyDetails(l,details,requests){for(const d of list(details)){
- const req=requests.find(r=>r.field===d.field&&(!d.image_index||r.image_index===d.image_index));if(!req||d.certainty!=='clear')continue;
- const value=d.text??d.value;if(d.field==='serial'&&!serial(value)||d.field==='collector_number'&&!numberParts(value))continue;
- if(['stamp','shadow','rarity_symbol'].includes(d.field)&&!['present','absent'].includes(value))continue;
+ const req=requests.find(r=>r.field===d.field&&r.image_index===d.image_index);if(!req||d.certainty!=='clear'||d.evidence_found===false)continue;
+ const raw=d.text??d.value,value=presenceFields.includes(d.field)?(['present','absent'].includes(raw)?raw:presenceText(d.field,raw)):d.field==='finish'?finish(raw):raw;
+ if(!value||d.field==='serial'&&!serial(value)||d.field==='collector_number'&&!numberParts(value))continue;
+ if(presenceFields.includes(d.field)&&!['present','absent'].includes(value))continue;
  const previous=l.evidence(d.field);if(previous.some(a=>!(d.field==='collector_number'?numbersMatch(a.value,value):same(a.value,value)))){l.record('conflicting_detail',{field:d.field,value,previous:previous.map(a=>a.id)});continue;}
- l.add(d.field,value,{source:'focused_vision',certainty:'clear',image_index:req.image_index,region:req.region,raw:value,request_key:req.key});
+ l.add(d.field,value,{source:'focused_vision',certainty:'clear',image_index:req.image_index,region:req.region,raw,request_key:req.key,supersedes:l.values(d.field).filter(a=>a.image_index===req.image_index&&a.certainty!=='clear').map(a=>a.id)});
  }return l;}
-const api={coreKey,Ledger,ingestVision,ingestOcr,keyValues,profile,number,numberParts,numbersMatch,serial,language,season,finish,norm,same,subjectMatch,tokens,COLOR_WORDS,PATTERNS,query,domains,sourceTrusted,evaluate,candidateGroups,printingScope,variantState,photoRequest,reduce,recoveryRequests,applyDetails};
+const api={coreKey,Ledger,ingestVision,ingestOcr,keyValues,profile,number,numberParts,numbersMatch,serial,language,season,finish,norm,same,subjectMatch,tokens,COLOR_WORDS,PATTERNS,query,domains,sourceTrusted,evaluate,candidateGroups,printingScope,variantState,photoRequest,reduce,recoveryRequests,applyDetails,presenceText,reconcileVisualEvidence,assertConsistent};
 if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckCatalogueEngine=api;
 })(typeof window==='undefined'?globalThis:window);
