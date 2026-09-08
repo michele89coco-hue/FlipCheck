@@ -40,6 +40,7 @@ before(async()=>{
     if(options.certificate&&/psacard.com\/cert\//.test(b.url))reply={status:200,url:b.url,structured_fields:options.certificate};
    }
    if(action==='catalogue'&&options.tcgdex){if(/\/cards\?/.test(b.url))reply={status:200,body:[{id:'ecard3-H23',localId:'H23',name:'Politoed'}]};else if(/\/cards\//.test(b.url))reply={status:200,body:{id:'ecard3-H23',localId:'H23',name:'Politoed',hp:110,attacks:[{name:'Crescita Improvvisa'},{name:'Ranabalzo'},{name:'Spruzza Energia'}],set:{id:'ecard3',name:'Skyridge'},rarity:'Rare Holo',variants:{holo:true}}};else reply={status:200,body:{releaseDate:'2003-05-12'}};}
+   if(action==='catalogue'&&options.catalogueReply)reply=options.catalogueReply(b);
    if(action==='image')reply={status:200,image_data:carrier};
    return route.fulfill({json:reply}).catch(()=>{});
   }
@@ -49,6 +50,20 @@ before(async()=>{
 afterEach(async()=>{assert.deepEqual(errors,[]);});after(async()=>{await browser?.close();await new Promise(r=>server.close(r));});
 test('193 native host serves every production engine module',async()=>{await reset('politoed');assert.equal(await page.evaluate(()=>FlipCheckCatalogueEngine&&FlipCheckCatalogueSources&&typeof resolveCatalogue193),'function');assert.ok(allow.test('/catalogue-runtime.js'));});
 test('193 actual scan uses structured catalogue with one initial AI call and closes Politoed',async()=>{await reset('politoed',{tcgdex:true});const out=await scan();assert.equal(out.identification.engine_final,true);assert.equal(out.identification.family,'Skyridge');assert.equal(out.identification.market_ready,true,JSON.stringify(out.identification));assert.deepEqual(stages(),['flipcheck_identification']);assert.equal(out.visualAssistance.route,'catalogue_engine');assert.ok(native.some(n=>n.action==='catalogue'));assert.ok(out.visualAssistance.engine.observations.length>0);assert.ok(events.some(e=>e.kind==='end'));assert.equal(await page.locator('#marketBtn').isDisabled(),false);assert.equal(await page.locator('#identNote .confrow').count(),0);assert.equal(await page.locator('#identNote .need').count(),0);});
+test('missing Italian catalogue falls back to English and completes identification without another AI call',async()=>{
+ await reset('politoed',{catalogueReply(b){
+  if(b.url.includes('/it/'))return {status:200,body:[]};
+  if(/\/cards\?/.test(b.url))return {status:200,body:[{id:'ecard3-H23',localId:'H23',name:'Politoed'},{id:'xy3-18',localId:'18',name:'Politoed'}]};
+  if(/\/cards\//.test(b.url))return {status:200,body:{id:'ecard3-H23',localId:'H23',name:'Politoed',hp:110,set:{id:'ecard3',name:'Skyridge'},rarity:'Rare Holo',variants:{holo:true}}};
+  return {status:200,body:{releaseDate:'2003-05-12'}};
+ }});
+ const out=await scan();assert.equal(out.identification.core_identity.status,'confirmed',JSON.stringify(out.visualAssistance.engine));assert.equal(out.identification.market_ready,true);assert.equal(out.identification.language,'it');assert.equal(out.identification.catalogue_reference_language,'en');
+ assert.deepEqual(stages(),['flipcheck_identification']);assert.equal(out.visualAssistance.catalogueCoverage.truncated,false);assert.ok(native.some(n=>n.url?.includes('/en/cards?')));assert.ok(!native.some(n=>n.url?.includes('/cards/xy3-18')));
+ assert.equal(out.identification.card_identity.rarity,null);assert.equal(await page.locator('#marketBtn').isDisabled(),false);
+});
+test('a complete local catalogue needs no cross-language fallback',async()=>{
+ await reset('politoed',{tcgdex:true});const out=await scan();assert.equal(out.identification.market_ready,true);assert.ok(!native.some(n=>n.url?.includes('/en/cards')));assert.deepEqual(stages(),['flipcheck_identification']);
+});
 test('193 real web text fallback also finds Politoed without the guessed set',async()=>{await reset('politoed');const out=await scan();assert.equal(out.identification.family,'Skyridge',JSON.stringify(out.visualAssistance.engine?.events));assert.equal(out.identification.market_ready,true);assert.equal(stages().filter(s=>s==='flipcheck_catalogue_search').length,1);assert.ok(out.visualAssistance.queries.every(q=>!q.includes('Aquapolis')));});
 test('193 Boniface consumes one serial crop and no further search once /5 is read',async()=>{await reset('boniface',{details:[{field:'serial',text:'2/5',certainty:'clear',image_index:2}]});const out=await scan();assert.equal(out.identification.market_ready,true,JSON.stringify(out.visualAssistance.engine?.events));assert.equal(out.identification.variant,'Green');assert.equal(out.identification.physical_serial.value,'2/5');assert.deepEqual(stages(),['flipcheck_identification','flipcheck_catalogue_search','flipcheck_evidence_detail']);assert.equal(out.visualAssistance.detailReread.requested[0].rotation,90);assert.ok(events.filter(e=>e.type==='original').length===2);});
 test('193 unreadable serial retains card identity without inventing /5',async()=>{await reset('boniface');const out=await scan();assert.equal(out.identification.core_identity.status,'confirmed');assert.equal(out.identification.market_ready,false);assert.equal(out.identification.serial_number,null);assert.match(out.identification.next_photo_request,/numerazione/);assert.equal(stages().filter(s=>s==='flipcheck_evidence_detail').length,1);});

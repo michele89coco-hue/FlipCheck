@@ -105,7 +105,8 @@ function evaluate(l,entry){
  if(k.subject&&names.some(n=>subjectMatch(k.subject,n))){score+=35;matches.push('subject');}else if(k.subject)reasons.push('different_subject');
  if(k.numbers.some(n=>numbersMatch(n,entry.number))){score+=25;matches.push('number');if(strongNumbers.some(a=>numbersMatch(a.value,entry.number)))score+=15;else {const reads=l.values('collector_number').filter(a=>numbersMatch(a.value,entry.number));if(unique(reads.map(a=>a.source)).length>1)score+=8;}}
  else if(strongNumbers.length)reasons.push('different_number');
- if(k.language&&entry.language&&k.language!==language(entry.language)&&k.language!==entry.language)reasons.push('different_language');
+ // Catalogue language describes the reference, not the photographed copy.
+ // Subject, collector number and product evidence still have to agree.
  if(k.year&&entry.year){if(season(entry.year)===k.year){score+=10;matches.push('season');}else reasons.push('different_product_season');}
  // Copyright is supporting evidence, never a hard product-year veto.
  if(k.copyright.some(y=>str(entry.year).startsWith(y)))score+=3;
@@ -122,19 +123,20 @@ function evaluate(l,entry){
 function candidateGroups(l,entries){
  const evaluated=entries.map(e=>evaluate(l,e)),eligible=evaluated.filter(e=>e.eligible).sort((a,b)=>b.score-a.score);
  l.candidates=evaluated.map(({image_data,...e})=>e);
- const groups=new Map();for(const e of eligible){const id=[norm(e.subject),norm(e.family),number(e.number),e.language||keyValues(l).language||'',season(e.year),norm(e.subset||'Base').replace(/^.*base(?: set)?(?: checklist)?.*$/,'base')].join('|');if(!groups.has(id))groups.set(id,{id,entry:e,entries:[],score:e.score});const g=groups.get(id);g.entries.push(e);g.score=Math.max(g.score,e.score);}
+ const groups=new Map();for(const e of eligible){const id=[norm(e.subject),norm(e.family),number(e.number),season(e.year),norm(e.subset||'Base').replace(/^.*base(?: set)?(?: checklist)?.*$/,'base')].join('|');if(!groups.has(id))groups.set(id,{id,entry:e,entries:[],score:e.score});const g=groups.get(id);g.entries.push(e);g.score=Math.max(g.score,e.score);if(language(e.language)===keyValues(l).language&&language(g.entry.language)!==keyValues(l).language)g.entry=e;}
  return [...groups.values()].sort((a,b)=>b.score-a.score);
 }
 function printingScope(l,e){
- const lang=language(e?.language)||l.pick('language')?.value,set=norm(e?.family),year=+season(e?.year).slice(0,4),base=/^(?:pokemon game |pokemon |set )?(?:base set|base|basic|set base|set de base|basis|expansion pack|拡張パック)$/.test(set)||e?.set_id==='base1';
+ const lang=l.pick('language')?.value||'',set=norm(e?.family),year=+season(e?.year).slice(0,4),base=/^(?:pokemon game |pokemon |set )?(?:base set|base|basic|set base|set de base|basis|expansion pack|拡張パック)$/.test(set)||e?.set_id==='base1';
  const shadow=lang==='en'&&base&&l.base.pokemon_printing?.card_type!=='energy';
  const historicalFirst=['jungle','giungla','dschungel','jungla','selva','fossil','fossile','fossiles','fosil','team rocket','gym heroes','gym challenge','neo genesis','neo discovery','neo revelation','neo destiny'].includes(set);
- const firstEdition=l.pick('stamp')?.value==='present'||e?.printing_options?.includes('first_edition')===true||(['en','it','fr','de','es','pt','nl'].includes(lang)&&(base||historicalFirst));
+ const firstEdition=l.pick('stamp')?.value==='present'||(lang&&language(e?.language)===lang&&e?.printing_options?.includes('first_edition')===true)||(['en','it','fr','de','es','pt','nl'].includes(lang)&&(base||historicalFirst));
  const noRarity=lang==='ja'&&base&&(!year||year===1996);
  return {shadow,firstEdition,noRarity,language:lang,base,scope_source:'set_language_catalogue',source:'https://www.cgccards.com/news/article/10262/pokemon-first-editions/'};
 }
 function variantOptions(l,group){
- const options=group.entries.flatMap(e=>list(e.variants).map(v=>({...v,source:v.source||e.source}))),uniqueOptions=[];
+ // A foreign catalogue can identify the core without defining local printings.
+ const options=group.entries.filter(e=>!keyValues(l).language||!e.language||language(e.language)===keyValues(l).language).flatMap(e=>list(e.variants).map(v=>({...v,source:v.source||e.source}))),uniqueOptions=[];
  for(const o of options)if(!uniqueOptions.some(x=>same(x.name,o.name)&&x.print_run===o.print_run&&JSON.stringify(x.colors||[])===JSON.stringify(o.colors||[])&&JSON.stringify(x.patterns||[])===JSON.stringify(o.patterns||[])))uniqueOptions.push(o);
  return uniqueOptions;
 }
@@ -154,7 +156,7 @@ function variantState(l,group){
    else pending.push('finish');
   }else if(finishes.length===1){labels.push(({normal:'Non holo',holo:'Holo',reverse:'Reverse holo'})[finishes[0]]);proof.push({field:'finish',value:finishes[0],source:e.source,reason:'catalogue_single_printing'});}
   else pending.push('finish');
-  if(e.rarity)fields.rarity=e.rarity;
+  if(e.rarity&&(!e.language||language(e.language)===k.language))fields.rarity=e.rarity;
  }else if(l.domain==='sports'||l.domain==='onepiece'){
   const compatible=options.filter(v=>(!sn||v.unnumbered!==true&&(v.print_run===undefined||v.print_run===null||(v.max_print_run?sn.print_run<=+v.print_run:+v.print_run===sn.print_run)))&&(!v.colors?.length||!k.colors.length||v.colors.every(c=>k.colors.includes(c)))&&(!v.patterns?.length||!k.patterns.filter(p=>!['geometric','dots','squares'].includes(p)).length||v.patterns.some(p=>k.patterns.includes(p))));
   fields.variant_candidates=compatible;
@@ -202,13 +204,14 @@ function reduce(l,entries,{error=null}={}){
  const model=[date,family,cardNumber?'#'+cardNumber:'',subject].filter(Boolean).join(' · '),pending=variation.pending;
  const result={engine_version:193,engine_final:true,kind:base.kind||'card',category:base.category||'Carta',brand:entry?.brand||base.brand||'',family,model:entry?model:'',title:model||base.title||'Oggetto da identificare',variant:variation.labels.join(' · '),language:k.language,condition:base.condition||'',
   status:entry?'identified':'uncertain',identity_status:entry?'confirmed':'partial',exact_identity_status:exact?'confirmed':entry?'variant_pending':'unresolved',market_ready:exact,model_verified:!!entry,catalogue_core_verified:!!entry,catalogue_verified:exact,model_confidence:null,family_confidence:family?90:0,
+  catalogue_reference_language:language(entry?.language)||null,language_origin:k.language?'original_photo':null,
   core_identity:{status:entry?'confirmed':'partial',origin:'catalogue_engine',model,fields,pending_fields:entry?[]:pending},identity_keys:{subject:{value:subject},number:{value:cardNumber},date:{value:date}},
   source_confirmed_catalog_number:entry?.number||null,source_confirmed_year:entry?.year||null,physical_serial:variation.physical_serial||null,serial_number:variation.physical_serial?.value||null,
   variant_needs_verification:!exact,variant_check:variation.status,variant_resolution:variation,printing_check:l.domain==='pokemon'&&entry?{complete:variation.status==='confirmed',labels:variation.labels,missing:pending,stamp:variation.printingScope.firstEdition?(l.pick('stamp')?.value||(/1st Edition/.test(variation.labels.join(' '))?'present':'unclear')):'not_applicable',shadow:variation.printingScope.shadow?l.pick('shadow')?.value||'unclear':'not_applicable',contradiction:false}:undefined,
   assistance_state:exact?'confirmed':error|| (entry?'physical_detail_needed':'unidentified'),missing_information:pending.map(p=>({serial:'Numerazione dell’esemplare',variant:'Variante commerciale',finish:'Finitura',stamp:'Timbro First Edition',shadow:'Ombra dell’illustrazione',rarity_symbol:'Simbolo di rarità',catalogue:'Riscontro catalografico',collector_number:'Numero carta',subject:'Nome'})[p]||p),
   next_photo_request:exact?null:photoRequest(pending,l.domain),verification_summary:exact?'Carta e stampa identificate tramite letture e catalogo.':entry?'Carta identificata. Resta il dettaglio di stampa indicato.':'Letture conservate; identità catalografica da completare.',
   normalized_query:exact?[model,variation.labels.join(' '),k.language].filter(Boolean).join(' '):'',candidate_models:(entry?[]:groups.slice(0,4)).map(g=>({model:[g.entry.year,g.entry.family,g.entry.number,g.entry.subject].join(' '),score:g.score})),catalogue_data:fields,identification_sources:unique(groups.flatMap(g=>g.entries.map(e=>e.source.url))).map(url=>({url,title:groups.flatMap(g=>g.entries).find(e=>e.source.url===url)?.source.title||url})),evidence:fields.map(f=>f.field+': '+f.value),object_unit:base.object_unit||'single',pokemon_printing:base.pokemon_printing,
-  card_identity:{autograph:l.pick('autograph')?.value||'unclear',patch:l.pick('patch')?.value||'unclear',manufacturer:entry?.brand||base.brand||null,subject,set:family,number:cardNumber,date:date||null,language:k.language,variant:variation.labels.join(' · ')||null,rarity:entry?.rarity||l.pick('rarity_text')?.value||null,rarity_symbol:l.pick('rarity_symbol')?.value||'unclear',serial:variation.physical_serial||null}}
+  card_identity:{autograph:l.pick('autograph')?.value||'unclear',patch:l.pick('patch')?.value||'unclear',manufacturer:entry?.brand||base.brand||null,subject,set:family,number:cardNumber,date:date||null,language:k.language,variant:variation.labels.join(' · ')||null,rarity:(entry&&(!entry.language||language(entry.language)===k.language)?entry.rarity:null)||l.pick('rarity_text')?.value||null,rarity_symbol:l.pick('rarity_symbol')?.value||'unclear',serial:variation.physical_serial||null}}
  l.record('reduce',{core:result.core_identity.status,exact:result.exact_identity_status,groups:groups.length,selected:top?.id||null,pending});return result;
 }
 function recoveryRequests(l,result){
