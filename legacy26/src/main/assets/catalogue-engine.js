@@ -67,11 +67,12 @@ class Ledger {
  constructor(base){this.base=clone(base||{});this.domain=profile(base||{});this.atoms=[];this.events=[];this.candidates=[];this.attempts=new Set();this.sequence=0;}
  add(field,value,meta={}){if(value===null||value===undefined||str(value)==='')return;const reportedField=field;field=semanticField(this.domain,field,value);if(field!==reportedField)meta={...meta,reported_field:reportedField,semantic_correction:true};const atom={id:'e'+(++this.sequence),field,value:str(value),level:meta.level||'observed',certainty:meta.certainty||'uncertain',reported_certainty:meta.certainty||'uncertain',source:meta.source||'vision',region:region(meta.region),image_index:meta.image_index||meta.region?.image_index||0,raw:meta.raw??str(value),...meta};atom.region=region(atom.region);if(atom.level==='observed'&&!atom.region&&!atom.image_index)atom.level='inferred';if(field==='serial'&&!serial(atom.value)||presenceFields.includes(field)&&!['present','absent'].includes(atom.value))atom.certainty='uncertain';Object.freeze(atom);this.atoms.push(atom);return atom;}
  values(field){return this.atoms.filter(a=>a.field===field);}
+ active(field){const replaced=new Set(this.atoms.flatMap(a=>list(a.supersedes)));return this.values(field).filter(a=>!replaced.has(a.id));}
  evidence(field){const values=this.values(field),replaced=new Set(values.flatMap(a=>list(a.supersedes)));return values.filter(a=>!replaced.has(a.id)&&a.level==='observed'&&a.certainty==='clear');}
  pick(field){const all=this.evidence(field);if(!all.length)return null;if(field==='subject')return composeSubject(all);if(field==='collector_number'){if(all.every(a=>all.every(b=>numbersMatch(a.value,b.value))))return [...all].sort((a,b)=>b.value.length-a.value.length)[0];return null;}return unique(all.map(a=>norm(a.value))).length===1?all[all.length-1]:null;}
  record(stage,data={}){this.events.push({stage,...clone(data)});}
  attempt(key){if(this.attempts.has(key))return false;this.attempts.add(key);return true;}
- snapshot(){return {version:193,domain:this.domain,observations:this.atoms,events:this.events,attempts:[...this.attempts],candidates:this.candidates};}
+ snapshot(){return {user_details:this.userDetails||'',version:193,domain:this.domain,observations:this.atoms,events:this.events,attempts:[...this.attempts],candidates:this.candidates};}
 }
 function legacyFeatures(ledger,base){
  for(const o of list(base.physical_observations).filter(o=>o.entity==='target')){
@@ -125,7 +126,7 @@ function ingestOcr(ledger,reports){
  }
  return ledger;
 }
-function keyValues(l){return {subject:l.pick('subject')?.value||'',numbers:unique(l.values('collector_number').filter(a=>a.level==='observed').map(a=>numberParts(a.value)?.full)),year:season(l.pick('season')?.value)||'',copyright:unique(l.values('copyright').flatMap(a=>str(a.value).match(/\b(?:19|20)\d{2}\b/g)||[])),language:l.pick('language')?.value||'',brands:unique(l.values('brand').map(a=>a.value)),colors:unique(l.evidence('border_color').map(a=>a.value)),patterns:unique(l.evidence('pattern').map(a=>a.value)),serials:unique(l.values('serial').filter(a=>a.level==='observed').map(a=>serial(a.value)?.value)),products:unique(l.evidence('product').filter(a=>semanticField(l.domain,'product',a.value)==='product').concat(l.domain==='generic'?l.evidence('model_code'):[]).map(a=>a.value))};}
+function keyValues(l){return {subject:l.pick('subject')?.value||'',numbers:unique(l.active('collector_number').filter(a=>a.level==='observed').map(a=>numberParts(a.value)?.full)),year:season(l.pick('season')?.value)||'',copyright:unique(l.values('copyright').flatMap(a=>str(a.value).match(/\b(?:19|20)\d{2}\b/g)||[])),language:l.pick('language')?.value||'',brands:unique(l.values('brand').map(a=>a.value)),colors:unique(l.evidence('border_color').map(a=>a.value)),patterns:unique(l.evidence('pattern').map(a=>a.value)),serials:unique(l.active('serial').filter(a=>a.level==='observed').map(a=>serial(a.value)?.value)),products:unique(l.evidence('product').filter(a=>semanticField(l.domain,'product',a.value)==='product').concat(l.domain==='generic'?l.evidence('model_code'):[]).map(a=>a.value))};}
 function domains(l){const b=norm([l.base.brand,...l.values('brand').map(a=>a.value),...l.evidence('text').map(a=>a.value)].join(' '));if(l.domain==='generic')return [];if(l.domain==='pokemon')return ['tcgdex.net','pokemon.com','pokemontcg.io','bulbapedia.bulbagarden.net','wiki.pokemoncentral.it','psacard.com'];if(l.domain==='onepiece')return ['en.onepiece-cardgame.com','onepiece-cardgame.com'];const makers=[];if(/topps|bowman/.test(b))makers.push('topps.com','ripped.topps.com');if(/panini/.test(b))makers.push('paniniamerica.net');if(/upper deck|fleer|skybox/.test(b))makers.push('upperdeck.com');if(/leaf/.test(b))makers.push('leaftradingcards.com');return unique([...makers,'beckett.com','checklistinsider.com']);}
 function query(l,mode='identity'){
  const k=keyValues(l);
@@ -224,14 +225,15 @@ function variantState(l,group){
   else pending.push('finish');
   if(e.rarity&&(!e.language||language(e.language)===k.language))fields.rarity=e.rarity;
  }else if(l.domain==='sports'||l.domain==='onepiece'){
-  const compatible=options.filter(v=>(!sn||v.unnumbered!==true&&(v.print_run===undefined||v.print_run===null||(v.max_print_run?sn.print_run<=+v.print_run:+v.print_run===sn.print_run)))&&(!v.colors?.length||!k.colors.length||v.colors.every(c=>k.colors.includes(c)))&&(!v.patterns?.length||!k.patterns.filter(p=>!['geometric','dots','squares'].includes(p)).length||v.patterns.some(p=>k.patterns.includes(p))));
+  const serialAbsent=l.pick('serial_presence')?.value==='absent';
+  const compatible=options.filter(v=>(!serialAbsent||!v.print_run)&&(!sn||v.unnumbered!==true&&(v.print_run===undefined||v.print_run===null||(v.max_print_run?sn.print_run<=+v.print_run:+v.print_run===sn.print_run)))&&(!v.colors?.length||!k.colors.length||v.colors.every(c=>k.colors.includes(c)))&&(!v.patterns?.length||!k.patterns.filter(p=>!['geometric','dots','squares'].includes(p)).length||v.patterns.some(p=>k.patterns.includes(p))));
   fields.variant_candidates=compatible;
   fields.needs_catalogue=options.length===0||compatible.length===0||l.domain==='onepiece'&&compatible.every(v=>v.visual_required&&!v.image_url)||k.colors.length>0&&!compatible.some(v=>v.colors?.some(c=>k.colors.includes(c))||v.patterns?.some(p=>k.patterns.includes(p)&&!['geometric','dots','squares'].includes(p))||sn&&+v.print_run===sn.print_run);
-  const compared=l.pick('catalogue_variant'),candidate=compared?compatible.find(v=>same(v.id||v.name,compared.value)):compatible.length===1?compatible[0]:null;
+  const declared=userVariant199(l,compatible),compared=l.pick('catalogue_variant'),candidate=declared|| (compared?compatible.find(v=>same(v.id||v.name,compared.value)):compatible.length===1?compatible[0]:null);
   const supported=candidate&&!candidate.max_print_run&&(!candidate.print_run||sn&&+candidate.print_run===sn.print_run)&&(!candidate.colors?.length||candidate.colors.every(c=>k.colors.includes(c)))&&(!candidate.patterns?.length||candidate.patterns.every(p=>k.patterns.includes(p)))&&(candidate.visual_required!==true||!!compared);
-  if(supported&&(compared&&(!compared.reference_source||compared.reference_source===candidate.source?.url)||sn||candidate.colors?.length||candidate.patterns?.length||candidate.name==='Base'&&l.pick('finish')?.value==='normal')){labels.push(candidate.name);proof.push({field:'variant',value:candidate.name,source:candidate.source,image_url:candidate.image_url||undefined});}
+  if(supported&&(compared&&(!compared.reference_source||compared.reference_source===candidate.source?.url)||declared||sn||candidate.base_printing&&serialAbsent||candidate.colors?.length||candidate.patterns?.length||candidate.name==='Base'&&l.pick('finish')?.value==='normal')){labels.push(candidate.name);fields.variant_origin=declared?'user_declaration':compared?'visual_comparison':'photo_and_catalogue';proof.push({field:'variant',value:candidate.name,source:candidate.source,image_url:candidate.image_url||undefined,origin:fields.variant_origin});}
   else pending.push('variant');
-  if(l.values('serial').length&&!sn)pending.push('serial');
+  if(l.values('serial').length&&!sn&&!serialAbsent)pending.push('serial');
   for(const feature of ['autograph','patch'])if(l.pick(feature)?.value==='present'){const pattern=feature==='autograph'?/autograph|signature|signed/i:/patch|memorabilia|relic/i;if(!pattern.test([e.subset,candidate?.name].join(' ')))pending.push(feature);else proof.push({field:feature,value:'present',observation:l.pick(feature).id,source:e.source});}
   if(sn)fields.physical_serial={...sn,origin:'original_photo',observation:physicalSerial.id};
  }
@@ -270,6 +272,7 @@ function reduce(l,entries,{error=null}={}){
  const shared=top?.score>=60&&groups.length&&groups.every(g=>same(g.entry.family,top.entry.family)&&subjectMatch(g.entry.subject,top.entry.subject));
  const family=entry?.family||(shared&&top.score>=75?top.entry.family:''),subject=entry?.subject||k.subject,cardNumber=entry?.number||l.pick('collector_number')?.value||'',date=entry?.year||k.year;
  const variation=entry?variantState(l,top):{status:'pending',pending:[!subject?'subject':!cardNumber?'collector_number':'catalogue'],labels:[],proof:[]};
+ if(!entry&&l.candidates.some(e=>e.grounded&&subjectMatch(k.subject,e.subject)&&e.reasons?.includes('different_number')&&!e.reasons.includes('different_printed_product')))variation.pending.push('collector_number');
  const exact=!!entry&&variation.status==='confirmed',fields=[];
  for(const [field,value] of [['subject',subject],['family',family],['catalog_number',cardNumber],['year',date],['brand',entry?.brand||base.brand]])if(value)fields.push({field,value,origin:entry?'catalogue_and_photo':field==='family'?'catalogue':'photo',source:entry?.source||null});
  const model=[date,family,cardNumber?'#'+cardNumber:'',subject].filter(Boolean).join(' · '),pending=variation.pending;
@@ -288,7 +291,7 @@ function reduce(l,entries,{error=null}={}){
   source_confirmed_catalog_number:entry?.number||null,source_confirmed_year:entry?.year||null,physical_serial:variation.physical_serial||null,serial_number:variation.physical_serial?.value||null,
   variant_needs_verification:!exact,variant_check:variation.status,variant_resolution:variation,printing_check:l.domain==='pokemon'&&entry?{complete:variation.status==='confirmed',labels:variation.labels,missing:pending,stamp:variation.printingScope.firstEdition?(stampConflict?'conflict':stampProof?'confirmed':'unclear'):'not_applicable',stamp_presence:stampProof?.value||(variation.printingScope.firstEdition?'unclear':'not_applicable'),shadow:variation.printingScope.shadow?l.pick('shadow')?.value||'unclear':'not_applicable',contradiction:stampConflict}:undefined,
   assistance_state:exact?'confirmed':error|| (entry?variation.needs_catalogue?'source_detail_needed':'physical_detail_needed':'unidentified'),missing_information:pending.map(p=>({serial:'Numerazione dell’esemplare',variant:'Variante commerciale',finish:'Finitura',stamp:'Timbro First Edition',shadow:'Ombra dell’illustrazione',rarity_symbol:'Simbolo di rarità',catalogue:'Riscontro catalografico',language:'Lingua della carta',collector_number:'Numero carta',subject:'Nome'})[p]||p),
-  next_photo_request:exact?null:photoRequest(pending,l.domain,{catalogueMissing:variation.needs_catalogue}),verification_summary:exact?'Carta e stampa identificate tramite letture e catalogo.':entry?'Carta identificata. Resta il dettaglio di stampa indicato.':'Letture conservate; identità catalografica da completare.',
+  next_photo_request:exact?null:photoRequest(pending,l.domain,{catalogueMissing:variation.needs_catalogue}),verification_summary:exact?(variation.variant_origin==='user_declaration'?'Carta identificata; variante dichiarata dall’utente e presente nel catalogo.':'Carta e stampa identificate tramite letture e catalogo.'):entry?'Carta identificata. Resta il dettaglio di stampa indicato.':'Letture conservate; identità catalografica da completare.',
   normalized_query:exact?[model,variation.labels.join(' '),k.language].filter(Boolean).join(' '):'',candidate_models:(entry?[]:groups.slice(0,4)).map(g=>({model:[g.entry.year,g.entry.family,g.entry.number,g.entry.subject].join(' '),score:g.score})),catalogue_data:fields,identification_sources:unique(groups.flatMap(g=>g.entries.map(e=>e.source.url))).map(url=>({url,title:groups.flatMap(g=>g.entries).find(e=>e.source.url===url)?.source.title||url})),evidence:fields.map(f=>f.field+': '+f.value),object_unit:base.object_unit||'single',pokemon_printing:l.domain==='pokemon'?printing:undefined,
   card_identity:{autograph:l.pick('autograph')?.value||'unclear',patch:l.pick('patch')?.value||'unclear',manufacturer:entry?.brand||base.brand||null,subject,set:family,number:cardNumber,date:date||null,language:k.language,variant:variation.labels.join(' · ')||null,rarity:(entry&&(!entry.language||language(entry.language)===k.language)?entry.rarity:null)||l.pick('rarity_text')?.value||null,rarity_symbol:l.pick('rarity_symbol')?.value||'unclear',serial:variation.physical_serial||null}}
  l.record('reduce',{core:result.core_identity.status,exact:result.exact_identity_status,groups:groups.length,selected:top?.id||null,pending});return assertConsistent(l,result);
@@ -296,14 +299,16 @@ function reduce(l,entries,{error=null}={}){
 function recoveryRequests(l,result){
  const pending=new Set(result?.variant_resolution?.pending||[]),requests=[];
  if(['sealed','generic'].includes(l.domain))return [];
- if(result.core_identity?.status!=='confirmed'&&!l.pick('collector_number'))pending.add('collector_number');
+ const conflict=result.core_identity?.status!=='confirmed'&&l.pick('collector_number')&&l.candidates.some(e=>e.grounded&&subjectMatch(keyValues(l).subject,e.subject)&&e.reasons?.includes('different_number')&&!e.reasons.includes('different_printed_product'));
+ if(result.core_identity?.status!=='confirmed'&&(!l.pick('collector_number')||conflict))pending.add('collector_number');
  if(l.values('serial').length&&!l.pick('serial'))pending.add('serial');
  for(const field of ['serial','collector_number','stamp','shadow','rarity_symbol','finish','language','variant'])if(pending.has(field)){
   const values=l.values(field).filter(a=>a.region),best=values.find(a=>a.rotation&&serial(a.value))||values.find(a=>numberParts(a.value))||values[0];
   // No blanket hunt for any small number: only a typed observation or fraction can request a serial read.
   if(field==='serial'&&!values.some(a=>serial(a.value)||a.source==='vision'))continue;
-  const key='detail:'+field+':'+(best?JSON.stringify(best.region):'front');if(l.attempts.has(key))continue;
-  requests.push({key,field,region:best?.region||null,image_index:best?.image_index||1,rotation:best?.rotation||0,readings:values.map(a=>({id:a.id,text:a.raw,value:a.value,source:a.source,rotation:a.rotation||0})).slice(0,8)});
+  let crop=best?.region||null;if(field==='serial'&&crop){const nearby=values.filter(a=>a.image_index===best.image_index&&near(a.region,crop)).map(a=>a.region);crop=unionRegions199(nearby);}
+  const key='detail:'+field+':'+(crop?JSON.stringify(crop):'front');if(l.attempts.has(key))continue;
+  requests.push({key,field,reason:field==='collector_number'&&conflict?'catalogue_number_conflict':undefined,region:crop,image_index:best?.image_index||1,rotation:best?.rotation||(field==='serial'&&crop&&crop.height>crop.width*1.4?90:0),readings:values.map(a=>({id:a.id,text:a.raw,value:a.value,source:a.source,rotation:a.rotation||0})).slice(0,8)});
  }
  return requests.slice(0,3);
 }
@@ -312,9 +317,25 @@ function applyDetails(l,details,requests){for(const d of list(details)){
  const raw=d.text??d.value,value=presenceFields.includes(d.field)?(['present','absent'].includes(raw)?raw:presenceText(d.field,raw)):d.field==='finish'?finish(raw):d.field==='language'?language(raw):raw;
  if(!value||d.field==='serial'&&!serial(value)||d.field==='collector_number'&&!numberParts(value))continue;
  if(presenceFields.includes(d.field)&&!['present','absent'].includes(value))continue;
- const previous=l.evidence(d.field);if(previous.some(a=>!(d.field==='collector_number'?numbersMatch(a.value,value):same(a.value,value)))){l.record('conflicting_detail',{field:d.field,value,previous:previous.map(a=>a.id)});continue;}
- l.add(d.field,value,{source:'focused_vision',certainty:'clear',image_index:req.image_index,region:req.region,raw,request_key:req.key,supersedes:l.values(d.field).filter(a=>a.image_index===req.image_index&&a.certainty!=='clear').map(a=>a.id)});
+ const correction=req.reason==='catalogue_number_conflict'&&d.field==='collector_number'&&d.evidence_found===true;
+ const previous=l.evidence(d.field).filter(a=>!(correction&&a.image_index===req.image_index&&a.source==='vision'));if(previous.some(a=>!(d.field==='collector_number'?numbersMatch(a.value,value):same(a.value,value)))){l.record('conflicting_detail',{field:d.field,value,previous:previous.map(a=>a.id)});continue;}
+ l.add(d.field,value,{source:'focused_vision',certainty:'clear',image_index:req.image_index,region:req.region,raw,request_key:req.key,supersedes:l.values(d.field).filter(a=>a.image_index===req.image_index&&(a.certainty!=='clear'||correction&&a.source==='vision')).map(a=>a.id)});
  }return l;}
-const api={semanticField,familyKey,subsetKey,distinctiveMarks,canonicalEntries,coreKey,Ledger,ingestVision,ingestOcr,keyValues,profile,number,numberParts,numbersMatch,serial,language,season,finish,norm,same,subjectMatch,tokens,COLOR_WORDS,PATTERNS,query,domains,sourceTrusted,evaluate,candidateGroups,printingScope,variantState,photoRequest,reduce,recoveryRequests,applyDetails,presenceText,reconcileVisualEvidence,assertConsistent};
+
+function unionRegions199(regions){if(!regions.length)return null;const x=Math.min(...regions.map(r=>r.x)),y=Math.min(...regions.map(r=>r.y));return {image_index:regions[0].image_index,x,y,width:Math.max(...regions.map(r=>r.x+r.width))-x,height:Math.max(...regions.map(r=>r.y+r.height))-y};}
+function userVariant199(l,options){
+ if(l.domain!=='sports')return null;const text=norm(l.userDetails||'').replace(/\b(?:rc|rookie card|rookie|variante|variant|parallela|parallel)\b/g,'').replace(/\s+/g,' ').trim();if(!text)return null;
+ const hits=options.filter(v=>norm(v.name)===text),specific=keyValues(l).patterns.filter(p=>!['geometric','dots','squares'].includes(p));
+ return hits.length===1&&(!specific.length||specific.every(p=>hits[0].patterns?.includes(p)))?hits[0]:null;
+}
+function applySurfaceInspection199(l,reply,imageIndexes){
+ if(l.domain!=='sports')return;
+ const surfaces=list(reply.surfaces).filter(s=>imageIndexes.includes(s.image_index)&&s.fully_visible===true&&s.legible===true);
+ const read=reply.serial||{},sn=serial(read.text);if(sn&&read.certainty==='clear'&&read.evidence_found===true&&imageIndexes.includes(read.image_index))applyDetails(l,[{...read,field:'serial'}],[{field:'serial',image_index:read.image_index,key:'surface:serial'}]);
+ const absent=reply.serial_presence==='absent'&&surfaces.some(s=>s.side==='front')&&surfaces.some(s=>s.side==='back')&&new Set(surfaces.map(s=>s.image_index)).size>=2&&imageIndexes.every(i=>surfaces.some(s=>s.image_index===i))&&!sn&&!l.evidence('serial').length;
+ if(absent)l.add('serial_presence','absent',{source:'surface_inspection',certainty:'clear',image_index:surfaces[0].image_index,checked_images:imageIndexes,raw:'Entire front and back inspected; no specimen serial visible'});
+ l.record('surface_inspection',{reply,accepted_absence:absent,images:imageIndexes});
+}
+const api={unionRegions199,userVariant199,applySurfaceInspection199,semanticField,familyKey,subsetKey,distinctiveMarks,canonicalEntries,coreKey,Ledger,ingestVision,ingestOcr,keyValues,profile,number,numberParts,numbersMatch,serial,language,season,finish,norm,same,subjectMatch,tokens,COLOR_WORDS,PATTERNS,query,domains,sourceTrusted,evaluate,candidateGroups,printingScope,variantState,photoRequest,reduce,recoveryRequests,applyDetails,presenceText,reconcileVisualEvidence,assertConsistent};
 if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckCatalogueEngine=api;
 })(typeof window==='undefined'?globalThis:window);

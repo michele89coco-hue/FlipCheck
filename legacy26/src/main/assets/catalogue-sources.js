@@ -23,7 +23,7 @@ function cleanFamily(value){return str(value).replace(/^\d{4}(?:[-/]\d{2,4})?\s*
 function titleFamily(p,l){
  const text=pageText(p),k=E.keyValues(l),base=l.base.family||'',candidate=cleanFamily(p.title||text.split('\n')[0]);
  if(base&&E.norm(text).includes(E.norm(base)))return cleanFamily(base);
- const setLabel=text.match(/(?:^|\n)(?:Set|Espansione|Expansion)\s*:?\s*\n?([^\n]+)/i)?.[1];
+ const setLabel=text.match(/(?:^|\n)(?:Set|Espansione|Expansion)(?:\s*:\s*|\s*\n)([^\n]+)/i)?.[1];
  return setLabel?cleanFamily(setLabel):candidate;
 }
 function itemAttributes(name){const colors=E.tokens(name,E.COLOR_WORDS),patterns=E.tokens(name,E.PATTERNS).filter(p=>!['geometric','dots','squares'].includes(p));return {colors,patterns};}
@@ -32,17 +32,20 @@ function variantsFromLines(lines,src){
   const quote=line.trim().replace(/^[•*+\-]\s+/,''),text=quote.replace(/\s+1\/1$/,' /1'),m=text.match(/^([A-Za-z][A-Za-z &'-]{1,65}?)\s*(?:[-–—:]?\s*(?:\/|#'?d\s+to|numbered\s+to))\s*(\d{1,6})(\s+or less)?\s*$/i);
   if(m){out.push({name:m[1].trim(),print_run:+m[2],max_print_run:!!m[3],...itemAttributes(m[1]),source:src,quote});continue;}
   if(text.length<65&&E.tokens(text,E.COLOR_WORDS).length&&/^[a-z &'-]+$/i.test(text)&&!/^base |^look |^the |^each |^all |cards|box|year|set/i.test(text))out.push({name:text,unnumbered:true,...itemAttributes(text),source:src,quote});
- }return out;
+ }
+ // Some older checklists describe a numbered parallel in prose, after base rows.
+ const joined=lines.join('\n');for(const m of joined.matchAll(/(?:^|\n)#{1,6}[ \t]+([A-Za-z][^\n]{1,80})\n([^#]{0,550}?)(?:all[^.\n]{0,50}(?:are|is) numbered to)\s+(\d{1,6})\b/gi)){if(/checklist|inserts|base set/i.test(m[1]))continue;out.push({name:m[1].trim(),print_run:+m[3],source:src,quote:m[0].trim(),paragraph_parallel:true});}
+ return out;
 }
 function cardRows(p,l){
  const text=pageText(p),lines=text.split('\n'),k=E.keyValues(l),out=[],src=source(p),family=titleFamily(p,l);
  let section='Base',sectionKnown=false,sectionLines=[],sectionEntries=[];
  const baseRanges=[...text.matchAll(/\b(Terrace|Mezzanine|Field Level)\s*:\s*#?s?\s*(\d+)\s*[-–]\s*(\d+)/gi)];
- const flush=()=>{const variants=/^(?:Unspecified checklist section|Full Checklist|Team Checklist|Complete Checklist)$/i.test(section)?[]:variantsFromLines(sectionLines,src);for(const e of sectionEntries)e.variants=variants.map(v=>({...v}));sectionLines=[];sectionEntries=[];};
+ const flush=()=>{const variants=/^(?:Unspecified checklist section|Full Checklist|Team Checklist|Complete Checklist)$/i.test(section)?[]:variantsFromLines(sectionLines,src);for(const e of sectionEntries){e.variants=variants.map(v=>({...v}));if(E.subsetKey(e.subset)==='base'&&variants.length&&variants.every(v=>v.print_run)&&variants.some(v=>v.paragraph_parallel))e.variants.unshift({name:'Base',base_printing:true,source:src,quote:sectionLines.find(t=>/^(?:#{1,6}\s*)?Base(?: Set)?(?: Checklist)?$/i.test(t))||'Base'});}sectionLines=[];sectionEntries=[];};
  for(const line of lines){
   const t=line.trim(),heading=t.replace(/^#{1,6}\s+/,'');
   if(/^Checklist Top$/i.test(t)){flush();section='Unspecified checklist section';sectionKnown=false;continue;}
-  const isHeading=t.length<160&&(/^(?:Base(?: Set)?|Base\s*[-–]\s*(?:Terrace|Mezzanine|Field Level))$/i.test(t)||/^(?:#{1,6}\s+).*(?:Checklist|Base & Parallel Details)/i.test(t)||/^(?:Base(?: Set)?|[A-Z0-9][A-Za-z0-9 &’'!()/-]{2,140}) Checklist$/.test(t));
+  const isHeading=t.length<160&&!/^#?\d{1,4}\s+/.test(t)&&(/^(?:Base(?: Set)?|Base\s*[-–]\s*(?:Terrace|Mezzanine|Field Level))$/i.test(t)||/^(?:#{1,6}\s+).*(?:Checklist|Base & Parallel Details)/i.test(t)||/^(?:Base(?: Set)?|[A-Z0-9][A-Za-z0-9 &’'!()/-]{2,140}) Checklist$/.test(t));
   if(isHeading){
    let next=heading;
    if(/autograph|signature|insert|memorabilia|pairing|terrace|terrance|mezzanine|field level/i.test(heading))next=heading;
@@ -111,20 +114,20 @@ function records(pages,l){const out=[];for(const p of pages){if(/pokedex|pok[eé
 function groundedExtraction(reply,pages,l){
  const accepted=[],rejected=[];
  for(const e of list(reply?.entries)){
-  const q=str(e.entry_quote),page=pages.find(p=>p.url===e.source_url&&pageText(p).includes(q)),text=page&&pageText(page),proof=e.proof||{},object=l&&['sealed','generic'].includes(l.domain),fields=object?['subject','family']:['subject','family','number'];
+  const literal=v=>str(v).replace(/\s+/g,' '),q=literal(e.entry_quote),page=pages.find(p=>p.url===e.source_url&&literal(pageText(p)).includes(q)),text=page&&literal(pageText(page)),proof=e.proof||{},object=l&&['sealed','generic'].includes(l.domain),fields=object?['subject','family']:['subject','family','number'];
   let reason=!page?(pages.some(p=>p.url===e.source_url)?'entry_quote_not_found':'unknown_source'):!(E.sourceTrusted(page.url,l?.domain)||l?.domain==='generic'&&/^https:\/\//.test(page.url))?'untrusted_catalogue':!q||!text.includes(q)?'entry_quote_not_found':null;
-  for(const field of fields)if(!reason){const quote=str(proof[field]);if(!quote||!text.includes(quote)||!E.norm(quote).includes(E.norm(e[field])))reason='ungrounded_'+field;}
+  for(const field of fields)if(!reason){const quote=literal(proof[field]);if(!quote||!text.includes(quote)||!E.norm(quote).includes(E.norm(e[field])))reason='ungrounded_'+field;}
   if(!reason&&!object&&(!E.norm(q).includes(E.norm(e.subject))||!new RegExp('(?:^|[^A-Z0-9])'+str(e.number).replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?:$|[^A-Z0-9])','i').test(q)))reason='number_subject_not_in_same_entry';
   if(reason){rejected.push({subject:e.subject,number:e.number,reason});continue;}
   if(!reason&&!object&&!E.norm(page.title).includes(E.norm(e.family))&&!E.norm(q).includes(E.norm(e.family))&&!E.norm(text.slice(Math.max(0,text.indexOf(q)-600),text.indexOf(q))).includes(E.norm(e.family))){rejected.push({subject:e.subject,number:e.number,reason:'unlinked_family_heading'});continue;}
-  const year=e.year&&proof.year&&text.includes(proof.year)&&proof.year.includes(e.year)?e.year:'';
-  const variants=list(e.variants).filter(v=>v.quote&&text.includes(v.quote)&&E.norm(v.quote).includes(E.norm(v.name))&&(!v.print_run||new RegExp('(?:/|to|run\\s*:)\\s*'+v.print_run+'(?:\\D|$)','i').test(v.quote))&&list(v.colors).every(c=>E.tokens(v.quote,E.COLOR_WORDS).includes(c))&&list(v.patterns).every(c=>E.tokens(v.quote,E.PATTERNS).includes(c))).map(v=>({...v,source:source(page)}));
+  const year=e.year&&proof.year&&text.includes(literal(proof.year))&&proof.year.includes(e.year)?e.year:'';
+  const variants=list(e.variants).filter(v=>v.quote&&text.includes(literal(v.quote))&&E.norm(v.quote).includes(E.norm(v.name))&&(!v.print_run||new RegExp('(?:/|to|run\\s*:)\\s*'+v.print_run+'(?:\\D|$)','i').test(v.quote))&&list(v.colors).every(c=>E.tokens(v.quote,E.COLOR_WORDS).includes(c))&&list(v.patterns).every(c=>E.tokens(v.quote,E.PATTERNS).includes(c))).map(v=>({...v,source:source(page)}));
   accepted.push({...e,year,variants,source:source(page),grounded:true});
  }
  return {accepted,rejected};
 }
 function rankSources(pages,l){
- const k=E.keyValues(l);return pages.filter(p=>!/(?:pokedex|pok[eé]dex)/i.test(p.url+' '+p.title)).map(p=>{const title=E.norm(p.title+' '+p.url),text=E.norm(pageText(p));return {p,score:(k.subject&&title.includes(E.norm(k.subject))?10:0)+(k.numbers.some(n=>title.includes(E.norm(E.numberParts(n)?.local||n)))?30:0)+(/checklist|cardlist|cards|espansione|expansion/i.test(p.url+' '+p.title)?8:0)+(k.numbers.some(n=>text.includes(E.norm(n)))?5:0)};}).sort((a,b)=>b.score-a.score).map(x=>x.p);
+ const k=E.keyValues(l);return pages.filter(p=>!/(?:pokedex|pok[eé]dex)/i.test(p.url+' '+p.title)).map(p=>{const title=E.norm(p.title+' '+p.url),text=E.norm(pageText(p));return {p,score:(k.subject&&title.includes(E.norm(k.subject))?40:0)+(k.subject&&text.includes(E.norm(k.subject))?15:0)+(k.products.some(v=>E.familyKey(cleanFamily(p.title))===E.familyKey(v))?35:0)+(k.numbers.some(n=>title.includes(E.norm(E.numberParts(n)?.local||n)))?30:0)+(/checklist|cardlist|cards|espansione|expansion/i.test(p.url+' '+p.title)?8:0)+(k.numbers.some(n=>text.includes(E.norm(n)))?5:0)};}).sort((a,b)=>b.score-a.score).map(x=>x.p);
 }
 function directoryLinks(page,l){const k=E.keyValues(l),terms=uniq([k.year,...k.products,...str(l.base.family).split(' ').filter(t=>t.length>3)]).map(E.norm);return list(page.catalogue_links).map(a=>({...a,score:terms.reduce((n,t)=>n+Number(E.norm(a.title+' '+a.url).includes(t)),0)})).filter(a=>a.score>=Math.min(2,terms.length)&&a.score>0).sort((a,b)=>b.score-a.score).slice(0,2);}
 const api={bandaiEntries,rankSources,providers,requestPlan,tcgdexBriefs,tcgdexCard,pageText,cleanFamily,records,groundedExtraction,directoryLinks,itemAttributes,variantsFromLines};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckCatalogueSources=api;

@@ -169,7 +169,7 @@ public final class AndroidUiRegressionTest {
             String saved;
             try(java.io.InputStream input=activity.getContentResolver().openInputStream(file)){assertNotNull(input);java.io.ByteArrayOutputStream bytes=new java.io.ByteArrayOutputStream();byte[] buffer=new byte[8192];int count;while((count=input.read(buffer))!=-1)bytes.write(buffer,0,count);saved=bytes.toString("UTF-8");}
             assertTrue("Old silent 400k rejection must be removed",saved.length()>400000);
-            JSONObject report=new JSONObject(saved);assertEquals(198,report.getInt("versionCode"));assertTrue(report.isNull("identification"));assertEquals("technical_error",report.getString("scanStatus"));
+            JSONObject report=new JSONObject(saved);assertEquals(199,report.getInt("versionCode"));assertTrue(report.isNull("identification"));assertEquals("technical_error",report.getString("scanStatus"));
             assertEquals(450000,report.getJSONArray("phases").getJSONObject(0).getJSONObject("result").getString("text").length());
         } finally {
             instrumentation.removeMonitor(monitor);

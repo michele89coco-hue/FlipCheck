@@ -27,10 +27,11 @@ before(async()=>{
    if(options.hold&&kind==='flipcheck_identification')await new Promise(r=>release=r);
    if(options.httpError&&kind==='flipcheck_identification')return route.fulfill({status:401,json:{error:{message:'Offline unauthorized'}}}).catch(()=>{});
    if(options.incomplete&&kind==='flipcheck_identification'&&api.length===1)return route.fulfill({json:{status:'incomplete',incomplete_details:{reason:'max_output_tokens'},output:[{type:'message',content:[{type:'output_text',text:'{'}]}],usage:{input_tokens:350,output_tokens:150}}});
-   let payload=kind==='flipcheck_identification'?(options.packet||d.vision):kind==='flipcheck_evidence_detail'?{details:options.details||[]} :kind==='flipcheck_catalogue_comparison'?{comparisons:options.coreComparisons||[]}:kind==='flipcheck_variant_comparison'?{comparisons:options.comparisons||[]}: {entries:options.catalogueEntries||[]};
+   let payload=kind==='flipcheck_identification'?(options.packet||d.vision):kind==='flipcheck_evidence_detail'?{details:options.details||[]} :kind==='flipcheck_catalogue_comparison'?{comparisons:options.coreComparisons||[]}:kind==='flipcheck_variant_comparison'?{comparisons:options.comparisons||[]}:kind==='flipcheck_surface_inspection'?(options.surfaceInspection||{surfaces:[],serial_presence:'unclear',serial:{text:'',certainty:'uncertain',evidence_found:false,image_index:1}}): {entries:options.catalogueEntries||[]};
    if(options.malformed&&kind==='flipcheck_identification'){const r=envelope(payload);r.output[0].content[0].text='bad-json';return route.fulfill({json:r});}
    const pages=(d.pages||[]).filter(p=>p.url),web=kind==='flipcheck_catalogue_search'?pages.map(p=>({...p,source_text:p.source_text||p.text||'',snippet:p.text||p.source_text||''})):[];
-   return route.fulfill({json:envelope(payload,web)}).catch(()=>{});
+   const reply=envelope(payload,web),record=options.recordedPhases?.find(p=>p.stage===({flipcheck_identification:'vision',flipcheck_catalogue_search:'flipcheck_catalogue_search'})[kind]);if(record?.usage){reply.usage=record.usage;if(record.webCalls===2&&web.length)reply.output.unshift({...reply.output[0]});}
+   return route.fulfill({json:reply}).catch(()=>{});
   }
   if(url.startsWith('https://offline-native.invalid/')){
    const action=url.split('/').pop(),b=JSON.parse(route.request().postData());native.push({action,...b});let reply={status:503};
@@ -170,4 +171,24 @@ test('198 official same-code artworks are compared before search, with the selec
 });
 test('198 matching both official artworks leaves the print unresolved and still allows saving the report',async()=>{
  await reset('politoed',replay197Options(1,{comparisons:[artworkMatch('variant0'),artworkMatch('variant1')]}));const out=await scan();assert.equal(out.identification.core_identity.status,'confirmed');assert.equal(out.identification.market_ready,false);assert.match(out.identification.next_photo_request,/illustrazione/);await page.locator('#saveScanDiagnostic').click();await page.waitForTimeout(30);const saved=events.find(e=>e.kind==='diagnostic');assert.ok(saved);assert.equal(JSON.parse(saved.snapshot).identification.core_identity.status,'confirmed');
+});
+
+const D198=JSON.parse(require('zlib').gunzipSync(fs.readFileSync(path.join(__dirname,'fixtures/diagnostics-198.json.gz'))));
+const fullSurface199=()=>({surfaces:[{side:'front',image_index:1,fully_visible:true,legible:true},{side:'back',image_index:2,fully_visible:true,legible:true}],serial_presence:'absent',serial:{text:'',certainty:'uncertain',evidence_found:false,image_index:2}});
+function replay198Options(n,extra={}){const recorded=D198[n];return {packet:recorded.vision,photoCount:2,recordedPhases:recorded.phases,catalogueEntries:recorded.phases.find(p=>p.stage==='flipcheck_catalogue_search')?.result.entries||[],mutate(d){d.pages=recorded.pages;d.photoOcr=recorded.photoOcr;},...extra};}
+for(const [n,name] of [[0,'Boniface serial crop'],[1,'Doncic green rc declaration'],[2,'Doncic inspected front/back'],[3,'Kobe corrected number and base printing']])test('199 recorded scan: '+name+' completes with explicit new evidence inside the recorded budget',async()=>{
+ const extra=n===0?{details:[{field:'serial',text:'2/5',certainty:'clear',evidence_found:true,image_index:2}]}:n===3?{details:[{field:'collector_number',text:'81',certainty:'clear',evidence_found:true,image_index:2}],surfaceInspection:fullSurface199()}:n===2?{surfaceInspection:fullSurface199()}:{};
+ await reset('boniface',replay198Options(n,extra));if(n===1)await page.locator('#details').fill('green rc');const out=await scan(),r=out.identification;assert.equal(r.market_ready,true,JSON.stringify({r,events:out.visualAssistance.engine?.events}));assert.equal(r.variant,n===3?'Base':'Green');assert.ok(out.visualAssistance.budget.spentOrReservedUsd<=.03);assert.equal(stages().filter(s=>s==='flipcheck_catalogue_search').length,1);assert.equal(await page.locator('#marketBtn').isDisabled(),false);
+ if(n===0){assert.equal(r.physical_serial.value,'2/5');assert.equal(out.visualAssistance.detailReread.requested[0].rotation,90);assert.ok(out.visualAssistance.detailReread.requested[0].region.x<.8);}
+ if(n===1){assert.equal(r.variant_resolution.variant_origin,'user_declaration');assert.ok(!stages().includes('flipcheck_surface_inspection'));}
+ if(n===2||n===3){assert.ok(stages().includes('flipcheck_surface_inspection'));const body=api.find(b=>b.text.format.name==='flipcheck_surface_inspection');assert.equal(body.input[0].content.filter(c=>c.type==='input_image').length,1);}
+ if(n===3){assert.equal(r.card_identity.number,'81');assert.equal(r.source_confirmed_year,'1997-98');}
+});
+test('199 user can apply green rc after a pending scan with no new API calls and coherent exported state',async()=>{
+ await reset('doncic',replay198Options(1));let out=await scan();assert.equal(out.identification.market_ready,false);const before=api.length,revision=out.visualAssistance.stateRevision;
+ await page.locator('#details').fill('green rc');await page.locator('#applyUserDetails').click();out=await page.evaluate(()=>diagnostic26());assert.equal(api.length,before);assert.equal(out.identification.market_ready,true);assert.equal(out.visualAssistance.jobStatus,'variant_resolved');assert.equal(out.visualAssistance.stateRevision,revision+1);assert.equal(out.visualAssistance.engine.user_details,'green rc');assert.equal(await page.locator('#marketBtn').isDisabled(),false);assert.match(await page.locator('#runStatus').innerText(),/dichiarata dall’utente/);
+ await page.locator('#saveScanDiagnostic').click();await page.waitForTimeout(30);assert.equal(JSON.parse(events.find(e=>e.kind==='diagnostic').snapshot).identification.variant_resolution.variant_origin,'user_declaration');
+});
+test('199 unclear surface check does not close a parallel or request another catalogue search',async()=>{
+ const reply=fullSurface199();reply.surfaces[1].legible=false;await reset('doncic',replay198Options(2,{surfaceInspection:reply}));const out=await scan();assert.equal(out.identification.market_ready,false);assert.equal(out.identification.core_identity.status,'confirmed');assert.equal(stages().filter(s=>s==='flipcheck_catalogue_search').length,1);assert.ok(await page.locator('#saveScanDiagnostic').isVisible());
 });
