@@ -6,7 +6,7 @@ const providers={pokemon:{directories:['https://api.tcgdex.net/v2/'],domains:['t
 function source(page){return {url:page.url,title:page.title||page.url,provider:page.provider||new URL(page.url).hostname,retrieved_at:page.retrieved_at||null};}
 function requestPlan(l){
  const k=E.keyValues(l);if(l.domain==='pokemon'&&k.subject){const lang=k.language||'en',params=new URLSearchParams({name:k.subject,'pagination:page':'1','pagination:itemsPerPage':'100'});return [{action:'catalogue',url:'https://api.tcgdex.net/v2/'+lang+'/cards?'+params,provider:'tcgdex',language:lang,purpose:'name_lookup',subject:k.subject,numbers:k.numbers}];}
- if(l.domain==='onepiece')return [{action:'page',url:providers.onepiece.directories[0],terms:[...k.numbers,k.subject].filter(Boolean),provider:'bandai',purpose:'card_list'}];
+ if(l.domain==='onepiece')return [{action:'page',url:providers.onepiece.directories[0]+'?'+new URLSearchParams({freewords:k.subject||k.numbers[0]||''}),terms:[...k.numbers,k.subject].filter(Boolean),provider:'bandai',purpose:'card_list'}];
  const brand=E.norm([l.base.brand,...k.brands,...k.products].join(' ')),p=/topps|bowman/.test(brand)?'topps':/panini/.test(brand)?'panini':/upper deck|fleer|skybox/.test(brand)?'upperdeck':/leaf/.test(brand)?'leaf':null;
  return p?[{action:'page',url:providers[p].directories[0],terms:[k.year,...k.products,l.base.family].filter(Boolean),provider:p,purpose:'checklist_directory'}]:[];
 }
@@ -72,6 +72,15 @@ function singleEntry(p,l){
  }
  return out;
 }
+function bandaiEntries(p,l){
+ if(l.domain!=='onepiece'||!/(^|\.)onepiece-cardgame\.com$/.test(new URL(p.url).hostname))return [];
+ const text=pageText(p),k=E.keyValues(l),out=[],starts=[...text.matchAll(/\b((?:OP|ST|EB|PRB)\d{2}-\d{3}|P-\d{3})\s*\|\s*([A-Z]+)\s*\|\s*(?:LEADER|CHARACTER|EVENT|STAGE)\s+/g)];
+ for(let i=0;i<starts.length;i++){
+  const m=starts[i],body=text.slice(m.index+m[0].length,starts[i+1]?.index||text.length),name=body.trim().split('\n')[0].trim(),family=body.match(/Card Set\(s\)\s+([^\n]+)/)?.[1]?.trim();
+  if(!E.subjectMatch(name,k.subject)||!family)continue;
+  out.push({subject:name,number:m[1],family,year:'',language:'en',brand:'Bandai',rarity:m[2],variants:[],source:source(p),grounded:true,entry_quote:m[0]+body.slice(0,Math.min(body.length,1600))});
+ }return out;
+}
 function tableEntries(p,l){
  const k=E.keyValues(l),out=[];if(!k.subject)return out;
  for(const row of list(p.catalogue_rows)){
@@ -87,7 +96,7 @@ function objectEntries(p,l){
  if(!parts.length||!parts.every(v=>E.norm(text).includes(E.norm(v))))return [];
  return [{subject:p.title||family,family,number:'',year:E.season(p.title),brand:l.base.brand,source:source(p),grounded:true,entry_quote:text}];
 }
-function records(pages,l){const out=[];for(const p of pages){if(/pokedex|pok[eé]dex/i.test(p.url+' '+p.title))continue;if(!p.url||!(E.sourceTrusted(p.url)||l.domain==='generic'&&/^https:\/\//.test(p.url)))continue;for(const e of [...tableEntries(p,l),...cardRows(p,l),...singleEntry(p,l),...objectEntries(p,l)])if(e.family)out.push(e);}return out;}
+function records(pages,l){const out=[];for(const p of pages){if(/pokedex|pok[eé]dex/i.test(p.url+' '+p.title))continue;if(!p.url||!(E.sourceTrusted(p.url)||l.domain==='generic'&&/^https:\/\//.test(p.url)))continue;for(const e of [...bandaiEntries(p,l),...tableEntries(p,l),...cardRows(p,l),...singleEntry(p,l),...objectEntries(p,l)])if(e.family)out.push(e);}return out;}
 function groundedExtraction(reply,pages,l){
  const accepted=[],rejected=[];
  for(const e of list(reply?.entries)){
@@ -96,12 +105,16 @@ function groundedExtraction(reply,pages,l){
   for(const field of fields)if(!reason){const quote=str(proof[field]);if(!quote||!text.includes(quote)||!E.norm(quote).includes(E.norm(e[field])))reason='ungrounded_'+field;}
   if(!reason&&!object&&(!E.norm(q).includes(E.norm(e.subject))||!new RegExp('(?:^|[^A-Z0-9])'+str(e.number).replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?:$|[^A-Z0-9])','i').test(q)))reason='number_subject_not_in_same_entry';
   if(reason){rejected.push({subject:e.subject,number:e.number,reason});continue;}
+  if(!reason&&!object&&!E.norm(page.title).includes(E.norm(e.family))&&!E.norm(q).includes(E.norm(e.family))&&!E.norm(text.slice(Math.max(0,text.indexOf(q)-600),text.indexOf(q))).includes(E.norm(e.family))){rejected.push({subject:e.subject,number:e.number,reason:'unlinked_family_heading'});continue;}
   const year=e.year&&proof.year&&text.includes(proof.year)&&proof.year.includes(e.year)?e.year:'';
-  const variants=list(e.variants).filter(v=>v.quote&&text.includes(v.quote)&&E.norm(v.quote).includes(E.norm(v.name))).map(v=>({...v,source:source(page)}));
+  const variants=list(e.variants).filter(v=>v.quote&&text.includes(v.quote)&&E.norm(v.quote).includes(E.norm(v.name))&&(!v.print_run||new RegExp('(?:/|to|run\\s*:)\\s*'+v.print_run+'(?:\\D|$)','i').test(v.quote))&&list(v.colors).every(c=>E.tokens(v.quote,E.COLOR_WORDS).includes(c))&&list(v.patterns).every(c=>E.tokens(v.quote,E.PATTERNS).includes(c))).map(v=>({...v,source:source(page)}));
   accepted.push({...e,year,variants,source:source(page),grounded:true});
  }
  return {accepted,rejected};
 }
+function rankSources(pages,l){
+ const k=E.keyValues(l);return pages.filter(p=>!/(?:pokedex|pok[eé]dex)/i.test(p.url+' '+p.title)).map(p=>{const title=E.norm(p.title+' '+p.url),text=E.norm(pageText(p));return {p,score:(k.subject&&title.includes(E.norm(k.subject))?10:0)+(k.numbers.some(n=>title.includes(E.norm(E.numberParts(n)?.local||n)))?30:0)+(/checklist|cardlist|cards|espansione|expansion/i.test(p.url+' '+p.title)?8:0)+(k.numbers.some(n=>text.includes(E.norm(n)))?5:0)};}).sort((a,b)=>b.score-a.score).map(x=>x.p);
+}
 function directoryLinks(page,l){const k=E.keyValues(l),terms=uniq([k.year,...k.products,...str(l.base.family).split(' ').filter(t=>t.length>3)]).map(E.norm);return list(page.catalogue_links).map(a=>({...a,score:terms.reduce((n,t)=>n+Number(E.norm(a.title+' '+a.url).includes(t)),0)})).filter(a=>a.score>=Math.min(2,terms.length)&&a.score>0).sort((a,b)=>b.score-a.score).slice(0,2);}
-const api={providers,requestPlan,tcgdexBriefs,tcgdexCard,pageText,cleanFamily,records,groundedExtraction,directoryLinks,itemAttributes,variantsFromLines};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckCatalogueSources=api;
+const api={rankSources,providers,requestPlan,tcgdexBriefs,tcgdexCard,pageText,cleanFamily,records,groundedExtraction,directoryLinks,itemAttributes,variantsFromLines};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckCatalogueSources=api;
 })(typeof window==='undefined'?globalThis:window);
