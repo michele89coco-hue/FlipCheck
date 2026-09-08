@@ -148,10 +148,12 @@ final class LocalReferenceOcr implements AutoCloseable {
                             // Dense small print needs enlarged edge views: full-image rotation alone
                             // leaves a narrow vertical serial at its original character size.
                             if(!sparse){
-                                pending.add(new Pass("right_edge_90",new RectF(.5f,.15f,1,.85f),90,2));
-                                pending.add(new Pass("left_edge_270",new RectF(0,.15f,.5f,.85f),270,2));
+                                // Build190's real-photo trace exhausted recovery after two edge passes.
+                                // Try the complementary light-on-dark treatment before that same work.
                                 pending.add(new Pass("right_edge_inverted_90",new RectF(.6f,.2f,1,.8f),90,3,true));
                                 pending.add(new Pass("left_edge_inverted_270",new RectF(0,.2f,.4f,.8f),270,3,true));
+                                pending.add(new Pass("right_edge_90",new RectF(.5f,.15f,1,.85f),90,2));
+                                pending.add(new Pass("left_edge_270",new RectF(0,.15f,.5f,.85f),270,2));
                             }
                             pending.add(new Pass("rotate_90",new RectF(0,0,1,1),90,1));
                             pending.add(new Pass("rotate_270",new RectF(0,0,1,1),270,1));
