@@ -118,6 +118,11 @@ final class LocalReferenceOcr implements AutoCloseable {
             return current;
         }
     }
+    static boolean weakCriticalCode(String text,float confidence,RectF box){
+        if(confidence>=.85f||box==null||!(box.top>.65f||box.left>.75f||box.right<.25f))return false;
+        String compact=text.replaceAll("\\s+","");
+        return compact.length()<=18&&(compact.matches("[A-Za-z]{1,6}[0-9]+[A-Za-z0-9/|I-]*")||compact.matches("[0-9]{1,6}/[0-9]{1,6}"));
+    }
     private final class ReadJob {
         final String id,script;final TextRecognizer engine;final AtomicBoolean cancelled;final Result callback;final Bitmap original;
         final long started=SystemClock.elapsedRealtime();final JSONArray lines=new JSONArray(),passes=new JSONArray();
@@ -131,13 +136,17 @@ final class LocalReferenceOcr implements AutoCloseable {
             try{
                 engine.process(InputImage.fromBitmap(pixels,0)).addOnCompleteListener(worker,task->{
                     try{
-                        int count=0,characters=0;boolean small=false;
+                        int count=0,characters=0;boolean small=false;List<RectF> weakCodes=new ArrayList<>();
                         if(task.isSuccessful()){
                             succeeded=true;
                             for(com.google.mlkit.vision.text.Text.TextBlock block:task.getResult().getTextBlocks())for(com.google.mlkit.vision.text.Text.Line line:block.getLines()){
                                 Rect box=line.getBoundingBox();if(box==null||box.width()<=0||box.height()<=0)continue;
                                 count++;characters+=textKey(line.getText()).length();small|=Math.min(box.width(),box.height())<16;
                                 RectF mapped=pass.map(box,pixels.getWidth(),pixels.getHeight());if(mapped==null)continue;
+                                if(attempted==1&&weakCriticalCode(line.getText(),line.getConfidence(),mapped)&&weakCodes.size()<2){
+                                    float padX=Math.max(.025f,mapped.width()*.3f),padY=Math.max(.025f,mapped.height()*.8f);
+                                    weakCodes.add(new RectF(Math.max(0,mapped.left-padX),Math.max(0,mapped.top-padY),Math.min(1,mapped.right+padX),Math.min(1,mapped.bottom+padY)));
+                                }
                                 JSONObject observation=GoogleVisionBridge.json("text",line.getText(),"x",mapped.left,"y",mapped.top,"width",mapped.width(),"height",mapped.height(),"pass",pass.name,"rotation_degrees",pass.rotation,"engine_confidence",line.getConfidence(),"observation_count",1);
                                 // Weak supplemental text may be foil/picture noise. Original observations remain visible.
                                 if(attempted==1||line.getConfidence()==0||line.getConfidence()>=.5f)mergeLine(lines,observation);
@@ -146,7 +155,8 @@ final class LocalReferenceOcr implements AutoCloseable {
                         passes.put(GoogleVisionBridge.json("name",pass.name,"rotation_degrees",pass.rotation,"state",task.isSuccessful()?"ok":"ocr_unavailable","line_count",count,"region_count",pass.regions==null?1:pass.regions.size(),"width",pixels.getWidth(),"height",pixels.getHeight()));
                         boolean sparse=count<3&&characters<24;
                         if(attempted==1){baselineElapsed=SystemClock.elapsedRealtime()-started;recoveryStarted=SystemClock.elapsedRealtime();}
-                        if(attempted==1&&task.isSuccessful()&&(sparse||small)){
+                        if(attempted==1&&task.isSuccessful()&&(sparse||small||!weakCodes.isEmpty())){
+                            for(int i=0;i<weakCodes.size();i++)pending.add(new Pass("critical_code_"+i,weakCodes.get(i),0,3));
                             // Small print benefits from larger pixels; perpendicular serials need orientation recovery.
                             // Dense small print needs enlarged edge views: full-image rotation alone
                             // leaves a narrow vertical serial at its original character size.

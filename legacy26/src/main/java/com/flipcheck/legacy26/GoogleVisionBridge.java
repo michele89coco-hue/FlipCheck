@@ -114,7 +114,7 @@ public final class GoogleVisionBridge {
                 JSONObject p=new JSONObject(payload);
                 Request r;
                 if ("detect".equals(action)) r=googleRequest(p);
-                else if ("page".equals(action) || "image".equals(action)) r=referenceRequest(p.optString("url"));
+                else if ("page".equals(action) || "image".equals(action) || "catalogue".equals(action)) r=referenceRequest(p.optString("url"));
                 else throw new IOException("invalid_action");
                 final Request request=r.newBuilder().tag(JSONObject.class,p).build();
                 final ScanEvidenceCache.Session session=evidence.session();
@@ -178,7 +178,11 @@ public final class GoogleVisionBridge {
                     if ("detect".equals(action)) {
                         result=json("status",code,"attempted",true,"body",new JSONObject(new String(read(r,1500000),StandardCharsets.UTF_8)));
                     } else if (code!=200) result=json("status",code,"state","reference_unavailable");
-                    else if ("page".equals(action)) {
+                    else if ("catalogue".equals(action)) {
+                        Object body=new org.json.JSONTokener(new String(read(r,2000000),StandardCharsets.UTF_8)).nextValue();
+                        if(!(body instanceof JSONObject)&&!(body instanceof JSONArray))throw new IOException("invalid_catalogue_json");
+                        result=json("status",200,"url",r.request().url().toString(),"body",body);
+                    } else if ("page".equals(action)) {
                         boolean pdf=r.header("Content-Type","").toLowerCase().contains("application/pdf") || r.request().url().encodedPath().toLowerCase().endsWith(".pdf");
                         byte[] data=read(r,pdf?6000000:600000);
                         JSONObject context=request.tag(JSONObject.class);JSONArray terms=context==null?new JSONArray():context.optJSONArray("terms");
@@ -207,6 +211,25 @@ public final class GoogleVisionBridge {
     static JSONObject pageData(String html, String pageUrl) {return pageData(html,pageUrl,new JSONArray());}
     static JSONObject pageData(String html, String pageUrl, JSONArray terms) {
         Document doc=Jsoup.parse(html,pageUrl);
+        JSONArray catalogueLinks=new JSONArray(),catalogueRows=new JSONArray();
+        for(Element link:doc.select("a[href]")) {
+            String label=link.text().trim(),destination=link.absUrl("href");
+            if(label.isEmpty()||label.length()>250)continue;
+            if((label+" "+destination).matches("(?i).*(?:checklist|cardlist|parallel|[12][09][0-9]{2}).*"))try{
+                catalogueLinks.put(json("title",label,"url",publicUrl(destination).toString()));
+            }catch(IOException ignored){}
+            if(catalogueLinks.length()>=350)break;
+        }
+        for(Element table:doc.select("table")) {
+            JSONArray headers=new JSONArray();Element first=table.selectFirst("tr");
+            if(first!=null)for(Element h:first.select("th,td"))headers.put(h.text());
+            for(Element row:table.select("tr")) {
+                JSONArray cells=new JSONArray();for(Element cell:row.select("th,td"))cells.put(cell.text());
+                if(cells.length()>1&&relevance(row.text(),terms)>0)catalogueRows.put(json("headers",headers,"cells",cells,"text",row.text()));
+                if(catalogueRows.length()>=100)break;
+            }
+            if(catalogueRows.length()>=100)break;
+        }
         JSONArray structuredFields=new JSONArray();
         for(Element row:doc.select("tr")) {
             org.jsoup.select.Elements cells=row.select("th,td");
@@ -275,7 +298,7 @@ public final class GoogleVisionBridge {
         for(Element row:content.select("tr"))row.appendText("\n");
         for(Element block:content.select("p,li,h1,h2,h3,section,div,br"))block.appendText("\n");
         String text=(doc.title()+"\n"+productText+"\n"+content.wholeText()).replaceAll("[\\t\\x0B\\f\\r ]+"," ").replaceAll(" *\n *","\n").replaceAll("\n{3,}","\n\n").trim();
-        return json("status",200,"url",pageUrl,"title",doc.title(),"structured_fields",structuredFields,"text",selectPageText(text,terms),"text_selection","observed_terms","images",new JSONArray(images),"image_details",new JSONArray(images.stream().map(imageDetails::get).collect(java.util.stream.Collectors.toList())),"image_links",imageLinks,"is_collection",productText.length()==0&&linkedPages.size()>1&&(doc.title().matches("(?i).*(?:all products|search results|gallery|catalogue list).*")||pageUrl.matches("(?i).*/(?:shop|search|collection|category|gallery)[^/]*[/?].*")));
+        return json("status",200,"url",pageUrl,"title",doc.title(),"structured_fields",structuredFields,"catalogue_links",catalogueLinks,"catalogue_rows",catalogueRows,"catalogue_text",text.substring(0,Math.min(120000,text.length())),"catalogue_text_truncated",text.length()>120000,"text",selectPageText(text,terms),"text_selection","observed_terms","images",new JSONArray(images),"image_details",new JSONArray(images.stream().map(imageDetails::get).collect(java.util.stream.Collectors.toList())),"image_links",imageLinks,"is_collection",productText.length()==0&&linkedPages.size()>1&&(doc.title().matches("(?i).*(?:all products|search results|gallery|catalogue list).*")||pageUrl.matches("(?i).*/(?:shop|search|collection|category|gallery)[^/]*[/?].*")));
     }
     // Select literal passages before imposing the transfer limit. A checklist row
     // near the end of a page must not disappear behind its introductory article.

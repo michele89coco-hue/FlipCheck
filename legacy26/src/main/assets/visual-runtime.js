@@ -83,6 +83,7 @@ const physicalSchema168={type:'array',maxItems:6,items:{type:'object',additional
 const detailSchema168={type:'array',maxItems:3,items:{type:'object',additionalProperties:false,properties:{detail:{type:'string',enum:['stamp','shadow','copyright']},region:boxSchema164},required:['detail','region']}};
 openai=async function(body){
  const initial=body.text?.format?.name==='flipcheck_identification';
+ if(initial&&window.FlipCheckCatalogueEngine)return extractObservation193(body);
  // Reading the grading label does not depend on the optional discovery switch.
  if(initial&&!active164()){
   const schema=JSON.parse(JSON.stringify(body.text.format.schema)),strings=Object.fromEntries(['grader','label_text','subject','family','model','year','card_number','variant','grade','certificate','match_details'].map(k=>[k,{type:'string'}]));
@@ -194,6 +195,7 @@ augmentCandidatesFromRawResults=function(refined,raw,signature){
 };
 candidateFingerprintScore=function(c,signature,hasSources){const score=priorScore167(c,signature,hasSources);if(!active164())return score;if(c?.requires_visual_check)return {...score,score:Math.min(84,score.score)};return c?.complete_observed_match?{...score,score:Math.max(86,score.score)}:score;};
 function syncIdentity169(value){
+ if(value?.engine_final===true)return value;
  if(value?.slab_verification?.state==='confirmed')return value;
  if(S191.isSlab(lastVisionReading||value))return value;
  if(active164())value=V164.preserveObservedYear185(V164.withSerial184(value,lastVisionReading||value),lastVisionReading||value);
@@ -235,7 +237,7 @@ mergeResolvedFingerprint=function(base,refined,sources,signature){
  }
  return syncIdentity169(result);
 };
-shouldResolveOnline=function(base){if(S191.isSlab(lastVisionReading||base))return base?.slab_verification?.state!=='confirmed';const checked=enforceIdentificationPolicy(base);if(checked?.printing_check?.complete===false&&scan164&&validImageCount())return true;if(V164.ready(checked))return false;if(active164()&&validImageCount())return true;return priorShould164(checked);};
+shouldResolveOnline=function(base){if(window.FlipCheckCatalogueEngine&&scan164)return !base?.engine_final;if(S191.isSlab(lastVisionReading||base))return base?.slab_verification?.state!=='confirmed';const checked=enforceIdentificationPolicy(base);if(checked?.printing_check?.complete===false&&scan164&&validImageCount())return true;if(V164.ready(checked))return false;if(active164()&&validImageCount())return true;return priorShould164(checked);};
 async function decodeVisual164(file){if(window.createImageBitmap)return createImageBitmap(file,{imageOrientation:'from-image'});return new Promise((resolve,reject)=>{const u=URL.createObjectURL(file),im=new Image();im.onload=()=>{URL.revokeObjectURL(u);resolve(im);};im.onerror=()=>{URL.revokeObjectURL(u);reject(new Error('invalid_image'));};im.src=u;});}
 function saveEvidence192(kind,data,metadata){try{window.FlipCheckGoogle?.storeEvidence?.(kind,data||'',JSON.stringify(metadata||{}));}catch(_){} }
 function evidenceInfo192(){try{return JSON.parse(window.FlipCheckGoogle?.evidenceInfo?.()||'{}');}catch(_){return {};}}
@@ -821,6 +823,7 @@ async function resolveSlab191(base,ctx){
  recordClosure164(result,'production_after_slab_check');return result;
 }
 resolveIdentificationCheap=async function(base,user){
+ if(window.FlipCheckCatalogueEngine&&scan164)return resolveCatalogue193(base,scan164);
  if(scan164&&S191.isSlab(lastVisionReading||base))return resolveSlab191(base,scan164);
  if(active164())base=V164.auditIdentity(base);
  if(scan164&&!V164.slabFacts185(lastVisionReading||base)&&!V164.cataloguePending(base)&&enforceIdentificationPolicy(base)?.printing_check?.complete===false){base=await resolvePrinting168(base,scan164);if(base.printing_check?.complete===false||V164.ready(base))return base;}
@@ -891,6 +894,7 @@ function recoverableText166(error){return /^Risposta API incompleta: (max_output
 function responseReason166(error){return error?.message?.includes('max_output_tokens')?'max_output_tokens':error?.message?.includes('vuota')?'empty_output':'invalid_or_incomplete_output';}
 function guard164AfterError(ctx){if(ctx!==scan164)throw new Error('scan_cancelled');}
 enforceIdentificationPolicy=function(value){
+ if(value?.engine_version===193)return value;
  if(value?.slab_verification?.state==='confirmed')return value;
  if(S191.isSlab(lastVisionReading||value))return scan164?.slabIdentity||{...value,market_ready:false,normalized_query:'',printing_check:undefined,variant_check:'pending'};
  value=active164()?V164.auditIdentity(value):value;
@@ -938,6 +942,6 @@ $('marketBtn').onclick=async()=>{if(photoBusy||apiBusy)return;if(!scan164)scan16
 invalidatePhotoReading=function(){if(scan164){scan164.budget.cancelled=true;for(const c of scan164.controllers)c.abort();}scan164=null;generation164++;return priorInvalidate164();};
 diagnostic26=function(){const d=priorDiagnostic164();let nativePhotoPicker=null;try{nativePhotoPicker=JSON.parse(window.FlipCheckHost?.photoPickerInfo?.()||'null');}catch(_){}return {...d,nativePhotoPicker,schema:'flipcheck-v0262-evidence-14',
  selectedBaseline:{versionCode:159,sourceCommit:'fbb4f1ead7cc65afe01f9aae7446c13161a32f10'},visualAssistance:scan164?{
- scanId:scan164.id,testMode:scan164.mode,featureEnabled:visualConfig164().enabled,state:scan164.state,provider:scan164.provider,comparablesState:scan164.comparablesState||'not_requested',queries:scan164.queries,calls:scan164.calls,closures:scan164.closures,recoveries:scan164.recoveries,
+ engine:scan164.engineSnapshot||null,catalogueRequests:scan164.catalogueRequests||[],catalogueCoverage:scan164.catalogueCoverage||null,scanId:scan164.id,testMode:scan164.mode,featureEnabled:visualConfig164().enabled,state:scan164.state,provider:scan164.provider,comparablesState:scan164.comparablesState||'not_requested',queries:scan164.queries,calls:scan164.calls,closures:scan164.closures,recoveries:scan164.recoveries,
  evidenceWorkspace:{...evidenceInfo192(),prepared_image_hits:scan164.imageCacheHits||0},localPrinting:scan164.localPrinting,localReferenceComparisons:scan164.localReferenceComparisons,priorityClosure:scan164.priorityClosure,evidenceTransitions:scan164.evidenceTransitions,dateVerification:scan164.dateVerification,route:scan164.route,certificateLookup:scan164.certificateLookup,catalogueRoute:scan164.catalogueRoute,catalogueFilter:scan164.catalogueFilter,catalogueFallback:scan164.catalogueFallback,slabVerification:scan164.slabVerification,specificationVerification:scan164.specificationVerification,photoEvidence:scan164.photoEvidence,cardKeyVerification:scan164.cardKeyVerification,configurationReread:scan164.configurationReread,textReferences:scan164.textReferences,photoOcr:scan164.photoOcr,evidenceFusion:scan164.evidenceFusion,focusedReview:scan164.focusedReview,fieldRepair:scan164.fieldRepair,comparisonPlanning:scan164.comparisonPlanning,excludedReferences:scan164.excludedReferences,localOcr:scan164.localOcr,retainedReferences:scan164.retainedReferences,detailReread:scan164.detailReread,secondQuery:scan164.secondQuery,deferredComparison:scan164.deferredComparison,continuationBudget:scan164.continuationBudget,referenceCompletion:scan164.referenceCompletion,initialImagePreparations:scan164.initialImagePreparations,imagePreparation:scan164.imagePreparation,imagePreparations:scan164.imagePreparations,comparisons:scan164.comparisons,printingRecovery:scan164.printingRecovery,coreIdentityState:scan164.coreIdentityState,identityState:scan164.identityState,catalogueRetrieval:scan164.catalogueRetrieval,comparison:scan164.comparison,budget:{maxUsd:scan164.budget.maxUsd,spentOrReservedUsd:scan164.budget.spent(),entries:scan164.budget.entries,visionCalls:scan164.budget.visionCalls,maxVisionCalls:4,estimated:true,includesIdentificationAndMarket:true},
  costNote:'OpenAI usage follows configured v26 rates; Google is estimated separately. Failed/time-out requests retain their reservation because billing may apply.'}: {state:active164()?'not_requested':'not_configured'}};};

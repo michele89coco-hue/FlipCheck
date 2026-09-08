@@ -8,8 +8,8 @@ android {
         applicationId 'com.flipcheck.beta.legacy26fix'
         minSdk 23
         targetSdk 36
-        versionCode 192
-        versionName '0.28.1-identity'
+        versionCode 193
+        versionName '0.29.0-catalogue'
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         buildConfigField 'String', 'SOURCE_COMMIT', '"' + (System.getenv('GIT_COMMIT') ?: 'local') + '"'
     }

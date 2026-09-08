@@ -18,7 +18,7 @@ async function upload(items) { await page.locator('#photoBatch').setInputFiles(i
 before(async()=>{
   server=http.createServer((req,res)=>{
     const name=req.url==='/'?'index.html':req.url.slice(1);
-    if(!['index.html','editions.js','targeted-fixes.js','visual-policy.js','visual-runtime.js','google-direct.js','background-runtime.js','slab-identity.js','identity-final.js','image-evidence.js'].includes(name)){res.writeHead(404);res.end();return;}
+    if(!['index.html','editions.js','targeted-fixes.js','visual-policy.js','visual-runtime.js','google-direct.js','background-runtime.js','slab-identity.js','identity-final.js','image-evidence.js','catalogue-engine.js','catalogue-sources.js','catalogue-runtime.js'].includes(name)){res.writeHead(404);res.end();return;}
     res.setHeader('Content-Type',name.endsWith('.js')?'application/javascript':'text/html');res.end(fs.readFileSync(path.join(root,name)));
   });
   await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));origin='http://127.0.0.1:'+server.address().port;
@@ -81,32 +81,5 @@ test('decoding order cannot reorder photos and analysis is locked until ready',a
   assert.equal(await page.locator('#identifyBtn').isDisabled(),false);
   await page.evaluate(()=>{resize=savedResize26;});
 });
-test('original sports result uses two images in one Vision request and no web',async()=>{
-  await reset();await upload(photos.slice(0,2));await page.locator('#identifyBtn').click();await page.waitForFunction(()=>!apiBusy);
-  assert.equal(requests.length,1);assert.equal(requests[0].model,'gpt-5.6-luna');assert.equal(requests[0].tools,undefined);
-  assert.equal(requests[0].input[0].content.filter(x=>x.type==='input_image').length,2);
-  assert.match(await page.locator('#identTitle').textContent(),/Metal Universe Kobe Bryant #81.*Base/);
-  assert.equal(await page.evaluate(()=>ident.model_confidence),94);assert.equal(await page.locator('#marketBtn').isDisabled(),false);
-  assert.equal(await page.locator('#printingPanel').count(),0);
-});
-test('same Vision response displays stamp and Shadowless with matching market query',async()=>{
-  await reset();await upload([photos[0]]);
-  response={...kobe,brand:'Pokemon',family:'Base Set',model:'Alakazam #1/102',title:'Alakazam',variant:'Holo',normalized_query:'Pokemon Base Set Alakazam #1/102 Holo',pokemon_printing:printing};
-  await page.locator('#identifyBtn').click();await page.waitForFunction(()=>!apiBusy);
-  assert.equal(requests.length,1);assert.ok(requests[0].text.format.schema.required.includes('pokemon_printing'));
-  assert.match(await page.locator('#printingPanel').textContent(),/1st Edition visibile/);
-  assert.match(await page.locator('#confirmed').inputValue(),/1st Edition Shadowless/);
-  assert.equal(await page.locator('#marketBtn').isDisabled(),false);
-  await page.screenshot({path:process.env.FC26_SCREENSHOT||'/tmp/flipcheck26-printing.png',fullPage:true});
-});
-test('uncertain edition keeps identity visible, disables automatic comps and exports without key/images',async()=>{
-  await reset();await upload([photos[0]]);
-  response={...kobe,brand:'Pokemon',family:'Base Set',model:'Alakazam #1/102',variant:'Holo',pokemon_printing:{...printing,first_edition_stamp:'unclear',stamp_text:''}};
-  await page.locator('#identifyBtn').click();await page.waitForFunction(()=>!apiBusy);
-  assert.equal(requests.length,2);assert.equal(requests[1].text.format.name,'flipcheck_printing_detail');assert.match(await page.locator('#identTitle').textContent(),/Alakazam #1\/102/);
-  assert.match(await page.locator('#tags').textContent(),/EDIZIONE DA VERIFICARE/);assert.equal(await page.locator('#marketBtn').isDisabled(),true);
-  const diagnostic=await page.evaluate(()=>JSON.stringify(diagnostic26()));
-  assert.doesNotMatch(diagnostic,/test-key-never-transmitted|data:image|Authorization|Bearer/);
-  assert.equal(JSON.parse(diagnostic).uploadedImageCount,1);assert.equal(JSON.parse(diagnostic).phases.length,2);
-  assert.deepEqual(errors,[]);
-});
+// Identity decisions and final rendering are exercised through the production
+// catalogue engine in catalogue-browser.test.cjs (supersedes Vision-only closure).

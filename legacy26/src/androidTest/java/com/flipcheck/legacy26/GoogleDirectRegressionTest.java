@@ -10,6 +10,21 @@ import static org.junit.Assert.*;
 
 /** Actual production request construction and network guards, with zero HTTP calls. */
 public final class GoogleDirectRegressionTest {
+    @Test public void catalogueColumnsAndCompleteChecklistSurviveExcerptSelection() throws Exception {
+        String html="<html><head><title>2031 Product Checklist</title></head><body><main><h2>Base Set</h2>"+
+            "<table><tr><th>Card Number</th><th>Player</th><th>Set</th></tr><tr><td>21</td><td>Alex Rivera</td><td>Product</td></tr></table>"+
+            "<a href='/2031-checklist.pdf'>2031 Product Checklist</a><h2>Parallels</h2><p>Green /5</p></main></body></html>";
+        JSONObject page=GoogleVisionBridge.pageData(html,"https://catalog.example/product",new org.json.JSONArray().put("Alex Rivera"));
+        JSONObject row=page.getJSONArray("catalogue_rows").getJSONObject(0);
+        assertEquals("Card Number",row.getJSONArray("headers").getString(0));assertEquals("21",row.getJSONArray("cells").getString(0));assertEquals("Alex Rivera",row.getJSONArray("cells").getString(1));
+        assertTrue(page.getString("catalogue_text").contains("Green /5"));assertEquals("https://catalog.example/2031-checklist.pdf",page.getJSONArray("catalogue_links").getJSONObject(0).getString("url"));
+    }
+    @Test public void weakFooterCodesTriggerRecoveryButBodyStatisticsDoNot() {
+        assertTrue(LocalReferenceOcr.weakCriticalCode("H23IH32N",.74f,new android.graphics.RectF(.75f,.88f,.91f,.92f)));
+        assertTrue(LocalReferenceOcr.weakCriticalCode("2/5",.64f,new android.graphics.RectF(.9f,.3f,.94f,.4f)));
+        assertFalse(LocalReferenceOcr.weakCriticalCode("42",.6f,new android.graphics.RectF(.3f,.5f,.4f,.55f)));
+        assertFalse(LocalReferenceOcr.weakCriticalCode("H23/H32",.98f,new android.graphics.RectF(.75f,.88f,.91f,.92f)));
+    }
     @Test public void commentArticleCannotReplaceTheActualChecklistBody() throws Exception {
         String html="<html><head><title>2031 Example Prism Checklist</title></head><body>"+
             "<article class='comment'>How can you tell a silver card?</article>"+
