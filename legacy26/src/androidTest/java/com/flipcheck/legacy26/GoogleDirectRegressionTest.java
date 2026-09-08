@@ -48,7 +48,7 @@ public final class GoogleDirectRegressionTest {
         java.util.concurrent.CountDownLatch done=new java.util.concurrent.CountDownLatch(1);java.util.concurrent.atomic.AtomicReference<JSONObject> output=new java.util.concurrent.atomic.AtomicReference<>();
         try(LocalReferenceOcr reader=new LocalReferenceOcr()){
             reader.read("local-label-test",image,result->{output.set(result);done.countDown();});
-            assertTrue("Bundled OCR should work without a model download",done.await(25,java.util.concurrent.TimeUnit.SECONDS));
+            assertTrue("Bundled OCR should work without a model download",done.await(45,java.util.concurrent.TimeUnit.SECONDS));
             assertEquals("ok",output.get().getString("state"));assertEquals("on_device_reference_ocr",output.get().getString("origin"));
             assertTrue(output.get().getString("text").contains("ZX-430"));assertTrue(output.get().getString("text").contains("2018"));
             assertEquals("Clear labels should not pay the latency of speculative rereads",1,output.get().getInt("pass_count"));
@@ -193,7 +193,7 @@ public final class GoogleDirectRegressionTest {
         java.util.concurrent.atomic.AtomicReference<JSONObject> output=new java.util.concurrent.atomic.AtomicReference<>();
         try(LocalReferenceOcr reader=new LocalReferenceOcr()){
             reader.read(id,image,result->{output.set(result);done.countDown();});
-            assertTrue("Bundled offline OCR completion",done.await(25,java.util.concurrent.TimeUnit.SECONDS));
+            assertTrue("Bundled offline OCR completion",done.await(45,java.util.concurrent.TimeUnit.SECONDS));
             assertEquals("ok",output.get().getString("state"));assertEquals(0,output.get().getInt("paid_requests"));
             assertTrue(output.get().getInt("pass_count")<=6);
             assertEquals("original_normalized",output.get().getString("coordinate_space"));
@@ -207,6 +207,9 @@ public final class GoogleDirectRegressionTest {
             byte[] buffer=new byte[8192];int count;while((count=input.read(buffer))!=-1)bytes.write(buffer,0,count);
         }
         JSONObject result=readLocalImage("data:image/jpeg;base64,"+android.util.Base64.encodeToString(bytes.toByteArray(),android.util.Base64.NO_WRAP),"real-boniface-189");
+        java.io.File evidenceDir=androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().getTargetContext().getExternalFilesDir("ui159");
+        if(evidenceDir!=null){evidenceDir.mkdirs();try(java.io.FileOutputStream file=new java.io.FileOutputStream(new java.io.File(evidenceDir,"boniface-native-ocr.json"))){file.write(result.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8));}}
+        assertTrue("Dense small print must actually enter recovery",result.getInt("pass_count")>1);
         String text=result.getString("text").toUpperCase(java.util.Locale.ROOT);
         assertTrue(text,text.contains("BONIFACE"));assertTrue(text,text.matches("(?s).*NO[. ]*21.*"));
         assertTrue("Actual photo serial must be OCR output, never fixture metadata: "+text,text.matches("(?s).*2\\s*/\\s*5.*"));

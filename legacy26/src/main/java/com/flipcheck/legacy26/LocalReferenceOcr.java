@@ -32,7 +32,7 @@ final class LocalReferenceOcr implements AutoCloseable {
     private volatile boolean closed;
     private boolean resourcesClosed;
     private static final int MAX_PASSES=6;
-    private static final long RECOVERY_BUDGET_MS=4500;
+    private static final long RECOVERY_BUDGET_MS=8000;
 
     static Bitmap decode(String data) throws IOException {
         if(data==null||data.length()>6000000||!data.startsWith("data:image/"))throw new IOException("invalid_image");
@@ -102,10 +102,10 @@ final class LocalReferenceOcr implements AutoCloseable {
     private final class ReadJob {
         final String id;final AtomicBoolean cancelled;final Result callback;final Bitmap original;
         final long started=SystemClock.elapsedRealtime();final JSONArray lines=new JSONArray(),passes=new JSONArray();
-        final List<Pass> pending=new ArrayList<>();int attempted;boolean succeeded;
+        final List<Pass> pending=new ArrayList<>();int attempted;boolean succeeded;long baselineElapsed,recoveryStarted;
         ReadJob(String id,AtomicBoolean cancelled,Result callback,Bitmap original){this.id=id;this.cancelled=cancelled;this.callback=callback;this.original=original;pending.add(new Pass("original",new RectF(0,0,1,1),0,1));}
         void next(){
-            if(closed||cancelled.get()||pending.isEmpty()||attempted>=MAX_PASSES||(attempted>0&&SystemClock.elapsedRealtime()-started>=RECOVERY_BUDGET_MS)){complete();return;}
+            if(closed||cancelled.get()||pending.isEmpty()||attempted>=MAX_PASSES||(recoveryStarted>0&&SystemClock.elapsedRealtime()-recoveryStarted>=RECOVERY_BUDGET_MS)){complete();return;}
             Pass pass=pending.remove(0);Bitmap pixels;
             try{pixels=pass.image(original);}catch(Exception error){complete();return;}
             attempted++;
@@ -126,12 +126,21 @@ final class LocalReferenceOcr implements AutoCloseable {
                         }
                         passes.put(GoogleVisionBridge.json("name",pass.name,"rotation_degrees",pass.rotation,"state",task.isSuccessful()?"ok":"ocr_unavailable","line_count",count,"width",pixels.getWidth(),"height",pixels.getHeight()));
                         boolean sparse=count<3&&characters<24;
+                        if(attempted==1){baselineElapsed=SystemClock.elapsedRealtime()-started;recoveryStarted=SystemClock.elapsedRealtime();}
                         if(attempted==1&&task.isSuccessful()&&(sparse||small)){
                             // Small print benefits from larger pixels; perpendicular serials need orientation recovery.
+                            // Dense small print needs enlarged edge views: full-image rotation alone
+                            // leaves a narrow vertical serial at its original character size.
+                            if(!sparse){
+                                pending.add(new Pass("right_edge_90",new RectF(.5f,.15f,1,.85f),90,2));
+                                pending.add(new Pass("left_edge_270",new RectF(0,.15f,.5f,.85f),270,2));
+                            }
                             pending.add(new Pass("rotate_90",new RectF(0,0,1,1),90,1));
                             pending.add(new Pass("rotate_270",new RectF(0,0,1,1),270,1));
-                            if(sparse)pending.add(new Pass("rotate_180",new RectF(0,0,1,1),180,1));
-                            pending.add(new Pass("upper_detail",new RectF(0,0,1,.56f),0,2));
+                            if(sparse){
+                                pending.add(new Pass("rotate_180",new RectF(0,0,1,1),180,1));
+                                pending.add(new Pass("upper_detail",new RectF(0,0,1,.56f),0,2));
+                            }
                             pending.add(new Pass("lower_detail",new RectF(0,.44f,1,1),0,2));
                         }
                     }finally{if(pixels!=original)pixels.recycle();}
@@ -143,7 +152,7 @@ final class LocalReferenceOcr implements AutoCloseable {
             StringBuilder text=new StringBuilder();int ambiguous=0;
             for(int i=0;i<lines.length();i++){JSONObject line=lines.optJSONObject(i);if(line==null)continue;if(text.length()>0)text.append('\n');text.append(line.optString("text"));if(line.optBoolean("ambiguous"))ambiguous++;}
             String value=text.substring(0,Math.min(4800,text.length()));
-            JSONObject result=GoogleVisionBridge.json("state",succeeded?"ok":"ocr_unavailable","origin","on_device_reference_ocr","script","latin","text",value,"lines",lines,"width",original.getWidth(),"height",original.getHeight(),"coordinate_space","original_normalized","passes",passes,"pass_count",attempted,"ambiguous_line_count",ambiguous,"elapsed_ms",SystemClock.elapsedRealtime()-started,"paid_requests",0);
+            JSONObject result=GoogleVisionBridge.json("state",succeeded?"ok":"ocr_unavailable","origin","on_device_reference_ocr","script","latin","text",value,"lines",lines,"width",original.getWidth(),"height",original.getHeight(),"coordinate_space","original_normalized","passes",passes,"pass_count",attempted,"ambiguous_line_count",ambiguous,"elapsed_ms",SystemClock.elapsedRealtime()-started,"baseline_elapsed_ms",baselineElapsed,"recovery_elapsed_ms",recoveryStarted==0?0:SystemClock.elapsedRealtime()-recoveryStarted,"recovery_budget_ms",RECOVERY_BUDGET_MS,"paid_requests",0);
             original.recycle();finish(id,cancelled,callback,result);
         }
     }

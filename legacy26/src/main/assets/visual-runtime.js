@@ -293,7 +293,7 @@ async function retainReferences173(references,ctx){
  }
  let available=false;try{available=window.FlipCheckGoogle?.ocrAvailable?.()===true;}catch(_){}
  if(available)for(let i=0;i<fresh.length;i+=2){
-  const results=await Promise.allSettled(fresh.slice(i,i+2).map(async r=>{ctx.localOcr.attempts++;r.ocr=await directCall165('ocr',{image_data:r.image_data},ctx,10000);return r.ocr;}));
+  const results=await Promise.allSettled(fresh.slice(i,i+2).map(async r=>{ctx.localOcr.attempts++;r.ocr=await directCall165('ocr',{image_data:r.image_data},ctx,(ctx.ocrRequests=(ctx.ocrRequests||0)+1)===1?45000:20000);return r.ocr;}));
   for(const result of results){const state=result.status==='fulfilled'?result.value.state:'ocr_unavailable';ctx.localOcr.states.push(state);if(state==='ok')ctx.localOcr.completed++;}
   guard164(ctx);
  }
@@ -311,7 +311,7 @@ async function readPhotoOcr174(base,ctx){
  if(!available)return;
  const photos=await targetPhotos169(base,ctx);
  for(const p of photos){
-  try{const ocr=await directCall165('ocr',{image_data:p.data},ctx,10000);ctx.photoOcr.push({image_index:p.meta.imageIndex,meta:p.meta,...ocr,origin:'on_device_photo_ocr'});}
+  try{const ocr=await directCall165('ocr',{image_data:p.data},ctx,(ctx.ocrRequests=(ctx.ocrRequests||0)+1)===1?45000:20000);ctx.photoOcr.push({image_index:p.meta.imageIndex,meta:p.meta,...ocr,origin:'on_device_photo_ocr'});}
   catch(error){guard164(ctx);ctx.photoOcr.push({image_index:p.meta.imageIndex,state:'ocr_unavailable'});}
  }
 }

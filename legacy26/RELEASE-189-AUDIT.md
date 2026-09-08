@@ -41,3 +41,9 @@ Un punteggio 90 è una regola di decisione accompagnata da prove, non una probab
 - Il gate Android usa Android 16 su emulatore. Non sostituisce una matrice di telefoni reali e prove di aggiornamento sul dispositivo dell'utente.
 
 Riferimenti tecnici primari: [ML Kit Android](https://developers.google.com/ml-kit/vision/text-recognition/v2/android), [contratto Text.Line](https://developers.google.com/android/reference/com/google/mlkit/vision/text/Text.Line).
+
+## Seconda build: 190
+
+Il primo gate completo ha superato 278 test di regole, 130 browser e 24 test Android su 25. La vera fotografia Boniface ha fatto emergere un difetto che i replay non misurano: la prima lettura ha impiegato circa 24 secondi e ha esaurito il vecchio limite di 4,5 secondi prima delle riletture. Il seriale verticale non era stato acquisito.
+
+La 190 separa il tempo della lettura iniziale dal recupero (fino a sei passaggi, budget di recupero di 8 secondi verificato tra passaggi), dà priorità a viste ingrandite dei bordi per testi minuti e mantiene le rotazioni generali. Il timeout dell'app concede 45 secondi alla prima richiesta OCR e 20 alle successive. Sono limiti di attesa, non ritardi fissi. Il test richiede ancora nome, numero e seriale dalla fotografia reale, controlla che le riletture siano state eseguite e salva l'output OCR completo. Non è stata introdotta alcuna risposta preimpostata per Boniface. VersionCode 190, versione 0.27.1-release-candidate.
