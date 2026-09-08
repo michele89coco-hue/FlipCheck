@@ -135,16 +135,23 @@ async function resolveCatalogue193(base,ctx){
   const lookup=await catalogueLookup193(l,ctx);entries=lookup.entries;pages=lookup.pages;result=E193.reduce(l,entries);
   // A number may launch retrieval while still uncertain; only unresolved physical
   // fields request crops. Do not burn a reread before checking a structured catalogue.
-  if(!entries.length||result.core_identity.status!=='confirmed'){
+  if(!entries.length||result.core_identity.status!=='confirmed'||ctx.catalogueCoverage?.truncated){
    const found=await searchCatalogue193(l,ctx,'identity',pages);entries.push(...found.entries);pages=found.pages;result=E193.reduce(l,entries);
   }
   await localShadow193(l,result,ctx);result=E193.reduce(l,entries);
   let requests=E193.recoveryRequests(l,result).filter(r=>r.field!=='variant');
   await detailRead193(l,ctx,requests);result=E193.reduce(l,entries);
-  if(result.core_identity.status==='confirmed'&&result.variant_resolution.pending.includes('variant')){
+  if(result.core_identity.status==='confirmed'&&result.variant_resolution.pending.some(f=>['variant','autograph','patch'].includes(f))){
    const found=await searchCatalogue193(l,ctx,'variant',pages);entries.push(...found.entries);pages=found.pages;result=E193.reduce(l,entries);
   }
   await compareVariants193(l,result,ctx,pages);result=E193.reduce(l,entries);
  }catch(error){guard164AfterError(ctx);const state=error.message==='scan_cancelled'?'cancelled':error.message==='budget_exhausted'?'budget_exhausted':'service_unavailable';l.record('pipeline_error',{state,message:error.message});result=E193.reduce(l,entries,{error:state});}
  ctx.identityState=result.exact_identity_status==='confirmed'?'confirmed':result.assistance_state;ctx.coreIdentityState=result.core_identity.status;ctx.state=ctx.identityState;ctx.engineSnapshot=l.snapshot();saveEvidence192('reading','',{engine:ctx.engineSnapshot});return result;
 }
+// A catalogue decision is a verified/partial state, not a model-generated percentage.
+const priorRender193=renderIdent;
+renderIdent=function(value){
+ priorRender193(value);if(value?.engine_version!==193)return;
+ document.querySelectorAll('#identNote .confrow').forEach(row=>row.remove());$('confBar').parentElement.style.display='none';
+ if(value.core_identity?.status==='confirmed')document.querySelectorAll('#identNote .need').forEach(el=>el.remove());
+};

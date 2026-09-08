@@ -20,7 +20,7 @@ function subjectMatch(a,b){const x=norm(a),y=norm(b);return x===y||x.split(' ').
 function profile(base){if(base.domain&&base.domain!=='unknown')return base.domain;if(base.object_unit==='box'||base.object_unit==='case'||/\bbox\b|confezione|sealed/i.test(base.category||''))return 'sealed';if(base.pokemon_printing?.is_pokemon||/pokemon|pokémon/i.test(base.category||''))return 'pokemon';if(/one piece/i.test([base.category,base.family].join(' ')))return 'onepiece';if(base.kind==='card'&&/panini|topps|upper deck|leaf|fleer|skybox|basket|soccer|football|baseball|hockey/i.test([base.brand,base.family,base.category].join(' ')))return 'sports';return 'generic';}
 class Ledger {
  constructor(base){this.base=clone(base||{});this.domain=profile(base||{});this.atoms=[];this.events=[];this.candidates=[];this.attempts=new Set();this.sequence=0;}
- add(field,value,meta={}){if(value===null||value===undefined||str(value)==='')return;const atom={id:'e'+(++this.sequence),field,value:str(value),level:meta.level||'observed',certainty:meta.certainty||'uncertain',source:meta.source||'vision',region:region(meta.region),image_index:meta.image_index||meta.region?.image_index||0,raw:meta.raw??str(value),...meta};atom.region=region(atom.region);if(atom.level==='observed'&&!atom.region&&!atom.image_index)atom.level='inferred';Object.freeze(atom);this.atoms.push(atom);return atom;}
+ add(field,value,meta={}){if(value===null||value===undefined||str(value)==='')return;const atom={id:'e'+(++this.sequence),field,value:str(value),level:meta.level||'observed',certainty:meta.certainty||'uncertain',source:meta.source||'vision',region:region(meta.region),image_index:meta.image_index||meta.region?.image_index||0,raw:meta.raw??str(value),...meta};atom.region=region(atom.region);if(atom.level==='observed'&&!atom.region&&!atom.image_index)atom.level='inferred';if(field==='serial'&&!serial(atom.value))atom.certainty='uncertain';Object.freeze(atom);this.atoms.push(atom);return atom;}
  values(field){return this.atoms.filter(a=>a.field===field);}
  evidence(field){const values=this.values(field),replaced=new Set(values.flatMap(a=>list(a.supersedes)));return values.filter(a=>!replaced.has(a.id)&&a.level==='observed'&&a.certainty==='clear');}
  pick(field){const all=this.evidence(field);if(!all.length)return null;if(field==='collector_number'){if(all.every(a=>all.every(b=>numbersMatch(a.value,b.value))))return [...all].sort((a,b)=>b.value.length-a.value.length)[0];return null;}return unique(all.map(a=>norm(a.value))).length===1?all[all.length-1]:null;}
@@ -42,7 +42,7 @@ function legacyFeatures(ledger,base){
  }
 }
 function ingestVision(ledger,base,source='vision'){
- if(list(base.observations).length){for(const o of base.observations){ledger.add(o.field,o.field==='language'?language(o.text??o.value):o.field==='collector_number'?number(o.text??o.value):o.field==='hp'?str(o.text??o.value).match(/\d+/)?.[0]:o.text??o.value,{source,certainty:o.certainty,region:o.region,image_index:o.image_index,zone:o.zone,raw:o.text??o.value});for(const a of list(o.alternatives))ledger.add(o.field,typeof a==='string'?a:a.text,{source,certainty:'uncertain',region:o.region,image_index:o.image_index,alternative:true,raw:typeof a==='string'?a:a.text});}}
+ if(list(base.observations).length){for(const o of base.observations){ledger.add(o.zone==='statistics'?'statistics_text':o.field,o.field==='language'?language(o.text??o.value):o.field==='collector_number'?number(o.text??o.value):o.field==='hp'?str(o.text??o.value).match(/\d+/)?.[0]:o.text??o.value,{source,certainty:o.certainty,region:o.region,image_index:o.image_index,zone:o.zone,raw:o.text??o.value});for(const a of list(o.alternatives))ledger.add(o.field,typeof a==='string'?a:a.text,{source,certainty:'uncertain',region:o.region,image_index:o.image_index,alternative:true,raw:typeof a==='string'?a:a.text});}}
  else {
   for(const c of list(base.photo_clues)){
    const field=({subject:'subject',collector_number:'collector_number',serial:'serial',season:'season',copyright:'copyright',edition:'edition_text',team:'team',model:'product',barcode:'barcode',issue_number:'issue_number'})[c.role]||'text';
@@ -85,7 +85,7 @@ function query(l,mode='identity'){
  const k=keyValues(l),observed=l.evidence('text').filter(a=>!/\b(?:HP|PV)\b|^[◆★●]$/.test(a.value)),product=unique([...k.products,...observed.filter(a=>/topps|chrome|update|select|prizm|upper deck|leaf|panini|terrace|mezzanine|field level/i.test(a.value)).map(a=>a.value)]).join(' ');
  const card=l.domain!=='sealed',name=card?k.subject:'',nums=card?k.numbers.slice(0,3).map(v=>'"'+(numberParts(v)?.local||v)+'"').join(' OR '):'';
  const date=k.year||k.copyright[k.copyright.length-1]||'';
- const variant=['sports','onepiece'].includes(l.domain)?[...k.colors,...k.patterns,...k.serials.map(v=>'/'+serial(v).print_run)].join(' '):'';
+ const variant=['sports','onepiece'].includes(l.domain)?[...k.colors,...k.patterns,...k.serials.map(v=>'/'+serial(v).print_run),...['autograph','patch'].filter(f=>l.pick(f)?.value==='present')].join(' '):'';
  const config=l.domain==='sealed'?l.evidence('text').filter(a=>/autograph|packs?\b|cards? per|bustine|confezion/i.test(a.value)).map(a=>a.value).join(' '):'';
  return [l.domain==='pokemon'?'Pokémon TCG':l.domain==='onepiece'?'One Piece card':product||l.base.brand,name,nums,date,variant,config,l.domain==='sealed'?'box configuration':l.domain==='generic'?'model specifications':mode==='variant'?'parallel variants checklist':'checklist',domains(l).length?'('+domains(l).map(d=>'site:'+d).join(' OR ')+')':''].filter(Boolean).join(' ').replace(/\s+/g,' ').trim();
 }
@@ -116,9 +116,10 @@ function candidateGroups(l,entries){
  return [...groups.values()].sort((a,b)=>b.score-a.score);
 }
 function printingScope(l,e){
- const lang=language(e?.language)||l.pick('language')?.value,set=norm(e?.family),year=+season(e?.year).slice(0,4),base=/^(?:pokemon game |pokemon |set )?(?:base set|base|basic|set base|expansion pack)$/.test(set)||e?.set_id==='base1';
+ const lang=language(e?.language)||l.pick('language')?.value,set=norm(e?.family),year=+season(e?.year).slice(0,4),base=/^(?:pokemon game |pokemon |set )?(?:base set|base|basic|set base|set de base|basis|expansion pack|拡張パック)$/.test(set)||e?.set_id==='base1';
  const shadow=lang==='en'&&base&&l.base.pokemon_printing?.card_type!=='energy';
- const firstEdition=lang==='en'?(base||['jungle','fossil','team rocket','gym heroes','gym challenge','neo genesis','neo discovery','neo revelation','neo destiny'].includes(set)):lang==='ja'?e?.printing_options?.includes('first_edition')===true:e?.printing_options?.includes('first_edition')===true;
+ const historicalFirst=['jungle','giungla','dschungel','jungla','selva','fossil','fossile','fossiles','fosil','team rocket','gym heroes','gym challenge','neo genesis','neo discovery','neo revelation','neo destiny'].includes(set);
+ const firstEdition=l.pick('stamp')?.value==='present'||e?.printing_options?.includes('first_edition')===true||(['en','it','fr','de','es','pt','nl'].includes(lang)&&(base||historicalFirst));
  const noRarity=lang==='ja'&&base&&(!year||year===1996);
  return {shadow,firstEdition,noRarity,language:lang,base,scope_source:'set_language_catalogue',source:'https://www.cgccards.com/news/article/10262/pokemon-first-editions/'};
 }
@@ -152,6 +153,7 @@ function variantState(l,group){
   if(supported&&(sn||candidate.colors?.length||candidate.patterns?.length||candidate.name==='Base'&&l.pick('finish')?.value==='normal')){labels.push(candidate.name);proof.push({field:'variant',value:candidate.name,source:candidate.source});}
   else pending.push('variant');
   if(l.values('serial').length&&!sn)pending.push('serial');
+  for(const feature of ['autograph','patch'])if(l.pick(feature)?.value==='present'){const pattern=feature==='autograph'?/autograph|signature|signed/i:/patch|memorabilia|relic/i;if(!pattern.test([e.subset,candidate?.name].join(' ')))pending.push(feature);else proof.push({field:feature,value:'present',observation:l.pick(feature).id,source:e.source});}
   if(sn)fields.physical_serial={...sn,origin:'original_photo',observation:physicalSerial.id};
  }
  return {status:pending.length?'pending':'confirmed',pending:unique(pending),labels:unique(labels),proof,...fields};
@@ -195,8 +197,8 @@ function reduce(l,entries,{error=null}={}){
   variant_needs_verification:!exact,variant_check:variation.status,variant_resolution:variation,printing_check:l.domain==='pokemon'&&entry?{complete:variation.status==='confirmed',labels:variation.labels,missing:pending,stamp:variation.printingScope.firstEdition?(l.pick('stamp')?.value||(/1st Edition/.test(variation.labels.join(' '))?'present':'unclear')):'not_applicable',shadow:variation.printingScope.shadow?l.pick('shadow')?.value||'unclear':'not_applicable',contradiction:false}:undefined,
   assistance_state:exact?'confirmed':error|| (entry?'physical_detail_needed':'unidentified'),missing_information:pending.map(p=>({serial:'Numerazione dell’esemplare',variant:'Variante commerciale',finish:'Finitura',stamp:'Timbro First Edition',shadow:'Ombra dell’illustrazione',rarity_symbol:'Simbolo di rarità',catalogue:'Riscontro catalografico',collector_number:'Numero carta',subject:'Nome'})[p]||p),
   next_photo_request:exact?null:photoRequest(pending,l.domain),verification_summary:exact?'Carta e stampa identificate tramite letture e catalogo.':entry?'Carta identificata. Resta il dettaglio di stampa indicato.':'Letture conservate; identità catalografica da completare.',
-  normalized_query:exact?[model,variation.labels.join(' '),k.language].filter(Boolean).join(' '):'',candidate_models:groups.slice(0,4).map(g=>({model:[g.entry.year,g.entry.family,g.entry.number,g.entry.subject].join(' '),score:g.score})),catalogue_data:fields,identification_sources:unique(groups.flatMap(g=>g.entries.map(e=>e.source.url))).map(url=>({url,title:groups.flatMap(g=>g.entries).find(e=>e.source.url===url)?.source.title||url})),evidence:fields.map(f=>f.field+': '+f.value),object_unit:base.object_unit||'single',pokemon_printing:base.pokemon_printing,
-  card_identity:{manufacturer:entry?.brand||base.brand||null,subject,set:family,number:cardNumber,date:date||null,language:k.language,variant:variation.labels.join(' · ')||null,rarity:entry?.rarity||null,serial:variation.physical_serial||null}}
+  normalized_query:exact?[model,variation.labels.join(' '),k.language].filter(Boolean).join(' '):'',candidate_models:(entry?[]:groups.slice(0,4)).map(g=>({model:[g.entry.year,g.entry.family,g.entry.number,g.entry.subject].join(' '),score:g.score})),catalogue_data:fields,identification_sources:unique(groups.flatMap(g=>g.entries.map(e=>e.source.url))).map(url=>({url,title:groups.flatMap(g=>g.entries).find(e=>e.source.url===url)?.source.title||url})),evidence:fields.map(f=>f.field+': '+f.value),object_unit:base.object_unit||'single',pokemon_printing:base.pokemon_printing,
+  card_identity:{autograph:l.pick('autograph')?.value||'unclear',patch:l.pick('patch')?.value||'unclear',manufacturer:entry?.brand||base.brand||null,subject,set:family,number:cardNumber,date:date||null,language:k.language,variant:variation.labels.join(' · ')||null,rarity:entry?.rarity||l.pick('rarity_text')?.value||null,rarity_symbol:l.pick('rarity_symbol')?.value||'unclear',serial:variation.physical_serial||null}}
  l.record('reduce',{core:result.core_identity.status,exact:result.exact_identity_status,groups:groups.length,selected:top?.id||null,pending});return result;
 }
 function recoveryRequests(l,result){
