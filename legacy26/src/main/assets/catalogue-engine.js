@@ -195,7 +195,7 @@ function reduce(l,entries,{error=null}={}){
  const groups=candidateGroups(l,entries),top=groups[0],k=keyValues(l),base=l.base;
  const uniqueMatch=top&&top.score>=75&&(!groups[1]||top.score-groups[1].score>=12),entry=uniqueMatch?top.entry:null;
  const shared=top?.score>=60&&groups.length&&groups.every(g=>same(g.entry.family,top.entry.family)&&subjectMatch(g.entry.subject,top.entry.subject));
- const family=entry?.family||(shared?top.entry.family:''),subject=entry?.subject||k.subject,cardNumber=entry?.number||l.pick('collector_number')?.value||'',date=entry?.year||k.year;
+ const family=entry?.family||(shared&&top.score>=75?top.entry.family:''),subject=entry?.subject||k.subject,cardNumber=entry?.number||l.pick('collector_number')?.value||'',date=entry?.year||k.year;
  const variation=entry?variantState(l,top):{status:'pending',pending:[!subject?'subject':!cardNumber?'collector_number':'catalogue'],labels:[],proof:[]};
  const exact=!!entry&&variation.status==='confirmed',fields=[];
  for(const [field,value] of [['subject',subject],['family',family],['catalog_number',cardNumber],['year',date],['brand',entry?.brand||base.brand]])if(value)fields.push({field,value,origin:entry?'catalogue_and_photo':field==='family'?'catalogue':'photo',source:entry?.source||null});

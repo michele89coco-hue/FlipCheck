@@ -65,7 +65,7 @@ public final class BackgroundScanRegressionTest {
         // Keep the production decision engine active. Stub the native IO boundary too:
         // its HTTP traffic bypasses WebViewClient, so intercepting only Responses is insufficient.
         instrumentation.runOnMainSync(()->{web.removeJavascriptInterface("FlipCheckGoogle");web.addJavascriptInterface(new OfflineCatalogueIo(catalogue),"FlipCheckGoogle");web.reload();});
-        waitJs("window.FlipCheckGoogle?.offlineAvailable?.() === true",15000);
+        waitJs("window.FlipCheckGoogle?.offlineAvailable?.() === true && document.readyState === 'complete' && typeof resolveCatalogue193 === 'function'",15000);
         requests.set(0);
         // Intercept only transport: preserve production fetch, budget and AbortController wiring.
         instrumentation.runOnMainSync(() -> {
