@@ -108,7 +108,7 @@ test('a mocked original printing reread closes the verified core only when its r
   Object.assign(env,{FlipCheckEditions:E,status:()=>{},guard164:()=>{},guard164AfterError:()=>{},addUsage:()=>{},recordClosure164:()=>{},syncIdentity169:x=>x,validImageCount:()=>1,visualPhoto164:async()=>({data:'synthetic crop',meta:{imageIndex:1,cropped:true}}),parseResponseJSON:x=>x,
    enforceIdentificationPolicy:x=>E.apply(x,E.cataloguePrinting(x,env.lastVisionReading.pokemon_printing),1),
    openai:async body=>{ctx.calls.push({purpose:body.text.format.name});assert.equal(body.tools,undefined);return {pokemon_printing:{...base.pokemon_printing,artwork_shadow:shadow,shadow_image:1,shadow_location:'Right and lower artwork border'}};}});
-  vm.runInContext(source.slice(source.indexOf('async function resolvePrinting168('),source.indexOf('resolveIdentificationCheap=async function')),env);
+  vm.runInContext(source.slice(source.indexOf('function rememberEvidence189('),source.indexOf('function newContext164(')),env);vm.runInContext(source.slice(source.indexOf('async function resolvePrinting168('),source.indexOf('resolveIdentificationCheap=async function')),env);
   const out=await env.finishIdentity171(core,ctx);assert.equal(ctx.printingRecovery.attempted,true);assert.equal(ctx.calls.length,1);assert.equal(out.market_ready,shadow==='absent');
   if(shadow==='absent'){assert.match(out.variant,/Shadowless/);assert.equal(out.identity_basis.variant,'physical_evidence');}else assert.equal(out.assistance_state,'physical_detail_needed');
  }

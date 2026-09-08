@@ -136,7 +136,7 @@ function syncFixture(){
  const d=fixture(),{env,ctx}=runtime(d.base),saved=evaluate(d);saved.core_identity.origin='photo_and_catalogue_keys';
  const keys=V.cardKeyFacts(d.base);ctx.keyCore={signature:JSON.stringify([keys.subject.value,keys.number.value,keys.date.value,keys.date.kind]),identity:saved};ctx.coreState=saved;
  Object.assign(env,{active164:()=>true,canonTerm:s=>String(s||'').toLowerCase()});
- vm.runInContext(source.slice(source.indexOf('function syncIdentity169('),source.indexOf('mergeResolvedFingerprint=function')),env);
+ vm.runInContext(source.slice(source.indexOf('function rememberEvidence189('),source.indexOf('function newContext164(')),env);vm.runInContext(source.slice(source.indexOf('function syncIdentity169('),source.indexOf('mergeResolvedFingerprint=function')),env);
  return {d,env,ctx,saved};
 }
 test('a corrected photo key invalidates both cached identity states',()=>{

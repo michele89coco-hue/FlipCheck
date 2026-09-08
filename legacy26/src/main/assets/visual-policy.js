@@ -84,7 +84,7 @@ function clueRole(c){
  if(c.role==='season'&&/\b(?:world cup|olympic|olympics|olimpiadi)\b/i.test(c.text)&&! /\b(?:19|20)\d{2}\s*[-/]\s*\d{2,4}\b/.test(c.text))return 'event_year';
  return c.role;
 }
-function identifierValue(c){return c.role==='collector_number'?String(c.text).replace(/^\s*(?:NO\.?|N[°º.]|NUMBER|NUMERO|#)\s*/i,'').trim():c.text;}
+function identifierValue(c){return c.role==='collector_number'?String(c.text).replace(/^\s*(?:(?:CARD|CARTA)\s*)?(?:NO\.?|N[°º.]|NUMBER|NUMERO|#)\s*[:#.-]?\s*/i,'').trim():c.text;}
 function observedSubject(base){
  const names=clues(base).filter(c=>c.role==='text'&&!has(base.family,c.text)&&!has(base.brand,c.text)&&/[a-z]{3}/i.test(norm(c.text)));
  const typed=names.filter(c=>c.semantic_role==='subject');
@@ -103,7 +103,7 @@ function observedSubject(base){
 function collectorReadings(text,repairSeparator=false){
  const fractions=[...String(text||'').matchAll(/\b[A-Z]{0,3}\d{1,4}\s*\/\s*[A-Z]{0,3}\d{1,4}\b/gi)].map(m=>m[0].replace(/\s/g,''));
  if(fractions.length)return fractions.filter(t=>!seasonLike(t));
- const label=String(text||'').match(/^\s*(?:NO\.?|N[°º.]|NUMBER|NUMERO|#)\s*[:#.-]?\s*([A-Z]{0,3}\d{1,4})\s*$/i);
+ const label=String(text||'').match(/^\s*(?:(?:CARD|CARTA)\s*)?(?:NO\.?|N[°º.]|NUMBER|NUMERO|#)\s*[:#.-]?\s*([A-Z]{0,3}\d{1,4})\s*$/i);
  if(label)return [label[1]];
  // Keep the verbatim OCR quote. This is only a provisional alternative, accepted
  // later only against a specific catalogue entry, never a rewritten Vision fact.
@@ -111,14 +111,42 @@ function collectorReadings(text,repairSeparator=false){
  const value=repaired&&repaired[1]+'/'+repaired[2];
  return value&&!seasonLike(value)?[value]:[];
 }
+function ocrLines189(local){return list(local.lines).flatMap(line=>[line,...list(line.alternatives).map(a=>({...a,alternative_of:line.text,ambiguous:true}))]);}
 function ocrRegion(line,local){
  const m=local.meta;if(!m?.rect||![line.x,line.y,line.width,line.height,m.originalWidth,m.originalHeight,m.rect.x,m.rect.y,m.rect.width,m.rect.height].every(Number.isFinite)||m.originalWidth<=0||m.originalHeight<=0||m.rect.width<=0||m.rect.height<=0)return null;
  return {image_index:local.image_index,x:(m.rect.x+line.x*m.rect.width)/m.originalWidth,y:(m.rect.y+line.y*m.rect.height)/m.originalHeight,width:line.width*m.rect.width/m.originalWidth,height:line.height*m.rect.height/m.originalHeight,certain:true};
 }
+function recoverNumberRoles189(base,ocr){
+ if(base?.kind!=='card'||targetUnit(base)!=='single'||!observedSubject(base))return base;
+ const clear=clues(base),subject=observedSubject(base),family=familyGrounded188(base);
+ const printedContext=sportsCard184(base)&&family&&clear.some(c=>c.role==='season'&&seasonLike(seasonValue(c.text)));
+ const candidate=c=>c.certainty==='clear'&&['text','model','unknown'].includes(c.role)&&
+  !/jersey|shirt|uniform|maglia|dorsale|pokedex|pokédex|statistic|career|totals|points|attack|attacco/i.test([c.location,c.position,c.context,c.semantic_role].filter(Boolean).join(' '))&&
+  /^\s*(?:(?:card|carta)\s*(?:no\.?|number|numero)|no\.?|n[°º.]|number|numero|#)\s*[:#.-]?\s*[a-z]{0,3}\d{1,4}\s*$/i.test(c.text)&&collectorReadings(c.text).length===1&&!seasonLike(collectorReadings(c.text)[0]);
+ const recovered=list(base.photo_clues).map(c=>{
+  if(!candidate(c)||!c.region||c.region.certain!==true||c.region.image_index!==c.image_index)return c;
+  const r=c.region,object=list(base.object_regions).find(o=>o.image_index===c.image_index)||base.object_region;
+  if(![r.x,r.y,r.width,r.height].every(Number.isFinite)||r.x<0||r.y<0||r.width<=0||r.height<=0||r.x+r.width>1.001||r.y+r.height>1.001||r.width*r.height>.2)return c;
+  if(object?.image_index===c.image_index&&object.certain&&[object.x,object.y,object.width,object.height].every(Number.isFinite)&&
+   (r.x+r.width/2<object.x-.03||r.x+r.width/2>object.x+object.width+.03||r.y+r.height/2<object.y-.03||r.y+r.height/2>object.y+object.height+.03))return c;
+  const value=collectorReadings(c.text)[0],explicitCard=/^\s*(?:card|carta)\s*/i.test(c.text);
+  // Pokémon's isolated No. is often the species number, not the set number.
+  if(base.pokemon_printing?.is_pokemon&&!explicitCard)return c;
+  const local=list(ocr).filter(o=>o.state==='ok'&&o.image_index===c.image_index).flatMap(o=>ocrLines189(o).map(line=>({line,region:ocrRegion(line,o)}))).filter(o=>o.region&&
+   Math.abs(o.region.x+o.region.width/2-r.x-r.width/2)<=Math.max(.035,(o.region.width+r.width)/2)&&
+   Math.abs(o.region.y+o.region.height/2-r.y-r.height/2)<=Math.max(.025,(o.region.height+r.height)/2));
+  const labelled=local.filter(o=>collectorReadings(o.line.text).length===1),agrees=labelled.find(o=>numberKey185(collectorReadings(o.line.text)[0])===numberKey185(value));
+  const conflicts=labelled.filter(o=>numberKey185(collectorReadings(o.line.text)[0])!==numberKey185(value));
+  if(!agrees&&!printedContext)return c;
+  return {...c,role:'collector_number',original_role:c.original_role||c.role,role_recovery:{rule:conflicts.length?'explicit_label_conflicting_readings':agrees?'explicit_label_photo_ocr_agreement':'explicit_label_printed_card_context',photo_quote:c.text,...(agrees?{ocr_quote:agrees.line.text,ocr_region:agrees.region}:{}),subject:subject.text,value}};
+ });
+ return {...base,photo_clues:recovered,number_role_recoveries:recovered.filter(c=>c.role_recovery).map(c=>({image_index:c.image_index,region:c.region,...c.role_recovery}))};
+}
 function reconcilePhotoOcr(base,ocr){
  if(base?.kind!=='card'||targetUnit(base)!=='single')return base;
+ base=recoverNumberRoles189(base,ocr);
  const original=list(base.photo_clues).filter(c=>c.role==='collector_number'),alternatives=[];
- for(const local of list(ocr).filter(o=>o.state==='ok'))for(const line of list(local.lines)){
+ for(const local of list(ocr).filter(o=>o.state==='ok'))for(const line of ocrLines189(local)){
   const values=collectorReadings(line.text,true),region=ocrRegion(line,local);if(values.length!==1||!region)continue;
   const nearby=original.find(c=>c.image_index===local.image_index&&(!c.region||Math.abs(c.region.y-region.y)<.15&&Math.abs(c.region.x-region.x)<.3));
   // A separate stamped fraction is not a second catalogue number on a sports card.
@@ -138,7 +166,7 @@ function classifyNumberReadings188(base,readings){
   // Two independently agreeing readings of the full collector fraction take
   // precedence over a separate bare footer number. A differing fraction remains
   // a real disagreement. Do not invent a Pokédex role without a printed label.
-  const separate=full&&r.image_index===full.image_index&&!String(r.text).includes('/')&&numberKey185(r.text)!==numberKey185(full.text).split('/')[0]&&
+  const separate=full&&r.image_index===full.image_index&&!String(r.text).includes('/')&&numberKey185(r.text)!==numberKey185(identifierValue(full).split('/')[0])&&
    readings.some(o=>o!==r&&o.region&&r.region&&numberKey185(o.text)===numberKey185(full.text)&&(Math.abs(o.region.x-r.region.x)>Math.min(o.region.width,r.region.width)||Math.abs(o.region.y-r.region.y)>Math.min(o.region.height,r.region.height)));
   if(separate)other.push({...r,role:'other_printed_number',resolution:'separate_number_full_collector_fraction_corroborated'});else collector.push(r);
  }
@@ -204,7 +232,7 @@ function applyPhotoDetails(base,details,requests,selections){
  return {value:out,updates};
 }
 function identifiers(base){return clues(base).filter(c=>['model','collector_number','barcode'].includes(c.role)).map(c=>({...c,text:identifierValue(c),observed_text:c.text}));}
-function seasonValue(text){const m=String(text||'').match(/\b((?:19|20)\d{2})(?:\s*[-/]\s*(\d{2}|(?:19|20)\d{2}))?\b/);return m?[m[1],m[2]?.slice(-2)].filter(Boolean).join('-'):String(text||'');}
+function seasonValue(text){const m=String(text||'').match(/\b((?:19|20)\d{2})(?:\s*[-/]\s*((?:19|20)\d{2}|\d{2}))?\b/);return m?[m[1],m[2]?.slice(-2)].filter(Boolean).join('-'):String(text||'');}
 const appearanceFeatures=['color','pattern','finish'];
 function physicalVariantProof(base){
  if(base?.kind!=='card'||empty(base.variant))return null;
@@ -330,7 +358,8 @@ function keyEvidence(base,fields,refs){
   // may omit a year; preserve the observed copyright without inventing a source year.
   const datedEntry=sourceYear&&own.some(f=>f.field==='year'&&f.scope==='target'&&['year','season'].includes(f.number_kind)&&
    (has(heading,sourceYear)||/\b(?:release[d]?|publication|published|uscita|pubblicazione|edizione)(?:\b|(?=\d))/i.test(f.quote)));
-  const dateMatch=sourceYear?(keys.date?years.includes(seasonValue(sourceYear)):!!datedEntry):keys.date?.kind==='copyright'&&keys.number.value.includes('/');
+  const missingDate=!sourceYear&&!keys.date;
+  const dateMatch=sourceYear?(keys.date?years.includes(seasonValue(sourceYear)):!!datedEntry):keys.date?.kind==='copyright'&&keys.number.value.includes('/')||missingDate;
   if(!catalogueTuple(base,own,keys)||!nameAlias187(value('subject'),keys.subject.value)||numberKey185(value('catalog_number'))!==numberKey185(keys.number.value)||!dateMatch)continue;
   if(['subject','catalog_number'].some(k=>own.find(f=>f.field===k)?.scope!=='target'))continue;
   if(familyGrounded188(base)&&!familyAgrees184(base.family,value('family'),base.brand))continue;
@@ -342,7 +371,7 @@ function keyEvidence(base,fields,refs){
    referenceText(ref).split(/\n/).some(line=>line.trim().length<=240&&has(line,subjectField.quote)&&checklistRow186(line,keys));
   if(!familyAgrees184(value('family'),heading,base.brand)||!(subjectSpan187(keys.subject.value,heading)&&has(heading,number)||row&&datedEntry))continue;
   if(own.some(f=>own.some(g=>g.field===f.field&&norm(g.value)!==norm(f.value))))continue;
-  results.push({reference_id:ref.id,fields:own.filter(f=>f.field!=='variant'),date_kind:keys.date?.kind||'catalogue_release',date_check:sourceYear?(keys.date?'agrees':'catalogue_only'):'not_stated_in_entry',number_origin:keys.number.origin,origin:'photo_and_catalogue_keys',alias_matches:norm(value('subject'))!==norm(keys.subject.value)?[{field:'subject',observed:keys.subject.value,catalogue:value('subject'),rule:'same_set_date_number_name_alias'}]:[]});
+  results.push({reference_id:ref.id,fields:own.filter(f=>f.field!=='variant'),date_kind:keys.date?.kind||'catalogue_release',date_check:sourceYear?(keys.date?'agrees':'catalogue_only'):'not_stated_in_entry',core_complete:!missingDate,pending_fields:missingDate?['year']:[],number_origin:keys.number.origin,origin:'photo_and_catalogue_keys',alias_matches:norm(value('subject'))!==norm(keys.subject.value)?[{field:'subject',observed:keys.subject.value,catalogue:value('subject'),rule:'same_set_date_number_name_alias'}]:[]});
  }
  if(new Set(results.map(r=>familyKey(r.fields.find(f=>f.field==='family').value))).size!==1)return null;
  return results[0]||null;
@@ -431,6 +460,68 @@ function webDocuments188(sources,photo){
   const text=original.replace(/\s+(?=#{1,6}\s)/g,'\n').replace(/(?:^|\n)#{1,6}\s+/g,'\n').replace(/\s+[•*]\s+/g,'\n').replace(/\s+(?=\d{1,4}\s+[\p{Lu}][\p{L}’'.-]+\b)/gu,'\n');
   return [{id:'webdoc'+(i+1),url:s.url,title:s.title,text,text_origin:'web_search_document',original_text:original,format_normalization:'whitespace_and_markdown_list_boundaries',retrieval:'existing_search_response'}];
  });
+}
+const identityKeyEqual189=(field,a,b)=>field==='catalog_number'||field==='issue_number'?numberKey185(a)===numberKey185(b):field==='year'?seasonValue(a)===seasonValue(b):field==='subject'?nameAlias187(a,b):field==='family'?familyKey(a)===familyKey(b):norm(a)===norm(b);
+function targetRecheck189(prior,photo){
+ const fields=list(prior?.core_identity?.fields),roles={collector_number:'catalog_number',issue_number:'issue_number',season:'year',subject:'subject'};
+ return list(photo?.photo_clues).filter(c=>c.origin==='focused_photo_reread'&&c.certainty==='clear').flatMap(c=>{
+  const field=roles[c.semantic_role||c.role],before=fields.find(f=>f.field===field);
+  if(!before||identityKeyEqual189(field,before.value,c.text))return [];
+  const value=field==='year'?seasonValue(c.text):field==='catalog_number'?identifierValue(c):c.text;
+  return [{field,observed_value:value,quote:c.observed_text||c.text,image_index:c.image_index,certainty:c.certainty,origin:c.origin}];
+ });
+}
+function retainIdentity189(prior,next,context={}){
+ if(!next)return prior?.core_identity?.status==='confirmed'&&prior.catalogue_core_verified===true?prior:next;
+ const core=prior?.core_identity,confirmed=core?.status==='confirmed'&&(prior.catalogue_core_verified===true||prior.photo_core_verified===true||prior.slab_verification?.state==='confirmed');
+ const partial=core?.status==='partial'&&prior.catalogue_key_evidence?.state==='partial';
+ if((!confirmed&&!partial)||!list(core.fields).length)return next;
+ // Only a new reading of the original target may contradict a photographed key.
+ // A different subject/number on a retrieved image rejects that reference instead.
+ const originalReread=targetRecheck189(prior,context.photo);
+ const contradictions=[...originalReread,...(context.target_recheck===true?list(context.contradictions):[])].filter(c=>{
+  const before=core.fields.find(f=>f.field===c.field),value=c.observed_value;
+  return before&&!empty(value)&&c.certainty==='clear'&&c.origin==='focused_photo_reread'&&Number.isInteger(c.image_index)&&c.image_index>=1&&c.image_index<=3&&has(c.quote,value)&&!identityKeyEqual189(c.field,before.value,value);
+ });
+ if(contradictions.length){
+  const fields=[...new Set(contradictions.map(c=>c.field))];
+  return {...next,market_ready:false,model_verified:false,catalogue_verified:false,catalogue_core_verified:false,photo_core_verified:false,status:'uncertain',identity_status:'disputed',exact_identity_status:'unresolved',normalized_query:'',model_confidence:Math.min(89,Number(next.model_confidence)||0),
+   core_identity:{...core,status:'disputed',pending_fields:fields},identity_evidence:{...prior.identity_evidence,state:'disputed',contradictions},identity_target_conflicts:contradictions,unresolved_identity_fields:[...new Set([...list(next.unresolved_identity_fields),...fields])],core_retained_from:undefined};
+ }
+ const incoming=list(next.core_identity?.fields),same=incoming.every(f=>!core.fields.some(p=>p.field===f.field&&!identityKeyEqual189(f.field,p.value,f.value)));
+ const advances=confirmed?next.core_identity?.status==='confirmed'&&same:next.core_identity?.status==='confirmed'&&same||next.catalogue_key_evidence?.state==='partial'&&same&&incoming.length>=core.fields.length;
+ if(advances){
+  const fields=[...incoming,...core.fields.filter(p=>!incoming.some(f=>f.field===p.field&&identityKeyEqual189(p.field,p.value,f.value)))];
+  return {...next,core_identity:{...next.core_identity,fields},...(prior.identity_evidence?.state==='confirmed'&&!next.identity_evidence?{identity_evidence:prior.identity_evidence}:{}),...(prior.catalogue_key_evidence&&!next.catalogue_key_evidence?{catalogue_key_evidence:prior.catalogue_key_evidence}:{})};
+ }
+ const proved=new Set(core.fields.map(f=>f.field)),facts=[...list(prior.catalogue_data),...list(next.catalogue_data).filter(f=>!proved.has(f.field))];
+ return {...next,core_identity:core,catalogue_data:facts,model:core.model||prior.model,title:core.model||prior.title,family:prior.family,identity_basis:{...next.identity_basis,family:prior.identity_basis?.family},
+  catalogue_core_verified:prior.catalogue_core_verified===true,photo_core_verified:prior.photo_core_verified===true,model_verified:confirmed,status:confirmed?'identified':'uncertain',identity_status:confirmed?'confirmed':next.identity_status,model_confidence:confirmed?Math.max(90,Number(prior.model_confidence)||0):Math.min(89,Number(next.model_confidence)||0),
+  catalogue_needs_verification:confirmed?false:next.catalogue_needs_verification,identity_evidence:prior.identity_evidence,catalogue_key_evidence:prior.catalogue_key_evidence,
+  unresolved_identity_fields:list(next.unresolved_identity_fields).filter(f=>!proved.has(f)),missing_information:list(prior.missing_information),next_photo_request:prior.next_photo_request||null,
+  market_ready:false,catalogue_verified:false,normalized_query:'',assistance_state:confirmed?'core_confirmed':'catalogue_year_missing',core_retained_from:'verified_identity_checkpoint',identity_retention:{stage:context.stage||'secondary_check',reason:same?'no_new_target_counterevidence':'different_reference_identity'}};
+}
+function targetedDateEvidence189(base,photo,refs){
+ if(base?.catalogue_key_evidence?.state!=='partial'||base.core_identity?.status!=='partial'||!list(base.core_identity.pending_fields).includes('year'))return base;
+ const facts=list(base.core_identity.fields),family=facts.find(f=>f.field==='family')?.value,subject=facts.find(f=>f.field==='subject')?.value,number=facts.find(f=>f.field==='catalog_number')?.value;
+ if(!family||!subject||!number)return base;
+ const years=[],keys=cardKeyFacts(photo),familyTitle=title=>familyAgrees184(family,title,photo.brand);
+ for(const ref of list(refs)){
+  if(!trustedReferenceText(ref)||ref.is_collection||!familyTitle(ref.title||'')||!has(referenceText(ref),ref.title)||!catalogueScope186({...photo,family},ref,true).eligible)continue;
+  const title=String(ref.title),exactEntry=!!subjectSpan187(subject,title)&&has(title,number.split('/')[0]);
+  // A set page may supply its release year, but another individual card cannot.
+  const setPage=!subjectSpan187(subject,title)&&!/(?:#|\bno\.?\s+)\s*[a-z]{0,3}\d/i.test(title)&&familyTokens187(title.split(/\s[|–—-]\s/)[0],photo.brand).filter(w=>!familyTokens187(family,photo.brand).includes(w)).every(w=>['gcc','tcg','pokemon','wiki','central','bulbapedia','expansion','expansione','checklist','release','dates','date','guide'].includes(w));
+  if(!exactEntry&&!setPage)continue;
+  const pattern=/(?:release(?:d|\s+date)?|publication|published|data\s+di\s+uscita|date\s+de\s+sortie|pubblicazione|uscita|veroffentlicht|erscheinungsdatum)[^\d\r\n]{0,50}(?:\d{1,2}[^\d\r\n]{1,24}){0,2}((?:19|20)\d{2})\b/gi;
+  for(const match of referenceText(ref).matchAll(pattern)){
+   if(/copyright|site|website|pagina|page\s+(?:last|updated)/i.test(referenceText(ref).slice(Math.max(0,match.index-40),match.index)))continue;
+   years.push({field:'year',value:match[1],quote:match[0],reference_id:ref.id,evidence:'text',scope:'target',number_kind:'year',origin:'catalogue',source:ref.url,relationship:exactEntry?'exact_card_release':'verified_card_set_release',family});
+  }
+ }
+ if(new Set(years.map(f=>f.value)).size!==1)return base;
+ const year=years[0];if(keys?.date&&!list(keys.date.values||[keys.date.value]).includes(year.value))return base;
+ const model=[year.value,base.core_identity.model||base.model].filter(Boolean).join(' · '),core={...base.core_identity,status:'confirmed',model,fields:[...facts,year],pending_fields:[]};
+ return priorityClosure188({...base,model,title:model,core_identity:core,catalogue_core_verified:true,model_verified:true,catalogue_needs_verification:false,catalogue_key_evidence:{...base.catalogue_key_evidence,state:'confirmed',core_complete:true,pending_fields:[],fields:[...base.catalogue_key_evidence.fields,year]},source_confirmed_year:year.value,catalogue_data:[...list(base.catalogue_data),year],release_resolution:{origin:year.relationship,reference_id:year.reference_id,quote:year.quote},unresolved_identity_fields:list(base.unresolved_identity_fields).filter(f=>f!=='year'),missing_information:list(base.missing_information).filter(t=>!/^Anno di pubblicazione della serie da verificare$/.test(t))},photo,refs);
 }
 function preservePhotoIdentity(value,photo){
  if(!value)return value;
@@ -800,10 +891,10 @@ function validate(base,reply,references){
   const ambiguity=c.physical_ambiguity&&!externalOnly;
   const decision=c.decision==='match'||c.decision==='possible'&&externalOnly;
   const entryProof=!!keys||featureKinds.length>=2&&imageSources.length>0;
-  const accepted=decision&&c.identity_level!=='family'&&sameUnit&&named&&familyMatch&&entryProof&&codesMatch&&configurationMatch&&seasonMatch&&appearanceMatch&&variantMatch&&!ambiguity&&!conflicts.length;
-  const blockers=[!sameUnit&&'unit_mismatch',(!named||!familyMatch)&&'catalogue_not_cited',!codesMatch&&'physical_identifier_not_matched',!configurationMatch&&'configuration_not_matched',!seasonMatch&&'season_not_matched',(!appearanceMatch||!variantMatch)&&'appearance_not_matched',ambiguity&&'physical_ambiguity',conflicts.length>0&&'contradiction',(!decision||c.identity_level==='family'||!entryProof)&&'insufficient_visual_comparison'].filter(Boolean);
+  const accepted=keys?.core_complete!==false&&decision&&c.identity_level!=='family'&&sameUnit&&named&&familyMatch&&entryProof&&codesMatch&&configurationMatch&&seasonMatch&&appearanceMatch&&variantMatch&&!ambiguity&&!conflicts.length;
+  const blockers=[keys?.core_complete===false&&'catalogue_year_missing',!sameUnit&&'unit_mismatch',(!named||!familyMatch)&&'catalogue_not_cited',!codesMatch&&'physical_identifier_not_matched',!configurationMatch&&'configuration_not_matched',!seasonMatch&&'season_not_matched',(!appearanceMatch||!variantMatch)&&'appearance_not_matched',ambiguity&&'physical_ambiguity',conflicts.length>0&&'contradiction',(!decision||c.identity_level==='family'||!entryProof)&&'insufficient_visual_comparison'].filter(Boolean);
   const variantOnly=scope==='variant'&&catalogueTuple(base,fields,keys?cardKeyFacts(base):null);
-  const coreAccepted=collectible(base)&&sameUnit&&named&&familyMatch&&codesMatch&&configurationMatch&&seasonMatch&&(decision||c.decision==='possible'&&variantOnly)&&(c.identity_level!=='family'||variantOnly)&&entryProof&&(!ambiguity||variantOnly)&&!coreConflicts.length;
+  const coreAccepted=keys?.core_complete!==false&&collectible(base)&&sameUnit&&named&&familyMatch&&codesMatch&&configurationMatch&&seasonMatch&&(decision||c.decision==='possible'&&variantOnly)&&(c.identity_level!=='family'||variantOnly)&&entryProof&&(!ambiguity||variantOnly)&&!coreConflicts.length;
   return {...c,model:name||c.model,matches,appearance_check:appearanceProof,description_matches:descriptions,fields,field_issues:fieldIssues,quantity_conflicts:quantityConflicts,identifier_agreements:identifierAgreements,key_evidence:keys,identity_conflicts:conflicts,ambiguity_scope:scope,accepted,core_accepted:coreAccepted,blocking_fields:blockers,rejection:accepted?'':blockers[0]};
  });
  const selected=[...new Map(candidates.filter(c=>c.accepted).map(c=>[canonical(c),c])).values()];
@@ -811,21 +902,24 @@ function validate(base,reply,references){
  if(selected.length!==1){
   const cores=candidates.filter(c=>c.core_accepted),core=cores.length===1?cores[0]:null;
   const facts=core?.fields.filter(f=>f.field!=='variant').map(f=>({...f,origin:'catalogue',source:refs.find(r=>r.id===f.reference_id)?.url}));
-  const shared=core?[]:sharedObservedFacts(base,candidates,refs);
+  const partials=candidates.filter(c=>c.key_evidence?.core_complete===false&&c.same_unit&&c.decision!=='different'&&!c.identity_conflicts.length);
+  const partial=!core&&partials.length===1?partials[0]:null;
+  const partialFacts=partial?.key_evidence.fields.map(f=>({...f,origin:'catalogue',source:refs.find(r=>r.id===f.reference_id)?.url}));
+  const shared=core||partial?[]:sharedObservedFacts(base,candidates,refs);
   const request=referenceMissing?base.next_photo_request||null:reply?.physical_detail_needed||base.next_photo_request||null;
-  return preservePhotoIdentity({...base,...(shared.length?{catalogue_data:shared,core_identity:{model:base.model||base.title,status:'partial',origin:'photo_and_catalogue',fields:shared}}:{}),...(core?{model:core.model,title:core.model,family:facts.find(f=>f.field==='family')?.value||base.family,catalogue_core_verified:true,core_identity:{model:core.model,status:'confirmed',origin:'catalogue',fields:facts},catalogue_data:facts,identity_basis:{...base.identity_basis,family:'catalogue'},unresolved_identity_fields:list(base.unresolved_identity_fields).filter(f=>f!=='family'),catalogue_needs_verification:false,variant_check:'pending',market_ready:false}:{}),visual_candidates:candidates,assistance_state:selected.length>1?'ambiguous':referenceMissing?'source_detail_needed':reply?.physical_detail_needed?'physical_detail_needed':core?'core_confirmed':'unidentified',next_photo_request:request},base);
+  return retainIdentity189(base,preservePhotoIdentity({...base,...(partial?{catalogue_key_evidence:{...partial.key_evidence,state:'partial',score:75,score_kind:'verified_key_coverage'},catalogue_data:partialFacts,core_identity:{model:partial.model,status:'partial',origin:'photo_and_catalogue',fields:partialFacts,pending_fields:['year']},family:partialFacts.find(f=>f.field==='family')?.value||base.family,model:partial.model,title:partial.model,catalogue_core_verified:false,catalogue_verified:false,market_ready:false,model_verified:false,unresolved_identity_fields:[...new Set([...list(base.unresolved_identity_fields).filter(f=>f!=='family'),'year'])],missing_information:['Anno di pubblicazione della serie da verificare'],next_photo_request:null}:{}),...(shared.length?{catalogue_data:shared,core_identity:{model:base.model||base.title,status:'partial',origin:'photo_and_catalogue',fields:shared}}:{}),...(core?{model:core.model,title:core.model,family:facts.find(f=>f.field==='family')?.value||base.family,catalogue_core_verified:true,core_identity:{model:core.model,status:'confirmed',origin:'catalogue',fields:facts},catalogue_data:facts,identity_basis:{...base.identity_basis,family:'catalogue'},unresolved_identity_fields:list(base.unresolved_identity_fields).filter(f=>f!=='family'),catalogue_needs_verification:false,variant_check:'pending',market_ready:false}:{}),visual_candidates:candidates,assistance_state:selected.length>1?'ambiguous':referenceMissing?'source_detail_needed':reply?.physical_detail_needed?'physical_detail_needed':core?'core_confirmed':'unidentified',next_photo_request:partial?null:request},base),{stage:'reference_comparison'});
  }
  const c=selected[0],fields=c.fields.map(f=>({...f,origin:'catalogue',source:refs.find(r=>r.id===f.reference_id).url}));
  const value=name=>fields.find(f=>f.field===name)?.value||'';
  const sources=refs.filter(r=>[...c.matches,...list(c.description_matches)].some(m=>m.reference_id===r.id)||fields.some(f=>f.reference_id===r.id)).map(r=>({title:r.title||r.url,url:r.url,image_url:r.image_url}));
  const physicalVariant=base.kind==='card'&&/\b(?:holder|custodia|slab|plastic)\b/i.test(base.variant||'')?'':base.variant;
  const variant=variantPending(base)?value('variant'):base.kind==='object'&&value('variant')?value('variant'):base.kind==='card'||clues(base).some(o=>!empty(physicalVariant)&&has(o.text,physicalVariant))?physicalVariant:'';
- return preservePhotoIdentity({...base,status:'identified',market_ready:true,model_verified:true,model_confidence:95,model:c.model,title:c.model,brand:value('brand')||base.brand,family:value('family')||base.family,
+ return retainIdentity189(base,preservePhotoIdentity({...base,status:'identified',market_ready:true,model_verified:true,model_confidence:95,model:c.model,title:c.model,brand:value('brand')||base.brand,family:value('family')||base.family,
   // Scores here retain the v26 renderer contract; they are not Google probabilities.
   family_confidence:Math.max(90,base.family_confidence||0),family_mode:false,variant,normalized_query:[c.model,...['family','year','catalog_number','issue_number'].map(k=>value(k)).filter(v=>!has(c.model,v)),c.unit,variant,base.pokemon_printing?.language].filter(Boolean).join(' '),
   catalogue_verified:true,catalogue_core_verified:true,core_identity:{model:c.model,status:'confirmed',origin:'catalogue',fields:fields.filter(f=>f.field!=='variant')},variant_check:'confirmed',unresolved_identity_fields:[],identity_basis:{...base.identity_basis,family:'catalogue',variant:'catalogue'},catalogue_needs_verification:false,variant_needs_verification:false,source_confirmed_catalog_number:value('catalog_number'),source_confirmed_issue_number:value('issue_number'),source_confirmed_year:value('year'),
   observed_data:base.photo_clues||clues(base),physical_observations:physical(base),catalogue_data:fields,identification_sources:sources,visual_candidates:candidates,assistance_state:'confirmed',authenticity_status:'not_assessed',specimen_notes:list(c.specimen_notes),
-  verification_summary:'Identità verificata confrontando foto e riferimenti catalografici. Autenticità e condizioni non certificate.',missing_information:[],next_photo_request:null},base);
+  verification_summary:'Identità verificata confrontando foto e riferimenti catalografici. Autenticità e condizioni non certificate.',missing_information:[],next_photo_request:null},base),{stage:'reference_comparison'});
 }
 // Complete textual specifications using new sources while reusing only image comparisons already performed.
 function completeComparison(base,reply,references,sources){
@@ -851,7 +945,7 @@ function fuseComparisons(base,history){
  const refs=[],readings=[];let stableCore=null;
  for(const phase of list(history)){
   const previous=readings.length?validate({...base,market_ready:false,catalogue_verified:false,catalogue_core_verified:false},{candidates:readings},refs):null;
-  if(previous?.catalogue_core_verified)stableCore=previous;
+  if(previous?.catalogue_core_verified)stableCore=priorityClosure188(previous,base,refs);
   for(const r of list(phase.references)){const at=refs.findIndex(x=>x.id===r.id);if(at<0)refs.push(r);else refs[at]={...refs[at],...r};}
   const evaluated=new Set(list(phase.references).map(r=>r.id));
   const incoming=list(phase.reply?.candidates).map(c=>({...c,ambiguity_scope:ambiguityScope(base,c,phase.reply),matches:[...list(c.matches)],raw_fields:list(c.fields),fields:validFields(c,refs,base,c.matches)}));
@@ -893,7 +987,8 @@ function fuseComparisons(base,history){
   previous.model=catalogueName(base,previous,previous.fields);previous.combined_from_references=[...new Set(previous.fields.map(f=>f.reference_id))];
  }
  const latest=list(history).at(-1)?.reply||{};
- const result=validate(base,{...latest,candidates:combined},refs);
+ const evaluatedResult=validate(base,{...latest,candidates:combined},refs);
+ const result=stableCore?.identity_evidence?.state==='confirmed'?retainIdentity189(stableCore,evaluatedResult,{stage:'comparison_history'}):evaluatedResult;
  if(result.catalogue_core_verified||!stableCore||list(history).at(-1)?.purpose!=='focused_reference_reread')return result;
  const facts=stableCore.core_identity.fields,sourceIds=new Set(facts.map(f=>f.reference_id));
  const revisited=combined.filter(c=>list(c.fields).some(f=>sourceIds.has(f.reference_id)));
@@ -927,17 +1022,76 @@ function printingPlan(base,check,count){
 function referenceImageUseful(value){try{return !/(?:^|[-_])(?:logo(?:type)?|favicon|sprite|placeholder|default|hero-inner|auction[-_]company|no[-_]?(?:image|photo|picture)|(?:image|photo|picture)[-_](?:unavailable|missing|not[-_]found))(?:[._-]|$)/i.test(new URL(value).pathname.split('/').pop());}catch(_){return false;}}
 function referenceImageKey(ref){
  try{
-  const u=new URL(ref.image_url);for(const key of ['w','h','width','height','q','quality','auto','format','crop'])u.searchParams.delete(key);
-  u.pathname=u.pathname.replace(/\/thumb\/(.+\.[a-z]+)\/\d+px-[^/]+$/i,'/$1').replace(/_(?:\d+x\d*|grande|large|small)(?=\.[a-z]+$)/i,'');
+  const u=new URL(ref.image_url);for(const key of ['w','h','width','height','q','quality','auto','format','crop','fit','resize'])u.searchParams.delete(key);
+  u.pathname=u.pathname.replace(/\/thumb\/(.+\.[a-z]+)\/\d+px-[^/]+$/i,'/$1').replace(/[-_](?:\d+x\d*|grande|large|small)(?=\.[a-z]+$)/i,'');
   if(u.hostname==='storage.googleapis.com'&&u.pathname.startsWith('/images.pricecharting.com/'))u.pathname=u.pathname.replace(/\/\d+\.(jpg|png|webp)$/i,'/image.$1');
-  return u.href;
+  u.searchParams.sort();return u.href;
  }catch(_){return ref.id||ref.url;}
 }
+function referenceNumberReadings189(ref,base){
+ const lines=list(ref.ocr?.lines).length?ref.ocr.lines.map(l=>l.text):String(ref.ocr?.text||'').split(/\n/);
+ const number=cardKeyFacts(base)?.number.value||identifiers(base||{}).find(c=>c.role==='collector_number')?.text;
+ return [...new Set(lines.flatMap(t=>collectorReadings(t)).filter(n=>!(sportsCard184(base)&&number&&!String(number).includes('/')&&n.includes('/'))).map(numberKey185))];
+}
+function referenceHeaderSubject189(ref){
+ // TCG names share the header with HP/PV/PS. Use spatial OCR relationships,
+ // not a creature dictionary or a list of known cards.
+ const lines=list(ref.ocr?.lines),hp=lines.find(l=>l.y<.3&&/\b\d{2,3}\s*(?:HP|PV|PS)\b/i.test(l.text));
+ if(!hp)return '';
+ const labels=lines.filter(l=>l!==hp&&l.x<hp.x&&Math.abs(l.y-hp.y)<=Math.max(.04,hp.height||0)&&/^[\p{L}\p{M} .’'\-]{4,45}$/u.test(l.text)&&!/(?:stage|fase|basic|base|evolve|pokemon|pokémon)/i.test(l.text));
+ return labels.sort((a,b)=>Math.abs(a.y-hp.y)-Math.abs(b.y-hp.y))[0]?.text||'';
+}
+function imageTargetAffinity189(ref,base){
+ // A document is still useful catalogue evidence, but its body/title cannot
+ // turn each gallery image into a photograph of the identified target.
+ const neutral={eligible:true,reason:'image_discovery_without_identity_claim',score:0};
+ if(!ref.image_url&&!ref.image_data&&!ref.image_caption)return neutral;
+ if(list(ref.pages_rendered).length||ref.document_type==='pdf')return {...neutral,reason:'catalogue_document_image'};
+ let filename='';try{filename=decodeURIComponent(new URL(ref.image_url).pathname.split('/').pop()||'').replace(/\.[a-z0-9]+$/i,'').replace(/[-_]\d+x\d+$/,'').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/([a-z])([0-9])/gi,'$1 $2');}catch(_){}
+ const caption=String(ref.image_caption||''),own=[caption,filename].filter(Boolean).join('\n'),ocr=String(ref.ocr?.text||''),unit=targetUnit(base||{});
+ const numbers=referenceNumberReadings189(ref,base);
+ const subject=observedSubject(base||{})?.text,number=cardKeyFacts(base)?.number.value||identifiers(base||{}).find(c=>c.role==='collector_number')?.text;
+ const wantedNumber=number&&numberKey185(number),sameNumber=!!wantedNumber&&numbers.includes(wantedNumber);
+ const subjectHit=t=>!!subject&&(!!subjectSpan187(subject,t)||has(t,subject));
+ const ownSubject=subjectHit(own),ocrSubject=subjectHit(ocr);
+ const ownBox=/\b(?:box|boxed|hobby|jumbo|mega|blaster|confezione|scatola|display)\b/i.test(own),ocrBox=/\b(?:box|boxed|packs?|bustine|confezione|scatola|display)\b/i.test(ocr);
+ const unrelatedAccessory=/\b(?:binder|album|card storage|sleeves|card stand|raccoglitore)\b/i.test(own);
+ if(unit==='single'&&base?.kind==='card'){
+  if(unrelatedAccessory||/\b(?:box|boxed|booster pack|confezione|scatola|display)\b/i.test(own))return {eligible:false,reason:'different_image_unit',score:-100};
+  const border=borderColors187(base),imageColors=visualColors.filter(c=>has(visualWords(own),c));
+  if(ownSubject&&sportsCard184(base)&&border.length&&imageColors.length&&!imageColors.some(c=>border.includes(c)))return {eligible:false,reason:'different_image_parallel_colour',score:-95};
+  if(wantedNumber&&numbers.length&&!sameNumber)return {eligible:false,reason:'different_image_card_number',score:-100,image_numbers:numbers};
+  const namedNumbers=ownSubject?[...own.matchAll(/(?:#|\bno\.?\s+)([a-z]{0,3}\d{1,4}(?:\s*\/\s*[a-z]{0,3}\d{1,4})?)(?!\d)/gi)].map(m=>m[1].replace(/\s/g,'')):[];
+  if(wantedNumber&&namedNumbers.length&&namedNumbers.every(n=>numberKey185(n)!==wantedNumber&&!(String(number).includes('/')&&!n.includes('/')&&numberKey185(n)===numberKey185(String(number).split('/')[0]))))return {eligible:false,reason:'different_image_metadata_number',score:-95};
+  // Subject-bearing filenames and captions are local to the image. Strip only
+  // observed family/brand plus generic production descriptors, never names.
+  const ignored=new Set(norm([base.brand,base.family,'card cards trading basketball baseball football soccer hockey pokemon pokémon rookie rc holo holographic rare reverse parallel refractor prizm prism front back scan image photo picture thumbnail official base set mint psa bgs cgc auto autograph autographs signature signatures green red blue gold silver black white yellow purple pink orange ruby emerald numbered serial number edition limited first 1st english italian japanese french german foil wave sparkle speckle speckles orange disco hyper shimmer border portrait insert inserts illustration variations variation checklist feature hobby retail product'].join(' ')).split(' '));
+  const identifying=own.split(/\n/).some(t=>t.length<=240&&(familyTokens187(base.family,base.brand).some(w=>has(t,w))||/\b(?:19|20)\d{2}\b/.test(t))&&norm(t).split(' ').filter(w=>w.length>=4&&!ignored.has(w)&&!/^\d+$/.test(w)&&!/^[a-f0-9]{12,}$/i.test(w)).length>=1);
+  if(subject&&!ownSubject&&identifying&&!ocrSubject)return {eligible:false,reason:'different_or_unlinked_image_subject',score:-90};
+  const headerSubject=referenceHeaderSubject189(ref);
+  if(subject&&headerSubject&&!nameAlias187(subject,headerSubject)&&!ocrSubject)return {eligible:false,reason:'different_reference_header_subject',score:-100,image_subject:headerSubject};
+  const readable=(norm(ocr).match(/\b[a-z]{3,}\b/g)||[]).length>=4;
+  if(subject&&readable&&!ocrSubject&&!sameNumber)return {eligible:false,reason:'readable_image_lacks_target_keys',score:-80};
+  return {...neutral,reason:ocrSubject||sameNumber?'target_keys_on_reference_image':ownSubject?'target_named_by_image_metadata':neutral.reason,score:(ocrSubject?45:0)+(sameNumber?45:0)+(ownSubject?25:0),image_subject_supported:ocrSubject,image_number_supported:sameNumber};
+ }
+ if(unit==='box'){
+  if(unrelatedAccessory||!ownBox&&/\b(?:single card|rookie card|parallel card|autograph card|variations?|parallels?|montage|collage)\b/i.test(own))return {eligible:false,reason:'card_image_for_box_target',score:-100};
+  const family=familyTokens187(base.family,base.brand),familyHits=family.filter(w=>has(ocr,w)).length;
+  if(ocr.trim()&&!ownBox&&!ocrBox&&familyHits<Math.min(2,family.length||2))return {eligible:false,reason:'readable_image_lacks_box_identity',score:-80};
+  return {...neutral,reason:ownBox||ocrBox?'box_image_evidence':neutral.reason,score:(ownBox?35:0)+(ocrBox?35:0)+familyHits*5};
+ }
+ return neutral;
+}
+function referenceImageCandidates189(page,base){
+ const candidates=list(page?.images).filter(referenceImageUseful).map((image,i)=>{
+  const detail=list(page.image_details).find(d=>referenceImageKey({image_url:d.image_url})===referenceImageKey({image_url:image}));
+  const ref={image_url:image,image_caption:detail?.caption||'',title:page.title||'',text:page.text||''},affinity=imageTargetAffinity189(ref,base);
+  return {...ref,image_affinity:affinity,original_index:i};
+ }).filter(r=>r.image_affinity.eligible).sort((a,b)=>b.image_affinity.score-a.image_affinity.score||a.original_index-b.original_index);
+ return candidates.filter((r,i,a)=>a.findIndex(o=>referenceImageKey(o)===referenceImageKey(r))===i);
+}
 function referenceRelevant(ref,base){
- const caption=String(ref.image_caption||'');
- if(!catalogueScope186(base,ref).eligible)return false;
- if(base?.kind==='card'&&targetUnit(base)==='single'&&/\b(?:binder|album|card storage|sleeves|card stand|mega box|hobby box|booster box|blaster box|sealed box|raccoglitore|confezione)\b/i.test(caption))return false;
- if(targetUnit(base)==='box'&&caption&&/\b(?:single card|rookie card|autograph card|parallel card)\b/i.test(caption)&&! /\bbox\b/i.test(caption))return false;
+ if(!catalogueScope186(base,ref).eligible||!imageTargetAffinity189(ref,base).eligible)return false;
  if(base?.kind==='card'&&targetUnit(base)==='single'&&sportsCard184(base)){
   const title=catalogueHeading187(ref,base),colors=borderColors187(base),number=cardKeyFacts(base)?.number.value,subject=observedSubject(base)?.text;
   // Other parallel colours may establish the base entry, but they cannot be
@@ -970,10 +1124,10 @@ function rankReferences(refs,base,candidates=[]){
   const subject=observedSubject(base)?.text;
   const specific=base.kind==='card'&&variantPending(base)&&trustedReferenceText(r)&&!r.is_collection&&subject&&has(r.title,subject)&&number&&has(r.title,number)&&colors.some(color=>has(r.title,color));
   const idHits=ids.filter(o=>has(text,o.text)).length;
-  const imageNumbers=[...new Set(String(r.ocr?.text||'').split(/\n/).flatMap(collectorReadings))],imageAgreement=number&&imageNumbers.some(n=>norm(n)===norm(number)),imageConflict=number&&imageNumbers.length&&!imageAgreement;
+  const imageNumbers=referenceNumberReadings189(r,base),imageAgreement=number&&imageNumbers.some(n=>norm(n)===norm(number)),imageConflict=number&&imageNumbers.length&&!imageAgreement;
   const terms=clear.filter(o=>has(text,o.text)).length;
   const candidateHit=list(candidates).some(c=>norm(c.model).split(' ').filter(w=>w.length>=4).filter(w=>has(r.title,w)).length>=2);
-  return {r,i,imageConflict,score:idHits*8+terms*2+(imageAgreement?30:0)-(imageConflict?80:0)+(specific?45:0)+(trustedReferenceText(r)?4:0)+(candidateHit?3:0)-(r.discovery_only?2:0)};
+  return {r,i,imageConflict,score:imageTargetAffinity189(r,base).score+idHits*8+terms*2+(imageAgreement?30:0)-(imageConflict?80:0)+(specific?45:0)+(trustedReferenceText(r)?4:0)+(candidateHit?3:0)-(r.discovery_only?2:0)};
  }).filter(x=>!x.imageConflict);
  const sorted=scored.sort((a,b)=>b.score-a.score||a.i-b.i).map(x=>x.r);
  return sorted.filter((r,i,a)=>a.findIndex(other=>referenceImageKey(other)===referenceImageKey(r))===i);
@@ -1039,7 +1193,7 @@ function cataloguePlan185(base,previous=[],fallback=false){
   [/topps|bowman/i,['topps.com'],['beckett.com','checklistinsider.com','tcdb.com']],
   [/panini|donruss/i,['paniniamerica.net'],['beckett.com','checklistinsider.com','tcdb.com']],
   [/upper deck|skybox|fleer/i,['upperdeck.com'],['beckett.com','tcdb.com']]];
- const route=routes.find(r=>r[0].test(text));if(!route&&!slab)return null;
+ const route=routes.find(r=>r[0].test(text));
  const graderDomains={psa:'psacard.com',bgs:'beckett.com',beckett:'beckett.com',cgc:'cgccards.com',sgc:'gosgc.com'};
  const grader=slab&&graderDomains[norm(slab.grader)],official_domains=route?.[1]||[],fallback_domains=route?.[2]||[],domains=[...new Set([...official_domains,...fallback_domains,...(slab&&grader?[grader]:[])])];
  const publisherYear=keys?.date?.kind==='copyright'&&keys.date.quote.match(/(?:©|\bcopyright)\s*((?:19|20)\d{2})\s*(?:Wizards|Panini|Topps|Upper Deck)\b/i)?.[1];
@@ -1063,7 +1217,9 @@ function boxPlan188(base,previous=[],fallback=false){
  if(!familyWords.length||!familyWords.every(w=>clear.some(c=>familyTokens187(c.text,base.brand).includes(w))))return null;
  const official=/topps|bowman/i.test(base.brand)?['topps.com']:/panini|donruss/i.test(base.brand)?['paniniamerica.net']:/upper deck/i.test(base.brand)?['upperdeck.com']:[];
  const specialists=['beckett.com','checklistinsider.com'],domains=[...official,...specialists];
- const terms=[seasonValue(year.text),has(base.family,base.brand)?base.family:base.brand+' '+base.family,'box',...evidence(base).filter(configuration).map(c=>c.text).slice(0,2),'configuration'];
+ const sports=['basketball','baseball','soccer','football','hockey','wrestling','racing','cricket','rugby','tennis'].filter(s=>clear.some(c=>c.semantic_role!=='subject'&&has(c.text,s)));
+ const sport=sports.length===1&&!has(base.family,sports[0])?sports[0]:'';
+ const terms=[seasonValue(year.text),has(base.family,base.brand)?base.family:base.brand+' '+base.family,sport,'box',...evidence(base).filter(configuration).map(c=>c.text).slice(0,2),'configuration'].filter(Boolean);
  const query=terms.join(' ')+(fallback||!domains.length?'':' ('+domains.map(d=>'site:'+d).join(' OR ')+')');
  return {kind:'box_configuration',query,terms,domains,official_domains:official,fallback_domains:specialists,useful:true,duplicate:previous.some(q=>norm(q)===norm(query)),scope:'same_product_year_box_configuration',certificate:false};
 }
@@ -1072,11 +1228,13 @@ function catalogueScope186(base,source,retrieved=false){
  if(base?.kind!=='card'&&!isBox||!cataloguePlan185(base))return {eligible:true,reason:'general_discovery'};
  const slab=slabFacts185(base),family=slab?.family||base.family||'',title=source.title||'',text=[title,source.text,source.snippet].filter(Boolean).join('\n');
  const grounded=!!slab||familyGrounded188(base)||isBox&&!!boxPlan188(base);
+ const sports=['soccer','basketball','baseball','hockey','wrestling','racing','cricket','rugby','tennis'],printedSports=sports.filter(s=>clues(base).some(c=>c.semantic_role!=='subject'&&has(c.text,s))),titleSports=sports.filter(s=>has(title,s));
+ if(printedSports.length===1&&titleSports.length&&!titleSports.includes(printedSports[0]))return {eligible:false,reason:'different_sport'};
  if(grounded&&familyConflict187(family,title))return {eligible:false,reason:'different_product_line'};
  const cardNumber=slab?.card_number||cardKeyFacts(base)?.number.value;
- const titleNumbers=[...title.matchAll(/(?:#|\bno\.?\s+)([a-z]{0,3}\d{1,4}(?:\s*\/\s*[a-z]{0,3}\d{1,4})?)(?!\d)/gi)].map(m=>numberKey185(m[1]));
+ const titleNumberReadings=[...title.matchAll(/(?:#|\bno\.?\s+)([a-z]{0,3}\d{1,4}(?:\s*\/\s*[a-z]{0,3}\d{1,4})?)(?!\d)/gi)].map(m=>m[1]),titleNumbers=titleNumberReadings.map(numberKey185);
  if(cardNumber&&titleNumbers.length===1){
-  const observedNumber=numberKey185(cardNumber),same=titleNumbers[0]===observedNumber||!!slab&&!observedNumber.includes('/')&&titleNumbers[0].split('/')[0]===observedNumber;
+  const observedNumber=numberKey185(cardNumber),same=titleNumbers[0]===observedNumber||!!slab&&!String(cardNumber).includes('/')&&numberKey185(titleNumberReadings[0].split('/')[0])===observedNumber;
   if(!same)return {eligible:false,reason:'different_card_number'};
  }
  const stop=new Set(norm([base.brand,'pokemon pokémon card cards trading series set checklist guide details base soccer football basketball baseball hockey road to the and of collection'].join(' ')).split(' '));
@@ -1133,7 +1291,12 @@ function slabClosure187(base,photo,refs,web={}){
   core_identity:{status:'confirmed',model,origin:'photo_slab_label',fields,pending_fields:[]},catalogue_core_verified:false,catalogue_verified:false,model_verified:true,market_ready:true,status:'identified',model_confidence:Math.max(90,Number(base.model_confidence)||0),identity_status:'confirmed',exact_identity_status:'confirmed',variant_needs_verification:false,variant_check:'confirmed',catalogue_needs_verification:false,unresolved_identity_fields:[],missing_information:[],next_photo_request:null,assistance_state:'confirmed',candidate_models:[],visual_candidates:[],candidate_checks:[],printing_check:undefined,
   identity_basis:{family:'slab_label',variant:'slab_label'},slab_verification:{state:'confirmed',origin:'photo_slab_label_and_visual_coherence',scope:'label_description',reference_id:hit?.id||null,source:hit?.url||null,web_check:{attempted:true,completed:true,corroborated:!!hit},label_text:slab.label_text,certificate_verified:false},authenticity_status:'not_assessed',normalized_query:[model,slab.variant,slab.grader,slab.grade,photo.pokemon_printing?.language].filter(Boolean).join(' '),verification_summary:hit?'Identità dell’etichetta coerente con l’oggetto e riscontrata con ricerca sommaria.':'Identità dell’etichetta confermata dalla coerenza visiva; ricerca completata senza riscontro catalografico sufficiente.'},photo);
 }
-function borderColors187(photo){return [...new Set(physical(photo).filter(o=>o.feature==='color'&&/border|bordo|cornice|frame/i.test(o.text)).flatMap(o=>visualColors.filter(c=>has(visualWords(o.text),c))))].slice(0,3);}
+function borderColors187(photo){
+ const color=visualColors.join('|'),modifiers='and|or|e|o|with|holographic|reflective|foil|prismatic|metallic|outer|printed|card|colored|coloured|bright|dark|light|sparkling|solid';
+ const before=new RegExp('\\b(?:'+color+')(?:[ /-]+(?:'+color+'|'+modifiers+')){0,7}\\s+(?:border|bordo|cornice|frame)\\b','g');
+ const after=new RegExp('\\b(?:border|bordo|cornice|frame)(?:[ /-]+(?:is|in|color|colour|of))?\\s+(?:'+color+')(?:[ /-]+(?:and|or|e|o|'+color+')){0,4}\\b','g');
+ return [...new Set(physical(photo).filter(o=>o.feature==='color').flatMap(o=>[...visualWords(o.text).matchAll(before),...visualWords(o.text).matchAll(after)].flatMap(m=>visualColors.filter(c=>has(m[0],c)))))].slice(0,3);
+}
 function literalSpecifications187(photo,refs){
  const serial=serialEvidence184(photo),colors=borderColors187(photo),level=cardLevel185(photo),entries=[];
  if(!serial||!colors.length)return {entries};
@@ -1293,5 +1456,5 @@ schema.properties.detail_needed_from={type:'string',enum:['none','target','refer
 fieldSchema.properties.evidence={type:'string',enum:['text','image']};fieldSchema.required.push('evidence');
 fieldSchema.properties.field.enum.push('subject','variant');matchSchema.properties.feature.enum.push('appearance','color','pattern','finish');fieldSchema.properties.scope={type:'string',enum:['target','parent','holder','listing']};
 fieldSchema.properties.number_kind={type:'string',enum:['none','model_number','card_number','catalog_number','issue_number','year','season','serial','listing_id']};fieldSchema.required.push('scope','number_kind');
-const api={productHeading188,literalBoxSpecifications188,familyGrounded188,webDocuments188,labelContains188,classifyNumberReadings188,boxPlan188,catalogueInstructions188,individualEntry188,priorityClosure188,slabDiscrepancy187,letterAlias187,nameAlias187,subjectSpan187,familyConflict187,catalogueHeading187,borderColors187,slabClosure187,literalSpecifications187,checklistEntries186,checklistRow186,catalogueScope186,numberKey185,cardLevel185,cataloguePlan185,slabFacts185,slabClosure185,preserveObservedYear185,sportsCard184,parseSerial184,serialEvidence184,withSerial184,familyAgrees184,citedSources184,releaseEvidence184,specificationClosure184,familyKey,boxIdentity,observedSubject,reconcilePhotoOcr,collectorReadings,keySignature,physicalVariantProof,mergeCatalogueFields,referenceImageKey,cardKeyFacts,keyEvidence,detailRequests,photoIdentity,preservePhotoIdentity,catalogueTuple,referenceText,ambiguityScope,detailRegion,applyPhotoDetails,collectible,queryHypotheses,recoverableComparison,referenceRelevant,sharedObservedFacts,fuseComparisons,genericIdentity,harvestCode,rankReferences,targetUnit,trustedReferenceText,fallbackPlan,clueRole,completeComparison,auditIdentity,cataloguePending,quantityPairs,quantityMatches,printingPlan,identifierValue,seasonValue,variantPending,googleFirst,appearanceFeatures,compactReference,referenceImageUseful,clues,identifiers,seasonLike,physical,evidence,plan,configuration,observed,resolverPrompt,groundChecks,rankSources,validFields,catalogueName,ready,canonical,mergeCandidates,validate,Budget,schema,url,empty};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckVisual=api;
+const api={retainIdentity189,targetRecheck189,targetedDateEvidence189,imageTargetAffinity189,referenceImageCandidates189,productHeading188,literalBoxSpecifications188,familyGrounded188,webDocuments188,labelContains188,classifyNumberReadings188,boxPlan188,catalogueInstructions188,individualEntry188,priorityClosure188,slabDiscrepancy187,letterAlias187,nameAlias187,subjectSpan187,familyConflict187,catalogueHeading187,borderColors187,slabClosure187,literalSpecifications187,checklistEntries186,checklistRow186,catalogueScope186,numberKey185,cardLevel185,cataloguePlan185,slabFacts185,slabClosure185,preserveObservedYear185,sportsCard184,parseSerial184,serialEvidence184,withSerial184,familyAgrees184,citedSources184,releaseEvidence184,specificationClosure184,familyKey,boxIdentity,observedSubject,reconcilePhotoOcr,collectorReadings,keySignature,physicalVariantProof,mergeCatalogueFields,referenceImageKey,cardKeyFacts,keyEvidence,detailRequests,photoIdentity,preservePhotoIdentity,catalogueTuple,referenceText,ambiguityScope,detailRegion,applyPhotoDetails,collectible,queryHypotheses,recoverableComparison,referenceRelevant,sharedObservedFacts,fuseComparisons,genericIdentity,harvestCode,rankReferences,targetUnit,trustedReferenceText,fallbackPlan,clueRole,completeComparison,auditIdentity,cataloguePending,quantityPairs,quantityMatches,printingPlan,identifierValue,seasonValue,variantPending,googleFirst,appearanceFeatures,compactReference,referenceImageUseful,clues,identifiers,seasonLike,physical,evidence,plan,configuration,observed,resolverPrompt,groundChecks,rankSources,validFields,catalogueName,ready,canonical,mergeCandidates,validate,Budget,schema,url,empty};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckVisual=api;
 })(typeof window!=='undefined'?window:globalThis);

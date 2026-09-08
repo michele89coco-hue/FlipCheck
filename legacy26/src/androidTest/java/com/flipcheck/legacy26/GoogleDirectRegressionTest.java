@@ -51,6 +51,7 @@ public final class GoogleDirectRegressionTest {
             assertTrue("Bundled OCR should work without a model download",done.await(25,java.util.concurrent.TimeUnit.SECONDS));
             assertEquals("ok",output.get().getString("state"));assertEquals("on_device_reference_ocr",output.get().getString("origin"));
             assertTrue(output.get().getString("text").contains("ZX-430"));assertTrue(output.get().getString("text").contains("2018"));
+            assertEquals("Clear labels should not pay the latency of speculative rereads",1,output.get().getInt("pass_count"));
             org.json.JSONArray lines=output.get().getJSONArray("lines");assertTrue(lines.length()>=2);assertTrue(lines.getJSONObject(0).getDouble("width")>0);assertTrue(lines.getJSONObject(0).getDouble("x")>=0);
         }
     }
@@ -180,6 +181,85 @@ public final class GoogleDirectRegressionTest {
         JSONObject result=GoogleVisionBridge.pageData(html,"https://catalog.example/range",new org.json.JSONArray().put("ZX-430").put("2 batteries"));
         assertEquals("https://catalog.example/exact.jpg",result.getJSONArray("images").getString(0));
         JSONObject detail=result.getJSONArray("image_details").getJSONObject(0);assertEquals("https://catalog.example/exact.jpg",detail.getString("image_url"));assertTrue(detail.getString("caption").contains("2 batteries"));assertFalse(detail.getString("caption").contains("ZX-600"));
+    }
+
+    private static String encodedImage(android.graphics.Bitmap image) {
+        java.io.ByteArrayOutputStream bytes=new java.io.ByteArrayOutputStream();
+        image.compress(android.graphics.Bitmap.CompressFormat.PNG,100,bytes);
+        return "data:image/png;base64,"+android.util.Base64.encodeToString(bytes.toByteArray(),android.util.Base64.NO_WRAP);
+    }
+    private static JSONObject readLocalImage(String image,String id) throws Exception {
+        java.util.concurrent.CountDownLatch done=new java.util.concurrent.CountDownLatch(1);
+        java.util.concurrent.atomic.AtomicReference<JSONObject> output=new java.util.concurrent.atomic.AtomicReference<>();
+        try(LocalReferenceOcr reader=new LocalReferenceOcr()){
+            reader.read(id,image,result->{output.set(result);done.countDown();});
+            assertTrue("Bundled offline OCR completion",done.await(25,java.util.concurrent.TimeUnit.SECONDS));
+            assertEquals("ok",output.get().getString("state"));assertEquals(0,output.get().getInt("paid_requests"));
+            assertTrue(output.get().getInt("pass_count")<=6);
+            assertEquals("original_normalized",output.get().getString("coordinate_space"));
+            return output.get();
+        }
+    }
+    @Test public void actualBonifacePhotoRetainsCardNumberNameAndVerticalSerialOffline() throws Exception {
+        android.content.Context tests=androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().getContext();
+        java.io.ByteArrayOutputStream bytes=new java.io.ByteArrayOutputStream();
+        try(java.io.InputStream input=tests.getAssets().open("ocr/boniface-back.jpg")){
+            byte[] buffer=new byte[8192];int count;while((count=input.read(buffer))!=-1)bytes.write(buffer,0,count);
+        }
+        JSONObject result=readLocalImage("data:image/jpeg;base64,"+android.util.Base64.encodeToString(bytes.toByteArray(),android.util.Base64.NO_WRAP),"real-boniface-189");
+        String text=result.getString("text").toUpperCase(java.util.Locale.ROOT);
+        assertTrue(text,text.contains("BONIFACE"));assertTrue(text,text.matches("(?s).*NO[. ]*21.*"));
+        assertTrue("Actual photo serial must be OCR output, never fixture metadata: "+text,text.matches("(?s).*2\\s*/\\s*5.*"));
+        org.json.JSONArray lines=result.getJSONArray("lines");boolean foundSerial=false;
+        for(int i=0;i<lines.length();i++){
+            JSONObject line=lines.getJSONObject(i);if(!line.getString("text").matches("(?s).*2\\s*/\\s*5.*"))continue;
+            assertTrue("Vertical serial must map back to the right edge",line.getDouble("x")>.70);
+            assertTrue("Serial must remain in the original photo's middle",line.getDouble("y")>.45&&line.getDouble("y")<.65);
+            foundSerial=true;
+        }
+        assertTrue(foundSerial);
+    }
+    @Test public void sidewaysLabelIsRecoveredWithItsOriginalPhotoCoordinates() throws Exception {
+        android.graphics.Bitmap upright=android.graphics.Bitmap.createBitmap(1100,400,android.graphics.Bitmap.Config.ARGB_8888);
+        android.graphics.Canvas canvas=new android.graphics.Canvas(upright);canvas.drawColor(android.graphics.Color.WHITE);
+        android.graphics.Paint paint=new android.graphics.Paint(android.graphics.Paint.ANTI_ALIAS_FLAG);paint.setColor(android.graphics.Color.BLACK);paint.setTextSize(62);
+        canvas.drawText("SERIAL 2/5",40,100,paint);canvas.drawText("MODEL ZX-430",40,235,paint);
+        android.graphics.Matrix matrix=new android.graphics.Matrix();matrix.postRotate(90);
+        android.graphics.Bitmap sideways=android.graphics.Bitmap.createBitmap(upright,0,0,1100,400,matrix,true);
+        JSONObject result;
+        try{result=readLocalImage(encodedImage(sideways),"sideways-control-189");}finally{sideways.recycle();upright.recycle();}
+        assertTrue(result.getString("text"),result.getString("text").contains("ZX-430"));
+        org.json.JSONArray lines=result.getJSONArray("lines");boolean found=false;
+        for(int i=0;i<lines.length();i++){
+            JSONObject line=lines.getJSONObject(i);if(!line.getString("text").contains("2/5"))continue;
+            assertTrue(line.getDouble("x")>.70);assertTrue(line.getDouble("y")<.10);
+            assertTrue(line.getDouble("height")>line.getDouble("width"));found=true;
+        }
+        assertTrue(found);
+    }
+    @Test public void rotatedCropCoordinatesReturnToTheOriginalImageForEveryOrientation() {
+        android.graphics.RectF crop=new android.graphics.RectF(.2f,.4f,.8f,1f);
+        android.graphics.RectF[] expected={new android.graphics.RectF(.32f,.52f,.44f,.64f),new android.graphics.RectF(.32f,.76f,.44f,.88f),new android.graphics.RectF(.56f,.76f,.68f,.88f),new android.graphics.RectF(.56f,.52f,.68f,.64f)};
+        for(int i=0;i<4;i++){
+            android.graphics.RectF actual=LocalReferenceOcr.originalBounds(new android.graphics.Rect(20,40,40,80),100,200,crop,i*90);
+            assertEquals(expected[i].left,actual.left,.0001);assertEquals(expected[i].top,actual.top,.0001);
+            assertEquals(expected[i].right,actual.right,.0001);assertEquals(expected[i].bottom,actual.bottom,.0001);
+        }
+    }
+    @Test public void rereadingNeverChangesADigitOrConfusesASeparatePrintedNumber() throws Exception {
+        org.json.JSONArray lines=new org.json.JSONArray();
+        LocalReferenceOcr.mergeLine(lines,GoogleVisionBridge.json("text","No. 21","x",.2,"y",.3,"width",.2,"height",.05,"pass","original"));
+        LocalReferenceOcr.mergeLine(lines,GoogleVisionBridge.json("text","No.21","x",.2,"y",.3,"width",.2,"height",.05,"pass","upper_detail"));
+        assertEquals(1,lines.length());assertEquals(2,lines.getJSONObject(0).getInt("observation_count"));
+        LocalReferenceOcr.mergeLine(lines,GoogleVisionBridge.json("text","No. 27","x",.2,"y",.3,"width",.2,"height",.05,"pass","rotate_90"));
+        assertEquals("No. 21",lines.getJSONObject(0).getString("text"));assertTrue(lines.getJSONObject(0).getBoolean("ambiguous"));
+        assertEquals("No. 27",lines.getJSONObject(0).getJSONArray("alternatives").getJSONObject(0).getString("text"));
+        LocalReferenceOcr.mergeLine(lines,GoogleVisionBridge.json("text","No. 21","x",.8,"y",.8,"width",.1,"height",.05,"pass","original"));
+        assertEquals(2,lines.length());
+        org.json.JSONArray fractions=new org.json.JSONArray();
+        LocalReferenceOcr.mergeLine(fractions,GoogleVisionBridge.json("text","15/64","x",.2,"y",.3,"width",.2,"height",.05));
+        LocalReferenceOcr.mergeLine(fractions,GoogleVisionBridge.json("text","5/64","x",.2,"y",.3,"width",.2,"height",.05));
+        assertTrue(fractions.getJSONObject(0).getBoolean("ambiguous"));
     }
 
 }

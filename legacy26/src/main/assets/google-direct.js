@@ -62,7 +62,7 @@ async function references(found,options){
   if(document?.text&&!document.is_collection&&!titleSupported(p.pageTitle,document.text))return null;
   const text=document?.is_collection?(link?.title||''):document?.text||p.pageTitle;
   if(!text)return null;
-  return {id:'ref'+(i+1),url:referenceUrl,title,text:text.slice(0,5000),text_origin:document?.is_collection?'linked_image_title':document?.text?'retrieved_page':'google_indexed_title',image_url:image.url,image_data:data.image_data};
+  return {id:'ref'+(i+1),url:referenceUrl,title,text:text.slice(0,5000),text_origin:document?.is_collection?'linked_image_title':document?.text?'retrieved_page':'google_indexed_title',image_caption:list(document?.image_details).find(d=>imageKey(d.image_url)===imageKey(image.url))?.caption||link?.title||'',image_match_origin:'google_linked_match',image_url:image.url,image_data:data.image_data};
  }));
  const refs=results.filter(r=>r.status==='fulfilled'&&r.value).map(r=>r.value);
  // Global image matches have no attributed page. Retain them for visual discovery, without inventing one.
@@ -82,7 +82,7 @@ async function catalogueReferences(sources,options,base){
  const pages=list(sources).filter(s=>url(s.url)).slice(0,options?.textOnly?3:6),refs=[],attempts=[],textReferences=[];
  const subject=FlipCheckVisual.observedSubject(base||{}),serial=FlipCheckVisual.serialEvidence184(base),colors=FlipCheckVisual.physical(base||{}).filter(o=>o.feature==='color').map(o=>o.text.match(/\b(?:green|red|blue|gold|silver|black|white|purple)\b/i)?.[0]).filter(Boolean);
  const number=FlipCheckVisual.cardKeyFacts(base)?.number.value;
- const terms=[number&&subject?number+' '+subject.text:'',...(serial?colors.map(c=>c+' /'+serial.print_run):[]),subject?.text,...FlipCheckVisual.identifiers(base||{}).map(c=>c.text),base?.family,...FlipCheckVisual.evidence(base||{}).filter(FlipCheckVisual.configuration).map(c=>c.text),...colors,...FlipCheckVisual.evidence(base||{}).map(c=>c.text)].filter(Boolean).slice(0,12);
+ const terms=[...list(options?.evidenceTerms),number&&subject?number+' '+subject.text:'',...(serial?colors.map(c=>c+' /'+serial.print_run):[]),subject?.text,...FlipCheckVisual.identifiers(base||{}).map(c=>c.text),base?.family,...FlipCheckVisual.evidence(base||{}).filter(FlipCheckVisual.configuration).map(c=>c.text),...colors,...FlipCheckVisual.evidence(base||{}).map(c=>c.text)].filter(Boolean).slice(0,12);
  async function retrieve(s,i){
   const attempt={url:s.url,state:'requested'};attempts.push(attempt);
   try{
@@ -101,12 +101,12 @@ async function catalogueReferences(sources,options,base){
    if(!scope.eligible){attempt.state='excluded_catalogue_scope';attempt.reason=scope.reason;return null;}
    textReferences.push({id:'page'+(i+1),url:page.url||s.url,title:page.title||s.title,text:page.text.slice(0,5000),text_origin:'retrieved_page'});
    if(options?.textOnly){attempt.state='retrieved_text';return null;}
-   const images=list(page.images).map(url).filter(u=>u&&FlipCheckVisual.referenceImageUseful(u)).slice(0,2);
+   const eligibleImages=FlipCheckVisual.referenceImageCandidates189(page,base).filter(r=>url(r.image_url)),images=eligibleImages.slice(0,2);
+   attempt.image_candidates=list(page.images).length;attempt.image_eligible=eligibleImages.length;
    const pictures=[];
-   for(const image of images){
-    const picture=await call('image',{url:image},options);if(!picture.image_data)continue;
-    const detail=list(page.image_details).find(d=>imageKey(d.image_url)===imageKey(image));
-    pictures.push({id:'ref'+(i+1)+'i'+pictures.length,url:page.url||s.url,title:page.title||s.title,text:page.text.slice(0,5000),text_origin:'retrieved_page',image_caption:detail?.caption||'',image_url:image,image_data:picture.image_data});
+   for(const selected of images){
+    const image=selected.image_url,picture=await call('image',{url:image},options);if(!picture.image_data)continue;
+    pictures.push({id:'ref'+(i+1)+'i'+pictures.length,url:page.url||s.url,title:page.title||s.title,text:page.text.slice(0,5000),text_origin:'retrieved_page',image_caption:selected.image_caption,image_affinity:selected.image_affinity,image_url:image,image_data:picture.image_data});
    }
    if(pictures.length){attempt.state='retrieved_image';return pictures;}
    attempt.state=images.length?'image_unavailable':'no_linked_images';return null;
@@ -120,6 +120,6 @@ async function catalogueReferences(sources,options,base){
  return {state:'ok',references:refs.slice(0,6),textReferences,referenceAttempts:attempts.length,attempts,referenceState:refs.length?'retrieved':'no_accessible_page_images'};
 }
 
-function imageKey(value){try{const u=new URL(value);for(const key of ['width','height','w','h','quality'])u.searchParams.delete(key);return u.href;}catch(_){return '';}}
+function imageKey(value){return FlipCheckVisual.referenceImageKey({image_url:value})||'';}
 root.FlipCheckDirect={call,receive,normalize,references,catalogueReferences,url};
 })(typeof window==='undefined'?globalThis:window);

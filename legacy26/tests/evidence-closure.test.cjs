@@ -171,7 +171,7 @@ test('new printing readings require both frame edges to agree with the printing 
 });
 test('production final synchronization clears a stale uncertain status after exact closure',()=>{
  const photo=sport182(),env={V164:V,active164:()=>true,scan164:{},lastVisionReading:photo,canonTerm:s=>String(s).toLowerCase()};
- vm.createContext(env);vm.runInContext(runtime.slice(runtime.indexOf('function syncIdentity169('),runtime.indexOf('mergeResolvedFingerprint=function')),env);
+ vm.createContext(env);vm.runInContext(runtime.slice(runtime.indexOf('function rememberEvidence189('),runtime.indexOf('function newContext164(')),env);vm.runInContext(runtime.slice(runtime.indexOf('function syncIdentity169('),runtime.indexOf('mergeResolvedFingerprint=function')),env);
  const exact={...photo,core_identity:V.photoIdentity(photo),status:'uncertain',model:'Verified card',catalogue_verified:true,catalogue_core_verified:true,variant_needs_verification:false,catalogue_needs_verification:false,market_ready:true,normalized_query:'Verified card Green',model_verified:true,missing_information:['obsolete printing doubt'],next_photo_request:'obsolete request'};
  const out=env.syncIdentity169(exact);assert.equal(out.status,'identified');assert.equal(out.identity_status,'confirmed');assert.equal(out.exact_identity_status,'confirmed');assert.equal(out.next_photo_request,null);assert.equal(out.missing_information.length,0);
  env.scan164={};const pending=env.syncIdentity169(photo);assert.equal(pending.core_identity.status,'confirmed');assert.equal(pending.identity_status,'confirmed');assert.equal(pending.exact_identity_status,'variant_pending');assert.match(pending.verification_summary,/Identità principale verificata/);

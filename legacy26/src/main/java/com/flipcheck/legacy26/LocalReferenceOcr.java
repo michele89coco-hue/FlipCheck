@@ -2,17 +2,25 @@ package com.flipcheck.legacy26;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.os.SystemClock;
 import android.util.Base64;
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.text.TextRecognition;
 import com.google.mlkit.vision.text.TextRecognizer;
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /** Bundled Latin OCR. No API key, HTTP request or catalogue decision. */
@@ -23,6 +31,8 @@ final class LocalReferenceOcr implements AutoCloseable {
     private final Map<String,AtomicBoolean> jobs=new ConcurrentHashMap<>();
     private volatile boolean closed;
     private boolean resourcesClosed;
+    private static final int MAX_PASSES=6;
+    private static final long RECOVERY_BUDGET_MS=4500;
 
     static Bitmap decode(String data) throws IOException {
         if(data==null||data.length()>6000000||!data.startsWith("data:image/"))throw new IOException("invalid_image");
@@ -41,6 +51,102 @@ final class LocalReferenceOcr implements AutoCloseable {
         if(largest>2048){float scale=2048f/largest;Bitmap resized=Bitmap.createScaledBitmap(bitmap,Math.max(1,Math.round(bitmap.getWidth()*scale)),Math.max(1,Math.round(bitmap.getHeight()*scale)),true);if(resized!=bitmap)bitmap.recycle();bitmap=resized;}
         return bitmap;
     }
+
+    /** A crop/orientation never changes the coordinate system exported to callers. */
+    static RectF originalBounds(Rect box,int width,int height,RectF region,int clockwise) {
+        float[] corners={box.left/(float)width,box.top/(float)height,box.right/(float)width,box.bottom/(float)height};
+        float left=1,top=1,right=0,bottom=0;
+        for(int i=0;i<2;i++)for(int j=0;j<2;j++){
+            float x=corners[i*2],y=corners[j*2+1],u=x,v=y;
+            if(clockwise==90){u=y;v=1-x;}else if(clockwise==180){u=1-x;v=1-y;}else if(clockwise==270){u=1-y;v=x;}
+            u=region.left+u*region.width();v=region.top+v*region.height();
+            left=Math.min(left,u);right=Math.max(right,u);top=Math.min(top,v);bottom=Math.max(bottom,v);
+        }
+        return new RectF(Math.max(0,left),Math.max(0,top),Math.min(1,right),Math.min(1,bottom));
+    }
+    private static String textKey(String text){return text.toUpperCase(Locale.ROOT).replaceAll("[^\\p{L}\\p{N}/]","");}
+    private static String numberKey(String text){return text.replaceAll("[^0-9/]+",":").replaceAll("^:|:$","");}
+    private static RectF bounds(JSONObject line){return new RectF((float)line.optDouble("x"),(float)line.optDouble("y"),(float)(line.optDouble("x")+line.optDouble("width")),(float)(line.optDouble("y")+line.optDouble("height")));}
+    /** Reruns are observations, not independent votes or permission to invent characters. */
+    static void mergeLine(JSONArray lines,JSONObject candidate){
+        RectF b=bounds(candidate);String key=textKey(candidate.optString("text"));if(key.isEmpty())return;
+        for(int i=0;i<lines.length();i++){
+            JSONObject previous=lines.optJSONObject(i);if(previous==null)continue;RectF a=bounds(previous),intersection=new RectF(a);
+            float smaller=Math.min(a.width()*a.height(),b.width()*b.height());
+            if(smaller<=0||!intersection.intersect(b)||intersection.width()*intersection.height()/smaller<.65f)continue;
+            try{
+                if(textKey(previous.optString("text")).equals(key)){previous.put("observation_count",previous.optInt("observation_count",1)+1);return;}
+                // Partial lines must not be mistaken for contradictory collector numbers.
+                String old=textKey(previous.optString("text"));
+                if((old.contains(key)||key.contains(old))&&numberKey(old).equals(numberKey(key)))return;
+                JSONArray alternatives=previous.optJSONArray("alternatives");if(alternatives==null){alternatives=new JSONArray();previous.put("alternatives",alternatives);}
+                if(alternatives.length()<4)alternatives.put(candidate);
+                previous.put("ambiguous",true);return;
+            }catch(org.json.JSONException ignored){return;}
+        }
+        if(lines.length()<120)lines.put(candidate);
+    }
+    private static final class Pass {
+        final String name;final RectF region;final int rotation;final float zoom;
+        Pass(String name,RectF region,int rotation,float zoom){this.name=name;this.region=region;this.rotation=rotation;this.zoom=zoom;}
+        Bitmap image(Bitmap original){
+            int x=Math.max(0,Math.round(region.left*original.getWidth())),y=Math.max(0,Math.round(region.top*original.getHeight()));
+            int w=Math.min(original.getWidth()-x,Math.max(1,Math.round(region.width()*original.getWidth()))),h=Math.min(original.getHeight()-y,Math.max(1,Math.round(region.height()*original.getHeight())));
+            Bitmap current=Bitmap.createBitmap(original,x,y,w,h);
+            float scale=Math.min(zoom,2048f/Math.max(w,h));
+            if(Math.abs(scale-1)>.01f){Bitmap next=Bitmap.createScaledBitmap(current,Math.max(1,Math.round(w*scale)),Math.max(1,Math.round(h*scale)),true);if(next!=current&&current!=original)current.recycle();current=next;}
+            if(rotation!=0){Matrix matrix=new Matrix();matrix.postRotate(rotation);Bitmap next=Bitmap.createBitmap(current,0,0,current.getWidth(),current.getHeight(),matrix,true);if(next!=current&&current!=original)current.recycle();current=next;}
+            return current;
+        }
+    }
+    private final class ReadJob {
+        final String id;final AtomicBoolean cancelled;final Result callback;final Bitmap original;
+        final long started=SystemClock.elapsedRealtime();final JSONArray lines=new JSONArray(),passes=new JSONArray();
+        final List<Pass> pending=new ArrayList<>();int attempted;boolean succeeded;
+        ReadJob(String id,AtomicBoolean cancelled,Result callback,Bitmap original){this.id=id;this.cancelled=cancelled;this.callback=callback;this.original=original;pending.add(new Pass("original",new RectF(0,0,1,1),0,1));}
+        void next(){
+            if(closed||cancelled.get()||pending.isEmpty()||attempted>=MAX_PASSES||(attempted>0&&SystemClock.elapsedRealtime()-started>=RECOVERY_BUDGET_MS)){complete();return;}
+            Pass pass=pending.remove(0);Bitmap pixels;
+            try{pixels=pass.image(original);}catch(Exception error){complete();return;}
+            attempted++;
+            try{
+                recognizer.process(InputImage.fromBitmap(pixels,0)).addOnCompleteListener(worker,task->{
+                    try{
+                        int count=0,characters=0;boolean small=false;
+                        if(task.isSuccessful()){
+                            succeeded=true;
+                            for(com.google.mlkit.vision.text.Text.TextBlock block:task.getResult().getTextBlocks())for(com.google.mlkit.vision.text.Text.Line line:block.getLines()){
+                                Rect box=line.getBoundingBox();if(box==null||box.width()<=0||box.height()<=0)continue;
+                                count++;characters+=textKey(line.getText()).length();small|=Math.min(box.width(),box.height())<16;
+                                RectF mapped=originalBounds(box,pixels.getWidth(),pixels.getHeight(),pass.region,pass.rotation);
+                                JSONObject observation=GoogleVisionBridge.json("text",line.getText(),"x",mapped.left,"y",mapped.top,"width",mapped.width(),"height",mapped.height(),"pass",pass.name,"rotation_degrees",pass.rotation,"engine_confidence",line.getConfidence(),"observation_count",1);
+                                // Weak supplemental text may be foil/picture noise. Original observations remain visible.
+                                if(attempted==1||line.getConfidence()==0||line.getConfidence()>=.5f)mergeLine(lines,observation);
+                            }
+                        }
+                        passes.put(GoogleVisionBridge.json("name",pass.name,"rotation_degrees",pass.rotation,"state",task.isSuccessful()?"ok":"ocr_unavailable","line_count",count,"width",pixels.getWidth(),"height",pixels.getHeight()));
+                        boolean sparse=count<3&&characters<24;
+                        if(attempted==1&&task.isSuccessful()&&(sparse||small)){
+                            // Small print benefits from larger pixels; perpendicular serials need orientation recovery.
+                            pending.add(new Pass("rotate_90",new RectF(0,0,1,1),90,1));
+                            pending.add(new Pass("rotate_270",new RectF(0,0,1,1),270,1));
+                            if(sparse)pending.add(new Pass("rotate_180",new RectF(0,0,1,1),180,1));
+                            pending.add(new Pass("upper_detail",new RectF(0,0,1,.56f),0,2));
+                            pending.add(new Pass("lower_detail",new RectF(0,.44f,1,1),0,2));
+                        }
+                    }finally{if(pixels!=original)pixels.recycle();}
+                    next();
+                });
+            }catch(Exception error){if(pixels!=original)pixels.recycle();complete();}
+        }
+        void complete(){
+            StringBuilder text=new StringBuilder();int ambiguous=0;
+            for(int i=0;i<lines.length();i++){JSONObject line=lines.optJSONObject(i);if(line==null)continue;if(text.length()>0)text.append('\n');text.append(line.optString("text"));if(line.optBoolean("ambiguous"))ambiguous++;}
+            String value=text.substring(0,Math.min(4800,text.length()));
+            JSONObject result=GoogleVisionBridge.json("state",succeeded?"ok":"ocr_unavailable","origin","on_device_reference_ocr","script","latin","text",value,"lines",lines,"width",original.getWidth(),"height",original.getHeight(),"coordinate_space","original_normalized","passes",passes,"pass_count",attempted,"ambiguous_line_count",ambiguous,"elapsed_ms",SystemClock.elapsedRealtime()-started,"paid_requests",0);
+            original.recycle();finish(id,cancelled,callback,result);
+        }
+    }
     synchronized void read(String id,String image,Result callback) {
         if(closed||jobs.size()>=3||jobs.containsKey(id)){callback.accept(GoogleVisionBridge.json("state","ocr_unavailable"));return;}
         AtomicBoolean cancelled=new AtomicBoolean();jobs.put(id,cancelled);
@@ -48,19 +154,7 @@ final class LocalReferenceOcr implements AutoCloseable {
             if(closed||cancelled.get()){jobs.remove(id,cancelled);shutdownIfIdle();return;}
             Bitmap bitmap;
             try{bitmap=decode(image);}catch(Exception e){finish(id,cancelled,callback,GoogleVisionBridge.json("state","invalid_image"));return;}
-            try {
-                recognizer.process(InputImage.fromBitmap(bitmap,0)).addOnCompleteListener(worker,task->{
-                    try {
-                        String text=task.isSuccessful()?task.getResult().getText():"";
-                        org.json.JSONArray lines=new org.json.JSONArray();
-                        if(task.isSuccessful())for(com.google.mlkit.vision.text.Text.TextBlock block:task.getResult().getTextBlocks())for(com.google.mlkit.vision.text.Text.Line line:block.getLines()){
-                            android.graphics.Rect box=line.getBoundingBox();if(box==null||lines.length()>=100)continue;
-                            lines.put(GoogleVisionBridge.json("text",line.getText(),"x",Math.max(0,box.left)/(double)bitmap.getWidth(),"y",Math.max(0,box.top)/(double)bitmap.getHeight(),"width",box.width()/(double)bitmap.getWidth(),"height",box.height()/(double)bitmap.getHeight()));
-                        }
-                        finish(id,cancelled,callback,GoogleVisionBridge.json("state",task.isSuccessful()?"ok":"ocr_unavailable","origin","on_device_reference_ocr","script","latin","text",text.substring(0,Math.min(4800,text.length())),"lines",lines,"width",bitmap.getWidth(),"height",bitmap.getHeight()));
-                    } finally {bitmap.recycle();shutdownIfIdle();}
-                });
-            } catch(Exception e){bitmap.recycle();finish(id,cancelled,callback,GoogleVisionBridge.json("state","ocr_unavailable"));}
+            new ReadJob(id,cancelled,callback,bitmap).next();
         });
     }
     private void finish(String id,AtomicBoolean cancelled,Result callback,JSONObject result){

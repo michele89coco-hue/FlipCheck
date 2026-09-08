@@ -8,11 +8,12 @@ android {
         applicationId 'com.flipcheck.beta.legacy26fix'
         minSdk 23
         targetSdk 36
-        versionCode 188
-        versionName '0.26.12-evidence-priority'
+        versionCode 189
+        versionName '0.27.0-release-candidate'
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         buildConfigField 'String', 'SOURCE_COMMIT', '"' + (System.getenv('GIT_COMMIT') ?: 'local') + '"'
     }
+    testBuildType 'release'
     buildFeatures { buildConfig true }
     signingConfigs {
         compatible {
@@ -26,6 +27,11 @@ android {
     }
     buildTypes {
         debug { if (System.getenv('FLIPCHECK_KEYSTORE_PATH')) signingConfig signingConfigs.compatible }
+        release {
+            debuggable false
+            minifyEnabled false
+            if (System.getenv('FLIPCHECK_KEYSTORE_PATH')) signingConfig signingConfigs.compatible
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
