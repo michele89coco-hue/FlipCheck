@@ -75,3 +75,9 @@ test('a truncated checklist cannot donate the following unnamed section variants
  const l=sport(),page={url:src.url,title:'2018-19 Panini Prizm Basketball Checklist',text:'280 Example\nChecklist Top\nPrizms Parallels:\nChoice Green /8\n3 Example\n### Fireworks Checklist\n280 Example\nGreen'};
  const records=C.records([page],l);assert.deepEqual(records.find(e=>e.number==='280'&&e.subset==='Base').variants,[]);assert.equal(records.find(e=>e.number==='3').subset,'Unspecified checklist section');
 });
+
+test('a generic pattern cannot turn a missing color reference into a request for another photo',()=>{
+ const l=sport();l.add('pattern','geometric',{certainty:'clear',image_index:1});
+ const r=E.reduce(l,[sportsCard({variants:[{name:'Choice Nebula',patterns:['nebula'],print_run:1},{name:'Blue Ice',colors:['blue'],patterns:['ice'],print_run:99}]})]);
+ assert.equal(r.market_ready,false);assert.equal(r.next_photo_request,null);assert.equal(r.assistance_state,'source_detail_needed');
+});

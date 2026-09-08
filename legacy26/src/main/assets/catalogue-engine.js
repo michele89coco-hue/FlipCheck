@@ -222,7 +222,7 @@ function variantState(l,group){
  }else if(l.domain==='sports'||l.domain==='onepiece'){
   const compatible=options.filter(v=>(!sn||v.unnumbered!==true&&(v.print_run===undefined||v.print_run===null||(v.max_print_run?sn.print_run<=+v.print_run:+v.print_run===sn.print_run)))&&(!v.colors?.length||!k.colors.length||v.colors.every(c=>k.colors.includes(c)))&&(!v.patterns?.length||!k.patterns.filter(p=>!['geometric','dots','squares'].includes(p)).length||v.patterns.some(p=>k.patterns.includes(p))));
   fields.variant_candidates=compatible;
-  fields.needs_catalogue=options.length===0||compatible.length===0;
+  fields.needs_catalogue=options.length===0||compatible.length===0||k.colors.length>0&&!compatible.some(v=>v.colors?.some(c=>k.colors.includes(c))||v.patterns?.some(p=>k.patterns.includes(p)&&!['geometric','dots','squares'].includes(p))||sn&&+v.print_run===sn.print_run);
   const compared=l.pick('catalogue_variant'),candidate=compared?compatible.find(v=>same(v.name,compared.value)):compatible.length===1?compatible[0]:null;
   const supported=candidate&&!candidate.max_print_run&&(!candidate.print_run||sn&&+candidate.print_run===sn.print_run)&&(!candidate.colors?.length||candidate.colors.every(c=>k.colors.includes(c)))&&(!candidate.patterns?.length||candidate.patterns.every(p=>k.patterns.includes(p)))&&(candidate.visual_required!==true||!!compared);
   if(supported&&(compared&&(!compared.reference_source||compared.reference_source===candidate.source?.url)||sn||candidate.colors?.length||candidate.patterns?.length||candidate.name==='Base'&&l.pick('finish')?.value==='normal')){labels.push(candidate.name);proof.push({field:'variant',value:candidate.name,source:candidate.source});}
