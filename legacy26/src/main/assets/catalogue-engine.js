@@ -8,7 +8,7 @@ const presenceFields=['stamp','shadow','rarity_symbol','autograph','patch'];
 function semanticField(domain,field,value){
  const t=norm(value);
  if(!['product','subset'].includes(field))return field;
- if(domain==='pokemon'&&/^(?:evolves? from|evolves? into|evolve da|evoluzione di|stage [012]|fase [012]|basic pokemon|pokemon base|trainer|allenatore|energy|energia)\b/.test(t))return 'card_type';
+ if(domain==='pokemon'&&(/^(?:evolves? from|evolves? into|evolve da|evoluzione di|stage [012]|fase [012])\b/.test(t)||/^(?:basic pokemon|pokemon base|trainer|allenatore|energy|energia)$/.test(t)))return 'card_type';
  if(domain==='onepiece'&&/^(?:character|leader|event|stage|counter|strike|slash|ranged|special|wisdom)(?:\s|$)/.test(t))return 'card_type';
  if(domain==='onepiece'&&field==='subset')return 'card_traits';
  if(domain==='sports'&&/^(?:rc(?: card)?|rookie(?: card)?|rated rookie|rookie shield)$/.test(t))return 'badge';

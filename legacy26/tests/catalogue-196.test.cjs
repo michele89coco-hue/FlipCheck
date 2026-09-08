@@ -81,3 +81,9 @@ test('a generic pattern cannot turn a missing color reference into a request for
  const r=E.reduce(l,[sportsCard({variants:[{name:'Choice Nebula',patterns:['nebula'],print_run:1},{name:'Blue Ice',colors:['blue'],patterns:['ice'],print_run:99}]})]);
  assert.equal(r.market_ready,false);assert.equal(r.next_photo_request,null);assert.equal(r.assistance_state,'source_detail_needed');
 });
+
+test('real product names starting with type words remain catalogue constraints',()=>{
+ for(const name of ['Trainer Gallery','Pokemon Base Set','Energy Collection'])assert.equal(E.semanticField('pokemon','product',name),'product');
+ for(const name of ['Trainer','Energy','Pokemon Base'])assert.equal(E.semanticField('pokemon','product',name),'card_type');
+ assert.equal(E.semanticField('sports','product','Rookie Signatures'),'product');
+});
