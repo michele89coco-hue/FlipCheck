@@ -149,6 +149,7 @@ async function compareVariants193(l,result,ctx,pages){
   const url=linked?.url||linked?.image_url;if(!url||!l.attempt('variant-image:'+url))continue;
   try{const r=await directCall165('image',{url},ctx,7000);if(r.status===200&&r.image_data){refs.push({id:'variant'+refs.length,variant,source:page.url,image_data:r.image_data});saveEvidence192('reference',r.image_data,{url,source:page.url,variant:variant.name});}}catch(error){guard164(ctx);}
  }
+ if(l.domain==='onepiece'&&refs.length!==candidates.length){l.record('variant_comparison_unavailable',{reason:'incomplete_artwork_references',expected:candidates.length,available:refs.length});return;}
  if(!refs.length){l.record('variant_comparison_unavailable',{reason:'no_attributed_variant_images'});return;}
  const photo=await visualPhoto164(lastVisionReading||l.base);guard164(ctx);
  if(window.FlipCheckImageEvidence){try{const E=FlipCheckImageEvidence,a=E.signature(await E.pixels(photo.data));ctx.localReferenceComparisons=[];for(const ref of refs){const b=E.signature(await E.pixels(ref.image_data));ctx.localReferenceComparisons.push({reference_id:ref.id,variant:ref.variant.name,...E.compare(a,b)});}saveEvidence192('reading','',{local_comparisons:ctx.localReferenceComparisons});}catch(error){guard164(ctx);}}
@@ -160,7 +161,7 @@ async function compareVariants193(l,result,ctx,pages){
  if(matches.length===1){const c=matches[0],ref=refs.find(r=>r.id===c.reference_id);if(ref){for(const f of c.features.filter(f=>f.agrees&&f.certainty==='clear')){
    const values=f.field==='border_color'?E193.tokens(f.original,E193.COLOR_WORDS):f.field==='pattern'?E193.tokens(f.original,E193.PATTERNS):f.field==='finish'?[E193.finish(f.original)]:[];
    for(const value of values)if(value)l.add(f.field,value,{source:'variant_comparison',certainty:'clear',image_index:photo.meta.imageIndex,raw:f.original});
-  }l.add('catalogue_variant',ref.variant.name,{source:'variant_comparison',certainty:'clear',image_index:photo.meta.imageIndex,reference_source:ref.source});}}
+  }l.add('catalogue_variant',ref.variant.id||ref.variant.name,{source:'variant_comparison',certainty:'clear',image_index:photo.meta.imageIndex,reference_source:ref.source});}}
  l.record('variant_comparison',{reply,references:refs.map(({image_data,...ref})=>ref)});diagnosticPhases.push({stage:'flipcheck_variant_comparison',result:reply,webCalls:0,usage:response.usage||null});
 }
 async function resolveCatalogue193(base,ctx){
@@ -179,7 +180,9 @@ async function resolveCatalogue193(base,ctx){
   await localShadow193(l,result,ctx);result=commitCatalogue193(l,entries,ctx);
   let requests=E193.recoveryRequests(l,result).filter(r=>r.field!=='variant');
   result=await detailRead193(l,ctx,requests,entries)||commitCatalogue193(l,entries,ctx);
-  if(result.core_identity.status==='confirmed'&&result.variant_resolution.pending.some(f=>['variant','autograph','patch'].includes(f))){
+  // Official code-scoped artwork can resolve a promo before another web search.
+  if(l.domain==='onepiece'){await compareVariants193(l,result,ctx,pages);result=commitCatalogue193(l,entries,ctx);}
+  if(result.core_identity.status==='confirmed'&&result.variant_resolution.pending.some(f=>['variant','autograph','patch'].includes(f))&&(result.variant_resolution.needs_catalogue||!result.variant_resolution.variant_candidates?.length||result.variant_resolution.pending.some(f=>['autograph','patch'].includes(f)))){
    const found=await searchCatalogue193(l,ctx,'variant',pages);entries.push(...found.entries);pages=found.pages;result=commitCatalogue193(l,entries,ctx);
   }
   await compareVariants193(l,result,ctx,pages);result=commitCatalogue193(l,entries,ctx);

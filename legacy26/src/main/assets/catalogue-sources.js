@@ -29,30 +29,32 @@ function titleFamily(p,l){
 function itemAttributes(name){const colors=E.tokens(name,E.COLOR_WORDS),patterns=E.tokens(name,E.PATTERNS).filter(p=>!['geometric','dots','squares'].includes(p));return {colors,patterns};}
 function variantsFromLines(lines,src){
  const out=[];for(const line of lines){
-  const text=line.trim().replace(/^[•*+\-]\s+/,''),m=text.match(/^([A-Za-z][A-Za-z &'-]{1,65}?)\s*(?:[-–—:]?\s*(?:\/|#'?d\s+to|numbered\s+to))\s*(\d{1,6})(\s+or less)?\s*$/i);
-  if(m){out.push({name:m[1].trim(),print_run:+m[2],max_print_run:!!m[3],...itemAttributes(m[1]),source:src,quote:text});continue;}
-  if(text.length<65&&E.tokens(text,E.COLOR_WORDS).length&&/^[a-z &'-]+$/i.test(text)&&!/^base |^look |^the |^each |^all |cards|box|year|set/i.test(text))out.push({name:text,unnumbered:true,...itemAttributes(text),source:src,quote:text});
+  const quote=line.trim().replace(/^[•*+\-]\s+/,''),text=quote.replace(/\s+1\/1$/,' /1'),m=text.match(/^([A-Za-z][A-Za-z &'-]{1,65}?)\s*(?:[-–—:]?\s*(?:\/|#'?d\s+to|numbered\s+to))\s*(\d{1,6})(\s+or less)?\s*$/i);
+  if(m){out.push({name:m[1].trim(),print_run:+m[2],max_print_run:!!m[3],...itemAttributes(m[1]),source:src,quote});continue;}
+  if(text.length<65&&E.tokens(text,E.COLOR_WORDS).length&&/^[a-z &'-]+$/i.test(text)&&!/^base |^look |^the |^each |^all |cards|box|year|set/i.test(text))out.push({name:text,unnumbered:true,...itemAttributes(text),source:src,quote});
  }return out;
 }
 function cardRows(p,l){
  const text=pageText(p),lines=text.split('\n'),k=E.keyValues(l),out=[],src=source(p),family=titleFamily(p,l);
- let section='Base',sectionLines=[],sectionEntries=[];
- const flush=()=>{const variants=variantsFromLines(sectionLines,src);for(const e of sectionEntries)e.variants=variants.map(v=>({...v}));sectionLines=[];sectionEntries=[];};
+ let section='Base',sectionKnown=false,sectionLines=[],sectionEntries=[];
+ const baseRanges=[...text.matchAll(/\b(Terrace|Mezzanine|Field Level)\s*:\s*#?s?\s*(\d+)\s*[-–]\s*(\d+)/gi)];
+ const flush=()=>{const variants=/^(?:Unspecified checklist section|Full Checklist|Team Checklist|Complete Checklist)$/i.test(section)?[]:variantsFromLines(sectionLines,src);for(const e of sectionEntries)e.variants=variants.map(v=>({...v}));sectionLines=[];sectionEntries=[];};
  for(const line of lines){
   const t=line.trim(),heading=t.replace(/^#{1,6}\s+/,'');
-  if(/^Checklist Top$/i.test(t)){flush();section='Unspecified checklist section';continue;}
-  const isHeading=t.length<160&&(/^(?:#{1,6}\s+).*(?:Checklist|Base & Parallel Details)/i.test(t)||/^(?:Base(?: Set)?|[A-Z0-9][A-Za-z0-9 &’'!()/-]{2,140}) Checklist$/.test(t));
+  if(/^Checklist Top$/i.test(t)){flush();section='Unspecified checklist section';sectionKnown=false;continue;}
+  const isHeading=t.length<160&&(/^(?:Base(?: Set)?|Base\s*[-–]\s*(?:Terrace|Mezzanine|Field Level))$/i.test(t)||/^(?:#{1,6}\s+).*(?:Checklist|Base & Parallel Details)/i.test(t)||/^(?:Base(?: Set)?|[A-Z0-9][A-Za-z0-9 &’'!()/-]{2,140}) Checklist$/.test(t));
   if(isHeading){
    let next=heading;
    if(/autograph|signature|insert|memorabilia|pairing|terrace|terrance|mezzanine|field level/i.test(heading))next=heading;
    else if(/base|Base & Parallel Details/i.test(heading)||E.norm(heading).includes(E.norm(family)))next='Base';
-   if(next!==null){flush();section=next;}
+   if(next!==null){flush();section=next;sectionKnown=!/^(?:full|team|complete) checklist$/i.test(heading); }
   }
   sectionLines.push(t);
   const row=t.match(/^#?([A-Z]{0,8}-?\d+[A-Z]?(?:\/[A-Z]*\d+)?)\s+(.*)$/i);
   if(!row||!k.subject)continue;
-  const name=row[2].split(/\s[-–—|]\s/)[0].trim();if(!E.subjectMatch(name,k.subject))continue;
-  const e={subject:name,number:row[1],family,year:E.season(p.title||text),brand:l.base.brand||'',language:k.language,subset:/terrace|terrance/i.test(section)?'Terrace':/mezzanine/i.test(section)?'Mezzanine':/field level/i.test(section)?'Field Level':section,variants:[],source:src,grounded:true,entry_quote:t,coverage:'documented_variants'};
+  const name=row[2].split(/\s[-–—|]\s|,\s/)[0].trim();if(!E.subjectMatch(name,k.subject))continue;
+  const range=(!sectionKnown||section==='Base')&&baseRanges.find(m=>+row[1]>=+m[2]&&+row[1]<=+m[3]),rowSection=range?range[1]:section;
+  const e={subject:name,number:row[1],family,year:E.season(p.title||text),brand:l.base.brand||'',language:k.language,subset:/terrace|terrance/i.test(rowSection)?'Terrace':/mezzanine/i.test(rowSection)?'Mezzanine':/field level/i.test(rowSection)?'Field Level':rowSection,subset_known:!!range||sectionKnown,variants:[],source:src,grounded:true,entry_quote:t,coverage:'documented_variants'};
   out.push(e);sectionEntries.push(e);
  }
  flush();return out;
@@ -84,8 +86,10 @@ function bandaiEntries(p,l){
  for(let i=0;i<starts.length;i++){
   const m=starts[i],body=text.slice(m.index+m[0].length,starts[i+1]?.index||text.length),printedName=body.trim().split('\n')[0].trim(),name=printedName.replace(/\s*\(Parallel\)\s*$/i,''),family=body.match(/Card Set\(s\)\s+([^\n]+)/)?.[1]?.trim();
   if(!E.subjectMatch(name,k.subject)||!family)continue;
+  const siblings=starts.filter(x=>x[1]===m[1]),sameEdition=siblings.every(x=>{const b=text.slice(x.index+x[0].length,starts[starts.indexOf(x)+1]?.index||text.length);return b.trim().split('\n')[0].trim()===printedName&&b.match(/Card Set\(s\)\s+([^\n]+)/)?.[1]?.trim()===family;});
+  const images=sameEdition?list(p.image_details).filter(im=>{try{const u=new URL(im.url||im.image_url);return /(^|\.)onepiece-cardgame\.com$/.test(u.hostname)&&new RegExp('/'+m[1]+'(?:_p[0-9]+)?\\.(?:png|jpg|webp)$','i').test(u.pathname);}catch(_){return false;}}):[];
   const variantName=family+(/\(Parallel\)/i.test(printedName)?' · Parallel Artwork':''),image=starts.length===1?list(p.image_details).find(i=>E.norm([i.caption,i.alt,i.title,i.url,i.image_url].join(' ')).includes(E.norm(m[1]))):null;
-  out.push({subject:name,number:m[1],family:m[1].startsWith('P-')?'Promotional Cards':m[1].split('-')[0],catalogue_set:family,year:'',language:'en',brand:'Bandai',rarity:m[2],variants:[{name:variantName,visual_required:true,image_url:image?.url||image?.image_url||'',source:source(p)}],source:source(p),grounded:true,entry_quote:m[0]+body.slice(0,Math.min(body.length,1600))});
+  out.push({subject:name,number:m[1],family:m[1].startsWith('P-')?'Promotional Cards':m[1].split('-')[0],catalogue_set:family,year:'',language:'en',brand:'Bandai',rarity:m[2],variants:images.length?images.map(im=>({id:im.url||im.image_url,name:variantName,visual_required:true,image_url:im.url||im.image_url,source:source(p)})):[{name:variantName,visual_required:true,image_url:image?.url||image?.image_url||'',source:source(p)}],source:source(p),grounded:true,entry_quote:m[0]+body.slice(0,Math.min(body.length,1600))});
  }return out;
 }
 function tableEntries(p,l){

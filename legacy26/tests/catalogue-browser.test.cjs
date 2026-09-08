@@ -27,7 +27,7 @@ before(async()=>{
    if(options.hold&&kind==='flipcheck_identification')await new Promise(r=>release=r);
    if(options.httpError&&kind==='flipcheck_identification')return route.fulfill({status:401,json:{error:{message:'Offline unauthorized'}}}).catch(()=>{});
    if(options.incomplete&&kind==='flipcheck_identification'&&api.length===1)return route.fulfill({json:{status:'incomplete',incomplete_details:{reason:'max_output_tokens'},output:[{type:'message',content:[{type:'output_text',text:'{'}]}],usage:{input_tokens:350,output_tokens:150}}});
-   let payload=kind==='flipcheck_identification'?(options.packet||d.vision):kind==='flipcheck_evidence_detail'?{details:options.details||[]} :kind==='flipcheck_catalogue_comparison'?{comparisons:options.coreComparisons||[]}:kind==='flipcheck_variant_comparison'?{comparisons:options.comparisons||[]}: {entries:[]};
+   let payload=kind==='flipcheck_identification'?(options.packet||d.vision):kind==='flipcheck_evidence_detail'?{details:options.details||[]} :kind==='flipcheck_catalogue_comparison'?{comparisons:options.coreComparisons||[]}:kind==='flipcheck_variant_comparison'?{comparisons:options.comparisons||[]}: {entries:options.catalogueEntries||[]};
    if(options.malformed&&kind==='flipcheck_identification'){const r=envelope(payload);r.output[0].content[0].text='bad-json';return route.fulfill({json:r});}
    const pages=(d.pages||[]).filter(p=>p.url),web=kind==='flipcheck_catalogue_search'?pages.map(p=>({...p,source_text:p.source_text||p.text||'',snippet:p.text||p.source_text||''})):[];
    return route.fulfill({json:envelope(payload,web)}).catch(()=>{});
@@ -154,4 +154,20 @@ test('197 large reports retain all data beyond the old native 400k limit and cap
   const large={identification:null,scanStatus:'technical_error',visualAssistance:{state:'service_unavailable',textReferences:[{url:'https://catalog.example/card',text:'x'.repeat(8000000)}]}},bounded=diagnosticPayload197(large);
   return {lossless:JSON.stringify(JSON.parse(plain))===JSON.stringify(normal),plainLength:plain.length,boundedLength:bounded.length,reduced:JSON.parse(bounded),originalLength:large.visualAssistance.textReferences[0].text.length};
  });assert.equal(checks.lossless,true);assert.ok(checks.plainLength>400000);assert.ok(checks.boundedLength<8000000);assert.equal(checks.reduced.diagnosticExport.truncated,true);assert.equal(checks.reduced.scanStatus,'technical_error');assert.equal(checks.originalLength,8000000);
+});
+
+const D197=JSON.parse(require('node:zlib').gunzipSync(fs.readFileSync(path.join(__dirname,'fixtures/diagnostics-197.json.gz'))));
+function replay197Options(n,extra={}){const recorded=D197[n];return {packet:recorded.vision,photoCount:n>1?2:1,catalogueEntries:recorded.phases.find(p=>p.stage==='flipcheck_catalogue_search')?.result.entries||[],mutate(d){d.pages=recorded.pages;d.photoOcr=recorded.photoOcr;},...extra};}
+test('198 actual Boniface pipeline resolves recorded /5 after canonical checklist grouping',async()=>{
+ await reset('boniface',replay197Options(2,{details:D197[2].phases.find(p=>p.stage==='flipcheck_evidence_detail').result.details}));const out=await scan();assert.equal(out.identification.market_ready,true,JSON.stringify(out.identification));assert.equal(out.identification.physical_serial.value,'2/5');assert.equal(out.identification.variant,'Green');assert.equal(stages().filter(s=>s==='flipcheck_catalogue_search').length,1);assert.ok(events.some(e=>e.kind==='end'));
+});
+test('198 actual Doncic pipeline preserves base and unresolved parallel without a redundant search',async()=>{
+ await reset('doncic',replay197Options(3));const out=await scan();assert.equal(out.identification.core_identity.status,'confirmed');assert.equal(out.identification.market_ready,false);assert.equal(stages().filter(s=>s==='flipcheck_catalogue_search').length,1);assert.equal(out.identification.assistance_state,'physical_detail_needed');
+});
+const artworkMatch=id=>({reference_id:id,match:true,conflicts:[],features:[{field:'artwork',original:'Distinct foreground pose and buildings',reference:'Distinct foreground pose and buildings',agrees:true,certainty:'clear'},{field:'stamp',original:'4th Anniversary lower-left emblem',reference:'4th Anniversary lower-left emblem',agrees:true,certainty:'clear'}]});
+test('198 official same-code artworks are compared before search, with the selected image preserved',async()=>{
+ await reset('politoed',replay197Options(1,{comparisons:[artworkMatch('variant1')]}));const out=await scan();assert.equal(out.identification.market_ready,true,JSON.stringify(out.identification));assert.match(out.identification.variant_resolution.proof[0].image_url,/P-110_p1/);assert.deepEqual(stages(),['flipcheck_identification','flipcheck_variant_comparison']);assert.equal(native.filter(n=>n.action==='image').length,2);assert.equal(await page.locator('#marketBtn').isDisabled(),false);
+});
+test('198 matching both official artworks leaves the print unresolved and still allows saving the report',async()=>{
+ await reset('politoed',replay197Options(1,{comparisons:[artworkMatch('variant0'),artworkMatch('variant1')]}));const out=await scan();assert.equal(out.identification.core_identity.status,'confirmed');assert.equal(out.identification.market_ready,false);assert.match(out.identification.next_photo_request,/illustrazione/);await page.locator('#saveScanDiagnostic').click();await page.waitForTimeout(30);const saved=events.find(e=>e.kind==='diagnostic');assert.ok(saved);assert.equal(JSON.parse(saved.snapshot).identification.core_identity.status,'confirmed');
 });
