@@ -234,3 +234,15 @@ if(process.env.FLIPCHECK_DIAGNOSTICS_191_DIR){
   });
  }
 }
+
+test('192 cancellation during image preparation cannot cache a late crop or start recognition',async()=>{
+ await openScenario('cloyster');
+ await page.evaluate(()=>{
+  window.evidenceKinds=[];FlipCheckGoogle.storeEvidence=(kind)=>evidenceKinds.push(kind);
+  const originalDecode=decodeVisual164;decodeVisual164=file=>new Promise((resolve,reject)=>{window.releaseImageDecode=()=>originalDecode(file).then(resolve,reject);});
+ });
+ await page.locator('#identifyBtn').click();await page.waitForFunction(()=>typeof releaseImageDecode==='function');
+ await page.locator('#cancelScan').click();await page.evaluate(()=>releaseImageDecode());await page.waitForFunction(()=>!apiBusy);
+ assert.equal(api.length,0);assert.notEqual((await report()).identification?.market_ready,true);
+ assert.equal(await page.evaluate(()=>evidenceKinds.includes('crop')),false);assert.equal(hostEvents.find(e=>e.kind==='end')?.outcome,'cancelled');
+});

@@ -240,11 +240,12 @@ async function decodeVisual164(file){if(window.createImageBitmap)return createIm
 function saveEvidence192(kind,data,metadata){try{window.FlipCheckGoogle?.storeEvidence?.(kind,data||'',JSON.stringify(metadata||{}));}catch(_){} }
 function evidenceInfo192(){try{return JSON.parse(window.FlipCheckGoogle?.evidenceInfo?.()||'{}');}catch(_){return {};}}
 async function visualPhoto164(base){
- const cache=scan164&&(scan164.preparedPhotos||(scan164.preparedPhotos=new Map())),cacheKey=JSON.stringify([base.object_region,base.detail_crop,base.search_window,base.object_unit]);
- if(cache?.has(cacheKey)){scan164.imageCacheHits=(scan164.imageCacheHits||0)+1;return cache.get(cacheKey);}
+ const ctx=scan164,cache=ctx&&(ctx.preparedPhotos||(ctx.preparedPhotos=new Map())),cacheKey=JSON.stringify([base.object_region,base.detail_crop,base.search_window,base.object_unit]);
+ if(cache?.has(cacheKey)){ctx.imageCacheHits=(ctx.imageCacheHits||0)+1;return cache.get(cacheKey);}
  const sourceFiles=files.filter(Boolean),r=base.object_region;const index=r?.image_index>0&&r.image_index<=sourceFiles.length?r.image_index:1;
- if(scan164&&window.FlipCheckGoogle?.storeEvidence){const originals=scan164.originalsSaved||(scan164.originalsSaved=new Set());if(!originals.has(index)){originals.add(index);const original=sourceFiles[index-1];if(original.size<=8000000){const data=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=reject;reader.readAsDataURL(original);});saveEvidence192('original',data,{image_index:index,mime:original.type,bytes:original.size});}}}
+ if(ctx&&window.FlipCheckGoogle?.storeEvidence){const originals=ctx.originalsSaved||(ctx.originalsSaved=new Set());if(!originals.has(index)){originals.add(index);const original=sourceFiles[index-1];if(original.size<=8000000){const data=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=reject;reader.readAsDataURL(original);});guard164(ctx);saveEvidence192('original',data,{image_index:index,mime:original.type,bytes:original.size});}}}
  const image=await decodeVisual164(sourceFiles[index-1]);try{
+  if(ctx)guard164(ctx);
   const w=image.naturalWidth||image.width,h=image.naturalHeight||image.height;let rect={x:0,y:0,width:w,height:h},cropped=false;
   const minimum=base.detail_crop?.003:.05;
   if((r?.certain||base.search_window===true)&&r&&[r.x,r.y,r.width,r.height].every(Number.isFinite)&&r.x>=0&&r.y>=0&&r.width>minimum&&r.height>minimum&&r.x+r.width<=1.001&&r.y+r.height<=1.001){
