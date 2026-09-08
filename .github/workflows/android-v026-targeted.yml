@@ -1,7 +1,7 @@
 name: FlipCheck 26 targeted fixes
 on:
   push:
-    branches: [codex/v0262-google-visual, codex/v0262-evidence-recovery-177, codex/v0262-background-quality-178, codex/v0262-photo-evidence-179, codex/v0262-key-evidence-180, codex/v0262-evidence-181, codex/card-box-closure-182, codex/universal-key-closure-183, codex/format-serial-closure-184, codex/checklist-slab-serial-185, codex/checklist-evidence-repair-186, codex/slab-alias-checklist-187, codex/evidence-priority-188, codex/release-evidence-189, codex/release-ocr-190, codex/identity-final-191, codex/identity-final-192, codex/catalogue-engine-193, codex/catalogue-language-separation]
+    branches: [codex/v0262-google-visual, codex/v0262-evidence-recovery-177, codex/v0262-background-quality-178, codex/v0262-photo-evidence-179, codex/v0262-key-evidence-180, codex/v0262-evidence-181, codex/card-box-closure-182, codex/universal-key-closure-183, codex/format-serial-closure-184, codex/checklist-slab-serial-185, codex/checklist-evidence-repair-186, codex/slab-alias-checklist-187, codex/evidence-priority-188, codex/release-evidence-189, codex/release-ocr-190, codex/identity-final-191, codex/identity-final-192, codex/catalogue-engine-193, codex/catalogue-language-separation, codex/state-fixes-195]
   workflow_dispatch:
 permissions:
   contents: read
@@ -46,12 +46,12 @@ jobs:
         run: |
           ./gradlew :legacy26:assembleRelease :legacy26:assembleReleaseAndroidTest --no-daemon --console=plain
           mkdir -p artifact
-          cp legacy26/build/outputs/apk/release/legacy26-release.apk artifact/FlipCheck-v0.29.1-Language-194.apk
-          sha256sum artifact/FlipCheck-v0.29.1-Language-194.apk > artifact/FlipCheck-v0.29.1-Language-194.sha256
-          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose --print-certs artifact/FlipCheck-v0.29.1-Language-194.apk > artifact/apksigner-report.txt
+          cp legacy26/build/outputs/apk/release/legacy26-release.apk artifact/FlipCheck-v0.29.2-StateFix-195.apk
+          sha256sum artifact/FlipCheck-v0.29.2-StateFix-195.apk > artifact/FlipCheck-v0.29.2-StateFix-195.sha256
+          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose --print-certs artifact/FlipCheck-v0.29.2-StateFix-195.apk > artifact/apksigner-report.txt
           grep -q 'Signer #1 certificate SHA-256 digest: d4d02478ea31cb6bd83228047e9accd7dfb191ed991a4c8e8c06a228e54614c7' artifact/apksigner-report.txt
-          "$ANDROID_HOME/build-tools/36.0.0/aapt" dump badging artifact/FlipCheck-v0.29.1-Language-194.apk > artifact/apk-analyzer-report.txt
-          grep -q "package: name='com.flipcheck.beta.legacy26fix' versionCode='194' versionName='0.29.1-language'" artifact/apk-analyzer-report.txt
+          "$ANDROID_HOME/build-tools/36.0.0/aapt" dump badging artifact/FlipCheck-v0.29.2-StateFix-195.apk > artifact/apk-analyzer-report.txt
+          grep -q "package: name='com.flipcheck.beta.legacy26fix' versionCode='195' versionName='0.29.2-state-fixes'" artifact/apk-analyzer-report.txt
           if grep -q 'application-debuggable' artifact/apk-analyzer-report.txt; then exit 1; fi
           cp /tmp/flipcheck26-printing.png artifact/browser-printing.png
       - name: Enable emulator acceleration
