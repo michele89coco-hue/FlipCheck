@@ -14,7 +14,7 @@ function fixture(){
 function evaluate(d){return V.validate(d.base,{candidates:[d.candidate],detail_needed_from:'none'},[d.ref]);}
 function runtime(base){
  const ctx={comparisonHistory:[],comparisons:[],recoveries:[],provider:{},photoOcr:[],budget:new V.Budget()},env={V164:V,lastVisionReading:base,scan164:ctx,status:()=>{},guard164:()=>{},addUsage:()=>{},recordClosure164:()=>{},syncIdentity169:x=>x,parseResponseJSON:x=>x,estimate164:()=>.001,schemaFormat:(name,schema)=>({text:{format:{name,type:'json_schema',strict:true,schema}}}),recoverableText166:()=>false};
- vm.createContext(env);
+ Object.assign(env,{S191:require('../src/main/assets/slab-identity.js'),F191:require('../src/main/assets/identity-final.js')});vm.createContext(env);
  vm.runInContext(source.slice(source.indexOf('function comparisonBody169('),source.indexOf('async function resolvePrinting168(')),env);
  return {env,ctx};
 }

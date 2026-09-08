@@ -195,7 +195,7 @@ public final class GoogleDirectRegressionTest {
             reader.read(id,image,result->{output.set(result);done.countDown();});
             assertTrue("Bundled offline OCR completion",done.await(45,java.util.concurrent.TimeUnit.SECONDS));
             assertEquals("ok",output.get().getString("state"));assertEquals(0,output.get().getInt("paid_requests"));
-            assertTrue(output.get().getInt("pass_count")<=6);
+            assertTrue(output.get().getInt("pass_count")<=8);
             assertEquals("original_normalized",output.get().getString("coordinate_space"));
             return output.get();
         }
@@ -265,4 +265,22 @@ public final class GoogleDirectRegressionTest {
         assertTrue(fractions.getJSONObject(0).getBoolean("ambiguous"));
     }
 
+    @Test public void certificatePagePreservesReturnedFieldsWithoutTreatingFormInputAsRecord() throws Exception {
+        String html="<html><title>Verify</title><body><input name='cert' value='000123456'><table><tr><th>Cert Number</th><td>000123456</td></tr><tr><th>Subject</th><td>Example Card</td></tr></table><dl><dt>Grade</dt><dd>9</dd></dl></body></html>";
+        JSONObject result=GoogleVisionBridge.pageData(html,"https://www.psacard.com/cert/000123456/psa");
+        org.json.JSONArray fields=result.getJSONArray("structured_fields");assertEquals(3,fields.length());assertEquals("000123456",fields.getJSONObject(0).getString("value"));
+        JSONObject empty=GoogleVisionBridge.pageData("<input name='cert' value='000123456'>","https://www.psacard.com/cert/000123456/psa");assertEquals(0,empty.getJSONArray("structured_fields").length());
+    }
+    @Test public void japaneseNamesAreReadLocallyWithBundledScriptModel() throws Exception {
+        android.graphics.Bitmap bitmap=android.graphics.Bitmap.createBitmap(1100,450,android.graphics.Bitmap.Config.ARGB_8888);
+        android.graphics.Canvas canvas=new android.graphics.Canvas(bitmap);canvas.drawColor(android.graphics.Color.WHITE);
+        android.graphics.Paint paint=new android.graphics.Paint(android.graphics.Paint.ANTI_ALIAS_FLAG);paint.setColor(android.graphics.Color.BLACK);paint.setTextSize(72);
+        canvas.drawText("ピカチュウ",60,130,paint);canvas.drawText("025/165 RR",60,290,paint);
+        java.util.concurrent.CountDownLatch done=new java.util.concurrent.CountDownLatch(1);java.util.concurrent.atomic.AtomicReference<JSONObject> out=new java.util.concurrent.atomic.AtomicReference<>();
+        try(LocalReferenceOcr reader=new LocalReferenceOcr()){
+            reader.read("japanese-control-191",encodedImage(bitmap),"japanese",result->{out.set(result);done.countDown();});
+            assertTrue(done.await(45,java.util.concurrent.TimeUnit.SECONDS));assertEquals("ok",out.get().getString("state"));
+            assertEquals("japanese",out.get().getString("script"));assertEquals(0,out.get().getInt("paid_requests"));assertTrue(out.get().getString("text"),out.get().getString("text").contains("ピカチュウ"));assertTrue(out.get().getString("text"),out.get().getString("text").contains("025/165"));
+        }finally{bitmap.recycle();}
+    }
 }

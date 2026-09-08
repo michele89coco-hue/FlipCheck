@@ -103,7 +103,7 @@ test('original printing recovery supersedes both a wrong match and its stale rej
 });
 test('focused recovery tries a smaller complete request when the first plan exceeds remaining budget',()=>{
  const {base,ref}=fixture(),ctx={comparisonHistory:[],budget:{maxUsd:.03,spent:()=>.023}},env={V164:V,lastVisionReading:base,scan164:ctx,schemaFormat:(name,schema)=>({text:{format:{name,schema}}}),estimate164:b=>b.max_output_tokens===1600?.0072:.0068};
- vm.createContext(env);vm.runInContext(runtime.slice(runtime.indexOf('function comparisonBody169('),runtime.indexOf('function expandFocused174(')),env);
+ Object.assign(env,{S191:require('../src/main/assets/slab-identity.js'),F191:require('../src/main/assets/identity-final.js')});vm.createContext(env);vm.runInContext(runtime.slice(runtime.indexOf('function comparisonBody169('),runtime.indexOf('function expandFocused174(')),env);
  const planned=env.planComparison179(base,[{data:'synthetic',meta:{imageIndex:1}}],[{...ref,image_data:'synthetic'}],ctx,'Verify the missing field.');assert.equal(planned.body.max_output_tokens,1400);assert.ok(planned.estimatedUsd<=.007);
 });
 
@@ -171,14 +171,14 @@ test('new printing readings require both frame edges to agree with the printing 
 });
 test('production final synchronization clears a stale uncertain status after exact closure',()=>{
  const photo=sport182(),env={V164:V,active164:()=>true,scan164:{},lastVisionReading:photo,canonTerm:s=>String(s).toLowerCase()};
- vm.createContext(env);vm.runInContext(runtime.slice(runtime.indexOf('function rememberEvidence189('),runtime.indexOf('function newContext164(')),env);vm.runInContext(runtime.slice(runtime.indexOf('function syncIdentity169('),runtime.indexOf('mergeResolvedFingerprint=function')),env);
+ Object.assign(env,{S191:require('../src/main/assets/slab-identity.js'),F191:require('../src/main/assets/identity-final.js')});vm.createContext(env);vm.runInContext(runtime.slice(runtime.indexOf('function rememberEvidence189('),runtime.indexOf('function newContext164(')),env);vm.runInContext(runtime.slice(runtime.indexOf('function syncIdentity169('),runtime.indexOf('mergeResolvedFingerprint=function')),env);
  const exact={...photo,core_identity:V.photoIdentity(photo),status:'uncertain',model:'Verified card',catalogue_verified:true,catalogue_core_verified:true,variant_needs_verification:false,catalogue_needs_verification:false,market_ready:true,normalized_query:'Verified card Green',model_verified:true,missing_information:['obsolete printing doubt'],next_photo_request:'obsolete request'};
  const out=env.syncIdentity169(exact);assert.equal(out.status,'identified');assert.equal(out.identity_status,'confirmed');assert.equal(out.exact_identity_status,'confirmed');assert.equal(out.next_photo_request,null);assert.equal(out.missing_information.length,0);
  env.scan164={};const pending=env.syncIdentity169(photo);assert.equal(pending.core_identity.status,'confirmed');assert.equal(pending.identity_status,'confirmed');assert.equal(pending.exact_identity_status,'variant_pending');assert.match(pending.verification_summary,/Identità principale verificata/);
 });
 test('production comparison planning keeps the relevant variant when the budget permits only one reference',()=>{
  const base=sport182(),ctx={comparisonHistory:[],photoOcr:[],budget:new V.Budget()},env={V164:V,lastVisionReading:base,scan164:ctx,schemaFormat:(name,schema)=>({text:{format:{name,schema}}}),estimate164:body=>((JSON.stringify(body).match(/"type":"input_image"/g)||[]).length)*.01};
- vm.createContext(env);vm.runInContext(runtime.slice(runtime.indexOf('function comparisonBody169('),runtime.indexOf('function expandFocused174(')),env);
+ Object.assign(env,{S191:require('../src/main/assets/slab-identity.js'),F191:require('../src/main/assets/identity-final.js')});vm.createContext(env);vm.runInContext(runtime.slice(runtime.indexOf('function comparisonBody169('),runtime.indexOf('function expandFocused174(')),env);
  ctx.budget.maxUsd=.021;
  const refs=['Silver','Green'].map((variant,i)=>({id:variant,url:'https://catalog.example/'+i,title:'Alex Rivera '+variant+' Prism 73',text:'Alex Rivera 73',text_origin:'retrieved_page',image_data:'synthetic'}));
  refs[0].ocr={state:'ok',text:'NO. 73'};

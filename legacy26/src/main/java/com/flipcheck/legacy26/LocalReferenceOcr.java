@@ -3,6 +3,10 @@ package com.flipcheck.legacy26;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.Canvas;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.SystemClock;
@@ -11,6 +15,7 @@ import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.text.TextRecognition;
 import com.google.mlkit.vision.text.TextRecognizer;
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
+import com.google.mlkit.vision.text.japanese.JapaneseTextRecognizerOptions;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,15 +28,16 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-/** Bundled Latin OCR. No API key, HTTP request or catalogue decision. */
+/** Bundled Latin/Japanese OCR. No API key, HTTP request or catalogue decision. */
 final class LocalReferenceOcr implements AutoCloseable {
     interface Result {void accept(JSONObject value);}
     private final ExecutorService worker=Executors.newSingleThreadExecutor();
     private final TextRecognizer recognizer=TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS);
+    private TextRecognizer japaneseRecognizer;
     private final Map<String,AtomicBoolean> jobs=new ConcurrentHashMap<>();
     private volatile boolean closed;
     private boolean resourcesClosed;
-    private static final int MAX_PASSES=6;
+    private static final int MAX_PASSES=8;
     private static final long RECOVERY_BUDGET_MS=8000;
 
     static Bitmap decode(String data) throws IOException {
@@ -87,8 +93,9 @@ final class LocalReferenceOcr implements AutoCloseable {
         if(lines.length()<120)lines.put(candidate);
     }
     private static final class Pass {
-        final String name;final RectF region;final int rotation;final float zoom;
-        Pass(String name,RectF region,int rotation,float zoom){this.name=name;this.region=region;this.rotation=rotation;this.zoom=zoom;}
+        final String name;final RectF region;final int rotation;final float zoom;final boolean invert;
+        Pass(String name,RectF region,int rotation,float zoom){this(name,region,rotation,zoom,false);}
+        Pass(String name,RectF region,int rotation,float zoom,boolean invert){this.name=name;this.region=region;this.rotation=rotation;this.zoom=zoom;this.invert=invert;}
         Bitmap image(Bitmap original){
             int x=Math.max(0,Math.round(region.left*original.getWidth())),y=Math.max(0,Math.round(region.top*original.getHeight()));
             int w=Math.min(original.getWidth()-x,Math.max(1,Math.round(region.width()*original.getWidth()))),h=Math.min(original.getHeight()-y,Math.max(1,Math.round(region.height()*original.getHeight())));
@@ -96,21 +103,30 @@ final class LocalReferenceOcr implements AutoCloseable {
             float scale=Math.min(zoom,2048f/Math.max(w,h));
             if(Math.abs(scale-1)>.01f){Bitmap next=Bitmap.createScaledBitmap(current,Math.max(1,Math.round(w*scale)),Math.max(1,Math.round(h*scale)),true);if(next!=current&&current!=original)current.recycle();current=next;}
             if(rotation!=0){Matrix matrix=new Matrix();matrix.postRotate(rotation);Bitmap next=Bitmap.createBitmap(current,0,0,current.getWidth(),current.getHeight(),matrix,true);if(next!=current&&current!=original)current.recycle();current=next;}
+            if(invert){
+                Bitmap next=Bitmap.createBitmap(current.getWidth(),current.getHeight(),Bitmap.Config.ARGB_8888);
+                // Foil serials are often light on dark; retain the original observations too.
+                // Grayscale inversion with modest contrast makes those strokes dark on light.
+                ColorMatrix gray=new ColorMatrix();gray.setSaturation(0);
+                ColorMatrix contrast=new ColorMatrix(new float[]{-1.5f,0,0,0,319,0,-1.5f,0,0,319,0,0,-1.5f,0,319,0,0,0,1,0});contrast.postConcat(gray);
+                Paint paint=new Paint(Paint.FILTER_BITMAP_FLAG);paint.setColorFilter(new ColorMatrixColorFilter(contrast));new Canvas(next).drawBitmap(current,0,0,paint);
+                if(current!=original)current.recycle();current=next;
+            }
             return current;
         }
     }
     private final class ReadJob {
-        final String id;final AtomicBoolean cancelled;final Result callback;final Bitmap original;
+        final String id,script;final TextRecognizer engine;final AtomicBoolean cancelled;final Result callback;final Bitmap original;
         final long started=SystemClock.elapsedRealtime();final JSONArray lines=new JSONArray(),passes=new JSONArray();
         final List<Pass> pending=new ArrayList<>();int attempted;boolean succeeded;long baselineElapsed,recoveryStarted;
-        ReadJob(String id,AtomicBoolean cancelled,Result callback,Bitmap original){this.id=id;this.cancelled=cancelled;this.callback=callback;this.original=original;pending.add(new Pass("original",new RectF(0,0,1,1),0,1));}
+        ReadJob(String id,String script,TextRecognizer engine,AtomicBoolean cancelled,Result callback,Bitmap original){this.id=id;this.script=script;this.engine=engine;this.cancelled=cancelled;this.callback=callback;this.original=original;pending.add(new Pass("original",new RectF(0,0,1,1),0,1));}
         void next(){
             if(closed||cancelled.get()||pending.isEmpty()||attempted>=MAX_PASSES||(recoveryStarted>0&&SystemClock.elapsedRealtime()-recoveryStarted>=RECOVERY_BUDGET_MS)){complete();return;}
             Pass pass=pending.remove(0);Bitmap pixels;
             try{pixels=pass.image(original);}catch(Exception error){complete();return;}
             attempted++;
             try{
-                recognizer.process(InputImage.fromBitmap(pixels,0)).addOnCompleteListener(worker,task->{
+                engine.process(InputImage.fromBitmap(pixels,0)).addOnCompleteListener(worker,task->{
                     try{
                         int count=0,characters=0;boolean small=false;
                         if(task.isSuccessful()){
@@ -134,6 +150,8 @@ final class LocalReferenceOcr implements AutoCloseable {
                             if(!sparse){
                                 pending.add(new Pass("right_edge_90",new RectF(.5f,.15f,1,.85f),90,2));
                                 pending.add(new Pass("left_edge_270",new RectF(0,.15f,.5f,.85f),270,2));
+                                pending.add(new Pass("right_edge_inverted_90",new RectF(.6f,.2f,1,.8f),90,3,true));
+                                pending.add(new Pass("left_edge_inverted_270",new RectF(0,.2f,.4f,.8f),270,3,true));
                             }
                             pending.add(new Pass("rotate_90",new RectF(0,0,1,1),90,1));
                             pending.add(new Pass("rotate_270",new RectF(0,0,1,1),270,1));
@@ -152,24 +170,28 @@ final class LocalReferenceOcr implements AutoCloseable {
             StringBuilder text=new StringBuilder();int ambiguous=0;
             for(int i=0;i<lines.length();i++){JSONObject line=lines.optJSONObject(i);if(line==null)continue;if(text.length()>0)text.append('\n');text.append(line.optString("text"));if(line.optBoolean("ambiguous"))ambiguous++;}
             String value=text.substring(0,Math.min(4800,text.length()));
-            JSONObject result=GoogleVisionBridge.json("state",succeeded?"ok":"ocr_unavailable","origin","on_device_reference_ocr","script","latin","text",value,"lines",lines,"width",original.getWidth(),"height",original.getHeight(),"coordinate_space","original_normalized","passes",passes,"pass_count",attempted,"ambiguous_line_count",ambiguous,"elapsed_ms",SystemClock.elapsedRealtime()-started,"baseline_elapsed_ms",baselineElapsed,"recovery_elapsed_ms",recoveryStarted==0?0:SystemClock.elapsedRealtime()-recoveryStarted,"recovery_budget_ms",RECOVERY_BUDGET_MS,"paid_requests",0);
+            JSONObject result=GoogleVisionBridge.json("state",succeeded?"ok":"ocr_unavailable","origin","on_device_reference_ocr","script",script,"text",value,"lines",lines,"width",original.getWidth(),"height",original.getHeight(),"coordinate_space","original_normalized","passes",passes,"pass_count",attempted,"ambiguous_line_count",ambiguous,"elapsed_ms",SystemClock.elapsedRealtime()-started,"baseline_elapsed_ms",baselineElapsed,"recovery_elapsed_ms",recoveryStarted==0?0:SystemClock.elapsedRealtime()-recoveryStarted,"recovery_budget_ms",RECOVERY_BUDGET_MS,"paid_requests",0);
             original.recycle();finish(id,cancelled,callback,result);
         }
     }
-    synchronized void read(String id,String image,Result callback) {
+    void read(String id,String image,Result callback) {read(id,image,"latin",callback);}
+    synchronized void read(String id,String image,String requestedScript,Result callback) {
         if(closed||jobs.size()>=3||jobs.containsKey(id)){callback.accept(GoogleVisionBridge.json("state","ocr_unavailable"));return;}
         AtomicBoolean cancelled=new AtomicBoolean();jobs.put(id,cancelled);
         worker.execute(()->{
             if(closed||cancelled.get()){jobs.remove(id,cancelled);shutdownIfIdle();return;}
             Bitmap bitmap;
             try{bitmap=decode(image);}catch(Exception e){finish(id,cancelled,callback,GoogleVisionBridge.json("state","invalid_image"));return;}
-            new ReadJob(id,cancelled,callback,bitmap).next();
+            String script="japanese".equals(requestedScript)?"japanese":"latin";
+            TextRecognizer engine=recognizer;
+            if("japanese".equals(script)){if(japaneseRecognizer==null)japaneseRecognizer=TextRecognition.getClient(new JapaneseTextRecognizerOptions.Builder().build());engine=japaneseRecognizer;}
+            new ReadJob(id,script,engine,cancelled,callback,bitmap).next();
         });
     }
     private void finish(String id,AtomicBoolean cancelled,Result callback,JSONObject result){
         jobs.remove(id,cancelled);if(!closed&&!cancelled.get())callback.accept(result);shutdownIfIdle();
     }
     void cancel(String id){AtomicBoolean cancelled=jobs.get(id);if(cancelled!=null)cancelled.set(true);}
-    private synchronized void shutdownIfIdle(){if(closed&&jobs.isEmpty()&&!resourcesClosed){resourcesClosed=true;recognizer.close();worker.shutdown();}}
+    private synchronized void shutdownIfIdle(){if(closed&&jobs.isEmpty()&&!resourcesClosed){resourcesClosed=true;recognizer.close();if(japaneseRecognizer!=null)japaneseRecognizer.close();worker.shutdown();}}
     @Override public synchronized void close(){closed=true;for(AtomicBoolean cancelled:jobs.values())cancelled.set(true);shutdownIfIdle();}
 }

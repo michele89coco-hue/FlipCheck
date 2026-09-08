@@ -120,9 +120,10 @@ public final class GoogleVisionBridge {
         });
     }
     @JavascriptInterface public boolean ocrAvailable(){return !closed;}
-    @JavascriptInterface public void readText(String id,String image){
+    @JavascriptInterface public void readText(String id,String image){readTextScript(id,image,"latin");}
+    @JavascriptInterface public void readTextScript(String id,String image,String script){
         if(closed||id==null||!id.matches("[a-zA-Z0-9_-]{8,100}")||image==null||image.length()>6000000)return;
-        main.post(()->{if(!closed&&"https://flipcheck.local/index.html".equals(web.getUrl()))localOcr.read(id,image,result->deliver(id,result));});
+        main.post(()->{if(!closed&&"https://flipcheck.local/index.html".equals(web.getUrl()))localOcr.read(id,image,script,result->deliver(id,result));});
     }
     private void execute(String id, String action, Request request, int redirects) {
         Call call=("detect".equals(action)?googleClient:client).newCall(request);calls.put(id,call);
@@ -172,6 +173,17 @@ public final class GoogleVisionBridge {
     static JSONObject pageData(String html, String pageUrl) {return pageData(html,pageUrl,new JSONArray());}
     static JSONObject pageData(String html, String pageUrl, JSONArray terms) {
         Document doc=Jsoup.parse(html,pageUrl);
+        JSONArray structuredFields=new JSONArray();
+        for(Element row:doc.select("tr")) {
+            org.jsoup.select.Elements cells=row.select("th,td");
+            if(structuredFields.length()<80&&cells.size()==2&&cells.get(0).text().length()<50&&cells.get(1).text().length()<500)
+                structuredFields.put(json("label",cells.get(0).text(),"value",cells.get(1).text()));
+        }
+        for(Element term:doc.select("dt")) {
+            Element definition=term.nextElementSibling();
+            if(structuredFields.length()<80&&definition!=null&&definition.tagName().equals("dd")&&term.text().length()<50&&definition.text().length()<500)
+                structuredFields.put(json("label",term.text(),"value",definition.text()));
+        }
         LinkedHashSet<String> images=new LinkedHashSet<>();
         StringBuilder productText=new StringBuilder();
         for(Element script:doc.select("script[type=application/ld+json]")) {
@@ -229,7 +241,7 @@ public final class GoogleVisionBridge {
         for(Element row:content.select("tr"))row.appendText("\n");
         for(Element block:content.select("p,li,h1,h2,h3,section,div,br"))block.appendText("\n");
         String text=(doc.title()+"\n"+productText+"\n"+content.wholeText()).replaceAll("[\\t\\x0B\\f\\r ]+"," ").replaceAll(" *\n *","\n").replaceAll("\n{3,}","\n\n").trim();
-        return json("status",200,"url",pageUrl,"title",doc.title(),"text",selectPageText(text,terms),"text_selection","observed_terms","images",new JSONArray(images),"image_details",new JSONArray(images.stream().map(imageDetails::get).collect(java.util.stream.Collectors.toList())),"image_links",imageLinks,"is_collection",productText.length()==0&&linkedPages.size()>1&&(doc.title().matches("(?i).*(?:all products|search results|gallery|catalogue list).*")||pageUrl.matches("(?i).*/(?:shop|search|collection|category|gallery)[^/]*[/?].*")));
+        return json("status",200,"url",pageUrl,"title",doc.title(),"structured_fields",structuredFields,"text",selectPageText(text,terms),"text_selection","observed_terms","images",new JSONArray(images),"image_details",new JSONArray(images.stream().map(imageDetails::get).collect(java.util.stream.Collectors.toList())),"image_links",imageLinks,"is_collection",productText.length()==0&&linkedPages.size()>1&&(doc.title().matches("(?i).*(?:all products|search results|gallery|catalogue list).*")||pageUrl.matches("(?i).*/(?:shop|search|collection|category|gallery)[^/]*[/?].*")));
     }
     // Select literal passages before imposing the transfer limit. A checklist row
     // near the end of a page must not disappear behind its introductory article.

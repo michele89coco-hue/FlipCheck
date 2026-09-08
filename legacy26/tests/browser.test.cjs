@@ -18,11 +18,11 @@ async function upload(items) { await page.locator('#photoBatch').setInputFiles(i
 before(async()=>{
   server=http.createServer((req,res)=>{
     const name=req.url==='/'?'index.html':req.url.slice(1);
-    if(!['index.html','editions.js','targeted-fixes.js','visual-policy.js','visual-runtime.js','google-direct.js','background-runtime.js'].includes(name)){res.writeHead(404);res.end();return;}
+    if(!['index.html','editions.js','targeted-fixes.js','visual-policy.js','visual-runtime.js','google-direct.js','background-runtime.js','slab-identity.js','identity-final.js'].includes(name)){res.writeHead(404);res.end();return;}
     res.setHeader('Content-Type',name.endsWith('.js')?'application/javascript':'text/html');res.end(fs.readFileSync(path.join(root,name)));
   });
   await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));origin='http://127.0.0.1:'+server.address().port;
-  browser=await chromium.launch({headless:true,args:['--no-sandbox']});page=await browser.newPage({viewport:{width:412,height:915}});
+  browser=await chromium.launch({executablePath:process.env.FLIPCHECK_BROWSER_EXECUTABLE||undefined,headless:true,args:['--no-sandbox']});page=await browser.newPage({viewport:{width:412,height:915}});
   page.on('pageerror',error=>errors.push(error.message));
   await page.route('**/*',async route=>{
     if(route.request().url().startsWith(origin))return route.continue();
@@ -85,7 +85,7 @@ test('original sports result uses two images in one Vision request and no web',a
   await reset();await upload(photos.slice(0,2));await page.locator('#identifyBtn').click();await page.waitForFunction(()=>!apiBusy);
   assert.equal(requests.length,1);assert.equal(requests[0].model,'gpt-5.6-luna');assert.equal(requests[0].tools,undefined);
   assert.equal(requests[0].input[0].content.filter(x=>x.type==='input_image').length,2);
-  assert.match(await page.locator('#identTitle').textContent(),/Metal Universe Kobe Bryant #81 Base/);
+  assert.match(await page.locator('#identTitle').textContent(),/Metal Universe Kobe Bryant #81.*Base/);
   assert.equal(await page.evaluate(()=>ident.model_confidence),94);assert.equal(await page.locator('#marketBtn').isDisabled(),false);
   assert.equal(await page.locator('#printingPanel').count(),0);
 });

@@ -18,7 +18,7 @@ test('real Cloyster label searches card identity and specialist catalogues in th
 });
 test('real slab closes from a scoped catalogue title and matching row without a certificate page',()=>{
  const p=photo('cloyster'),r=reference('2002 Expedition Checklist','2002 Expedition Checklist\n8 Cloyster Holo Rare\n9 Another Creature');
- const out=V.slabClosure185(V.auditIdentity(p),p,[r]);assert.equal(out.market_ready,true);assert.equal(E.apply(out,p.pokemon_printing,1).printing_check.complete,true);assert.equal(out.slab_verification.certificate_verified,false);
+ const out=V.slabClosure185(V.auditIdentity(p),p,[r]);assert.equal(out.market_ready,true);assert.equal(E.apply(out,p.pokemon_printing,1),out);assert.equal(out.slab_verification.certificate_verified,false);
  for(const r of [reference('2003 Expedition Checklist','2003 Expedition Checklist\n8 Cloyster'),reference('2002 Expedition Checklist','2002 Expedition Checklist\n9 Cloyster\n8 Another Creature'),reference('2002 Expedition Cloyster #9'),reference('2002 Other Series Cloyster #8')])assert.notEqual(V.slabClosure185(V.auditIdentity(p),p,[r]).market_ready,true,r.text);
 });
 test('real unreadable vertical serial triggers rotated original side and remains unknown until read',()=>{
@@ -71,7 +71,7 @@ test('2002 post-Neo western releases exclude stamps without excluding Neo Destin
 test('187 actual Charizard label closes after one web attempt despite unnumbered promo terminology',()=>{
  const d=actual186.charizard,p=structuredClone(d.photo),out=V.slabClosure187(V.auditIdentity(p),p,d.rawSources,{attempted:true,completed:true});
  assert.equal(V.ready(out),true);assert.match(out.model,/1999.*CD PROMO.*#6.*CHARIZARD/);assert.equal(out.slab_verification.certificate_verified,false);
- assert.equal(out.core_identity.origin,'photo_slab_label');assert.equal(out.catalogue_core_verified,false);assert.equal(E.apply(out,p.pokemon_printing,1).printing_check.complete,true);
+ assert.equal(out.core_identity.origin,'photo_slab_label');assert.equal(out.catalogue_core_verified,false);assert.equal(E.apply(out,p.pokemon_printing,1),out);
  assert.equal(V.ready(V.slabClosure187(V.auditIdentity(p),p,[],{attempted:false,completed:false})),false);
 });
 test('187 slab certificate, grade and missing catalogue number do not obstruct the readable title',()=>{

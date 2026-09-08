@@ -47,12 +47,12 @@ async function clickIdentify(){await page.locator('#identifyBtn').click();await 
 before(async()=>{
  server=http.createServer((req,res)=>{const name=req.url==='/'?'index.html':req.url.slice(1);if(!/^(?:index\.html|[a-z-]+\.js)$/.test(name)||!fs.existsSync(path.join(assets,name))){res.writeHead(404);return res.end();}res.setHeader('Content-Type',name.endsWith('.js')?'application/javascript':'text/html');res.end(fs.readFileSync(path.join(assets,name)));});
  await new Promise(r=>server.listen(0,'127.0.0.1',r));origin='http://127.0.0.1:'+server.address().port;
- browser=await chromium.launch({headless:true,args:['--no-sandbox']});page=await browser.newPage({viewport:{width:412,height:915},serviceWorkers:'block'});
+ browser=await chromium.launch({executablePath:process.env.FLIPCHECK_BROWSER_EXECUTABLE||undefined,headless:true,args:['--no-sandbox']});page=await browser.newPage({viewport:{width:412,height:915},serviceWorkers:'block'});
  page.on('pageerror',error=>errors.push(error.message));page.on('dialog',dialog=>dialog.dismiss());
  await page.exposeFunction('offlineHostEvent',event=>hostEvents.push(event));
  await page.addInitScript(()=>{
   const send=(id,action,payload)=>fetch('https://offline-native.invalid/'+action,{method:'POST',body:JSON.stringify(payload)}).then(r=>r.json()).then(result=>window.FlipCheckDirect.receive(id,result));
-  window.FlipCheckGoogle={ocrAvailable(){return true;},request(id,action,payload){send(id,action,JSON.parse(payload));},readText(id,image_data){send(id,'ocr',{image_data});},cancel(id){window.offlineHostEvent({kind:'native_cancel',id});}};
+  window.FlipCheckGoogle={ocrAvailable(){return true;},request(id,action,payload){send(id,action,JSON.parse(payload));},readText(id,image_data){send(id,'ocr',{image_data});},readTextScript(id,image_data,script){send(id,'ocr',{image_data,script});},cancel(id){window.offlineHostEvent({kind:'native_cancel',id});}};
   window.FlipCheckHost={buildInfo(){return JSON.stringify({versionCode:189,versionName:'offline-contract-replay',sourceCommit:'test-only'});},beginScan(id){window.offlineHostEvent({kind:'begin',id});queueMicrotask(()=>window.FlipCheckBackground.started(id,true,''));},endScan(id,snapshot,outcome){window.offlineHostEvent({kind:'end',id,snapshot,outcome});},backgroundInfo(){return JSON.stringify({state:'offline',retainedRuntime:true});},lastScan(){return '{}';},photoPickerInfo(){return '{}';},saveDiagnostic(snapshot){window.offlineHostEvent({kind:'export',snapshot});}};
  });
  await page.route('**/*',async route=>{
@@ -86,9 +86,9 @@ before(async()=>{
 });
 afterEach(()=>{assert.deepEqual(unexpected,[],'No unmocked external request is permitted');assert.deepEqual(errors,[],'Production UI emitted a JavaScript error');});
 after(async()=>{hold?.();await browser?.close();if(server)await new Promise(r=>server.close(r));});
-for(const name of ['charizard','cloyster'])test('189 recorded '+name+' slab uses actual Responses usage and a single title search',async()=>{
+for(const name of ['charizard','cloyster'])test('189 recorded '+name+' slab closes on its label without a paid title search',async()=>{
  await openScenario(name);const d=await clickIdentify();assert.equal(d.identification.market_ready,true,narrow(d));assert.equal(d.identification.slab_verification.certificate_verified,false);
- assert.deepEqual(stages(),['flipcheck_identification','flipcheck_resolver']);assert.equal(d.usage.web,1);assert.ok(d.usage.cached>0);assert.equal(d.visualAssistance.route,'slab_label');assert.equal(native.some(r=>r.action==='detect'),false);
+ assert.deepEqual(stages(),['flipcheck_identification']);assert.equal(d.usage.web,0);assert.equal(d.usage.input,fixture.phases[0].usage.input_tokens);assert.equal(d.visualAssistance.route,'slab_label');assert.equal(native.some(r=>r.action==='detect'),false);
  assert.equal(hostEvents.filter(e=>e.kind==='begin').length,1);assert.equal(hostEvents.filter(e=>e.kind==='end').length,1);assert.equal(hostEvents.at(-1).outcome,'completed');
 });
 test('189 recorded Topps retains proven core and refuses single-card reference images',async()=>{
@@ -107,11 +107,11 @@ test('189 recorded Politoed retains proven keys while genuinely absent release y
 });
 test('189 incomplete initial response is recovered once and both real usage records count',async()=>{
  await openScenario('cloyster',{incompleteInitial:true});fixture.phases.splice(1,0,copy(fixture.phases[0]));const d=await clickIdentify();assert.equal(d.identification.market_ready,true,narrow(d));
- assert.equal(stages().filter(s=>s==='flipcheck_identification').length,2);assert.equal(d.usage.requests,api.length);assert.ok(d.usage.input>=2*recorded.cloyster.phases[0].usage.input_tokens);assert.equal(d.usage.web,1);
+ assert.equal(stages().filter(s=>s==='flipcheck_identification').length,2);assert.equal(d.usage.requests,api.length);assert.ok(d.usage.input>=2*recorded.cloyster.phases[0].usage.input_tokens);assert.equal(d.usage.web,0);
 });
 test('189 missing optional Vision fields and unavailable local OCR cannot erase a clear slab',async()=>{
  await openScenario('cloyster',{ocrUnavailable:true,mutate:d=>{for(const p of d.phases.filter(p=>p.stage==='vision'))for(const key of ['candidate_models','distinctive_terms','layout_signature','physical_observations','search_terms'])delete p.result[key];}});
- const d=await clickIdentify();assert.equal(d.identification.market_ready,true,narrow(d));assert.equal(d.usage.web,1);assert.equal(stages().includes('flipcheck_printing_detail'),false);
+ const d=await clickIdentify();assert.equal(d.identification.market_ready,true,narrow(d));assert.equal(d.usage.web,0);assert.equal(stages().includes('flipcheck_printing_detail'),false);
 });
 test('189 provider 401 releases UI and native foreground lifecycle without silently retrying',async()=>{
  await openScenario('cloyster',{httpError:401});const d=await clickIdentify();assert.equal(api.length,1);assert.notEqual(d.identification?.market_ready,true);assert.equal(await page.locator('#identifyBtn').isEnabled(),true);assert.equal(hostEvents.filter(e=>e.kind==='end').length,1);assert.equal(hostEvents.find(e=>e.kind==='end').outcome,'failed');assert.equal(native.some(r=>r.action==='detect'),false);
@@ -134,9 +134,9 @@ test('189 untrusted source HTML and executable link schemes remain inert in rend
  assert.ok(out.includes('https://catalog.example/safe'));assert.equal(out.some(u=>/^(?:javascript|data|file):/i.test(u)),false,'Untrusted source URLs must be filtered before rendering');assert.equal(await page.evaluate(()=>window.__sourceExecuted===true),false);
 });
 
-test('189 exact slab title verification stays active without an optional Google API key',async()=>{
+test('189 slab certificate and label routes stay active without an optional Google API key',async()=>{
  await openScenario('cloyster');await page.evaluate(()=>{$('googleApiKey').value='';});const d=await clickIdentify();
- assert.equal(d.identification.market_ready,true,narrow(d));assert.equal(d.visualAssistance.route,'slab_label');assert.deepEqual(stages(),['flipcheck_identification','flipcheck_resolver']);assert.equal(native.some(r=>r.action==='detect'),false);
+ assert.equal(d.identification.market_ready,true,narrow(d));assert.equal(d.visualAssistance.route,'slab_label');assert.deepEqual(stages(),['flipcheck_identification']);assert.equal(native.some(r=>r.action==='detect'),false);
 });
 
 test('189 synthetic release-page availability closes Politoed without another paid search',async()=>{
@@ -154,4 +154,45 @@ test('189 double identify taps while a response is pending create one scan and o
  await openScenario('cloyster',{holdInitial:true});await page.locator('#identifyBtn').click();while(!hold)await new Promise(r=>setTimeout(r,10));
  await page.evaluate(()=>{$('identifyBtn').click();$('identifyBtn').click();});assert.equal(api.length,1);hold();hold=null;await page.waitForFunction(()=>!apiBusy);
  assert.equal(hostEvents.filter(e=>e.kind==='begin').length,1);assert.equal(stages().filter(s=>s==='flipcheck_identification').length,1);assert.equal((await report()).identification.market_ready,true);
+});
+
+for(const enabled of [true,false])test('191 official slab certificate closes with visual assistance '+enabled+' and no paid follow-up',async()=>{
+ const url='https://www.psacard.com/cert/64613920/psa';
+ const fields={'Cert Number':'64613920','Subject':'Charizard','Year':'1999','Brand/Title':'CD Promo','Card Number':'6','Item Grade':'MINT 9'};
+ await openScenario('charizard',{pages:{[url]:{status:200,url,structured_fields:Object.entries(fields).map(([label,value])=>({label,value})),text:''}}});
+ await page.evaluate(enabled=>{$('visualEnabled').checked=enabled;},enabled);const d=await clickIdentify();
+ assert.equal(d.identification.market_ready,true,narrow(d));assert.equal(d.identification.grading.certificate_verified,true,narrow(d));
+ assert.deepEqual(stages(),['flipcheck_identification']);assert.equal(d.usage.web,0);assert.deepEqual(native.map(r=>r.action),['page']);
+ assert.match(await page.locator('#identTitle').textContent(),/1999.*CD Promo.*#6.*Charizard.*PSA MINT 9/);
+ assert.match(await page.locator('#gradingIdentity191').textContent(),/PSA.*MINT 9.*Certificato verificato/);
+ assert.doesNotMatch(await page.locator('#identPanel').textContent(),/Modello da confermare|MODELLO NON CONFERMATO/);
+});
+test('191 unavailable certificate with incomplete label asks for its label and never calls another model',async()=>{
+ await openScenario('charizard',{mutate:d=>{d.phases[0].result.slab_reading.label_text='MINT 9';d.phases[0].result.slab_reading.certainty='uncertain';}});
+ const d=await clickIdentify();assert.equal(d.identification.market_ready,false);assert.match(d.identification.next_photo_request,/etichetta/);assert.deepEqual(stages(),['flipcheck_identification']);assert.equal(d.usage.web,0);
+});
+// User diagnostics are supplied locally; never commit their full exports or photographs.
+if(process.env.FLIPCHECK_DIAGNOSTICS_DIR){
+ const names=['boniface','topps','cloyster','machamp','politoed'];
+ for(const [i,name] of names.entries()){
+  recorded['current_'+name]=JSON.parse(fs.readFileSync(path.join(process.env.FLIPCHECK_DIAGNOSTICS_DIR,'FlipCheck-26Fix-diagnostica'+(i?' ('+i+')':'')+'.json'),'utf8'));
+  test('191 replay current build190 '+name+' diagnostic through production UI',async()=>{
+   await openScenario('current_'+name);const d=await clickIdentify();
+   fs.writeFileSync('/tmp/flipcheck191-replay-'+name+'.json',JSON.stringify(d,null,2));
+   assert.equal(d.identification.core_identity.status,'confirmed',narrow(d));
+   assert.equal(d.identification.market_ready,name!=='topps',narrow(d));
+   assert.ok(stages().length<=fixture.phases.length,'No extra paid phases beyond the recorded run');
+   if(name==='cloyster'){assert.deepEqual(stages(),['flipcheck_identification']);assert.equal(d.identification.grading.company,'BGS');assert.match(d.identification.title,/2002.*#8.*Cloyster.*BGS 9/);}
+   if(name==='topps')assert.match(d.identification.next_photo_request,/pacch|pack|scatol|confezion/i);
+   if(name==='machamp'){assert.match(d.identification.model,/1999.*8\/102.*Machamp/);assert.doesNotMatch(d.identification.variant,/unclear|unconfirmed/);}
+   if(name==='politoed'){assert.match(d.identification.model,/2003.*Skyridge.*H23\/H32.*Politoed/);assert.doesNotMatch(d.identification.variant,/unconfirmed/);}
+   if(name==='boniface'){assert.equal(d.identification.serial_number,'2/5');assert.equal(d.identification.print_run,5);assert.equal(d.identification.variant,'Green');}
+  });
+ }
+}
+
+test('191 replacing a slab result clears its grading panel from the next identity',async()=>{
+ await openScenario('charizard');await clickIdentify();assert.equal(await page.locator('#gradingIdentity191').count(),1);
+ await page.evaluate(()=>renderIdent({kind:'card',brand:'Example',model:'Other card',variant:'',core_identity:{status:'confirmed'},exact_identity_status:'confirmed',market_ready:true,normalized_query:'Other card',model_confidence:98}));
+ assert.equal(await page.locator('#gradingIdentity191').count(),0);assert.doesNotMatch(await page.locator('#identPanel').textContent(),/PSA|MINT 9/);
 });

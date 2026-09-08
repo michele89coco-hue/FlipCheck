@@ -11,8 +11,8 @@ async function reset(enabled=true){specificationReply={entries:[]};cardKeysReply
 async function upload(){await page.locator('#photoBatch').setInputFiles(photos);await page.waitForFunction(()=>!photoBusy);}
 async function identify(){await page.locator('#identifyBtn').click();await page.waitForFunction(()=>!apiBusy,{},{timeout:12000});}
 before(async()=>{
- server=http.createServer((req,res)=>{const name=req.url==='/'?'index.html':req.url.slice(1);if(!['index.html','editions.js','targeted-fixes.js','visual-policy.js','visual-runtime.js','google-direct.js','background-runtime.js'].includes(name)){res.writeHead(404);return res.end();}res.setHeader('Content-Type',name.endsWith('.js')?'application/javascript':'text/html');res.end(fs.readFileSync(path.join(root,name)));});await new Promise(r=>server.listen(0,'127.0.0.1',r));origin='http://127.0.0.1:'+server.address().port;
- browser=await chromium.launch({headless:true,args:['--no-sandbox']});page=await browser.newPage({viewport:{width:412,height:915}});page.on('pageerror',e=>errors.push(e.message));
+ server=http.createServer((req,res)=>{const name=req.url==='/'?'index.html':req.url.slice(1);if(!['index.html','editions.js','targeted-fixes.js','visual-policy.js','visual-runtime.js','google-direct.js','background-runtime.js','slab-identity.js','identity-final.js'].includes(name)){res.writeHead(404);return res.end();}res.setHeader('Content-Type',name.endsWith('.js')?'application/javascript':'text/html');res.end(fs.readFileSync(path.join(root,name)));});await new Promise(r=>server.listen(0,'127.0.0.1',r));origin='http://127.0.0.1:'+server.address().port;
+ browser=await chromium.launch({executablePath:process.env.FLIPCHECK_BROWSER_EXECUTABLE||undefined,headless:true,args:['--no-sandbox']});page=await browser.newPage({viewport:{width:412,height:915}});page.on('pageerror',e=>errors.push(e.message));
  await page.addInitScript(()=>{window.FlipCheckGoogle={request(id,action,payload){fetch('https://native.example/'+action,{method:'POST',body:payload}).then(r=>r.json()).then(result=>window.FlipCheckDirect.receive(id,result));},cancel(){}};});
  await page.route('**/*',async route=>{
   const u=route.request().url();if(u.startsWith(origin))return route.continue();
@@ -639,7 +639,7 @@ test('183 a photographed name and number close against a web release year withou
   scan164=newContext164();lastVisionReading={kind:'card',object_unit:'single',category:'sports card',brand:'Example',family:'Guessed series',title:'Alex Rivera card',model:'',model_confidence:55,market_ready:false,variant:'',variant_scope:'none',identity_basis:{family:'inferred',variant:'not_applicable'},unresolved_identity_fields:['family'],photo_clues:[{text:'Alex Rivera',role:'subject',certainty:'clear',image_index:1},{text:'NO. 73',role:'collector_number',certainty:'clear',image_index:1}],physical_observations:[]};scan164.photoOcr=[];
   const result=await resolveIdentificationCheap(lastVisionReading,'');return {result,keys:scan164.cardKeyVerification};
  });
- assert.equal(out.result.market_ready,true,JSON.stringify(out));assert.equal(out.result.source_confirmed_year,'2031');assert.equal(out.result.identity_keys.date,null);assert.equal(out.keys.state,'confirmed');assert.equal(out.result.next_photo_request,null);
+ assert.equal(out.result.market_ready,true,JSON.stringify(out));assert.equal(out.result.source_confirmed_year,'2031');assert.equal(out.result.identity_keys.date.value,'2031');assert.equal(out.keys.state,'confirmed');assert.equal(out.result.next_photo_request,null);
  assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_resolver','flipcheck_card_keys']);assert.equal(googleRequests.some(r=>r.action==='detect'),false);
 });
 test('183 complete initial Pokemon result keeps terminal and core states consistent in the exported diagnostic',async()=>{
@@ -658,14 +658,14 @@ test('183 catalogue repair preserves two separately named subjects on one panel 
  },quote);
  assert.equal(out.repair.state,'completed');assert.equal(out.result.market_ready,true);assert.match(out.result.model,/Alex Rivera \/ Morgan Vale/);assert.equal(out.result.catalogue_data.filter(f=>f.field==='subject').length,2);assert.equal(requests.length,1);assert.equal(googleRequests.length,0);
 });
-test('185 slab uses one quick web check and no photo comparison or printing reread',async()=>{
+test('185 slab uses certificate then label fallback and no photo comparison or printing reread',async()=>{
  await reset();await upload();resolverMode='catalogue_identity';
  catalogTitle='1997 Japanese Fossil Ghostmon Holo #94';catalogText=catalogTitle;
  vision={...unknown,kind:'card',object_unit:'single',category:'Pokemon card',brand:'Pokemon',family:'Fossil',title:'Ghostmon',model:'Ghostmon',variant:'Holo',variant_scope:'commercial',model_confidence:95,identity_basis:{family:'printed',variant:'physical_evidence'},unresolved_identity_fields:['variant'],photo_clues:[{text:'Ghostmon',role:'subject',certainty:'clear',image_index:1},{text:'#94',role:'collector_number',certainty:'clear',image_index:1},{text:'No. 094',role:'collector_number',certainty:'clear',image_index:1}],slab_reading:{present:true,certainty:'clear',image_index:1,grader:'PSA',label_text:'1997 JAPANESE FOSSIL #94 GHOSTMON HOLO MINT 9 12345678',subject:'Ghostmon',family:'Fossil',model:'',year:'1997',card_number:'94',variant:'HOLO',grade:'MINT 9',certificate:'12345678',object_match:'matches',match_details:'Visible subject and layout agree.'},pokemon_printing:{is_pokemon:true,language:'Japanese',set_name:'Fossil',first_edition_stamp:'unclear',artwork_shadow:'not_applicable'}};
  await identify();
  const out=await page.evaluate(()=>({result:ident,scan:{slab:scan164.slabVerification,calls:scan164.calls}}));
  assert.equal(out.result.market_ready,true,JSON.stringify(out));assert.equal(out.result.exact_identity_status,'confirmed');assert.equal(out.result.next_photo_request,null);assert.equal(out.result.slab_verification.state,'confirmed');
- assert.equal(requests.filter(r=>r.text.format.name==='flipcheck_resolver').length,1);
+ assert.equal(requests.filter(r=>r.text.format.name==='flipcheck_resolver').length,0);
  assert.equal(requests.filter(r=>['flipcheck_visual_comparison','flipcheck_printing_detail','flipcheck_photo_detail'].includes(r.text.format.name)).length,0);
  assert.equal(googleRequests.filter(r=>r.action==='detect'||r.action==='image').length,0);
 });
@@ -682,12 +682,12 @@ test('185 original-side serial recovery creates rotated edge views and retains p
  assert.equal(requests.filter(r=>r.text.format.name==='flipcheck_photo_detail').length,1);
 });
 const real185=require('./fixtures/diagnostics-185.json');
-test('186 recorded Cloyster slab closes through production click with real usage and one identity search',async()=>{
+test('186 recorded Cloyster slab closes through production click with real usage and no identity search',async()=>{
  await reset();await upload();vision=structuredClone(real185.cloyster.photo);usageOverrides=structuredClone(real185.cloyster.usageByStage);
  resolverMode='catalogue_identity';catalogTitle='2002 Expedition Checklist';catalogText=catalogTitle+'\n8 Cloyster Holo Rare\n9 Another Creature';
  await identify();const out=await page.evaluate(()=>({result:ident,slab:scan164.slabVerification,budget:scan164.budget.spent()}));
  assert.equal(out.result.market_ready,true,JSON.stringify(out));assert.equal(out.slab.state,'confirmed');assert.equal(out.result.next_photo_request,null);assert.ok(out.budget<.03);
- assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_identification','flipcheck_resolver']);
+ assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_identification']);
  assert.equal(googleRequests.some(r=>['image','detect'].includes(r.action)),false);
 });
 test('186 recorded Boniface unreadable mark reaches rotated recovery then checklist and parallel closure',async()=>{
@@ -717,19 +717,19 @@ test('186 recorded Machamp printing response preserves Shadowless when two crops
  assert.deepEqual(schema.properties.shadow_image.enum,[0,1]);assert.equal(requests.length,1);
 });
 const actual186=require('./fixtures/diagnostics-186.json');
-test('187 recorded Charizard uses label identity, one quick web and no certificate or printing chase',async()=>{
+test('187 recorded Charizard uses label identity, an official certificate attempt and no paid follow-up',async()=>{
  await reset();await upload();vision=structuredClone(actual186.charizard.photo);usageOverrides=structuredClone(actual186.charizard.usageByStage);
  resolverMode='catalogue_identity';catalogTitle='Unnumbered Promotional cards';catalogText='Charizard — Pokémon Song Best Collection CD insert (January 1, 1999)';
  await identify();const d=await page.evaluate(()=>diagnostic26());
  assert.equal(d.identification.market_ready,true);assert.match(d.identification.model,/1999.*CD PROMO.*#6/);assert.equal(d.visualAssistance.route,'slab_label');assert.equal(d.identification.slab_verification.certificate_verified,false);
- assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_identification','flipcheck_resolver']);assert.equal(googleRequests.length,0);assert.equal(d.identification.next_photo_request,null);
+ assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_identification']);assert.equal(googleRequests.filter(r=>r.action==='detect'||r.action==='image').length,0);assert.equal(d.identification.next_photo_request,null);
  const query=d.visualAssistance.queries.join(' ');assert.doesNotMatch(query,/64613920/);assert.ok(d.visualAssistance.budget.spentOrReservedUsd<=.03);
 });
-test('187 coherent slab stays confirmed after an empty search, while a physical mismatch cannot close',async()=>{
+test('187 coherent slab stays confirmed after certificate failure and generic card doubts cannot reopen it',async()=>{
  await reset();await upload();vision=structuredClone(actual186.charizard.photo);resolverMode='empty_complete';
- await identify();let d=await page.evaluate(()=>diagnostic26());assert.equal(d.identification.market_ready,true);assert.equal(d.identification.slab_verification.web_check.corroborated,false);assert.equal(requests.length,2);
+ await identify();let d=await page.evaluate(()=>diagnostic26());assert.equal(d.identification.market_ready,true);assert.equal(d.identification.slab_verification.certificate_verified,false);assert.equal(requests.length,1);
  await reset();await upload();vision=structuredClone(actual186.charizard.photo);vision.slab_reading.object_match='conflict';vision.slab_reading.match_details='The contained card shows a different character';
- await identify();d=await page.evaluate(()=>diagnostic26());assert.equal(d.identification.market_ready,false);assert.equal(d.identification.slab_verification.state,'physical_conflict');assert.equal(requests.length,1);
+ await identify();d=await page.evaluate(()=>diagnostic26());assert.equal(d.identification.market_ready,true);assert.equal(d.identification.slab_verification.state,'confirmed');assert.equal(requests.length,1);
 });
 test('187 actual Boniface checklist text closes 2/5 without specifications or image-comparison API calls',async()=>{
  await reset();await upload();vision=structuredClone(actual186.boniface.mergedPhoto);vision.photo_clues=vision.photo_clues.map(c=>({...c,image_index:1,region:c.region?{...c.region,image_index:1}:null}));
@@ -744,7 +744,7 @@ test('188 actual reordered Cloyster label bypasses printing recovery through the
  resolverMode='catalogue_identity';catalogTitle='2002 Expedition Italian Cloyster #8 Holo';catalogText=catalogTitle;
  await identify();const d=await page.evaluate(()=>diagnostic26());
  assert.equal(d.identification.market_ready,true,JSON.stringify(d.identification));assert.equal(d.visualAssistance.route,'slab_label');
- assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_identification','flipcheck_resolver']);assert.equal(googleRequests.length,0);
+ assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_identification']);assert.equal(googleRequests.filter(r=>r.action==='detect'||r.action==='image').length,0);
  assert.equal(d.identification.slab_reading.variant,'Holo R, Italian');assert.equal(d.identification.next_photo_request,null);
 });
 test('188 actual Vileplume uses its exact catalogue entry despite the incorrect initial Base Set flag',async()=>{
