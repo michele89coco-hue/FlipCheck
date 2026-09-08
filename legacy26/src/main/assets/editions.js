@@ -47,7 +47,7 @@ First Edition e Shadowless sono due attributi separati: il timbro non dimostra d
     const facts=identity.core_identity?.fields||identity.catalogue_data||[];
     if(printing.is_pokemon&&identity.catalogue_core_verified&&norm(set_name)==='base'&&
       facts.some(f=>f.field==='catalog_number'&&/^\d+\s*\/\s*102$/.test(clean(f.value))))set_name='Base Set';
-    const result={...printing,set_name};
+    const result={...printing,set_name,catalogue_subject:identity.identity_keys?.subject?.value||identity.observed_subject?.text||facts.find(f=>f.field==='subject')?.value||'',catalogue_number:identity.identity_keys?.number?.value||facts.find(f=>f.field==='catalog_number')?.value||''};
     delete result.stamp_policy;delete result.rarity_policy;
     // Edition availability is catalogue/era knowledge, not a photo observation.
     // Western 2003+ releases postdate the original 1st Edition programme. This
@@ -63,6 +63,10 @@ First Edition e Shadowless sono due attributi separati: il timbro non dimostra d
     const postNeo=/^(?:2002 )?(?:expedition(?: base set)?|legendary collection)$/.test(norm(set_name));
     if(identity.catalogue_core_verified&&western&&postNeo&&year===2002)
       result.stamp_policy={state:'not_applicable',rule:'western_post_neo_2002_release',year,origin:'verified_series',source:'https://www.psacard.com/articles/articleview/9498/psa-set-registry-collecting-2002-poke-mon-neo-destiny-1st-edition'};
+    // Set membership is stronger than a misread copyright when excluding a
+    // printing which that set never had. This rule applies to every card in it.
+    if(identity.catalogue_core_verified&&western&&/^(?:pokemon )?(?:skyridge|aquapolis|expedition(?: base set)?|legendary collection)$/.test(norm(set_name)))
+      result.stamp_policy={state:'not_applicable',rule:'verified_post_first_edition_set',origin:'verified_series',source:'https://www.cgccards.com/news/article/10262/pokemon-first-editions/'};
     const japanese=/^(japanese|giapponese|ja|jp)$/.test(norm(printing.language));
     if(identity.catalogue_core_verified&&japanese&&year>=1996&&year<2001&&clean(set_name))result.stamp_policy={state:'not_applicable',rule:'japanese_release_before_2001',year,origin:sourceYears.length?'catalogue_release':'verified_series_and_observed_copyright',evidence:sourceYears.length?sourceDates:printing.copyright_text,source:'https://www.cgccards.com/news/article/10262/pokemon-first-editions/'};
     if(identity.catalogue_core_verified&&japanese&&year>=2017)
@@ -71,6 +75,12 @@ First Edition e Shadowless sono due attributi separati: il timbro non dimostra d
     if(identity.catalogue_core_verified&&japanese&&year===1996&&isOriginalBaseSet(set_name)&&['pokemon','trainer'].includes(printing.card_type))
       result.rarity_policy={state:'applicable',rule:'japanese_base_1996',year,source:'https://www.cgccards.com/news/article/11258/'};
     return result;
+  }
+  function releaseDate(identity) {
+    const p=identity.pokemon_printing||{},set=norm(identity.family||p.set_name);
+    if(identity.catalogue_core_verified&&p.is_pokemon&&/^(?:english|inglese|en|italian|italiano|it)$/.test(norm(p.language))&&set==='skyridge')
+      return {field:'year',value:'2003',kind:'year',number_kind:'year',origin:'catalogue',verification:'verified_set_release',quote:'2003 Nintendo Pokemon Skyridge',source:'https://www.psacard.com/cardfacts/non-sports-cards/2003-nintendo-pokemon-skyridge/images/32895'};
+    return null;
   }
   function remapCropImages186(printing,originalIndexes){
     if(!printing)return {printing,remapped:[]};
@@ -136,10 +146,16 @@ First Edition e Shadowless sono due attributi separati: il timbro non dimostra d
       ? 'bordo destro del riquadro e riga copyright in basso' : 'riga copyright in basso: il solo bordo non distingue questa stampa');
     const slab = located(p.slab_image,'label') ? clean(p.slab_text) : '';
     const slabNorm = norm(slab);
-    const contradiction = excluded&&p.first_edition_stamp==='present'||!!slab && ((/shadowless/.test(slabNorm) && shadow === 'present')
+    const knownSubject=clean(p.catalogue_subject)||clean(p.catalogue_number);
+    // Original English Base Machamp is the documented deck-printing exception.
+    // Unknown subjects stay pending rather than being assigned that exception.
+    const machamp=/^machamp$/i.test(clean(p.catalogue_subject))||/^0?8\s*\/\s*102$/.test(clean(p.catalogue_number));
+    const incompatible=applicable&&p.card_type==='pokemon'&&stamp==='present'&&shadow==='present'&&knownSubject&&!machamp;
+    const contradiction = incompatible||excluded&&p.first_edition_stamp==='present'||!!slab && ((/shadowless/.test(slabNorm) && shadow === 'present')
       || /(?:1st|first|prima)\s*(?:edition|edizione)/.test(slabNorm) && stamp === 'absent'
       || /unlimited/.test(slabNorm) && (stamp === 'present' || shadow === 'absent'));
     if(excluded&&p.first_edition_stamp==='present')missing.push('timbro di edizione incompatibile con la serie e l’anno verificati');
+    if(incompatible)missing.push('timbro e ombra esterna della cornice: letture incompatibili con questa stampa Base Set inglese');
     return {stamp,shadow,rarity,rarityApplicable,applicable,labels,missing,slab,contradiction,...(p.stamp_policy?{stamp_policy:p.stamp_policy}:{}),
       complete:missing.length === 0 && !contradiction,
       stampLocation:clean(p.stamp_location), shadowLocation:clean(p.shadow_location), copyright};
@@ -195,7 +211,7 @@ First Edition e Shadowless sono due attributi separati: il timbro non dimostra d
         ?{...f,verification:result.complete?'confirmed_physical':'pending_physical'}:f);
     return out;
   }
-  const api = {schema,prompt,evaluate,apply,isOriginalBaseSet,contradictsPrinting,cataloguePrinting,observedFinish,remapCropImages186};
+  const api = {schema,prompt,evaluate,apply,isOriginalBaseSet,contradictsPrinting,cataloguePrinting,releaseDate,observedFinish,remapCropImages186};
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.FlipCheckEditions = api;
 })(typeof window !== 'undefined' ? window : globalThis);

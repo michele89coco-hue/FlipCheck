@@ -66,7 +66,7 @@ final class ScanSession {
                 if (!"https".equals(uri.getScheme()) || !"flipcheck.local".equals(uri.getHost())) return null;
                 String path = uri.getPath();
                 if (path == null || path.equals("/")) path = "/index.html";
-                if (!path.matches("/(index\\.html|editions\\.js|targeted-fixes\\.js|visual-policy\\.js|visual-runtime\\.js|google-direct\\.js|background-runtime\\.js|slab-identity\\.js|identity-final\\.js)"))
+                if (!path.matches("/(index\\.html|editions\\.js|targeted-fixes\\.js|visual-policy\\.js|visual-runtime\\.js|google-direct\\.js|background-runtime\\.js|slab-identity\\.js|identity-final\\.js|image-evidence\\.js)"))
                     return missing();
                 try { return new WebResourceResponse(path.endsWith(".js") ? "application/javascript" : "text/html", "UTF-8", app.getAssets().open(path.substring(1))); }
                 catch (Exception ignored) { return missing(); }
@@ -160,6 +160,7 @@ final class ScanSession {
             if (id == null || !id.matches("[a-zA-Z0-9-]{8,80}")) return;
             main.post(() -> {
                 if (!localPage() || owner == null || !ownerVisible || running) { replyStart(id, false, "scan_not_available"); return; }
+                google.beginEvidence(id);
                 token = id; running = true; foregroundReady = false; state = "starting"; failure = "";
                 startedAt = System.currentTimeMillis(); finishedAt = 0; backgroundTransitions = 0;
                 prefs.edit().putString("state", "running").putString("snapshot", "").putString("reason", "").putLong("startedAt", startedAt).apply();

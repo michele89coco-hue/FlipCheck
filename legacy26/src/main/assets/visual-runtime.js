@@ -237,8 +237,13 @@ mergeResolvedFingerprint=function(base,refined,sources,signature){
 };
 shouldResolveOnline=function(base){if(S191.isSlab(lastVisionReading||base))return base?.slab_verification?.state!=='confirmed';const checked=enforceIdentificationPolicy(base);if(checked?.printing_check?.complete===false&&scan164&&validImageCount())return true;if(V164.ready(checked))return false;if(active164()&&validImageCount())return true;return priorShould164(checked);};
 async function decodeVisual164(file){if(window.createImageBitmap)return createImageBitmap(file,{imageOrientation:'from-image'});return new Promise((resolve,reject)=>{const u=URL.createObjectURL(file),im=new Image();im.onload=()=>{URL.revokeObjectURL(u);resolve(im);};im.onerror=()=>{URL.revokeObjectURL(u);reject(new Error('invalid_image'));};im.src=u;});}
+function saveEvidence192(kind,data,metadata){try{window.FlipCheckGoogle?.storeEvidence?.(kind,data||'',JSON.stringify(metadata||{}));}catch(_){} }
+function evidenceInfo192(){try{return JSON.parse(window.FlipCheckGoogle?.evidenceInfo?.()||'{}');}catch(_){return {};}}
 async function visualPhoto164(base){
+ const cache=scan164&&(scan164.preparedPhotos||(scan164.preparedPhotos=new Map())),cacheKey=JSON.stringify([base.object_region,base.detail_crop,base.search_window,base.object_unit]);
+ if(cache?.has(cacheKey)){scan164.imageCacheHits=(scan164.imageCacheHits||0)+1;return cache.get(cacheKey);}
  const sourceFiles=files.filter(Boolean),r=base.object_region;const index=r?.image_index>0&&r.image_index<=sourceFiles.length?r.image_index:1;
+ if(scan164&&window.FlipCheckGoogle?.storeEvidence){const originals=scan164.originalsSaved||(scan164.originalsSaved=new Set());if(!originals.has(index)){originals.add(index);const original=sourceFiles[index-1];if(original.size<=8000000){const data=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=reject;reader.readAsDataURL(original);});saveEvidence192('original',data,{image_index:index,mime:original.type,bytes:original.size});}}}
  const image=await decodeVisual164(sourceFiles[index-1]);try{
   const w=image.naturalWidth||image.width,h=image.naturalHeight||image.height;let rect={x:0,y:0,width:w,height:h},cropped=false;
   const minimum=base.detail_crop?.003:.05;
@@ -246,7 +251,8 @@ async function visualPhoto164(base){
    const x=Math.max(0,Math.floor((r.x-.015)*w)),y=Math.max(0,Math.floor((r.y-.015)*h));rect={x,y,width:Math.min(w,Math.ceil((r.x+r.width+.015)*w))-x,height:Math.min(h,Math.ceil((r.y+r.height+.015)*h))-y};cropped=true;
   }
   const draw=(region,max)=>{const s=Math.min(1,max/Math.max(region.width,region.height)),c=document.createElement('canvas');c.width=Math.round(region.width*s);c.height=Math.round(region.height*s);const cx=c.getContext('2d');cx.fillStyle='white';cx.fillRect(0,0,c.width,c.height);cx.drawImage(image,region.x,region.y,region.width,region.height,0,0,c.width,c.height);const png=base.detail_crop===true?c.toDataURL('image/png'):null,data=png&&png.length<=1400000?png:c.toDataURL('image/jpeg',.94);return {data,width:c.width,height:c.height,mimeType:data.startsWith('data:image/png')?'image/png':'image/jpeg'};};
-  const sent=draw(rect,2048);return {...sent,meta:{originalWidth:w,originalHeight:h,imageIndex:index,rect,cropped,searchWindow:base.search_window===true,sentWidth:sent.width,sentHeight:sent.height,mimeType:sent.mimeType,jpegQuality:sent.mimeType==='image/jpeg'?.94:null,source:'original_file',orientation:'from-image',unit:base.object_unit||'unknown'}};
+  const sent=draw(rect,2048),result={...sent,meta:{originalWidth:w,originalHeight:h,imageIndex:index,rect,cropped,searchWindow:base.search_window===true,sentWidth:sent.width,sentHeight:sent.height,mimeType:sent.mimeType,jpegQuality:sent.mimeType==='image/jpeg'?.94:null,source:'original_file',orientation:'from-image',unit:base.object_unit||'unknown'}};
+  if(cache&&cache.size<18)cache.set(cacheKey,result);saveEvidence192('crop',result.data,result.meta);return result;
  }finally{if(image.close)image.close();}
 }
 async function serialEdgeViews185(picture){
@@ -612,6 +618,19 @@ async function compareReferences167(base,ctx,photos,references,focus=''){
   throw new Error('budget_exhausted');
  }
  let {refs,body,compactRequest}=planned;photos=planned.photos;
+ if(window.FlipCheckImageEvidence){
+  // Compare downloaded pixels locally after cropping. This metric describes
+  // appearance only: no numeric threshold can establish a catalogue identity.
+  const E=FlipCheckImageEvidence;ctx.localReferenceComparisons=[];
+  try{for(const photo of photos.slice(0,2)){
+   const a=E.signature(await E.pixels(photo.data));guard164(ctx);
+   for(const ref of refs.slice(0,3))if(ref.image_data){
+    const b=E.signature(await E.pixels(ref.image_data));guard164(ctx);
+    const measurement={photo_index:photo.meta.imageIndex,reference_id:ref.id,...E.compare(a,b)};
+    ctx.localReferenceComparisons.push(measurement);saveEvidence192('reading','',{local_comparison:measurement});
+   }
+  }}catch(error){guard164(ctx);ctx.localComparisonError='local_comparison_unavailable';}
+ }
  ctx.comparison={referenceIds:refs.map(r=>r.id),availableReferences:references.length,photoIndexes:photos.map(p=>p.meta.imageIndex),maxOutputTokens:body.max_output_tokens,compactRequest,estimatedUsd:estimate164(body)};
  const started=Date.now();let response=await openai(body);addUsage(response,'gpt-5.6-luna',0,'Confronto immagini delle fonti',true,started);guard164(ctx);
  let reply;try{reply=parseResponseJSON(response);}catch(error){
@@ -704,7 +723,21 @@ async function finishComparison173(base,ctx){
  ctx.focusedComparisonUsed=true;ctx.recoveries.push({stage:'focused_reference_reread',reason:repairable.rejection,extraWebRequests:0});
  try{const result=await compareReferences167(base,ctx,photos,refs,variantOnly?'Verifica soltanto la variante fisica ancora aperta. Nome, numero, anno e serie sono già confermati. '+reason:reason);ctx.focusedReview.state='completed';return await repairCatalogueFields179(result,ctx);}catch(error){guard164(ctx);ctx.focusedReview.state=error.message;if(!recoverableText166(error))throw error;return base;}
 }
+async function localPrinting192(base,ctx){
+ const p=base.pokemon_printing||lastVisionReading?.pokemon_printing;
+ if(!window.FlipCheckImageEvidence||!p?.is_pokemon||!/^(english|inglese|en)$/i.test(p.language)||!FlipCheckEditions.isOriginalBaseSet(base.family||p.set_name)||p.card_type!=='pokemon')return base;
+ if(!ctx.localPrinting){
+  const imageIndex=p.shadow_image||1,picture=await visualPhoto164({object_region:{image_index:imageIndex,certain:false}});guard164(ctx);
+  const pixels=await FlipCheckImageEvidence.pixels(picture.data);guard164(ctx);
+  ctx.localPrinting={...FlipCheckImageEvidence.analyze(pixels.data,pixels.width,pixels.height),image_index:imageIndex};
+  saveEvidence192('reading','',{local_frame:ctx.localPrinting});
+ }
+ const m=ctx.localPrinting;if(!['present','absent'].includes(m.state))return base;
+ const printing={...p,artwork_shadow:m.state,shadow_edges:{right:m.right.state,lower:m.lower.state},shadow_image:m.image_index,shadow_location:'Measured outside the detected artwork frame: right and lower margins',local_frame_measurement:m,previous_shadow:p.previous_shadow||p.artwork_shadow};
+ lastVisionReading={...lastVisionReading,pokemon_printing:printing};return {...base,pokemon_printing:printing};
+}
 async function resolvePrinting168(base,ctx){
+ base=await localPrinting192(base,ctx);
  const before=enforceIdentificationPolicy(base),check=before.printing_check,original=before.pokemon_printing||lastVisionReading?.pokemon_printing;
  if(!check||check.complete||ctx.printingRecovery)return before;
  ctx.printingRecovery={attempted:false,details:check.missing,images:[],updatedGroups:[]};
@@ -723,13 +756,16 @@ async function resolvePrinting168(base,ctx){
   const started=Date.now(),body={model:'gpt-5.6-luna',reasoning:{effort:'low'},max_output_tokens:1100,store:false,...schemaFormat('flipcheck_printing_detail',format),input:[{role:'user',content}]};
   const callsBefore=ctx.calls.length;let response;try{response=await openai(body);}finally{ctx.printingRecovery.attempted=ctx.calls.length>callsBefore;}addUsage(response,body.model,0,'Rilettura dettagli di stampa',true,started);guard164(ctx);
   const mapped=FlipCheckEditions.remapCropImages186(parseResponseJSON(response).pokemon_printing,pictures.map(x=>x.meta.imageIndex));
+  saveEvidence192('reading','',{kind:'printing_detail',reading:mapped.printing});
   const p=mapped.printing,merged={...original},indexes=new Set(pictures.map(x=>x.meta.imageIndex));ctx.printingRecovery.imageRemapping=mapped.remapped;
   if(p?.is_pokemon===true){
-   if(check.stamp==='unclear'&&indexes.has(p.stamp_image)&&(['present','absent'].includes(p.first_edition_stamp)||((base.catalogue_verified||base.catalogue_core_verified)&&p.first_edition_stamp==='not_applicable'&&p.set_name===original.set_name))&&p.stamp_location){for(const k of ['first_edition_stamp','stamp_image','stamp_location','stamp_text'])merged[k]=p[k];ctx.printingRecovery.updatedGroups.push('stamp');}
-   if(check.shadow==='unclear'&&indexes.has(p.shadow_image)&&['present','absent'].includes(p.artwork_shadow)&&p.shadow_location){for(const k of ['artwork_shadow','shadow_image','shadow_location',...(p.shadow_edges?['shadow_edges']:[])])merged[k]=p[k];ctx.printingRecovery.updatedGroups.push('shadow');}
-   if((!original.copyright_text||check.shadow==='unclear')&&indexes.has(p.copyright_image)&&p.copyright_text){merged.copyright_text=p.copyright_text;merged.copyright_image=p.copyright_image;ctx.printingRecovery.updatedGroups.push('copyright');}
+   if((check.stamp==='unclear'||check.contradiction)&&indexes.has(p.stamp_image)&&(['present','absent'].includes(p.first_edition_stamp)||((base.catalogue_verified||base.catalogue_core_verified)&&p.first_edition_stamp==='not_applicable'&&p.set_name===original.set_name))&&p.stamp_location){for(const k of ['first_edition_stamp','stamp_image','stamp_location','stamp_text'])merged[k]=p[k];ctx.printingRecovery.updatedGroups.push('stamp');}
+   if((check.shadow==='unclear'||check.contradiction)&&indexes.has(p.shadow_image)&&['present','absent'].includes(p.artwork_shadow)&&p.shadow_location){for(const k of ['artwork_shadow','shadow_image','shadow_location',...(p.shadow_edges?['shadow_edges']:[])])merged[k]=p[k];ctx.printingRecovery.updatedGroups.push('shadow');}
+   if(indexes.has(p.copyright_image)&&p.copyright_text&&/©|copyright/i.test(p.copyright_text)){merged.copyright_text=p.copyright_text;merged.copyright_image=p.copyright_image;ctx.printingRecovery.updatedGroups.push('copyright');}
   }
-  lastVisionReading={...lastVisionReading,pokemon_printing:merged};
+  const updateCopyright=clues=>(clues||[]).map(c=>c.role==='copyright'&&c.image_index===merged.copyright_image&&ctx.printingRecovery.updatedGroups.includes('copyright')?{...c,text:merged.copyright_text,certainty:'clear',previous_text:c.text,origin:'focused_printing_reading'}:c);
+  lastVisionReading={...lastVisionReading,pokemon_printing:merged,photo_clues:updateCopyright(lastVisionReading.photo_clues)};
+  base={...base,photo_clues:updateCopyright(base.photo_clues)};
   let result=enforceIdentificationPolicy({...base,pokemon_printing:merged});ctx.printingRecovery.complete=result.printing_check.complete;
   if(result.printing_check.complete)ctx.evidenceFusion={...ctx.evidenceFusion,printingResolution:result.printing_resolution||{origin:'original_photo',labels:result.printing_check.labels},coreVerified:result.catalogue_core_verified===true,exactVerified:V164.ready(result)};
   if(V164.ready(result))result={...result,assistance_state:'confirmed',missing_information:[],next_photo_request:null};
@@ -791,6 +827,7 @@ resolveIdentificationCheap=async function(base,user){
  const ctx=scan164;ctx.userHint=user||'';let result=base;
  try{
   await readPhotoOcr174(lastVisionReading||base,ctx);
+  base=await localPrinting192(base,ctx);
   lastVisionReading=V164.reconcilePhotoOcr(lastVisionReading||base,ctx.photoOcr);base=V164.reconcilePhotoOcr(base,ctx.photoOcr);
   base=await rereadPhotoDetails173(base,ctx);ctx.photoEvidence={observed_subject:lastVisionReading.observed_subject,ocr_number_readings:lastVisionReading.ocr_number_readings,reading_disagreements:lastVisionReading.reading_disagreements,keys:V164.cardKeyFacts(lastVisionReading)};result=base;const p=V164.plan(lastVisionReading||base,ctx.queries);
   if(V164.googleFirst(lastVisionReading||base)){
@@ -882,7 +919,7 @@ function renderIdentityState191(value){
  const likely=document.querySelector('#identNote .likely');if(likely){likely.replaceChildren();const b=document.createElement('b');b.textContent=exact?'Identità confermata':'Identità principale confermata';likely.append(b,document.createElement('br'),document.createTextNode(title));}
  if(slab){document.getElementById('gradingIdentity191')?.remove();const grading=document.createElement('div');grading.id='gradingIdentity191';grading.className='status';grading.textContent='Certificatore: '+value.grading.company+' · Voto: '+(value.grading.grade||'non leggibile')+' · '+(value.grading.certificate_verified?'Certificato verificato':'Identità da etichetta');$('identPanel').append(grading);}
 }
-renderIdent=function(value){priorRender164(value);renderIdentityState191(value);document.getElementById('specimenSerial184')?.remove();if(value?.kind==='card'){const number=value.source_confirmed_catalog_number||V164.cardKeyFacts(value)?.number.value,serial=value.physical_serial;if(number||serial||value.observed_year){const detail=document.createElement('div');detail.id='specimenSerial184';detail.className='status';detail.textContent=[number?'Numero carta nel set: '+number:'',serial?'Numerazione esemplare: '+serial.value+' · Tiratura: '+serial.print_run:'',value.observed_year?(value.observed_year.kind==='copyright'?'Anno copyright letto: ':'Anno/stagione letti: ')+value.observed_year.value:''].filter(Boolean).join(' · ');$('identPanel').appendChild(detail);}}if(!value?.assistance_state)return;const panel=document.createElement('div');panel.className='status';panel.id='visualResult';panel.textContent=value.slab_verification?.state==='confirmed'?value.verification_summary:value.core_identity?.status==='confirmed'&&!V164.ready(value)?'Identità principale verificata. Variante o stampa ancora da verificare.':value.assistance_message||assistanceMessages164[value.assistance_state]||'Ricerca assistita completata.';
+renderIdent=function(value){priorRender164(value);renderIdentityState191(value);document.getElementById('specimenSerial184')?.remove();if(value?.kind==='card'){const number=value.source_confirmed_catalog_number||V164.cardKeyFacts(value)?.number.value,serial=value.physical_serial;if(number||serial||value.observed_year){const detail=document.createElement('div');detail.id='specimenSerial184';detail.className='status';detail.textContent=[number?'Numero carta nel set: '+number:'',serial?'Numerazione esemplare: '+serial.value+' · Tiratura: '+serial.print_run:'',value.observed_year&&value.observed_year.verification!=='superseded'?(value.observed_year.kind==='copyright'?'Anno copyright letto: ':'Anno/stagione letti: ')+value.observed_year.value:''].filter(Boolean).join(' · ');$('identPanel').appendChild(detail);}}if(!value?.assistance_state)return;const panel=document.createElement('div');panel.className='status';panel.id='visualResult';panel.textContent=value.slab_verification?.state==='confirmed'?value.verification_summary:value.core_identity?.status==='confirmed'&&!V164.ready(value)?'Identità principale verificata. Variante o stampa ancora da verificare.':value.assistance_message||assistanceMessages164[value.assistance_state]||'Ricerca assistita completata.';
  if(value.next_photo_request){const p=document.createElement('p');p.textContent=value.next_photo_request;panel.append(p);}
  if(!V164.ready(value)&&value.candidate_models?.length){const p=document.createElement('p');p.textContent='Candidati da verificare: '+value.candidate_models.slice(0,3).map(c=>c.model).join(' · ');panel.append(p);}
  const displayFacts=(value.catalogue_data||[]).filter(f=>f.verification!=='pending_physical');
@@ -893,7 +930,7 @@ renderIdent=function(value){priorRender164(value);renderIdentityState191(value);
 $('identifyBtn').onclick=async()=>{
  if(photoBusy||apiBusy)return;scan164=newContext164();const ctx=scan164;currentScan=null;cancel164.classList.remove('hide');
  try{await priorIdentify164();if(ctx===scan164&&ctx.budget.cancelled){ident=null;$('identPanel').classList.add('hide');status('Analisi annullata.','warn');}else if(ctx===scan164){ident=syncIdentity169(ident);recordClosure164(ident,'production_before_render');if(ident){renderIdent(ident);if(ident.core_identity?.status==='confirmed')status(ident.exact_identity_status==='confirmed'?'Identità confermata.':'Identità principale confermata. Completa il dettaglio indicato per la variante.',ident.exact_identity_status==='confirmed'?'ok':'warn');}if(!ident&&ctx.initialIncomplete){ctx.state='response_incomplete';ctx.identityState='response_incomplete';}if(V164.ready(ident))ctx.provider.state=ctx.provider.state==='not_requested'?'skipped_identity_confirmed':ctx.provider.state;}}
- finally{if(ctx===scan164){cancel164.classList.add('hide');ctx.elapsedMs=Date.now()-(currentScan?.startedAt||Date.now());if(ctx.state==='identifying')ctx.state=ident?.assistance_state||'unidentified';renderLiveCost();}}
+ finally{if(ctx===scan164){if(!ctx.budget.cancelled){saveEvidence192('reading','',{vision:lastVisionReading});saveEvidence192('result','',{identity:ident});}cancel164.classList.add('hide');ctx.elapsedMs=Date.now()-(currentScan?.startedAt||Date.now());if(ctx.state==='identifying')ctx.state=ident?.assistance_state||'unidentified';renderLiveCost();}}
 };
 renderLiveCost=function(){priorLiveCost164();if(!scan164||!currentScan)return;const g=scan164.budget.entries.filter(e=>e.kind==='visual');if(!g.length)return;const el=$('liveCost');el.innerHTML=el.innerHTML.replace('Costo di questa analisi finora','Costo OpenAI da usage');const p=document.createElement('p');p.className='note';p.textContent='Totale API stimato, incluso Google: $'+scan164.budget.spent().toFixed(4)+' · Google: '+g.length+' tentativo · eventuali addebiti incerti restano conteggiati nel limite.';el.append(p);};
 $('marketBtn').onclick=async()=>{if(photoBusy||apiBusy)return;if(!scan164)scan164=newContext164();scan164.phase='market';scan164.budget.deadline=Date.now()+60000;const saved=ident,savedTrial=JSON.parse(JSON.stringify(trial)),calls=scan164.calls.length;try{await priorMarket164();}finally{if(V164.ready(saved)&&!V164.ready(ident))ident=saved;scan164.comparablesState=scan164.state==='budget_exhausted'?'budget_exhausted':$('resultPanel').textContent.includes('DATI INSUFFICIENTI')?'unavailable':'requested';if(scan164.comparablesState==='budget_exhausted'&&scan164.calls.length===calls){trial=savedTrial;saveTrial();status('Identità conservata. Il budget rimasto non basta per la ricerca mercato.','warn');}scan164.phase='identity';scan164.state=scan164.identityState|| (V164.ready(ident)?'confirmed':'unidentified');renderLiveCost();}};
@@ -901,5 +938,5 @@ invalidatePhotoReading=function(){if(scan164){scan164.budget.cancelled=true;for(
 diagnostic26=function(){const d=priorDiagnostic164();let nativePhotoPicker=null;try{nativePhotoPicker=JSON.parse(window.FlipCheckHost?.photoPickerInfo?.()||'null');}catch(_){}return {...d,nativePhotoPicker,schema:'flipcheck-v0262-evidence-14',
  selectedBaseline:{versionCode:159,sourceCommit:'fbb4f1ead7cc65afe01f9aae7446c13161a32f10'},visualAssistance:scan164?{
  scanId:scan164.id,testMode:scan164.mode,featureEnabled:visualConfig164().enabled,state:scan164.state,provider:scan164.provider,comparablesState:scan164.comparablesState||'not_requested',queries:scan164.queries,calls:scan164.calls,closures:scan164.closures,recoveries:scan164.recoveries,
- priorityClosure:scan164.priorityClosure,evidenceTransitions:scan164.evidenceTransitions,dateVerification:scan164.dateVerification,route:scan164.route,certificateLookup:scan164.certificateLookup,catalogueRoute:scan164.catalogueRoute,catalogueFilter:scan164.catalogueFilter,catalogueFallback:scan164.catalogueFallback,slabVerification:scan164.slabVerification,specificationVerification:scan164.specificationVerification,photoEvidence:scan164.photoEvidence,cardKeyVerification:scan164.cardKeyVerification,configurationReread:scan164.configurationReread,textReferences:scan164.textReferences,photoOcr:scan164.photoOcr,evidenceFusion:scan164.evidenceFusion,focusedReview:scan164.focusedReview,fieldRepair:scan164.fieldRepair,comparisonPlanning:scan164.comparisonPlanning,excludedReferences:scan164.excludedReferences,localOcr:scan164.localOcr,retainedReferences:scan164.retainedReferences,detailReread:scan164.detailReread,secondQuery:scan164.secondQuery,deferredComparison:scan164.deferredComparison,continuationBudget:scan164.continuationBudget,referenceCompletion:scan164.referenceCompletion,initialImagePreparations:scan164.initialImagePreparations,imagePreparation:scan164.imagePreparation,imagePreparations:scan164.imagePreparations,comparisons:scan164.comparisons,printingRecovery:scan164.printingRecovery,coreIdentityState:scan164.coreIdentityState,identityState:scan164.identityState,catalogueRetrieval:scan164.catalogueRetrieval,comparison:scan164.comparison,budget:{maxUsd:scan164.budget.maxUsd,spentOrReservedUsd:scan164.budget.spent(),entries:scan164.budget.entries,visionCalls:scan164.budget.visionCalls,maxVisionCalls:4,estimated:true,includesIdentificationAndMarket:true},
+ evidenceWorkspace:{...evidenceInfo192(),prepared_image_hits:scan164.imageCacheHits||0},localPrinting:scan164.localPrinting,localReferenceComparisons:scan164.localReferenceComparisons,priorityClosure:scan164.priorityClosure,evidenceTransitions:scan164.evidenceTransitions,dateVerification:scan164.dateVerification,route:scan164.route,certificateLookup:scan164.certificateLookup,catalogueRoute:scan164.catalogueRoute,catalogueFilter:scan164.catalogueFilter,catalogueFallback:scan164.catalogueFallback,slabVerification:scan164.slabVerification,specificationVerification:scan164.specificationVerification,photoEvidence:scan164.photoEvidence,cardKeyVerification:scan164.cardKeyVerification,configurationReread:scan164.configurationReread,textReferences:scan164.textReferences,photoOcr:scan164.photoOcr,evidenceFusion:scan164.evidenceFusion,focusedReview:scan164.focusedReview,fieldRepair:scan164.fieldRepair,comparisonPlanning:scan164.comparisonPlanning,excludedReferences:scan164.excludedReferences,localOcr:scan164.localOcr,retainedReferences:scan164.retainedReferences,detailReread:scan164.detailReread,secondQuery:scan164.secondQuery,deferredComparison:scan164.deferredComparison,continuationBudget:scan164.continuationBudget,referenceCompletion:scan164.referenceCompletion,initialImagePreparations:scan164.initialImagePreparations,imagePreparation:scan164.imagePreparation,imagePreparations:scan164.imagePreparations,comparisons:scan164.comparisons,printingRecovery:scan164.printingRecovery,coreIdentityState:scan164.coreIdentityState,identityState:scan164.identityState,catalogueRetrieval:scan164.catalogueRetrieval,comparison:scan164.comparison,budget:{maxUsd:scan164.budget.maxUsd,spentOrReservedUsd:scan164.budget.spent(),entries:scan164.budget.entries,visionCalls:scan164.budget.visionCalls,maxVisionCalls:4,estimated:true,includesIdentificationAndMarket:true},
  costNote:'OpenAI usage follows configured v26 rates; Google is estimated separately. Failed/time-out requests retain their reservation because billing may apply.'}: {state:active164()?'not_requested':'not_configured'}};};

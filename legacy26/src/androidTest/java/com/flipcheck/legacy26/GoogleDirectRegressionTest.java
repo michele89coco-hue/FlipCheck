@@ -296,4 +296,39 @@ public final class GoogleDirectRegressionTest {
             JSONObject result=readLocalImage(encodedImage(bitmap),"other-vertical-serial-191");assertTrue(result.getString("text"),result.getString("text").matches("(?s).*17\\s*/\\s*99.*"));
         }finally{bitmap.recycle();}
     }
+
+    @Test public void scanEvidenceCacheReusesJsonAndKeepsOriginalBytes() throws Exception {
+        java.io.File root=new java.io.File(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().getTargetContext().getCacheDir(),"evidence-test-reuse");
+        ScanEvidenceCache.remove(root);root.mkdirs();
+        try {
+            ScanEvidenceCache cache=new ScanEvidenceCache(root);cache.begin("scan-first");ScanEvidenceCache.Session session=cache.session();
+            session.put("ocr:latin:image-a",new JSONObject().put("text","PLAYER NAME 2/5"));
+            assertEquals("PLAYER NAME 2/5",session.get("ocr:latin:image-a").getString("text"));
+            byte[] source=new byte[]{(byte)137,80,78,71,1,2,3,4};
+            session.media("original","data:image/png;base64,"+android.util.Base64.encodeToString(source,android.util.Base64.NO_WRAP),new JSONObject().put("image_index",1));
+            java.io.File[] media=session.directory.listFiles((dir,name)->name.endsWith(".png"));assertEquals(1,media.length);
+            try(java.io.FileInputStream in=new java.io.FileInputStream(media[0])){byte[] got=new byte[source.length];assertEquals(source.length,in.read(got));org.junit.Assert.assertArrayEquals(source,got);}
+            assertEquals(1,session.info().getInt("cache_hits"));assertFalse(session.info().getBoolean("credentials_stored"));
+        } finally {ScanEvidenceCache.remove(root);}
+    }
+    @Test public void newScanCannotReadPreviousEvidenceAndLateWritesCannotReviveIt() throws Exception {
+        java.io.File root=new java.io.File(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().getTargetContext().getCacheDir(),"evidence-test-isolation");
+        ScanEvidenceCache.remove(root);root.mkdirs();
+        try {
+            ScanEvidenceCache cache=new ScanEvidenceCache(root);cache.begin("scan-old");ScanEvidenceCache.Session old=cache.session();old.put("same-key",new JSONObject().put("text","old"));
+            cache.begin("scan-new");ScanEvidenceCache.Session current=cache.session();assertNull(current.get("same-key"));assertFalse(old.directory.exists());
+            old.put("late-response",new JSONObject().put("text","old"));assertFalse(old.directory.exists());assertNull(current.get("late-response"));
+            current.put("same-key",new JSONObject().put("text","new"));assertEquals("new",current.get("same-key").getString("text"));
+        } finally {ScanEvidenceCache.remove(root);}
+    }
+    @Test public void evidenceRetentionAndEntryLimitRemainBounded() throws Exception {
+        java.io.File root=new java.io.File(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().getTargetContext().getCacheDir(),"evidence-test-bounds");
+        ScanEvidenceCache.remove(root);root.mkdirs();
+        try {
+            java.io.File expired=new java.io.File(root,"scan-evidence/expired");expired.mkdirs();assertTrue(expired.setLastModified(System.currentTimeMillis()-90000000L));
+            ScanEvidenceCache cache=new ScanEvidenceCache(root);assertFalse(expired.exists());cache.begin("scan-current");
+            ScanEvidenceCache.Session session=cache.session();for(int i=0;i<390;i++)session.put("entry-"+i,new JSONObject().put("n",i));
+            assertEquals(384,session.info().getInt("entries"));assertEquals(6,session.info().getInt("skipped"));assertNull(session.get("entry-389"));
+        } finally {ScanEvidenceCache.remove(root);}
+    }
 }

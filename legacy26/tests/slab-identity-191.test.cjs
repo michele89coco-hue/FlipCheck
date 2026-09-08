@@ -74,3 +74,12 @@ test('191 Japanese names must actually occur in label text and cannot match as e
  const p=specimen();p.slab_reading.label_text='1996 Base Set ピカチュウ #25 PSA 9';p.slab_reading.family='Base Set';p.slab_reading.year='1996';p.slab_reading.subject='ピカチュウ';p.slab_reading.model='ピカチュウ';
  assert.equal(S.labelFacts(p).complete,true);p.slab_reading.subject='リザードン';p.slab_reading.model='リザードン';assert.equal(S.labelFacts(p).complete,false);
 });
+
+test('192 label title splits year, language, finish and rarity without requiring contiguous words',()=>{
+ const p=specimen();p.slab_reading.family='2002 Expedition';p.slab_reading.variant='Italian Holo R';const r=S.close(p,S.labelFacts(p));
+ assert.equal(r.variant,'Holo R');assert.equal(r.language,'Italian');assert.equal((r.title.match(/2002/g)||[]).length,1);
+});
+test('192 finish printed in the subject survives a redundant set-name variant',()=>{
+ const p=specimen();Object.assign(p.slab_reading,{label_text:'1999 JAPANESE CHARIZARD-HOLO CD PROMO #6 MINT 9',subject:'Charizard',family:'CD Promo',year:'1999',card_number:'6',variant:'CD Promo'});
+ assert.equal(S.labelFacts(p).variant,'HOLO');
+});

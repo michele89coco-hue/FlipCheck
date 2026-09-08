@@ -44,7 +44,7 @@ async function openScenario(name,options={}){
  const imageSpecs=[...specs,...refList.map((r,i)=>({width:r.ocr?.width||350,height:r.ocr?.height||490,label:'SYNTHETIC REFERENCE '+i}))];
  const payloads=await page.evaluate(specs=>specs.map((s,i)=>{const c=document.createElement('canvas');c.width=s.width;c.height=s.height;const g=c.getContext('2d');g.fillStyle=['#ddd','#cdd','#ddc','#dcc','#ccd'][i%5];g.fillRect(0,0,c.width,c.height);g.fillStyle='#111';g.font='24px sans-serif';g.fillText(s.label,30,60);return c.toDataURL('image/png');}),imageSpecs);
  for(let i=0;i<refList.length;i++){referenceImages.set(refList[i].image_url,payloads[specs.length+i]);referenceOcr.set(payloads[specs.length+i],refList[i].ocr||{state:'ok',text:'',lines:[]});}
- await page.locator('#photoBatch').setInputFiles(specs.map((s,i)=>({name:'offline-photo-'+(i+1)+'.png',mimeType:'image/png',buffer:Buffer.from(payloads[i].split(',')[1],'base64')})));
+ await page.locator('#photoBatch').setInputFiles(specs.map((s,i)=>({name:'offline-photo-'+(i+1)+'.png',mimeType:'image/png',buffer:options.realPhotos?.[i]?fs.readFileSync(options.realPhotos[i]):Buffer.from(payloads[i].split(',')[1],'base64')})));
  await page.waitForFunction(()=>!photoBusy);
 }
 async function clickIdentify(){await page.locator('#identifyBtn').click();await page.waitForFunction(()=>!apiBusy,{}, {timeout:20000});return report();}
@@ -65,7 +65,15 @@ before(async()=>{
    const body=JSON.parse(route.request().postData());api.push(body);const kind=body.text?.format?.name;
    if(scenario.holdInitial&&kind==='flipcheck_identification'){await new Promise(resolve=>{hold=resolve;});}
    if(scenario.httpError&&kind==='flipcheck_identification')return route.fulfill({status:scenario.httpError,contentType:'application/json',body:JSON.stringify({error:{message:'Offline provider error'}})}).catch(()=>{});
-   const phase=phaseFor(kind);let result=responseEnvelope(phase,kind);
+   const phase=phaseFor(kind);
+   if(scenario.remapReferenceIds&&kind==='flipcheck_visual_comparison'){
+    // Request-local IDs are transport labels. Remap only an identical image URL;
+    // keep every recorded observation/quote unchanged, never invent a new match.
+    const current=await page.evaluate(()=>scan164.referencePool.map(r=>({id:r.id,image_url:r.image_url})));
+    const map=new Map((fixture.visualAssistance.retainedReferences||[]).map(old=>[old.id,current.find(r=>r.image_url===old.image_url)?.id||'unavailable_recorded_reference']));
+    for(const c of phase.result.candidates||[])for(const f of [...c.matches||[],...c.fields||[]])if(f.reference_id)f.reference_id=map.get(f.reference_id)||f.reference_id;
+   }
+   let result=responseEnvelope(phase,kind);
    if(scenario.incompleteInitial&&kind==='flipcheck_identification'&&cursor.vision===1)result={...result,status:'incomplete',incomplete_details:{reason:'max_output_tokens'},output:[{type:'message',content:[{type:'output_text',text:'{"status":'}]}]};
    if(scenario.malformedInitial&&kind==='flipcheck_identification')result={...result,output:[{type:'message',content:[{type:'output_text',text:'not json'}]}]};
    return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(result)}).catch(()=>{});
@@ -200,3 +208,29 @@ test('191 replacing a slab result clears its grading panel from the next identit
  await page.evaluate(()=>renderIdent({kind:'card',brand:'Example',model:'Other card',variant:'',core_identity:{status:'confirmed'},exact_identity_status:'confirmed',market_ready:true,normalized_query:'Other card',model_confidence:98}));
  assert.equal(await page.locator('#gradingIdentity191').count(),0);assert.doesNotMatch(await page.locator('#identPanel').textContent(),/PSA|MINT 9/);
 });
+
+// Build-191 exports stay outside the repository. Actual supplied photos only feed
+// local pixel analysis; Responses/OCR are still explicitly offline replay data.
+if(process.env.FLIPCHECK_DIAGNOSTICS_191_DIR){
+ const dir=process.env.FLIPCHECK_DIAGNOSTICS_191_DIR;
+ const names=['topps','boniface','cloyster','charizard','machamp','politoed','neo','doncic','pele','magikarp','jordan'];
+ for(const [i,name] of names.entries()){
+  recorded['release192_'+name]=JSON.parse(fs.readFileSync(path.join(dir,'FlipCheck-26Fix-diagnostica'+(i?' ('+i+')':'')+'.json'),'utf8'));
+  test('192 supplied build191 diagnostic '+name,async()=>{
+   const photo=name==='magikarp'?'01-1000154523.jpg':name==='jordan'?'02-1000149865.jpg':null;
+   await openScenario('release192_'+name,{remapReferenceIds:true,...(photo&&fs.existsSync(path.join(dir,photo))?{realPhotos:[path.join(dir,photo)]}:{})});
+   const d=await clickIdentify();fs.writeFileSync('/tmp/flipcheck192-replay-'+name+'.json',JSON.stringify({...d,requestBodies:api},null,2));
+   if(!['topps','jordan'].includes(name))assert.equal(d.identification.core_identity.status,'confirmed',narrow(d));
+   if(['cloyster','charizard','neo'].includes(name)){
+    assert.equal(d.identification.market_ready,true,narrow(d));assert.deepEqual(stages(),['flipcheck_identification']);
+    assert.match(d.identification.variant,/holo/i);assert.ok(d.identification.grading.company);assert.ok(d.identification.grading.grade);
+   }
+   if(name==='boniface'){assert.equal(d.identification.serial_number,'2/5');assert.equal(d.identification.variant,'Green',narrow(d));assert.equal(d.identification.market_ready,true,narrow(d));}
+   if(name==='politoed'){assert.match(d.identification.title,/2003/);assert.doesNotMatch(d.identification.title,/2000/);assert.equal(d.identification.market_ready,true,narrow(d));}
+   if(name==='doncic'){assert.equal(d.identification.market_ready,false);assert.ok(d.identification.next_photo_request,narrow(d));}
+   if(name==='pele'){assert.doesNotMatch(d.identification.model,/jugadores|del equipo|representando/i);assert.match(d.identification.model,/Pel[eé]/i);}
+   if(name==='magikarp'){assert.equal(d.visualAssistance.localPrinting.state,'absent');assert.match(d.identification.variant,/Shadowless/);assert.doesNotMatch(d.identification.variant,/Shadowed/);assert.equal(d.identification.market_ready,true,narrow(d));}
+   if(name==='jordan'){assert.match(d.visualAssistance.queries.join(' '),/MICHAEL JORDAN/i);assert.match(d.visualAssistance.queries.join(' '),/USA|portrait|flag/i);assert.equal(stages().includes('flipcheck_visual_comparison'),false);assert.notEqual(d.identification.market_ready,true);}
+  });
+ }
+}

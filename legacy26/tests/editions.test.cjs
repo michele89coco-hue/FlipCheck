@@ -85,3 +85,15 @@ test('original recognition, scoring and usage algorithms survive release UI hard
     assert.ok(before.includes('function '+name+'('),name);assert.equal(body(after),body(before),name);
   }
 });
+
+test('192 impossible first-edition shadowed Base combination stays open except the Machamp deck issue',()=>{
+ const shadowed={...base,artwork_shadow:'present',shadow_edges:{right:'present',lower:'present'},catalogue_subject:'Magikarp',catalogue_number:'35/102'};
+ assert.equal(editions.evaluate(shadowed,1).contradiction,true);assert.equal(editions.evaluate(shadowed,1).complete,false);
+ assert.notEqual(editions.evaluate({...shadowed,catalogue_subject:'Machamp',catalogue_number:'8/102'},1).contradiction,true);
+});
+test('192 verified Skyridge excludes first edition despite an initially misread copyright',()=>{
+ const p={...base,set_name:'Skyridge',language:'Italian',first_edition_stamp:'unclear',copyright_text:'© 2000 Pokemon'};
+ const identity={family:'Skyridge',catalogue_core_verified:true,pokemon_printing:p};
+ assert.equal(editions.cataloguePrinting(identity,p).stamp_policy.state,'not_applicable');assert.equal(editions.releaseDate(identity).value,'2003');
+ assert.equal(editions.releaseDate({...identity,catalogue_core_verified:false}),null);
+});

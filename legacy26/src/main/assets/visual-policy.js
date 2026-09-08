@@ -70,7 +70,7 @@ const url=x=>{try{const u=new URL(x);return u.protocol==='https:'&&!u.username&&
 function clues(base){
  const rich=list(base.photo_clues).filter(c=>!empty(c.text)&&c.certainty==='clear');
  const raw=Array.isArray(base.photo_clues)?rich:list(base.layout_signature).map(c=>({text:c.term,role:'text',certainty:'clear',location:c.position}));
- return raw.map(c=>({...c,...(c.role==='subject'?{semantic_role:'subject'}:{}),role:c.role==='subject'?'text':base.kind==='card'&&/^\s*\d+\s*(?:HP|PV)\s*$/i.test(c.text)?'card_stat':base.kind==='card'&&c.role==='model'&&!/\d/.test(c.text)?'text':clueRole(c)})).filter(c=>!empty(c.text)&&!['serial','slab_certificate'].includes(c.role)&&(norm(c.text).length>=4||base.kind==='card'&&c.role==='text'&&norm(c.text).length===3&&(c.semantic_role==='subject'||has(base.model,c.text)||has(base.title,c.text))&&!has(base.brand,c.text)&&!has(base.family,c.text)||['model','collector_number','barcode','symbol'].includes(c.role)))
+ return raw.map(c=>({...c,...(c.role==='subject'?{semantic_role:'subject'}:{}),role:c.role==='subject'?'text':base.kind==='card'&&/^\s*\d+\s*(?:HP|PV)\s*$/i.test(c.text)?'card_stat':base.kind==='card'&&c.role==='model'&&!/\d/.test(c.text)?'text':clueRole(c)})).filter(c=>!empty(c.text)&&!['serial','slab_certificate'].includes(c.role)&&(norm(c.text).length>=4||base.kind==='card'&&['text','team'].includes(c.role)&&norm(c.text).length===3&&(c.semantic_role==='subject'||c.role==='team'||has(base.model,c.text)||has(base.title,c.text))&&!has(base.brand,c.text)&&!has(base.family,c.text)||['model','collector_number','barcode','symbol'].includes(c.role)))
   .filter((c,i,a)=>a.findIndex(v=>norm(v.text)===norm(c.text))===i);
 }
 const seasonLike=x=>/^(?:19|20)\d{2}(?:\s*[-/]\s*(?:\d{2}|(?:19|20)\d{2}))?$/.test(String(x||'').trim());
@@ -90,6 +90,15 @@ function observedSubject(base){
  const typed=names.filter(c=>c.semantic_role==='subject');
  if(typed.length===1)return typed[0];
  if(typed.length>1){
+  // Adjacent words on the same photographed name line form one subject. This
+  // never joins different rows, cards or multiple distant portrait captions.
+  const ordered=typed.slice().sort((a,b)=>(a.region?.x||0)-(b.region?.x||0));
+  if(ordered.length<=4&&ordered.every(c=>c.image_index===ordered[0].image_index&&c.region&&[c.region.x,c.region.y,c.region.width,c.region.height].every(Number.isFinite))&&ordered.slice(1).every((c,i)=>{
+   const a=ordered[i].region,b=c.region,h=Math.max(a.height,b.height);return Math.abs(a.y+a.height/2-b.y-b.height/2)<h*.65&&b.x>=a.x+a.width*.5&&b.x-a.x-a.width<Math.max(h*2,.04);
+  })){
+   const text=ordered.map(c=>c.text).join(' '),r=ordered[0].region,last=ordered.at(-1).region;
+   if(has(base.title,text)||has(base.model,text))return {...ordered[0],text,region:{...r,width:last.x+last.width-r.x},origin:'adjacent_photo_words',components:ordered.map(c=>({text:c.text,region:c.region}))};
+  }
   // Older observations typed both athlete and team as subject. A title may select
   // one already transcribed name on a single card, but cannot invent one.
   const titled=typed.filter(c=>has(base.title,c.text));
@@ -145,6 +154,17 @@ function recoverNumberRoles189(base,ocr){
 function reconcilePhotoOcr(base,ocr){
  if(base?.kind!=='card'||targetUnit(base)!=='single')return base;
  base=recoverNumberRoles189(base,ocr);
+ // A local reading can corroborate an already located serial without another
+ // paid crop. Screen counters and unrelated fractions cannot provide this proof.
+ const serialClues=list(base.photo_clues).map(c=>{
+  if(c.role!=='serial'||c.certainty==='clear'||!parseSerial184(c.text)||!c.region)return c;
+  for(const local of list(ocr).filter(o=>o.state==='ok'&&o.image_index===c.image_index))for(const line of list(local.lines)){
+   const r=ocrRegion(line,local),a=parseSerial184(line.text),b=parseSerial184(c.text),v=c.region;
+   if(!line.ambiguous&&r&&a&&a.value===b.value&&r.x+r.width/2>=v.x-.03&&r.x+r.width/2<=v.x+v.width+.03&&r.y+r.height/2>=v.y-.03&&r.y+r.height/2<=v.y+v.height+.03)
+    return {...c,certainty:'clear',origin:'photo_and_local_ocr',region:r,ocr_quote:line.text};
+  }return c;
+ });
+ base={...base,photo_clues:serialClues};
  const original=list(base.photo_clues).filter(c=>c.role==='collector_number'),alternatives=[];
  for(const local of list(ocr).filter(o=>o.state==='ok'))for(const line of ocrLines189(local)){
   const values=collectorReadings(line.text,true),region=ocrRegion(line,local);if(values.length!==1||!region)continue;
@@ -673,7 +693,10 @@ function validFields(c,refs,base,matches=[]){return list(c.fields).map(original=
   f.original_quote=f.quote;f.quote=ref.title;f.quote_context='existing_entry_title';
  }
  if(base&&trustedReferenceText(ref)&&f.field==='subject'&&f.scope==='target'&&f.quote?.length>=8&&f.quote.length<=240&&has(referenceText(ref),f.quote)&&!has(f.quote,f.value)&&clues(base).some(o=>o.role==='text'&&has(f.quote,o.text))&&matches.some(m=>m.reference_id===f.reference_id&&['text','subject'].includes(m.feature)))
-  return {...f,value:f.quote,recovered_from:'cited_subject_description'};
+  {const words=String(f.value||'').match(/[\p{L}\p{N}]+/gu)||[],tokens=words.filter(w=>!['and','e','y','et','und','&'].includes(norm(w)));
+   if(tokens.length>=2&&tokens.every(w=>has(f.quote,w)))return {...f,quote_supported_tokens:true};
+   const names=clues(base).filter(o=>o.role==='text'&&has(f.quote,o.text)&&o.text.length>=4).map(o=>o.text);
+   return {...f,value:[...new Set(names)].sort((a,b)=>norm(f.quote).indexOf(norm(a))-norm(f.quote).indexOf(norm(b))).join(' · '),quote_supported_tokens:true,recovered_from:'cited_subject_names'};}
  return f;
  }).filter(f=>{
  const ref=refs.find(r=>r.id===f.reference_id);
@@ -682,7 +705,7 @@ function validFields(c,refs,base,matches=[]){return list(c.fields).map(original=
  const imageQuote=f.evidence==='image'&&ref?.image_data&&f.quote?.length>=2&&(localQuote||matches.some(m=>m.reference_id===f.reference_id&&has(m.reference_detail,f.quote)));
  const minimum=['year','issue_number','catalog_number'].includes(f.field)?1:['subject','brand','family'].includes(f.field)?3:8;
  const textQuote=f.evidence!=='image'&&trustedReferenceText(ref)&&f.quote?.length>=minimum&&has(referenceText(ref),f.quote);
- if(!ref||!['model','subject','family','brand','year','issue_number','catalog_number','variant'].includes(f.field)||empty(f.value)||(!textQuote&&!imageQuote)||!has(f.quote,f.value))return false;
+ if(!ref||!['model','subject','family','brand','year','issue_number','catalog_number','variant'].includes(f.field)||empty(f.value)||(!textQuote&&!imageQuote)||(!has(f.quote,f.value)&&!(f.field==='subject'&&f.quote_supported_tokens===true&&String(f.value).split(/\s+/).filter(w=>norm(w)&&!['e','and','y','et','und'].includes(norm(w))).every(w=>has(f.quote,w)))))return false;
  if(f.scope&&f.scope!=='target'&&!(f.scope==='parent'&&['brand','family','year','issue_number'].includes(f.field)))return false;
  if(f.field==='catalog_number'&&(listingNumber(f.value,ref)||f.number_kind&&!['card_number','catalog_number'].includes(f.number_kind)))return false;
  if(f.field==='issue_number'&&f.number_kind&&f.number_kind!=='issue_number')return false;
@@ -998,7 +1021,7 @@ function fuseComparisons(base,history){
  return {...result,model:stableCore.core_identity.model,title:stableCore.core_identity.model,family:stableCore.family,catalogue_core_verified:true,core_identity:stableCore.core_identity,catalogue_data:stableCore.catalogue_data,identity_basis:stableCore.identity_basis,catalogue_needs_verification:false,unresolved_identity_fields:list(result.unresolved_identity_fields).filter(f=>f!=='family'),variant_check:'pending',market_ready:false,normalized_query:'',assistance_state:result.assistance_state==='unidentified'?'core_confirmed':result.assistance_state,core_retained_from:'prior_verified_comparison'};
 }
 function printingPlan(base,check,count){
- const needed=[...(check.stamp==='unclear'?['stamp']:[]),...(check.shadow==='unclear'?['shadow','copyright']:[])],requests=[];
+ const needed=[...(check.stamp==='unclear'||check.contradiction?['stamp']:[]),...(check.shadow==='unclear'||check.contradiction?['shadow','copyright']:[])],requests=[];
  for(const detail of needed){
   const region=list(base.printing_detail_regions).find(r=>r.detail===detail)?.region;
   if(region?.certain&&region.image_index>=1&&region.image_index<=count)requests.push({detail,object_region:region,detail_crop:true});
@@ -1019,7 +1042,7 @@ function printingPlan(base,check,count){
  }
  return requests.slice(0,3);
 }
-function referenceImageUseful(value){try{return !/(?:^|[-_])(?:logo(?:type)?|favicon|sprite|placeholder|default|hero-inner|auction[-_]company|no[-_]?(?:image|photo|picture)|(?:image|photo|picture)[-_](?:unavailable|missing|not[-_]found))(?:[._-]|$)/i.test(new URL(value).pathname.split('/').pop());}catch(_){return false;}}
+function referenceImageUseful(value){try{const u=new URL(value);if(/\/(?:home|assets?|static|branding)\/(?:meta|og|social|share)(?:[-_.]|$)/i.test(u.pathname)||/\/(?:meta|og-image|social-share)\.(?:jpe?g|png|webp)$/i.test(u.pathname))return false;return !/(?:^|[-_])(?:logo(?:type)?|favicon|sprite|placeholder|default|hero-inner|auction[-_]company|no[-_]?(?:image|photo|picture)|(?:image|photo|picture)[-_](?:unavailable|missing|not[-_]found))(?:[._-]|$)/i.test(new URL(value).pathname.split('/').pop());}catch(_){return false;}}
 function referenceImageKey(ref){
  try{
   const u=new URL(ref.image_url);for(const key of ['w','h','width','height','q','quality','auto','format','crop','fit','resize'])u.searchParams.delete(key);
@@ -1204,7 +1227,13 @@ function cataloguePlan185(base,previous=[],fallback=false){
  const terms=[base.pokemon_printing?.is_pokemon&&!/pok[eé]mon/i.test(product)?'Pokemon':'',product,subject,number?'#'+String(number).replace(/^\s*#+\s*/,''):'',slab?.variant||'',slab?'':cardLevel185(base),!slab&&!base.pokemon_printing?.is_pokemon&&colors.length?(colors.length>1?'('+colors.join(' OR ')+')':colors[0]):'',serial?'/'+serial.print_run:'',base.pokemon_printing?.language].filter(Boolean);
  // Use the label's identity, never spend the sole useful query on a certificate form.
  // Search the observed border colours; multiple colours are alternatives, not a guessed parallel.
- const search=terms.concat(serial?'checklist parallels':'checklist');
+ const appearance=!slab&&!year&&!familyGrounded188(base)?physical(base).filter(o=>['layout','pattern'].includes(o.feature)).map(o=>o.text).join(' '):'';
+ const landmarks=[/\bUSA\b/i.test(appearance)||clues(base).some(c=>/^USA$/i.test(c.text))?'USA':'',/portrait|ritratto/i.test(appearance)?'portrait':'',/flag|bandiera/i.test(appearance)?'flag':''].filter(Boolean);
+ const exploratory=!slab&&!year&&!base.pokemon_printing?.is_pokemon&&!familyGrounded188(base);
+ // One distinctive visible landmark keeps discovery broad. Requiring all colours,
+ // portrait, country, flag and checklist together can hide the correct catalogue.
+ const landmark=landmarks.includes('flag')?'flag':landmarks[0];
+ const search=exploratory?[JSON.stringify(subject),JSON.stringify(String(number).replace(/^#+/,'')),landmark||'card sticker']:terms.concat(serial?'checklist parallels':'checklist');
  const selected=fallback?[]:domains;
  const query=[...search,...(selected.length?['('+selected.map(d=>'site:'+d).join(' OR ')+')']:[])].join(' ').slice(0,500);
  return {kind:slab?'slab':'card_checklist',query,useful:true,duplicate:previous.some(q=>norm(q)===norm(query)),terms,domains,official_domains,fallback_domains,scope:'same_set_year_subject_number',certificate:false};
@@ -1292,7 +1321,7 @@ function slabClosure187(base,photo,refs,web={}){
   identity_basis:{family:'slab_label',variant:'slab_label'},slab_verification:{state:'confirmed',origin:'photo_slab_label_and_visual_coherence',scope:'label_description',reference_id:hit?.id||null,source:hit?.url||null,web_check:{attempted:true,completed:true,corroborated:!!hit},label_text:slab.label_text,certificate_verified:false},authenticity_status:'not_assessed',normalized_query:[model,slab.variant,slab.grader,slab.grade,photo.pokemon_printing?.language].filter(Boolean).join(' '),verification_summary:hit?'Identità dell’etichetta coerente con l’oggetto e riscontrata con ricerca sommaria.':'Identità dell’etichetta confermata dalla coerenza visiva; ricerca completata senza riscontro catalografico sufficiente.'},photo);
 }
 function borderColors187(photo){
- const color=visualColors.join('|'),modifiers='and|or|e|o|with|holographic|reflective|foil|prismatic|metallic|outer|printed|card|colored|coloured|bright|dark|light|sparkling|solid';
+ const color=visualColors.join('|'),modifiers='front|back|and|or|e|o|with|holographic|reflective|foil|prismatic|metallic|outer|printed|card|colored|coloured|bright|dark|light|sparkling|solid';
  const before=new RegExp('\\b(?:'+color+')(?:[ /-]+(?:'+color+'|'+modifiers+')){0,7}\\s+(?:border|bordo|cornice|frame)\\b','g');
  const after=new RegExp('\\b(?:border|bordo|cornice|frame)(?:[ /-]+(?:is|in|color|colour|of))?\\s+(?:'+color+')(?:[ /-]+(?:and|or|e|o|'+color+')){0,4}\\b','g');
  return [...new Set(physical(photo).filter(o=>o.feature==='color').flatMap(o=>[...visualWords(o.text).matchAll(before),...visualWords(o.text).matchAll(after)].flatMap(m=>visualColors.filter(c=>has(m[0],c)))))].slice(0,3);
@@ -1390,7 +1419,10 @@ function specificationClosure184(base,photo,reply,refs){
  const isBox=targetUnit(photo)==='box',serial=serialEvidence184(photo),core=isBox?boxIdentity(photo):base.catalogue_core_verified&&base.core_identity;
  if(!core||!isBox&&!serial)return base;
  const accepted=[];
- for(const entry of list(reply?.entries)){
+ for(const raw of list(reply?.entries)){
+  // A returned name may include the same /N as the separately quoted run.
+  // Strip only that exact denominator, never a commercial pattern word.
+  const entry=!isBox&&serial?{...raw,variant:String(raw.variant||'').replace(new RegExp('\\s*\\/\\s*'+serial.print_run+'$'),'').trim()}:raw;
   const original=refs.find(r=>r.id===entry.reference_id),r=original&&isBox?{...original,title:productHeading188(photo,original)}:original,quote=entry.section_quote||'';
   if(!trustedReferenceText(r)||quote.length<12||quote.length>1800||quote.includes('…')||!has(referenceText(r),quote)||entry.unit!==(isBox?'box':'single'))continue;
   if(!empty(photo.brand)&&!has(r.title,photo.brand)||!familyAgrees184(core.fields.find(f=>f.field==='family')?.value||photo.family,r.title,photo.brand))continue;

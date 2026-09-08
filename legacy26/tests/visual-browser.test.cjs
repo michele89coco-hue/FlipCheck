@@ -11,7 +11,7 @@ async function reset(enabled=true){specificationReply={entries:[]};cardKeysReply
 async function upload(){await page.locator('#photoBatch').setInputFiles(photos);await page.waitForFunction(()=>!photoBusy);}
 async function identify(){await page.locator('#identifyBtn').click();await page.waitForFunction(()=>!apiBusy,{},{timeout:12000});}
 before(async()=>{
- server=http.createServer((req,res)=>{const name=req.url==='/'?'index.html':req.url.slice(1);if(!['index.html','editions.js','targeted-fixes.js','visual-policy.js','visual-runtime.js','google-direct.js','background-runtime.js','slab-identity.js','identity-final.js'].includes(name)){res.writeHead(404);return res.end();}res.setHeader('Content-Type',name.endsWith('.js')?'application/javascript':'text/html');res.end(fs.readFileSync(path.join(root,name)));});await new Promise(r=>server.listen(0,'127.0.0.1',r));origin='http://127.0.0.1:'+server.address().port;
+ server=http.createServer((req,res)=>{const name=req.url==='/'?'index.html':req.url.slice(1);if(!['index.html','editions.js','targeted-fixes.js','visual-policy.js','visual-runtime.js','google-direct.js','background-runtime.js','slab-identity.js','identity-final.js','image-evidence.js'].includes(name)){res.writeHead(404);return res.end();}res.setHeader('Content-Type',name.endsWith('.js')?'application/javascript':'text/html');res.end(fs.readFileSync(path.join(root,name)));});await new Promise(r=>server.listen(0,'127.0.0.1',r));origin='http://127.0.0.1:'+server.address().port;
  browser=await chromium.launch({executablePath:process.env.FLIPCHECK_BROWSER_EXECUTABLE||undefined,headless:true,args:['--no-sandbox']});page=await browser.newPage({viewport:{width:412,height:915}});page.on('pageerror',e=>errors.push(e.message));
  await page.addInitScript(()=>{window.FlipCheckGoogle={request(id,action,payload){fetch('https://native.example/'+action,{method:'POST',body:payload}).then(r=>r.json()).then(result=>window.FlipCheckDirect.receive(id,result));},cancel(){}};});
  await page.route('**/*',async route=>{
@@ -745,7 +745,7 @@ test('188 actual reordered Cloyster label bypasses printing recovery through the
  await identify();const d=await page.evaluate(()=>diagnostic26());
  assert.equal(d.identification.market_ready,true,JSON.stringify(d.identification));assert.equal(d.visualAssistance.route,'slab_label');
  assert.deepEqual(requests.map(r=>r.text.format.name),['flipcheck_identification']);assert.equal(googleRequests.filter(r=>r.action==='detect'||r.action==='image').length,0);
- assert.equal(d.identification.slab_reading.variant,'Holo R, Italian');assert.equal(d.identification.next_photo_request,null);
+ assert.equal(d.identification.slab_reading.variant,'Holo R');assert.equal(d.identification.card_identity.language,'Italian');assert.equal(d.identification.next_photo_request,null);
 });
 test('188 actual Vileplume uses its exact catalogue entry despite the incorrect initial Base Set flag',async()=>{
  await reset();await upload();vision=structuredClone(actual187.vileplume.photo);

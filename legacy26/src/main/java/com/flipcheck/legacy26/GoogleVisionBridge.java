@@ -49,11 +49,15 @@ public final class GoogleVisionBridge {
     private final OkHttpClient client;
     private final OkHttpClient googleClient;
     private final LocalReferenceOcr localOcr=new LocalReferenceOcr();
+    private final ScanEvidenceCache evidence;
+    private final java.util.concurrent.ExecutorService evidenceIo=java.util.concurrent.Executors.newSingleThreadExecutor();
+    private final java.util.Set<String> cancelled=java.util.concurrent.ConcurrentHashMap.newKeySet();
     private volatile boolean closed;
 
     GoogleVisionBridge(WebView web) {
         this.web = web;
         referenceCache=web.getContext().getCacheDir();
+        evidence=new ScanEvidenceCache(referenceCache);
         client = new OkHttpClient.Builder().dns(host -> {
             List<InetAddress> addresses = Arrays.asList(InetAddress.getAllByName(host));
             for (InetAddress address : addresses) if (!isPublic(address)) throw new UnknownHostException("address_blocked");
@@ -112,20 +116,47 @@ public final class GoogleVisionBridge {
                 if ("detect".equals(action)) r=googleRequest(p);
                 else if ("page".equals(action) || "image".equals(action)) r=referenceRequest(p.optString("url"));
                 else throw new IOException("invalid_action");
-                execute(id,action,r.newBuilder().tag(JSONObject.class,p).build(),0);
+                final Request request=r.newBuilder().tag(JSONObject.class,p).build();
+                final ScanEvidenceCache.Session session=evidence.session();
+                final String cacheKey=action+":"+request.url()+":"+p.optJSONArray("terms");
+                queueEvidence(()->{
+                    if(closed||cancelled.contains(id))return;
+                    JSONObject cached=session!=null&&!"detect".equals(action)?session.get(cacheKey):null;
+                    if(cached!=null){deliver(id,cached);return;}
+                    execute(id,action,request,0,session,cacheKey);
+                });
             } catch (Exception e) {
                 String state="invalid_api_key".equals(e.getMessage())?"invalid_api_key":"invalid_request";
                 deliver(id,json("state",state,"status",0,"attempted",false));
             }
         });
     }
+    private void queueEvidence(Runnable work){if(closed)return;try{evidenceIo.execute(work);}catch(java.util.concurrent.RejectedExecutionException ignored){}}
+    void beginEvidence(String id){queueEvidence(()->evidence.begin(id));}
+    @JavascriptInterface public String evidenceInfo(){ScanEvidenceCache.Session s=evidence.session();return s==null?"{}":s.info().toString();}
+    @JavascriptInterface public void storeEvidence(String kind,String data,String metadata){
+        if(closed||data==null||metadata==null||metadata.length()>300000||data.length()>11000000)return;
+        main.post(()->{if(closed||!"https://flipcheck.local/index.html".equals(web.getUrl()))return;
+            final ScanEvidenceCache.Session session=evidence.session();if(session==null)return;
+            queueEvidence(()->{try{if("reading".equals(kind)||"result".equals(kind))session.put(kind+":"+ScanEvidenceCache.digest(metadata),new JSONObject(metadata));else session.media(kind,data,new JSONObject(metadata));}catch(Exception ignored){}});
+        });
+    }
     @JavascriptInterface public boolean ocrAvailable(){return !closed;}
     @JavascriptInterface public void readText(String id,String image){readTextScript(id,image,"latin");}
     @JavascriptInterface public void readTextScript(String id,String image,String script){
         if(closed||id==null||!id.matches("[a-zA-Z0-9_-]{8,100}")||image==null||image.length()>6000000)return;
-        main.post(()->{if(!closed&&"https://flipcheck.local/index.html".equals(web.getUrl()))localOcr.read(id,image,script,result->deliver(id,result));});
+        main.post(()->{if(closed||!"https://flipcheck.local/index.html".equals(web.getUrl()))return;
+            final ScanEvidenceCache.Session session=evidence.session();final String key="ocr:"+script+":"+ScanEvidenceCache.digest(image);
+            queueEvidence(()->{
+                if(closed||cancelled.contains(id))return;
+                JSONObject cached=session==null?null:session.get(key);if(cached!=null){deliver(id,cached);return;}
+                if(session!=null)session.media("ocr-input",image,json("script",script));
+                localOcr.read(id,image,script,result->{if(!closed)queueEvidence(()->{if(session!=null&&"ok".equals(result.optString("state")))session.put(key,result);deliver(id,result);});});
+            });
+        });
     }
-    private void execute(String id, String action, Request request, int redirects) {
+    private void execute(String id, String action, Request request, int redirects, ScanEvidenceCache.Session session, String cacheKey) {
+        if(closed||cancelled.contains(id))return;
         Call call=("detect".equals(action)?googleClient:client).newCall(request);calls.put(id,call);
         call.enqueue(new Callback() {
             public void onFailure(Call c, IOException error) {
@@ -140,7 +171,7 @@ public final class GoogleVisionBridge {
                         HttpUrl next=r.request().url().resolve(r.header("Location",""));
                         if(next==null) throw new IOException("invalid_redirect");
                         Request redirected=referenceRequest(next.toString()).newBuilder().tag(JSONObject.class,request.tag(JSONObject.class)).build();
-                        synchronized(calls) { if(calls.get(id)!=c) return; execute(id,action,redirected,redirects+1); }
+                        synchronized(calls) { if(calls.get(id)!=c) return; execute(id,action,redirected,redirects+1,session,cacheKey); }
                         return;
                     }
                     JSONObject result;
@@ -157,7 +188,10 @@ public final class GoogleVisionBridge {
                         if(mime.isEmpty()) throw new IOException("invalid_image");
                         result=json("status",code,"image_data","data:"+mime+";base64,"+Base64.encodeToString(data,Base64.NO_WRAP));
                     }
-                    if(calls.remove(id,c)) deliver(id,result);
+                    if(calls.remove(id,c)) {
+                        if(session!=null&&!"detect".equals(action)&&result.optInt("status")==200)queueEvidence(()->{session.put(cacheKey,result);if("image".equals(action))session.media("reference",result.optString("image_data"),json("url",request.url().toString()));});
+                        deliver(id,result);
+                    }
                 } catch (Exception e) {
                     if(calls.remove(id,c)) deliver(id,json("status",0,"state","response_unavailable","attempted",true));
                 }
@@ -360,13 +394,14 @@ public final class GoogleVisionBridge {
         JSONObject value=new JSONObject();try{for(int i=0;i<pairs.length;i+=2)value.put((String)pairs[i],pairs[i+1]);}catch(Exception ignored){}return value;
     }
     private void deliver(String id, JSONObject result) {
-        if(closed) return;
-        main.post(() -> {if(!closed && "https://flipcheck.local/index.html".equals(web.getUrl()))
+        if(closed||cancelled.contains(id)) return;
+        main.post(() -> {if(!closed && !cancelled.contains(id) && "https://flipcheck.local/index.html".equals(web.getUrl()))
             web.evaluateJavascript("window.FlipCheckDirect && window.FlipCheckDirect.receive("+JSONObject.quote(id)+","+result.toString()+")",null);});
     }
     @JavascriptInterface public void cancel(String id) {
+        cancelled.add(id);
         localOcr.cancel(id);
         main.post(() -> {synchronized(calls) {Call call=calls.remove(id);if(call!=null)call.cancel();}});
     }
-    void close() {closed=true;localOcr.close();for(Call c:calls.values())c.cancel();calls.clear();client.dispatcher().executorService().shutdown();client.connectionPool().evictAll();}
+    void close() {closed=true;evidenceIo.shutdown();localOcr.close();for(Call c:calls.values())c.cancel();calls.clear();client.dispatcher().executorService().shutdown();client.connectionPool().evictAll();}
 }

@@ -27,8 +27,17 @@ function labelFacts(base){
  for(const field of ['subject','family','model','year','variant'])out[field]=copied(label,p[field])?clean(p[field]):'';
  const rawNumber=cardNumber(p.card_number)||cardNumber(label.match(/(?:^|\s)(#[A-Z0-9][^;\n]*)/i)?.[1]);
  out.card_number=copied(label,rawNumber)?rawNumber:'';
- const variants=clean(p.variant).split(/[,;|·]+/).map(clean).filter(Boolean);
- out.variant=variants.length&&variants.every(v=>copied(label,v))?clean(p.variant):out.variant;
+ // Language and finish are often on different label lines. Ground each word,
+ // then preserve the literal finish independently of language or set wording.
+ const languages=/\b(?:italian|japanese|english|french|german|spanish|korean|portuguese|chinese)\b/gi;
+ const variant=clean(p.variant).replace(languages,'').trim();
+ const words=variant.match(/[\p{L}\p{N}]+/gu)||[];
+ const labelWords=new Set((label.match(/[\p{L}\p{N}]+/gu)||[]).map(key));
+ out.variant=words.length&&words.every(w=>labelWords.has(key(w)))?variant:'';
+ const finish=label.match(/\b(?:NON[- ]?HOLO|REVERSE(?:[- ]HOLO)?|HOLO(?:GRAPHIC|FOIL)?(?:\s+R(?:ARE)?)?|RRR|RR|SAR|AR|SR|UR)\b/i)?.[0];
+ if(key(out.variant)===key(out.family))out.variant='';
+ if(finish&&!copied(out.variant,finish))out.variant=[out.variant,finish].filter(Boolean).join(' · ');
+ out.variant=out.variant.replace(/^[,;|·\s]+|[,;|·\s]+$/g,'');
  out.grade=clean(p.grade); // Separate field: never derive a grade from arbitrary label digits.
  out.certificate=clean(p.certificate).replace(/\s/g,''); // Preserve leading zeroes; do not guess O/0.
  out.language=clean(p.language)||clean(base.pokemon_printing?.language);
@@ -83,7 +92,9 @@ function officialRecord(plan,page,facts){
 function close(base,facts,record={state:'not_attempted'}){
  if(!facts||(!facts.complete&&record.state!=='verified'))return {...base,market_ready:false,model_verified:false,normalized_query:'',identity_status:'unresolved',exact_identity_status:'unresolved',assistance_state:'physical_detail_needed',core_identity:{status:'partial',pending_fields:['slab_label']},slab_verification:{state:'label_incomplete',certificate_verified:false,lookup_state:record.state},missing_information:['Titolo dell’etichetta non leggibile per intero'],next_photo_request:'Fotografa da vicino l’intera etichetta della slab, mantenendo nitidi nome, serie e anno.'};
  const verified=record.state==='verified',data={...facts,...(verified?record.fields:{})},origin=verified?'official_certificate':'photo_slab_label';
- const model=[data.year,data.family,data.card_number?'#'+data.card_number:'',data.subject||data.model].filter(Boolean).join(' · ');
+ const displayFamily=clean(data.family).replace(new RegExp('^'+data.year+'\\s+'),'');
+ const model=[data.year,displayFamily,data.card_number?'#'+data.card_number:'',data.subject||data.model].filter(Boolean).join(' · ');
+ if(!data.variant){const finish=clean(data.subject).match(/(?:-|\b)(HOLO(?:FOIL)?)(?:$|\b)/i);if(finish)data.variant=finish[1];}
  const grading=[data.grader,data.grade].filter(Boolean).join(' '),title=[model,data.language,data.variant,grading].filter(Boolean).join(' · ');
  const fieldOrigin=k=>verified&&record.official_fields.includes(k)?'official_certificate':'photo_slab_label';
  const fields=['year','family','subject','card_number','variant','language','grader','grade'].filter(k=>data[k]).map(k=>({field:k==='card_number'?'catalog_number':k,value:data[k],origin:fieldOrigin(k),quote:fieldOrigin(k)==='official_certificate'?record.raw_fields[k]||record.title:data.label_text,image_index:data.image_index,...(fieldOrigin(k)==='official_certificate'?{source:record.source}:{})}));
