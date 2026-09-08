@@ -147,7 +147,9 @@ public final class BackgroundScanRegressionTest {
     }
     public final class OfflineCatalogueIo {
         private final JSONObject catalogue;
-        OfflineCatalogueIo(JSONObject catalogue){this.catalogue=catalogue;}
+        private final WebView target;
+        private final android.os.Handler main = new android.os.Handler(android.os.Looper.getMainLooper());
+        OfflineCatalogueIo(JSONObject catalogue){this.catalogue=catalogue;this.target=web;}
         @android.webkit.JavascriptInterface public boolean offlineAvailable(){return true;}
         @android.webkit.JavascriptInterface public boolean ocrAvailable(){return true;}
         @android.webkit.JavascriptInterface public void readText(String id,String image){deliver(id,GoogleVisionBridge.json("state","ok","text","","lines",new org.json.JSONArray()));}
@@ -158,7 +160,9 @@ public final class BackgroundScanRegressionTest {
             try{if(action.equals("page")&&new JSONObject(payload).optString("url").equals(catalogue.getString("url")))result=new JSONObject(catalogue.toString()).put("status",200);}catch(Exception ignored){}
             deliver(id,result);
         }
-        private void deliver(String id,JSONObject value){String script="FlipCheckDirect.receive("+JSONObject.quote(id)+","+value+");";web.post(()->web.evaluateJavascript(script,null));}
+        // Match GoogleVisionBridge: View.post queues callbacks until reattachment
+        // when the Activity is destroyed; the retained scan needs the main looper.
+        private void deliver(String id,JSONObject value){String script="FlipCheckDirect.receive("+JSONObject.quote(id)+","+value+");";main.post(()->target.evaluateJavascript(script,null));}
     }
     private void waitState(String state,long timeout) {
         long end=SystemClock.uptimeMillis()+timeout;
