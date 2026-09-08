@@ -11,6 +11,10 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('n
 const {chromium}=require('playwright');
 const recorded=require('./fixtures/diagnostics-188.json');
 const assets=path.join(__dirname,'../src/main/assets'),copy=x=>structuredClone(x);
+// Serve exactly the resources the production Android host permits. Missing module
+// wiring must fail browser replay before reaching the slower emulator gate.
+const nativeHost=fs.readFileSync(path.join(__dirname,'../src/main/java/com/flipcheck/legacy26/ScanSession.java'),'utf8');
+const nativeAssetPattern=new RegExp('^'+JSON.parse(nativeHost.match(/path\.matches\(("(?:[^"\\]|\\.)*")\)/)[1])+'$');
 let server,browser,page,origin,scenario,fixture,api=[],native=[],unexpected=[],errors=[],cursor={},photoCursor=0,referenceImages=new Map(),referenceOcr=new Map(),hostEvents=[],hold;
 const stages=()=>api.map(r=>r.text?.format?.name);
 const report=()=>page.evaluate(()=>diagnostic26());
@@ -45,7 +49,7 @@ async function openScenario(name,options={}){
 }
 async function clickIdentify(){await page.locator('#identifyBtn').click();await page.waitForFunction(()=>!apiBusy,{}, {timeout:20000});return report();}
 before(async()=>{
- server=http.createServer((req,res)=>{const name=req.url==='/'?'index.html':req.url.slice(1);if(!/^(?:index\.html|[a-z-]+\.js)$/.test(name)||!fs.existsSync(path.join(assets,name))){res.writeHead(404);return res.end();}res.setHeader('Content-Type',name.endsWith('.js')?'application/javascript':'text/html');res.end(fs.readFileSync(path.join(assets,name)));});
+ server=http.createServer((req,res)=>{const name=req.url==='/'?'index.html':req.url.slice(1);if(!nativeAssetPattern.test('/'+name)||!fs.existsSync(path.join(assets,name))){res.writeHead(404);return res.end();}res.setHeader('Content-Type',name.endsWith('.js')?'application/javascript':'text/html');res.end(fs.readFileSync(path.join(assets,name)));});
  await new Promise(r=>server.listen(0,'127.0.0.1',r));origin='http://127.0.0.1:'+server.address().port;
  browser=await chromium.launch({executablePath:process.env.FLIPCHECK_BROWSER_EXECUTABLE||undefined,headless:true,args:['--no-sandbox']});page=await browser.newPage({viewport:{width:412,height:915},serviceWorkers:'block'});
  page.on('pageerror',error=>errors.push(error.message));page.on('dialog',dialog=>dialog.dismiss());

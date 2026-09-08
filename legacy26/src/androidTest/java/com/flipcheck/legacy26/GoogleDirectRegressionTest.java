@@ -283,4 +283,17 @@ public final class GoogleDirectRegressionTest {
             assertEquals("japanese",out.get().getString("script"));assertEquals(0,out.get().getInt("paid_requests"));assertTrue(out.get().getString("text"),out.get().getString("text").contains("ピカチュウ"));assertTrue(out.get().getString("text"),out.get().getString("text").contains("025/165"));
         }finally{bitmap.recycle();}
     }
+    @Test public void lightTextRecoveryFindsAnotherSerialOnTheOppositeSide() throws Exception {
+        android.graphics.Bitmap bitmap=android.graphics.Bitmap.createBitmap(800,1100,android.graphics.Bitmap.Config.ARGB_8888);
+        android.graphics.Canvas canvas=new android.graphics.Canvas(bitmap);canvas.drawColor(android.graphics.Color.WHITE);
+        android.graphics.Paint paint=new android.graphics.Paint(android.graphics.Paint.ANTI_ALIAS_FLAG);paint.setColor(android.graphics.Color.BLACK);paint.setTextSize(14);
+        for(int y=180;y<600;y+=25)canvas.drawText("EXAMPLE SERIES 2031 CARD 73 ORDINARY CARD TEXT",180,y,paint);
+        paint.setColor(android.graphics.Color.rgb(25,25,25));canvas.drawRect(60,700,125,970,paint);
+        canvas.save();canvas.translate(110,935);canvas.rotate(-90);paint.setColor(android.graphics.Color.rgb(190,190,190));paint.setTextSize(28);canvas.drawText("17/99",0,0,paint);canvas.restore();
+        try{
+            java.util.List<android.graphics.RectF> regions=LightTextRegions.find(bitmap);
+            assertTrue("Detect actual light text regardless of number, card or side",regions.stream().anyMatch(r->r.contains(100f/800,900f/1100)));
+            JSONObject result=readLocalImage(encodedImage(bitmap),"other-vertical-serial-191");assertTrue(result.getString("text"),result.getString("text").matches("(?s).*17\\s*/\\s*99.*"));
+        }finally{bitmap.recycle();}
+    }
 }

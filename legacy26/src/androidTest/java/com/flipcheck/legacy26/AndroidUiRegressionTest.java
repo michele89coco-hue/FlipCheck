@@ -43,7 +43,7 @@ public final class AndroidUiRegressionTest {
         List<Uri> created = new ArrayList<>();
         try {
             screenshot("launch-before-web-ready.png");
-            waitForJs("typeof diagnostic26 === 'function'", 45000);
+            waitForJs("typeof diagnostic26 === 'function' && !!window.FlipCheckSlab && !!window.FlipCheckIdentityFinal && !!$('googleApiKey')", 45000);
             eval("window.fetch = function(){throw new Error('NETWORK_FORBIDDEN_IN_UI_TEST')}; true");
             assertEquals("true",eval("typeof FlipCheckGoogle.request === 'function' && !!$('googleApiKey') && !$('visualEndpoint') && !$('visualAccess')"));
             eval("window.googleBridgeProbe=null;FlipCheckDirect.call('detect',{apiKey:'invalid',image_base64:'aGVsbG8='}).then(r=>window.googleBridgeProbe=r);true");

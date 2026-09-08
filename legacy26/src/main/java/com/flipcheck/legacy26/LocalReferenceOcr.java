@@ -93,10 +93,13 @@ final class LocalReferenceOcr implements AutoCloseable {
         if(lines.length()<120)lines.put(candidate);
     }
     private static final class Pass {
-        final String name;final RectF region;final int rotation;final float zoom;final boolean invert;
+        final String name;final RectF region;final int rotation;final float zoom;final boolean invert;final List<RectF> regions;LightTextRegions.Mosaic mosaic;
         Pass(String name,RectF region,int rotation,float zoom){this(name,region,rotation,zoom,false);}
-        Pass(String name,RectF region,int rotation,float zoom,boolean invert){this.name=name;this.region=region;this.rotation=rotation;this.zoom=zoom;this.invert=invert;}
+        Pass(String name,RectF region,int rotation,float zoom,boolean invert){this.name=name;this.region=region;this.rotation=rotation;this.zoom=zoom;this.invert=invert;this.regions=null;}
+        Pass(List<RectF> regions){this.name="light_text_regions_90";this.region=new RectF(0,0,1,1);this.rotation=90;this.zoom=1;this.invert=false;this.regions=regions;}
+        RectF map(Rect box,int width,int height){return mosaic==null?originalBounds(box,width,height,region,rotation):mosaic.map(box);}
         Bitmap image(Bitmap original){
+            if(regions!=null){mosaic=LightTextRegions.render(original,regions);return mosaic.image;}
             int x=Math.max(0,Math.round(region.left*original.getWidth())),y=Math.max(0,Math.round(region.top*original.getHeight()));
             int w=Math.min(original.getWidth()-x,Math.max(1,Math.round(region.width()*original.getWidth()))),h=Math.min(original.getHeight()-y,Math.max(1,Math.round(region.height()*original.getHeight())));
             Bitmap current=Bitmap.createBitmap(original,x,y,w,h);
@@ -134,13 +137,13 @@ final class LocalReferenceOcr implements AutoCloseable {
                             for(com.google.mlkit.vision.text.Text.TextBlock block:task.getResult().getTextBlocks())for(com.google.mlkit.vision.text.Text.Line line:block.getLines()){
                                 Rect box=line.getBoundingBox();if(box==null||box.width()<=0||box.height()<=0)continue;
                                 count++;characters+=textKey(line.getText()).length();small|=Math.min(box.width(),box.height())<16;
-                                RectF mapped=originalBounds(box,pixels.getWidth(),pixels.getHeight(),pass.region,pass.rotation);
+                                RectF mapped=pass.map(box,pixels.getWidth(),pixels.getHeight());if(mapped==null)continue;
                                 JSONObject observation=GoogleVisionBridge.json("text",line.getText(),"x",mapped.left,"y",mapped.top,"width",mapped.width(),"height",mapped.height(),"pass",pass.name,"rotation_degrees",pass.rotation,"engine_confidence",line.getConfidence(),"observation_count",1);
                                 // Weak supplemental text may be foil/picture noise. Original observations remain visible.
                                 if(attempted==1||line.getConfidence()==0||line.getConfidence()>=.5f)mergeLine(lines,observation);
                             }
                         }
-                        passes.put(GoogleVisionBridge.json("name",pass.name,"rotation_degrees",pass.rotation,"state",task.isSuccessful()?"ok":"ocr_unavailable","line_count",count,"width",pixels.getWidth(),"height",pixels.getHeight()));
+                        passes.put(GoogleVisionBridge.json("name",pass.name,"rotation_degrees",pass.rotation,"state",task.isSuccessful()?"ok":"ocr_unavailable","line_count",count,"region_count",pass.regions==null?1:pass.regions.size(),"width",pixels.getWidth(),"height",pixels.getHeight()));
                         boolean sparse=count<3&&characters<24;
                         if(attempted==1){baselineElapsed=SystemClock.elapsedRealtime()-started;recoveryStarted=SystemClock.elapsedRealtime();}
                         if(attempted==1&&task.isSuccessful()&&(sparse||small)){
@@ -148,6 +151,7 @@ final class LocalReferenceOcr implements AutoCloseable {
                             // Dense small print needs enlarged edge views: full-image rotation alone
                             // leaves a narrow vertical serial at its original character size.
                             if(!sparse){
+                                List<RectF> regions=LightTextRegions.find(original);if(!regions.isEmpty())pending.add(new Pass(regions));
                                 // Build190's real-photo trace exhausted recovery after two edge passes.
                                 // Try the complementary light-on-dark treatment before that same work.
                                 pending.add(new Pass("right_edge_inverted_90",new RectF(.6f,.2f,1,.8f),90,3,true));
