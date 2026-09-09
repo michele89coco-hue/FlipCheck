@@ -136,7 +136,7 @@ function pokemonPresence204(field,value,description=''){
 }
 function pokemonPolicy204(l,entry,result){
  if(l.domain!=='pokemon')return result;
- const p=pokemonKeys204(l),names=[entry.subject,...list(entry.aliases)],direct=names.some(n=>subjectMatch(p.subject,n)),alias=pokemonAliases204(l).some(a=>names.some(n=>subjectMatch(a,n))),visual=l.evidence('catalogue_core').some(a=>a.value===coreKey(entry));
+ const p=pokemonKeys204(l),names=[entry.subject,...list(entry.aliases)],direct=names.some(n=>subjectMatch(p.subject,n)),alias=pokemonAliases204(l).some(a=>names.some(n=>subjectMatch(a,n))),visual=l.evidence('catalogue_core').some(a=>a.value===coreKey(entry)&&(entry.source_tier!=='discovery_lead'||sourceTrusted(a.reference_source,'pokemon')));
  const reasons=result.reasons.filter(r=>!['different_printing_language','different_product_season'].includes(r));
  const entryYear=season(entry.printing_year||entry.copyright_year||entry.year),entryLanguage=language(entry.printing_language||entry.language),ep=numberParts(entry.number);
  if(p.language&&entryLanguage&&!printingLanguageCompatible201(p.language,entryLanguage))reasons.push('different_printing_language');

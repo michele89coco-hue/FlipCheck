@@ -158,6 +158,7 @@ async function compareCore193(l,entries,ctx,pages){
  for(const g of candidates){
   if(l.domain==='pokemon'){
    for(const e of g.entries){
+    if(e.source_tier==='discovery_lead'&&!E193.sourceTrusted(e.source.url,'pokemon'))continue;
     const page=pages.find(p=>p.url===e.source.url&&p.image_details?.length);
     const urls=[...new Set([e.image_url,...C193.pokemonReferenceImages203(page,e,l)].filter(Boolean))];
     for(const url of urls){
