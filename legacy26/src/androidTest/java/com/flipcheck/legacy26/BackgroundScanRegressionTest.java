@@ -64,8 +64,11 @@ public final class BackgroundScanRegressionTest {
         String catalogueResponse=envelope(new JSONObject().put("entries",new org.json.JSONArray()),catalogue);
         // Keep the production decision engine active. Stub the native IO boundary too:
         // its HTTP traffic bypasses WebViewClient, so intercepting only Responses is insufficient.
+        // The retained WebView may still expose the previous test document until reload commits.
+        // Mark that document and wait for its replacement before injecting the image fixture.
+        eval("window.__backgroundReload202=true;true");
         instrumentation.runOnMainSync(()->{web.removeJavascriptInterface("FlipCheckGoogle");web.addJavascriptInterface(new OfflineCatalogueIo(catalogue),"FlipCheckGoogle");web.reload();});
-        waitJs("window.FlipCheckGoogle?.offlineAvailable?.() === true && document.readyState === 'complete' && typeof resolveCatalogue193 === 'function'",15000);
+        waitJs("window.__backgroundReload202 !== true && window.FlipCheckGoogle?.offlineAvailable?.() === true && document.readyState === 'complete' && typeof resolveCatalogue193 === 'function'",15000);
         requests.set(0);
         // Intercept only transport: preserve production fetch, budget and AbortController wiring.
         instrumentation.runOnMainSync(() -> {
