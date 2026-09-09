@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: '22'
       - name: Targeted policy checks without live API
-        run: node --test legacy26/tests/editions.test.cjs legacy26/tests/visual-policy.test.cjs legacy26/tests/identity-repair.test.cjs legacy26/tests/evidence-regression.test.cjs legacy26/tests/evidence-priority.test.cjs legacy26/tests/card-keys.test.cjs legacy26/tests/evidence-closure.test.cjs legacy26/tests/universal-closure.test.cjs legacy26/tests/format-serial.test.cjs legacy26/tests/checklist-slab.test.cjs legacy26/tests/real-evidence.test.cjs legacy26/tests/priority-closure.test.cjs legacy26/tests/identity-release.test.cjs legacy26/tests/ocr-keys-release.test.cjs legacy26/tests/reference-release.test.cjs legacy26/tests/slab-identity-191.test.cjs legacy26/tests/image-evidence-192.test.cjs legacy26/tests/catalogue-engine.test.cjs legacy26/tests/catalogue-196.test.cjs legacy26/tests/catalogue-198.test.cjs legacy26/tests/catalogue-199.test.cjs legacy26/tests/catalogue-200.test.cjs legacy26/tests/catalogue-201.test.cjs legacy26/tests/catalogue-202.test.cjs legacy26/tests/pokemon-number-identity.test.cjs
+        run: node --test legacy26/tests/editions.test.cjs legacy26/tests/visual-policy.test.cjs legacy26/tests/identity-repair.test.cjs legacy26/tests/evidence-regression.test.cjs legacy26/tests/evidence-priority.test.cjs legacy26/tests/card-keys.test.cjs legacy26/tests/evidence-closure.test.cjs legacy26/tests/universal-closure.test.cjs legacy26/tests/format-serial.test.cjs legacy26/tests/checklist-slab.test.cjs legacy26/tests/real-evidence.test.cjs legacy26/tests/priority-closure.test.cjs legacy26/tests/identity-release.test.cjs legacy26/tests/ocr-keys-release.test.cjs legacy26/tests/reference-release.test.cjs legacy26/tests/slab-identity-191.test.cjs legacy26/tests/image-evidence-192.test.cjs legacy26/tests/catalogue-engine.test.cjs legacy26/tests/catalogue-196.test.cjs legacy26/tests/catalogue-198.test.cjs legacy26/tests/catalogue-199.test.cjs legacy26/tests/catalogue-200.test.cjs legacy26/tests/catalogue-201.test.cjs legacy26/tests/catalogue-202.test.cjs legacy26/tests/pokemon-number-identity.test.cjs legacy26/tests/pokemon-photo-keys-204.test.cjs
       - name: Browser integration without live API
         run: |
           npm install --prefix /tmp/flipcheck26-tests playwright@1.62.1 --no-audit --no-fund
@@ -46,12 +46,12 @@ jobs:
         run: |
           ./gradlew :legacy26:assembleRelease :legacy26:assembleReleaseAndroidTest --no-daemon --console=plain
           mkdir -p artifact
-          cp legacy26/build/outputs/apk/release/legacy26-release.apk artifact/FlipCheck-v0.29.10-Pokemon-203.apk
-          sha256sum artifact/FlipCheck-v0.29.10-Pokemon-203.apk > artifact/FlipCheck-v0.29.10-Pokemon-203.sha256
-          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose --print-certs artifact/FlipCheck-v0.29.10-Pokemon-203.apk > artifact/apksigner-report.txt
+          cp legacy26/build/outputs/apk/release/legacy26-release.apk artifact/FlipCheck-v0.29.11-Pokemon-204.apk
+          sha256sum artifact/FlipCheck-v0.29.11-Pokemon-204.apk > artifact/FlipCheck-v0.29.11-Pokemon-204.sha256
+          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose --print-certs artifact/FlipCheck-v0.29.11-Pokemon-204.apk > artifact/apksigner-report.txt
           grep -q 'Signer #1 certificate SHA-256 digest: d4d02478ea31cb6bd83228047e9accd7dfb191ed991a4c8e8c06a228e54614c7' artifact/apksigner-report.txt
-          "$ANDROID_HOME/build-tools/36.0.0/aapt" dump badging artifact/FlipCheck-v0.29.10-Pokemon-203.apk > artifact/apk-analyzer-report.txt
-          grep -q "package: name='com.flipcheck.beta.legacy26fix' versionCode='203' versionName='0.29.10-pokemon-identity'" artifact/apk-analyzer-report.txt
+          "$ANDROID_HOME/build-tools/36.0.0/aapt" dump badging artifact/FlipCheck-v0.29.11-Pokemon-204.apk > artifact/apk-analyzer-report.txt
+          grep -q "package: name='com.flipcheck.beta.legacy26fix' versionCode='204' versionName='0.29.11-photo-keys'" artifact/apk-analyzer-report.txt
           if grep -q 'application-debuggable' artifact/apk-analyzer-report.txt; then exit 1; fi
           cp /tmp/flipcheck26-printing.png artifact/browser-printing.png
       - name: Enable emulator acceleration

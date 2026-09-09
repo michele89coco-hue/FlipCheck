@@ -57,12 +57,13 @@ test('the actual detail handler commits identity and evidence before its promise
   else {await pending.then(result=>{assert.equal(ctx.catalogueIdentity,result);assert.equal(ctx.catalogueState.result,result);assert.equal(ctx.jobStatus,'variant_resolved');assert.equal(ctx.detailReread.committed_revision,ctx.catalogueState.revision);assert.equal(ctx.detailReread.evidence_found,true);assert.ok(ctx.engineSnapshot.observations.some(a=>a.field==='stamp'&&a.value==='present'));assert.equal(previousSnapshot.observations.length,previousCount);});}
  }
 });
-test('an English catalogue identifies an Italian card while the photo owns its language',()=>{
+test('204: a foreign edition cannot close the photographed Italian printing',()=>{
  const l=observed({subject:'Example',collector_number:'H23/H32',copyright:'© 2003',language:'it',finish:'holo'});
  const r=E.reduce(l,[entry({rarity:'English catalogue rarity'})]);
- assert.equal(r.core_identity.status,'confirmed');assert.equal(r.market_ready,true);assert.equal(r.card_identity.number,'H23/H32');assert.equal(r.source_confirmed_year,'2003');
- assert.equal(r.language,'it');assert.equal(r.card_identity.language,'it');assert.equal(r.language_origin,'original_photo');assert.equal(r.catalogue_reference_language,'en');
- assert.equal(r.card_identity.rarity,null);assert.equal(r.printing_check.shadow,'not_applicable');assert.equal(r.printing_check.stamp,'not_applicable');
+ assert.equal(r.core_identity.status,'partial');assert.equal(r.market_ready,false);assert.equal(r.card_identity.number,'H23/H32');assert.equal(r.source_confirmed_year,null);
+ assert.equal(r.language,'it');assert.equal(r.card_identity.language,'it');assert.equal(r.language_origin,'original_photo');assert.equal(r.catalogue_reference_language,null);
+ assert.equal(r.card_identity.rarity,null);assert.equal(r.printed_year,'2003');assert.equal(r.next_photo_request,null);
+ const local=E.reduce(l,[entry({language:'it'})]);assert.equal(local.market_ready,true);assert.equal(local.catalogue_reference_language,'it');
 });
 test('language differences never merge conflicting numbers, subjects or printed years',()=>{
  const l=observed({subject:'Example',collector_number:'H23/H32',season:'2003',language:'it'});
@@ -75,11 +76,11 @@ test('language versions of the same core form one candidate and retain local pri
   assert.equal(E.candidateGroups(l,list).length,1);const r=E.reduce(l,list);assert.equal(r.market_ready,true);assert.equal(r.catalogue_reference_language,'it');assert.equal(r.card_identity.rarity,'Local rarity');assert.equal(r.variant,'Holo');
  }
  const ambiguous=observed({subject:'Example',collector_number:'H23/H32',language:'it'});
- assert.equal(E.reduce(ambiguous,[entry(),entry({year:'2004',language:'it'})]).core_identity.status,'partial');
+ assert.equal(E.reduce(ambiguous,[entry({language:'it'}),entry({year:'2004',language:'it'})]).core_identity.status,'partial');
 });
 test('foreign language printing options cannot assign first edition or finish to the photographed copy',()=>{
  const l=observed({subject:'Example',collector_number:'7/100',season:'2003',language:'it'}),e=entry({number:'7/100',family:'Example Set',printing_options:['first_edition'],variants:[{name:'Reverse',finish:'reverse'}]});
- const r=E.reduce(l,[e]);assert.equal(r.core_identity.status,'confirmed');assert.equal(r.market_ready,false);assert.deepEqual(r.variant_resolution.pending,['finish']);assert.equal(r.printing_check.stamp,'not_applicable');
+ const r=E.reduce(l,[e]);assert.equal(r.core_identity.status,'partial');assert.equal(r.market_ready,false);assert.deepEqual(r.variant_resolution.pending,['catalogue']);assert.ok(l.candidates[0].reasons.includes('different_printing_language'));
  const base=entry({family:'Base Set',year:'1999'});assert.equal(E.printingScope(l,base).shadow,false);
  const unknown=observed({subject:'Example',collector_number:'H23/H32'}),out=E.reduce(unknown,[entry()]);assert.equal(out.core_identity.status,'confirmed');assert.equal(out.language,'');assert.equal(out.language_origin,null);
 });
@@ -88,11 +89,11 @@ test('catalogue lookup has one English fallback without changing the observed la
  assert.deepEqual(plans.map(p=>p.language),['it','en']);assert.equal(plans[1].fallback,true);assert.match(plans[1].url,/\/en\/cards\?/);assert.equal(E.keyValues(l).language,'it');
  assert.equal(C.requestPlan(observed({subject:'Example',language:'en'})).length,1);
 });
-test('the recorded Italian Politoed number remains uncertain while catalogue and OCR resolve the core',()=>{
+test('204: repeating an uncertain number across OCR and vision cannot certify it',()=>{
  const l=observed({subject:'Politoed',hp:'110',copyright:'© 2003 Pokémon / Nintendo',language:'it',finish:'holo'});
  for(const [value,source] of [['H23/H32','vision'],['H23/32','vision'],['H23/H32','local_ocr']])l.add('collector_number',value,{source,certainty:'uncertain',image_index:1});
  const record=C.tcgdexCard({id:'ecard3-H23',name:'Politoed',localId:'H23',hp:110,set:{id:'ecard3',name:'Skyridge',cardCount:{official:144,total:182}},variants:{firstEdition:false,holo:true,normal:false,reverse:false},rarity:'Holo Rare'},{releaseDate:'2003-05-12'},'en','https://api.tcgdex.net/v2/en/cards/ecard3-H23');
- const r=E.reduce(l,[record]);assert.equal(r.core_identity.status,'confirmed');assert.equal(r.market_ready,true);assert.equal(r.language,'it');assert.equal(r.card_identity.number,'H23');assert.equal(l.pick('collector_number'),null);assert.equal(r.source_confirmed_year,'2003');assert.deepEqual(E.recoveryRequests(l,r),[]);
+ const r=E.reduce(l,[record]);assert.equal(r.core_identity.status,'partial');assert.equal(r.market_ready,false);assert.equal(r.language,'it');assert.equal(r.physical_card_number,null);assert.equal(l.pick('collector_number'),null);assert.equal(r.source_confirmed_year,null);assert.ok(E.recoveryRequests(l,r).some(q=>q.field==='collector_number'));
 });
 test('production catalogue retrieval falls back across languages, skips unrelated cards and preserves observations',async()=>{
  const fs=require('node:fs'),vm=require('node:vm'),path=require('node:path'),source=fs.readFileSync(path.join(__dirname,'../src/main/assets/catalogue-runtime.js'),'utf8');
@@ -107,12 +108,12 @@ test('production catalogue retrieval falls back across languages, skips unrelate
    return {status:200,body:{releaseDate:'2003-05-12'}};
   }};
   vm.createContext(sandbox);vm.runInContext(production+'\nthis.lookup=catalogueLookup193;',sandbox);const found=await sandbox.lookup(l,ctx),r=E.reduce(l,found.entries);
-  assert.equal(r.core_identity.status,'confirmed');assert.equal(r.market_ready,true);assert.equal(r.language,'it');assert.equal(r.catalogue_reference_language,localStatus==='matched'?'it':'en');
+  assert.equal(r.core_identity.status,localStatus==='matched'?'confirmed':'partial');assert.equal(r.market_ready,localStatus==='matched');assert.equal(r.language,'it');assert.equal(r.catalogue_reference_language,localStatus==='matched'?'it':null);
   assert.equal(requests.some(url=>url.includes('/en/')),localStatus!=='matched');assert.ok(!requests.some(url=>url.includes('/cards/xy3-18')));assert.equal(ctx.catalogueCoverage.truncated,false);assert.equal(E.keyValues(l).language,'it');
  }
 });
-test('recorded Politoed resolves Skyridge H23 without a mandatory year or denominator reread',()=>{const {l,entries}=replay('politoed'),r=E.reduce(l,entries);assert.equal(r.core_identity.status,'confirmed');assert.equal(r.family,'Skyridge');assert.equal(r.market_ready,true);assert.equal(r.card_identity.number,'H23/H32');assert.equal(r.printing_check.shadow,'not_applicable');assert.equal(r.printing_check.stamp,'not_applicable');assert.deepEqual(E.recoveryRequests(l,r),[]);assert.equal(l.base.family,'Aquapolis');assert.ok(!r.candidate_models.some(c=>/Pokédex/.test(c.model)));});
-test('different printings on one wiki page never become aliases',()=>{const {l,entries}=replay('politoed');assert.ok(entries.some(e=>e.number==='25/144'));assert.ok(entries.some(e=>e.number==='H23/H32'));assert.ok(E.candidateGroups(l,entries).find(g=>g.entry.number==='H23/H32').score>E.candidateGroups(l,entries).find(g=>g.entry.number==='25/144').score);});
+test('204: recorded uncertain Politoed requires a physical reread before exact closure',()=>{const {l,entries}=replay('politoed'),r=E.reduce(l,entries);assert.equal(r.core_identity.status,'partial');assert.equal(r.market_ready,false);assert.equal(r.physical_card_number,null);assert.deepEqual(E.recoveryRequests(l,r).map(q=>q.field),['collector_number','copyright']);assert.equal(l.base.family,'Aquapolis');assert.equal(r.language,'it');assert.ok(!r.candidate_models.some(c=>/Pokédex/.test(c.model)));});
+test('different printings on one wiki page never become aliases',()=>{const {l,entries}=replay('politoed');assert.ok(entries.some(e=>e.number==='25/144'));assert.ok(entries.some(e=>e.number==='H23/H32'));const groups=E.candidateGroups(l,entries);assert.ok(groups.find(g=>g.entry.number==='H23/H32').score>groups.find(g=>g.entry.number==='25/144').score);assert.equal(groups.length,2);});
 test('recorded Boniface serial alternatives survive with original-image coordinates and rotation',()=>{const {l,entries}=replay('boniface'),r=E.reduce(l,entries),req=E.recoveryRequests(l,r).find(r=>r.field==='serial');assert.equal(l.pick('serial'),null);assert.equal(req.rotation,90);assert.equal(req.image_index,2);assert.ok(req.region.x>.7&&req.region.x<.85);assert.ok(req.readings.some(r=>r.value==='2/5'));assert.equal(r.market_ready,false);assert.equal(r.core_identity.status,'confirmed');});
 test('a verified serial closes documented Green /5 and retains the specimen numerator',()=>{const {l,entries}=replay('boniface'),r=E.reduce(l,entries);E.applyDetails(l,[{field:'serial',text:'2/5',certainty:'clear',image_index:2}],E.recoveryRequests(l,r));const out=E.reduce(l,entries);assert.equal(out.variant,'Green');assert.equal(out.market_ready,true);assert.equal(out.physical_serial.specimen,2);assert.equal(out.physical_serial.print_run,5);});
 test('a dubious serial is never autocorrected to fit the checklist',()=>{const {l,entries}=replay('boniface'),req=E.recoveryRequests(l,E.reduce(l,entries));E.applyDetails(l,[{field:'serial',text:'215',certainty:'clear',image_index:2}],req);assert.equal(E.reduce(l,entries).market_ready,false);E.applyDetails(l,[{field:'serial',text:'2/5',certainty:'uncertain',image_index:2}],req);assert.equal(l.pick('serial'),null);});
@@ -120,7 +121,7 @@ test('recorded Doncic retains core and green; statistics 42 and wrong Blue Ice a
 test('recorded box keeps the product and never forces Hobby or requests a card number',()=>{const {l,entries}=replay('topps'),r=E.reduce(l,entries);assert.equal(r.core_identity.status,'confirmed');assert.equal(r.market_ready,false);assert.match(r.title,/Chrome.*UPDATE SERIES/i);assert.doesNotMatch(r.variant,/Hobby|Jumbo/);assert.match(r.next_photo_request,/confezione/);assert.deepEqual(E.recoveryRequests(l,r),[]);assert.doesNotMatch(E.query(l),/FLAGG|WEMBANYAMA/);});
 test('recorded Magikarp closes only after scoped local shadow evidence; observations stay immutable',()=>{const {d,l,entries}=replay('magikarp'),r=E.reduce(l,entries);assert.equal(r.core_identity.status,'confirmed');assert.deepEqual(r.variant_resolution.pending,['shadow']);const count=l.atoms.length;l.add('shadow','absent',{source:'local_frame_measurement',certainty:'clear',image_index:1,raw:JSON.stringify(d.localPrinting)});const out=E.reduce(l,entries);assert.equal(out.market_ready,true);assert.match(out.variant,/1st Edition.*Shadowless.*Non holo/);assert.equal(l.atoms.length,count+1);assert.equal(l.base.pokemon_printing.artwork_shadow,'unclear');});
 test('same prefix/year with a different subject is rejected; number alone never identifies',()=>{let l=observed({subject:'Example',collector_number:'H23',language:'en'});const r=E.reduce(l,[entry(),entry({subject:'Another',family:'Aquapolis'})]);assert.equal(r.family,'Skyridge');l=observed({collector_number:'H23',language:'en'});assert.equal(E.reduce(l,[entry()]).core_identity.status,'partial');});
-test('copyright is not a release-year veto, printed season is',()=>{let l=observed({subject:'Example',collector_number:'H23',copyright:'© 2002',language:'en'});assert.equal(E.reduce(l,[entry()]).core_identity.status,'confirmed');l.add('season','2002',{certainty:'clear',image_index:1});assert.equal(E.reduce(l,[entry()]).core_identity.status,'partial');});
+test('204: clear photographed year binds the printing; an explicitly documented printing year can differ from set release',()=>{const l=observed({subject:'Example',collector_number:'H23',copyright:'© 2002',language:'en'});assert.equal(E.reduce(l,[entry()]).core_identity.status,'partial');const r=E.reduce(l,[entry({printing_year:'2002'})]);assert.equal(r.core_identity.status,'confirmed');assert.equal(r.card_identity.date,'2002');assert.equal(r.printed_year,'2002');});
 test('full numbers conflict but local numbers and leading zeros can corroborate',()=>{const l=observed({collector_number:'006'});l.add('collector_number','6',{certainty:'clear',image_index:2});assert.ok(l.pick('collector_number'));assert.equal(E.numbersMatch('H23','H23/H32'),true);assert.equal(E.numbersMatch('25/144','25/165'),false);assert.equal(E.numbersMatch('OP01-001','OP02-001'),false);l.add('collector_number','7',{certainty:'clear',image_index:2});assert.equal(l.pick('collector_number'),null);});
 test('candidate order and duplicate sources do not alter the decision',()=>{const {l,entries}=replay('politoed'),a=E.reduce(l,entries),b=E.reduce(l,[...entries,...entries].reverse());assert.equal(a.model,b.model);assert.equal(a.market_ready,b.market_ready);});
 test('set and language scope shadow, first edition and no rarity separately',()=>{let l=observed({language:'en'});assert.equal(E.printingScope(l,entry({family:'Neo Destiny',year:'2002'})).firstEdition,true);assert.equal(E.printingScope(l,entry({family:'Skyridge'})).shadow,false);l=observed({language:'ja'});const scope=E.printingScope(l,entry({family:'Expansion Pack',language:'ja',year:'1996'}));assert.equal(scope.noRarity,true);assert.equal(scope.shadow,false);});

@@ -4,6 +4,34 @@
 const E=root.FlipCheckCatalogueEngine||(typeof require==='function'?require('./catalogue-engine.js'):null),list=x=>Array.isArray(x)?x:[],str=x=>String(x??'').trim(),uniq=x=>[...new Set(x.filter(Boolean))];
 const providers={pokemon:{directories:['https://api.tcgdex.net/v2/'],domains:['tcgdex.net','pokemon.com','bulbapedia.bulbagarden.net','wiki.pokemoncentral.it','psacard.com']},topps:{directories:['https://www.topps.com/pages/checklists'],domains:['topps.com','ripped.topps.com']},panini:{directories:['https://www.paniniamerica.net/checklist.html'],domains:['paniniamerica.net']},upperdeck:{directories:['https://upperdeck.com/checklists/'],domains:['upperdeck.com']},leaf:{directories:['https://www.leaftradingcards.com/catalog'],domains:['leaftradingcards.com']},onepiece:{directories:['https://en.onepiece-cardgame.com/cardlist/'],domains:['en.onepiece-cardgame.com','www.onepiece-cardgame.com']}};
 function source(page){return {url:page.url,title:page.title||page.url,provider:page.provider||new URL(page.url).hostname,retrieved_at:page.retrieved_at||null};}
+function pokemonProductEntries204(page,l){
+ if(l.domain!=='pokemon')return [];
+ let url;try{url=new URL(page.url);}catch(_){return [];}
+ if(!/(^|\.)pricecharting\.com$/.test(url.hostname)||!url.pathname.startsWith('/game/pokemon-'))return [];
+ const title=str(page.title),m=title.match(/^(.+?)\s+#([A-Z0-9/-]+)\s+Prices\s*\|\s*Pokemon\s+([^|]+)\s*\|/i);if(!m)return [];
+ const subject=m[1].replace(/\s*\[[^\]]+\]\s*/g,' ').trim(),printedLanguage=m[3].match(/^(Japanese|Chinese|Italian|German|French|Spanish|Korean)\s+/i),language=printedLanguage?E.language(printedLanguage[1]):'en',family=m[3].replace(/^(Japanese|Chinese|Italian|German|French|Spanish|Korean)\s+/i,'').trim();
+ const number=m[2],keys=E.pokemonKeys204(l),names=[keys.subject,...E.pokemonAliases204(l)];
+ if(!E.numberParts(number)||!E.pokemonNumbers203(l).some(n=>E.numbersMatch(n,number)))return [];
+ if(!names.some(n=>E.subjectMatch(n,subject))&&!/[\u3040-\u9fff]/.test(keys.subject))return [];
+ if(keys.language&&!E.printingLanguageCompatible201(keys.language,language))return [];
+ const fields=list(page.structured_fields),year=E.season(fields.find(f=>/^release date:?$/i.test(f.label))?.value)||'',variant=title.match(/\[([^\]]+)\]/)?.[1]||'',finish=E.finish(variant);
+ const e={subject,number,family,language,year,brand:'Pokémon',identifier_type:/cd promo|unnumbered/i.test(family)?'pokedex':'collector',variants:finish?[{name:variant,finish,visual_required:true}]:[],source:source(page),grounded:true,entry_quote:title,requires_image_confirmation:true,source_tier:'secondary_product'};
+ const images=pokemonReferenceImages203(page,e,l);if(images.length)e.image_url=images[images.length-1];
+ return [e];
+}
+function pokemonLeadEntries204(reply,pages,l){
+ if(l.domain!=='pokemon')return [];
+ const keys=E.pokemonKeys204(l),out=[];
+ for(const e of list(reply?.entries)){
+  const page=pages.find(p=>p.url===e.source_url&&str(e.entry_quote)&&E.norm(pageText(p)).includes(E.norm(e.entry_quote)));if(!page||E.sourceTrusted(page.url,'pokemon'))continue;
+  const text=E.norm(pageText(page));
+  if(!e.subject||!e.family||!E.numberParts(e.number)||!text.includes(E.norm(e.subject))||!text.includes(E.norm(e.family))||!E.norm(e.entry_quote).includes(E.norm(e.number)))continue;
+  if(!E.pokemonNumbers203(l).some(n=>E.numbersMatch(n,e.number))||keys.language&&E.language(e.language)&&!E.printingLanguageCompatible201(keys.language,e.language))continue;
+  const year=e.year&&text.includes(E.norm(e.year))?e.year:'';
+  out.push({...e,year,identifier_type:keys.number_role==='pokedex_number'?'pokedex':'collector',variants:[],source:source(page),grounded:true,requires_image_confirmation:true,source_tier:'discovery_lead',image_url:null});
+ }
+ return out;
+}
 const pokemonSourcePolicy203={
  structured_catalogue:['tcgdex.net'],
  official_catalogue:['pokemon.com','pokemon-card.com'],
@@ -26,7 +54,7 @@ function pokemonReferenceImages203(page,entry,l){
  }).map(i=>i.image_url||i.url).filter(Boolean);
 }
 function requestPlan(l){
- const k=E.keyValues(l);if(l.domain==='pokemon'&&k.subject&&!k.language.startsWith('zh')){const langs=uniq([k.language||'en',...(/[\u3040-\u9fff]/.test(k.subject)?[]:['en'])]),params=new URLSearchParams({name:k.subject,'pagination:page':'1','pagination:itemsPerPage':'100'});return langs.map((lang,index)=>({action:'catalogue',url:'https://api.tcgdex.net/v2/'+lang+'/cards?'+params,provider:'tcgdex',language:lang,purpose:index?'cross_language_lookup':'name_lookup',fallback:index>0,subject:k.subject,numbers:k.numbers}));}
+ const k=E.keyValues(l);if(l.domain==='pokemon')k.numbers=E.pokemonNumbers203(l);if(l.domain==='pokemon'&&k.subject&&!k.language.startsWith('zh')){const langs=uniq([k.language||'en',...(/[\u3040-\u9fff]/.test(k.subject)?[]:['en'])]),params=new URLSearchParams({name:k.subject,'pagination:page':'1','pagination:itemsPerPage':'100'});return langs.map((lang,index)=>({action:'catalogue',url:'https://api.tcgdex.net/v2/'+lang+'/cards?'+(index&&E.pokemonAliases204(l).length?new URLSearchParams({name:E.pokemonAliases204(l)[0],'pagination:page':'1','pagination:itemsPerPage':'100'}):params),provider:'tcgdex',language:lang,purpose:index?'cross_language_lookup':'name_lookup',fallback:index>0,subject:k.subject,numbers:k.numbers}));}
  if(l.domain==='onepiece')return ['https://en.onepiece-cardgame.com/cardlist/','https://asia-en.onepiece-cardgame.com/cardlist/'].map((base,index)=>({action:'page',url:base+'?'+new URLSearchParams({freewords:k.numbers[0]||k.subject||''}),terms:[...k.numbers,k.subject,...E.distinctiveMarks(l)].filter(Boolean),provider:'bandai',purpose:index?'regional_card_list':'card_code_lookup',fallback:index>0}));
  const brand=E.norm([l.base.brand,...k.brands,...k.products].join(' ')),p=/topps|bowman/.test(brand)?'topps':/panini/.test(brand)?'panini':/upper deck|fleer|skybox/.test(brand)?'upperdeck':/leaf/.test(brand)?'leaf':null;
  return p?[{action:'page',url:providers[p].directories[0],terms:[k.year,...k.products,l.base.family].filter(Boolean),provider:p,purpose:'checklist_directory'}]:[];
@@ -146,7 +174,7 @@ function objectEntries(p,l){
  return sections.length?sections:[{subject:p.title||family,family,number:'',year:E.season(p.title),brand:l.base.brand,source:source(p),grounded:true,entry_quote:text}];
 }
 function usablePage200(p){const t=pageText(p);return !!p.url&&t.length>0&&!/^Your Trusted Marketplace for Collectible Trading Card Games - TCGplayer\s*$/i.test(t);}
-function records(pages,l){const out=[];for(const p of pages){if(/pokedex|pok[eé]dex/i.test(p.url+' '+p.title))continue;if(!p.url||!(E.sourceTrusted(p.url,l.domain)||l.domain==='generic'&&/^https:\/\//.test(p.url)))continue;for(const e of [...bandaiEntries(p,l),...tableEntries(p,l),...cardRows(p,l),...singleEntry(p,l),...objectEntries(p,l)])if(e.family)out.push(e);}return out;}
+function records(pages,l){const out=[];for(const p of pages){if(/pokedex|pok[eé]dex/i.test(p.url+' '+p.title))continue;if(!p.url||!(E.sourceTrusted(p.url,l.domain)||l.domain==='generic'&&/^https:\/\//.test(p.url)))continue;for(const e of [...pokemonProductEntries204(p,l),...bandaiEntries(p,l),...tableEntries(p,l),...cardRows(p,l),...singleEntry(p,l),...objectEntries(p,l)])if(e.family)out.push(e);}return out;}
 function groundedExtraction(reply,pages,l){
  const accepted=[],rejected=[];
  for(const original of list(reply?.entries)){
@@ -176,5 +204,5 @@ function rankSources(pages,l){
  const k=E.keyValues(l);if(l.domain==='pokemon')k.numbers=E.pokemonNumbers203(l);return pages.filter(p=>!/(?:pokedex|pok[eé]dex)/i.test(p.url+' '+p.title)).map(p=>{const title=E.norm(p.title+' '+p.url),text=E.norm(pageText(p));return {p,score:(k.subject&&title.includes(E.norm(k.subject))?40:0)+(k.subject&&text.includes(E.norm(k.subject))?15:0)+(k.products.some(v=>E.familyKey(cleanFamily(p.title))===E.familyKey(v))?35:0)+(k.numbers.some(n=>title.includes(E.norm(E.numberParts(n)?.local||n)))?30:0)+(/checklist|cardlist|cards|espansione|expansion/i.test(p.url+' '+p.title)?8:0)+(k.numbers.some(n=>text.includes(E.norm(n)))?5:0)};}).sort((a,b)=>b.score-a.score).map(x=>x.p);
 }
 function directoryLinks(page,l){const k=E.keyValues(l),terms=uniq([k.year,...k.products,...str(l.base.family).split(' ').filter(t=>t.length>3)]).map(E.norm);return list(page.catalogue_links).map(a=>({...a,score:terms.reduce((n,t)=>n+Number(E.norm(a.title+' '+a.url).includes(t)),0)})).filter(a=>a.score>=Math.min(2,terms.length)&&a.score>0).sort((a,b)=>b.score-a.score).slice(0,2);}
-const api={pokemonSourcePolicy203,pokemonReferenceImages203,registryEntries201,usablePage200,bandaiEntries,rankSources,providers,requestPlan,tcgdexBriefs,tcgdexCard,pageText,cleanFamily,records,groundedExtraction,directoryLinks,itemAttributes,variantsFromLines};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckCatalogueSources=api;
+const api={pokemonProductEntries204,pokemonLeadEntries204,pokemonSourcePolicy203,pokemonReferenceImages203,registryEntries201,usablePage200,bandaiEntries,rankSources,providers,requestPlan,tcgdexBriefs,tcgdexCard,pageText,cleanFamily,records,groundedExtraction,directoryLinks,itemAttributes,variantsFromLines};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckCatalogueSources=api;
 })(typeof window==='undefined'?globalThis:window);
