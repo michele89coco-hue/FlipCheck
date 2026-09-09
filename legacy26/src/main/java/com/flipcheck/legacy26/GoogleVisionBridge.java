@@ -168,6 +168,10 @@ public final class GoogleVisionBridge {
             });
         });
     }
+    static JSONObject lensResponse(int status, byte[] data) {
+        try { return json("status",status,"attempted",true,"body",new JSONObject(new String(data,StandardCharsets.UTF_8))); }
+        catch (Exception error) { return json("status",status,"attempted",true,"state",status==200?"response_unavailable":"http_error"); }
+    }
     static OkHttpClient lensTransport(OkHttpClient base, String action, JSONObject payload) {
         if ("lens_config".equals(action)) {
             int timeout=Math.max(1000,Math.min(25000,payload==null?25000:payload.optInt("timeout_ms",25000)));
@@ -200,7 +204,9 @@ public final class GoogleVisionBridge {
                         return;
                     }
                     JSONObject result;
-                    if ("detect".equals(action)||action.startsWith("lens")) {
+                    if (action.startsWith("lens")) {
+                        result=lensResponse(code,read(r,1500000));
+                    } else if ("detect".equals(action)) {
                         result=json("status",code,"attempted",true,"body",new JSONObject(new String(read(r,1500000),StandardCharsets.UTF_8)));
                     } else if (code!=200) result=json("status",code,"state","reference_unavailable");
                     else if ("catalogue".equals(action)) {

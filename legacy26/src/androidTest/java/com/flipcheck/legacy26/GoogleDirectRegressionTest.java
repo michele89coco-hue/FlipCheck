@@ -11,6 +11,9 @@ import static org.junit.Assert.*;
 /** Actual production request construction and network guards, with zero HTTP calls. */
 public final class GoogleDirectRegressionTest {
     @Test public void lensStartupWaitIsBoundedAndDoesNotExtendPaidSearchTimeout() throws Exception {
+        for(int status:new int[]{502,503,504,401,403})assertEquals(status,GoogleVisionBridge.lensResponse(status,"<html>Starting service</html>".getBytes(java.nio.charset.StandardCharsets.UTF_8)).getInt("status"));
+        assertEquals("response_unavailable",GoogleVisionBridge.lensResponse(200,"not json".getBytes()).getString("state"));
+        assertTrue(GoogleVisionBridge.lensResponse(200,"{\"enabled\":true}".getBytes()).getJSONObject("body").getBoolean("enabled"));
         okhttp3.OkHttpClient base=new okhttp3.OkHttpClient();
         okhttp3.OkHttpClient config=GoogleVisionBridge.lensTransport(base,"lens_config",new JSONObject());
         assertEquals(25000,config.callTimeoutMillis());assertEquals(25000,config.readTimeoutMillis());
