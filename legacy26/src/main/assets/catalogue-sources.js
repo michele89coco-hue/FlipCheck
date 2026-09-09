@@ -28,7 +28,7 @@ function titleFamily(p,l){
 }
 function itemAttributes(name){const colors=E.tokens(name,E.COLOR_WORDS),patterns=E.tokens(name,E.PATTERNS).filter(p=>!['geometric','dots','squares'].includes(p));return {colors,patterns};}
 function variantsFromLines(lines,src){
- const out=[];for(const line of lines){
+ const out=[];const expanded=lines.flatMap(line=>/^\s*Parallels\s*:/i.test(line)?line.replace(/^\s*Parallels\s*:\s*/i,'').split(';').map(t=>t.trim().replace(/\.$/,'')): [line]);for(const line of expanded){
   const quote=line.trim().replace(/^[•*+\-]\s+/,''),text=quote.replace(/\s+1\/1$/,' /1'),m=text.match(/^([A-Za-z][A-Za-z &'-]{1,65}?)\s*(?:[-–—:]?\s*(?:\/|#'?d\s+to|numbered\s+to))\s*(\d{1,6})(\s+or less)?\s*$/i);
   if(m){out.push({name:m[1].trim(),print_run:+m[2],max_print_run:!!m[3],...itemAttributes(m[1]),source:src,quote});continue;}
   if(text.length<65&&E.tokens(text,E.COLOR_WORDS).length&&/^[a-z &'-]+$/i.test(text)&&!/^base |^look |^the |^each |^all |cards|box|year|set/i.test(text))out.push({name:text,unnumbered:true,...itemAttributes(text),source:src,quote});
@@ -39,7 +39,7 @@ function variantsFromLines(lines,src){
  return out;
 }
 function cardRows(p,l){
- const text=pageText(p),lines=text.split('\n'),k=E.keyValues(l),out=[],src=source(p),family=titleFamily(p,l);
+ const text=pageText(p),rawLines=text.split('\n'),lines=rawLines.map((t,i)=>/^[A-Z][A-Za-z &'’()/-]{2,90}$/.test(t.trim())&&/^\d+ cards?\b/.test(rawLines.slice(i+1).find(v=>v.trim())?.trim()||'')&&/^Parallels\b/.test(rawLines.slice(i+1).filter(v=>v.trim())[1]?.trim()||'')?t.trim()+' Checklist':t),k=E.keyValues(l),out=[],src=source(p),family=titleFamily(p,l);
  let section='Base',sectionKnown=false,sectionLines=[],sectionEntries=[];
  const baseRanges=[...text.matchAll(/\b(Terrace|Mezzanine|Field Level)\s*:\s*#?s?\s*(\d+)\s*[-–]\s*(\d+)/gi)];
  const flush=()=>{const variants=/^(?:Unspecified checklist section|Full Checklist|Team Checklist|Complete Checklist)$/i.test(section)?[]:variantsFromLines(sectionLines,src);for(const e of sectionEntries){e.variants=variants.map(v=>({...v}));if(E.subsetKey(e.subset)==='base'&&variants.length&&variants.every(v=>v.print_run)&&variants.some(v=>v.paragraph_parallel))e.variants.unshift({name:'Base',base_printing:true,source:src,quote:sectionLines.find(t=>/^(?:#{1,6}\s*)?Base(?: Set)?(?: Checklist)?$/i.test(t))||'Base'});}sectionLines=[];sectionEntries=[];};
@@ -113,7 +113,7 @@ function tableEntries(p,l){
   const headers=list(row.headers).map(E.norm),cells=list(row.cells),ni=headers.findIndex(h=>/^(?:card )?(?:no|number|num|#)$/.test(h)||/card number/.test(h)),si=headers.findIndex(h=>/player|subject|card name|^name$/.test(h));
   if(ni<0||si<0||!E.subjectMatch(cells[si],k.subject)||!E.numberParts(cells[ni]))continue;
   const fi=headers.findIndex(h=>/set|product/.test(h)),yi=headers.findIndex(h=>/year|season/.test(h)),sub=headers.findIndex(h=>/subset|insert/.test(h));
-  out.push({subject:cells[si],number:E.number(cells[ni]),family:fi>=0?cleanFamily(cells[fi]):titleFamily(p,l),year:yi>=0?E.season(cells[yi]):E.season(p.title),subset:sub>=0?cells[sub]:'Base',brand:l.base.brand||'',language:k.language,variants:[],source:source(p),grounded:true,entry_quote:row.text||cells.join(' | ')});
+  out.push({subject:cells[si],number:E.number(cells[ni]),family:fi>=0?cleanFamily(cells[fi]):titleFamily(p,l),year:yi>=0?E.season(cells[yi]):E.season(p.title),subset:sub>=0?cells[sub]:'',subset_known:sub>=0,brand:l.base.brand||'',language:k.language,variants:[],source:source(p),grounded:true,entry_quote:row.text||cells.join(' | ')});
  }return out;
 }
 function objectEntries(p,l){
@@ -132,6 +132,10 @@ function groundedExtraction(reply,pages,l){
   const e={...original,source_url:E.sourceUrl201(original.source_url)};if(e.source_url!==original.source_url)e.reported_source_url=original.source_url;
   const literal=v=>str(v).replace(/\s+/g,' '),q=literal(e.entry_quote),page=pages.find(p=>p.url===e.source_url&&literal(pageText(p)).includes(q)),text=page&&literal(pageText(page)),proof=e.proof||{},object=l&&['sealed','generic'].includes(l.domain),fields=object?['subject','family']:['subject','family','number'];
   let reason=!page?(pages.some(p=>p.url===e.source_url)?'entry_quote_not_found':'unknown_source'):!(E.sourceTrusted(page.url,l?.domain)||l?.domain==='generic'&&/^https:\/\//.test(page.url))?'untrusted_catalogue':!q||!text.includes(q)?'entry_quote_not_found':null;
+  // A composite model family is not a literal catalog heading. Retain the
+  // reported value, then use the independently quoted heading when it is a prefix.
+  if(!reason&&proof.family&&text.includes(literal(proof.family))&&E.norm(e.family).startsWith(E.norm(proof.family)+' ')){e.reported_family=e.family;e.family=literal(proof.family);}
+  if(e.subset&&!text?.includes(literal(e.subset))){e.reported_subset=e.subset;e.subset='';e.subset_known=false;}
   for(const field of fields)if(!reason){const quote=literal(proof[field]);if(!quote||!text.includes(quote)||!E.norm(quote).includes(E.norm(e[field])))reason='ungrounded_'+field;}
   if(!reason&&!object&&(!E.norm(q).includes(E.norm(e.subject))||!new RegExp('(?:^|[^A-Z0-9])'+str(e.number).replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?:$|[^A-Z0-9])','i').test(q)))reason='number_subject_not_in_same_entry';
   if(reason){rejected.push({subject:e.subject,number:e.number,reason});continue;}
