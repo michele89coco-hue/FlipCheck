@@ -15,7 +15,7 @@ test('197 identical Bandai labels retain both official artwork references, never
  l.add('catalogue_variant',vs[1].id,{certainty:'clear',image_index:1,reference_source:vs[1].source.url});r=E.reduce(l,entries);assert.equal(r.market_ready,true);assert.equal(r.variant_resolution.proof[0].image_url,vs[1].image_url);assert.equal(r.variant,'4th Anniversary Event');
 });
 test('197 box search retains basketball and printed autograph configuration, rejecting baseball references',()=>{
- const {l,entries}=replay(0);assert.match(E.query(l),/basketball.*1 AUTOGRAPH/i);const r=E.reduce(l,entries);assert.equal(r.core_identity.status,'confirmed');assert.equal(r.core_identity.origin,'printed_product');assert.equal(r.catalogue_core_verified,false);assert.equal(r.market_ready,false);
+ const {l,entries}=replay(0);assert.match(E.query(l),/basketball.*1 AUTOGRAPH/i);const r=E.reduce(l,entries);assert.equal(r.core_identity.status,'confirmed');assert.equal(r.core_identity.origin,'catalogue_and_photo');assert.equal(r.catalogue_core_verified,true);assert.equal(r.market_ready,false);
 });
 const src={url:'https://www.beckett.com/test'};
 const card=(patch={})=>({subject:'Example',number:'21',family:'Select',year:'2025-26',subset:'Terrace',grounded:true,source:src,variants:[],...patch});

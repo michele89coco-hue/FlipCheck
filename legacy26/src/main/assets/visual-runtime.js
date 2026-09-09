@@ -40,7 +40,8 @@ function estimate164(body){
  const text=JSON.stringify(body,(k,v)=>k==='image_url'?'[image]':v),imageCount=(JSON.stringify(body).match(/"type":"input_image"/g)||[]).length;
  const price=modelPrice(body.model);if(!price.input||!price.output)throw new Error('pricing_not_configured');
  const input=Math.ceil(new TextEncoder().encode(text).length/2)+imageCount*8192;
- const tools=body.tools?.length?Math.max(1,Number(body.max_tool_calls)||1):0;
+ // Recorded catalogue responses can contain two billed searches despite max_tool_calls=1.
+ const tools=body.tools?.length?Math.max(body.text?.format?.name==='flipcheck_catalogue_search'?2:1,Number(body.max_tool_calls)||1):0;
  return (input*Math.max(price.input,price.write)+Number(body.max_output_tokens||3000)*price.output)/1e6+tools*.01;
 }
 async function boundedFetch164(url,options,ctx,ms){
