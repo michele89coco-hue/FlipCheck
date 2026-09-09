@@ -168,9 +168,20 @@ public final class GoogleVisionBridge {
             });
         });
     }
+    static OkHttpClient lensTransport(OkHttpClient base, String action, JSONObject payload) {
+        if ("lens_config".equals(action)) {
+            int timeout=Math.max(1000,Math.min(25000,payload==null?25000:payload.optInt("timeout_ms",25000)));
+            return base.newBuilder().connectTimeout(Math.min(10000,timeout),TimeUnit.MILLISECONDS)
+                .readTimeout(timeout,TimeUnit.MILLISECONDS).callTimeout(timeout,TimeUnit.MILLISECONDS).build();
+        }
+        return base.newBuilder().callTimeout(38,TimeUnit.SECONDS).readTimeout(35,TimeUnit.SECONDS).build();
+    }
+    private OkHttpClient transportFor(String action, JSONObject payload) {
+        return action.startsWith("lens")?lensTransport(client,action,payload):"detect".equals(action)?googleClient:client;
+    }
     private void execute(String id, String action, Request request, int redirects, ScanEvidenceCache.Session session, String cacheKey) {
         if(closed||cancelled.contains(id))return;
-        OkHttpClient transport=action.startsWith("lens")?client.newBuilder().callTimeout("lens".equals(action)?38:6,TimeUnit.SECONDS).readTimeout(35,TimeUnit.SECONDS).build():"detect".equals(action)?googleClient:client;
+        OkHttpClient transport=transportFor(action,request.tag(JSONObject.class));
         Call call=transport.newCall(request);calls.put(id,call);
         call.enqueue(new Callback() {
             public void onFailure(Call c, IOException error) {

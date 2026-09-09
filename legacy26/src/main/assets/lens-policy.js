@@ -107,6 +107,19 @@ function present206(result,entries,l,titleLanguage='it'){
  if(result.market_ready)result.normalized_query=result.title;
  return result;
 }
-const api={visualEntries206,present206,normalize,attributes,evaluate,select,ranked,fallbackReason,url};
+// Only the free configuration GET is retried. A Lens search is never replayed here.
+async function waitForService207(request,{now=()=>Date.now(),wait=ms=>new Promise(r=>setTimeout(r,ms)),guard=()=>{},onAttempt=()=>{}}={}){
+ const deadline=now()+80000;let last=null,attempt=0;
+ while(now()<deadline&&attempt<16){
+  guard();const remaining=deadline-now();if(remaining<1000)break;
+  const timeout=Math.min(25000,remaining-500);onAttempt(++attempt,timeout);
+  try{last=await request(timeout);}catch(error){guard();if(!/^(?:timeout|scan_timeout|network_error)$/.test(error.message))throw error;last={status:0,state:error.message};}
+  guard();
+  if(![502,503,504].includes(last.status)&&!(last.status===0&&['timeout','scan_timeout','network_error'].includes(last.state)))return last;
+  const delay=Math.min(5000,deadline-now());if(delay>0){await wait(delay);guard();}
+ }
+ return {status:0,state:'service_startup_timeout',lastState:last?.state||null};
+}
+const api={waitForService207,visualEntries206,present206,normalize,attributes,evaluate,select,ranked,fallbackReason,url};
 if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckLens=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

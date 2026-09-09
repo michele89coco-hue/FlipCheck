@@ -35,7 +35,7 @@ before(async()=>{
   }
   if(url.startsWith('https://offline-native.invalid/')){
    const action=url.split('/').pop(),b=JSON.parse(route.request().postData());native.push({action,...b});events.push({kind:'native',action});let reply={status:503};
-   if(action==='lens_config')reply={status:200,body:{enabled:true,protocol:2,provider:'searchapi_google_lens',unitUsd:.004}};
+   if(action==='lens_config')reply=options.lensConfigReplies?.[Math.min(native.filter(n=>n.action==='lens_config').length-1,options.lensConfigReplies.length-1)]||{status:200,body:{enabled:true,protocol:2,provider:'searchapi_google_lens',unitUsd:.004}};
    if(action==='lens')reply={status:200,body:options.lensReply||{state:'ok',providerCalls:1,accountCalls:1,estimatedUsd:.004,billingUnknown:false,candidates:options.lensCandidates||[]}};
    if(action==='ocr')reply=options.noOcr?{state:'ocr_unavailable'}:d.photoOcr?.[ocrIndex++]||{state:'ok',lines:[],text:''};
    if(action==='page'){
@@ -280,4 +280,13 @@ test('206 image-first closes from downloaded images, keeps both originals and ph
  const body=api.find(b=>b.text.format.name==='flipcheck_lens_image_comparison');assert.equal(body.input[0].content.filter(c=>c.type==='input_image').length,3);assert.equal(body.tools,undefined);
  assert.equal(out.identificationPipeline.visualComparison.entries.length,1);assert.equal(out.identificationPipeline.visualComparison.references[0].ocr.origin,'candidate_image_ocr');
  assert.ok(out.visualAssistance.budget.spentOrReservedUsd<=.03);assert.ok(events.some(e=>e.kind==='end'));assert.doesNotMatch(JSON.stringify(out),/data:image|offline-secret|access-testing/);
+});
+
+test('207 startup retry reaches one Lens search and preserves scan credit budget',async()=>{
+ await reset('politoed',{lens:true,tcgdex:true,bandObservations:politoedKeys204,lensConfigReplies:[{status:503},{status:200,body:{enabled:true,protocol:2,provider:'searchapi_google_lens',unitUsd:.004}}]});
+ const out=await scan();assert.equal(out.identification.market_ready,true);assert.equal(native.filter(n=>n.action==='lens_config').length,2);assert.equal(native.filter(n=>n.action==='lens').length,1);assert.equal(out.identificationPipeline.warmup.state,'ready');assert.equal(out.identificationPipeline.warmup.attempts,2);assert.ok(out.identificationPipeline.warmup.elapsedMs>=5000);assert.equal(out.visualAssistance.budget.entries.filter(e=>e.kind==='lens').length,1);assert.equal(out.visualAssistance.budget.maxUsd,.03);
+});
+test('207 invalid app access stops immediately with no image upload or Lens charge',async()=>{
+ await reset('politoed',{lens:true,tcgdex:true,bandObservations:politoedKeys204,lensConfigReplies:[{status:401,body:{state:'unauthorized'}}]});const out=await scan();
+ assert.equal(native.filter(n=>n.action==='lens_config').length,1);assert.equal(native.filter(n=>n.action==='lens').length,0);assert.equal(out.identificationPipeline.warmup.state,'unauthorized');assert.equal(out.visualAssistance.budget.entries.filter(e=>e.kind==='lens').length,0);assert.equal(out.identification.market_ready,true);
 });

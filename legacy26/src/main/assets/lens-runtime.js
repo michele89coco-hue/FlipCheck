@@ -14,7 +14,7 @@ async function startLens205(ctx){
  if(!config.enabled||!config.server||!config.access){state.state=config.enabled?'not_configured':'disabled';state.fallbacks.push({stage:'original_ocr',reason:state.state});return state;}
  let reservation=null;const started=Date.now(),event={provider:'searchapi_google_lens',kind:'lens',purpose:'initial_image_only',state:'configuration',startedAt:started};ctx.calls.push(event);
  try{
-  state.backendCalls++;const cap=await directCall165('lens_config',{server:config.server,access:config.access},ctx,6500),c=cap.body;
+  const cap=await warmupLens207(ctx,config,state),c=cap.body;
   if(cap.status!==200||!c?.enabled||c.provider!=='searchapi_google_lens'||c.protocol!==2)throw new Error(c?.state||cap.state||'service_not_configured');
   if(!Number.isFinite(c.unitUsd)||c.unitUsd<0)throw new Error('cost_not_configured');
   // Charge the same scan budget. Reserve before uploading and retain unknown billing on timeout.
@@ -119,4 +119,18 @@ async function compareLensImages206(l,ctx){
 async function primaryLens206(l,ctx){
  ctx.lens.evaluations=L205.select(ctx.lens,l);ctx.lens.consideredCount=ctx.lens.evaluations.length;
  const visual=await compareLensImages206(l,ctx);return {entries:visual.entries,pages:[]};
+}
+
+async function warmupLens207(ctx,config,state){
+ const started=Date.now();state.warmup={state:'connecting',attempts:0,maxWaitMs:80000,providerCalls:0};
+ // Startup waiting must not consume the 150-second recognition window or any scan credits.
+ ctx.budget.deadline+=80000;
+ const notice=setTimeout(()=>{if(ctx===scan164&&!ctx.budget.cancelled)status('<span class="loader"></span>Attendo l’avvio del servizio immagini…');},6000);
+ try{
+  const result=await L205.waitForService207(timeout=>directCall165('lens_config',{server:config.server,access:config.access,timeout_ms:timeout},ctx,timeout+500),{
+   guard:()=>guard164(ctx),onAttempt:attempt=>{state.backendCalls++;state.warmup.attempts=attempt;}
+  });
+  state.warmup.state=result.status===200&&result.body?.enabled?'ready':result.body?.state||result.state||'service_unavailable';
+  return result;
+ }finally{clearTimeout(notice);const elapsed=Date.now()-started;ctx.budget.deadline-=Math.max(0,80000-elapsed);state.warmup.elapsedMs=elapsed;}
 }

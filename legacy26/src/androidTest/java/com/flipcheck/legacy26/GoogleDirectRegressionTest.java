@@ -10,6 +10,16 @@ import static org.junit.Assert.*;
 
 /** Actual production request construction and network guards, with zero HTTP calls. */
 public final class GoogleDirectRegressionTest {
+    @Test public void lensStartupWaitIsBoundedAndDoesNotExtendPaidSearchTimeout() throws Exception {
+        okhttp3.OkHttpClient base=new okhttp3.OkHttpClient();
+        okhttp3.OkHttpClient config=GoogleVisionBridge.lensTransport(base,"lens_config",new JSONObject());
+        assertEquals(25000,config.callTimeoutMillis());assertEquals(25000,config.readTimeoutMillis());
+        assertEquals(10000,config.connectTimeoutMillis());
+        assertEquals(1000,GoogleVisionBridge.lensTransport(base,"lens_config",new JSONObject().put("timeout_ms",-1)).callTimeoutMillis());
+        assertEquals(25000,GoogleVisionBridge.lensTransport(base,"lens_config",new JSONObject().put("timeout_ms",999999)).callTimeoutMillis());
+        assertEquals(7000,GoogleVisionBridge.lensTransport(base,"lens_config",new JSONObject().put("timeout_ms",7000)).callTimeoutMillis());
+        assertEquals(38000,GoogleVisionBridge.lensTransport(base,"lens",new JSONObject().put("timeout_ms",999999)).callTimeoutMillis());
+    }
     @Test public void lensCredentialStaysOnServiceOriginAndOutOfBody() throws Exception {
         JSONObject input=new JSONObject().put("server","https://lens.example").put("access","test-access-1234567890")
             .put("scan_id","scan_12345678").put("image_base64","aGVsbG8=").put("remaining_usd",.03);
