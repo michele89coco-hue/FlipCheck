@@ -1,0 +1,44 @@
+name: Lens comparison on one combined front and back image
+
+on:
+  push:
+    branches: ["experiment/searchapi-lens-20260909"]
+    paths:
+      - ".github/workflows/lens-collage-comparison.yml"
+      - "tools/lens_collage_comparison.py"
+      - "tools/regression/fixtures/lens-collage-20260909/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lens-collage-comparison
+  cancel-in-progress: false
+
+jobs:
+  compare:
+    strategy:
+      fail-fast: false
+      matrix:
+        provider: [searchapi, oxylabs]
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Search one combined image without text hints
+        env:
+          SEARCHAPI_API_KEY: ${{ secrets.SEARCHAPI_API_KEY }}
+          OXYLABS_USERNAME: ${{ secrets.OXYLABS_USERNAME }}
+          OXYLABS_PASSWORD: ${{ secrets.OXYLABS_PASSWORD }}
+        run: python3 tools/lens_collage_comparison.py "${{ matrix.provider }}"
+      - name: Save sanitized results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lens-collage-${{ matrix.provider }}-${{ github.run_id }}
+          path: collage-lens-results/${{ matrix.provider }}/
+          if-no-files-found: warn
+          retention-days: 7
