@@ -13,7 +13,7 @@ function call(action,payload,{signal,timeoutMs=22000}={}){
   pending.set(id,{resolve:r=>finish(r)});signal?.addEventListener('abort',abort,{once:true});
   if(signal?.aborted){abort();return;}
   timer=setTimeout(abort,timeoutMs);
-  try{if(action==='ocr'){if(payload.script==='japanese'&&root.FlipCheckGoogle.readTextScript)root.FlipCheckGoogle.readTextScript(id,payload.image_data,'japanese');else root.FlipCheckGoogle.readText(id,payload.image_data);}else root.FlipCheckGoogle.request(id,action,JSON.stringify(payload));}catch(_){finish(null,new Error('native_service_missing'));}
+  try{if(action==='ocr'){if(['japanese','chinese'].includes(payload.script)&&root.FlipCheckGoogle.readTextScript)root.FlipCheckGoogle.readTextScript(id,payload.image_data,payload.script);else root.FlipCheckGoogle.readText(id,payload.image_data);}else root.FlipCheckGoogle.request(id,action,JSON.stringify(payload));}catch(_){finish(null,new Error('native_service_missing'));}
  });
 }
 function errorState(response){
