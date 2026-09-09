@@ -362,7 +362,8 @@ function reduceObject(l,entries,error){
   if(!matched||year&&e.year&&season(e.year)!==year||sport&&/\b(?:basketball|baseball|football|soccer)\b/.test(sourceSport)&&!sourceSport.includes(sport))continue;
   const config=configuration([e.entry_quote,e.configuration_quote].filter(Boolean).join(' ')),conflicts=Object.keys(observed).filter(f=>observed[f]!==null&&config[f]!==null&&observed[f]!==config[f]);
   const exactConfig=Object.keys(observed).filter(f=>observed[f]!==null).length>=2&&Object.keys(observed).every(f=>observed[f]===null||observed[f]===config[f]);
-  const code=l.pick('barcode')?.value||l.pick('sku')?.value||l.pick('model_code')?.value,codeMatch=!!code&&str(e.entry_quote).includes(code);
+  const inlineCodes=l.domain==='generic'?unique(l.evidence('product').flatMap(a=>str(a.value).match(/\b[A-Z]{1,6}\d{0,6}[-/]\d{2,6}[A-Z0-9-]*\b/g)||[])):[];
+  const code=l.pick('barcode')?.value||l.pick('sku')?.value||l.pick('model_code')?.value||(inlineCodes.length===1?inlineCodes[0]:''),codeMatch=!!code&&str(e.entry_quote).includes(code);
   candidates.push({...e,configuration_conflicts:conflicts,exact:!conflicts.length&&(codeMatch||l.domain==='sealed'&&exactConfig)});
  }
  if(l.domain==='sealed'){const groups=unique(candidates.map(e=>norm(e.family)));for(const family of groups){const group=candidates.filter(e=>norm(e.family)===family),keys=Object.keys(observed).filter(f=>observed[f]!==null),survivors=group.filter(e=>!e.configuration_conflicts.length);if(group.length>=2&&keys.length&&survivors.length===1&&group.every(e=>keys.every(f=>configuration([e.entry_quote,e.configuration_quote].filter(Boolean).join(' '))[f]!==null)))survivors[0].exact=true;}}

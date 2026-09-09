@@ -48,6 +48,11 @@ test('Orbit: multiple candidates considered and 94026 remains uncertain without 
  const l=photo('generic',{}, {brand:'Orbit',model_code:'94026'}),out=evaluate('orbit',l);assert.ok(out.some(c=>c.eligible&&/Orbit/i.test(c.title)));assert.equal(l.pick('model_code'),null);
  const entry={subject:'Orbit 94026',family:'Orbit Control Star',number:'94026',grounded:true,entry_quote:'Orbit Control Star 94026',source:{url:'https://catalogue.example/orbit'}};assert.equal(E.reduce(l,[entry]).market_ready,false);assert.equal(E.reduce(l,[entry]).normalized_query,'');
 });
+test('an actual model code inside the photographed product name still closes a generic object',()=>{
+ const l=photo('generic',{brand:'Example',product:'Example ZX-500'}),entry={subject:'Example ZX-500',family:'Example ZX-500',number:'ZX-500',grounded:true,entry_quote:'Example ZX-500 water pump. Model Example ZX-500.',source:{url:'https://example.com/catalogue/zx-500'}};
+ assert.equal(E.reduce(l,[entry]).market_ready,true);assert.equal(E.reduce(l,[entry]).core_identity.fields.find(f=>f.field==='product').origin,'photo');
+ const uncertain=photo('generic',{brand:'Example'},{product:'Example ZX-500'});assert.equal(E.reduce(uncertain,[entry]).market_ready,false);
+});
 test('Mewtwo V cannot be translated to Mewtwo ex, including a conflicting identity-band packet',()=>{
  const l=photo('pokemon',{subject:'超梦V',collector_number:'135/127',copyright:'©2024',language:'zh'});E.applyIdentityBands202(l,{observations:[{field:'subject',text:'超梦',alternatives:['Mewtwo ex','Mewtwo'],certainty:'clear',image_index:1,region:{image_index:1,x:.1,y:.1,width:.3,height:.1}}]});assert.deepEqual(E.pokemonAliases204(l),['Mewtwo V']);assert.match(E.query(l),/Mewtwo V/);assert.doesNotMatch(E.query(l),/Mewtwo ex/);
 });
