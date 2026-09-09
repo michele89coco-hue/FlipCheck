@@ -1,0 +1,808 @@
+{
+  "vision": {
+    "domain": "sports",
+    "kind": "card",
+    "category": "basketball",
+    "language": "en",
+    "object_unit": "single",
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.06,
+        "y": 0.14,
+        "width": 0.88,
+        "height": 0.67,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "LUKA DONCIC",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.52,
+          "y": 0.68,
+          "width": 0.32,
+          "height": 0.03
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "team",
+        "text": "DALLAS MAVERICKS",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.57,
+          "y": 0.72,
+          "width": 0.26,
+          "height": 0.025
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "product",
+        "text": "PRIZM",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.67,
+          "y": 0.2,
+          "width": 0.16,
+          "height": 0.04
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "RC",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.09,
+          "y": 0.19,
+          "width": 0.07,
+          "height": 0.08
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "No. 77",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.42,
+          "y": 0.31,
+          "width": 0.08,
+          "height": 0.1
+        },
+        "zone": "front",
+        "alternatives": [
+          "77",
+          "11"
+        ]
+      }
+    ],
+    "features": [
+      {
+        "field": "border_color",
+        "value": "green",
+        "description": "Bordo e cornice esterna verdi con effetto brillante",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.07,
+          "y": 0.17,
+          "width": 0.84,
+          "height": 0.62
+        },
+        "zone": "border"
+      },
+      {
+        "field": "finish",
+        "value": "reflective",
+        "description": "Superficie con riflessi multicolore e brillantezza prismatica",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.1,
+          "y": 0.18,
+          "width": 0.8,
+          "height": 0.58
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "pattern",
+        "value": "geometric diagonal stripes and dotted texture",
+        "description": "Strisce diagonali, reticolo puntinato e texture a puntini",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.17,
+          "y": 0.21,
+          "width": 0.68,
+          "height": 0.54
+        },
+        "zone": "artwork"
+      },
+      {
+        "field": "rookie",
+        "value": "present",
+        "description": "Badge RC visibile in alto a sinistra",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.09,
+          "y": 0.19,
+          "width": 0.07,
+          "height": 0.08
+        },
+        "zone": "label"
+      },
+      {
+        "field": "stamp",
+        "value": "present",
+        "description": "Badge RC stampato",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.09,
+          "y": 0.19,
+          "width": 0.07,
+          "height": 0.08
+        },
+        "zone": "label"
+      },
+      {
+        "field": "layout",
+        "value": "ritratto d'azione verticale con cornice geometrica, logo in alto e fascia nome in basso",
+        "description": "Giocatore in azione con pallone; fascia inferiore con nome e squadra",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.08,
+          "y": 0.17,
+          "width": 0.84,
+          "height": 0.61
+        },
+        "zone": "other"
+      }
+    ],
+    "hypotheses": [
+      {
+        "field": "family",
+        "value": "basketball trading card"
+      },
+      {
+        "field": "brand",
+        "value": "Prizm"
+      }
+    ],
+    "slab_reading": null,
+    "engine_version": 193,
+    "brand": "Prizm",
+    "family": "basketball trading card",
+    "title": "LUKA DONCIC",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": {
+      "image_index": 1,
+      "x": 0.06,
+      "y": 0.14,
+      "width": 0.88,
+      "height": 0.67,
+      "certain": true
+    },
+    "photo_clues": [
+      {
+        "text": "LUKA DONCIC",
+        "role": "subject",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.52,
+          "y": 0.68,
+          "width": 0.32,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "DALLAS MAVERICKS",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.57,
+          "y": 0.72,
+          "width": 0.26,
+          "height": 0.025,
+          "certain": true
+        }
+      },
+      {
+        "text": "PRIZM",
+        "role": "model",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.67,
+          "y": 0.2,
+          "width": 0.16,
+          "height": 0.04,
+          "certain": true
+        }
+      },
+      {
+        "text": "RC",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.09,
+          "y": 0.19,
+          "width": 0.07,
+          "height": 0.08,
+          "certain": true
+        }
+      },
+      {
+        "text": "No. 77",
+        "role": "text",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.42,
+          "y": 0.31,
+          "width": 0.08,
+          "height": 0.1,
+          "certain": true
+        }
+      }
+    ],
+    "physical_observations": [
+      {
+        "feature": "color",
+        "text": "green border",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Superficie con riflessi multicolore e brillantezza prismatica",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "pattern",
+        "text": "Strisce diagonali, reticolo puntinato e texture a puntini",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Badge RC visibile in alto a sinistra",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Badge RC stampato",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Giocatore in azione con pallone; fascia inferiore con nome e squadra",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      }
+    ]
+  },
+  "crops": [
+    {
+      "id": "original-1-upper",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.044444444444444446,
+        "y": 0.12478632478632479,
+        "width": 0.9111111111111111,
+        "height": 0.23162393162393163
+      }
+    },
+    {
+      "id": "original-1-lower",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.044444444444444446,
+        "y": 0.5803418803418804,
+        "width": 0.9111111111111111,
+        "height": 0.24487179487179486
+      }
+    }
+  ],
+  "batches": [
+    {
+      "ids": [
+        "lens-1",
+        "lens-2",
+        "lens-3"
+      ],
+      "reply": {
+        "original_readings": [
+          {
+            "field": "subject",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "LUKA DONCIC",
+            "crop_text": "LUKA DONCIC",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Luka Doncic",
+              "en": "Luka Doncic"
+            }
+          },
+          {
+            "field": "collector_number",
+            "image_index": 1,
+            "crop_id": "",
+            "full_text": "",
+            "crop_text": "",
+            "evidence_found": false,
+            "certainty": "uncertain",
+            "display_names": {
+              "it": "",
+              "en": ""
+            }
+          },
+          {
+            "field": "set_code",
+            "image_index": 1,
+            "crop_id": "",
+            "full_text": "",
+            "crop_text": "",
+            "evidence_found": false,
+            "certainty": "uncertain",
+            "display_names": {
+              "it": "",
+              "en": ""
+            }
+          },
+          {
+            "field": "rarity_text",
+            "image_index": 1,
+            "crop_id": "",
+            "full_text": "",
+            "crop_text": "",
+            "evidence_found": false,
+            "certainty": "uncertain",
+            "display_names": {
+              "it": "",
+              "en": ""
+            }
+          },
+          {
+            "field": "copyright",
+            "image_index": 1,
+            "crop_id": "",
+            "full_text": "",
+            "crop_text": "",
+            "evidence_found": false,
+            "certainty": "uncertain",
+            "display_names": {
+              "it": "",
+              "en": ""
+            }
+          },
+          {
+            "field": "language",
+            "image_index": 1,
+            "crop_id": "",
+            "full_text": "",
+            "crop_text": "",
+            "evidence_found": false,
+            "certainty": "uncertain",
+            "display_names": {
+              "it": "",
+              "en": ""
+            }
+          },
+          {
+            "field": "model_code",
+            "image_index": 1,
+            "crop_id": "",
+            "full_text": "",
+            "crop_text": "",
+            "evidence_found": false,
+            "certainty": "uncertain",
+            "display_names": {
+              "it": "",
+              "en": ""
+            }
+          },
+          {
+            "field": "serial",
+            "image_index": 1,
+            "crop_id": "",
+            "full_text": "",
+            "crop_text": "",
+            "evidence_found": false,
+            "certainty": "uncertain",
+            "display_names": {
+              "it": "",
+              "en": ""
+            }
+          }
+        ],
+        "comparisons": [
+          {
+            "reference_id": "lens-1",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "LUKA DONCIC",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "LUKA DONCIC",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Luka Doncic shooting, Dallas Mavericks uniform number 77",
+                "reference": "Luka Doncic shooting, Dallas Mavericks uniform number 77",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "Green Prizm design with RC shield and Prizm logo",
+                "reference": "Green Prizm design with RC shield and Prizm logo",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Luka Doncic",
+              "family": "Panini Prizm",
+              "number": "#280",
+              "year": "2018",
+              "brand": "Panini",
+              "subset": "Green Prizm",
+              "proof": {
+                "subject": "2018 PANINI PRIZM\nLUKA DONCIC",
+                "family": "2018 PANINI PRIZM",
+                "year": "2018 PANINI PRIZM",
+                "subset": "GREEN PRIZM"
+              },
+              "display_names": {
+                "it": "Luka Doncic",
+                "en": "Luka Doncic"
+              }
+            }
+          },
+          {
+            "reference_id": "lens-2",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [
+              "Il candidato è blu, mentre l'originale è Green Prizm."
+            ],
+            "original_reading": {
+              "subject": "LUKA DONCIC",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "LUKA DONCIC",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Luka Doncic shooting, Dallas Mavericks uniform number 77",
+                "reference": "Luka Doncic shooting, Dallas Mavericks uniform number 77",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "Green Prizm design",
+                "reference": "Blue Prizm design",
+                "agrees": false,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Luka Doncic",
+              "family": "Panini Prizm",
+              "number": "#280",
+              "year": "2018-19",
+              "brand": "Panini",
+              "subset": "",
+              "proof": {
+                "subject": "2018-19 Panini Prizm - Luka Dončić #280",
+                "family": "2018-19 Panini Prizm",
+                "year": "2018-19 Panini Prizm",
+                "subset": ""
+              },
+              "display_names": {
+                "it": "Luka Doncic",
+                "en": "Luka Doncic"
+              }
+            }
+          },
+          {
+            "reference_id": "lens-3",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "LUKA DONCIC",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "LUKA DONCIC",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Luka Doncic shooting, Dallas Mavericks uniform number 77",
+                "reference": "Luka Doncic shooting, Dallas Mavericks uniform number 77",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "Green Prizm design with RC shield and Prizm logo",
+                "reference": "Green Prizm design with RC shield and Prizm logo",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Luka Doncic",
+              "family": "Panini Prizm",
+              "number": "#280",
+              "year": "2018",
+              "brand": "Panini",
+              "subset": "Green Prizm",
+              "proof": {
+                "subject": "2018 Panini Prizm Green Prizms Luka Doncic ROOKIE #280",
+                "family": "2018 Panini Prizm",
+                "year": "2018 Panini Prizm",
+                "subset": "Green Prizms"
+              },
+              "display_names": {
+                "it": "Luka Doncic",
+                "en": "Luka Doncic"
+              }
+            }
+          }
+        ]
+      },
+      "accepted": []
+    }
+  ],
+  "references": [
+    {
+      "id": "lens-1",
+      "title": "2018 LUKA DONCIC PANINI PRIZM GREEN PRIZM CARD #280 PSA GEM ...",
+      "snippet": "",
+      "url": "https://www.ebay.com/itm/375460430496",
+      "image_url": "https://i.ebayimg.com/images/g/xoMAAOSwOmxmWhvL/s-l400.png",
+      "page_text": ""
+    },
+    {
+      "id": "lens-2",
+      "title": "2018-19 Panini Prizm - Luka Dončić #280 for sale | eBay",
+      "snippet": "",
+      "url": "https://www.ebay.com/b/2018-19-Panini-Prizm-Luka-Don-i-280/212/bn_7123275584",
+      "image_url": "https://i.ebayimg.com/images/g/TjUAAOSwAOJnpiup/s-l1200.webp",
+      "page_text": ""
+    },
+    {
+      "id": "lens-3",
+      "title": "2018 Panini Prizm Green Prizms Luka Doncic ROOKIE #280 PSA ...",
+      "snippet": "",
+      "url": "https://www.fanaticscollect.com/buy-now/aab55220-b6f1-40f1-abfd-9d4480b0ef42/2018-panini-prizm-green-prizms-luka-doncic-rookie-280-psa-10-gem-mint",
+      "image_url": "https://cdn-vault.fanaticscollect.com/2022/9/23/rm2/medium/v450440_2022092311153962R_21.jpg",
+      "page_text": ""
+    },
+    {
+      "id": "lens-4",
+      "title": "2018-2019 Panini Prizm Basketball Checklist - StockX News",
+      "snippet": "",
+      "url": "https://stockx.com/news/2018-2019-panini-prizm-basketball-checklist/",
+      "image_url": "https://images-wp.stockx.com/news/wp-content/uploads/2019/11/LukaChoiceGreenBeckett.com_-570x800.png",
+      "page_text": ""
+    },
+    {
+      "id": "lens-5",
+      "title": "2018-19 Panini Prizm - Prizms Green Luka Doncic PSA 10 ...",
+      "snippet": "",
+      "url": "https://www.ebay.com/itm/144763988800",
+      "image_url": "https://i.ebayimg.com/images/g/U8IAAOSw8PNjRuoR/s-l400.jpg",
+      "page_text": ""
+    },
+    {
+      "id": "lens-6",
+      "title": "Luka Doncic [Green Prizm] #280 Prices | 2018 Panini Prizm ...",
+      "snippet": "",
+      "url": "https://www.sportscardspro.com/game/basketball-cards-2018-panini-prizm/luka-doncic-green-prizm-280",
+      "image_url": "https://storage.googleapis.com/images.pricecharting.com/u2fqj64x6peukf44/240.jpg",
+      "page_text": ""
+    },
+    {
+      "id": "lens-7",
+      "title": "Cert Verification 65797621",
+      "snippet": "",
+      "url": "https://www.psacard.com/cert/65797621",
+      "image_url": "https://d1htnxwo4o0jhw.cloudfront.net/cert/128555133/DoB-HXCToEeZ4oT6SbTXLQ.jpg",
+      "page_text": ""
+    },
+    {
+      "id": "lens-8",
+      "title": "2018-19 Panini Prizm - [Base] - Blue Ice Prizm #280 - Luka ...",
+      "snippet": "",
+      "url": "https://www.comc.com/Cards/Basketball/2018-19/Panini_Prizm_-_Base_-_Blue_Ice_Prizm/280/Luka_Doncic/13750746",
+      "image_url": "https://img.comc.com/i/Basketball/2018-19/Panini-Prizm---Base---Blue-Ice-Prizm/280/Luka-Doncic.jpg?id=0022e7e4-c65c-49b0-adce-626f96329b0e&size=original",
+      "page_text": ""
+    },
+    {
+      "id": "lens-9",
+      "title": "Luka Doncic [Purple Wave Prizm] #280 Prices | 2018 Panini ...",
+      "snippet": "",
+      "url": "https://www.sportscardspro.com/game/basketball-cards-2018-panini-prizm/luka-doncic-purple-wave-prizm-280",
+      "image_url": "https://storage.googleapis.com/images.pricecharting.com/corrvc62hukh6hn5il44/1600.jpg",
+      "page_text": ""
+    },
+    {
+      "id": "lens-10",
+      "title": "What is this on my slab? : r/sportscards",
+      "snippet": "",
+      "url": "https://www.reddit.com/r/sportscards/comments/1mr7gsf/what_is_this_on_my_slab/",
+      "image_url": "https://preview.redd.it/what-is-this-on-my-slab-v0-cwllskewg8jf1.jpeg?width=1080&crop=smart&auto=webp&s=2741cbce1278b71871250d725e99994755eb7a84",
+      "page_text": ""
+    },
+    {
+      "id": "lens-11",
+      "title": "2018-19 Panini Prizm Base Luka Doncic Rookie Card RC ...",
+      "snippet": "",
+      "url": "https://www.ebay.com/itm/224583585711",
+      "image_url": "https://i.ebayimg.com/images/g/zh4AAOSw~OphJB~K/s-l400.jpg",
+      "page_text": ""
+    },
+    {
+      "id": "lens-12",
+      "title": "Spec Details",
+      "snippet": "",
+      "url": "https://www.psacard.com/spec/psa/2684055",
+      "image_url": "https://d1htnxwo4o0jhw.cloudfront.net/spec/2690776/IxLtb2E2FUCwuQXhs2vS6Q.jpg",
+      "page_text": ""
+    },
+    {
+      "id": "lens-13",
+      "title": "Real or Fake? @huntbreaks posted this screenshot today ...",
+      "snippet": "",
+      "url": "https://www.instagram.com/p/DTL8pqzkiLK/",
+      "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJV-K-durYW7yQIwb6Rt_G9TDW_ZXbvTRYfTyC0p5Gj5Pj3dsl",
+      "page_text": ""
+    },
+    {
+      "id": "lens-14",
+      "title": "Luka Doncic 2018 Prizm #280 Silver Price Guide - Sports Card ...",
+      "snippet": "",
+      "url": "https://www.sportscardinvestor.com/cards/luka-doncic-basketball/2018-prizm-silver-280",
+      "image_url": "https://i.ebayimg.com/images/g/pNUAAeSw1ihqcI~W/s-l1600.jpg",
+      "page_text": ""
+    },
+    {
+      "id": "lens-15",
+      "title": "2018-19 Panini Prizm Prizms Red White and Blue #280 Luka ...",
+      "snippet": "",
+      "url": "https://marketplace.beckett.com/burbanksportscards_21/item/2018-19-panini-prizm-prizms-red-white-and-blue-280-luka-doncic_95508974",
+      "image_url": "https://img.beckett.com/images/items/16094188/marketplace/95508974/front.jpg",
+      "page_text": ""
+    },
+    {
+      "id": "lens-16",
+      "title": "FIRST LOOK: Luka Dončić's 1-of-1 'Glass Canvas' Superfractor ...",
+      "snippet": "",
+      "url": "https://www.facebook.com/Topps/posts/first-look-luka-don%C4%8Di%C4%87s-1-of-1-glass-canvas-superfractor-in-topps-chrome-update-/1506383654864300/",
+      "image_url": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQ1cFQZ8bqKkTMdCPicnAoBAKuDNYVJnx6rjY84GJyrwbz_yX0k",
+      "page_text": ""
+    },
+    {
+      "id": "lens-17",
+      "title": "2018 Panini Prizm Green Prizms Luka Doncic ROOKIE #280 PSA 9 ...",
+      "snippet": "",
+      "url": "https://www.fanaticscollect.com/buy-now/22922489-09ab-4ca6-93af-8eb402672026/2018-panini-prizm-green-prizms-luka-doncic-rookie-280-psa-9-mint",
+      "image_url": "https://cdn-vault.fanaticscollect.com/2021/4/28/1/medium/v142946_2021042812201900M_13.jpg",
+      "page_text": ""
+    },
+    {
+      "id": "lens-18",
+      "title": "2018 Panini Prizm #280 RC Luka Doncic Value null ...",
+      "snippet": "",
+      "url": "https://collectibles.com/basketball-cards/ci-2018-panini-prizm-rc-280-luka-doncic?catalog_item_variation_id=9418569",
+      "image_url": "https://images.getcardbase.com/v84rgqjk7px17mqx09l0pkvehsv3",
+      "page_text": ""
+    },
+    {
+      "id": "lens-19",
+      "title": "Amazon.com: Luka Doncic 2018-19 Panini Prizm Rookie Card ...",
+      "snippet": "",
+      "url": "https://www.amazon.com/Doncic-2018-19-Panini-Prizm-Rookie/dp/B0CQRZJLYW",
+      "image_url": "https://m.media-amazon.com/images/I/61-wbPSp+7L._UF350,350_QL80_.jpg",
+      "page_text": ""
+    },
+    {
+      "id": "lens-20",
+      "title": "Curious why this luka doncic prizm base rookie is so ...",
+      "snippet": "",
+      "url": "https://www.reddit.com/r/basketballcards/comments/15boji3/curious_why_this_luka_doncic_prizm_base_rookie_is/",
+      "image_url": "https://preview.redd.it/curious-why-this-luka-doncic-prizm-base-rookie-is-so-v0-kuqn40s38neb1.jpg?width=1080&crop=smart&auto=webp&s=0683a2bc1ddd11f5baa588f0dd26606d87c3c474",
+      "page_text": ""
+    }
+  ]
+}

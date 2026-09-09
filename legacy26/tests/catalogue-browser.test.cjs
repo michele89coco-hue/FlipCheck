@@ -26,6 +26,7 @@ before(async()=>{
    const body=JSON.parse(route.request().postData());api.push(body);const kind=body.text.format.name;events.push({kind:'api',stage:kind});
    if(options.hold&&kind==='flipcheck_identification')await new Promise(r=>release=r);
    if(options.httpError&&kind==='flipcheck_identification')return route.fulfill({status:401,json:{error:{message:'Offline unauthorized'}}}).catch(()=>{});
+   if(options.truncatedComparison&&kind==='flipcheck_lens_image_comparison'&&stages().filter(s=>s===kind).length===1)return route.fulfill({json:{status:'incomplete',incomplete_details:{reason:'max_output_tokens'},output:[],usage:{input_tokens:350,output_tokens:2000}}});
    if(options.incomplete&&kind==='flipcheck_identification'&&api.length===1)return route.fulfill({json:{status:'incomplete',incomplete_details:{reason:'max_output_tokens'},output:[{type:'message',content:[{type:'output_text',text:'{'}]}],usage:{input_tokens:350,output_tokens:150}}});
    let payload=kind==='flipcheck_identification'?(options.packet||d.vision):kind==='flipcheck_pokemon_identity_bands'?{observations:options.bandObservations||[],features:options.bandFeatures||[]}:kind==='flipcheck_evidence_detail'?{details:options.details||[]} :kind==='flipcheck_lens_image_comparison'?{original_readings:options.lensOriginalReadings||[],comparisons:(options.lensComparisonReplies?.[stages().filter(s=>s==='flipcheck_lens_image_comparison').length-1]||options.lensComparisons||[])}:kind==='flipcheck_catalogue_comparison'?{comparisons:options.coreComparisons||[]}:kind==='flipcheck_variant_comparison'?{comparisons:options.comparisonReplies?.[stages().filter(s=>s==='flipcheck_variant_comparison').length-1]||options.comparisons||[]}:kind==='flipcheck_surface_inspection'?(options.surfaceInspections?.[stages().filter(s=>s==='flipcheck_surface_inspection').length-1]||options.surfaceInspection||{surfaces:[],serial_presence:'unclear',serial:{text:'',certainty:'uncertain',evidence_found:false,image_index:1}}): {entries:options.catalogueEntries||[]};
    if(kind==='flipcheck_lens_image_comparison'&&options.lensResponse)payload=options.lensResponse(body);
@@ -249,7 +250,7 @@ test('204: Mewtwo reuses the downloaded PriceCharting image in the complete prod
 for(const failure of ['timeout','empty_results','quota_exhausted'])test('205 Lens '+failure+' continues through OCR and targeted web',async()=>{
  await reset('politoed',{lens:true,lensReply:{state:failure,providerCalls:failure==='quota_exhausted'?0:1,accountCalls:1,estimatedUsd:.004,billingUnknown:failure==='timeout',candidates:[]},bandObservations:politoedKeys204});
  const out=await scan();assert.equal(out.identification.market_ready,true);assert.equal(out.identificationPipeline.state,failure);assert.equal(native.filter(x=>x.action==='lens').length,1);
- const trace=events.filter(x=>['native','api'].includes(x.kind)).map(x=>x.action||x.stage);assert.ok(trace.indexOf('lens')<trace.indexOf('ocr'));assert.ok(trace.indexOf('ocr')<trace.indexOf('flipcheck_identification'));assert.ok(trace.indexOf('flipcheck_catalogue_search')>trace.indexOf('lens'));
+ const trace=events.filter(x=>['native','api'].includes(x.kind)).map(x=>x.action||x.stage);assert.ok(trace.indexOf('flipcheck_identification')<trace.indexOf('lens'));assert.ok(trace.indexOf('lens')<trace.indexOf('ocr'));assert.ok(trace.indexOf('flipcheck_catalogue_search')>trace.indexOf('lens'));
  assert.ok(out.identificationPipeline.fallbacks.some(x=>x.stage==='targeted_web'));assert.ok(out.visualAssistance.budget.spentOrReservedUsd<=.03);assert.ok(events.find(x=>x.kind==='end').snapshot.identificationPipeline);assert.doesNotMatch(JSON.stringify(out),/access-testing-123456/);
 });
 test('205 recorded Lens candidates cannot override incompatible physical Politoed number',async()=>{
@@ -324,4 +325,25 @@ test('210 recorded first Lens match closes without extra comparison or paid web'
  const f=require('./fixtures/lens-209-first-match.json');
  await reset('politoed',{lens:true,packet:f.vision,lensCandidates:[f.reference],lensComparisons:f.reply.comparisons,lensOriginalReadings:f.reply.original_readings,noOcr:true,mutate(d){d.pages=[];}});
  const out=await scan();assert.equal(out.identification.market_ready,true,JSON.stringify(out.identification.missing_information));assert.equal(out.identification.catalogue_release_year,null);assert.equal(out.identification.printed_year,'2024');assert.equal(out.identification.language,'zh-hans');assert.equal(stages().filter(x=>x==='flipcheck_lens_image_comparison').length,1);assert.equal(api.filter(x=>x.tools?.some(t=>t.type==='web_search')).length,0);assert.equal(out.identificationPipeline.visualComparison.stopReason,'verified_identity');
+});
+
+
+test('211 complete slab with Lens enabled uses both originals in one Vision and skips Lens',async()=>{
+ await reset('psa',{lens:true,photoCount:2});const out=await scan();assert.equal(out.identification.market_ready,true);assert.equal(native.filter(x=>x.action==='lens'||x.action==='lens_config').length,0);assert.deepEqual(stages(),['flipcheck_identification']);assert.equal(api[0].input[0].content.filter(x=>x.type==='input_image').length,2);assert.equal(out.visualAssistance.budget.entries.filter(e=>e.kind==='lens').length,0);
+});
+test('211 two original photos use one Lens collage after one initial Vision',async()=>{
+ await reset('topps',{lens:true,photoCount:2,lensReply:{state:'empty_results',providerCalls:1,estimatedUsd:.004,billingUnknown:false,candidates:[]}});const out=await scan();assert.equal(native.filter(x=>x.action==='lens').length,1);assert.equal(out.identificationPipeline.image.imageCount,2);assert.deepEqual(out.identificationPipeline.image.imageIndices,[1,2]);assert.equal(api[0].input[0].content.filter(x=>x.type==='input_image').length,2);assert.ok(events.findIndex(x=>x.stage==='flipcheck_identification')<events.findIndex(x=>x.action==='lens'));
+});
+test('211 recorded incomplete slab recovers card identity without cert or serial invention',async()=>{
+ const slab=require('./fixtures/lens-211-slab.json'),f=require('./fixtures/lens-209-first-match.json');
+ await reset('politoed',{lens:true,packet:slab.vision,lensCandidates:[f.reference],lensComparisons:f.reply.comparisons,lensOriginalReadings:f.reply.original_readings,noOcr:true,mutate(d){d.pages=[];}});
+ const out=await scan();assert.equal(out.visualAssistance.route,'slab_card_recovery');assert.equal(native.filter(x=>x.action==='lens').length,1);assert.equal(out.identification.market_ready,true,JSON.stringify(out.identification));assert.equal(out.identification.slab_verification.certificate_verified,false);assert.equal(out.identification.physical_serial,null);assert.equal(out.identification.grading.certificate,'8658437093');
+});
+for(const name of ['luffy','doncic'])test('211 recorded '+name+' comparison closes in production without extra paid discovery',async()=>{
+ const f=structuredClone(require('./fixtures/lens-211-'+name+'.json')),b=name==='luffy'?f.batches.at(-1):f.batches[0],c=b.reply.comparisons.find(c=>c.reference_id===(name==='luffy'?'lens-13':'lens-1')),ref=f.references.find(r=>r.id===c.reference_id);c.reference_id='lens-1';
+ await reset('politoed',{lens:true,packet:f.vision,lensCandidates:[ref],lensComparisons:[c],lensOriginalReadings:b.reply.original_readings,noOcr:true,mutate(d){d.pages=ref.page_text?[{url:ref.url,title:ref.title,text:ref.page_text}]:[];}});
+ const out=await scan();assert.equal(out.identification.market_ready,true,JSON.stringify(out.identification));assert.equal(stages().filter(s=>s==='flipcheck_lens_image_comparison').length,1);assert.equal(stages().filter(s=>s==='flipcheck_catalogue_search').length,0);if(name==='doncic'){assert.equal(out.identification.physical_card_number,null);assert.doesNotMatch(out.identification.title,/ENG|Lingua/);}else assert.doesNotMatch(out.identification.title,/Leader/i);
+});
+test('211 truncated comparison retries one candidate within the same budget',async()=>{
+ const f=require('./fixtures/lens-209-first-match.json');await reset('politoed',{lens:true,packet:f.vision,lensCandidates:[f.reference],lensComparisons:f.reply.comparisons,lensOriginalReadings:f.reply.original_readings,truncatedComparison:true,noOcr:true,mutate(d){d.pages=[];}});const out=await scan();assert.equal(out.identification.market_ready,true);assert.equal(out.identificationPipeline.visualComparison.recovery,'retry_single_candidate');assert.equal(stages().filter(s=>s==='flipcheck_lens_image_comparison').length,2);assert.ok(out.visualAssistance.budget.spentOrReservedUsd<=.03);
 });

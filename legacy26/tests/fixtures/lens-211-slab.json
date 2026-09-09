@@ -1,0 +1,518 @@
+{
+  "vision": {
+    "domain": "pokemon",
+    "kind": "card",
+    "category": "Japanese Pokémon card in slab",
+    "language": "ja",
+    "object_unit": "single",
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.12,
+        "y": 0.37,
+        "width": 0.77,
+        "height": 0.53,
+        "certain": true
+      },
+      {
+        "image_index": 1,
+        "x": 0.1,
+        "y": 0.18,
+        "width": 0.8,
+        "height": 0.14,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "超夢V",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.25,
+          "y": 0.405,
+          "width": 0.22,
+          "height": 0.035
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "collector_number",
+        "text": "135/127",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.34,
+          "y": 0.85,
+          "width": 0.16,
+          "height": 0.025
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "rarity_text",
+        "text": "SR",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.5,
+          "y": 0.85,
+          "width": 0.04,
+          "height": 0.025
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "hp",
+        "text": "HP 220",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.68,
+          "y": 0.405,
+          "width": 0.12,
+          "height": 0.035
+        },
+        "zone": "statistics",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "超念力 50",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.35,
+          "y": 0.72,
+          "width": 0.45,
+          "height": 0.035
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "転移破壊 160",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.35,
+          "y": 0.76,
+          "width": 0.45,
+          "height": 0.035
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "copyright",
+        "text": "©2024 Pokémon/Nintendo/Creatures/GAME FREAK",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.42,
+          "y": 0.87,
+          "width": 0.3,
+          "height": 0.018
+        },
+        "zone": "footer",
+        "alternatives": [
+          "©2024 Pokémon",
+          "©2024 Pokémon/Nintendo/Creatures/GAME FREAK"
+        ]
+      },
+      {
+        "field": "language",
+        "text": "Japanese",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.25,
+          "y": 0.405,
+          "width": 0.5,
+          "height": 0.47
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "model_code",
+        "text": "2024 Pokemon JPN.",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.25,
+          "y": 0.205,
+          "width": 0.25,
+          "height": 0.02
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "serial",
+        "text": "8658437093",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.69,
+          "y": 0.285,
+          "width": 0.14,
+          "height": 0.02
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "CENTERING 9.5; CORNERS 10; EDGES 10; SURFACE 10; PRISTINE",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.25,
+          "y": 0.25,
+          "width": 0.58,
+          "height": 0.06
+        },
+        "zone": "label",
+        "alternatives": []
+      }
+    ],
+    "features": [
+      {
+        "field": "finish",
+        "value": "holo",
+        "description": "Superficie con riflessi olografici multicolore visibili",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.15,
+          "y": 0.39,
+          "width": 0.72,
+          "height": 0.48
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "layout",
+        "value": "Ritratto verticale con illustrazione a piena carta e testo giapponese",
+        "description": "Carta Pokémon V con cornice e fascia statistiche inferiore",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.12,
+          "y": 0.37,
+          "width": 0.77,
+          "height": 0.53
+        },
+        "zone": "other"
+      },
+      {
+        "field": "border_color",
+        "value": "black",
+        "description": "Bordo grafico scuro/nero della carta",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.12,
+          "y": 0.37,
+          "width": 0.77,
+          "height": 0.53
+        },
+        "zone": "border"
+      }
+    ],
+    "hypotheses": [
+      {
+        "field": "brand",
+        "value": "Pokémon"
+      },
+      {
+        "field": "family",
+        "value": "Pokémon Japanese V card"
+      }
+    ],
+    "slab_reading": {
+      "grader": "ARS",
+      "label_text": "2024 Pokemon JPN. / 超夢V / 135/127 SR / CENTERING 9.5 / CORNERS 10 / EDGES 10 / SURFACE 10 / PRISTINE / 8658437093",
+      "card_title": "超夢V",
+      "subject": "超夢V",
+      "family": "Pokémon Japanese V card",
+      "model": "135/127 SR",
+      "year": "2024",
+      "card_number": "135/127",
+      "variant": "SR",
+      "grade": "10 PRISTINE",
+      "certificate": "8658437093",
+      "match_details": "L'etichetta identifica una carta Pokémon giapponese 超夢V; il numero 135/127 SR è visibile anche sulla carta.",
+      "present": true,
+      "certainty": "clear",
+      "title_certainty": "clear",
+      "grade_certainty": "clear",
+      "certificate_certainty": "clear",
+      "secondary_text_incomplete": false,
+      "subgrades": [
+        {
+          "name": "centering",
+          "value": "9.5",
+          "certainty": "clear"
+        },
+        {
+          "name": "corners",
+          "value": "10",
+          "certainty": "clear"
+        },
+        {
+          "name": "edges",
+          "value": "10",
+          "certainty": "clear"
+        },
+        {
+          "name": "surface",
+          "value": "10",
+          "certainty": "clear"
+        }
+      ],
+      "image_index": 1,
+      "object_match": "matches"
+    },
+    "engine_version": 193,
+    "brand": "Pokémon",
+    "family": "Pokémon Japanese V card",
+    "title": "超夢V",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": {
+      "image_index": 1,
+      "x": 0.12,
+      "y": 0.37,
+      "width": 0.77,
+      "height": 0.53,
+      "certain": true
+    },
+    "photo_clues": [
+      {
+        "text": "超夢V",
+        "role": "subject",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.25,
+          "y": 0.405,
+          "width": 0.22,
+          "height": 0.035,
+          "certain": true
+        }
+      },
+      {
+        "text": "135/127",
+        "role": "collector_number",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.34,
+          "y": 0.85,
+          "width": 0.16,
+          "height": 0.025,
+          "certain": true
+        }
+      },
+      {
+        "text": "SR",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.5,
+          "y": 0.85,
+          "width": 0.04,
+          "height": 0.025,
+          "certain": true
+        }
+      },
+      {
+        "text": "HP 220",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.68,
+          "y": 0.405,
+          "width": 0.12,
+          "height": 0.035,
+          "certain": true
+        }
+      },
+      {
+        "text": "超念力 50",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.35,
+          "y": 0.72,
+          "width": 0.45,
+          "height": 0.035,
+          "certain": true
+        }
+      },
+      {
+        "text": "転移破壊 160",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.35,
+          "y": 0.76,
+          "width": 0.45,
+          "height": 0.035,
+          "certain": true
+        }
+      },
+      {
+        "text": "©2024 Pokémon/Nintendo/Creatures/GAME FREAK",
+        "role": "copyright",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.42,
+          "y": 0.87,
+          "width": 0.3,
+          "height": 0.018,
+          "certain": true
+        }
+      },
+      {
+        "text": "Japanese",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.25,
+          "y": 0.405,
+          "width": 0.5,
+          "height": 0.47,
+          "certain": true
+        }
+      },
+      {
+        "text": "2024 Pokemon JPN.",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.25,
+          "y": 0.205,
+          "width": 0.25,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "8658437093",
+        "role": "serial",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.69,
+          "y": 0.285,
+          "width": 0.14,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "CENTERING 9.5; CORNERS 10; EDGES 10; SURFACE 10; PRISTINE",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.25,
+          "y": 0.25,
+          "width": 0.58,
+          "height": 0.06,
+          "certain": true
+        }
+      }
+    ],
+    "physical_observations": [
+      {
+        "feature": "finish",
+        "text": "Superficie con riflessi olografici multicolore visibili",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Carta Pokémon V con cornice e fascia statistiche inferiore",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "color",
+        "text": "black border",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      }
+    ],
+    "pokemon_printing": {
+      "is_pokemon": true,
+      "language": "ja",
+      "set_name": "Pokémon Japanese V card",
+      "card_type": "pokemon",
+      "first_edition_stamp": "unclear",
+      "stamp_image": 0,
+      "stamp_location": "",
+      "stamp_text": "",
+      "artwork_shadow": "unclear",
+      "shadow_image": 0,
+      "shadow_location": "",
+      "copyright_text": "",
+      "copyright_image": 1
+    }
+  },
+  "crops": [],
+  "batches": [],
+  "references": []
+}
