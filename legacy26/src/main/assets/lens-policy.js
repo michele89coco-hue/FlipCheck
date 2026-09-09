@@ -49,6 +49,41 @@ function select(packet,l){return normalize(packet).map(c=>evaluate(c,l));}
 function ranked(evaluations){return evaluations.filter(c=>c.eligible).sort((a,b)=>b.matches.length-a.matches.length);}
 function fallbackReason(result){return result?.state==='ok'?'identity_not_verified':result?.state||'provider_unavailable';}
 
+// A reference can challenge a reading, but only two original-photo views can replace it.
+function reconcileOriginal208(l,readings,crops){
+ const accepted=[],rejected=[];
+ const fields=['subject','collector_number','set_code','rarity_text','copyright','language','model_code','serial'];
+ for(const row of list(readings)){
+  const crop=crops.find(c=>c.id===row.crop_id),field=row.field;
+  const full=String(row.full_text||'').trim(),detail=String(row.crop_text||'').trim();
+  const valid=crop&&crop.image_index===row.image_index&&fields.includes(field)&&row.evidence_found===true&&row.certainty==='clear'&&full&&norm(full)===norm(detail);
+  if(!valid){rejected.push({field,reason:'original_views_not_confirmed'});continue;}
+  const value=field==='collector_number'?E.number(detail):field==='language'?E.language(detail):detail;
+  if(!value||field==='collector_number'&&!E.numberParts(value)||field==='serial'&&!E.serial(value)){rejected.push({field,reason:'invalid_value'});continue;}
+  // Conflicting replies for the same field/image never win by array order.
+  if(list(readings).some(o=>o!==row&&o.field===field&&o.image_index===row.image_index&&o.evidence_found===true&&o.certainty==='clear'&&norm(o.full_text)===norm(o.crop_text)&&norm(o.crop_text)!==norm(detail))){rejected.push({field,reason:'conflicting_original_views'});continue;}
+  const old=l.active(field).filter(a=>a.image_index===row.image_index&&['vision','focused_vision','local_ocr','identity_band','lens_original_reread'].includes(a.source));
+  const atom=l.add(field,value,{source:'lens_original_reread',certainty:'clear',image_index:row.image_index,region:crop.region,raw:detail,supersedes:old.map(a=>a.id),original_views:{full,detail,crop_id:crop.id}});
+  accepted.push({field,value,observation:atom.id,superseded:old.map(a=>a.id)});
+  if(field==='subject'){
+   const suffix=v=>String(v).match(/(?:VMAX|VSTAR|GX|EX|ex|V)\s*$/)?.[0]?.trim()||'';
+   for(const lang of ['it','en']){const name=String(row.display_names?.[lang]||'').trim();if(name&&/[A-Za-z]/.test(name)&&suffix(name)===suffix(value))l.add('subject_alias',name,{source:'original_translation',level:'inferred',certainty:'uncertain',image_index:row.image_index,translated_from:atom.id,display_language:lang});}
+  }
+ }
+ l.record('original_views_reconciled',{accepted,rejected});return {accepted,rejected};
+}
+function retrievalPool208(evaluations){
+ // Text conflicts change priority, never prevent the image from being checked.
+ return [...ranked(evaluations),...evaluations.filter(c=>!c.eligible)].filter(c=>!c.reasons?.includes('different_product_type'));
+}
+function partialTitle208(result,l,titleLanguage){
+ const subject=l.pick('subject');if(!subject)return result;
+ const alias=l.values('subject_alias').find(a=>a.source==='original_translation'&&a.translated_from===subject.id&&a.display_language===titleLanguage);
+ if(!alias)return result;
+ const tag=({it:'ITA',en:'ENG',ja:'JPN',zh:'CHN','zh-hans':'CHN-S','zh-hant':'CHN-T',de:'DEU',fr:'FRA',es:'SPA',ko:'KOR'})[result.language]||result.language?.toUpperCase();
+ result.title=unique([alias.value,l.pick('set_code')?.value,result.card_identity?.number,result.card_identity?.date,result.variant,tag]).join(' · ');
+ result.identity_display=result.title;result.localized_subject=alias.value;result.display_language=titleLanguage;result.language_suffix=tag;return result;
+}
 // Build 206: only actually downloaded, compared references can become evidence.
 function visualEntries206(reply,refs,l){
  const accepted=[],rejected=[],keys=E.keyValues(l),physical=l.domain==='pokemon'?E.pokemonKeys204(l):{subject:keys.subject,number:l.pick('collector_number')?.value,year:keys.year,language:keys.language};
@@ -94,7 +129,7 @@ function visualEntries206(reply,refs,l){
  return {accepted,rejected};
 }
 function present206(result,entries,l,titleLanguage='it'){
- if(!result.card_identity||result.core_identity?.status!=='confirmed')return result;
+ if(!result.card_identity)return result;if(result.core_identity?.status!=='confirmed')return partialTitle208(result,l,titleLanguage);
  const entry=entries.find(e=>e.visual_reference_id&&E.familyKey(e.family)===E.familyKey(result.family)&&E.numbersMatch(e.number,result.card_identity.number));if(!entry)return result;
  const names=entry.display_names||{},name=String(names[titleLanguage]||names.en||entry.subject).trim(),physical=l.pick('subject')?.value||'';
  const suffix=v=>String(v).match(/(?:VMAX|VSTAR|GX|EX|ex|V)\s*$/)?.[0]?.trim()||'';
@@ -120,6 +155,6 @@ async function waitForService207(request,{now=()=>Date.now(),wait=ms=>new Promis
  }
  return {status:0,state:'service_startup_timeout',lastState:last?.state||null};
 }
-const api={waitForService207,visualEntries206,present206,normalize,attributes,evaluate,select,ranked,fallbackReason,url};
+const api={reconcileOriginal208,retrievalPool208,partialTitle208,waitForService207,visualEntries206,present206,normalize,attributes,evaluate,select,ranked,fallbackReason,url};
 if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckLens=api;
 })(typeof globalThis!=='undefined'?globalThis:this);
