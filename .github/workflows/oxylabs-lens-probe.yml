@@ -1,0 +1,38 @@
+name: Oxylabs Lens four-photo comparison
+
+on:
+  push:
+    branches: ["experiment/searchapi-lens-20260909"]
+    paths:
+      - ".github/workflows/oxylabs-lens-probe.yml"
+      - "tools/oxylabs_lens_probe.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: oxylabs-lens-probe
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Run four Lens searches using repository secrets
+        env:
+          OXYLABS_USERNAME: ${{ secrets.OXYLABS_USERNAME }}
+          OXYLABS_PASSWORD: ${{ secrets.OXYLABS_PASSWORD }}
+        run: python3 tools/oxylabs_lens_probe.py
+      - name: Save sanitized report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: oxylabs-lens-probe-${{ github.run_id }}
+          path: oxylabs-results/report.json
+          if-no-files-found: warn
+          retention-days: 7
