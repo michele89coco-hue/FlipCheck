@@ -3,19 +3,22 @@
 services:
   - type: web
     name: flipcheck-lens
-    runtime: docker
+    runtime: python
     plan: free
     region: frankfurt
     branch: codex/pokemon-number-identity
-    dockerfilePath: ./backend/visual-search/Dockerfile
-    dockerContext: ./backend/visual-search
+    buildCommand: pip install -r backend/visual-search/requirements.txt
+    startCommand: "sh -c 'export PUBLIC_ORIGIN=\"$RENDER_EXTERNAL_URL\"; exec python -u backend/visual-search/lens.py'"
     autoDeployTrigger: off
     envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.12"
+      - key: BIND_ADDRESS
+        value: "0.0.0.0"
       - key: SEARCHAPI_API_KEY
         sync: false
       - key: FLIPCHECK_ACCESS_TOKEN
         sync: false
-      - key: PUBLIC_ORIGIN
-        sync: false
       - key: SEARCHAPI_UNIT_USD
-        sync: false
+        # Budget estimate from the public Developer tariff, not verified account billing.
+        value: "0.004"

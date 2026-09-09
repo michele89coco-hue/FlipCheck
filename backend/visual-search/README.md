@@ -36,11 +36,11 @@ fallback available. Do not put the SearchApi key into the app access field.
 
 ## Render Free test deployment
 
-The repository's `render.yaml` explicitly selects one **Free** Docker web service
+The repository's `render.yaml` explicitly selects one **Free** Python web service
 in Frankfurt and disables automatic deployments to limit build usage. It adds no
 database, disk or paid resources. The authenticated config endpoint is not a public
-health check; use Render's default TCP check. Set `PUBLIC_ORIGIN` to the actual
-HTTPS URL assigned by Render, not a guessed hostname. Generate the separate app
+health check; use Render's default TCP check. The start command derives
+`PUBLIC_ORIGIN` from Render's assigned `RENDER_EXTERNAL_URL`. Generate the separate app
 access token with `python3 -c 'import secrets; print(secrets.token_urlsafe(32))'`
 and enter it only in Render's secret settings and the app.
 
@@ -50,8 +50,17 @@ does not guarantee zero overage charges on a workspace with billing enabled.
 Render's free service sleeps after 15 idle minutes and can need about a minute to
 resume. An APK config timeout during that restart intentionally falls back to OCR
 and existing web APIs. SearchApi credits and other API costs remain separate.
-See https://render.com/docs/free. Connecting this configuration is still required;
-committing it does not create a live service or provision GitHub secrets.
+See https://render.com/docs/free. Committing this configuration does not provision
+GitHub secrets. The Dockerfile remains available for other container hosts.
+
+On 2026-09-09, service `srv-dagmg50u01pc738hokj0` was created in the authorized
+workspace using the native Python runtime and Free instance plan. Its URL is
+https://flipcheck-lens.onrender.com. The first deploy became live and the
+authenticated `/v1/lens/config` returned HTTP 200. SearchApi activation still
+requires `SEARCHAPI_API_KEY` to be entered in Render's Environment settings.
+`SEARCHAPI_UNIT_USD=0.004` is a budget estimate from the public Developer price
+($40/10,000 searches at https://www.searchapi.io/pricing), not a verified account
+tariff. The configured scan cap remains unchanged. No live Lens search was run.
 
 ## Image lifecycle and limits
 
