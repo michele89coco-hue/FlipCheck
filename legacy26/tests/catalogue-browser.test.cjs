@@ -319,3 +319,9 @@ test('209 all 20 candidate images are OCRed even when visual budget stops before
  await reset('politoed',{lens:true,packet:candidatePacket209(),lensCandidates:Array.from({length:20},(_,i)=>({title:'Politoed Skyridge',url:'https://example.com/p'+i,image_url:'https://example.com/p'+i+'.jpg'})),mutate(d){d.pages=[];d.photoOcr=[];},lensResponse(body){return {original_readings:[],comparisons:comparedRefs209(body).map(r=>({reference_id:r.reference_id,match:false,ambiguous:true,conflicts:['unreadable'],identity:{}}))};}});
  const out=await scan(),v=out.identificationPipeline.visualComparison;assert.equal(v.downloadedCount,20);assert.equal(v.ocrCount,20);assert.equal(out.identification.market_ready,false);assert.equal(v.stopReason,'budget_or_call_limit');assert.ok(v.remainingIds.length>0);assert.ok(out.visualAssistance.budget.spentOrReservedUsd<=.03);
 });
+
+test('210 recorded first Lens match closes without extra comparison or paid web',async()=>{
+ const f=require('./fixtures/lens-209-first-match.json');
+ await reset('politoed',{lens:true,packet:f.vision,lensCandidates:[f.reference],lensComparisons:f.reply.comparisons,lensOriginalReadings:f.reply.original_readings,noOcr:true,mutate(d){d.pages=[];}});
+ const out=await scan();assert.equal(out.identification.market_ready,true,JSON.stringify(out.identification.missing_information));assert.equal(out.identification.catalogue_release_year,null);assert.equal(out.identification.printed_year,'2024');assert.equal(out.identification.language,'zh-hans');assert.equal(stages().filter(x=>x==='flipcheck_lens_image_comparison').length,1);assert.equal(api.filter(x=>x.tools?.some(t=>t.type==='web_search')).length,0);assert.equal(out.identificationPipeline.visualComparison.stopReason,'verified_identity');
+});

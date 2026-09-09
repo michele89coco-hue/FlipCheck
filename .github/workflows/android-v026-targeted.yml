@@ -1,7 +1,7 @@
 name: FlipCheck 26 targeted fixes
 on:
   push:
-    branches: [codex/v0262-google-visual, codex/v0262-evidence-recovery-177, codex/v0262-background-quality-178, codex/v0262-photo-evidence-179, codex/v0262-key-evidence-180, codex/v0262-evidence-181, codex/card-box-closure-182, codex/universal-key-closure-183, codex/format-serial-closure-184, codex/checklist-slab-serial-185, codex/checklist-evidence-repair-186, codex/slab-alias-checklist-187, codex/evidence-priority-188, codex/release-evidence-189, codex/release-ocr-190, codex/identity-final-191, codex/identity-final-192, codex/catalogue-engine-193, codex/catalogue-language-separation, codex/state-fixes-195, codex/card-recognition-196, codex/diagnostic-export-197, codex/catalogue-resolution-198, codex/physical-details-199, codex/identity-completion-200, codex/verified-identity-201, codex/recognition-202, codex/pokemon-number-identity, codex/image-primary-206, codex/lens-startup-207, codex/image-recovery-208, codex/ocr-candidates-209]
+    branches: [codex/v0262-google-visual, codex/v0262-evidence-recovery-177, codex/v0262-background-quality-178, codex/v0262-photo-evidence-179, codex/v0262-key-evidence-180, codex/v0262-evidence-181, codex/card-box-closure-182, codex/universal-key-closure-183, codex/format-serial-closure-184, codex/checklist-slab-serial-185, codex/checklist-evidence-repair-186, codex/slab-alias-checklist-187, codex/evidence-priority-188, codex/release-evidence-189, codex/release-ocr-190, codex/identity-final-191, codex/identity-final-192, codex/catalogue-engine-193, codex/catalogue-language-separation, codex/state-fixes-195, codex/card-recognition-196, codex/diagnostic-export-197, codex/catalogue-resolution-198, codex/physical-details-199, codex/identity-completion-200, codex/verified-identity-201, codex/recognition-202, codex/pokemon-number-identity, codex/image-primary-206, codex/lens-startup-207, codex/image-recovery-208, codex/ocr-candidates-209, codex/field-evidence-210]
   workflow_dispatch:
 permissions:
   contents: read
@@ -22,7 +22,7 @@ jobs:
       - name: SearchApi server privacy and failure checks without live API
         run: python3 -m unittest discover -s backend/visual-search -p 'test*.py'
       - name: Targeted policy checks without live API
-        run: node --test legacy26/tests/editions.test.cjs legacy26/tests/visual-policy.test.cjs legacy26/tests/identity-repair.test.cjs legacy26/tests/evidence-regression.test.cjs legacy26/tests/evidence-priority.test.cjs legacy26/tests/card-keys.test.cjs legacy26/tests/evidence-closure.test.cjs legacy26/tests/universal-closure.test.cjs legacy26/tests/format-serial.test.cjs legacy26/tests/checklist-slab.test.cjs legacy26/tests/real-evidence.test.cjs legacy26/tests/priority-closure.test.cjs legacy26/tests/identity-release.test.cjs legacy26/tests/ocr-keys-release.test.cjs legacy26/tests/reference-release.test.cjs legacy26/tests/slab-identity-191.test.cjs legacy26/tests/image-evidence-192.test.cjs legacy26/tests/catalogue-engine.test.cjs legacy26/tests/catalogue-196.test.cjs legacy26/tests/catalogue-198.test.cjs legacy26/tests/catalogue-199.test.cjs legacy26/tests/catalogue-200.test.cjs legacy26/tests/catalogue-201.test.cjs legacy26/tests/catalogue-202.test.cjs legacy26/tests/pokemon-number-identity.test.cjs legacy26/tests/pokemon-photo-keys-204.test.cjs legacy26/tests/lens-205.test.cjs legacy26/tests/lens-206.test.cjs legacy26/tests/lens-207.test.cjs legacy26/tests/lens-208.test.cjs legacy26/tests/lens-209.test.cjs
+        run: node --test legacy26/tests/editions.test.cjs legacy26/tests/visual-policy.test.cjs legacy26/tests/identity-repair.test.cjs legacy26/tests/evidence-regression.test.cjs legacy26/tests/evidence-priority.test.cjs legacy26/tests/card-keys.test.cjs legacy26/tests/evidence-closure.test.cjs legacy26/tests/universal-closure.test.cjs legacy26/tests/format-serial.test.cjs legacy26/tests/checklist-slab.test.cjs legacy26/tests/real-evidence.test.cjs legacy26/tests/priority-closure.test.cjs legacy26/tests/identity-release.test.cjs legacy26/tests/ocr-keys-release.test.cjs legacy26/tests/reference-release.test.cjs legacy26/tests/slab-identity-191.test.cjs legacy26/tests/image-evidence-192.test.cjs legacy26/tests/catalogue-engine.test.cjs legacy26/tests/catalogue-196.test.cjs legacy26/tests/catalogue-198.test.cjs legacy26/tests/catalogue-199.test.cjs legacy26/tests/catalogue-200.test.cjs legacy26/tests/catalogue-201.test.cjs legacy26/tests/catalogue-202.test.cjs legacy26/tests/pokemon-number-identity.test.cjs legacy26/tests/pokemon-photo-keys-204.test.cjs legacy26/tests/lens-205.test.cjs legacy26/tests/lens-206.test.cjs legacy26/tests/lens-207.test.cjs legacy26/tests/lens-208.test.cjs legacy26/tests/lens-209.test.cjs legacy26/tests/lens-210.test.cjs
       - name: Browser integration without live API
         run: |
           npm install --prefix /tmp/flipcheck26-tests playwright@1.62.1 --no-audit --no-fund
@@ -48,12 +48,12 @@ jobs:
         run: |
           ./gradlew :legacy26:assembleRelease :legacy26:assembleReleaseAndroidTest --no-daemon --console=plain
           mkdir -p artifact
-          cp legacy26/build/outputs/apk/release/legacy26-release.apk artifact/FlipCheck-v0.32.0-OcrCandidates-209.apk
-          sha256sum artifact/FlipCheck-v0.32.0-OcrCandidates-209.apk > artifact/FlipCheck-v0.32.0-OcrCandidates-209.sha256
-          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose --print-certs artifact/FlipCheck-v0.32.0-OcrCandidates-209.apk > artifact/apksigner-report.txt
+          cp legacy26/build/outputs/apk/release/legacy26-release.apk artifact/FlipCheck-v0.32.1-FieldEvidence-210.apk
+          sha256sum artifact/FlipCheck-v0.32.1-FieldEvidence-210.apk > artifact/FlipCheck-v0.32.1-FieldEvidence-210.sha256
+          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose --print-certs artifact/FlipCheck-v0.32.1-FieldEvidence-210.apk > artifact/apksigner-report.txt
           grep -q 'Signer #1 certificate SHA-256 digest: d4d02478ea31cb6bd83228047e9accd7dfb191ed991a4c8e8c06a228e54614c7' artifact/apksigner-report.txt
-          "$ANDROID_HOME/build-tools/36.0.0/aapt" dump badging artifact/FlipCheck-v0.32.0-OcrCandidates-209.apk > artifact/apk-analyzer-report.txt
-          grep -q "package: name='com.flipcheck.beta.legacy26fix' versionCode='209' versionName='0.32.0-ocr-candidates'" artifact/apk-analyzer-report.txt
+          "$ANDROID_HOME/build-tools/36.0.0/aapt" dump badging artifact/FlipCheck-v0.32.1-FieldEvidence-210.apk > artifact/apk-analyzer-report.txt
+          grep -q "package: name='com.flipcheck.beta.legacy26fix' versionCode='210' versionName='0.32.1-field-evidence'" artifact/apk-analyzer-report.txt
           if grep -q 'application-debuggable' artifact/apk-analyzer-report.txt; then exit 1; fi
           cp /tmp/flipcheck26-printing.png artifact/browser-printing.png
       - name: Enable emulator acceleration
