@@ -1,0 +1,67 @@
+name: Oxylabs Lens retry failed photos
+
+on:
+  push:
+    branches: ["experiment/searchapi-lens-20260909"]
+    paths:
+      - ".github/workflows/oxylabs-lens-retry.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: oxylabs-lens-probe
+  cancel-in-progress: false
+
+jobs:
+  retry:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Retry only the three photos that returned provider status 613
+        env:
+          OXYLABS_USERNAME: ${{ secrets.OXYLABS_USERNAME }}
+          OXYLABS_PASSWORD: ${{ secrets.OXYLABS_PASSWORD }}
+        run: |
+          python3 - <<'PY'
+          import json
+          import sys
+          sys.path.insert(0, "tools")
+          import oxylabs_lens_probe as probe
+
+          failed_ids = {"vileplume", "topps", "philips"}
+          probe.CASES = [case for case in probe.CASES if case[0] in failed_ids]
+          assert len(probe.CASES) == 3
+
+          def compact(value):
+              if isinstance(value, str) and value.startswith("data:image/"):
+                  return "[embedded image omitted from logs]"
+              if isinstance(value, list):
+                  return [compact(item) for item in value]
+              if isinstance(value, dict):
+                  return {key: compact(item) for key, item in value.items()}
+              return value
+
+          def log_output(marker, value):
+              print(marker + " " + json.dumps(compact(probe.sanitize(value))), flush=True)
+
+          probe.output = log_output
+          log_output("OXYLABS_RETRY", {
+              "initial_run": "34352758523",
+              "reason": "One repeat of each provider-613 failure, with identical request parameters.",
+              "maximum_search_requests": 3
+          })
+          sys.exit(probe.main())
+          PY
+      - name: Save sanitized retry report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: oxylabs-lens-retry-${{ github.run_id }}
+          path: oxylabs-results/report.json
+          if-no-files-found: warn
+          retention-days: 7
