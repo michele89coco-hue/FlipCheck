@@ -56,6 +56,22 @@ function candidateFacts209(text){
  const labelled=unique([...t.matchAll(/(?:#|\bNo\.?\s*)([A-Z]*\d{1,4})\b/gi)].map(m=>E.number(m[1])));
  return {codes,fractions,labelled,years:unique(t.match(/\b(?:19|20)\d{2}\b/g)||[])};
 }
+// Choose a front from physical observations only; never from marketplace metadata.
+function frontPlan213(reading,count){
+ const observations=reading.observations||[],features=reading.features||[],regions=reading.object_regions||[];
+ const views=Array.from({length:count},(_,i)=>{const image_index=i+1,obs=observations.filter(o=>o.image_index===image_index&&o.certainty==='clear');
+  const front=obs.filter(o=>o.zone==='front').length*3+features.filter(f=>f.image_index===image_index&&f.certainty==='clear'&&['artwork','border'].includes(f.zone)).length*2;
+  const back=obs.filter(o=>o.zone==='back').length*3;
+  return {image_index,score:front-back,front,back};}).sort((a,b)=>b.score-a.score||a.image_index-b.image_index);
+ const best=views[0],r=regions.find(r=>r?.image_index===best?.image_index&&r.certain&&r.width>0&&r.height>0);
+ return {image_index:best?.image_index||1,region:r||null,reason:best?.front?'physical_front_evidence':'first_view_fallback',views};
+}
+function referenceSupport213(c,ref){
+ if(!ref?.image_data)return null;
+ const features=list(c.features).filter(f=>f.agrees===true&&f.certainty==='clear'&&f.original&&f.reference);
+ if(!features.some(f=>['artwork','layout','shape'].includes(f.field)))return null;
+ return {reference_id:ref.id,source:ref.url,original_image_index:c.original_image_index||null,scope:'partial_visual_support',identity_proof:false,features,reference_reading:c.reference_reading||{},conflicts:list(c.conflicts)};
+}
 function rankOcr209(refs,l){
  const keys=E.keyValues(l),physical=E.number(l.pick('collector_number')?.value||''),setCodes=keys.setCodes.map(x=>x.replace(/\s/g,'').toUpperCase());
  return refs.map((ref,index)=>{
@@ -64,7 +80,7 @@ function rankOcr209(refs,l){
   if(physical&&ids.length){if(ids.some(x=>E.numbersMatch(x,physical))){score+=100;reasons.push('identifier_agrees');}else{score-=80;reasons.push('identifier_differs');}}
   if(setCodes.length&&facts.codes.some(x=>setCodes.includes(x))){score+=60;reasons.push('set_agrees');}
   if(keys.year&&facts.years.includes(keys.year))score+=8;
-  if(keys.subject&&norm([ref.title,ref.ocr?.text].join(' ')).includes(norm(keys.subject)))score+=5;
+  if(keys.subject&&norm([ref.title,ref.ocr?.text].join(' ')).includes(norm(keys.subject)))score+=35;
   const model=l.pick('model_code')?.value||l.pick('sku')?.value;if(model&&norm([ref.title,ref.ocr?.text,ref.page_text].join(' ')).includes(norm(model))){score+=100;reasons.push('model_agrees');}
   // Unknown/unreadable remains eligible; language never filters discovery.
   return {...ref,ocrRank:{score,reasons,facts,index}};
@@ -113,11 +129,12 @@ function partialTitle208(result,l,titleLanguage){
 }
 // Build 206: only actually downloaded, compared references can become evidence.
 function visualEntries206(reply,refs,l){
- const accepted=[],rejected=[],keys=E.keyValues(l),physical=l.domain==='pokemon'?E.pokemonKeys204(l):{subject:keys.subject,number:l.pick('collector_number')?.value,year:keys.year,language:keys.language};
+ const accepted=[],rejected=[],support=[],keys=E.keyValues(l),physical=l.domain==='pokemon'?E.pokemonKeys204(l):{subject:keys.subject,number:l.pick('collector_number')?.value,year:keys.year,language:keys.language};
  const seen=new Set();
  for(const c of list(reply?.comparisons)){
   const ref=refs.find(r=>r.id===c.reference_id),e={...(c.identity||{})},reasons=[];
   const sports=l.domain==='sports';
+  const partial=referenceSupport213(c,ref);if(partial)support.push(partial);
   if(!ref||!ref.image_data||seen.has(c.reference_id)){rejected.push({id:c.reference_id,reasons:['unknown_or_duplicate_reference']});continue;}seen.add(c.reference_id);
   if(c.match!==true||c.ambiguous!==false||c.title_matches_image!==true||list(c.conflicts).length)reasons.push('unverified_image');
   if(c.original_image_index!==undefined&&(!Number.isInteger(c.original_image_index)||c.original_image_index<1||c.original_image_index>(l.base.uploaded_image_count||3)))reasons.push('invalid_original_image');
@@ -128,6 +145,7 @@ function visualEntries206(reply,refs,l){
   const title=(ref.title||'')+' '+(ref.snippet||'')+' '+(ref.page_text||'');
   // Validate each value against actual supplied text, never an ellipsis invented in a quote.
   const groundedField=field=>{const value=norm(e[field]);return !!value&&(' '+norm(title)+' ').includes(' '+value+' ');};
+  if(l.domain==='onepiece'&&!groundedField('family')&&/\bone piece\b/.test(norm(title))&&/^one piece(?: card game| promo)?$/.test(norm(e.family)))e.family='One Piece';
   const fieldProof={};
   for(const field of ['subject','family']){if(!groundedField(field))reasons.push('ungrounded_'+field);else fieldProof[field]={value:e[field],origin:'reference_text',url:ref.page_url||ref.url};}
   const releaseYear=groundedField('year')?E.season(e.year):'';
@@ -136,7 +154,7 @@ function visualEntries206(reply,refs,l){
   const suffix208=v=>String(v||'').match(/(?:VMAX|VSTAR|GX|EX|ex|V)\s*$/)?.[0]?.trim()||'';
   if(suffix208(original.subject)&&suffix208(reference.subject)&&suffix208(original.subject)!==suffix208(reference.subject))reasons.push('different_reference_subject_suffix');
   if(physical.subject&&(!original.subject||!E.subjectMatch(original.subject,physical.subject)))reasons.push('different_original_subject');
-  if(physical.number&&(!original.number||!E.numbersMatch(original.number,physical.number)))reasons.push('different_original_number');
+  if(physical.number&&((!original.number&&!(sports&&c.original_view==='front'))||original.number&&!E.numbersMatch(original.number,physical.number)))reasons.push('different_original_number');
   if(physical.year&&original.year&&!(sports?yearReading212(original.year,physical.year):E.season(original.year)===physical.year))reasons.push('different_original_year');
   if(physical.year&&e.year&&physical.year!==E.season(e.year)&&!(l.domain==='pokemon'&&releaseYear))reasons.push('different_year');
   if(!sports&&physical.language&&reference.language&&!E.printingLanguageCompatible201(physical.language,reference.language))reasons.push('different_reference_language');
@@ -152,7 +170,7 @@ function visualEntries206(reply,refs,l){
    if(!physical.number&&!(sports&&sourceNumber))reasons.push('original_identifier_unresolved');
    if(!reference.subject)reasons.push('unreadable_reference_subject');
   }
-  if(e.subset&&!groundedField('subset')&&!(sports&&norm(e.proof?.subset)===norm(e.subset)+'s'&&(' '+norm(title)+' ').includes(' '+norm(e.proof.subset)+' ')))reasons.push('ungrounded_subset');
+  if(e.subset&&!groundedField('subset')&&!(sports&&norm(e.proof?.subset)===norm(e.subset)+'s'&&(' '+norm(title)+' ').includes(' '+norm(e.proof.subset)+' '))){e.subset='';}
   if(e.subset&&groundedField('subset'))fieldProof.subset={value:e.subset,origin:'reference_text',url:ref.page_url||ref.url};
   let objectVerified=false;
   if(['generic','sealed'].includes(l.domain)){
@@ -188,7 +206,7 @@ function visualEntries206(reply,refs,l){
   l.add('catalogue_core',E.coreKey(entry),{source:'lens_image_comparison',certainty:'clear',image_index:1,reference_source:ref.url,reference_id:ref.id});
   accepted.push(entry);
  }
- return {accepted,rejected};
+ return {accepted,rejected,support};
 }
 function present206(result,entries,l,titleLanguage='it'){
  if(!result.card_identity)return result;if(result.core_identity?.status!=='confirmed')return partialTitle208(result,l,titleLanguage);
@@ -217,6 +235,6 @@ async function waitForService207(request,{now=()=>Date.now(),wait=ms=>new Promis
  }
  return {status:0,state:'service_startup_timeout',lastState:last?.state||null};
 }
-const api={appearance212,yearReading212,candidateFacts209,rankOcr209,reconcileOriginal208,retrievalPool208,partialTitle208,waitForService207,visualEntries206,present206,normalize,attributes,evaluate,select,ranked,fallbackReason,url};
+const api={frontPlan213,referenceSupport213,appearance212,yearReading212,candidateFacts209,rankOcr209,reconcileOriginal208,retrievalPool208,partialTitle208,waitForService207,visualEntries206,present206,normalize,attributes,evaluate,select,ranked,fallbackReason,url};
 if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckLens=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

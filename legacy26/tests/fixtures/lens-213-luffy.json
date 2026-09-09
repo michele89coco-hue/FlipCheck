@@ -1,0 +1,1567 @@
+{
+  "vision": {
+    "domain": "onepiece",
+    "kind": "card",
+    "category": "promo card",
+    "language": "en",
+    "object_unit": "single",
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.101,
+        "y": 0.226,
+        "width": 0.799,
+        "height": 0.529,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "Monkey.D.Luffy",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.245,
+          "y": 0.704,
+          "width": 0.478,
+          "height": 0.039
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "collector_number",
+        "text": "P-110",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.818,
+          "y": 0.763,
+          "width": 0.036,
+          "height": 0.013
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "attack",
+        "text": "9000",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.642,
+          "y": 0.252,
+          "width": 0.115,
+          "height": 0.037
+        },
+        "zone": "statistics",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "CHARACTER",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.412,
+          "y": 0.685,
+          "width": 0.139,
+          "height": 0.015
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "Counter +1000",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.132,
+          "y": 0.433,
+          "width": 0.036,
+          "height": 0.121
+        },
+        "zone": "statistics",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "4th Anniversary",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.128,
+          "y": 0.634,
+          "width": 0.096,
+          "height": 0.055
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "Elbaph/The Four Emperors/Straw Hat Crew",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.258,
+          "y": 0.744,
+          "width": 0.436,
+          "height": 0.018
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "copyright",
+        "text": "©Eiichiro Oda/Shueisha ©BANDAI",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.812,
+          "y": 0.594,
+          "width": 0.027,
+          "height": 0.164
+        },
+        "zone": "footer",
+        "alternatives": [
+          "©Eiichiro Oda/Shueisha/BANDAI"
+        ]
+      },
+      {
+        "field": "language",
+        "text": "English structural text visible",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.25,
+          "y": 0.704,
+          "width": 0.45,
+          "height": 0.059
+        },
+        "zone": "front",
+        "alternatives": []
+      }
+    ],
+    "features": [
+      {
+        "field": "pattern",
+        "value": "multicolored brick/stud pattern",
+        "description": "Sfondo con blocchi colorati a rilievo grafico",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.101,
+          "y": 0.226,
+          "width": 0.799,
+          "height": 0.529
+        },
+        "zone": "artwork"
+      },
+      {
+        "field": "stamp",
+        "value": "present",
+        "description": "Logo 4th Anniversary visibile",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.128,
+          "y": 0.634,
+          "width": 0.096,
+          "height": 0.055
+        },
+        "zone": "label"
+      },
+      {
+        "field": "layout",
+        "value": "ritratto, personaggio in azione, cornice multicolore",
+        "description": "Illustrazione verticale di Luffy con testo identificativo in fascia inferiore",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.101,
+          "y": 0.226,
+          "width": 0.799,
+          "height": 0.529
+        },
+        "zone": "other"
+      },
+      {
+        "field": "finish",
+        "value": "unclear",
+        "description": "La foto mostra la carta dentro una confezione; finitura non verificabile",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": null,
+        "zone": "surface"
+      }
+    ],
+    "hypotheses": [
+      {
+        "field": "family",
+        "value": "One Piece Card Game"
+      }
+    ],
+    "slab_reading": null,
+    "engine_version": 193,
+    "brand": "",
+    "family": "One Piece Card Game",
+    "title": "Monkey.D.Luffy",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": {
+      "image_index": 1,
+      "x": 0.101,
+      "y": 0.226,
+      "width": 0.799,
+      "height": 0.529,
+      "certain": true
+    },
+    "photo_clues": [
+      {
+        "text": "Monkey.D.Luffy",
+        "role": "subject",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.245,
+          "y": 0.704,
+          "width": 0.478,
+          "height": 0.039,
+          "certain": true
+        }
+      },
+      {
+        "text": "P-110",
+        "role": "collector_number",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.818,
+          "y": 0.763,
+          "width": 0.036,
+          "height": 0.013,
+          "certain": true
+        }
+      },
+      {
+        "text": "9000",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.642,
+          "y": 0.252,
+          "width": 0.115,
+          "height": 0.037,
+          "certain": true
+        }
+      },
+      {
+        "text": "CHARACTER",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.412,
+          "y": 0.685,
+          "width": 0.139,
+          "height": 0.015,
+          "certain": true
+        }
+      },
+      {
+        "text": "Counter +1000",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.132,
+          "y": 0.433,
+          "width": 0.036,
+          "height": 0.121,
+          "certain": true
+        }
+      },
+      {
+        "text": "4th Anniversary",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.128,
+          "y": 0.634,
+          "width": 0.096,
+          "height": 0.055,
+          "certain": true
+        }
+      },
+      {
+        "text": "Elbaph/The Four Emperors/Straw Hat Crew",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.258,
+          "y": 0.744,
+          "width": 0.436,
+          "height": 0.018,
+          "certain": true
+        }
+      },
+      {
+        "text": "©Eiichiro Oda/Shueisha ©BANDAI",
+        "role": "copyright",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.812,
+          "y": 0.594,
+          "width": 0.027,
+          "height": 0.164,
+          "certain": true
+        }
+      },
+      {
+        "text": "English structural text visible",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.25,
+          "y": 0.704,
+          "width": 0.45,
+          "height": 0.059,
+          "certain": true
+        }
+      }
+    ],
+    "physical_observations": [
+      {
+        "feature": "pattern",
+        "text": "Sfondo con blocchi colorati a rilievo grafico",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Logo 4th Anniversary visibile",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Illustrazione verticale di Luffy con testo identificativo in fascia inferiore",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "La foto mostra la carta dentro una confezione; finitura non verificabile",
+        "certainty": "uncertain",
+        "entity": "target",
+        "image_index": 1
+      }
+    ]
+  },
+  "batches": [
+    {
+      "ids": [
+        "lens-1",
+        "lens-3",
+        "lens-4"
+      ],
+      "reply": {
+        "original_readings": [
+          {
+            "field": "subject",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "CHARACTER Monkey.D.Luffy",
+            "crop_text": "CHARACTER Monkey.D.Luffy",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Monkey.D.Luffy",
+              "en": "Monkey.D.Luffy"
+            }
+          },
+          {
+            "field": "collector_number",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "P-110",
+            "crop_text": "P-110",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "P-110",
+              "en": "P-110"
+            }
+          },
+          {
+            "field": "copyright",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "©Eiichiro Oda/Shueisha Bandai 2025",
+            "crop_text": "©Eiichiro Oda/Shueisha Bandai 2025",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "©Eiichiro Oda/Shueisha Bandai 2025",
+              "en": "©Eiichiro Oda/Shueisha Bandai 2025"
+            }
+          }
+        ],
+        "comparisons": [
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.104,
+                "y": 0.225
+              },
+              {
+                "x": 0.899,
+                "y": 0.227
+              },
+              {
+                "x": 0.899,
+                "y": 0.752
+              },
+              {
+                "x": 0.104,
+                "y": 0.752
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.026,
+                "y": 0.022
+              },
+              {
+                "x": 0.962,
+                "y": 0.022
+              },
+              {
+                "x": 0.962,
+                "y": 0.973
+              },
+              {
+                "x": 0.026,
+                "y": 0.973
+              }
+            ],
+            "reference_id": "lens-1",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "Monkey.D.Luffy",
+              "number": "P-110",
+              "year": "2025",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "モンキー·D·ルフィ",
+              "number": "P-110",
+              "year": "",
+              "language": "giapponese"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Luffy con cappello cornuto e mantello rosso",
+                "reference": "Stessa illustrazione e posa",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "Timbro 4th Anniversary e layout inglese",
+                "reference": "Layout giapponese senza timbro visibile",
+                "agrees": false,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Monkey D. Luffy",
+              "family": "One Piece Card Game",
+              "number": "P-110",
+              "year": "2025",
+              "brand": "Bandai",
+              "subset": "One Piece Day ’25",
+              "proof": {
+                "subject": "Monkey D. Luffy Promo P-110",
+                "family": "One Piece",
+                "year": "2025",
+                "subset": "Japanese US"
+              },
+              "display_names": {
+                "it": "Monkey D. Luffy",
+                "en": "Monkey D. Luffy"
+              }
+            }
+          },
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.104,
+                "y": 0.225
+              },
+              {
+                "x": 0.899,
+                "y": 0.227
+              },
+              {
+                "x": 0.899,
+                "y": 0.752
+              },
+              {
+                "x": 0.104,
+                "y": 0.752
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.101,
+                "y": 0.264
+              },
+              {
+                "x": 0.954,
+                "y": 0.264
+              },
+              {
+                "x": 0.954,
+                "y": 0.921
+              },
+              {
+                "x": 0.101,
+                "y": 0.921
+              }
+            ],
+            "reference_id": "lens-3",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "Monkey.D.Luffy",
+              "number": "P-110",
+              "year": "2025",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "MONKEY D. LUFFY",
+              "number": "#110",
+              "year": "2025",
+              "language": "giapponese"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Luffy con stessa posa e mantello",
+                "reference": "Stessa illustrazione",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "Timbro 4th Anniversary, carta non slab",
+                "reference": "Stesso pattern, carta dentro PSA",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Monkey D. Luffy",
+              "family": "One Piece Card Game",
+              "number": "P-110",
+              "year": "2025",
+              "brand": "Bandai",
+              "subset": "Premium Card Collection – One Piece Day ’25",
+              "proof": {
+                "subject": "MONKEY D. LUFFY",
+                "family": "PCC -ONE PIECE DAY'25-",
+                "year": "2025",
+                "subset": "2025 ONE PIECE JP"
+              },
+              "display_names": {
+                "it": "Monkey D. Luffy",
+                "en": "Monkey D. Luffy"
+              }
+            }
+          },
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.104,
+                "y": 0.225
+              },
+              {
+                "x": 0.899,
+                "y": 0.227
+              },
+              {
+                "x": 0.899,
+                "y": 0.752
+              },
+              {
+                "x": 0.104,
+                "y": 0.752
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.18,
+                "y": 0.262
+              },
+              {
+                "x": 0.749,
+                "y": 0.262
+              },
+              {
+                "x": 0.749,
+                "y": 0.691
+              },
+              {
+                "x": 0.18,
+                "y": 0.691
+              }
+            ],
+            "reference_id": "lens-4",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "Monkey.D.Luffy",
+              "number": "P-110",
+              "year": "2025",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Luffy con posa e mantello corrispondenti",
+                "reference": "Stessa illustrazione visibile",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "Pattern LEGO, timbro anniversario",
+                "reference": "Pattern LEGO, carta in slab",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Monkey D. Luffy",
+              "family": "One Piece Card Game",
+              "number": "P-110",
+              "year": "2025",
+              "brand": "Bandai",
+              "subset": "Premium Card Collection – One Piece Day ’25",
+              "proof": {
+                "subject": "Monkey D Luffy P-110",
+                "family": "One Piece Card Game",
+                "year": "2025",
+                "subset": "One Piece Day 25 (JP)"
+              },
+              "display_names": {
+                "it": "Monkey D. Luffy",
+                "en": "Monkey D. Luffy"
+              }
+            }
+          }
+        ]
+      },
+      "accepted": []
+    },
+    {
+      "ids": [
+        "lens-6",
+        "lens-11",
+        "lens-13"
+      ],
+      "reply": {
+        "original_readings": [
+          {
+            "field": "subject",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "Monkey.D.Luffy",
+            "crop_text": "Monkey.D.Luffy",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Monkey.D.Luffy",
+              "en": "Monkey.D.Luffy"
+            }
+          },
+          {
+            "field": "collector_number",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "P-110",
+            "crop_text": "P-110",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "P-110",
+              "en": "P-110"
+            }
+          },
+          {
+            "field": "copyright",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "©Eiichiro Oda/Shueisha",
+            "crop_text": "©Eiichiro Oda/Shueisha",
+            "evidence_found": true,
+            "certainty": "uncertain",
+            "display_names": {
+              "it": "©Eiichiro Oda/Shueisha",
+              "en": "©Eiichiro Oda/Shueisha"
+            }
+          },
+          {
+            "field": "language",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "EN",
+            "crop_text": "EN",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "EN",
+              "en": "EN"
+            }
+          }
+        ],
+        "comparisons": [
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.101,
+                "y": 0.226
+              },
+              {
+                "x": 0.911,
+                "y": 0.226
+              },
+              {
+                "x": 0.911,
+                "y": 0.752
+              },
+              {
+                "x": 0.101,
+                "y": 0.752
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.13,
+                "y": 0.203
+              },
+              {
+                "x": 0.833,
+                "y": 0.938
+              },
+              {
+                "x": 0.833,
+                "y": 0.938
+              },
+              {
+                "x": 0.13,
+                "y": 0.203
+              }
+            ],
+            "reference_id": "lens-6",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "Monkey.D.Luffy",
+              "number": "P-110",
+              "year": "",
+              "language": "EN"
+            },
+            "reference_reading": {
+              "subject": "Monkey.D.Luffy",
+              "number": "P-110",
+              "year": "",
+              "language": "EN"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Luffy horned hat, red coat, raised fist",
+                "reference": "Same Luffy horned hat, red coat, raised fist",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "4th Anniversary stamp; English text; P-110",
+                "reference": "4th Anniversary stamp; English text; P-110",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Monkey.D.Luffy",
+              "family": "One Piece Promo",
+              "number": "P-110",
+              "year": "",
+              "brand": "One Piece",
+              "subset": "4th Anniversary",
+              "proof": {
+                "subject": "Monkey.D.Luffy",
+                "family": "One Piece Promo",
+                "year": "",
+                "subset": "4th Anniversary"
+              },
+              "display_names": {
+                "it": "Monkey.D.Luffy",
+                "en": "Monkey.D.Luffy"
+              }
+            }
+          },
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.101,
+                "y": 0.226
+              },
+              {
+                "x": 0.911,
+                "y": 0.226
+              },
+              {
+                "x": 0.911,
+                "y": 0.752
+              },
+              {
+                "x": 0.101,
+                "y": 0.752
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.134,
+                "y": 0.204
+              },
+              {
+                "x": 0.799,
+                "y": 0.204
+              },
+              {
+                "x": 0.799,
+                "y": 0.926
+              },
+              {
+                "x": 0.134,
+                "y": 0.926
+              }
+            ],
+            "reference_id": "lens-11",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "Monkey.D.Luffy",
+              "number": "P-110",
+              "year": "",
+              "language": "EN"
+            },
+            "reference_reading": {
+              "subject": "Monkey.D.Luffy",
+              "number": "P-110",
+              "year": "",
+              "language": "EN"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Identical colorful building-block background and pose",
+                "reference": "Identical colorful building-block background and pose",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "4th Anniversary stamp; English text; P-110",
+                "reference": "4th Anniversary stamp; English text; P-110",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Monkey.D.Luffy",
+              "family": "One Piece Promo",
+              "number": "P-110",
+              "year": "",
+              "brand": "One Piece",
+              "subset": "4th Anniversary",
+              "proof": {
+                "subject": "Monkey D. Luffy",
+                "family": "One Piece Promo",
+                "year": "",
+                "subset": "4th Anniversary"
+              },
+              "display_names": {
+                "it": "Monkey.D.Luffy",
+                "en": "Monkey.D.Luffy"
+              }
+            }
+          },
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.101,
+                "y": 0.226
+              },
+              {
+                "x": 0.911,
+                "y": 0.226
+              },
+              {
+                "x": 0.911,
+                "y": 0.752
+              },
+              {
+                "x": 0.101,
+                "y": 0.752
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.281,
+                "y": 0.306
+              },
+              {
+                "x": 0.727,
+                "y": 0.306
+              },
+              {
+                "x": 0.727,
+                "y": 0.934
+              },
+              {
+                "x": 0.281,
+                "y": 0.934
+              }
+            ],
+            "reference_id": "lens-13",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [
+              "Japanese One Piece Day’25 design replaces 4th Anniversary design",
+              "Different title text and configuration"
+            ],
+            "original_reading": {
+              "subject": "Monkey.D.Luffy",
+              "number": "P-110",
+              "year": "",
+              "language": "EN"
+            },
+            "reference_reading": {
+              "subject": "Monkey D. Luffy",
+              "number": "P-110",
+              "year": "",
+              "language": "Japanese"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Same character pose and general artwork",
+                "reference": "Same character pose and general artwork",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "4th Anniversary logo; English name bar",
+                "reference": "One Piece Day’25 logo; Japanese name bar",
+                "agrees": false,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "4th Anniversary, English printing",
+                "reference": "One Piece Day’25 Japanese promo",
+                "agrees": false,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Monkey D. Luffy",
+              "family": "One Piece Promo",
+              "number": "P-110",
+              "year": "2025",
+              "brand": "One Piece",
+              "subset": "One Piece Day’25",
+              "proof": {
+                "subject": "Monkey D. Luffy",
+                "family": "One Piece Promo",
+                "year": "One Piece (2025) Japanese",
+                "subset": "PC: One Piece Day’25 - P-110 Promo"
+              },
+              "display_names": {
+                "it": "Monkey.D.Luffy",
+                "en": "Monkey.D.Luffy"
+              }
+            }
+          }
+        ]
+      },
+      "accepted": []
+    },
+    {
+      "ids": [
+        "lens-7"
+      ],
+      "reply": {
+        "original_readings": [
+          {
+            "field": "subject",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "Monkey.D.Luffy",
+            "crop_text": "Monkey.D.Luffy",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Monkey.D.Luffy",
+              "en": "Monkey.D.Luffy"
+            }
+          },
+          {
+            "field": "collector_number",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "P-110",
+            "crop_text": "P-110",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "P-110",
+              "en": "P-110"
+            }
+          },
+          {
+            "field": "rarity_text",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "CHARACTER",
+            "crop_text": "CHARACTER",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "CHARACTER",
+              "en": "CHARACTER"
+            }
+          }
+        ],
+        "comparisons": [
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.102,
+                "y": 0.224
+              },
+              {
+                "x": 0.912,
+                "y": 0.224
+              },
+              {
+                "x": 0.929,
+                "y": 0.753
+              },
+              {
+                "x": 0.087,
+                "y": 0.753
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.103,
+                "y": 0.038
+              },
+              {
+                "x": 0.893,
+                "y": 0.038
+              },
+              {
+                "x": 0.893,
+                "y": 0.918
+              },
+              {
+                "x": 0.103,
+                "y": 0.918
+              }
+            ],
+            "reference_id": "lens-7",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [
+              "Lingua e layout inferiore differenti",
+              "Variante di stampa non identica"
+            ],
+            "original_reading": {
+              "subject": "Monkey.D.Luffy",
+              "number": "P-110",
+              "year": "",
+              "language": "inglese"
+            },
+            "reference_reading": {
+              "subject": "蒙奇·D·路飞",
+              "number": "P-110",
+              "year": "",
+              "language": "cinese"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Luffy con cappello cornuto, sfondo mattoncini",
+                "reference": "Stessa illustrazione e sfondo mattoncini",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Testo CHARACTER e nome inglese in barra blu",
+                "reference": "Logo ONE PIECE DAY e nome cinese",
+                "agrees": false,
+                "certainty": "clear"
+              },
+              {
+                "field": "identifier",
+                "original": "P-110",
+                "reference": "P-110 visibile",
+                "agrees": true,
+                "certainty": "uncertain"
+              }
+            ],
+            "identity": {
+              "subject": "Monkey D. Luffy",
+              "family": "One Piece Card Game",
+              "number": "P-110",
+              "year": "",
+              "brand": "Bandai",
+              "subset": "ONE PIECE DAY Vol.2",
+              "proof": {
+                "subject": "One Piece Chinese Card ONE PIECE DAY Vol.2 Luffy P-110",
+                "family": "One Piece Chinese Card",
+                "year": "",
+                "subset": "ONE PIECE DAY Vol.2"
+              },
+              "display_names": {
+                "it": "Monkey D. Luffy",
+                "en": "Monkey D. Luffy"
+              }
+            }
+          }
+        ]
+      },
+      "accepted": []
+    }
+  ],
+  "references": [
+    {
+      "id": "lens-1",
+      "title": "Monkey D. Luffy Promo P-110 One Piece Day 2025 Japanese US ...",
+      "snippet": "",
+      "url": "https://www.ebay.com/itm/287215505350",
+      "image_url": "https://i.ebayimg.com/images/g/PLEAAeSwh6hpuxt5/s-l1200.png",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "japanese",
+        "text": "ONE\nDAYD\nCHARACTER\n9000,の\nモンキー·D·ルフィ\nルバラ回皇変わらの一味",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-2",
+      "title": "Monkey.D.Luffy 2025 One Piece, gioco di carte One Piece ...",
+      "snippet": "",
+      "url": "https://stockx.com/it-it/monkeydluffy-2025-one-piece-one-piece-card-game-one-piece-day-2025-promo-card-japanese-p-110-psa-or-bgs-graded",
+      "image_url": "https://images.stockx.com/images/MonkeyDLuffy-2025-One-Piece-One-Piece-Card-Game-One-Piece-Day-2025-Promo-Card-Japanese-P-110-PSA-or-BGS-Graded.jpg?fit=fill&bg=FFFFFF&w=1200&h=857&q=60&dpr=1&trim=color&updated_at=1779096858",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "ONE\nPIEEE\nDAY\nPSA\nRRARARTBR",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-3",
+      "title": "PSA 10 Luffy P-110 Premium Card Collection ONE PIECE DAY 25 ...",
+      "snippet": "",
+      "url": "https://www.ebay.it/itm/147064053671",
+      "image_url": "https://i.ebayimg.com/images/g/nT4AAeSwLrFpVJU6/s-l1200.jpg",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "2025 ONE PIECE JP\nMONKEY D. LUFFY\nPCC -ONE PIECE DAY25-\nONE\nDAY2\nFA\n#110\nGEM MT\n10\n90006\n7\n7",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-4",
+      "title": "Monkey D Luffy P-110 One Piece Day 25 (JP) -PSA 10 – Gallery ...",
+      "snippet": "",
+      "url": "https://galleryconcept.it/products/monkey-d-luffy-p-110-one-piece-day-25-jp-psa-10",
+      "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFuqybtu36a_6pSGkYt4_3ftnDbW3Q_BRGiZPFaRqAJrxwV5Iw",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "2025 oNE PECE JP\nPGC-ONE PECE DAYv26\nRA\n#10\nGEM MT\neo22415\nPOC -OME PECE DAY26",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-5",
+      "title": "One Piece Card Game Premium Card Collection One Piece Day ...",
+      "snippet": "",
+      "url": "https://www.mangakaze.com/prodotto/one-piece-card-game-premium-card-collection-one-piece-day-2025-jap/",
+      "image_url": "https://www.mangakaze.com/wp-content/uploads/2025/09/MangaKaze-File-16.png",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "ONE\nDAYBO\n90000\nEDJb74",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-6",
+      "title": "Preços de Monkey.D.Luffy P-110 | One Piece Promo | Cartas de ...",
+      "snippet": "",
+      "url": "https://www.pricecharting.com/pt/game/one-piece-promo/monkeydluffy-p-110",
+      "image_url": "https://i.ebayimg.com/images/g/fdoAAeSwieZqmHld/s-l225.jpg",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "4\nMonkey.b.Lutty",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-7",
+      "title": "One Piece Chinese Card ONE PIECE DAY Vol.2 Luffy P-110 ...",
+      "snippet": "",
+      "url": "https://www.ebay.com/itm/389215638630",
+      "image_url": "https://i.ebayimg.com/images/g/aXkAAeSwX1dpHYrx/s-l400.jpg",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "chinese",
+        "text": "ONE\nDAY\n蒙奇·D·路飞\nCG",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-8",
+      "title": "One Piece 17: Release Event – This Sunday We just received ...",
+      "snippet": "",
+      "url": "https://www.instagram.com/p/DcUBZvRoCqs/",
+      "image_url": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSY9VklJwjBRaIB_btynXv8tKOZGBaYVAEkKfPDLfINe9T4LZf2",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "900\n9000\nMonkey.D.Lutty\n7",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-9",
+      "title": "One Piece Card Game OP17 The World's Strongest Warriors ...",
+      "snippet": "",
+      "url": "https://www.instagram.com/p/DbauordEc7Y/",
+      "image_url": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTCyKtFYY7YTg9wMm_qULARbiJBidyM3uCtAjxS-qJGN2oKPsNm",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "9000\nMonkey.D.Luty",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-10",
+      "title": "Collezione di carte premium del gioco di carte One Piece ...",
+      "snippet": "",
+      "url": "https://japondemande.com/it/products/one-piece-card-game-premium-card-collection-one-piece-day-25",
+      "image_url": "https://japondemande.com/cdn/shop/files/product_cards_one-piece_premium_one-piece-day25-2.jpg?v=1758854669&width=1445",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "GAMP\nDAYS O\nCaTACTED\n9000\nEYD• JD74\nONE",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-11",
+      "title": "One Piece Monkey D. Luffy P-110 4th Anniversary | FINN-torget",
+      "snippet": "",
+      "url": "https://www.finn.no/recommerce/forsale/item/474829965",
+      "image_url": "https://images.finncdn.no/dynamic/1600w/item/474829965/f736c171-fa4f-4308-9310-be822f818a01",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "ZcOUNTER+1000\"\n7\nJAnniversarN\nCHA RACTER\n9000\nMonkey.D.Luffy\nElbaph/The Four Emperors/Straw Hat Crew eno\nGEOS CE0/S\nBANDA) MADE IN APAN EN NOT FOR SAN\n7",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-12",
+      "title": "Preços de Monkey.D.Luffy [4th Anniversary Leader] P | One ...",
+      "snippet": "",
+      "url": "https://www.pricecharting.com/pt/game/one-piece-promo/monkeydluffy-4th-anniversary-leader-p",
+      "image_url": "https://i.ebayimg.com/images/g/OhQAAeSwjh5qlbQO/s-l225.jpg",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "7\nS000/\nMonkey.D.Lutty",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-13",
+      "title": "CGC Pristine 10 Luffy P-110 Premium Card Collection ONE ...",
+      "snippet": "",
+      "url": "https://www.ebay.it/itm/136946926338",
+      "image_url": "https://i.ebayimg.com/images/g/uwcAAeSwgbNpZthZ/s-l1200.png",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "CGC10\nDCGC\nMonkey D. Luffy\nOne Piece (2025) Japanese\nPristine PC: One Piece Day'25 - P-110\nCERTIFIED GUARANTY COMPANY\n7\nONE\n|DAY25\nPRISTE\n10\n9000 0\n7",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-14",
+      "title": "One Piece TCG Kort | Lego Luff.. | Köp från Stark Boxes på ...",
+      "snippet": "",
+      "url": "https://www.tradera.com/item/1001268/749169359/one-piece-tcg-kort-lego-luffy-p-110-op17-4th-anniversary-promo",
+      "image_url": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQYk_ED2uXn55KmL8dc1U02Na5zdovAgug59Gqn0ob7SqG6BYmM",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "Go00\nMonkey.D.Lutfy",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-15",
+      "title": "one piece\"",
+      "snippet": "",
+      "url": "https://vendora.cy/browse/9r24yv/card-games.html?condition=new&q=one%20piece",
+      "image_url": "https://bcdn.vendora.gr/0/33/2c/332c4865e217df4d5b3e477a74b17f7f754e1559.jpg?class=xl",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "cOUNTER+1000\n71\n4\nAnnversary\nCBARACIER\n9000\nMonkey.D.Luffy\nElbaph The Four Emperors/ Straw Hat Crew aaa\nVVendora",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-16",
+      "title": "Cert Verification 145117369",
+      "snippet": "",
+      "url": "https://www.psacard.com/cert/145117369",
+      "image_url": "https://d1htnxwo4o0jhw.cloudfront.net/cert/198331973/small/ym2nyhNv-EyliLzVpeyQDg.jpg",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "2025 ONE PIECE JP\nMONKEY D. LUFFY\nPCC -ONE PIECE DAY'25-\nONE\nPIEEE\nDAY23\nPA\n#110\nGEM MT\n10\n145117369\n90000",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-17",
+      "title": "Luffy st21-014 magazine promo : r/OnePieceTCGFinance",
+      "snippet": "",
+      "url": "https://www.reddit.com/r/OnePieceTCGFinance/comments/1ox1f1n/luffy_st21014_magazine_promo/",
+      "image_url": "https://preview.redd.it/luffy-st21-014-magazine-promo-v0-95or3tae891g1.jpeg?width=1080&format=pjpg&auto=webp&s=7bcc252386d3e92e8529799480254e9755ed8841",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "11:59\nX 5of 8\nS0091000CCCOCe\nONI\nSAMPIE\nDAY3O\n5GE ll\nCAATACTED\n9000\nEYD•JDA",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-18",
+      "title": "One Piece Op17 Pre Release 4th Anniversary Promo Card Set ...",
+      "snippet": "",
+      "url": "https://www.tiktok.com/discover/one-piece-op17-pre-release-4th-anniversary-promo-card-set-lego-luffy-don-pack",
+      "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFYJJ_X1KvDQLQ1aFZhK_Z_WqF7yIHpfErN0wLs64nY7A-iBNR",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "Monkey.DLutty",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-19",
+      "title": "Official sneak peak for OP-17! 👀🔥 Follow @bingeparty_ for ...",
+      "snippet": "",
+      "url": "https://www.threads.com/@bingeparty_/post/DZxhVnsoGMi/video-official-sneak-peak-for-op-follow-bingeparty-for-more-one-piece-tcg-content/",
+      "image_url": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcT6Vt0mqyuboRZ04U2aHA0j4JaKTKZmr4fVJv_qjm0FLfBjX1Pd",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "s000\nMonkey.D.Lutty\n9000",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-20",
+      "title": "未開封 ONE PIECE DAY 2025プレミアムカードコレクション - メルカリ",
+      "snippet": "",
+      "url": "https://jp.mercari.com/item/m22149154184",
+      "image_url": "https://static.mercdn.net/item/detail/orig/photos/m22149154184_3.jpg?1782693840",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "tl000\nNE\nDAY3 D\nCWABACTER\n9000",
+        "origin": "candidate_image_ocr"
+      }
+    }
+  ],
+  "crops": [
+    {
+      "id": "original-1-upper",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.08518518518518518,
+        "y": 0.21068376068376068,
+        "width": 0.8305555555555556,
+        "height": 0.1893162393162393
+      }
+    },
+    {
+      "id": "original-1-lower",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.08518518518518518,
+        "y": 0.5705128205128205,
+        "width": 0.8305555555555556,
+        "height": 0.19957264957264959
+      }
+    }
+  ],
+  "recorded_entries": [],
+  "variant_comparisons": [],
+  "recorded_status": "variant_pending"
+}

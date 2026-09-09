@@ -1,0 +1,1809 @@
+{
+  "vision": {
+    "domain": "pokemon",
+    "kind": "card",
+    "category": "Pokémon card",
+    "language": "zh",
+    "object_unit": "single",
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.11,
+        "y": 0.2,
+        "width": 0.78,
+        "height": 0.5,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "超梦ex",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.25,
+          "y": 0.22,
+          "width": 0.18,
+          "height": 0.03
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "hp",
+        "text": "HP 220",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.68,
+          "y": 0.22,
+          "width": 0.12,
+          "height": 0.03
+        },
+        "zone": "statistics",
+        "alternatives": []
+      },
+      {
+        "field": "attack",
+        "text": "超念力 50",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.34,
+          "y": 0.54,
+          "width": 0.48,
+          "height": 0.03
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "attack",
+        "text": "转移破坏 160",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.34,
+          "y": 0.58,
+          "width": 0.49,
+          "height": 0.03
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "collector_number",
+        "text": "135/127",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.43,
+          "y": 0.67,
+          "width": 0.09,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "rarity_text",
+        "text": "SR",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.53,
+          "y": 0.67,
+          "width": 0.03,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "copyright",
+        "text": "©2024 Pokémon/Nintendo/Creatures/GAME FREAK.",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.35,
+          "y": 0.69,
+          "width": 0.3,
+          "height": 0.015
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "language",
+        "text": "Chinese text and Chinese card layout visible",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.25,
+          "y": 0.22,
+          "width": 0.5,
+          "height": 0.4
+        },
+        "zone": "front",
+        "alternatives": []
+      }
+    ],
+    "features": [
+      {
+        "field": "finish",
+        "value": "holo",
+        "description": "Strong multicolor reflective/holographic foil across the artwork and border",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.12,
+          "y": 0.2,
+          "width": 0.76,
+          "height": 0.5
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "layout",
+        "value": "full-art Pokémon ex card with portrait-oriented character artwork and black attack/footer bands",
+        "description": "Full-art composition; Chinese text; ex marker at upper left",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.12,
+          "y": 0.2,
+          "width": 0.76,
+          "height": 0.5
+        },
+        "zone": "other"
+      },
+      {
+        "field": "rarity_symbol",
+        "value": "present",
+        "description": "SR printed beside the collector number",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.53,
+          "y": 0.67,
+          "width": 0.03,
+          "height": 0.02
+        },
+        "zone": "footer"
+      },
+      {
+        "field": "stamp",
+        "value": "unclear",
+        "description": "No separate promotional or anniversary stamp can be confirmed",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": null,
+        "zone": "other"
+      },
+      {
+        "field": "shadow",
+        "value": "unclear",
+        "description": "Graphic shadow status cannot be reliably determined from this view",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": null,
+        "zone": "artwork"
+      }
+    ],
+    "hypotheses": [
+      {
+        "field": "family",
+        "value": "Pokémon TCG"
+      }
+    ],
+    "slab_reading": {
+      "grader": "Unknown",
+      "label_text": "",
+      "card_title": "",
+      "subject": "",
+      "family": "",
+      "model": "",
+      "year": "",
+      "card_number": "",
+      "variant": "",
+      "grade": "",
+      "certificate": "",
+      "match_details": "",
+      "present": false,
+      "certainty": "clear",
+      "title_certainty": "uncertain",
+      "grade_certainty": "uncertain",
+      "certificate_certainty": "uncertain",
+      "secondary_text_incomplete": false,
+      "subgrades": [],
+      "image_index": 1,
+      "object_match": "unclear"
+    },
+    "engine_version": 193,
+    "brand": "",
+    "family": "Pokémon TCG",
+    "title": "超梦ex",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": {
+      "image_index": 1,
+      "x": 0.11,
+      "y": 0.2,
+      "width": 0.78,
+      "height": 0.5,
+      "certain": true
+    },
+    "photo_clues": [
+      {
+        "text": "超梦ex",
+        "role": "subject",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.25,
+          "y": 0.22,
+          "width": 0.18,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "HP 220",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.68,
+          "y": 0.22,
+          "width": 0.12,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "超念力 50",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.34,
+          "y": 0.54,
+          "width": 0.48,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "转移破坏 160",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.34,
+          "y": 0.58,
+          "width": 0.49,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "135/127",
+        "role": "collector_number",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.43,
+          "y": 0.67,
+          "width": 0.09,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "SR",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.53,
+          "y": 0.67,
+          "width": 0.03,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "©2024 Pokémon/Nintendo/Creatures/GAME FREAK.",
+        "role": "copyright",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.35,
+          "y": 0.69,
+          "width": 0.3,
+          "height": 0.015,
+          "certain": true
+        }
+      },
+      {
+        "text": "Chinese text and Chinese card layout visible",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.25,
+          "y": 0.22,
+          "width": 0.5,
+          "height": 0.4,
+          "certain": true
+        }
+      }
+    ],
+    "physical_observations": [
+      {
+        "feature": "finish",
+        "text": "Strong multicolor reflective/holographic foil across the artwork and border",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Full-art composition; Chinese text; ex marker at upper left",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "SR printed beside the collector number",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "No separate promotional or anniversary stamp can be confirmed",
+        "certainty": "uncertain",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Graphic shadow status cannot be reliably determined from this view",
+        "certainty": "uncertain",
+        "entity": "target",
+        "image_index": 1
+      }
+    ],
+    "pokemon_printing": {
+      "is_pokemon": true,
+      "language": "zh",
+      "set_name": "Pokémon TCG",
+      "card_type": "pokemon",
+      "first_edition_stamp": "unclear",
+      "stamp_image": 0,
+      "stamp_location": "",
+      "stamp_text": "",
+      "artwork_shadow": "unclear",
+      "shadow_image": 0,
+      "shadow_location": "",
+      "copyright_text": "",
+      "copyright_image": 1
+    }
+  },
+  "batches": [
+    {
+      "ids": [
+        "lens-4",
+        "lens-5",
+        "lens-9"
+      ],
+      "reply": {
+        "original_readings": [
+          {
+            "field": "subject",
+            "image_index": 1,
+            "crop_id": "original-1-upper",
+            "full_text": "超梦V",
+            "crop_text": "超梦V",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Mewtwo V",
+              "en": "Mewtwo V"
+            }
+          },
+          {
+            "field": "collector_number",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "135/127",
+            "crop_text": "135/127",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "",
+              "en": ""
+            }
+          },
+          {
+            "field": "rarity_text",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "SR",
+            "crop_text": "SR",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "",
+              "en": ""
+            }
+          },
+          {
+            "field": "copyright",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "©2024 Pokémon",
+            "crop_text": "©2024 Pokémon",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "",
+              "en": ""
+            }
+          },
+          {
+            "field": "language",
+            "image_index": 1,
+            "crop_id": "original-1-upper",
+            "full_text": "Cinese",
+            "crop_text": "超梦V",
+            "evidence_found": true,
+            "certainty": "uncertain",
+            "display_names": {
+              "it": "Cinese",
+              "en": "Chinese"
+            }
+          }
+        ],
+        "comparisons": [
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.114,
+                "y": 0.198
+              },
+              {
+                "x": 0.897,
+                "y": 0.198
+              },
+              {
+                "x": 0.897,
+                "y": 0.701
+              },
+              {
+                "x": 0.114,
+                "y": 0.701
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.1,
+                "y": 0.21
+              },
+              {
+                "x": 0.94,
+                "y": 0.21
+              },
+              {
+                "x": 0.94,
+                "y": 0.98
+              },
+              {
+                "x": 0.1,
+                "y": 0.98
+              }
+            ],
+            "reference_id": "lens-4",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [
+              "Japanese language differs from original Chinese",
+              "Collector number is not visible in candidate image",
+              "Candidate title documents Japanese Pokémon GO 2022"
+            ],
+            "original_reading": {
+              "subject": "超梦V",
+              "number": "135/127",
+              "year": "©2024 Pokémon",
+              "language": "Chinese"
+            },
+            "reference_reading": {
+              "subject": "Mewtwo V",
+              "number": "",
+              "year": "",
+              "language": "Japanese"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Mewtwo dynamic cosmic full-art pose",
+                "reference": "Mewtwo dynamic cosmic full-art pose",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Chinese card layout, 220 HP, SR bottom marking",
+                "reference": "Japanese card layout, 220 HP",
+                "agrees": false,
+                "certainty": "clear"
+              },
+              {
+                "field": "text",
+                "original": "135/127 and Chinese text",
+                "reference": "Japanese text, number unreadable",
+                "agrees": false,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Mewtwo V",
+              "family": "Pokémon",
+              "number": "",
+              "year": "2022",
+              "brand": "Pokémon",
+              "subset": "Pokémon GO",
+              "proof": {
+                "subject": "Mewtwo V – Japanese Pokémon GO 2022",
+                "family": "Pokémon",
+                "year": "2022",
+                "subset": "Japanese Pokémon GO"
+              },
+              "display_names": {
+                "it": "Mewtwo V",
+                "en": "Mewtwo V"
+              }
+            }
+          },
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.114,
+                "y": 0.198
+              },
+              {
+                "x": 0.897,
+                "y": 0.198
+              },
+              {
+                "x": 0.897,
+                "y": 0.701
+              },
+              {
+                "x": 0.114,
+                "y": 0.701
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.086,
+                "y": 0.21
+              },
+              {
+                "x": 0.95,
+                "y": 0.21
+              },
+              {
+                "x": 0.95,
+                "y": 0.99
+              },
+              {
+                "x": 0.086,
+                "y": 0.99
+              }
+            ],
+            "reference_id": "lens-5",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [
+              "Candidate is English-language; original is Chinese-language",
+              "Candidate number is unreadable",
+              "Exact print language differs"
+            ],
+            "original_reading": {
+              "subject": "超梦V",
+              "number": "135/127",
+              "year": "©2024 Pokémon",
+              "language": "Chinese"
+            },
+            "reference_reading": {
+              "subject": "Mewtwo V",
+              "number": "",
+              "year": "",
+              "language": "English"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Mewtwo cosmic full-art pose",
+                "reference": "Mewtwo cosmic full-art pose",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "Full-art V, 220 HP, three attacks",
+                "reference": "V, 220 HP, three attacks",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "text",
+                "original": "Chinese text, 135/127",
+                "reference": "English text, number unreadable",
+                "agrees": false,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Mewtwo V",
+              "family": "Pokémon",
+              "number": "",
+              "year": "",
+              "brand": "Pokémon",
+              "subset": "",
+              "proof": {
+                "subject": "BASIC MEWTWO - HP220",
+                "family": "POKEMON",
+                "year": "",
+                "subset": ""
+              },
+              "display_names": {
+                "it": "Mewtwo V",
+                "en": "Mewtwo V"
+              }
+            }
+          },
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.114,
+                "y": 0.198
+              },
+              {
+                "x": 0.897,
+                "y": 0.198
+              },
+              {
+                "x": 0.897,
+                "y": 0.701
+              },
+              {
+                "x": 0.114,
+                "y": 0.701
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.34,
+                "y": 0.34
+              },
+              {
+                "x": 0.69,
+                "y": 0.34
+              },
+              {
+                "x": 0.69,
+                "y": 0.91
+              },
+              {
+                "x": 0.34,
+                "y": 0.91
+              }
+            ],
+            "reference_id": "lens-9",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [
+              "Japanese card differs from original Chinese card",
+              "Candidate number unreadable",
+              "Different documented release year"
+            ],
+            "original_reading": {
+              "subject": "超梦V",
+              "number": "135/127",
+              "year": "©2024 Pokémon",
+              "language": "Chinese"
+            },
+            "reference_reading": {
+              "subject": "Mewtwo V",
+              "number": "",
+              "year": "",
+              "language": "Japanese"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Mewtwo cosmic full-art pose",
+                "reference": "Mewtwo cosmic full-art pose",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "Full-art V with 220 HP",
+                "reference": "Full-art V with 220 HP",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "text",
+                "original": "Chinese text and 135/127",
+                "reference": "Japanese text and unreadable number",
+                "agrees": false,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Mewtwo V",
+              "family": "Pokémon",
+              "number": "",
+              "year": "",
+              "brand": "Pokémon",
+              "subset": "Pokémon GO",
+              "proof": {
+                "subject": "Mewtwo Pokemon Go",
+                "family": "Pokémon",
+                "year": "",
+                "subset": ""
+              },
+              "display_names": {
+                "it": "Mewtwo V",
+                "en": "Mewtwo V"
+              }
+            }
+          }
+        ]
+      },
+      "accepted": []
+    },
+    {
+      "ids": [
+        "lens-17",
+        "lens-18",
+        "lens-19"
+      ],
+      "reply": {
+        "original_readings": [
+          {
+            "field": "subject",
+            "image_index": 1,
+            "crop_id": "original-1-upper",
+            "full_text": "超梦V",
+            "crop_text": "超梦V",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Mewtwo V",
+              "en": "Mewtwo V"
+            }
+          },
+          {
+            "field": "collector_number",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "135/127",
+            "crop_text": "135/127",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "135/127",
+              "en": "135/127"
+            }
+          },
+          {
+            "field": "rarity_text",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "SR",
+            "crop_text": "SR",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "SR",
+              "en": "SR"
+            }
+          },
+          {
+            "field": "copyright",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "©2024 Pokémon",
+            "crop_text": "©2024 Pokémon",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "©2024 Pokémon",
+              "en": "©2024 Pokémon"
+            }
+          },
+          {
+            "field": "language",
+            "image_index": 1,
+            "crop_id": "original-1-upper",
+            "full_text": "Cinese",
+            "crop_text": "超梦V",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Cinese",
+              "en": "Chinese"
+            }
+          }
+        ],
+        "comparisons": [
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.095,
+                "y": 0.195
+              },
+              {
+                "x": 0.895,
+                "y": 0.195
+              },
+              {
+                "x": 0.895,
+                "y": 0.752
+              },
+              {
+                "x": 0.095,
+                "y": 0.752
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.08,
+                "y": 0.02
+              },
+              {
+                "x": 0.93,
+                "y": 0.02
+              },
+              {
+                "x": 0.93,
+                "y": 0.98
+              },
+              {
+                "x": 0.08,
+                "y": 0.98
+              }
+            ],
+            "reference_id": "lens-17",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [
+              "Candidate title does not document collector number or copyright."
+            ],
+            "original_reading": {
+              "subject": "超梦V",
+              "number": "135/127",
+              "year": "2024",
+              "language": "Chinese"
+            },
+            "reference_reading": {
+              "subject": "",
+              "number": "",
+              "year": "",
+              "language": "Chinese"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Mewtwo full-art cosmic pose",
+                "reference": "Same Mewtwo full-art cosmic pose",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "V full-art holographic card",
+                "reference": "V full-art holographic card",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "text",
+                "original": "Chinese text; 135/127 SR",
+                "reference": "Chinese-looking text; number unreadable",
+                "agrees": true,
+                "certainty": "uncertain"
+              }
+            ],
+            "identity": {
+              "subject": "Mewtwo V",
+              "family": "Pokémon TCG",
+              "number": "",
+              "year": "",
+              "brand": "Pokémon",
+              "subset": "",
+              "proof": {
+                "subject": "carte Pokémon EX e V",
+                "family": "carte Pokémon EX e V",
+                "year": "",
+                "subset": ""
+              },
+              "display_names": {
+                "it": "Mewtwo V",
+                "en": "Mewtwo V"
+              }
+            }
+          },
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.095,
+                "y": 0.195
+              },
+              {
+                "x": 0.895,
+                "y": 0.195
+              },
+              {
+                "x": 0.895,
+                "y": 0.752
+              },
+              {
+                "x": 0.095,
+                "y": 0.752
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.3,
+                "y": 0.35
+              },
+              {
+                "x": 0.7,
+                "y": 0.35
+              },
+              {
+                "x": 0.7,
+                "y": 0.88
+              },
+              {
+                "x": 0.3,
+                "y": 0.88
+              }
+            ],
+            "reference_id": "lens-18",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [
+              "Reference is English, original is Chinese.",
+              "Reference source documents 2022; original copyright reads 2024.",
+              "Reference title identifies PSA 8, not the card printing."
+            ],
+            "original_reading": {
+              "subject": "超梦V",
+              "number": "135/127",
+              "year": "2024",
+              "language": "Chinese"
+            },
+            "reference_reading": {
+              "subject": "Mewtwo V",
+              "number": "",
+              "year": "",
+              "language": "English"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Mewtwo full-art cosmic pose",
+                "reference": "Same Mewtwo full-art cosmic pose",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Chinese card layout",
+                "reference": "English card layout",
+                "agrees": false,
+                "certainty": "clear"
+              },
+              {
+                "field": "text",
+                "original": "超梦V; 135/127 SR",
+                "reference": "Mewtwo V; number unreadable",
+                "agrees": false,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Mewtwo V",
+              "family": "Pokémon TCG",
+              "number": "",
+              "year": "2022",
+              "brand": "Pokémon",
+              "subset": "Black Star Promo",
+              "proof": {
+                "subject": "2022 Pokémon Black Star Promo Mewtwo V Full Art",
+                "family": "Pokémon Black Star Promo",
+                "year": "2022",
+                "subset": "Black Star Promo"
+              },
+              "display_names": {
+                "it": "Mewtwo V",
+                "en": "Mewtwo V"
+              }
+            }
+          },
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.095,
+                "y": 0.195
+              },
+              {
+                "x": 0.895,
+                "y": 0.195
+              },
+              {
+                "x": 0.895,
+                "y": 0.752
+              },
+              {
+                "x": 0.095,
+                "y": 0.752
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.1,
+                "y": 0.02
+              },
+              {
+                "x": 0.9,
+                "y": 0.02
+              },
+              {
+                "x": 0.9,
+                "y": 0.99
+              },
+              {
+                "x": 0.1,
+                "y": 0.99
+              }
+            ],
+            "reference_id": "lens-19",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [
+              "Reference is English, original is Chinese.",
+              "Reference title documents 2022; original copyright reads 2024.",
+              "Reference number and variant are not documented in supplied text."
+            ],
+            "original_reading": {
+              "subject": "超梦V",
+              "number": "135/127",
+              "year": "2024",
+              "language": "Chinese"
+            },
+            "reference_reading": {
+              "subject": "Mewtwo V",
+              "number": "",
+              "year": "",
+              "language": "English"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Mewtwo full-art cosmic pose",
+                "reference": "Same Mewtwo full-art cosmic pose",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "V full-art holographic card",
+                "reference": "V full-art holographic card",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "text",
+                "original": "Chinese text; 135/127 SR",
+                "reference": "English text; number unreadable",
+                "agrees": false,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Mewtwo V",
+              "family": "Pokémon TCG",
+              "number": "",
+              "year": "2022",
+              "brand": "Pokémon",
+              "subset": "Black Star Promo",
+              "proof": {
+                "subject": "Pokémon Go TCG 2022 Black Star Promo Full Art Holo Mewtwo v",
+                "family": "Pokémon Go TCG",
+                "year": "2022",
+                "subset": "Black Star Promo"
+              },
+              "display_names": {
+                "it": "Mewtwo V",
+                "en": "Mewtwo V"
+              }
+            }
+          }
+        ]
+      },
+      "accepted": []
+    },
+    {
+      "ids": [
+        "lens-20",
+        "lens-1"
+      ],
+      "reply": {
+        "original_readings": [
+          {
+            "field": "subject",
+            "image_index": 1,
+            "crop_id": "original-1-upper",
+            "full_text": "超夢V",
+            "crop_text": "超夢V",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Mewtwo V",
+              "en": "Mewtwo V"
+            }
+          },
+          {
+            "field": "collector_number",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "135/127",
+            "crop_text": "135/127",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Numero collezionista",
+              "en": "Collector number"
+            }
+          },
+          {
+            "field": "rarity_text",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "SR",
+            "crop_text": "SR",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Rarità",
+              "en": "Rarity"
+            }
+          },
+          {
+            "field": "copyright",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "©2024 Pokémon",
+            "crop_text": "©2024 Pokémon",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Copyright",
+              "en": "Copyright"
+            }
+          },
+          {
+            "field": "language",
+            "image_index": 1,
+            "crop_id": "original-1-upper",
+            "full_text": "Cinese tradizionale",
+            "crop_text": "Cinese tradizionale",
+            "evidence_found": true,
+            "certainty": "uncertain",
+            "display_names": {
+              "it": "Lingua",
+              "en": "Language"
+            }
+          }
+        ],
+        "comparisons": [
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.113,
+                "y": 0.197
+              },
+              {
+                "x": 0.893,
+                "y": 0.197
+              },
+              {
+                "x": 0.893,
+                "y": 0.703
+              },
+              {
+                "x": 0.113,
+                "y": 0.703
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.297,
+                "y": 0.451
+              },
+              {
+                "x": 0.924,
+                "y": 0.451
+              },
+              {
+                "x": 0.924,
+                "y": 0.979
+              },
+              {
+                "x": 0.297,
+                "y": 0.979
+              }
+            ],
+            "reference_id": "lens-20",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [
+              "Collector number differs: original 135/127; candidate documentation indicates Pokémon GO073971."
+            ],
+            "original_reading": {
+              "subject": "超夢V",
+              "number": "135/127",
+              "year": "2024",
+              "language": "Chinese"
+            },
+            "reference_reading": {
+              "subject": "Mewtwo V",
+              "number": "",
+              "year": "",
+              "language": "Japanese"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Mewtwo cosmic pose",
+                "reference": "Mewtwo cosmic pose",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Chinese full-art V",
+                "reference": "Chinese full-art V",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "identifier",
+                "original": "135/127 SR",
+                "reference": "073971 / Pokémon GO",
+                "agrees": false,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Mewtwo V",
+              "family": "Pokémon TCG",
+              "number": "073971",
+              "year": "2022",
+              "brand": "Pokémon",
+              "subset": "Pokémon GO",
+              "proof": {
+                "subject": "Mewtwo V CGC 9.5",
+                "family": "Pokémon (2022) Japanese",
+                "year": "2022",
+                "subset": "Pokémon GO073971"
+              },
+              "display_names": {
+                "it": "Mewtwo V",
+                "en": "Mewtwo V"
+              }
+            }
+          },
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.113,
+                "y": 0.197
+              },
+              {
+                "x": 0.893,
+                "y": 0.197
+              },
+              {
+                "x": 0.893,
+                "y": 0.703
+              },
+              {
+                "x": 0.113,
+                "y": 0.703
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.137,
+                "y": 0.309
+              },
+              {
+                "x": 0.895,
+                "y": 0.309
+              },
+              {
+                "x": 0.895,
+                "y": 0.877
+              },
+              {
+                "x": 0.137,
+                "y": 0.877
+              }
+            ],
+            "reference_id": "lens-1",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [
+              "English SWSH229 differs from original Chinese 135/127 SR."
+            ],
+            "original_reading": {
+              "subject": "超夢V",
+              "number": "135/127",
+              "year": "2024",
+              "language": "Chinese"
+            },
+            "reference_reading": {
+              "subject": "Mewtwo V",
+              "number": "SWSH229",
+              "year": "",
+              "language": "English"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Mewtwo cosmic pose",
+                "reference": "Mewtwo cosmic pose",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Chinese full-art V",
+                "reference": "English promo layout",
+                "agrees": false,
+                "certainty": "clear"
+              },
+              {
+                "field": "identifier",
+                "original": "135/127 SR",
+                "reference": "SWSH229 promo",
+                "agrees": false,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Mewtwo V",
+              "family": "Pokémon TCG",
+              "number": "SWSH229",
+              "year": "2022",
+              "brand": "Pokémon",
+              "subset": "Sword & Shield Promo Cards",
+              "proof": {
+                "subject": "2022 Mewtwo V SWSH229",
+                "family": "SWSH: Sword & Shield Promo Cards",
+                "year": "2022",
+                "subset": "Pokémon Go Elite Trainer Box"
+              },
+              "display_names": {
+                "it": "Mewtwo V",
+                "en": "Mewtwo V"
+              }
+            }
+          }
+        ]
+      },
+      "accepted": []
+    }
+  ],
+  "references": [
+    {
+      "id": "lens-1",
+      "title": "Mewtwo V SWSH229 SWSH: Sword & Shield Promo Cards Holo for ...",
+      "snippet": "",
+      "url": "https://www.ebay.com/p/4055138777",
+      "image_url": "https://i.ebayimg.com/images/g/F0kAAeSwdjBpvWUo/s-l1200.png",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "chinese",
+        "text": "2022 POKEMON SWSH BSP\nFA/MEWTWO V\nPOKEMON GO ELITE TRNR.BX.\naASTG Mewtwov\nSuper Psy\nBolt\nTransfer Break\n#229\nNM-MT\n137863733\n-220\nEsknn x2 (ristae -30 treat 0\n50\n160\nMove an Enengy frem this Pokemon to lof youe Benchcd\nPokéngon\n8\nVrute\nwhen yur Pokéeon V in Kncked Out.\nror oppenent takes 2 Prise cardt.",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-2",
+      "title": "CARTA POKEMON MEWTWO V SWSH229 HOLO PROMO 2022 ITALIANO RARA ...",
+      "snippet": "",
+      "url": "https://www.ebay.it/itm/255642922055",
+      "image_url": "https://i.ebayimg.com/00/s/MTYwMFgxMjAw/z/XpwAAOSwmMNnZsv9/$_57.JPG?set_id=880000500F",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "chinese",
+        "text": "Mewtwo\nSuparpsico\n-Sfondatransfer\nnela tua panchina,\nM, PLANEA Mochtzuk\ndebolezza x2 resistenza巴-30\n好日sWSH229\nSposta unEnerga da questo Pokémon a uno di quelli\n「ritirata\n„220\n50\n160\n2022 Pokémon/Nintendo/Creatures/GAME FREAK\ndL Kegola V l tuo avversario prende due carte Premio\nogni volta che uno dei tuoi Pokémon-V viene messo KO,",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-3",
+      "title": "Preços de Mewtwo V #SWSH229 | Pokemon Promo | Cartas de Pokemon",
+      "snippet": "",
+      "url": "https://www.pricecharting.com/pt/game/pokemon-promo/mewtwo-v-swsh229",
+      "image_url": "https://storage.googleapis.com/images.pricecharting.com/cb011b7d7d16867b2700461030dfec2b7c9b6855d19b34f36d87d232137c8e8f/1600.jpg",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "chinese",
+        "text": "BASIC\nMewtwoV\nPokémon.\nweaknessx2\nMus, PUANETA Mochizuki\nSuper PsyBolt\nogF SwsH229\nTransfer Break\nMove an Energy from chis Pokénmen to l of your Benched\n“resistance 巴-30\nVrule\nretreat\n220\nyour opponent takes 2 Prize cards.\n50\n2022 Pokémon/ Nintendo/ Creatures/GAME FREAK\n160\nWhen your Pokémon V is Knocked Out,\nHP.",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-4",
+      "title": "Mewtwo V – Japanese Pokémon GO 2022 – PSA 10 – Cardtreasure.ch",
+      "snippet": "",
+      "url": "https://cardtreasure.ch/products/mewtwo-v-japanese-pokemon-go-2022-psa-10",
+      "image_url": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSSk4L0dfhXzCri6qKzB5HNR3gMu86ynClVm0uky-tqbLjgNU79",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "japanese",
+        "text": "2022 oKEMON CO N\nGEM MT\n13314857\n-2200\n-2200)\nGEM MT",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-5",
+      "title": "TRADING CARD - POKEMON - BASIC MEWTWO - HP220 | eBay",
+      "snippet": "",
+      "url": "https://www.ebay.com/itm/256155826708",
+      "image_url": "https://i.ebayimg.com/images/g/ySsAAOSwVzBktvOC/s-l400.jpg",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "chinese",
+        "text": "AS MewtwoV\nSuperPsy Bolt\n新0r\nTransfer Break\n-2200\nVrule\n50\nMove anEn hamchi Pakemen aNof you Brmhre\n160\n30",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-6",
+      "title": "PSA 10 Pokémon Go Promo #229 Mewtwo V | Cardgameshop",
+      "snippet": "",
+      "url": "https://www.cardgameshop.be/en/products/psa-10-pokemon-go-promo-229-mewtwo-v",
+      "image_url": "https://files.cardgameshop.be/cache/products/images/4/u/y/800x800/f/f/b1aee1526b6462cb3641d173a407a056cbcd0c/psa-10-pokemon-go-promo-229-mewtwo-v.webp",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "chinese",
+        "text": "2022 POKEMON SwSH BSP\nFA/MEVWTWO V\nPOKEMON GO ELITE TRNR.BX.\n三INII\nBASIG MewtwoV\noker\nSuperPsyBolt\nTransfer Break\n0\n#229\nGEM MT\n113390238\n.220\nMove aneny rom hib Pokemon to oyour Penched\nwakness x2 (reistace -30 treat 0\n50\n160\n10\n0\nPA\nVrule",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-7",
+      "title": "Mewtwo V #SWSH229 Precios | Pokemon Promo | Tarjetas de Pokemon",
+      "snippet": "",
+      "url": "https://www.pricecharting.com/es/game/pokemon-promo/mewtwo-v-swsh229",
+      "image_url": "https://i.ebayimg.com/images/g/ymkAAeSwddFqnHCe/s-l225.jpg",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "chinese",
+        "text": "Mowtwey 220\nSueyeolt\n-2200\nCMewtwoV",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-8",
+      "title": "PSA 9 MINT JAPANESE POKEMON GO 2022 MEWTWO V 073/071 S10b ...",
+      "snippet": "",
+      "url": "https://pkmhobby.com/products/psa-9-mint-japanese-pokemon-go-2022-mewtwo-v-073-071-s10b",
+      "image_url": "https://pkmhobby.com/cdn/shop/files/57_cd616c4e-b1a3-40b8-92f1-a710284e4bb1.jpg?v=1739549988&width=160",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "japanese",
+        "text": "2022 POKEMON GO JPN\nFAMEWTWO V\nMNT\n10294 192\n220の",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-9",
+      "title": "PSA 10 Mewtwo Pokemon Go for sale on my website. Link in bio ...",
+      "snippet": "",
+      "url": "https://www.instagram.com/p/DJsAwkwymMY/",
+      "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0BN1RXs3sntXmYN6UP6YDbgIvw49BCDaHmDj3acYVVDSwhex0",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "chinese",
+        "text": "GORIL\nTCO\nMYSTE\na22 OREMON GO\nFANEWTwov\n7200)\n▼B0X\nDRILLA",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-10",
+      "title": "Karta Pokémon TCG Mewtwo V (SWSH229) • Recenze - Allegro",
+      "snippet": "",
+      "url": "https://allegro.cz/produkt/karta-pokemon-tcg-mewtwo-v-swsh229-95ff797f-c168-4355-9960-5f0a94557f95",
+      "image_url": "https://a.allegroimg.com/s512/11029f/bf509f0e43c582a457d2f5b7cbe1",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "chinese",
+        "text": "BASIG\nMewtwo\nSuper PsyBolt\nweakness x2\nTansfer Break\n(resletane の-30\n„220\nMovemnegy trom thh Rokêmon to lotyour Benahed\netrea\nVrute\nyaur oppenent aes 7 Prise cards\n50\n160\nwhen prPehtmton 第nechrd Out",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-11",
+      "title": "Pokemon - Mewtwo V - SWSH229 - Full Art - Black Star Promo ...",
+      "snippet": "",
+      "url": "https://www.amazon.it/-/en/Pokemon-Mewtwo-SWSH229-Black-Promo/dp/B0BST3QBPP",
+      "image_url": "https://m.media-amazon.com/images/I/71U+6OllbdL._AC_UF1000,1000_QL80_.jpg",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "chinese",
+        "text": "eASIE MewtwoV\nPokémon\nweakness x2\nSuper PsyBolt\nA swsH229\nTransfer Brealk\nMovear Eergfom t西Pekenen to lefyour Bendhed\n(resistance 円-30 retreat\nVrule\nw220\n50\nyour opponent takes 2 Prize cards.\nO2022 Pokémon/ Nintendo/Creatures /GAME FREAK\n160\nWhen your Pokémon Vis Knocked Out,",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-12",
+      "title": "Buy Pokemon GO Mewtwo V SWSH229 Online UK | Ubuy",
+      "snippet": "",
+      "url": "https://www.u-buy.co.uk/product/8QYV4WGZQ-pokemon-go-mewtwo-v-swsh229",
+      "image_url": "https://i5.walmartimages.com/seo/Pokemon-TCG-Pokemon-Go-Mewtwo-V-SWSH229-Full-Art-Black-Star-Promo_962f6adb-af81-48dd-b658-abe06fff78f3.172fd3d1871c895c9391e27e9a1bdc51.jpeg",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "chinese",
+        "text": "PA Mewtwo\nSuper Psy Bolt\nAlus PUANEA Moahikt\nTransfer Break\nweakness Ox2 resistance巴-30\nFSws229.\nMove an Energy tromthis Pokemon to lof your Benched\nRokemon,\nretreat\n2022 Pokor/ Nieteve?\n220\nyour opponent takes 2 Prize cards.\n160\nWhen your Pokémon Vis Knoked Out,",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-13",
+      "title": "Promo SWSH229 Mewtwo V Full Art (IT) – MINT » Federicstore",
+      "snippet": "",
+      "url": "https://federicstore.it/prodotto/promo-swsh229-mewtwo-v-full-art-sigillato-it-mint/",
+      "image_url": "https://federicstore.it/wp-content/uploads/2022/06/SWSH229.png",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "chinese",
+        "text": "GASE MewtwoV\nSupesico\n*Sfondatrar.sfev\nSposta nEnnPôn\nnella,tua pata\n„220\nDERICSSTOS\naverale prede dae carte Prenie\ni Pokimen-V iene mese KD.",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-14",
+      "title": "Mewtwo V Pokemon Go PSA 9 di seconda mano per 45 EUR su ...",
+      "snippet": "",
+      "url": "https://it.wallapop.com/item/mewtwo-v-pokemon-go-psa-9-1260409964",
+      "image_url": "https://cdn.wallapop.com/images/10420/ku/ey/__/c10420p1260409964/i6485661086.jpg?pictureSize=W640",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "chinese",
+        "text": "2022 POKEMON SWSH BSP\nFA/MEWTWO V\nPOKEMAON GO ELITE TRNR.BX.\nMewtwoV\nSuper Psy Bolt\nOOTransfer Break\nPokemOn\n#229\nweakness x2 resistance G-30 retreat O\nMINT\n„220\nMove En Energy ronm his Poktmon to l ol your Benhed\nas/GAE nA\n160\niVrule\n「WeyoorPehtmen Ko(trd ot\n《Tur pponent akes 2 Prie car\n50\nSea",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-15",
+      "title": "Pokémon Tcg Mewtwo V Swsh229 Full Art | MercadoLibre",
+      "snippet": "",
+      "url": "https://www.mercadolibre.com.mx/pokemon-tcg-mewtwo-v-swsh229-full-art/up/MLMU3935340266",
+      "image_url": "https://http2.mlstatic.com/D_NQ_NP_669645-MLM110098743616_042026-O.webp",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "chinese",
+        "text": "Mewtwo\nSuper PsyBolt)\n紅nsfer ark\n„220\neaknes x2rhtahce 3O\n50\n160\nMove hEnctgyrothis Palémcnl of your Bec\nPokémon",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-16",
+      "title": "carte Pokémon Mewtwo V SWSH229 #5 Promo NEUF FR | eBay",
+      "snippet": "",
+      "url": "https://www.ebay.it/itm/314539167784",
+      "image_url": "https://i.ebayimg.com/images/g/u9wAAOSwWj1kQG32/s-l1200.jpg",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "chinese",
+        "text": "aCAND2023\nSuper Psy\nlus, FLANEA Modhiaki\nRupture Transfert\nFaiblesse OX2 esistanc 301\nSWsH229\nDéplacez une Energie de ce Pokémon yers fun de vos\nPokemon de BanG.\n2200\n50\nures/GAME FREAK\n160\nRögle V Lorsque votre Pokémon-V est mis K.O.,\nladversaire récupère 2 cartes Rěcompense.\nGASE Mewtwo",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-17",
+      "title": "carte Pokémon EX e V - Collezionismo In vendita a Agrigento",
+      "snippet": "",
+      "url": "https://www.subito.it/hobby-collezionismo/carte-pokemon-ex-e-v-agrigento-658322749.htm",
+      "image_url": "https://images.sbito.it/api/v1/sbt-ads-images-pro/images/1a/1aee9340-cc66-4ff9-8fa0-613de7ba1b0a?rule=gallery-mobile-1x-auto",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "chinese",
+        "text": "Suppstzo\nStandatranfec\n2200\n-30",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-18",
+      "title": "Grado PSA 8 – PokePower",
+      "snippet": "",
+      "url": "https://poke-power.eu/it/collections/psa-8",
+      "image_url": "https://poke-power.eu/cdn/shop/files/MewtwoV.jpg?v=1714587773&width=460",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "chinese",
+        "text": "PSA\nMewtwoV\nSuperPsBoit\nIrnster Break\n-220\n160",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-19",
+      "title": "Pokémon Go TCG 2022 Black Star Promo Full Art Holo Mewtwo v ...",
+      "snippet": "",
+      "url": "https://www.whatnot.com/listing/TGlzdGluZ05vZGU6MTYxNzk0OTU0Nw==",
+      "image_url": "https://images.whatnot.com/fit-in/300x0/filters:format(webp)/listings/0-3dcac235-e7b3-4052-9210-d135a4f2ca61-6a1de843-824d-4620-b61e-c69bfc7351cb.jpeg",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "chinese",
+        "text": "aAIMewtwoV\nSuper Psy Boit\n220\nTtanster Bren\norerhog toeth Ptnl色pog Donrfe\n「 -30 C O0\nVrule\n50\n160",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-20",
+      "title": "Pok&eacute;mon: Carte Pokémon Gradate Mewtwo V CGC 9.5 ...",
+      "snippet": "",
+      "url": "https://www.cardgamecorner.com/it/info-prodotto/343/3512/2374058/carte-pokemon-gradate-mewtwo-v-cgc-95",
+      "image_url": "https://www.cardgamecorner.com/prodotti/_pokemon/singole/carte_gradate/MewtwoVJPCGC9.5.png",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "chinese",
+        "text": "CGCUNIVERSAL GRADE\nGe Mint\n9.5\nMewtwoV\nPokémon (2022) Japanese\nPokémon GO073971\naO.220。\naa4<トs3k\nJapanese\n9.5",
+        "origin": "candidate_image_ocr"
+      }
+    }
+  ],
+  "crops": [
+    {
+      "id": "original-1-upper",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.09444444444444444,
+        "y": 0.18461538461538463,
+        "width": 0.8111111111111111,
+        "height": 0.18076923076923077
+      }
+    },
+    {
+      "id": "original-1-lower",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.09444444444444444,
+        "y": 0.5247863247863248,
+        "width": 0.8111111111111111,
+        "height": 0.1905982905982906
+      }
+    }
+  ],
+  "recorded_entries": [],
+  "variant_comparisons": [],
+  "recorded_status": "unresolved"
+}

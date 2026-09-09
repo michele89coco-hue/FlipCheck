@@ -34,6 +34,8 @@ async function startLens205(ctx){
 }
 // Vision owns routing. Lens is requested only after the slab shortcut was evaluated.
 async function lensPicture211(ctx){
+ const reading=ctx.rawObservation||lastVisionReading||{};
+ if(reading.domain==='sports'){const plan=L205.frontPlan213(reading,validImageCount()),picture=await visualPhoto164({object_region:plan.region?{...plan.region,certain:true}:{image_index:plan.image_index,certain:false},object_unit:'single'});return {...picture,meta:{...picture.meta,source:'sports_front',selection:plan,uploadedImageCount:validImageCount()}};}
  const photos=[];
  for(let i=1;i<=validImageCount();i++)photos.push(await visualPhoto164({object_region:{image_index:i,certain:false}}));
  guard164(ctx);
@@ -75,7 +77,7 @@ diagnostic26=function(){const d=priorDiagnostic205();return {...d,identification
 
 async function compareLensImages206(l,ctx){
  const state=ctx.lens;if(state.visualComparison)return {entries:state.visualComparison.entries||[]};
- const report=state.visualComparison={state:'preparing',mode:'originals_against_downloaded_images',downloads:[],references:[],entries:[],rejected:[]};
+ const report=state.visualComparison={state:'preparing',mode:'originals_against_downloaded_images',downloads:[],references:[],entries:[],rejected:[],support:[]};
  const ranked=state.evaluations,selected=[],seen=new Set();
  // Fetch diverse image URLs. Duplicated marketplace listings do not earn votes.
  for(const c of ranked){const key=c.image_url||c.thumbnail;if(!key||seen.has(key))continue;seen.add(key);selected.push(c);}
@@ -128,7 +130,9 @@ async function compareLensImages206(l,ctx){
   for(const r of rows)content.push({type:'input_text',text:JSON.stringify({reference_id:r.id,title:r.title,snippet:r.snippet,ocr:r.ocr,page_text:r.page_text||'',url:r.url})},{type:'input_image',image_url:r.image_data,detail:'high'});
   return {model:'gpt-5.6-luna',reasoning:{effort:'low'},store:false,max_output_tokens:2600,...schemaFormat('flipcheck_lens_image_comparison',object193({original_readings:{type:'array',maxItems:12,items:rereading},comparisons:{type:'array',maxItems:6,items:comparison}})),input:[{role:'user',content}]};};
  report.references=refs.map(({image_data,...r})=>r);report.comparedIds=[];report.batches=[];report.pages=[];report.originalReread={accepted:[],rejected:[]};
+ ctx.lensReferenceImages213=new Map(refs.map(r=>[r.id,r.image_data]));
  const pending=new Set(refs.map(r=>r.id));let compactRetry=false;
+ const comparisonLimit=Math.min(3,ctx.budget.visionCalls+2); // Always leave a Vision slot for decisive verification.
  while(pending.size){
   guard164(ctx);
   const ordered=L205.rankOcr209(refs.filter(r=>pending.has(r.id)),l);
@@ -146,7 +150,7 @@ async function compareLensImages206(l,ctx){
   }
   let body=makeBody(compared);while(compared.length>1&&ctx.budget.spent()+estimate164(body)>ctx.budget.maxUsd){compared.pop();body=makeBody(compared);}
   if(ctx.budget.spent()+estimate164(body)>ctx.budget.maxUsd){body=makeBody(compared,true);report.contextReduced=true;}
-  if(ctx.budget.spent()+estimate164(body)>ctx.budget.maxUsd||ctx.budget.visionCalls>=4){report.stopReason='budget_or_call_limit';break;}
+  if(ctx.budget.spent()+estimate164(body)>ctx.budget.maxUsd||ctx.budget.visionCalls>=comparisonLimit){report.stopReason='budget_or_call_limit';break;}
   status('<span class="loader"></span>Confronto le immagini compatibili ('+(report.comparedIds.length+1)+'–'+(report.comparedIds.length+compared.length)+')…');
   try{
    const started=Date.now(),response=await originalOpenai26(body);addUsage(response,body.model,0,'Confronto immagini Lens',true,started);guard164(ctx);
@@ -154,12 +158,13 @@ async function compareLensImages206(l,ctx){
    report.originalReread.accepted.push(...reread.accepted);report.originalReread.rejected.push(...reread.rejected);report.originalCrops=crops.map(({data,...c})=>c);
    for(const c of reply.comparisons||[]){const original=photos.find(p=>p.meta.imageIndex===c.original_image_index),ref=compared.find(r=>r.id===c.reference_id);if(original&&ref&&c.original_quad&&c.reference_quad)try{const a=FlipCheckImageEvidence.surface212(await FlipCheckImageEvidence.pixels(original.data),c.original_quad),b=FlipCheckImageEvidence.surface212(await FlipCheckImageEvidence.pixels(ref.image_data),c.reference_quad);c.local_appearance={original:a,reference:b,comparison:FlipCheckImageEvidence.compareSurface212(a,b)};}catch(_){c.local_appearance={state:'unavailable'};}}
    state.evaluations=L205.select(state,l);const checked=L205.visualEntries206(reply,compared,l);
-   report.entries.push(...checked.accepted);report.rejected.push(...checked.rejected);report.reply=reply;
+   report.support.push(...(checked.support||[]));report.entries.push(...checked.accepted);report.rejected.push(...checked.rejected);report.reply=reply;
    report.batches.push({ids:compared.map(r=>r.id),reply,accepted:checked.accepted.map(e=>e.visual_reference_id)});
    if(!reply.comparisons?.length){report.stopReason='empty_comparison';break;}
    diagnosticPhases.push({stage:'flipcheck_lens_image_comparison',result:{...checked,comparisons:reply.comparisons,comparedIds:compared.map(r=>r.id)},webCalls:0,usage:response.usage||null});
   }catch(error){guard164(ctx);report.reason=responseReason166(error);if(report.reason==='max_output_tokens'&&!compactRetry){compactRetry=true;report.recovery='retry_single_candidate';continue;}report.stopReason='comparison_unavailable';break;}
   for(const r of compared){pending.delete(r.id);report.comparedIds.push(r.id);}
+  if(!report.entries.length&&report.batches.length>=1&&compared.every(r=>r.ocrRank?.reasons?.includes('identifier_differs'))){report.stopReason='incompatible_identifiers_targeted_lookup';break;}
   if(report.entries.length){const result=E193.reduce(l,report.entries);if(result.market_ready){report.stopReason='verified_identity';break;}if(result.core_identity?.status==='confirmed'){report.stopReason='verified_core_variant_pending';break;}}
  }
  report.state=report.entries.length?'compared':'no_verified_match';report.stopReason=report.stopReason||'candidates_exhausted';report.remainingIds=[...pending];

@@ -1,0 +1,1482 @@
+{
+  "vision": {
+    "domain": "sports",
+    "kind": "card",
+    "category": "soccer trading card",
+    "language": "English",
+    "object_unit": "single",
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.13,
+        "y": 0.31,
+        "width": 0.75,
+        "height": 0.51,
+        "certain": true
+      },
+      {
+        "image_index": 2,
+        "x": 0.13,
+        "y": 0.31,
+        "width": 0.75,
+        "height": 0.51,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "Victor Boniface",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.37,
+          "y": 0.78,
+          "width": 0.28,
+          "height": 0.04
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "brand",
+        "text": "Panini",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.16,
+          "y": 0.82,
+          "width": 0.1,
+          "height": 0.03
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "product",
+        "text": "2025-26 Panini Select Road to FIFA World Cup 2026 Soccer",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.18,
+          "y": 0.85,
+          "width": 0.63,
+          "height": 0.03
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "subset",
+        "text": "Terrace",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.43,
+          "y": 0.38,
+          "width": 0.12,
+          "height": 0.02
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "team",
+        "text": "Nigeria",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.43,
+          "y": 0.69,
+          "width": 0.14,
+          "height": 0.02
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "team",
+        "text": "Nigeria",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.45,
+          "y": 0.58,
+          "width": 0.12,
+          "height": 0.02
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "collector_number",
+        "text": "No. 21",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.46,
+          "y": 0.35,
+          "width": 0.1,
+          "height": 0.02
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "season",
+        "text": "2025-26",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.19,
+          "y": 0.85,
+          "width": 0.1,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "copyright",
+        "text": "© 2026 Panini America, Inc.",
+        "certainty": "uncertain",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.17,
+          "y": 0.88,
+          "width": 0.3,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": [
+          "© 2026 Panini America, Inc."
+        ]
+      },
+      {
+        "field": "text",
+        "text": "Road to FIFA World Cup 2026",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.41,
+          "y": 0.62,
+          "width": 0.19,
+          "height": 0.07
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "Jersey number 22",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.51,
+          "y": 0.51,
+          "width": 0.07,
+          "height": 0.04
+        },
+        "zone": "other",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "PRIZM",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.44,
+          "y": 0.78,
+          "width": 0.12,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": []
+      }
+    ],
+    "features": [
+      {
+        "field": "border_color",
+        "value": "green",
+        "description": "Green reflective border and frame",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.12,
+          "y": 0.31,
+          "width": 0.76,
+          "height": 0.51
+        },
+        "zone": "border"
+      },
+      {
+        "field": "finish",
+        "value": "reflective",
+        "description": "Strong reflective/prismatic surface effect",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.12,
+          "y": 0.31,
+          "width": 0.76,
+          "height": 0.51
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "pattern",
+        "value": "Geometric nested arcs and radiating frame lines",
+        "description": "Repeated curved geometric frame pattern",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.13,
+          "y": 0.32,
+          "width": 0.74,
+          "height": 0.49
+        },
+        "zone": "artwork"
+      },
+      {
+        "field": "rookie",
+        "value": "unclear",
+        "description": "No clearly readable RC/Rookie badge",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": null,
+        "zone": "other"
+      },
+      {
+        "field": "stamp",
+        "value": "absent",
+        "description": "No promotional stamp clearly visible in readable area",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": null,
+        "zone": "other"
+      }
+    ],
+    "hypotheses": [
+      {
+        "field": "family",
+        "value": "Panini Select soccer"
+      },
+      {
+        "field": "model",
+        "value": "Terrace green reflective/prizm parallel"
+      }
+    ],
+    "slab_reading": null,
+    "engine_version": 193,
+    "brand": "Panini",
+    "family": "Panini Select soccer",
+    "title": "Victor Boniface",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": {
+      "image_index": 1,
+      "x": 0.13,
+      "y": 0.31,
+      "width": 0.75,
+      "height": 0.51,
+      "certain": true
+    },
+    "photo_clues": [
+      {
+        "text": "Victor Boniface",
+        "role": "subject",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.37,
+          "y": 0.78,
+          "width": 0.28,
+          "height": 0.04,
+          "certain": true
+        }
+      },
+      {
+        "text": "Panini",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.16,
+          "y": 0.82,
+          "width": 0.1,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "2025-26 Panini Select Road to FIFA World Cup 2026 Soccer",
+        "role": "model",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.18,
+          "y": 0.85,
+          "width": 0.63,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "Terrace",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.43,
+          "y": 0.38,
+          "width": 0.12,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "Nigeria",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.43,
+          "y": 0.69,
+          "width": 0.14,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "Nigeria",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.45,
+          "y": 0.58,
+          "width": 0.12,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "No. 21",
+        "role": "collector_number",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.46,
+          "y": 0.35,
+          "width": 0.1,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "2025-26",
+        "role": "season",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.19,
+          "y": 0.85,
+          "width": 0.1,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "© 2026 Panini America, Inc.",
+        "role": "copyright",
+        "certainty": "uncertain",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.17,
+          "y": 0.88,
+          "width": 0.3,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "Road to FIFA World Cup 2026",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.41,
+          "y": 0.62,
+          "width": 0.19,
+          "height": 0.07,
+          "certain": true
+        }
+      },
+      {
+        "text": "Jersey number 22",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.51,
+          "y": 0.51,
+          "width": 0.07,
+          "height": 0.04,
+          "certain": true
+        }
+      },
+      {
+        "text": "PRIZM",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.44,
+          "y": 0.78,
+          "width": 0.12,
+          "height": 0.02,
+          "certain": true
+        }
+      }
+    ],
+    "physical_observations": [
+      {
+        "feature": "color",
+        "text": "green border",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Strong reflective/prismatic surface effect",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "pattern",
+        "text": "Repeated curved geometric frame pattern",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "No clearly readable RC/Rookie badge",
+        "certainty": "uncertain",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "No promotional stamp clearly visible in readable area",
+        "certainty": "uncertain",
+        "entity": "target",
+        "image_index": 1
+      }
+    ]
+  },
+  "batches": [
+    {
+      "ids": [
+        "lens-1",
+        "lens-6"
+      ],
+      "reply": {
+        "original_readings": [
+          {
+            "field": "subject",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "VICTOR BONIFACE",
+            "crop_text": "VICTOR BONIFACE",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Victor Boniface",
+              "en": "Victor Boniface"
+            }
+          },
+          {
+            "field": "copyright",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "2026",
+            "crop_text": "2026",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "2026",
+              "en": "2026"
+            }
+          },
+          {
+            "field": "subject",
+            "image_index": 2,
+            "crop_id": "original-2-upper",
+            "full_text": "VICTOR BONIFACE",
+            "crop_text": "VICTOR BONIFACE",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Victor Boniface",
+              "en": "Victor Boniface"
+            }
+          },
+          {
+            "field": "collector_number",
+            "image_index": 2,
+            "crop_id": "original-2-upper",
+            "full_text": "No. 21",
+            "crop_text": "No. 21",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "No. 21",
+              "en": "No. 21"
+            }
+          },
+          {
+            "field": "copyright",
+            "image_index": 2,
+            "crop_id": "original-2-lower",
+            "full_text": "2025-26 PANINI - SELECT ROAD TO FIFA WORLD CUP 2026™ SOCCER",
+            "crop_text": "2025-26 PANINI - SELECT ROAD TO FIFA WORLD CUP 2026™ SOCCER",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "2025-26",
+              "en": "2025-26"
+            }
+          }
+        ],
+        "comparisons": [
+          {
+            "original_image_index": 2,
+            "original_view": "back",
+            "reference_view": "back",
+            "original_quad": [
+              {
+                "x": 0.134,
+                "y": 0.308
+              },
+              {
+                "x": 0.896,
+                "y": 0.308
+              },
+              {
+                "x": 0.896,
+                "y": 0.806
+              },
+              {
+                "x": 0.134,
+                "y": 0.806
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.057,
+                "y": 0.059
+              },
+              {
+                "x": 0.957,
+                "y": 0.059
+              },
+              {
+                "x": 0.957,
+                "y": 0.989
+              },
+              {
+                "x": 0.057,
+                "y": 0.989
+              }
+            ],
+            "reference_id": "lens-1",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": false,
+            "conflicts": [
+              "Original back is Select No. 21 Terrace; candidate is Donruss Optic No. 164.",
+              "Back layout, border design, and text differ."
+            ],
+            "original_reading": {
+              "subject": "VICTOR BONIFACE",
+              "number": "No. 21",
+              "year": "2025-26",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "VICTOR BONIFACE",
+              "number": "No. 164",
+              "year": "2024-25",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Nigeria federation emblem and biography text",
+                "reference": "Nigeria federation emblem and different biography text",
+                "agrees": false,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Select Terrace back with centered emblem",
+                "reference": "Donruss Optic green-bordered back",
+                "agrees": false,
+                "certainty": "clear"
+              },
+              {
+                "field": "identifier",
+                "original": "No. 21",
+                "reference": "No. 164",
+                "agrees": false,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Victor Boniface",
+              "family": "Select Road to FIFA World Cup 2026 Soccer",
+              "number": "No. 21",
+              "year": "2025-26",
+              "brand": "Panini",
+              "subset": "Terrace",
+              "proof": {
+                "subject": "VICTOR BONIFACE",
+                "family": "2025-26 PANINI - SELECT ROAD TO FIFA WORLD CUP 2026™ SOCCER",
+                "year": "2025-26 PANINI - SELECT ROAD TO FIFA WORLD CUP 2026™ SOCCER",
+                "subset": "No. 21 TERRACE"
+              },
+              "display_names": {
+                "it": "Victor Boniface",
+                "en": "Victor Boniface"
+              }
+            }
+          },
+          {
+            "original_image_index": 2,
+            "original_view": "back",
+            "reference_view": "back",
+            "original_quad": [
+              {
+                "x": 0.134,
+                "y": 0.308
+              },
+              {
+                "x": 0.896,
+                "y": 0.308
+              },
+              {
+                "x": 0.896,
+                "y": 0.806
+              },
+              {
+                "x": 0.134,
+                "y": 0.806
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.092,
+                "y": 0.209
+              },
+              {
+                "x": 0.906,
+                "y": 0.209
+              },
+              {
+                "x": 0.906,
+                "y": 0.79
+              },
+              {
+                "x": 0.092,
+                "y": 0.79
+              }
+            ],
+            "reference_id": "lens-6",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": false,
+            "conflicts": [
+              "Candidate depicts Real Betis Balompié, not Victor Boniface.",
+              "Candidate number 11 and UEFA Conference League layout differ."
+            ],
+            "original_reading": {
+              "subject": "VICTOR BONIFACE",
+              "number": "No. 21",
+              "year": "2025-26",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "REAL BETIS BALOMPIÉ",
+              "number": "11",
+              "year": "2025",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Nigeria federation emblem",
+                "reference": "Real Betis crest and UEFA Conference League graphics",
+                "agrees": false,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Select player biography back",
+                "reference": "Topps Now event-text back",
+                "agrees": false,
+                "certainty": "clear"
+              },
+              {
+                "field": "identifier",
+                "original": "No. 21",
+                "reference": "011",
+                "agrees": false,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Real Betis Balompié",
+              "family": "UECL Topps NOW",
+              "number": "11",
+              "year": "2025",
+              "brand": "Topps",
+              "subset": "Conference League",
+              "proof": {
+                "subject": "REAL BETIS BALOMPIÉ",
+                "family": "2024-25 UECL Topps NOW®",
+                "year": "© 2025 THE TOPPS COMPANY, INC.",
+                "subset": "Card 11"
+              },
+              "display_names": {
+                "it": "Real Betis Balompié",
+                "en": "Real Betis Balompié"
+              }
+            }
+          }
+        ]
+      },
+      "accepted": []
+    },
+    {
+      "ids": [
+        "lens-7"
+      ],
+      "reply": {
+        "original_readings": [],
+        "comparisons": [
+          {
+            "original_image_index": 2,
+            "original_view": "back",
+            "reference_view": "back",
+            "original_quad": [
+              {
+                "x": 0.133,
+                "y": 0.308
+              },
+              {
+                "x": 0.914,
+                "y": 0.308
+              },
+              {
+                "x": 0.914,
+                "y": 0.805
+              },
+              {
+                "x": 0.133,
+                "y": 0.805
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.16,
+                "y": 0.036
+              },
+              {
+                "x": 0.831,
+                "y": 0.036
+              },
+              {
+                "x": 0.831,
+                "y": 0.96
+              },
+              {
+                "x": 0.16,
+                "y": 0.96
+              }
+            ],
+            "reference_id": "lens-7",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [
+              "Subject differs: Victor Boniface versus John Obi Mikel.",
+              "Number differs: original visibly No. 21; candidate visibly 94.",
+              "Layout and configuration differ."
+            ],
+            "original_reading": {
+              "subject": "",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "JOHN OBI MIKEL",
+              "number": "94",
+              "year": "",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Nigeria federation emblem and Victor Boniface biography",
+                "reference": "Nigeria federation emblem and John Obi Mikel biography",
+                "agrees": false,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "No. 21, TERRACE back layout",
+                "reference": "No. 94 back layout",
+                "agrees": false,
+                "certainty": "clear"
+              },
+              {
+                "field": "text",
+                "original": "VICTOR BONIFACE",
+                "reference": "JOHN OBI MIKEL",
+                "agrees": false,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "John Obi Mikel",
+              "family": "Select Soccer",
+              "number": "94",
+              "year": "2017-18",
+              "brand": "Panini",
+              "subset": "",
+              "proof": {
+                "subject": "John Obi Mikel",
+                "family": "Panini Select Soccer",
+                "year": "2017-18",
+                "subset": ""
+              },
+              "display_names": {
+                "it": "John Obi Mikel",
+                "en": "John Obi Mikel"
+              }
+            }
+          }
+        ]
+      },
+      "accepted": []
+    },
+    {
+      "ids": [
+        "lens-11"
+      ],
+      "reply": {
+        "original_readings": [],
+        "comparisons": [
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "back",
+            "original_quad": [
+              {
+                "x": 0.12,
+                "y": 0.284
+              },
+              {
+                "x": 0.889,
+                "y": 0.284
+              },
+              {
+                "x": 0.889,
+                "y": 0.786
+              },
+              {
+                "x": 0.12,
+                "y": 0.786
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.258,
+                "y": 0.05
+              },
+              {
+                "x": 0.715,
+                "y": 0.05
+              },
+              {
+                "x": 0.715,
+                "y": 0.933
+              },
+              {
+                "x": 0.258,
+                "y": 0.933
+              }
+            ],
+            "reference_id": "lens-11",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [
+              "Soggetto diverso",
+              "Numero diverso",
+              "Vista candidata retro, originale fronte"
+            ],
+            "original_reading": {
+              "subject": "",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "ALEX IWOBI",
+              "number": "153",
+              "year": "",
+              "language": "English"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Victor Boniface in white Nigeria kit",
+                "reference": "Alex Iwobi biography back",
+                "agrees": false,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Front portrait layout",
+                "reference": "Back text layout",
+                "agrees": false,
+                "certainty": "clear"
+              },
+              {
+                "field": "identifier",
+                "original": "",
+                "reference": "No. 153",
+                "agrees": false,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Alex Iwobi",
+              "family": "Select Soccer",
+              "number": "153",
+              "year": "2017-18",
+              "brand": "Panini",
+              "subset": "Checkerboard Prizm",
+              "proof": {
+                "subject": "Alex Iwobi",
+                "family": "Select Soccer",
+                "year": "2017-18",
+                "subset": "Checkerboard Prizm"
+              },
+              "display_names": {
+                "it": "Alex Iwobi",
+                "en": "Alex Iwobi"
+              }
+            }
+          },
+          {
+            "original_image_index": 2,
+            "original_view": "back",
+            "reference_view": "back",
+            "original_quad": [
+              {
+                "x": 0.132,
+                "y": 0.307
+              },
+              {
+                "x": 0.891,
+                "y": 0.307
+              },
+              {
+                "x": 0.891,
+                "y": 0.804
+              },
+              {
+                "x": 0.132,
+                "y": 0.804
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.258,
+                "y": 0.05
+              },
+              {
+                "x": 0.715,
+                "y": 0.05
+              },
+              {
+                "x": 0.715,
+                "y": 0.933
+              },
+              {
+                "x": 0.258,
+                "y": 0.933
+              }
+            ],
+            "reference_id": "lens-11",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [
+              "Soggetto diverso",
+              "Numero diverso"
+            ],
+            "original_reading": {
+              "subject": "",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "ALEX IWOBI",
+              "number": "153",
+              "year": "",
+              "language": "English"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Victor Boniface back biography",
+                "reference": "Alex Iwobi back biography",
+                "agrees": false,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Back biography layout",
+                "reference": "Back biography layout",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "identifier",
+                "original": "",
+                "reference": "No. 153",
+                "agrees": false,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Alex Iwobi",
+              "family": "Select Soccer",
+              "number": "153",
+              "year": "2017-18",
+              "brand": "Panini",
+              "subset": "Checkerboard Prizm",
+              "proof": {
+                "subject": "Alex Iwobi",
+                "family": "Select Soccer",
+                "year": "2017-18",
+                "subset": "Checkerboard Prizm"
+              },
+              "display_names": {
+                "it": "Alex Iwobi",
+                "en": "Alex Iwobi"
+              }
+            }
+          }
+        ]
+      },
+      "accepted": []
+    }
+  ],
+  "references": [
+    {
+      "id": "lens-1",
+      "title": "2024-25 Panini Donruss Optic Calcio N. 164 Victor Boniface ...",
+      "snippet": "",
+      "url": "https://www.ebay.it/itm/236376512164",
+      "image_url": "https://i.ebayimg.com/images/g/Gw4AAOSwwSpnzXv2/s-l400.jpg",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "VICTOR\nBONIFACE\nPAMIH\nBonitace crossed off a couple of items on his\nNigeria to-do list as quickly as possible. in his\nfirst game as a full international, a Sept. 10, 2023\nencounter with São Tomé, he provided his first assist\nfor the Super Eagles. Next came his first goal in\nan Oct. 13 meeting with Saudi Arabia.\n2024-25 PANIN- 20ONBUSS SOcCER\nNa 164\n945\nNIGERIA\nFIFA",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-2",
+      "title": "Panini Select 2017 2018 Calcio Soccer No. 41 Victor Moses | eBay",
+      "snippet": "",
+      "url": "https://www.ebay.it/itm/336222628410",
+      "image_url": "https://i.ebayimg.com/images/g/TLoAAOSwY75keL7x/s-l1200.jpg",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "No.\n41\nABUJA\nNIGERIA\nOCIA\nVICTOOR MOSES\nPAKIKI\nATION\nIn his first season with Chelsea, Moses helped the Blues run away\nwith a Premier League title as a regular starter in the midfield in\n2016-17. He advanced up the pitch in Nigeria's World Cup qualifier\nVS. Algeria on Nov. 12, 2016 and helped the squad to a 3-1 victory\nby tallying two goals from a position on the right wing.\n2017-18 PANINI - SELECT SOcCER\n2017 Panini America, Inc. Printed in the USA.\nImage depicted may not represent the current season uniform.",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-3",
+      "title": "2024-25 Donruss Soccer Optic Ice Prizm Parallel Victor ...",
+      "snippet": "",
+      "url": "https://www.ebay.com/itm/197132658041",
+      "image_url": "https://i.ebayimg.com/images/g/qZ8AAeSwYv5n3VgV/s-l1200.jpg",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "PRIZM\nVICTOR\nBONIFACE\nBoniface crossed off a couple of items on his\nNigeria to-do list as quickly as possible. In his\nfirst game as a full international, a Sept. 10, 2023\nencounter with São Tomé, he provided his first assist\nfor the Super Eagles. Next came his first goal in\nan Oct. 13 meeting with Saudi Arabia.\nPAKIHI\n2024-25 PANINI- DONRUSS SOCCER\nA\nAny image depicted may not represent the current season uniform.\nalEEO 2024 Panini America, Inc.\n1945\nNo. 164\nNIGERIA\nrelal Licensed Product Logos, and the Emblems, Mascots, Posters and Trophies\nCup tournaments are copyrights and/or trademarks of FIFA.\nFIFA\nOFFICIAL\nLCENSED\noDUCT\nGERIA\nOFIFA EIeq's 0fficial Licensed Product Logos, and the Enmble\nof\nSALL",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-4",
+      "title": "トル・アロコダレ RC ナイジェリア代表 Panini Select - メルカリ",
+      "snippet": "",
+      "url": "https://jp.mercari.com/item/m53100383700",
+      "image_url": "https://static.mercdn.net/item/detail/orig/photos/m53100383700_2.jpg?1786682135",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "PAKINI|\nNo. 22\nTERRACE\nOOTBALL\n1945\nERATI\nTOLU AROKODARE\nNIGERIA\nArokodare scored his first international\ngoal during a friendly draw with Russia\non June 6, 2025. Three months later,\nhe struck again, netting the winner vs.\nRwanda in FIFA World Cup qualifying.\nDoing so in acrobatic fashion, he lined\nup a deflection while on the ground and\nkicked the ball over his head for a goal.\nAny image depicted may not represent the current season uniform.\n2025-26 PANINI– SELECT ROAD TO FIFA WORLD CUP 2026TM S0cCER\neEE O 2026 Panini Anerica, Inc.\nFIFA's Official Llcensed Product Logos, and all brand elements, designs and trade names\nof FIFA and FIFAe tournaments, events and products are copyrights and/or trademarks\nGERI\nFIFA\nALL FE",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-5",
+      "title": "VICTOR BONIFACE 2024-25 Panini Donruss Optic PLUM BLOSSOM ...",
+      "snippet": "",
+      "url": "https://www.ebay.com/itm/286713845273",
+      "image_url": "https://i.ebayimg.com/images/g/3y4AAOSw6z9n2mig/s-l400.png",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "VICTOR\nBONIFACE\nPAIH\nNo. 164\nBoniface crossed off a couple of items on his\nNigeria to-do list as quickly as possible. In his\nfirst game as a full international, a Sept. 10, 2023\nencounter with São Tomé, he provided his first assist\nfor the Super Eagles. Next came his first goal in\nan Oct. 13 meeting with Saudi Arabia.\nNIGERIA\nFIFA",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-6",
+      "title": "Real Betis Balompié - 2024-25 UECL Topps NOW® - Card 11",
+      "snippet": "",
+      "url": "https://it.topps.com/products/real-betis-balompie-2024-25-uecl-topps-now%C2%AE-card-11",
+      "image_url": "https://cdn.shopify.com/s/files/1/0871/8916/0120/files/6dae159361b838e89e60a962ce3a2d8078e65ef1_ARTECL_16C2S_25TN_0011_BACK.png?v=1771433502",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "REAL BETIS BALOMPIÉ\nREACH FIRST-EVER MAJOR EUROPEAN FINAL\nReal Betis Balompié secured their place in the UEFA Conference League\nfinal hanks to a 4-3 aggregate vicłory against ACF Fiorentina.\nIt was a historic night for the Spanish side as they rea ched their first ever\nmajor European final in dramatic style. Betis came into the second leg with\na 2- advantage and made the perfect start thanks to a superb free-kick\nfrom Antony., However, twO quick-fire goals from Robin Gosens were\nenough to take the game to extra-time. Abde Ezzalzouli was to be the hero\nof the night for Los Verdiblancos as he struck home the decisive goal in the\n97ih minute to set up an exciting final against Chelsea FC in Poland.\ne2025 THE TOPPS COMPANY, INC. ALLRIGHTS RESERVED. TOPPS IS A REGISTERED TRADEM ARKOF\nTHE TOPPS COMPANY, INC. The word(s) UEFA, CONFERENCE LEAGUE, and all other UEFA Conference League\nmarks, names, logos, mascots and trophles are the property, register ed trade marks, designs and/or copyright\nof UEFA. ALL rlghts reserued\nCONFERENCE\nLEAGUE",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-7",
+      "title": "John Obi Mikel (Nigеria / Panini Select Soccer 2017-18 ...",
+      "snippet": "",
+      "url": "https://www.instagram.com/p/DbkNJnAnFQz/",
+      "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvxmEE4GiNPfLnfF1u20cFg2zA9CzRi2T8EiL74YfoGb4EDK4t",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "94\nJOHN OBI MIKEL\nNIGENIA,\nAB\n94",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-8",
+      "title": "Amazon.com: 2017-18 Select Soccer #101 Elderson Echiejile ...",
+      "snippet": "",
+      "url": "https://www.amazon.com/Select-Elderson-Echiejile-Mezzanine-Picturing/dp/B087PJYGHL",
+      "image_url": "https://m.media-amazon.com/images/I/61g58l1akfL.jpg",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "NIGERJA\nNa.\n101\nSBALL\nABUJA\nELDERSON ECHIEJILE\nDEFENDER\nEchiejile has looked at ease sneaking into the\noflensive third as an international, occasionally\npopping up to threaten tha net. He came up with\nhis first oal as a senior internatibnal $. Mali\nduring the 2013 Africa Cup ot Nations. Echiejile\nnetted again later that year s. Tahiti at the\nContederations Cup.",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-9",
+      "title": "Amazon.com: 2022 Panini Prizm FIFA World Cup Qatar #249 ...",
+      "snippet": "",
+      "url": "https://www.amazon.com/Panini-Ismaila-Official-Football-Condition/dp/B0BTBB7D1C",
+      "image_url": "https://m.media-amazon.com/images/I/61D8tRjMttL._UF350,350_QL80_.jpg",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "No. 249\nISMAŤLA SARR\nAlways in the center of things in\nSenegal's attack, Sar served asa\ncentral tigure in a FIFA World Cup qualifier\nVs. Congo on Nov. 14, 2021. The Watford man\naccounted for all the scoring in a 2-0 victory for\nhis first career international brace. He baged\nboth goals within the game's first 23 minutes.\n2922PANN-RUM EA WORLD CUP QaTAR 2421saccER",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-10",
+      "title": "2018 Panini Prizm World Cup Signatures #27 Kelechi Iheanacho ...",
+      "snippet": "",
+      "url": "https://www.fanaticscollect.com/buy-now/320caf3b-72af-416c-98de-291b5b92d470",
+      "image_url": "https://img.beckett.com/images/items/15395001/marketplace/98460519/back.jpg",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "RUSSIAPOL8\nGERIA\nDFFICIALLICENSE\nNo. S-RI\nABUJA\nFrom scrabbling on rock-strewn stretches of dirt as a kid in Nigeria\nto flying around pristine pitches as a rising star in the Premier\nLeague, Iheanacho has taken his game to incredible heights. Ready\nto take his country to new heights, the forward prepped for the 2018\nFIFA World Cup by scoring a game-winner vs. Zambia in qualifying.\nRELECHIIHEANACHO\nFORWARD\nFIFA, FIFA's Official Licensed Product Logos, and the\nEmblems, Mascots, Posters and Trophies of the FIFA Worid\nCupTM tournaments are copyrights and/or trademarks of\nFIFA. Manufactured under license by Panini. Made in USA.\nPAKIT\nThe autograph is guaranteed by Panini America, Inc.\n2018 PANINI- PRIZM WORLD CUP SOCCER\n2018 Panini America, Inc. Printed in the USA.\nImage depicted may not represent the current season uniform.\nB\nPRODUCT\nCIATION\nASS.",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-11",
+      "title": "Alex Iwobi Select Soccer 2017-18 Checkerboard Prizm | eBay ...",
+      "snippet": "",
+      "url": "https://www.ebay.com.au/itm/125256083105",
+      "image_url": "https://i.ebayimg.com/images/g/I74AAOSw9KZiVgdr/s-l400.jpg",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "153\nplayt\nOTBAL\nALEX IwOBI\nFOHWARD\nla the cas ef bi Esgians less as Nigria's\nain A playr with daal citireshig. he forward was\nDate is the Atrican satisn ane e\nte Ngera's senier sational team in 2015.\nthe age i\nte of\nEnglasd at\nRD\nASS\naGERLA\nABU-\nALEX I",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-12",
+      "title": "Conference League | Nyon",
+      "snippet": "",
+      "url": "https://www.facebook.com/UEConfLeague/",
+      "image_url": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcS5k_1kYTdHLYo06_MS36cGSzR5l7_wPRsa5QnTjbVAIkdzm0Ii",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-13",
+      "title": "Luiz Henrique 1 of 1 from Panini Select La Liga 22/23",
+      "snippet": "",
+      "url": "https://www.instagram.com/p/DXCAzqejGKL/",
+      "image_url": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQboz0pVW_asA1pcSzTtAuCwBHQ5-zpI2x1lLEbQgzxMVakSgqM",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "TRUE COLETOR\nB\nLUIZ HENHIQUE",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-14",
+      "title": "2022 Panini Prizm FIFA World Cup Qatar #144 Edson Alvarez ...",
+      "snippet": "",
+      "url": "https://www.walmart.com/ip/2022-Panini-Prizm-FIFA-World-Cup-Qatar-144-Edson-Alvarez-Mexico-Soccer-Futbol-Base-Trading-Card/20316715301?conditionGroupCode=4",
+      "image_url": "https://i5.walmartimages.com/asr/7ffd3bbe-2608-4136-a7ba-01048705a394.539ee032a1137d97edac1281d44c0a29.jpeg?odnHeight=768&odnWidth=768&odnBg=FFFFFF",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "No. 144\nPAKIKI.\nMEXICo\nEDSON ÁLVAREZ\nA commanding presence, Alvarez\nrelishes his defensive midfield role for\n. Showing he could shoulder the\nibility after inheriting the No. 4 jersey\nfrom the legendary Rafael Márquez, the\nstalwart did so with authority, paving the way\nto more than 50 caps by the age of 24 in 2022.\n2022 PANINI - PRIZM FIFA WORLD cUP QATAR 2022TM SOcCER\nO 2022 Panini America, Inc. Produced in the USA.\nAny imageeicens Nd Ihe Fmblems Mascots, Posters and\nTrophies of the FiFA Wortd Cup tournaments are copyrights and/ar trademarks of FIFA.\nMexico. S\nresponsibilit\nfor",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-15",
+      "title": "Selling autos & mems fcfs! : r/soccercard",
+      "snippet": "",
+      "url": "https://www.reddit.com/r/soccercard/comments/1w3tuge/selling_autos_mems_fcfs/",
+      "image_url": "https://i.redd.it/selling-autos-mems-fcfs-v0-5zth70d1ismh1.jpg?width=3024&format=pjpg&auto=webp&s=a8f5c3fdc3a0964bff6190e554c312a275517e78",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "PAIEI\nThe autograph is gu,\nLconsed Pren\nRODRIGO HUESCAS\nFIFA's Orficial Licensed\nAEO 2026 P\n2025-26\nPA\nof FiFA and FIFAe tournameots, events and products are copyri\nAmerica, inc\nroduct Logus, and all brand elements, designs and trade names\noyrights an/or trademarks af FIFA.\nNo. S-RH\nSIGNATURES\nand all and\nMÉXIco\nMEXIco\n01/10\nPAMII\naret senon unilerm.\n0 by Panini America, Inc.\nRLD CUP 2026TM SOCCER\nis not from any specific game or event.\nThe enclosed authentic memorabilia\nopt\nand became one of the\nAlvarado began representing Mexico in 2018\nthe FIFA World Cup 2026Tk.\nlooking to make a deep run on home soil at\nhe formed part of a talented attacking unit\nand slippery dribbling skills along the wing,\npuons up\nfront.\nProrityS most\nreliable\nMEXICo\nROBERTO ALVARADO\nMÉXICo\no depictod\n91/99\nNo. SE-GG\nPORTUGAL\nGONÇALO\nUEDES\nPRIZM\nThe autograph is guaranteed by Panini America, Ioc,\nPRZM\nA WORLD CUP 20261\nNo. SM-RAO\nE 2026 Panini America\ncopyrighs\n961Eie 2020 Panini Aaorica, Inc.\n0PE 2026 Panisi Anerica, Isc.\nRuproducclón Autori\nrel Instituto Nacioal de A\nLEUI ROAD TO FIFA WORLD",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-16",
+      "title": "Antonio Conte - Panini Select Fifa Silver Prizm | Pop ...",
+      "snippet": "",
+      "url": "https://www.finarte.it/auction/pop-culture-memorabilia-cards-milan-2023-10-26/antonio-conte-panini-select-fifa-silver-prizm-109500",
+      "image_url": "https://api.finarte.it/api/lotto/immagine/109500/1.jpg",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "ITALIA|\nFIGC\nANTONIO CONTE\nThe autograph is guaranteed by Panini America, Inc.",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-17",
+      "title": "Panathinaikos Panini Select EuroLeague… - € 9,99 - Vendora.gr",
+      "snippet": "",
+      "url": "https://vendora.gr/items/wmyk4zz/panathinaikos-panini-select-euroleague-premier-level-prizm-karta-juancho-hernangomez-san-kenourgio.html",
+      "image_url": "https://bcdn.vendora.gr/0/22/1d/221d1e67ee50f5a986b7742dd0e8d2b663790c31.jpg?class=lsq",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "No. 168\nPREMIER LEVEL\nPANATHINAIKOS AKTOR ATHENs\nPANATHINAIKOS BC\nAKTOR\nJUANCHO HERNANGOMEZ\nAfter previously working out of a\nbench role, Hernangomez fought\nhis way up the depth chart in\n2024-25 and started 27 of his 40\nappearances. The forward forced his\ncoaching statf's hand with brilliant\nplay, and his increased presence\nhelped him secure Al-EuroLeague\nSecond Team recognition.\nPRIZM\n2025-26 PANINI-SEUCT EUROLEAGUE BASKETBALL\n2926 Pai Anerica,\nEuroleague\nJUAN\n132/149\nPANATHINAIKOS",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-18",
+      "title": "2018 Panini Prizm World Cup Prizms Silver #139 Alex Iwobi on ...",
+      "snippet": "",
+      "url": "https://www.fanaticscollect.com/buy-now/eed26db9-ec2d-4f4c-920e-4531085f1aa9/2018-panini-prizm-world-cup-prizms-silver-139-alex-iwobi",
+      "image_url": "https://img.beckett.com/images/items/15394169/marketplace/97255280/back.jpg",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "No. 139\nPRIZM\nNIGERIA\nLISSA018\nOOTBALL\noICIAL ICENSED\nPRODUCT\nASs\nABUJA\nBORN: 5/3/96 | HEIGHT: 1.80 M (5'10\")\nALEX IWWOBI\nIwobi dialed up two goals for Nigeria in CAF qualifying\nfor the 2018 FIFA World Cup, both coming at Zambia's\nexpense and one starting a nationwide celebration on\nOct. 7, 2017. The forward, who plays his club soccer with\nArsenal, fired the goal that put Nigeria in the pack at\nRussia 2018 by way of a 1-0 victory.\nOFIFA, FIFA's Official Licensed Product\nLogos, and the Emblems, Mascots, Posters\nand Trophies of the FiIFA World CupT\ntournaments are copyrights and/or\ntrademarks of FIFA. Manufactured under\nlicense by Panini. Made in USA.\n2018 PANINI- PRIZM wORLD CUP sOcCER\n2018 Panini Anerica, inc. Printed in the USA,\nImage depicted may not represent the current season uaiform.\nPAKIT\naTIOA",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-19",
+      "title": "Football Trading Card - Riyad Mahrez - Icon - Algeria ...",
+      "snippet": "",
+      "url": "https://www.worldtradingcards.com/en/products/riyad-mahrez-icon-12-argelia-panini-adrenalyn-xl-fifa-world-cup-basico",
+      "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTY0EebS7gPlCMNXdX_E-bx0R6g3W49irDmI9Q9RpD_upaFFP_o",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "12\n60B583 234\nRIVAD IMAHREZ\nICON\nPANI",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-20",
+      "title": "Topps Chrome UEFA Club Competitions #34 Vangelis Pavlidis ...",
+      "snippet": "",
+      "url": "https://vinceron.com/products/topps-chrome-uefa-club-competitions-34-vangelis-pavlidis-green-refractor-07-99",
+      "image_url": "https://vinceron.com/cdn/shop/files/57_7a44d044-c928-42d3-b145-5398a2b9229a_900x.jpg?v=1781392235",
+      "page_text": null,
+      "page_url": null,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "AL\neEST\nLOTADTEO\n34\nVANGELIS PAVLIDIS\nSL BENFICA\nFORWARD\nMaking clever runs into the channels, building\npassages of interplay with his attacking colleagues,\nand creating chances for himself and others,\nVangelis Pavlidis is far more than just a\nclinical finisher. During an exceptional debut\nUEFA Champions League campaign, the Greek\nforward recorded seven goals and two assists.\nCHAMPIONS\nLEA\nPublished Under License by The Topps Compam, lec A2026 THE TOPTS COMPAY, NC\nTHE TOPPS COMPAY, INC. The wordis) UEFA CHAMPIONS LEACUE. and alil athe\nA ngbta esarved. wiwW. TOPPS.COM. coDEFCMP1242957.\noSLB cial Product\nS\nAND TOPPs CiROME ARE REGISTERED TRADEMARKS OF\nmarks, designs and/or copyright of UESA\ns names, logos, mscots and treghies arn the property\ngstered radi\nALL RIGHTS\nRESERVED TOPT\nUEEA Champions Laague mam\nLEAGUE",
+        "origin": "candidate_image_ocr"
+      }
+    }
+  ],
+  "crops": [
+    {
+      "id": "original-1-upper",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.11481481481481481,
+        "y": 0.2948717948717949,
+        "width": 0.7805555555555556,
+        "height": 0.18333333333333332
+      }
+    },
+    {
+      "id": "original-1-lower",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.11481481481481481,
+        "y": 0.6414529914529915,
+        "width": 0.7805555555555556,
+        "height": 0.1935897435897436
+      }
+    },
+    {
+      "id": "original-2-upper",
+      "image_index": 2,
+      "region": {
+        "image_index": 2,
+        "x": 0.11481481481481481,
+        "y": 0.2948717948717949,
+        "width": 0.7805555555555556,
+        "height": 0.18333333333333332
+      }
+    },
+    {
+      "id": "original-2-lower",
+      "image_index": 2,
+      "region": {
+        "image_index": 2,
+        "x": 0.11481481481481481,
+        "y": 0.6414529914529915,
+        "width": 0.7805555555555556,
+        "height": 0.1935897435897436
+      }
+    }
+  ],
+  "recorded_entries": [],
+  "variant_comparisons": [],
+  "recorded_status": "unresolved"
+}
