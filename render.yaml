@@ -1,0 +1,21 @@
+# Free test service only. Check workspace billing/overage settings before creation.
+# No database, disk, paid instance or automatic upgrade is requested.
+services:
+  - type: web
+    name: flipcheck-lens
+    runtime: docker
+    plan: free
+    region: frankfurt
+    branch: codex/pokemon-number-identity
+    dockerfilePath: ./backend/visual-search/Dockerfile
+    dockerContext: ./backend/visual-search
+    autoDeployTrigger: off
+    envVars:
+      - key: SEARCHAPI_API_KEY
+        sync: false
+      - key: FLIPCHECK_ACCESS_TOKEN
+        sync: false
+      - key: PUBLIC_ORIGIN
+        sync: false
+      - key: SEARCHAPI_UNIT_USD
+        sync: false

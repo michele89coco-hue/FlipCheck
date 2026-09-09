@@ -34,6 +34,25 @@ GET `/v1/lens/config` requires the app token and reports configuration readiness
 without consuming a Lens credit. A missing/invalid service leaves OCR/catalogue/web
 fallback available. Do not put the SearchApi key into the app access field.
 
+## Render Free test deployment
+
+The repository's `render.yaml` explicitly selects one **Free** Docker web service
+in Frankfurt and disables automatic deployments to limit build usage. It adds no
+database, disk or paid resources. The authenticated config endpoint is not a public
+health check; use Render's default TCP check. Set `PUBLIC_ORIGIN` to the actual
+HTTPS URL assigned by Render, not a guessed hostname. Generate the separate app
+access token with `python3 -c 'import secrets; print(secrets.token_urlsafe(32))'`
+and enter it only in Render's secret settings and the app.
+
+Before creating the service, verify that the workspace has no payment method or
+otherwise prevents supplementary bandwidth/build charges. A Free instance alone
+does not guarantee zero overage charges on a workspace with billing enabled.
+Render's free service sleeps after 15 idle minutes and can need about a minute to
+resume. An APK config timeout during that restart intentionally falls back to OCR
+and existing web APIs. SearchApi credits and other API costs remain separate.
+See https://render.com/docs/free. Connecting this configuration is still required;
+committing it does not create a live service or provision GitHub secrets.
+
 ## Image lifecycle and limits
 
 The client uploads one re-encoded original photo (maximum 2048 px, no EXIF). The
