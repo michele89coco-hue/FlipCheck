@@ -249,6 +249,22 @@ async function readPokemonBands202(l,ctx){
  if(ctx.budget.spent()+estimate164(body)+(ctx.lensFinalReserve208||0)>ctx.budget.maxUsd){ctx.pokemonPanels.state='skipped_budget';return;}
  const started=Date.now();try{const response=await originalOpenai26(body);addUsage(response,body.model,0,'Lettura fasce identificative Pokémon',true,started);guard164(ctx);const reply=E193.mapPokemonBands204(parseResponseJSON(response),plans);E193.applyIdentityBands202(l,reply);ctx.pokemonPanels.state='read';ctx.pokemonPanels.readings=reply.observations;ctx.pokemonPanels.features=reply.features||[];l.record('pokemon_identity_bands',{panels:ctx.pokemonPanels.panels,observations:reply.observations,features:reply.features||[]});diagnosticPhases.push({stage:'flipcheck_pokemon_identity_bands',result:reply,webCalls:0,usage:response.usage||null});saveEvidence192('reading','',{pokemon_panels:ctx.pokemonPanels});}catch(error){guard164(ctx);ctx.pokemonPanels.state='unavailable';l.record('pokemon_identity_bands_unavailable',{reason:responseReason166(error)});}
 }
+async function serialOcr212(l,ctx){
+ if(l.domain!=='sports'||l.pick('serial')||validImageCount()<2||ctx.lens?.state!=='ok'||!l.attempt('serial-border-ocr'))return;
+ const reports=[];
+ for(const r of (l.base.object_regions||[]).slice(0,2)){
+  if(!r.certain)continue;
+  for(const [side,box,rotation] of [['lower',{...r,y:r.y+r.height*.70,height:r.height*.30},0],['left',{...r,width:r.width*.24},90],['right',{...r,x:r.x+r.width*.76,width:r.width*.24},270]]){
+   try{let p=await visualPhoto164({object_region:{...box,certain:true},detail_crop:true});p=await rotateDetail193(p,rotation);const o=await directCall165('ocr',{image_data:p.data,script:'latin'},ctx,6500);guard164(ctx);
+    const candidates=String(o.text||'').split(/\n/).map(t=>t.trim()).filter(t=>/^\d{1,6}\s*\/\s*\d{1,6}$/.test(t)&&E193.serial(t));
+    for(const text of candidates)l.add('serial',text,{source:'local_ocr',certainty:'uncertain',image_index:r.image_index,region:box,raw:text,rotation,zone:'edge'});
+    reports.push({image_index:r.image_index,side,state:o.state,candidates});
+   }catch(error){guard164(ctx);reports.push({image_index:r.image_index,side,state:'unavailable'});}
+  }
+ }
+ l.record('serial_border_ocr',{reports,paid_requests:0});
+}
+
 async function resolveCatalogue193(base,ctx){
  let reading=lastVisionReading||base;
  if(S191.isSlab(reading)){
@@ -259,10 +275,12 @@ async function resolveCatalogue193(base,ctx){
   reading={...reading,slab_reading:null,observations:(reading.observations||[]).filter(o=>o.zone!=='label'&&!(o.field==='serial'&&o.text===ctx.slabRecovery.facts.certificate))};
  }
  if(typeof startLens205==='function')await startLens205(ctx);
+ reading={...reading,uploaded_image_count:validImageCount()};
  const l=new E193.Ledger(reading);ctx.catalogueEngine=l;ctx.route=ctx.slabRecovery?'slab_card_recovery':'catalogue_engine';E193.ingestVision(l,reading);l.userDetails=ctx.userDetails??String($('details')?.value||'').slice(0,2000);
  let entries=[],pages=[],result;
  try{
   await readPhotoOcr174(lastVisionReading||base,ctx);E193.ingestOcr(l,ctx.photoOcr);l.record('readings_collected',{count:l.atoms.length});
+  await serialOcr212(l,ctx);
   const primaryLens=ctx.lens?.state==='ok'&&typeof primaryLens206==='function'?await primaryLens206(l,ctx):null;
   if(primaryLens){entries=primaryLens.entries;pages=primaryLens.pages;result=commitCatalogue193(l,entries,ctx);if(result.market_ready)return result;}
   const rereadFields=new Set(ctx.lens?.visualComparison?.originalReread?.accepted?.map(r=>r.field)||[]);

@@ -37,5 +37,28 @@ function analyze(pixels,width,height){
 async function pixels(data){const im=new Image();await new Promise((resolve,reject)=>{im.onload=resolve;im.onerror=reject;im.src=data;});const c=document.createElement('canvas');c.width=im.width;c.height=im.height;const g=c.getContext('2d',{willReadFrequently:true});g.drawImage(im,0,0);return {data:g.getImageData(0,0,c.width,c.height).data,width:c.width,height:c.height};}
 function signature(p){const sample=[];for(let y=0;y<12;y++)for(let x=0;x<12;x++){const i=((Math.floor((y+.5)*p.height/12))*p.width+Math.floor((x+.5)*p.width/12))*4;sample.push((p.data[i]*.2126+p.data[i+1]*.7152+p.data[i+2]*.0722)/255);}const mean=sample.reduce((a,b)=>a+b,0)/sample.length;return {aspect:p.width/p.height,values:sample.map(v=>v-mean)};}
 function compare(a,b){let distance=0;for(let i=0;i<a.values.length;i++)distance+=Math.abs(a.values[i]-b.values[i]);return {mean_pixel_distance:Math.round(distance/a.values.length*1000)/1000,aspect_ratio_difference:Math.round(Math.abs(Math.log(a.aspect/b.aspect))*1000)/1000,scope:'appearance_only',identity_proof:false};}
-const api={analyze,pixels,signature,compare};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckImageEvidence=api;
+// Appearance measurements use an explicit object quadrilateral, never screenshot edges.
+function surface212(p,quad){
+ const unclear=reason=>({state:'unclear',reason,paid_requests:0,identity_proof:false,foil:'undetermined'});
+ if(!p?.data||!Array.isArray(quad)||quad.length!==4||quad.some(v=>!Number.isFinite(v.x)||!Number.isFinite(v.y)||v.x<0||v.y<0||v.x>1||v.y>1))return unclear('object_not_localized');
+ const cross=(a,b,c)=>(b.x-a.x)*(c.y-b.y)-(b.y-a.y)*(c.x-b.x),turns=quad.map((a,i)=>cross(a,quad[(i+1)%4],quad[(i+2)%4]));
+ if(!turns.every(v=>v>0)&&!turns.every(v=>v<0))return unclear('invalid_object_quad');
+ const area=Math.abs(quad.reduce((s,a,i)=>s+a.x*quad[(i+1)%4].y-a.y*quad[(i+1)%4].x,0))/2;if(area<.01)return unclear('object_too_small');
+ const W=64,H=80,regions={frame:{hist:Array(12).fill(0),n:0,glare:0,neutral:0,texture:0,pairs:0},background:{hist:Array(12).fill(0),n:0,glare:0,neutral:0,texture:0,pairs:0}},gray=new Float64Array(W*H);
+ for(let y=0;y<H;y++)for(let x=0;x<W;x++){
+  const u=(x+.5)/W,v=(y+.5)/H,weights=[(1-u)*(1-v),u*(1-v),u*v,(1-u)*v],sx=quad.reduce((s,q,i)=>s+q.x*weights[i],0),sy=quad.reduce((s,q,i)=>s+q.y*weights[i],0),idx=(Math.min(p.height-1,Math.floor(sy*p.height))*p.width+Math.min(p.width-1,Math.floor(sx*p.width)))*4;
+  const r=p.data[idx]/255,g=p.data[idx+1]/255,b=p.data[idx+2]/255,max=Math.max(r,g,b),min=Math.min(r,g,b),delta=max-min,sat=max?delta/max:0,lum=.2126*r+.7152*g+.0722*b;
+  const zone=x<W*.18||x>W*.82||y<H*.12||y>H*.88?regions.frame:regions.background;zone.n++;gray[y*W+x]=lum;
+  if(max>.95&&sat<.12){zone.glare++;continue;}if(max<.12)continue;
+  if(sat<.18)zone.neutral++;else{let h=delta===0?0:max===r?((g-b)/delta)%6:max===g?(b-r)/delta+2:(r-g)/delta+4;h=(h*60+360)%360;zone.hist[Math.floor(h/30)]++;}
+  if(x){zone.texture+=Math.abs(lum-gray[y*W+x-1]);zone.pairs++;}
+ }
+ for(const z of Object.values(regions)){z.glare_fraction=z.glare/z.n;z.neutral_fraction=z.neutral/z.n;z.hist=z.hist.map(n=>n/z.n);z.texture=z.texture/Math.max(1,z.pairs);delete z.glare;delete z.neutral;delete z.pairs;}
+ const z=regions.frame,green=z.hist[2]+z.hist[3]+z.hist[4],blue=z.hist[6]+z.hist[7]+z.hist[8],red=z.hist[0]+z.hist[11];
+ const color=z.glare_fraction>.25?'unclear':green>.30?'green':blue>.30?'blue':red>.30?'red':z.neutral_fraction>.55?'neutral':'mixed';
+ return {state:z.glare_fraction>.35?'unclear':'measured',method:'quad_normalized_hsv_texture',regions,frame_color:color,foil:'undetermined',paid_requests:0,identity_proof:false};
+}
+function compareSurface212(a,b){if(a.state!=='measured'||b.state!=='measured')return {state:'unclear',identity_proof:false};const distance=a.regions.frame.hist.reduce((s,v,i)=>s+Math.abs(v-b.regions.frame.hist[i]),0)/2;return {state:'measured',frame_histogram_distance:distance,frame_color_agrees:a.frame_color===b.frame_color&&!['unclear','mixed','neutral'].includes(a.frame_color),frame_color:a.frame_color,texture_difference:Math.abs(a.regions.frame.texture-b.regions.frame.texture),foil:'undetermined',identity_proof:false};}
+
+const api={analyze,pixels,signature,compare,surface212,compareSurface212};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckImageEvidence=api;
 })(typeof window!=='undefined'?window:globalThis);

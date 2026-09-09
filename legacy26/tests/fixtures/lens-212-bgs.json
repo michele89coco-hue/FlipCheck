@@ -1,0 +1,1386 @@
+{
+  "vision": {
+    "domain": "pokemon",
+    "kind": "card",
+    "category": "Pokémon",
+    "language": "Italiano",
+    "object_unit": "single",
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.03,
+        "y": 0.06,
+        "width": 0.91,
+        "height": 0.77,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "Cloyster",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.34,
+          "y": 0.27,
+          "width": 0.2,
+          "height": 0.04
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "brand",
+        "text": "Pokémon",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.34,
+          "y": 0.27,
+          "width": 0.2,
+          "height": 0.04
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "product",
+        "text": "2002 Expedition",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.31,
+          "y": 0.1,
+          "width": 0.16,
+          "height": 0.03
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "collector_number",
+        "text": "#8",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.31,
+          "y": 0.13,
+          "width": 0.16,
+          "height": 0.03
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "rarity_text",
+        "text": "R",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.47,
+          "y": 0.13,
+          "width": 0.04,
+          "height": 0.03
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "language",
+        "text": "Italian",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.31,
+          "y": 0.115,
+          "width": 0.12,
+          "height": 0.018
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "hp",
+        "text": "80 PV",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.67,
+          "y": 0.28,
+          "width": 0.09,
+          "height": 0.03
+        },
+        "zone": "statistics",
+        "alternatives": []
+      },
+      {
+        "field": "attack",
+        "text": "Leccata — 10",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.37,
+          "y": 0.52,
+          "width": 0.46,
+          "height": 0.06
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "attack",
+        "text": "Autofuoco — 20×",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.37,
+          "y": 0.6,
+          "width": 0.45,
+          "height": 0.08
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "copyright",
+        "text": "© 2002 Pokémon / Nintendo",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.27,
+          "y": 0.696,
+          "width": 0.22,
+          "height": 0.018
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "illustrator",
+        "text": "Kyou ...",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.51,
+          "y": 0.696,
+          "width": 0.12,
+          "height": 0.018
+        },
+        "zone": "footer",
+        "alternatives": [
+          "Kyou"
+        ]
+      },
+      {
+        "field": "text",
+        "text": "FASE 1; Evolve da Shellder; Pokémon di Fase 1",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.23,
+          "y": 0.264,
+          "width": 0.56,
+          "height": 0.06
+        },
+        "zone": "front",
+        "alternatives": []
+      }
+    ],
+    "features": [
+      {
+        "field": "border_color",
+        "value": "yellow",
+        "description": "Cornice gialla della carta",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.15,
+          "y": 0.24,
+          "width": 0.7,
+          "height": 0.5
+        },
+        "zone": "border"
+      },
+      {
+        "field": "finish",
+        "value": "holo",
+        "description": "Illustrazione con effetto olografico",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.24,
+          "y": 0.32,
+          "width": 0.58,
+          "height": 0.17
+        },
+        "zone": "artwork"
+      },
+      {
+        "field": "rarity_symbol",
+        "value": "present",
+        "description": "Simbolo di rarità visibile sull'etichetta come R",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.47,
+          "y": 0.13,
+          "width": 0.04,
+          "height": 0.03
+        },
+        "zone": "label"
+      },
+      {
+        "field": "layout",
+        "value": "Ritratto, cornice gialla, illustrazione centrale e due sezioni attacco",
+        "description": "Layout standard verticale",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.15,
+          "y": 0.24,
+          "width": 0.7,
+          "height": 0.5
+        },
+        "zone": "other"
+      }
+    ],
+    "hypotheses": [],
+    "slab_reading": {
+      "grader": "Beckett Grading Services (BGS)",
+      "label_text": "2002 EXPEDITION / ITALIAN / #8 CLOYSTER HOLO R / 9 MINT / 0014436473 / CENTERING 9.5 / CORNERS 9.5 / EDGES 9.5 / SURFACE 8.5",
+      "card_title": "Cloyster",
+      "subject": "Cloyster",
+      "family": "Pokémon Expedition",
+      "model": "#8 Cloyster Holo R",
+      "year": "2002",
+      "card_number": "#8",
+      "variant": "Holo R",
+      "grade": "9 MINT",
+      "certificate": "0014436473",
+      "match_details": "Etichetta BGS leggibile; carta Cloyster italiana visibile nello slab",
+      "present": true,
+      "certainty": "clear",
+      "title_certainty": "clear",
+      "grade_certainty": "clear",
+      "certificate_certainty": "clear",
+      "secondary_text_incomplete": false,
+      "subgrades": [
+        {
+          "name": "centering",
+          "value": "9.5",
+          "certainty": "clear"
+        },
+        {
+          "name": "corners",
+          "value": "9.5",
+          "certainty": "clear"
+        },
+        {
+          "name": "edges",
+          "value": "9.5",
+          "certainty": "clear"
+        },
+        {
+          "name": "surface",
+          "value": "8.5",
+          "certainty": "clear"
+        }
+      ],
+      "image_index": 1,
+      "object_match": "matches"
+    },
+    "engine_version": 193,
+    "brand": "Pokémon",
+    "family": "2002 Expedition",
+    "title": "Cloyster",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": {
+      "image_index": 1,
+      "x": 0.03,
+      "y": 0.06,
+      "width": 0.91,
+      "height": 0.77,
+      "certain": true
+    },
+    "photo_clues": [
+      {
+        "text": "Cloyster",
+        "role": "subject",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.34,
+          "y": 0.27,
+          "width": 0.2,
+          "height": 0.04,
+          "certain": true
+        }
+      },
+      {
+        "text": "Pokémon",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.34,
+          "y": 0.27,
+          "width": 0.2,
+          "height": 0.04,
+          "certain": true
+        }
+      },
+      {
+        "text": "2002 Expedition",
+        "role": "model",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.31,
+          "y": 0.1,
+          "width": 0.16,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "#8",
+        "role": "collector_number",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.31,
+          "y": 0.13,
+          "width": 0.16,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "R",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.47,
+          "y": 0.13,
+          "width": 0.04,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "Italian",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.31,
+          "y": 0.115,
+          "width": 0.12,
+          "height": 0.018,
+          "certain": true
+        }
+      },
+      {
+        "text": "80 PV",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.67,
+          "y": 0.28,
+          "width": 0.09,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "Leccata — 10",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.37,
+          "y": 0.52,
+          "width": 0.46,
+          "height": 0.06,
+          "certain": true
+        }
+      },
+      {
+        "text": "Autofuoco — 20×",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.37,
+          "y": 0.6,
+          "width": 0.45,
+          "height": 0.08,
+          "certain": true
+        }
+      },
+      {
+        "text": "© 2002 Pokémon / Nintendo",
+        "role": "copyright",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.27,
+          "y": 0.696,
+          "width": 0.22,
+          "height": 0.018,
+          "certain": true
+        }
+      },
+      {
+        "text": "Kyou ...",
+        "role": "text",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.51,
+          "y": 0.696,
+          "width": 0.12,
+          "height": 0.018,
+          "certain": true
+        }
+      },
+      {
+        "text": "FASE 1; Evolve da Shellder; Pokémon di Fase 1",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.23,
+          "y": 0.264,
+          "width": 0.56,
+          "height": 0.06,
+          "certain": true
+        }
+      }
+    ],
+    "physical_observations": [
+      {
+        "feature": "color",
+        "text": "yellow border",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Illustrazione con effetto olografico",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Simbolo di rarità visibile sull'etichetta come R",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Layout standard verticale",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      }
+    ],
+    "pokemon_printing": {
+      "is_pokemon": true,
+      "language": "Italiano",
+      "set_name": "2002 Expedition",
+      "card_type": "pokemon",
+      "first_edition_stamp": "unclear",
+      "stamp_image": 0,
+      "stamp_location": "",
+      "stamp_text": "",
+      "artwork_shadow": "unclear",
+      "shadow_image": 0,
+      "shadow_location": "",
+      "copyright_text": "© 2002 Pokémon / Nintendo",
+      "copyright_image": 1
+    }
+  },
+  "crops": [
+    {
+      "id": "original-1-upper",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.014814814814814815,
+        "y": 0.04487179487179487,
+        "width": 0.9407407407407408,
+        "height": 0.26153846153846155
+      }
+    },
+    {
+      "id": "original-1-lower",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.014814814814814815,
+        "y": 0.5683760683760684,
+        "width": 0.9407407407407408,
+        "height": 0.27692307692307694
+      }
+    }
+  ],
+  "batches": [
+    {
+      "ids": [
+        "lens-2",
+        "lens-5",
+        "lens-6"
+      ],
+      "reply": {
+        "original_readings": [
+          {
+            "field": "subject",
+            "image_index": 1,
+            "crop_id": "original-1-upper",
+            "full_text": "Cloyster",
+            "crop_text": "Cloyster",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Cloyster",
+              "en": "Cloyster"
+            }
+          },
+          {
+            "field": "copyright",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "© 2002 Pokémon / Nintendo",
+            "crop_text": "© 2002 Pokémon / Nintendo",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "© 2002 Pokémon / Nintendo",
+              "en": "© 2002 Pokémon / Nintendo"
+            }
+          },
+          {
+            "field": "language",
+            "image_index": 1,
+            "crop_id": "original-1-upper",
+            "full_text": "ITALIAN",
+            "crop_text": "ITALIAN",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Italiano",
+              "en": "Italian"
+            }
+          },
+          {
+            "field": "serial",
+            "image_index": 1,
+            "crop_id": "original-1-upper",
+            "full_text": "0014436473",
+            "crop_text": "0014436473",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "0014436473",
+              "en": "0014436473"
+            }
+          }
+        ],
+        "comparisons": [
+          {
+            "reference_id": "lens-2",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [
+              "Numero 42/165 invece di 8/165; inglese reverse holo invece di italiano holo."
+            ],
+            "original_reading": {
+              "subject": "Cloyster",
+              "number": "",
+              "year": "2002",
+              "language": "Italian"
+            },
+            "reference_reading": {
+              "subject": "Cloyster",
+              "number": "42/165",
+              "year": "2002",
+              "language": "English"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Cloyster davanti a sfondo fratturato",
+                "reference": "Stessa illustrazione",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "Holo, numero 8/165",
+                "reference": "Reverse holo, numero 42/165",
+                "agrees": false,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Cloyster",
+              "family": "Expedition",
+              "number": "42/165",
+              "year": "2002",
+              "brand": "Pokémon",
+              "subset": "Reverse Holo",
+              "proof": {
+                "subject": "Cloyster",
+                "family": "Expedition",
+                "year": "2002",
+                "subset": "Reverse Holo"
+              },
+              "display_names": {
+                "it": "Cloyster",
+                "en": "Cloyster"
+              }
+            }
+          },
+          {
+            "reference_id": "lens-5",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [
+              "Numero 42/165 invece di 8/165; carta inglese non holo."
+            ],
+            "original_reading": {
+              "subject": "Cloyster",
+              "number": "",
+              "year": "2002",
+              "language": "Italian"
+            },
+            "reference_reading": {
+              "subject": "Cloyster",
+              "number": "42/165",
+              "year": "2002",
+              "language": "English"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Stessa illustrazione di Cloyster",
+                "reference": "Stessa illustrazione di Cloyster",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "Holo, numero 8/165",
+                "reference": "Numero 42/165, variante non holo",
+                "agrees": false,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Cloyster",
+              "family": "Expedition",
+              "number": "42/165",
+              "year": "2002",
+              "brand": "Pokémon",
+              "subset": "",
+              "proof": {
+                "subject": "Cloyster",
+                "family": "Expedition",
+                "year": "2002",
+                "subset": ""
+              },
+              "display_names": {
+                "it": "Cloyster",
+                "en": "Cloyster"
+              }
+            }
+          },
+          {
+            "reference_id": "lens-6",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "Cloyster",
+              "number": "",
+              "year": "2002",
+              "language": "Italian"
+            },
+            "reference_reading": {
+              "subject": "Cloyster",
+              "number": "8/165",
+              "year": "2002",
+              "language": "English"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Cloyster davanti a sfondo fratturato",
+                "reference": "Stessa illustrazione e posa",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "Holo con pattern Expedition",
+                "reference": "Holo con pattern Expedition, 8/165",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Cloyster",
+              "family": "Expedition",
+              "number": "8/165",
+              "year": "2002",
+              "brand": "Pokémon",
+              "subset": "Holo",
+              "proof": {
+                "subject": "CLOYSTER-HOLO",
+                "family": "2002 POKEMON EXPEDITION",
+                "year": "2002",
+                "subset": "8/165"
+              },
+              "display_names": {
+                "it": "Cloyster",
+                "en": "Cloyster"
+              }
+            }
+          }
+        ]
+      },
+      "accepted": []
+    },
+    {
+      "ids": [
+        "lens-7",
+        "lens-9",
+        "lens-11"
+      ],
+      "reply": {
+        "original_readings": [
+          {
+            "field": "subject",
+            "image_index": 1,
+            "crop_id": "original-1-upper",
+            "full_text": "Cloyster",
+            "crop_text": "Cloyster",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Cloyster",
+              "en": "Cloyster"
+            }
+          },
+          {
+            "field": "copyright",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "© 2002 Pokémon / Nintendo",
+            "crop_text": "© 2002 Pokémon / Nintendo",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "© 2002 Pokémon / Nintendo",
+              "en": "© 2002 Pokémon / Nintendo"
+            }
+          }
+        ],
+        "comparisons": [
+          {
+            "reference_id": "lens-7",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [
+              "Lingua inglese contro originale italiana.",
+              "Numero e artwork concordano, ma lingua differente."
+            ],
+            "original_reading": {
+              "subject": "Cloyster",
+              "number": "",
+              "year": "2002",
+              "language": "italiano"
+            },
+            "reference_reading": {
+              "subject": "Cloyster",
+              "number": "8/165",
+              "year": "2002",
+              "language": "inglese"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Cloyster con guscio scuro scintillante",
+                "reference": "Stessa illustrazione con trattamento holo",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Layout Expedition italiano",
+                "reference": "Layout Expedition inglese",
+                "agrees": false,
+                "certainty": "clear"
+              },
+              {
+                "field": "identifier",
+                "original": "",
+                "reference": "8/165",
+                "agrees": false,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Cloyster",
+              "family": "Expedition",
+              "number": "8/165",
+              "year": "2002",
+              "brand": "Pokémon",
+              "subset": "Holo",
+              "proof": {
+                "subject": "Cloyster",
+                "family": "Cloyster Expedition Base Set",
+                "year": "2002 Pokémon / Nintendo",
+                "subset": "8/165"
+              },
+              "display_names": {
+                "it": "Cloyster",
+                "en": "Cloyster"
+              }
+            }
+          },
+          {
+            "reference_id": "lens-9",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [
+              "Lingua inglese contro originale italiana.",
+              "Numero e artwork concordano, ma lingua differente."
+            ],
+            "original_reading": {
+              "subject": "Cloyster",
+              "number": "",
+              "year": "2002",
+              "language": "italiano"
+            },
+            "reference_reading": {
+              "subject": "Cloyster",
+              "number": "8/165",
+              "year": "2002",
+              "language": "inglese"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Cloyster con guscio scuro scintillante",
+                "reference": "Stessa illustrazione con trattamento holo",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "Holo italiano",
+                "reference": "Holo inglese",
+                "agrees": false,
+                "certainty": "clear"
+              },
+              {
+                "field": "text",
+                "original": "Testo italiano",
+                "reference": "Testo inglese",
+                "agrees": false,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Cloyster",
+              "family": "Expedition",
+              "number": "8/165",
+              "year": "2002",
+              "brand": "Pokémon",
+              "subset": "Holo",
+              "proof": {
+                "subject": "Cloyster",
+                "family": "Expedition Holos are stunning",
+                "year": "2002 Pokémon / Nintendo",
+                "subset": "8/165"
+              },
+              "display_names": {
+                "it": "Cloyster",
+                "en": "Cloyster"
+              }
+            }
+          },
+          {
+            "reference_id": "lens-11",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [
+              "Variante reverse holo contro originale holo.",
+              "Nessun match esatto tra trattamenti fisici."
+            ],
+            "original_reading": {
+              "subject": "Cloyster",
+              "number": "",
+              "year": "2002",
+              "language": "italiano"
+            },
+            "reference_reading": {
+              "subject": "Cloyster",
+              "number": "8/165",
+              "year": "2002",
+              "language": "italiano"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Cloyster con guscio scuro scintillante",
+                "reference": "Stessa illustrazione, pattern reverse holo",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "Holo italiano",
+                "reference": "Reverse holo italiano",
+                "agrees": false,
+                "certainty": "clear"
+              },
+              {
+                "field": "text",
+                "original": "Testo italiano",
+                "reference": "Testo italiano",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Cloyster",
+              "family": "Expedition",
+              "number": "8/165",
+              "year": "2002",
+              "brand": "Pokémon",
+              "subset": "Reverse Holo",
+              "proof": {
+                "subject": "Cloyster",
+                "family": "Cloyster 8/165 - Expedition - Reverse Holo - Ita ...",
+                "year": "2002 Polkémon / Nivendo",
+                "subset": "8/165"
+              },
+              "display_names": {
+                "it": "Cloyster",
+                "en": "Cloyster"
+              }
+            }
+          }
+        ]
+      },
+      "accepted": []
+    },
+    {
+      "ids": [
+        "lens-14",
+        "lens-15"
+      ],
+      "reply": {
+        "original_readings": [
+          {
+            "field": "subject",
+            "image_index": 1,
+            "crop_id": "original-1-upper",
+            "full_text": "Cloyster",
+            "crop_text": "Cloyster",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Cloyster",
+              "en": "Cloyster"
+            }
+          },
+          {
+            "field": "rarity_text",
+            "image_index": 1,
+            "crop_id": "original-1-upper",
+            "full_text": "HOLO R",
+            "crop_text": "",
+            "evidence_found": false,
+            "certainty": "uncertain",
+            "display_names": {
+              "it": "HOLO R",
+              "en": "HOLO R"
+            }
+          },
+          {
+            "field": "copyright",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "© 2002 Pokémon / Nintendo",
+            "crop_text": "© 2002 Pokémon / Nintendo",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "© 2002 Pokémon / Nintendo",
+              "en": "© 2002 Pokémon / Nintendo"
+            }
+          },
+          {
+            "field": "language",
+            "image_index": 1,
+            "crop_id": "original-1-upper",
+            "full_text": "ITALIAN",
+            "crop_text": "",
+            "evidence_found": false,
+            "certainty": "uncertain",
+            "display_names": {
+              "it": "ITALIAN",
+              "en": "ITALIAN"
+            }
+          }
+        ],
+        "comparisons": [
+          {
+            "reference_id": "lens-14",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [
+              "Candidate is English; original is Italian.",
+              "Candidate card shows different holo pattern and language."
+            ],
+            "original_reading": {
+              "subject": "Cloyster",
+              "number": "",
+              "year": "2002",
+              "language": "Italian"
+            },
+            "reference_reading": {
+              "subject": "Cloyster",
+              "number": "8/165",
+              "year": "2002",
+              "language": "English"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Cloyster artwork with dark shell and purple body",
+                "reference": "Same Cloyster artwork and composition",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Italian Expedition card layout",
+                "reference": "English Expedition card layout",
+                "agrees": false,
+                "certainty": "clear"
+              },
+              {
+                "field": "text",
+                "original": "Italian attacks and labels",
+                "reference": "English attacks and labels",
+                "agrees": false,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Cloyster",
+              "family": "Pokémon Expedition",
+              "number": "8/165",
+              "year": "2002",
+              "brand": "Pokémon",
+              "subset": "Holo",
+              "proof": {
+                "subject": "Cloyster Expedition Holo 8/165",
+                "family": "Pokemon Expedition",
+                "year": "2002 POKEMON EXPEDITION",
+                "subset": "Cloyster Expedition Holo"
+              },
+              "display_names": {
+                "it": "Cloyster",
+                "en": "Cloyster"
+              }
+            }
+          },
+          {
+            "reference_id": "lens-15",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [
+              "Candidate is English; original is Italian.",
+              "Candidate slab card differs in language and holographic pattern."
+            ],
+            "original_reading": {
+              "subject": "Cloyster",
+              "number": "",
+              "year": "2002",
+              "language": "Italian"
+            },
+            "reference_reading": {
+              "subject": "Cloyster",
+              "number": "",
+              "year": "2002",
+              "language": "English"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Cloyster artwork with dark shell and purple body",
+                "reference": "Same Cloyster artwork and composition",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Italian Expedition card layout",
+                "reference": "English Expedition card layout",
+                "agrees": false,
+                "certainty": "clear"
+              },
+              {
+                "field": "text",
+                "original": "Italian card text",
+                "reference": "English card text",
+                "agrees": false,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Cloyster",
+              "family": "Pokémon Expedition",
+              "number": "",
+              "year": "2002",
+              "brand": "Pokémon",
+              "subset": "Holo",
+              "proof": {
+                "subject": "2002 POKEMON EXPEDITION CLOYSTER-HOLO",
+                "family": "2002 POKEMON EXPEDITION",
+                "year": "2002 POKEMON EXPEDITION",
+                "subset": "CLOYSTER-HOLO"
+              },
+              "display_names": {
+                "it": "Cloyster",
+                "en": "Cloyster"
+              }
+            }
+          }
+        ]
+      },
+      "accepted": []
+    }
+  ],
+  "entries": [],
+  "references": [
+    {
+      "id": "lens-1",
+      "title": "Lotto Carte Pokemon Cloyster - Holo - Expedition 8/165 ...",
+      "snippet": "",
+      "url": "https://www.ebay.it/itm/233741790686",
+      "image_url": "https://i.ebayimg.com/00/s/MTYwMFgxMjQy/z/l9wAAOSwNXZfgdEw/$_12.JPG?set_id=880000500F",
+      "page_text": ""
+    },
+    {
+      "id": "lens-2",
+      "title": "Pokemon - Cloyster - Holo Reverse - Expedition - English ...",
+      "snippet": "",
+      "url": "https://www.ebay.it/itm/285560868755",
+      "image_url": "https://i.ebayimg.com/images/g/CX0AAOSwr09lVRGV/s-l1200.jpg",
+      "page_text": ""
+    },
+    {
+      "id": "lens-3",
+      "title": "008-165 Cloyster Holo (IT) – MINT » Federicstore",
+      "snippet": "",
+      "url": "https://federicstore.it/prodotto/008-165-cloyster-holo-it-mint/",
+      "image_url": "https://federicstore.it/wp-content/uploads/2021/07/008-165h-expedition.png",
+      "page_text": ""
+    },
+    {
+      "id": "lens-4",
+      "title": "Cloyster Holo Expedition 8/165 - Collezionismo In vendita a Roma",
+      "snippet": "",
+      "url": "https://www.subito.it/hobby-collezionismo/cloyster-holo-expedition-8-165-roma-650165054.htm",
+      "image_url": "https://images.sbito.it/api/v1/sbt-ads-images-pro/images/8c/8cd9df50-a594-4567-b265-e705a0aa2a9e?rule=gallery-mobile-1x-auto",
+      "page_text": ""
+    },
+    {
+      "id": "lens-5",
+      "title": "Pokemon TCG Cloyster Expedition Base set Rare #42 PSA 8 NM ...",
+      "snippet": "",
+      "url": "https://www.ebay.com/itm/285375456715",
+      "image_url": "https://i.ebayimg.com/00/s/MTYwMFg5NDY=/z/~JwAAOSwdoBkrMQP/$_32.JPG?set_id=880000500F",
+      "page_text": ""
+    },
+    {
+      "id": "lens-6",
+      "title": "Pokemon Graded: Cloyster 8/165 Expedition (2002) Holo PSA 4 ...",
+      "snippet": "",
+      "url": "https://doubleinfinitygaming.com/collections/pokemon/products/pokemon-graded-cloyster-8-165-expedition-2002-holo-psa-4",
+      "image_url": "https://doubleinfinitygaming.com/cdn/shop/files/img241_1cf5221b-c886-4fec-9de6-426ca9b77322.jpg?v=1787068129&width=1200",
+      "page_text": ""
+    },
+    {
+      "id": "lens-7",
+      "title": "Cloyster Expedition Base Set | Pokémon | CardTrader",
+      "snippet": "",
+      "url": "https://www.cardtrader.com/it/cards/118562-cloyster-holo-rare-008-165-expedition-base-set",
+      "image_url": "https://www.cardtrader.com/uploads/blueprints/image/118562/cloyster-rare-holo-8-165-expedition-base-set.jpg",
+      "page_text": ""
+    },
+    {
+      "id": "lens-8",
+      "title": "Cloyster [Reverse Holo] #42 Prices | Pokemon Expedition ...",
+      "snippet": "",
+      "url": "https://www.pricecharting.com/game/pokemon-expedition/cloyster-reverse-holo-42",
+      "image_url": "https://i.ebayimg.com/images/g/X5UAAeSw48ZpNoIE/s-l225.jpg",
+      "page_text": ""
+    },
+    {
+      "id": "lens-9",
+      "title": "Expedition Holos are stunning : r/PokemonTCG",
+      "snippet": "",
+      "url": "https://www.reddit.com/r/PokemonTCG/comments/oiwsuw/expedition_holos_are_stunning/",
+      "image_url": "https://preview.redd.it/expedition-holos-are-stunning-v0-0dzux2bqnta71.jpg?width=1080&crop=smart&auto=webp&s=d945d65bfc61940daa23114499c26005543863b2",
+      "page_text": ""
+    },
+    {
+      "id": "lens-10",
+      "title": "Cloyster (Expedition 8) - Pokémon Central Wiki",
+      "snippet": "",
+      "url": "https://wiki.pokemoncentral.it/Cloyster_(Expedition_8)",
+      "image_url": "https://media.pokemoncentral.it/wiki/thumb/8/8e/CloysterExpedition8.jpg/180px-CloysterExpedition8.jpg",
+      "page_text": ""
+    },
+    {
+      "id": "lens-11",
+      "title": "Cloyster 8/165 - Expedition - Reverse Holo - Ita ...",
+      "snippet": "",
+      "url": "https://www.subito.it/hobby-collezionismo/cloyster-8-165-expedition-reverse-holo-ita-firenze-616358101.htm",
+      "image_url": "https://images.sbito.it/api/v1/sbt-ads-images-pro/images/b7/b712744c-f43c-4030-bad4-6fff0f76a6ec?rule=fullscreen-1x-auto",
+      "page_text": ""
+    },
+    {
+      "id": "lens-12",
+      "title": "Cloyster [Reverse Holo] #8 Prices | Pokemon Expedition ...",
+      "snippet": "",
+      "url": "https://www.pricecharting.com/game/pokemon-expedition/cloyster-reverse-holo-8",
+      "image_url": "https://storage.googleapis.com/images.pricecharting.com/e77bcddb59d8e7de754c635a56b94d46ecefcb33c0f668e7b1e9e3fdd72e0d0a/240.jpg",
+      "page_text": ""
+    },
+    {
+      "id": "lens-13",
+      "title": "CLOYSTER - 42/165 - EXPEDITION - ITA - POKEMON | eBay",
+      "snippet": "",
+      "url": "https://www.ebay.it/itm/254759871380",
+      "image_url": "https://i.ebayimg.com/images/g/7D0AAOSwEOhflrSW/s-l400.jpg",
+      "page_text": ""
+    },
+    {
+      "id": "lens-14",
+      "title": "Cloyster Expedition Holo 8/165 PSA 8.5 – TBC Games",
+      "snippet": "",
+      "url": "https://tbcgames.com/products/cloyster-expedition-holo-8-165-psa-8-5",
+      "image_url": "https://tbcgames.com/cdn/shop/products/IMG_5363.jpg?v=1679335212&width=1920",
+      "page_text": ""
+    },
+    {
+      "id": "lens-15",
+      "title": "Cloyster holo from Expedition. I LOVE e-readers and the holo ...",
+      "snippet": "",
+      "url": "https://www.instagram.com/p/DRVG0iQkn0A/",
+      "image_url": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcS4xjI7iSbWuIVL8TjouwYKDZe38PQeMtWYC88B_VKU9eF_Q4A0",
+      "page_text": ""
+    },
+    {
+      "id": "lens-16",
+      "title": "Cloyster Holo Expedition 8/165 di seconda mano per 26 EUR su ...",
+      "snippet": "",
+      "url": "https://it.wallapop.com/item/cloyster-holo-expedition-8-165-1270744749",
+      "image_url": "https://cdn.wallapop.com/images/10420/l0/kg/__/c10420p1270744749/i6550026942.jpg?pictureSize=W800",
+      "page_text": ""
+    },
+    {
+      "id": "lens-17",
+      "title": "Cloyster 8/165 Holo Rare - Pocket Monster",
+      "snippet": "",
+      "url": "https://pocketmonster.dk/pokemon/cloyster-8165-holo-rare/",
+      "image_url": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRcTxIJ7NMsJ4wm3OtUR87kM6ql0eisnhB6e7__n5m6Kwx1W96Z",
+      "page_text": ""
+    },
+    {
+      "id": "lens-18",
+      "title": "2002 Pokemon Expedition Holo Cloyster #8 CGC 9 MINT on ...",
+      "snippet": "",
+      "url": "https://www.fanaticscollect.com/buy-now/47467b89-cb1b-4605-ad98-e18296496571/2002-pokemon-expedition-holo-cloyster-8-cgc-9-mint",
+      "image_url": "https://cdn-vault.fanaticscollect.com/2025/8/16/rm2/medium/v1474420_2020081506424793R_25.jpg",
+      "page_text": ""
+    },
+    {
+      "id": "lens-19",
+      "title": "Cloyster 2002 Expedition #008/165 Reverse Holo Price Guide ...",
+      "snippet": "",
+      "url": "https://www.sportscardinvestor.com/cards/cloyster-pokemon/2002-expedition-reverse-holo-008-165",
+      "image_url": "https://i.ebayimg.com/images/g/N3AAAeSwiKBpjlmx/s-l1600.jpg",
+      "page_text": ""
+    },
+    {
+      "id": "lens-20",
+      "title": "Cloyster Expedition - Possible High Grader Valuation - Is ...",
+      "snippet": "",
+      "url": "https://www.reddit.com/r/PokemonCardValue/comments/1tpfg3x/cloyster_expedition_possible_high_grader/",
+      "image_url": "https://preview.redd.it/cloyster-expedition-possible-high-grader-valuation-is-the-v0-ds8rl694pq3h1.jpeg?width=1870&format=pjpg&auto=webp&s=dd98a64520f7dacd30672bac278b668e4278d780",
+      "page_text": ""
+    }
+  ]
+}

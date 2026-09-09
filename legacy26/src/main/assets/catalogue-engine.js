@@ -8,6 +8,7 @@ const presenceFields=['stamp','shadow','rarity_symbol','autograph','patch'];
 function semanticField(domain,field,value){
  const t=norm(value);
  if(domain==='pokemon'&&field==='collector_number'&&/^\d+\s*[x×+−-]$/i.test(str(value)))return 'statistics_number';
+ if(['onepiece','tcg'].includes(domain)&&field==='rarity_text'&&/^(?:CHARACTER|LEADER|EVENT|STAGE)$/i.test(str(value)))return 'card_type';
  if(domain==='onepiece'&&field==='rarity_text'&&/anniversary|winner|championship|pre.?release/i.test(value))return 'edition_text';
  if(['onepiece','tcg'].includes(domain)&&['set_code','model_code'].includes(field)&&/^(?:(?:OP|ST|EB|PRB)\d{2}-\d{3}|P-\d{3}|[A-Z0-9]{2,8}-[A-Z]{0,4}\d{2,5})$/i.test(str(value)))return 'collector_number';
  if(field==='copyright'&&/^illus\.?\s/i.test(str(value)))return 'illustrator';
@@ -242,7 +243,7 @@ function evaluate(l,entry){
 function canonicalEntries(entries){
  entries=entries.map(e=>subsetKey(e.subset)==='prizms'&&entries.some(a=>a!==e&&a.grounded&&a.source?.url===e.source?.url&&familyKey(a.family)===familyKey(e.family)&&subjectMatch(a.subject,e.subject)&&numbersMatch(a.number,e.number)&&season(a.year)===season(e.year)&&subsetKey(a.subset)==='base')?{...e,reported_subset:e.subset,subset:'Base'}:e);
  // A year printed in the grounded product name must survive family normalization.
- entries=entries.map(e=>e.subset&&norm(e.family).endsWith(norm(e.subset))?{...e,reported_subset:e.subset,subset:'Base'}:e);
+ entries=entries.map(e=>e.subset&&norm(e.family).endsWith(norm(e.subset))?{...e,reported_subset:e.subset,subset:'Base',subset_known:false}:e);
  entries=entries.map(e=>!e.year&&/^(?:19|20)\d{2}\b/.test(str(e.family))?{...e,year:season(e.family)}:e);
  return entries.map(e=>{
   // A single-card source parsed independently can disambiguate a model's
@@ -254,6 +255,7 @@ function canonicalEntries(entries){
 }
 function candidateGroups(l,entries){
  l.catalogueSubsets202=unique(entries.filter(e=>e.grounded&&e.subset_known===true).map(e=>subsetKey(e.subset)));
+ if(l.domain==='onepiece')entries=entries.map(e=>/^P-\d+$/i.test(number(e.number))&&/^(?:one piece promo|promotional cards|promo)$/i.test(str(e.family))?{...e,family:'One Piece Promo'}:e);
  const evaluated=canonicalEntries(entries).map(e=>evaluate(l,e)),eligible=evaluated.filter(e=>e.eligible).sort((a,b)=>b.score-a.score);
  l.candidates=evaluated.map(({image_data,...e})=>e);
  const groups=new Map();
@@ -357,18 +359,19 @@ function reduceObject(l,entries,error){
  for(const e of entries){
   if(!e.grounded||!e.source?.url||!e.family)continue;
   const text=productText201([e.family,e.subject,e.entry_quote].join(' ')),parts=physical.filter(t=>/chrome|update series|topps|select|upper deck|leaf|panini/i.test(t));
-  const matched=l.domain==='sealed'?parts.length>0&&parts.every(t=>text.includes(productText201(t))):k.products.length>0&&k.products.every(t=>text.includes(norm(t)));
+  const compared=e.source_tier==='lens_visual_verified'&&e.object_identity_verified===true&&l.evidence('catalogue_core').some(a=>a.value===coreKey(e));
+  const matched=compared||(l.domain==='sealed'?parts.length>0&&parts.every(t=>text.includes(productText201(t))):k.products.length>0&&k.products.every(t=>text.includes(norm(t))));
   const sport=sportCategory(l),sourceSport=norm([e.family,e.subject].join(' '));
   if(!matched||year&&e.year&&season(e.year)!==year||sport&&/\b(?:basketball|baseball|football|soccer)\b/.test(sourceSport)&&!sourceSport.includes(sport))continue;
   const config=configuration([e.entry_quote,e.configuration_quote].filter(Boolean).join(' ')),conflicts=Object.keys(observed).filter(f=>observed[f]!==null&&config[f]!==null&&observed[f]!==config[f]);
   const exactConfig=Object.keys(observed).filter(f=>observed[f]!==null).length>=2&&Object.keys(observed).every(f=>observed[f]===null||observed[f]===config[f]);
   const inlineCodes=l.domain==='generic'?unique(l.evidence('product').flatMap(a=>str(a.value).match(/\b[A-Z]{1,6}\d{0,6}[-/]\d{2,6}[A-Z0-9-]*\b/g)||[])):[];
   const code=l.pick('barcode')?.value||l.pick('sku')?.value||l.pick('model_code')?.value||(inlineCodes.length===1?inlineCodes[0]:''),codeMatch=!!code&&str(e.entry_quote).includes(code);
-  candidates.push({...e,configuration_conflicts:conflicts,exact:!conflicts.length&&(codeMatch||l.domain==='sealed'&&exactConfig)});
+  candidates.push({...e,configuration_conflicts:conflicts,exact:!conflicts.length&&(codeMatch||compared||l.domain==='sealed'&&exactConfig)});
  }
  if(l.domain==='sealed'){const groups=unique(candidates.map(e=>norm(e.family)));for(const family of groups){const group=candidates.filter(e=>norm(e.family)===family),keys=Object.keys(observed).filter(f=>observed[f]!==null),survivors=group.filter(e=>!e.configuration_conflicts.length);if(group.length>=2&&keys.length&&survivors.length===1&&group.every(e=>keys.every(f=>configuration([e.entry_quote,e.configuration_quote].filter(Boolean).join(' '))[f]!==null)))survivors[0].exact=true;}}
- l.candidates=candidates;const variants=unique(candidates.filter(e=>e.exact).map(e=>norm([e.family,e.subject,e.number].join(' ')))),exact=variants.length===1,core=!!product&&(l.domain==='sealed'||candidates.length>0),entry=exact?candidates.find(e=>e.exact):candidates[0],family=product||entry?.family||'',model=[year,family].filter(Boolean).join(' · '),pending=exact?[]:[l.domain==='sealed'?'configuration':'model'];
- const result={...l.base,engine_version:193,engine_final:true,kind:'object',title:model||l.base.title,brand,family,model:core?model:'',variant:exact?entry.subject:'',model_verified:core,model_confidence:null,market_ready:exact,catalogue_core_verified:!!entry,catalogue_verified:exact,status:core?'identified':'uncertain',identity_status:core?'confirmed':'partial',exact_identity_status:exact?'confirmed':core?'variant_pending':'unresolved',core_identity:{status:core?'confirmed':'partial',origin:entry?'catalogue_and_photo':'printed_product',model,fields:[{field:'brand',value:l.pick('brand')?.value||'',origin:'photo'},{field:'product',value:family,origin:product?'photo':'catalogue'},{field:'year',value:year,origin:'photo'}].filter(f=>f.value),pending_fields:core?[]:pending},variant_resolution:{status:exact?'confirmed':'pending',pending,labels:exact?[entry.subject]:[],proof:[]},variant_needs_verification:!exact,variant_check:exact?'confirmed':'pending',assistance_state:exact?'confirmed':error||'physical_detail_needed',missing_information:exact?[]:[l.domain==='sealed'?'Formato e configurazione della confezione':'Codice modello'],next_photo_request:exact?null:photoRequest(pending,l.domain),normalized_query:exact?[model,entry.subject].join(' '):'',verification_summary:exact?'Prodotto e configurazione identificati.':'Prodotto riconosciuto; resta il dettaglio indicato.',identification_sources:candidates.map(e=>e.source),candidate_models:candidates.filter(e=>!e.configuration_conflicts.length).map(e=>({model:e.subject,reason:'Configurazione da verificare'}))};
+ l.candidates=candidates;const variants=unique(candidates.filter(e=>e.exact).map(e=>norm([e.family,e.subject,e.number].join(' ')))),exact=variants.length===1,core=exact||!!product&&(l.domain==='sealed'||candidates.length>0),entry=exact?candidates.find(e=>e.exact):candidates[0],family=product||entry?.family||'',model=[year,family,exact&&entry?.object_identity_verified?entry.subject:''].filter(Boolean).join(' · '),pending=exact?[]:[l.domain==='sealed'?'configuration':'model'];
+ const result={...l.base,engine_version:193,engine_final:true,kind:'object',title:model||l.base.title,brand,family,model:core?model:'',variant:exact?entry.subject:'',model_verified:core,model_confidence:null,market_ready:exact,catalogue_core_verified:!!entry,catalogue_verified:exact,visual_reference_id:entry?.visual_reference_id||null,field_proof:entry?.field_proof||null,status:core?'identified':'uncertain',identity_status:core?'confirmed':'partial',exact_identity_status:exact?'confirmed':core?'variant_pending':'unresolved',core_identity:{status:core?'confirmed':'partial',origin:entry?'catalogue_and_photo':'printed_product',model,fields:[{field:'brand',value:l.pick('brand')?.value||'',origin:'photo'},{field:'product',value:family,origin:product?'photo':'catalogue'},{field:'year',value:year,origin:'photo'}].filter(f=>f.value),pending_fields:core?[]:pending},variant_resolution:{status:exact?'confirmed':'pending',pending,labels:exact?[entry.subject]:[],proof:exact&&entry?.visual_reference_id?[{field:'configuration',origin:'image_comparison',reference_id:entry.visual_reference_id,source:entry.source}]:[]},variant_needs_verification:!exact,variant_check:exact?'confirmed':'pending',assistance_state:exact?'confirmed':error||'physical_detail_needed',missing_information:exact?[]:[l.domain==='sealed'?'Formato e configurazione della confezione':'Codice modello'],next_photo_request:exact?null:photoRequest(pending,l.domain),normalized_query:exact?[model,entry.subject].join(' '):'',verification_summary:exact?'Prodotto e configurazione identificati.':'Prodotto riconosciuto; resta il dettaglio indicato.',identification_sources:candidates.map(e=>e.source),candidate_models:candidates.filter(e=>!e.configuration_conflicts.length).map(e=>({model:e.subject,reason:'Configurazione da verificare'}))};
  l.record('reduce',{core:result.core_identity.status,exact:result.exact_identity_status,pending});return result;
 }
 function reduce(l,entries,{error=null}={}){

@@ -10,7 +10,7 @@ const copied=(label,value)=>!!key(value)&&key(label).includes(key(value));
 function grader(value){
  const v=key(value);
  if(/^(psa|professionalsportsauthenticator)$/.test(v))return 'PSA';
- if(/^(bgs|beckett|beckettgradingservices)$/.test(v))return 'BGS';
+ if(/^(bgs|beckett|beckettgradingservices|beckettgradingservicesbgs|beckettbgs)$/.test(v))return 'BGS';
  if(/^(cgc|cgccards|cgcgrading)$/.test(v))return 'CGC';
  if(/^(tag|taggrading)$/.test(v))return 'TAG';
  return clean(value).toUpperCase();
@@ -32,6 +32,7 @@ function labelFacts(base){
  const p=base.slab_reading,label=clean(p.label_text),out={...p,grader:grader(p.grader),label_text:label};
  out.card_title=copied(label,p.card_title)?clean(p.card_title):'';
  for(const field of ['subject','family','model','year','variant']){const value=field==='model'?p.model||p.card_title:p[field];out[field]=copied(label,value)?clean(value):'';}
+ if(!out.family){const family=clean(p.family).replace(/^(?:Pok[eé]mon|Panini|Topps)\s+/i,'');if(family&&copied(label,family))out.family=family;}
  const rawNumber=cardNumber(p.card_number)||cardNumber(label.match(/(?:^|\s)(#[A-Z0-9][^;\n]*)/i)?.[1]);
  out.card_number=copied(label,rawNumber)?rawNumber:'';
  // Language and finish are often on different label lines. Ground each word,

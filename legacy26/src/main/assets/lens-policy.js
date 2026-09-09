@@ -70,6 +70,9 @@ function rankOcr209(refs,l){
   return {...ref,ocrRank:{score,reasons,facts,index}};
  }).sort((a,b)=>b.ocrRank.score-a.ocrRank.score||a.ocrRank.index-b.ocrRank.index);
 }
+// Normalize descriptions, not identifiers. Physical and catalogue values remain separate.
+function appearance212(v){return norm(v).replace(/\b(?:verde|verdi|grun|vert)\b/g,'green').replace(/\b(?:argento|argentato|silver)\b/g,'silver').replace(/\b(?:rosso|rossi|rouge)\b/g,'red').replace(/\b(?:blu|azzurro|bleu)\b/g,'blue').replace(/\b(?:oro|dorato)\b/g,'gold').replace(/\b(?:anniversario)\b/g,'anniversary').replace(/\bprizms\b/g,'prizm');}
+function yearReading212(value,season){const a=E.season(value),b=E.season(season);if(!a||!b)return true;if(a===b)return true;if(/^\d{4}$/.test(a)&&/^\d{4}-\d{2}$/.test(b)){const end=b.slice(0,2)+b.slice(-2);return a===b.slice(0,4)||a===end;}return false;}
 // A reference can challenge a reading, but only two original-photo views can replace it.
 function reconcileOriginal208(l,readings,crops){
  const accepted=[],rejected=[];
@@ -79,7 +82,7 @@ function reconcileOriginal208(l,readings,crops){
   const full=String(row.full_text||'').trim(),detail=String(row.crop_text||'').trim();
   const sameView=field==='language'?!!E.language(full)&&!!E.language(detail)&&E.printingLanguageCompatible201(E.language(full),E.language(detail)):norm(full)===norm(detail);
   const valid=crop&&crop.image_index===row.image_index&&fields.includes(field)&&row.evidence_found===true&&row.certainty==='clear'&&full&&sameView;
-  if(field==='subject'&&l.domain==='onepiece'&&(/^(?:CHARACTER|LEADER|EVENT|STAGE)\b/i.test(full)||full.includes('/'))){rejected.push({field,reason:'subject_contains_other_fields'});continue;}
+  if(field==='subject'&&(/^(?:CHARACTER|LEADER|EVENT|STAGE)\b/i.test(full)||full.includes('\n')||l.domain==='onepiece'&&full.includes('/'))){rejected.push({field,reason:'subject_contains_other_fields'});continue;}
   if(!valid){rejected.push({field,reason:'original_views_not_confirmed'});continue;}
   let value=field==='collector_number'?E.number(detail):field==='language'?E.language(full):detail;
   if(!value||field==='collector_number'&&!E.numberParts(value)||field==='serial'&&!E.serial(value)){rejected.push({field,reason:'invalid_value'});continue;}
@@ -117,6 +120,8 @@ function visualEntries206(reply,refs,l){
   const sports=l.domain==='sports';
   if(!ref||!ref.image_data||seen.has(c.reference_id)){rejected.push({id:c.reference_id,reasons:['unknown_or_duplicate_reference']});continue;}seen.add(c.reference_id);
   if(c.match!==true||c.ambiguous!==false||c.title_matches_image!==true||list(c.conflicts).length)reasons.push('unverified_image');
+  if(c.original_image_index!==undefined&&(!Number.isInteger(c.original_image_index)||c.original_image_index<1||c.original_image_index>(l.base.uploaded_image_count||3)))reasons.push('invalid_original_image');
+  if(c.original_view&&c.reference_view&&c.original_view!=='unknown'&&c.reference_view!=='unknown'&&c.original_view!==c.reference_view)reasons.push('different_views');
   const features=list(c.features).filter(f=>f.agrees===true&&f.certainty==='clear'&&f.original&&f.reference);
   const kinds=new Set(features.map(f=>f.field));
   if(kinds.size<2||!['artwork','layout','shape'].some(f=>kinds.has(f))||!['text','identifier','symbols','configuration'].some(f=>kinds.has(f)))reasons.push('insufficient_independent_details');
@@ -132,15 +137,15 @@ function visualEntries206(reply,refs,l){
   if(suffix208(original.subject)&&suffix208(reference.subject)&&suffix208(original.subject)!==suffix208(reference.subject))reasons.push('different_reference_subject_suffix');
   if(physical.subject&&(!original.subject||!E.subjectMatch(original.subject,physical.subject)))reasons.push('different_original_subject');
   if(physical.number&&(!original.number||!E.numbersMatch(original.number,physical.number)))reasons.push('different_original_number');
-  if(physical.year&&original.year&&E.season(original.year)!==physical.year)reasons.push('different_original_year');
+  if(physical.year&&original.year&&!(sports?yearReading212(original.year,physical.year):E.season(original.year)===physical.year))reasons.push('different_original_year');
   if(physical.year&&e.year&&physical.year!==E.season(e.year)&&!(l.domain==='pokemon'&&releaseYear))reasons.push('different_year');
   if(!sports&&physical.language&&reference.language&&!E.printingLanguageCompatible201(physical.language,reference.language))reasons.push('different_reference_language');
   if(!sports&&physical.language&&original.language&&!E.printingLanguageCompatible201(physical.language,original.language))reasons.push('different_original_language');
   const card=!['generic','sealed'].includes(l.domain);
   if(card){
    if(!sports&&!physical.language)reasons.push('original_language_unresolved');
-   if(physical.year&&reference.year&&E.season(reference.year)!==physical.year)reasons.push('different_reference_year');
-   if(l.domain!=='pokemon'&&reference.year&&e.year&&E.season(reference.year)!==E.season(e.year))reasons.push('different_reference_year');
+   if(physical.year&&reference.year&&!(sports?yearReading212(reference.year,physical.year):E.season(reference.year)===physical.year))reasons.push('different_reference_year');
+   if(l.domain!=='pokemon'&&reference.year&&e.year&&!(sports?yearReading212(reference.year,e.year):E.season(reference.year)===E.season(e.year)))reasons.push('different_reference_year');
    const sourceNumber=sports&&groundedField('number')&&!!releaseYear&&kinds.has('artwork')&&kinds.has('configuration');
    if(!e.number||reference.number&&!E.numbersMatch(e.number,reference.number)||!reference.number&&!sourceNumber)reasons.push('unreadable_reference_identifier');
    if(physical.number&&!E.numbersMatch(e.number,physical.number))reasons.push('different_number');
@@ -149,21 +154,30 @@ function visualEntries206(reply,refs,l){
   }
   if(e.subset&&!groundedField('subset')&&!(sports&&norm(e.proof?.subset)===norm(e.subset)+'s'&&(' '+norm(title)+' ').includes(' '+norm(e.proof.subset)+' ')))reasons.push('ungrounded_subset');
   if(e.subset&&groundedField('subset'))fieldProof.subset={value:e.subset,origin:'reference_text',url:ref.page_url||ref.url};
+  let objectVerified=false;
+  if(['generic','sealed'].includes(l.domain)){
+   const model=l.pick('model_code')?.value||l.pick('sku')?.value||l.pick('barcode')?.value;
+   const literalModel=model&&norm(title).includes(norm(model))&&features.some(f=>['text','identifier'].includes(f.field)&&norm(f.original).includes(norm(model))&&norm(f.reference).includes(norm(model)));
+   const visualModel=features.length>=3&&kinds.has('configuration')&&(kinds.has('text')||kinds.has('identifier'))&&(kinds.has('shape')||kinds.has('layout'))&&!!e.number&&groundedField('number');
+   if(model&&!norm(title).includes(norm(model)))reasons.push('different_model_code');
+   objectVerified=!!(literalModel||visualModel);
+   if(!objectVerified)reasons.push('object_model_not_distinguished');
+  }
   if(reasons.length){rejected.push({id:ref.id,reasons:unique(reasons)});continue;}
   // Keep reference readings and original observations separate. No candidate title enters the photo ledger.
   const source={url:ref.url,title:ref.title,provider:'searchapi_visual_comparison'};
   const copyrightYear=E.season(original.year)&&E.season(original.year)===E.season(reference.year)?E.season(reference.year):'';
   fieldProof.number={value:e.number,origin:reference.number?'reference_image':'reference_text',reference_id:ref.id,url:ref.url};
   if(copyrightYear)fieldProof.copyright_year={value:copyrightYear,origin:'compared_images',reference_id:ref.id};
-  const entry={subject:e.subject,family:e.family,number:e.number,year:releaseYear,copyright_year:copyrightYear,field_proof:fieldProof,brand:e.brand||'',subset:e.subset||'',subset_known:!!e.subset,
+  const entry={object_identity_verified:objectVerified,local_appearance:c.local_appearance||null,view_evidence:{original_image_index:c.original_image_index||null,original_view:c.original_view||'unknown',reference_view:c.reference_view||'unknown'},subject:e.subject,family:e.family,number:e.number,year:releaseYear,copyright_year:copyrightYear,field_proof:fieldProof,brand:e.brand||'',subset:e.subset||'',subset_known:!!e.subset,
    language:E.language(reference.language),aliases:unique([reference.subject,physical.subject]),identifier_type:'collector',variants:[],
    grounded:true,entry_quote:ref.title+' '+ref.snippet,reference_page:ref.page_text?{url:ref.page_url||ref.url,text:ref.page_text}:null,source,source_tier:'lens_visual_verified',image_url:ref.image_url||ref.thumbnail,
    requires_image_confirmation:true,visual_reference_id:ref.id,display_names:e.display_names||{},visual_proof:features,reference_reading:reference};
   if(['sports','onepiece','tcg'].includes(l.domain)&&e.subset){
-   const tokens=norm(e.subset).split(' ').filter(t=>!['leader','character','event','stage','p'].includes(t));
+   const tokens=appearance212(e.subset).split(' ').filter(t=>!['leader','character','event','stage','p'].includes(t));
    const significant=tokens.filter(t=>!['prizm','prizms','parallel','promo'].includes(t));
    const variantFeatures=features.filter(f=>['configuration','layout','text','symbols'].includes(f.field));
-   const matched=significant.length&&significant.every(t=>variantFeatures.some(f=>norm(f.original).split(' ').includes(t)&&norm(f.reference).split(' ').includes(t)));
+   const matched=significant.length&&significant.every(t=>variantFeatures.some(f=>appearance212(f.original).split(' ').includes(t)&&appearance212(f.reference).split(' ').includes(t))||c.local_appearance?.comparison?.frame_color_agrees&&c.local_appearance.comparison.frame_color===t);
    if(matched){
     const name=tokens.join(' '),variant={id:ref.id+':variant',name,visual_required:true,image_url:entry.image_url,source};
     entry.variants=[variant];entry.subset=name;entry.field_proof.subset={value:name,origin:'reference_text_and_compared_images',reference_id:ref.id};
@@ -203,6 +217,6 @@ async function waitForService207(request,{now=()=>Date.now(),wait=ms=>new Promis
  }
  return {status:0,state:'service_startup_timeout',lastState:last?.state||null};
 }
-const api={candidateFacts209,rankOcr209,reconcileOriginal208,retrievalPool208,partialTitle208,waitForService207,visualEntries206,present206,normalize,attributes,evaluate,select,ranked,fallbackReason,url};
+const api={appearance212,yearReading212,candidateFacts209,rankOcr209,reconcileOriginal208,retrievalPool208,partialTitle208,waitForService207,visualEntries206,present206,normalize,attributes,evaluate,select,ranked,fallbackReason,url};
 if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckLens=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

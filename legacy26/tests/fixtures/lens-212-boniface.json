@@ -1,0 +1,944 @@
+{
+  "vision": {
+    "domain": "sports",
+    "kind": "card",
+    "category": "soccer",
+    "language": "English",
+    "object_unit": "single",
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.13,
+        "y": 0.3,
+        "width": 0.74,
+        "height": 0.54,
+        "certain": true
+      },
+      {
+        "image_index": 2,
+        "x": 0.13,
+        "y": 0.3,
+        "width": 0.74,
+        "height": 0.54,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "Victor Boniface",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.31,
+          "y": 0.76,
+          "width": 0.4,
+          "height": 0.04
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "brand",
+        "text": "Panini",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.17,
+          "y": 0.8,
+          "width": 0.1,
+          "height": 0.03
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "product",
+        "text": "Select Road to FIFA World Cup 2026 Soccer",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.24,
+          "y": 0.83,
+          "width": 0.53,
+          "height": 0.025
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "subset",
+        "text": "Terrace",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.42,
+          "y": 0.37,
+          "width": 0.12,
+          "height": 0.025
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "team",
+        "text": "Nigeria",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.43,
+          "y": 0.72,
+          "width": 0.14,
+          "height": 0.025
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "collector_number",
+        "text": "No. 21",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.43,
+          "y": 0.34,
+          "width": 0.13,
+          "height": 0.025
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "season",
+        "text": "2025-26",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.3,
+          "y": 0.84,
+          "width": 0.12,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "copyright",
+        "text": "© 2026 Panini America, Inc.",
+        "certainty": "uncertain",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.27,
+          "y": 0.86,
+          "width": 0.35,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": [
+          "© 2026 Panini America, Inc."
+        ]
+      },
+      {
+        "field": "text",
+        "text": "Road to FIFA World Cup 2026",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.39,
+          "y": 0.66,
+          "width": 0.23,
+          "height": 0.05
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "No. 22",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.52,
+          "y": 0.51,
+          "width": 0.06,
+          "height": 0.04
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "Nigeria Football Federation • 1945",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.33,
+          "y": 0.45,
+          "width": 0.34,
+          "height": 0.1
+        },
+        "zone": "front",
+        "alternatives": []
+      }
+    ],
+    "features": [
+      {
+        "field": "border_color",
+        "value": "green",
+        "description": "Verde dominante nella cornice della stampa",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.13,
+          "y": 0.3,
+          "width": 0.74,
+          "height": 0.54
+        },
+        "zone": "border"
+      },
+      {
+        "field": "finish",
+        "value": "reflective",
+        "description": "Superficie con riflessi prismatici evidenti",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.13,
+          "y": 0.3,
+          "width": 0.74,
+          "height": 0.54
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "layout",
+        "value": "Ritratto verticale, giocatore in azione, cornice geometrica e logo SELECT",
+        "description": "Composizione verticale con soggetto centrale",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.13,
+          "y": 0.3,
+          "width": 0.74,
+          "height": 0.54
+        },
+        "zone": "artwork"
+      },
+      {
+        "field": "stamp",
+        "value": "unclear",
+        "description": "Nessun timbro promozionale chiaramente distinguibile",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": null,
+        "zone": "other"
+      }
+    ],
+    "hypotheses": [],
+    "slab_reading": null,
+    "engine_version": 193,
+    "brand": "Panini",
+    "family": "Select Road to FIFA World Cup 2026 Soccer",
+    "title": "Victor Boniface",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": {
+      "image_index": 1,
+      "x": 0.13,
+      "y": 0.3,
+      "width": 0.74,
+      "height": 0.54,
+      "certain": true
+    },
+    "photo_clues": [
+      {
+        "text": "Victor Boniface",
+        "role": "subject",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.31,
+          "y": 0.76,
+          "width": 0.4,
+          "height": 0.04,
+          "certain": true
+        }
+      },
+      {
+        "text": "Panini",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.17,
+          "y": 0.8,
+          "width": 0.1,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "Select Road to FIFA World Cup 2026 Soccer",
+        "role": "model",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.24,
+          "y": 0.83,
+          "width": 0.53,
+          "height": 0.025,
+          "certain": true
+        }
+      },
+      {
+        "text": "Terrace",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.42,
+          "y": 0.37,
+          "width": 0.12,
+          "height": 0.025,
+          "certain": true
+        }
+      },
+      {
+        "text": "Nigeria",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.43,
+          "y": 0.72,
+          "width": 0.14,
+          "height": 0.025,
+          "certain": true
+        }
+      },
+      {
+        "text": "No. 21",
+        "role": "collector_number",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.43,
+          "y": 0.34,
+          "width": 0.13,
+          "height": 0.025,
+          "certain": true
+        }
+      },
+      {
+        "text": "2025-26",
+        "role": "season",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.3,
+          "y": 0.84,
+          "width": 0.12,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "© 2026 Panini America, Inc.",
+        "role": "copyright",
+        "certainty": "uncertain",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.27,
+          "y": 0.86,
+          "width": 0.35,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "Road to FIFA World Cup 2026",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.39,
+          "y": 0.66,
+          "width": 0.23,
+          "height": 0.05,
+          "certain": true
+        }
+      },
+      {
+        "text": "No. 22",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.52,
+          "y": 0.51,
+          "width": 0.06,
+          "height": 0.04,
+          "certain": true
+        }
+      },
+      {
+        "text": "Nigeria Football Federation • 1945",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.33,
+          "y": 0.45,
+          "width": 0.34,
+          "height": 0.1,
+          "certain": true
+        }
+      }
+    ],
+    "physical_observations": [
+      {
+        "feature": "color",
+        "text": "green border",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Superficie con riflessi prismatici evidenti",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Composizione verticale con soggetto centrale",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Nessun timbro promozionale chiaramente distinguibile",
+        "certainty": "uncertain",
+        "entity": "target",
+        "image_index": 1
+      }
+    ]
+  },
+  "crops": [
+    {
+      "id": "original-1-upper",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.11481481481481481,
+        "y": 0.2846153846153846,
+        "width": 0.7703703703703704,
+        "height": 0.19273504273504274
+      }
+    },
+    {
+      "id": "original-1-lower",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.11481481481481481,
+        "y": 0.6521367521367522,
+        "width": 0.7703703703703704,
+        "height": 0.202991452991453
+      }
+    },
+    {
+      "id": "original-2-upper",
+      "image_index": 2,
+      "region": {
+        "image_index": 2,
+        "x": 0.11481481481481481,
+        "y": 0.2846153846153846,
+        "width": 0.7703703703703704,
+        "height": 0.19273504273504274
+      }
+    },
+    {
+      "id": "original-2-lower",
+      "image_index": 2,
+      "region": {
+        "image_index": 2,
+        "x": 0.11481481481481481,
+        "y": 0.6521367521367522,
+        "width": 0.7703703703703704,
+        "height": 0.202991452991453
+      }
+    }
+  ],
+  "batches": [
+    {
+      "ids": [
+        "lens-1",
+        "lens-7",
+        "lens-9"
+      ],
+      "reply": {
+        "original_readings": [
+          {
+            "field": "subject",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "VICTOR BONIFACE",
+            "crop_text": "VICTOR BONIFACE",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Victor Boniface",
+              "en": "Victor Boniface"
+            }
+          },
+          {
+            "field": "subject",
+            "image_index": 1,
+            "crop_id": "original-1-upper",
+            "full_text": "Victor Boniface",
+            "crop_text": "",
+            "evidence_found": false,
+            "certainty": "uncertain",
+            "display_names": {
+              "it": "Victor Boniface",
+              "en": "Victor Boniface"
+            }
+          },
+          {
+            "field": "collector_number",
+            "image_index": 2,
+            "crop_id": "original-2-upper",
+            "full_text": "No. 21",
+            "crop_text": "No. 21",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "No. 21",
+              "en": "No. 21"
+            }
+          },
+          {
+            "field": "copyright",
+            "image_index": 2,
+            "crop_id": "original-2-lower",
+            "full_text": "©2025 Panini America, Inc.",
+            "crop_text": "©2025 Panini America, Inc.",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "©2025 Panini America, Inc.",
+              "en": "©2025 Panini America, Inc."
+            }
+          },
+          {
+            "field": "language",
+            "image_index": 2,
+            "crop_id": "original-2-lower",
+            "full_text": "English",
+            "crop_text": "English",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Inglese",
+              "en": "English"
+            }
+          }
+        ],
+        "comparisons": [
+          {
+            "reference_id": "lens-1",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": false,
+            "conflicts": [
+              "Numero originale No. 21 contro candidato No. 164.",
+              "Layout, cornice e configurazione differiscono nettamente.",
+              "Candidato Donruss Optic, originale Select Road to FIFA World Cup."
+            ],
+            "original_reading": {
+              "subject": "Victor Boniface",
+              "number": "21",
+              "year": "2025",
+              "language": "English"
+            },
+            "reference_reading": {
+              "subject": "VICTOR BONIFACE",
+              "number": "164",
+              "year": "2024",
+              "language": "English"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Boniface in bianca divisa Nigeria, figura frontale.",
+                "reference": "Nessun giocatore visibile; retro testuale Boniface.",
+                "agrees": false,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Select verde, struttura ornamentale simmetrica.",
+                "reference": "Optic verde, layout rettangolare semplice.",
+                "agrees": false,
+                "certainty": "clear"
+              },
+              {
+                "field": "identifier",
+                "original": "No. 21, Select Road to FIFA World Cup.",
+                "reference": "No. 164, Donruss Optic.",
+                "agrees": false,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Victor Boniface",
+              "family": "Panini Select Road to FIFA World Cup",
+              "number": "21",
+              "year": "2025-26",
+              "brand": "Panini",
+              "subset": "Terrace",
+              "proof": {
+                "subject": "2025-26 PANINI - SELECT ROAD TO FIFA WORLD CUP 2026™ SOCCER",
+                "family": "2025-26 PANINI - SELECT ROAD TO FIFA WORLD CUP 2026™ SOCCER",
+                "year": "2025-26",
+                "subset": "No. 21 TERRACE"
+              },
+              "display_names": {
+                "it": "Victor Boniface",
+                "en": "Victor Boniface"
+              }
+            }
+          },
+          {
+            "reference_id": "lens-7",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [
+              "Candidato Real Betis, non Victor Boniface.",
+              "Artwork, layout e configurazione completamente diversi."
+            ],
+            "original_reading": {
+              "subject": "Victor Boniface",
+              "number": "21",
+              "year": "2025",
+              "language": "English"
+            },
+            "reference_reading": {
+              "subject": "REAL BETIS BALOMPIÉ",
+              "number": "11",
+              "year": "2025",
+              "language": "English"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Giocatore nigeriano raffigurato frontalmente.",
+                "reference": "Grafica Real Betis senza giocatore.",
+                "agrees": false,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Carta Select verticale ornamentale verde-bianca.",
+                "reference": "Layout Topps NOW orizzontale, verde e bianco.",
+                "agrees": false,
+                "certainty": "clear"
+              },
+              {
+                "field": "identifier",
+                "original": "No. 21, Nigeria.",
+                "reference": "Card 11, Conference League.",
+                "agrees": false,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Real Betis Balompié",
+              "family": "UECL Topps NOW",
+              "number": "11",
+              "year": "2025",
+              "brand": "Topps",
+              "subset": "Conference League",
+              "proof": {
+                "subject": "REAL BETIS BALOMPIÉ",
+                "family": "2024-25 UECL Topps NOW®",
+                "year": "2025",
+                "subset": "Card 11"
+              },
+              "display_names": {
+                "it": "Real Betis Balompié",
+                "en": "Real Betis Balompié"
+              }
+            }
+          },
+          {
+            "reference_id": "lens-9",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [
+              "Soggetto originale Victor Boniface; candidato Victor Moses.",
+              "Numero originale No. 21 contro candidato NL-15.",
+              "Originale Select 2025-26, candidato Prizm World Cup 2018."
+            ],
+            "original_reading": {
+              "subject": "Victor Boniface",
+              "number": "21",
+              "year": "2025",
+              "language": "English"
+            },
+            "reference_reading": {
+              "subject": "VICTOR MOSES",
+              "number": "NL-15",
+              "year": "2018",
+              "language": "English"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Boniface in divisa bianca, design Select verde.",
+                "reference": "Nessuna fotografia; retro Victor Moses verde.",
+                "agrees": false,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Select con pannello centrale ornamentale.",
+                "reference": "Prizm con bande ondulate e pannello Nigeria.",
+                "agrees": false,
+                "certainty": "clear"
+              },
+              {
+                "field": "identifier",
+                "original": "No. 21, Nigeria, Select.",
+                "reference": "No. NL-15, National Landmarks, Prizm.",
+                "agrees": false,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Victor Moses",
+              "family": "Panini Prizm World Cup Soccer",
+              "number": "NL-15",
+              "year": "2018",
+              "brand": "Panini",
+              "subset": "National Landmarks",
+              "proof": {
+                "subject": "VICTOR MOSES",
+                "family": "2018 PANINI - PRIZM WORLD CUP SOCCER",
+                "year": "2018",
+                "subset": "No. NL-15 NATIONAL LANDMARKS"
+              },
+              "display_names": {
+                "it": "Victor Moses",
+                "en": "Victor Moses"
+              }
+            }
+          }
+        ]
+      },
+      "accepted": []
+    }
+  ],
+  "entries": [],
+  "references": [
+    {
+      "id": "lens-1",
+      "title": "2024-25 Panini Donruss Optic Calcio N. 164 Victor Boniface ...",
+      "snippet": "",
+      "url": "https://www.ebay.it/itm/236376512164",
+      "image_url": "https://i.ebayimg.com/images/g/Gw4AAOSwwSpnzXv2/s-l400.jpg",
+      "page_text": ""
+    },
+    {
+      "id": "lens-2",
+      "title": "Panini Select 2017 2018 Calcio Soccer No. 41 Victor Moses | eBay",
+      "snippet": "",
+      "url": "https://www.ebay.it/itm/336222628410",
+      "image_url": "https://i.ebayimg.com/images/g/TLoAAOSwY75keL7x/s-l400.jpg",
+      "page_text": ""
+    },
+    {
+      "id": "lens-3",
+      "title": "2024-25 Donruss Soccer Optic Ice Prizm Parallel Victor ...",
+      "snippet": "",
+      "url": "https://www.ebay.com/itm/197132658041",
+      "image_url": "https://i.ebayimg.com/images/g/qZ8AAeSwYv5n3VgV/s-l1200.jpg",
+      "page_text": ""
+    },
+    {
+      "id": "lens-4",
+      "title": "トル・アロコダレ RC ナイジェリア代表 Panini Select - メルカリ",
+      "snippet": "",
+      "url": "https://jp.mercari.com/item/m53100383700",
+      "image_url": "https://static.mercdn.net/item/detail/orig/photos/m53100383700_2.jpg?1786682135",
+      "page_text": ""
+    },
+    {
+      "id": "lens-5",
+      "title": "VICTOR BONIFACE 2024-25 Panini Donruss Optic PLUM BLOSSOM ...",
+      "snippet": "",
+      "url": "https://www.ebay.com/itm/286713845273",
+      "image_url": "https://i.ebayimg.com/images/g/3y4AAOSw6z9n2mig/s-l1200.png",
+      "page_text": ""
+    },
+    {
+      "id": "lens-6",
+      "title": "Victor Boniface ナイジェリア トレーディングカード - メルカリ",
+      "snippet": "",
+      "url": "https://jp.mercari.com/item/m84277801640",
+      "image_url": "https://static.mercdn.net/item/detail/orig/photos/m84277801640_2.jpg?1778855521",
+      "page_text": ""
+    },
+    {
+      "id": "lens-7",
+      "title": "Real Betis Balompié - 2024-25 UECL Topps NOW® - Card 11",
+      "snippet": "",
+      "url": "https://it.topps.com/products/real-betis-balompie-2024-25-uecl-topps-now%C2%AE-card-11",
+      "image_url": "https://cdn.shopify.com/s/files/1/0871/8916/0120/files/6dae159361b838e89e60a962ce3a2d8078e65ef1_ARTECL_16C2S_25TN_0011_BACK.png?v=1771433502",
+      "page_text": ""
+    },
+    {
+      "id": "lens-8",
+      "title": "Amazon.com: 2022 Prizm Erick Gutierrez Mexico Rookie Soccer ...",
+      "snippet": "",
+      "url": "https://www.amazon.com/Prizm-Gutierrez-Mexico-Rookie-Soccer/dp/B0CFRCK1GJ",
+      "image_url": "https://m.media-amazon.com/images/I/61RfkpA4kDL.jpg",
+      "page_text": ""
+    },
+    {
+      "id": "lens-9",
+      "title": "VICTOR MOSES PSA 8 2018 PANINI PRIZM WORLD CUP NATIONAL ...",
+      "snippet": "",
+      "url": "https://www.ebay.com/itm/135236127180",
+      "image_url": "https://i.ebayimg.com/images/g/vEIAAOSwdLdm3NqJ/s-l1200.jpg",
+      "page_text": ""
+    },
+    {
+      "id": "lens-10",
+      "title": "Luiz Henrique 1 of 1 from Panini Select La Liga 22/23",
+      "snippet": "",
+      "url": "https://www.instagram.com/p/DXCAzqejGKL/",
+      "image_url": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQboz0pVW_asA1pcSzTtAuCwBHQ5-zpI2x1lLEbQgzxMVakSgqM",
+      "page_text": ""
+    },
+    {
+      "id": "lens-11",
+      "title": "2018 Panini Prizm World Cup Signatures #27 Kelechi Iheanacho ...",
+      "snippet": "",
+      "url": "https://www.fanaticscollect.com/buy-now/320caf3b-72af-416c-98de-291b5b92d470",
+      "image_url": "https://img.beckett.com/images/items/15395001/marketplace/98460519/back.jpg",
+      "page_text": ""
+    },
+    {
+      "id": "lens-12",
+      "title": "Conference League | Nyon",
+      "snippet": "",
+      "url": "https://www.facebook.com/UEConfLeague/",
+      "image_url": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcS5k_1kYTdHLYo06_MS36cGSzR5l7_wPRsa5QnTjbVAIkdzm0Ii",
+      "page_text": ""
+    },
+    {
+      "id": "lens-13",
+      "title": "Amazon.com: 2022 Panini Prizm FIFA World Cup Qatar #249 ...",
+      "snippet": "",
+      "url": "https://www.amazon.com/Panini-Ismaila-Official-Football-Condition/dp/B0BTBB7D1C",
+      "image_url": "https://m.media-amazon.com/images/I/61D8tRjMttL.jpg",
+      "page_text": ""
+    },
+    {
+      "id": "lens-14",
+      "title": "2022 Panini Prizm FIFA World Cup Qatar #144 Edson Alvarez ...",
+      "snippet": "",
+      "url": "https://www.walmart.com/ip/2022-Panini-Prizm-FIFA-World-Cup-Qatar-144-Edson-Alvarez-Mexico-Soccer-Futbol-Base-Trading-Card/20316715301?conditionGroupCode=4",
+      "image_url": "https://i5.walmartimages.com/asr/7ffd3bbe-2608-4136-a7ba-01048705a394.539ee032a1137d97edac1281d44c0a29.jpeg?odnHeight=768&odnWidth=768&odnBg=FFFFFF",
+      "page_text": ""
+    },
+    {
+      "id": "lens-15",
+      "title": "Miguel Layun 2016/17 panini Select. Signatures Series. Black ...",
+      "snippet": "",
+      "url": "https://www.instagram.com/p/DNFG7_Bs3FF/",
+      "image_url": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQJ7EoeW3dtVywHaQHXeCBwwabFOVRP2Kkbu6SkH2GOzdvscrqM",
+      "page_text": ""
+    },
+    {
+      "id": "lens-16",
+      "title": "Antonio Conte - Panini Select Fifa Silver Prizm | Pop ...",
+      "snippet": "",
+      "url": "https://www.finarte.it/auction/pop-culture-memorabilia-cards-milan-2023-10-26/antonio-conte-panini-select-fifa-silver-prizm-109500",
+      "image_url": "https://api.finarte.it/api/lotto/immagine/109500/1.jpg",
+      "page_text": ""
+    },
+    {
+      "id": "lens-17",
+      "title": "Football Trading Card - Riyad Mahrez - Icon - Algeria ...",
+      "snippet": "",
+      "url": "https://www.worldtradingcards.com/en/products/riyad-mahrez-icon-12-argelia-panini-adrenalyn-xl-fifa-world-cup-basico",
+      "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTY0EebS7gPlCMNXdX_E-bx0R6g3W49irDmI9Q9RpD_upaFFP_o",
+      "page_text": ""
+    },
+    {
+      "id": "lens-18",
+      "title": "ミントモール / MINT 千葉店 / PANINI NATIONAL TREASURES 2018 ...",
+      "snippet": "",
+      "url": "https://www.mint-mall.net/products/detail.php?product_id=105387",
+      "image_url": "https://8zi3k70.mint-mall.net/upload/save_image/11131427_5bea60b01c673.jpg",
+      "page_text": ""
+    },
+    {
+      "id": "lens-19",
+      "title": "Topps Chrome UEFA Club Competitions #34 Vangelis Pavlidis ...",
+      "snippet": "",
+      "url": "https://vinceron.com/products/topps-chrome-uefa-club-competitions-34-vangelis-pavlidis-green-refractor-07-99",
+      "image_url": "https://vinceron.com/cdn/shop/files/57_7a44d044-c928-42d3-b145-5398a2b9229a_900x.jpg?v=1781392235",
+      "page_text": ""
+    },
+    {
+      "id": "lens-20",
+      "title": "Panini Prizm World Cup Soccer 2026 Hobby Box",
+      "snippet": "",
+      "url": "https://www.sportscardsdirect.co.uk/products/panini-prizm-world-cup-soccer-2026-hobby-box",
+      "image_url": "https://www.sportscardsdirect.co.uk/cdn/shop/files/paniniprizmfifaworldcup2026__4.png?v=1780995622&width=1445",
+      "page_text": ""
+    }
+  ]
+}
