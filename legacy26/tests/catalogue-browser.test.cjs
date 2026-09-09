@@ -9,7 +9,7 @@ const envelope=(payload,web=[])=>({status:'completed',output:[...(web.length?[{t
 async function reset(name,opts={}){
  d=structuredClone(D[name]);options=opts;opts.mutate?.(d);api=[];native=[];errors=[];events=[];ocrIndex=0;release=null;
  await page.goto(origin);await page.waitForFunction(()=>typeof resolveCatalogue193==='function');
- await page.evaluate(()=>{trial={attempts:2,free:true,credits:0};saveTrial();$('apiKey').value='offline-secret-never-export';$('googleApiKey').value='';$('scanBudget').value='.03';window.FlipCheckTestMode='offline-catalogue-engine';});
+ await page.evaluate(lens=>{$('lensServer205').value=lens?'https://lens.example':'';$('lensAccess205').value=lens?'access-testing-123456':'';$('lensEnabled205').checked=true;lensSettingsChanged205();trial={attempts:2,free:true,credits:0};saveTrial();$('apiKey').value='offline-secret-never-export';$('googleApiKey').value='';$('scanBudget').value='.03';window.FlipCheckTestMode='offline-catalogue-engine';},!!opts.lens);
  const count=opts.photoCount||Math.max(1,...d.vision.photo_clues?.map(c=>c.image_index)||[]);
  const images=await page.evaluate(count=>Array.from({length:count},(_,i)=>{const c=document.createElement('canvas');c.width=900;c.height=1200;const g=c.getContext('2d');g.fillStyle=i?'#bbc':'#ccb';g.fillRect(0,0,900,1200);g.fillStyle='#000';g.font='35px sans-serif';g.fillText('SYNTHETIC CARRIER '+i,20,40);return c.toDataURL('image/png');}),count);carrier=images[0];
  await page.locator('#photoBatch').setInputFiles(images.map((s,i)=>({name:'carrier-'+i+'.png',mimeType:'image/png',buffer:Buffer.from(s.split(',')[1],'base64')})));await page.waitForFunction(()=>!photoBusy);
@@ -19,11 +19,11 @@ before(async()=>{
  server=http.createServer((req,res)=>{const name=req.url==='/'?'index.html':req.url.slice(1);if(!allow.test('/'+name)||!fs.existsSync(path.join(root,name))){res.writeHead(404);return res.end();}res.setHeader('Content-Type',name.endsWith('.js')?'application/javascript':'text/html');res.end(fs.readFileSync(path.join(root,name)));});await new Promise(r=>server.listen(0,'127.0.0.1',r));origin='http://127.0.0.1:'+server.address().port;
  browser=await chromium.launch({executablePath:process.env.FLIPCHECK_BROWSER_EXECUTABLE||undefined,headless:true,args:['--no-sandbox']});page=await browser.newPage({viewport:{width:412,height:915},serviceWorkers:'block'});
  page.on('pageerror',e=>errors.push(e.message));page.on('dialog',d=>d.dismiss());await page.exposeFunction('hostEvent',e=>events.push(e));
- await page.addInitScript(()=>{const send=(id,action,payload)=>fetch('https://offline-native.invalid/'+action,{method:'POST',body:JSON.stringify(payload)}).then(r=>r.json()).then(r=>FlipCheckDirect.receive(id,r));window.FlipCheckGoogle={ocrAvailable(){return true;},request(id,action,payload){send(id,action,JSON.parse(payload));},readText(id,image_data){send(id,'ocr',{image_data});},readTextScript(id,image_data,script){send(id,'ocr',{image_data,script});},cancel(id){hostEvent({kind:'cancel',id});},storeEvidence(kind,data,meta){hostEvent({kind:'evidence',type:kind,bytes:data.length});},evidenceInfo(){return '{}';}};window.FlipCheckHost={buildInfo(){return JSON.stringify({versionCode:193,versionName:'offline',sourceCommit:'offline'});},beginScan(id){hostEvent({kind:'begin',id});queueMicrotask(()=>FlipCheckBackground.started(id,true,''));},endScan(id,snapshot,outcome){hostEvent({kind:'end',id,outcome});},backgroundInfo(){return '{}';},lastScan(){return '{}';},photoPickerInfo(){return '{}';},saveDiagnostic(snapshot){hostEvent({kind:'diagnostic',snapshot});}};});
+ await page.addInitScript(()=>{const send=(id,action,payload)=>fetch('https://offline-native.invalid/'+action,{method:'POST',body:JSON.stringify(payload)}).then(r=>r.json()).then(r=>FlipCheckDirect.receive(id,r));window.FlipCheckGoogle={ocrAvailable(){return true;},request(id,action,payload){send(id,action,JSON.parse(payload));},readText(id,image_data){send(id,'ocr',{image_data});},readTextScript(id,image_data,script){send(id,'ocr',{image_data,script});},cancel(id){hostEvent({kind:'cancel',id});},storeEvidence(kind,data,meta){hostEvent({kind:'evidence',type:kind,bytes:data.length});},evidenceInfo(){return '{}';}};window.FlipCheckHost={buildInfo(){return JSON.stringify({versionCode:193,versionName:'offline',sourceCommit:'offline'});},beginScan(id){hostEvent({kind:'begin',id});queueMicrotask(()=>FlipCheckBackground.started(id,true,''));},endScan(id,snapshot,outcome){hostEvent({kind:'end',id,outcome,snapshot:JSON.parse(snapshot)});},backgroundInfo(){return '{}';},lastScan(){return '{}';},photoPickerInfo(){return '{}';},saveDiagnostic(snapshot){hostEvent({kind:'diagnostic',snapshot});}};});
  await page.route('**/*',async route=>{
   const url=route.request().url();if(url.startsWith(origin+'/'))return route.continue();
   if(url==='https://api.openai.com/v1/responses'){
-   const body=JSON.parse(route.request().postData());api.push(body);const kind=body.text.format.name;
+   const body=JSON.parse(route.request().postData());api.push(body);const kind=body.text.format.name;events.push({kind:'api',stage:kind});
    if(options.hold&&kind==='flipcheck_identification')await new Promise(r=>release=r);
    if(options.httpError&&kind==='flipcheck_identification')return route.fulfill({status:401,json:{error:{message:'Offline unauthorized'}}}).catch(()=>{});
    if(options.incomplete&&kind==='flipcheck_identification'&&api.length===1)return route.fulfill({json:{status:'incomplete',incomplete_details:{reason:'max_output_tokens'},output:[{type:'message',content:[{type:'output_text',text:'{'}]}],usage:{input_tokens:350,output_tokens:150}}});
@@ -34,7 +34,9 @@ before(async()=>{
    return route.fulfill({json:reply}).catch(()=>{});
   }
   if(url.startsWith('https://offline-native.invalid/')){
-   const action=url.split('/').pop(),b=JSON.parse(route.request().postData());native.push({action,...b});let reply={status:503};
+   const action=url.split('/').pop(),b=JSON.parse(route.request().postData());native.push({action,...b});events.push({kind:'native',action});let reply={status:503};
+   if(action==='lens_config')reply={status:200,body:{enabled:true,protocol:2,provider:'searchapi_google_lens',unitUsd:.004}};
+   if(action==='lens')reply={status:200,body:options.lensReply||{state:'ok',providerCalls:1,accountCalls:1,estimatedUsd:.004,billingUnknown:false,candidates:options.lensCandidates||[]}};
    if(action==='ocr')reply=options.noOcr?{state:'ocr_unavailable'}:d.photoOcr?.[ocrIndex++]||{state:'ok',lines:[],text:''};
    if(action==='page'){
     const pages=(options.pagesBySearch?.[Math.max(0,stages().filter(s=>s==='flipcheck_catalogue_search').length-1)]||d.pages).filter(p=>p.url===b.url).sort((a,b)=>(b.text||b.source_text||'').length-(a.text||a.source_text||'').length);if(pages.length)reply={status:200,...pages[0]};
@@ -240,4 +242,21 @@ const D203=JSON.parse(require('node:zlib').gunzipSync(fs.readFileSync(path.join(
 test('204: Mewtwo reuses the downloaded PriceCharting image in the complete production pipeline',async()=>{
  const row=D203[0];await reset('politoed',{packet:row.vision,noOcr:true,bandObservations:row.bands.observations,bandFeatures:row.bands.features,mutate(d){d.pages=row.pages;},coreComparisons:[{reference_id:'core0',reference_subject:'Mewtwo V',reference_number:'135',match:true,ambiguous:false,conflicts:[],features:[{field:'artwork',original:'same pose',reference:'same pose',agrees:true,certainty:'clear'},{field:'text',original:'same Chinese printing',reference:'same Chinese printing',agrees:true,certainty:'clear'}]}]});
  const out=await scan(),r=out.identification;assert.equal(r.market_ready,true,JSON.stringify(out.visualAssistance.engine));assert.equal(r.physical_card_number,'135/127');assert.equal(r.printed_year,'2024');assert.equal(r.language,'zh');assert.equal(r.family,'CS5aC');assert.equal(r.variant,'Holo');assert.deepEqual(stages(),['flipcheck_identification','flipcheck_pokemon_identity_bands','flipcheck_catalogue_search','flipcheck_catalogue_comparison']);assert.equal(native.filter(n=>n.action==='image'&&n.url?.includes('1600.jpg')).length,1);assert.equal(await page.locator('#marketBtn').isDisabled(),false);
+});
+
+// Build205 Lens transport and production fallback. All external IO remains intercepted.
+for(const failure of ['timeout','empty_results','quota_exhausted'])test('205 Lens '+failure+' continues through OCR and targeted web',async()=>{
+ await reset('politoed',{lens:true,lensReply:{state:failure,providerCalls:failure==='quota_exhausted'?0:1,accountCalls:1,estimatedUsd:.004,billingUnknown:failure==='timeout',candidates:[]},bandObservations:politoedKeys204});
+ const out=await scan();assert.equal(out.identification.market_ready,true);assert.equal(out.identificationPipeline.state,failure);assert.equal(native.filter(x=>x.action==='lens').length,1);
+ const trace=events.filter(x=>['native','api'].includes(x.kind)).map(x=>x.action||x.stage);assert.ok(trace.indexOf('lens')<trace.indexOf('ocr'));assert.ok(trace.indexOf('ocr')<trace.indexOf('flipcheck_identification'));assert.ok(trace.indexOf('flipcheck_catalogue_search')>trace.indexOf('lens'));
+ assert.ok(out.identificationPipeline.fallbacks.some(x=>x.stage==='targeted_web'));assert.ok(out.visualAssistance.budget.spentOrReservedUsd<=.03);assert.ok(events.find(x=>x.kind==='end').snapshot.identificationPipeline);assert.doesNotMatch(JSON.stringify(out),/access-testing-123456/);
+});
+test('205 recorded Lens candidates cannot override incompatible physical Politoed number',async()=>{
+ const recorded=JSON.parse(require('node:zlib').gunzipSync(fs.readFileSync(path.join(__dirname,'fixtures/lens-205-recorded.json.gz')))).glurak;
+ const L=require('../src/main/assets/lens-policy');await reset('politoed',{lens:true,lensCandidates:L.normalize(recorded),bandObservations:politoedKeys204,tcgdex:true});const out=await scan();
+ assert.equal(out.identification.market_ready,true);assert.equal(out.identificationPipeline.consideredCount,20);assert.ok(out.identificationPipeline.evaluations.some(c=>c.reasons.includes('different_number')));assert.equal(native.filter(x=>x.action==='lens').length,1);assert.equal(stages().filter(x=>x==='flipcheck_catalogue_search').length,0);
+});
+test('205 Lens reads every uploaded photo once and saves incomplete result and pending details',async()=>{
+ await reset('topps',{lens:true,photoCount:3,lensReply:{state:'empty_results',providerCalls:1,estimatedUsd:.004,billingUnknown:false,candidates:[]}});const out=await scan();
+ assert.equal(native.filter(x=>x.action==='lens').length,1);assert.equal(native.filter(x=>x.action==='ocr').length,3);assert.equal(out.identification.market_ready,false);assert.equal(out.identificationPipeline.finalClosure.exact,false);assert.ok(out.identificationPipeline.finalClosure.missing.length);assert.ok(events.some(x=>x.kind==='end'&&x.snapshot.identification));
 });

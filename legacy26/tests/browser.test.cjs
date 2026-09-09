@@ -18,7 +18,7 @@ async function upload(items) { await page.locator('#photoBatch').setInputFiles(i
 before(async()=>{
   server=http.createServer((req,res)=>{
     const name=req.url==='/'?'index.html':req.url.slice(1);
-    if(!['index.html','editions.js','targeted-fixes.js','visual-policy.js','visual-runtime.js','google-direct.js','background-runtime.js','slab-identity.js','identity-final.js','image-evidence.js','catalogue-engine.js','catalogue-sources.js','catalogue-runtime.js'].includes(name)){res.writeHead(404);res.end();return;}
+    if(!['index.html','editions.js','targeted-fixes.js','visual-policy.js','visual-runtime.js','google-direct.js','background-runtime.js','slab-identity.js','identity-final.js','image-evidence.js','catalogue-engine.js','catalogue-sources.js','catalogue-runtime.js','lens-policy.js','lens-runtime.js'].includes(name)){res.writeHead(404);res.end();return;}
     res.setHeader('Content-Type',name.endsWith('.js')?'application/javascript':'text/html');res.end(fs.readFileSync(path.join(root,name)));
   });
   await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));origin='http://127.0.0.1:'+server.address().port;

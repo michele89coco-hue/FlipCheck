@@ -10,6 +10,23 @@ import static org.junit.Assert.*;
 
 /** Actual production request construction and network guards, with zero HTTP calls. */
 public final class GoogleDirectRegressionTest {
+    @Test public void lensCredentialStaysOnServiceOriginAndOutOfBody() throws Exception {
+        JSONObject input=new JSONObject().put("server","https://lens.example").put("access","test-access-1234567890")
+            .put("scan_id","scan_12345678").put("image_base64","aGVsbG8=").put("remaining_usd",.03);
+        Request request=GoogleVisionBridge.lensRequest(input,false);
+        assertEquals("https://lens.example/v1/lens/search",request.url().toString());
+        assertEquals("Bearer test-access-1234567890",request.header("Authorization"));
+        okio.Buffer buffer=new okio.Buffer();request.body().writeTo(buffer);String body=buffer.readUtf8();
+        assertFalse(body.contains("test-access"));assertFalse(body.contains("api_key"));assertFalse(body.contains("server"));
+        assertEquals("GET",GoogleVisionBridge.lensRequest(input,true).method());
+        assertNull(GoogleVisionBridge.referenceRequest("https://catalogue.example/card").header("Authorization"));
+    }
+    @Test public void lensRejectsInvalidOriginsAndHeaderInjection() throws Exception {
+        for(String endpoint:new String[]{"http://lens.example","https://lens.example/path","https://lens.example?query=1","https://user:pass@lens.example","https://localhost"}){
+            try{GoogleVisionBridge.lensRequest(new JSONObject().put("server",endpoint).put("access","test-access-1234567890"),true);fail(endpoint);}catch(java.io.IOException expected){}
+        }
+        try{GoogleVisionBridge.lensRequest(new JSONObject().put("server","https://lens.example").put("access","bad\r\nHeader: injected"),true);fail();}catch(java.io.IOException expected){}
+    }
     @Test public void catalogueColumnsAndCompleteChecklistSurviveExcerptSelection() throws Exception {
         String html="<html><head><title>2031 Product Checklist</title></head><body><main><h2>Base Set</h2>"+
             "<table><tr><th>Card Number</th><th>Player</th><th>Set</th></tr><tr><td>21</td><td>Alex Rivera</td><td>Product</td></tr></table>"+

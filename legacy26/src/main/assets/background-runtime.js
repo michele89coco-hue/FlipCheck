@@ -19,7 +19,7 @@
   catch(error){failed=true;status(error.message,'error');return undefined;}
   finally{
    const pendingStart=pending.get(token);if(pendingStart){clearTimeout(pendingStart.timer);pending.delete(token);}
-   let snapshot='{}';try{const d=diagnostic26(),saved={};for(const key of ['identification','visionResult','usage','versionCode','versionName','sourceCommit','exportedAt'])if(d[key]!==undefined)saved[key]=d[key];snapshot=JSON.stringify(saved);}catch(_){}
+   let snapshot='{}';try{const d=diagnostic26(),saved={};for(const key of ['identification','visionResult','usage','versionCode','versionName','sourceCommit','exportedAt','identificationPipeline'])if(d[key]!==undefined)saved[key]=d[key];snapshot=JSON.stringify(saved);}catch(_){}
    failed=failed||(typeof currentScan!=='undefined'&&currentScan?.status==='technical_error');
    const wasCancelled=cancelled||(typeof scan164!=='undefined'&&scan164?.budget.cancelled);
    // A timed-out start must also release any native service that arrived too late.
