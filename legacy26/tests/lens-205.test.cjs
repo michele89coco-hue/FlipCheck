@@ -66,3 +66,7 @@ test('early Latin OCR is retained and Japanese OCR runs once after script recogn
  vm.createContext(sandbox);vm.runInContext(source.slice(source.indexOf('async function readPhotoOcr174('),source.indexOf('function detailRegion174('))+'\nthis.read=readPhotoOcr174;',sandbox);
  await sandbox.read({},ctx);await sandbox.read({language:'ja'},ctx);await sandbox.read({language:'ja'},ctx);assert.deepEqual(calls,['latin','japanese']);assert.equal(ctx.photoOcr.length,2);assert.ok(ctx.photoOcr.every(r=>r.origin==='on_device_photo_ocr'));
 });
+
+test('an uncertain explicit language cannot be promoted by the Vision summary or Lens',()=>{
+ const packet={domain:'pokemon',kind:'card',language:'en',observations:[{field:'language',text:'en',certainty:'uncertain',image_index:1},{field:'subject',text:'Dragonite',certainty:'clear',image_index:1},{field:'collector_number',text:'9/165',certainty:'clear',image_index:1}]};const l=E.ingestVision(new E.Ledger(packet),packet);assert.equal(l.pick('language'),null);L.select(D.dragonite,l);assert.equal(l.pick('language'),null);assert.equal(E.pokemonKeys204(l).complete,false);
+});

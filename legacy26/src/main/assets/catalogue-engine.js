@@ -107,7 +107,7 @@ function ingestVision(ledger,base,source='vision'){
  for(const h of list(base.hypotheses))ledger.add(h.field,h.value,{source,level:'inferred',certainty:'uncertain'});
  const p=base.pokemon_printing||{};
  for(const [field,value,image,location] of (ledger.domain==='pokemon'?[['stamp',p.first_edition_stamp,p.stamp_image,p.stamp_location],['shadow',p.artwork_shadow,p.shadow_image,p.shadow_location]]:[]))if(['present','absent'].includes(value)&&image&&location)ledger.add(field,value,{source,certainty:'clear',image_index:image,raw:location});
- const lang=language(base.language||p.language);if(lang)ledger.add('language',lang,{source,certainty:'clear',image_index:1});
+ const lang=language(base.language||p.language),explicitLanguage=list(base.observations).filter(o=>o.field==='language');if(lang&&!explicitLanguage.length)ledger.add('language',lang,{source,certainty:'clear',image_index:1});
  if(base.brand)ledger.add('brand',base.brand,{source,level:'inferred'});
  if(base.family)ledger.add('family',base.family,{source,level:'inferred'});
  reconcileIdentifiers201(ledger);return ledger;
