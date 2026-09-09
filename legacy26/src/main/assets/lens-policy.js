@@ -28,7 +28,7 @@ function evaluate(c,l){
  const a=attributes(c,l.domain),keys=E.keyValues(l),p=l.domain==='pokemon'?E.pokemonKeys204(l):{subject:keys.subject,number:l.pick('collector_number')?.value,year:keys.year,language:keys.language};
  const reasons=[],matches=[],missing=[];
  const check=(field,physical,values,equal=(x,y)=>x===y)=>{if(!physical)return;if(!values.length){missing.push(field);return;}if(values.some(x=>equal(physical,x)))matches.push(field);else reasons.push('different_'+field);};
- check('number',p.number,a.numbers,E.numbersMatch);check('language',p.language,a.languages,E.printingLanguageCompatible201);check('year',p.year,a.years);
+ check('number',p.number,a.numbers,E.numbersMatch);if(l.domain!=='sports')check('language',p.language,a.languages,E.printingLanguageCompatible201);check('year',p.year,a.years);
  for(const field of ['finish','stamp','shadow'])check(field,l.pick(field)?.value,a[field]?[a[field]]:[]);
  const names=unique([p.subject,...(l.domain==='pokemon'?E.pokemonAliases204(l):[])]),text=norm(c.title+' '+c.snippet);
  if(names.length){if(names.some(n=>norm(n)&&text.includes(norm(n))))matches.push('subject');else missing.push('subject');}
