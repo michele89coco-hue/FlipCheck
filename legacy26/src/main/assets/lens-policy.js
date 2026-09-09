@@ -99,6 +99,8 @@ function visualEntries206(reply,refs,l){
   for(const field of ['subject','family'])if(!literal(e[field],proof[field])||!literal(proof[field],title))reasons.push('ungrounded_'+field);
   if(e.year&&(!literal(e.year,proof.year)||!literal(proof.year,title)))reasons.push('ungrounded_year');
   const original=c.original_reading||{},reference=c.reference_reading||{};
+  const suffix208=v=>String(v||'').match(/(?:VMAX|VSTAR|GX|EX|ex|V)\s*$/)?.[0]?.trim()||'';
+  if(suffix208(original.subject)&&suffix208(reference.subject)&&suffix208(original.subject)!==suffix208(reference.subject))reasons.push('different_reference_subject_suffix');
   if(physical.subject&&(!original.subject||!E.subjectMatch(original.subject,physical.subject)))reasons.push('different_original_subject');
   if(physical.number&&(!original.number||!E.numbersMatch(original.number,physical.number)))reasons.push('different_original_number');
   if(physical.year&&original.year&&E.season(original.year)!==physical.year)reasons.push('different_original_year');
