@@ -1,0 +1,30 @@
+name: Retrieve existing Lens fixtures without API calls
+on:
+  push:
+    branches: [codex/pokemon-number-identity]
+    paths: [.github/workflows/lens-recorded-fixture-export.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  retrieve:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 6b9b0547ae335f68285c6661a0b4f26d2b4ef105
+          persist-credentials: false
+          sparse-checkout: |
+            tools/regression/fixtures/lens-pair-20260909
+            tools/regression/fixtures/lens-trio-20260909
+            tools/regression/fixtures/lens-single-20260909
+      - uses: actions/upload-artifact@v4
+        with:
+          name: existing-lens-fixtures-205
+          path: |
+            tools/regression/fixtures/lens-pair-20260909/*.jpg
+            tools/regression/fixtures/lens-trio-20260909/*.jpg
+            tools/regression/fixtures/lens-single-20260909/*.jpg
+          retention-days: 1
+          if-no-files-found: error

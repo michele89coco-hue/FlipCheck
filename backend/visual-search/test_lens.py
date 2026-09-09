@@ -69,6 +69,9 @@ class Tests(unittest.TestCase):
  def test_account_snapshot_is_cached_and_credit_reservation_decreases(self):
   s=self.service();a=s.run(self.request());b=s.run(self.request('scan_test_5678'))
   self.assertEqual(a['account']['remaining_credits'],10);self.assertEqual(b['account']['remaining_credits'],9);self.assertEqual([r for r,p in self.calls].count('me'),1)
+ def test_first_snapshot_is_fetched_even_on_a_freshly_booted_host(self):
+  with patch('lens.time.monotonic',return_value=5):
+   s=self.service();r=s.run(self.request());self.assertEqual(r['account']['remaining_credits'],10);self.assertEqual(self.calls[0][0],'me')
  def test_secret_sent_in_header_never_query_and_redirects_disabled(self):
   class Response:
    def read(self,size):return b'{}'

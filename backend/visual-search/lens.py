@@ -108,7 +108,7 @@ class LensService:
             'timeoutMs':int(self.timeout*1000),'imageTtlSeconds':self.images.ttl}
     def credits(self):
         with self.account_lock:
-            if time.monotonic()-self.account_at > 300:
+            if not self.account_at or time.monotonic()-self.account_at > 300:
                 data=self.provider.request('me',{},5).get('account') or {}
                 self.account={k:data[k] for k in ('remaining_credits','monthly_allowance','current_month_usage')
                     if isinstance(data.get(k),(float,int)) and math.isfinite(data[k])}
@@ -148,7 +148,7 @@ class LensService:
             return {**cached['result'],'cacheHit':True,'providerCalls':0,'accountCalls':0,'estimatedUsd':0}
         result=dict(base); token=None
         try:
-            result['accountCalls']=int(time.monotonic()-self.account_at>300)
+            result['accountCalls']=int(not self.account_at or time.monotonic()-self.account_at>300)
             result['account']=self.credits(); result['accountSnapshotAgeMs']=round((time.monotonic()-self.account_at)*1000)
             token,url=self.images.put(raw)
             result.update(providerCalls=1,estimatedUsd=self.unit_usd,billingUnknown=True)
