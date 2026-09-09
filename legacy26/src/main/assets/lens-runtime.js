@@ -15,7 +15,7 @@ async function startLens205(ctx){
  let reservation=null;const started=Date.now(),event={provider:'searchapi_google_lens',kind:'lens',purpose:'initial_image_only',state:'configuration',startedAt:started};ctx.calls.push(event);
  try{
   state.backendCalls++;const cap=await directCall165('lens_config',{server:config.server,access:config.access},ctx,6500),c=cap.body;
-  if(cap.status!==200||!c?.enabled||c.provider!=='searchapi_google_lens'||c.protocol!==2)throw new Error(c?.state||'service_not_configured');
+  if(cap.status!==200||!c?.enabled||c.provider!=='searchapi_google_lens'||c.protocol!==2)throw new Error(c?.state||cap.state||'service_not_configured');
   if(!Number.isFinite(c.unitUsd)||c.unitUsd<0)throw new Error('cost_not_configured');
   // Charge the same scan budget. Reserve before uploading and retain unknown billing on timeout.
   reservation=ctx.budget.reserve('lens',c.unitUsd);state.reservedUsd=c.unitUsd;

@@ -40,7 +40,10 @@ format; Philips without a verified model; and Orbit without verified 94026.
 Those tests combine recorded retrieval output with explicit expected/recorded photo
 facts. They measure candidate selection and closure policy, **not 10 fresh correct
 identifications**. Existing photographic fixtures for Kobe, Vileplume, Topps and Philips
-are retained. Browser tests use synthetic image carriers with recorded observation
+are retained. The six remaining originals were retrieved read-only from the experimental
+commit and visually inspected; Dragonite’s tiny footer is not claimed as a fresh clear OCR
+reading. The Glurak browser closure test uses recorded build204 physical readings and
+a recorded page containing the same literal German sale quote. Browser tests use synthetic image carriers with recorded observation
 packets and intercepted native/API requests. Native Android tests cover actual local
 OCR fixtures, upload/background/cancellation/navigation and result propagation.
 

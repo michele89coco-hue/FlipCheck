@@ -260,3 +260,10 @@ test('205 Lens reads every uploaded photo once and saves incomplete result and p
  await reset('topps',{lens:true,photoCount:3,lensReply:{state:'empty_results',providerCalls:1,estimatedUsd:.004,billingUnknown:false,candidates:[]}});const out=await scan();
  assert.equal(native.filter(x=>x.action==='lens').length,1);assert.equal(native.filter(x=>x.action==='ocr').length,3);assert.equal(out.identification.market_ready,false);assert.equal(out.identificationPipeline.finalClosure.exact,false);assert.ok(out.identificationPipeline.finalClosure.missing.length);assert.ok(events.some(x=>x.kind==='end'&&x.snapshot.identification));
 });
+test('205 Glurak closes through a recorded Lens source with no paid web fallback',async()=>{
+ const f=JSON.parse(require('node:zlib').gunzipSync(fs.readFileSync(path.join(__dirname,'fixtures/glurak-204-lens-verification.json.gz'))));
+ const recorded=JSON.parse(require('node:zlib').gunzipSync(fs.readFileSync(path.join(__dirname,'fixtures/lens-205-recorded.json.gz')))).glurak,L=require('../src/main/assets/lens-policy');
+ await reset('politoed',{lens:true,lensCandidates:L.normalize(recorded),packet:f.vision,bandObservations:f.bands.observations,bandFeatures:f.bands.features,catalogueEntries:[f.entry],mutate(d){d.pages=f.pages;d.vision=f.vision;}});
+ const out=await scan();assert.equal(out.identification.market_ready,true,JSON.stringify(out.identificationPipeline));assert.match(out.identification.title,/Glurak.*Box Topper/);assert.equal(out.identification.language,'de');assert.equal(out.identification.card_identity.number,'9/12');
+ assert.equal(stages().filter(s=>s==='flipcheck_catalogue_search').length,0);assert.equal(native.filter(x=>x.action==='lens').length,1);assert.ok(out.identificationPipeline.evaluations.some(c=>c.reasons.includes('different_number')));assert.ok(out.identificationPipeline.catalogueExtraction.accepted>0);assert.equal(native.filter(x=>x.action==='catalogue').length,0);
+});

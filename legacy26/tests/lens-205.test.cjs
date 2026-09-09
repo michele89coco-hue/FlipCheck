@@ -60,3 +60,9 @@ test('normalization caps to 20, deduplicates, rejects unsafe links and never tre
 test('timeouts, empty results and exhausted credits provide explicit fallback reasons',()=>{
  for(const state of ['timeout','empty_results','quota_exhausted','authentication_failed','not_configured'])assert.equal(L.fallbackReason({state}),state);assert.equal(L.fallbackReason({state:'ok'}),'identity_not_verified');
 });
+test('early Latin OCR is retained and Japanese OCR runs once after script recognition',async()=>{
+ const vm=require('vm'),source=fs.readFileSync(path.join(__dirname,'../src/main/assets/visual-runtime.js'),'utf8'),calls=[],ctx={};
+ const sandbox={window:{FlipCheckGoogle:{ocrAvailable:()=>true}},targetPhotos169:async()=>[{data:'recorded-carrier',meta:{imageIndex:1}}],directCall165:async(action,p)=>{calls.push(p.script);return {state:'ok',text:p.script,lines:[]};},guard164(){}};
+ vm.createContext(sandbox);vm.runInContext(source.slice(source.indexOf('async function readPhotoOcr174('),source.indexOf('function detailRegion174('))+'\nthis.read=readPhotoOcr174;',sandbox);
+ await sandbox.read({},ctx);await sandbox.read({language:'ja'},ctx);await sandbox.read({language:'ja'},ctx);assert.deepEqual(calls,['latin','japanese']);assert.equal(ctx.photoOcr.length,2);assert.ok(ctx.photoOcr.every(r=>r.origin==='on_device_photo_ocr'));
+});
