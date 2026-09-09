@@ -240,12 +240,12 @@ async function resolveCatalogue193(base,ctx){
  let entries=[],pages=[],result;
  try{
   await readPhotoOcr174(lastVisionReading||base,ctx);E193.ingestOcr(l,ctx.photoOcr);l.record('readings_collected',{count:l.atoms.length});
-  const primaryLens=ctx.lens?.state==='ok'&&typeof lensCatalogue205==='function'?await lensCatalogue205(l,ctx):null;
+  const primaryLens=ctx.lens?.state==='ok'&&typeof primaryLens206==='function'?await primaryLens206(l,ctx):null;
   if(primaryLens){entries=primaryLens.entries;pages=primaryLens.pages;result=commitCatalogue193(l,entries,ctx);if(result.market_ready)return result;}
   if(l.domain==='pokemon')await readPokemonBands202(l,ctx);
   if(['onepiece','tcg'].includes(l.domain)){const read=l.active('collector_number').find(a=>a.region&&(!l.pick('collector_number')||a.reported_field==='set_code'||l.active('collector_number').some(b=>!E193.numbersMatch(a.value,b.value))));if(read){const req={key:'code-preflight:'+read.image_index,field:'collector_number',reason:'code_preflight',region:expandedCode202(l,read),image_index:read.image_index,rotation:0,readings:[]};await detailRead193(l,ctx,[req],entries);}}
   if(l.domain==='pokemon'){const physical=E193.pokemonKeys204(l),requests=E193.recoveryRequests(l,{core_identity:{status:'partial'},variant_resolution:{pending:[]}}).filter(r=>r.field==='copyright'||r.field==='collector_number'&&!physical.number);if(requests.length)await detailRead193(l,ctx,requests,entries);}
-  const lens=primaryLens||(typeof lensCatalogue205==='function'?await lensCatalogue205(l,ctx):{entries:[],pages:[]});entries=lens.entries;pages=lens.pages;result=commitCatalogue193(l,entries,ctx);
+  const lens=typeof lensCatalogue205==='function'?await lensCatalogue205(l,ctx):{entries:[],pages:[]};entries=lens.entries;pages=lens.pages;result=commitCatalogue193(l,entries,ctx);
   if(!result.market_ready){const lookup=await catalogueLookup193(l,ctx);entries.push(...lookup.entries);pages.push(...lookup.pages);ctx.textReferences=pages;result=commitCatalogue193(l,entries,ctx);}
   if(l.domain==='sports'&&!l.pick('serial')){const serialRequests=E193.recoveryRequests(l,result).filter(r=>r.field==='serial');if(serialRequests.length){await detailRead193(l,ctx,serialRequests,entries);result=commitCatalogue193(l,entries,ctx);}}
   if(['onepiece','tcg'].includes(l.domain)&&entries.length&&result.core_identity.status!=='confirmed'){await compareCore193(l,entries,ctx,pages);result=commitCatalogue193(l,entries,ctx);}

@@ -115,3 +115,8 @@ async function compareLensImages206(l,ctx){
  if(!report.entries.length)state.fallbacks.push({stage:'catalogue_then_targeted_web',reason:report.state});
  return {entries:report.entries};
 }
+
+async function primaryLens206(l,ctx){
+ ctx.lens.evaluations=L205.select(ctx.lens,l);ctx.lens.consideredCount=ctx.lens.evaluations.length;
+ const visual=await compareLensImages206(l,ctx);return {entries:visual.entries,pages:[]};
+}
