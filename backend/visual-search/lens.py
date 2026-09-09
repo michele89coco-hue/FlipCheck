@@ -201,4 +201,8 @@ if __name__=='__main__':
     price=os.getenv('SEARCHAPI_UNIT_USD','')
     service=LensService(SearchApi(os.getenv('SEARCHAPI_API_KEY','')),os.getenv('PUBLIC_ORIGIN',''),
         os.getenv('FLIPCHECK_ACCESS_TOKEN',''),float(price) if price else None)
-    ThreadingHTTPServer((os.getenv('BIND_ADDRESS','127.0.0.1'),int(os.getenv('PORT','8080'))),handler(service)).serve_forever()
+    httpd=ThreadingHTTPServer((os.getenv('BIND_ADDRESS','127.0.0.1'),int(os.getenv('PORT','8080'))),handler(service))
+    # Operational readiness only: no credentials, image URLs, account queries or Lens calls.
+    print(json.dumps({'event':'lens_startup','configured':service.available,
+        'provider':'searchapi_google_lens','unitUsd':service.unit_usd,'providerCalls':0}),flush=True)
+    httpd.serve_forever()
