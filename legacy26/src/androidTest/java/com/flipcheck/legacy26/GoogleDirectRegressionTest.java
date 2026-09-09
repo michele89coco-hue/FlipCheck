@@ -328,6 +328,18 @@ public final class GoogleDirectRegressionTest {
             assertEquals("japanese",out.get().getString("script"));assertEquals(0,out.get().getInt("paid_requests"));assertTrue(out.get().getString("text"),out.get().getString("text").contains("ピカチュウ"));assertTrue(out.get().getString("text"),out.get().getString("text").contains("025/165"));
         }finally{bitmap.recycle();}
     }
+    @Test public void chineseNamesAndNumbersAreReadLocally() throws Exception {
+        android.graphics.Bitmap bitmap=android.graphics.Bitmap.createBitmap(1100,450,android.graphics.Bitmap.Config.ARGB_8888);
+        android.graphics.Canvas canvas=new android.graphics.Canvas(bitmap);canvas.drawColor(android.graphics.Color.WHITE);
+        android.graphics.Paint paint=new android.graphics.Paint(android.graphics.Paint.ANTI_ALIAS_FLAG);paint.setColor(android.graphics.Color.BLACK);paint.setTextSize(72);
+        canvas.drawText("超梦",60,130,paint);canvas.drawText("135/127 SR",60,290,paint);
+        java.util.concurrent.CountDownLatch done=new java.util.concurrent.CountDownLatch(1);java.util.concurrent.atomic.AtomicReference<JSONObject> out=new java.util.concurrent.atomic.AtomicReference<>();
+        try(LocalReferenceOcr reader=new LocalReferenceOcr()){
+            reader.read("chinese-control-209",encodedImage(bitmap),"chinese",result->{out.set(result);done.countDown();});
+            assertTrue(done.await(45,java.util.concurrent.TimeUnit.SECONDS));assertEquals("ok",out.get().getString("state"));
+            assertEquals("chinese",out.get().getString("script"));assertEquals(0,out.get().getInt("paid_requests"));assertTrue(out.get().getString("text"),out.get().getString("text").contains("超梦"));assertTrue(out.get().getString("text"),out.get().getString("text").contains("135/127"));
+        }finally{bitmap.recycle();}
+    }
     @Test public void lightTextRecoveryFindsAnotherSerialOnTheOppositeSide() throws Exception {
         android.graphics.Bitmap bitmap=android.graphics.Bitmap.createBitmap(800,1100,android.graphics.Bitmap.Config.ARGB_8888);
         android.graphics.Canvas canvas=new android.graphics.Canvas(bitmap);canvas.drawColor(android.graphics.Color.WHITE);

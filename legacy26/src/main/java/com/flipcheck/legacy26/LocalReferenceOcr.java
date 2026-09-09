@@ -16,6 +16,7 @@ import com.google.mlkit.vision.text.TextRecognition;
 import com.google.mlkit.vision.text.TextRecognizer;
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
 import com.google.mlkit.vision.text.japanese.JapaneseTextRecognizerOptions;
+import com.google.mlkit.vision.text.chinese.ChineseTextRecognizerOptions;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,7 @@ final class LocalReferenceOcr implements AutoCloseable {
     private final ExecutorService worker=Executors.newSingleThreadExecutor();
     private final TextRecognizer recognizer=TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS);
     private TextRecognizer japaneseRecognizer;
+    private TextRecognizer chineseRecognizer;
     private final Map<String,AtomicBoolean> jobs=new ConcurrentHashMap<>();
     private volatile boolean closed;
     private boolean resourcesClosed;
@@ -198,9 +200,10 @@ final class LocalReferenceOcr implements AutoCloseable {
             if(closed||cancelled.get()){jobs.remove(id,cancelled);shutdownIfIdle();return;}
             Bitmap bitmap;
             try{bitmap=decode(image);}catch(Exception e){finish(id,cancelled,callback,GoogleVisionBridge.json("state","invalid_image"));return;}
-            String script="japanese".equals(requestedScript)?"japanese":"latin";
+            String script="chinese".equals(requestedScript)?"chinese":"japanese".equals(requestedScript)?"japanese":"latin";
             TextRecognizer engine=recognizer;
             if("japanese".equals(script)){if(japaneseRecognizer==null)japaneseRecognizer=TextRecognition.getClient(new JapaneseTextRecognizerOptions.Builder().build());engine=japaneseRecognizer;}
+            if("chinese".equals(script)){if(chineseRecognizer==null)chineseRecognizer=TextRecognition.getClient(new ChineseTextRecognizerOptions.Builder().build());engine=chineseRecognizer;}
             new ReadJob(id,script,engine,cancelled,callback,bitmap).next();
         });
     }
@@ -208,6 +211,6 @@ final class LocalReferenceOcr implements AutoCloseable {
         jobs.remove(id,cancelled);if(!closed&&!cancelled.get())callback.accept(result);shutdownIfIdle();
     }
     void cancel(String id){AtomicBoolean cancelled=jobs.get(id);if(cancelled!=null)cancelled.set(true);}
-    private synchronized void shutdownIfIdle(){if(closed&&jobs.isEmpty()&&!resourcesClosed){resourcesClosed=true;recognizer.close();if(japaneseRecognizer!=null)japaneseRecognizer.close();worker.shutdown();}}
+    private synchronized void shutdownIfIdle(){if(closed&&jobs.isEmpty()&&!resourcesClosed){resourcesClosed=true;recognizer.close();if(japaneseRecognizer!=null)japaneseRecognizer.close();if(chineseRecognizer!=null)chineseRecognizer.close();worker.shutdown();}}
     @Override public synchronized void close(){closed=true;for(AtomicBoolean cancelled:jobs.values())cancelled.set(true);shutdownIfIdle();}
 }

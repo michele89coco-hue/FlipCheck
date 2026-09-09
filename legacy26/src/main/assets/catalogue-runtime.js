@@ -87,6 +87,10 @@ async function searchCatalogue193(l,ctx,mode,pages,identityEntry=null){
   body.input='Una ricerca per verificare questa identità. Query: '+query+'. Chiavi lette sulla foto: '+JSON.stringify(E193.keyValues(l))+'. Candidati Lens (ipotesi, non prove): '+JSON.stringify((ctx.lens.candidates||[]).slice(0,2).map(c=>({title:c.title,url:c.url})))+'. Restituisci una sola entry della stampa esatta. source_url deve essere recuperato, entry_quote un passaggio contiguo della fonte e proof citazioni letterali. Numero e lingua devono corrispondere alla stampa; non copiare dati Lens nella foto. Nessun prezzo; nessuna autenticità. Non inventare campi mancanti.';
   l.record('compact_final_verification',{estimatedUsd:estimate164(body),availableUsd:ctx.budget.maxUsd-ctx.budget.spent()});
  }
+ if(ctx.lens?.visualComparison?.comparedIds?.length&&ctx.budget.spent()+estimate164(body)>ctx.budget.maxUsd){
+  body.max_output_tokens=450;body.input='Verifica una sola stampa. Query: '+query+'. Restituisci una entry, URL recuperato e citazioni contigue a supporto. Non inventare anno, lingua o variante. Numero della foto vincolante. Nessun prezzo.';
+  l.record('minimal_final_verification',{estimatedUsd:estimate164(body),availableUsd:ctx.budget.maxUsd-ctx.budget.spent()});
+ }
  if(ctx.budget.spent()+estimate164(body)>ctx.budget.maxUsd){ctx.catalogueBudgetSkipped=true;l.record('catalogue_search_skipped',{reason:'budget',query});return {entries:[],pages,budgetSkipped:true};}
  ctx.lensFinalReserve208=0;l.attempt('web:'+query);ctx.queries.push(query);if(ctx.lens)ctx.lens.fallbacks.push({stage:'targeted_web',mode,query,reason:'identity_or_variant_unresolved'});
  status('<span class="loader"></span>Consulto la checklist e le stampe documentate…');const started=Date.now(),response=await originalOpenai26(body);addUsage(response,body.model,countWeb(response),'Ricerca catalografica',false,started);guard164(ctx);

@@ -49,6 +49,26 @@ function select(packet,l){return normalize(packet).map(c=>evaluate(c,l));}
 function ranked(evaluations){return evaluations.filter(c=>c.eligible).sort((a,b)=>b.matches.length-a.matches.length);}
 function fallbackReason(result){return result?.state==='ok'?'identity_not_verified':result?.state||'provider_unavailable';}
 
+// OCR and page text rank hypotheses only. No reference text enters the photo ledger.
+function candidateFacts209(text){
+ const t=String(text||''),codes=unique((t.match(/\b(?:SWSH\s*\d{1,4}|SM\s*\d{1,4}|XY\s*\d{1,4}|SVP\s*\d{1,4}|(?:OP|ST|EB|PRB)\d{2}-\d{3}|P-\d{3}|CS\d+[a-z]?C?)\b/gi)||[]).map(x=>x.replace(/\s/g,'').toUpperCase()));
+ const fractions=unique((t.match(/\b[A-Z]*\d{1,4}\s*\/\s*[A-Z]*\d{1,4}\b/gi)||[]).map(E.number));
+ return {codes,fractions,years:unique(t.match(/\b(?:19|20)\d{2}\b/g)||[])};
+}
+function rankOcr209(refs,l){
+ const keys=E.keyValues(l),physical=E.number(l.pick('collector_number')?.value||''),setCodes=keys.setCodes.map(x=>x.replace(/\s/g,'').toUpperCase());
+ return refs.map((ref,index)=>{
+  const facts=candidateFacts209([ref.title,ref.snippet,ref.ocr?.text,ref.page_text].filter(Boolean).join(' ')),ids=[...facts.fractions,...facts.codes.filter(x=>!/^CS/.test(x))];
+  let score=0;const reasons=[];
+  if(physical&&ids.length){if(ids.some(x=>E.numbersMatch(x,physical))){score+=100;reasons.push('identifier_agrees');}else{score-=80;reasons.push('identifier_differs');}}
+  if(setCodes.length&&facts.codes.some(x=>setCodes.includes(x))){score+=60;reasons.push('set_agrees');}
+  if(keys.year&&facts.years.includes(keys.year))score+=8;
+  if(keys.subject&&norm([ref.title,ref.ocr?.text].join(' ')).includes(norm(keys.subject)))score+=5;
+  const model=l.pick('model_code')?.value||l.pick('sku')?.value;if(model&&norm([ref.title,ref.ocr?.text,ref.page_text].join(' ')).includes(norm(model))){score+=100;reasons.push('model_agrees');}
+  // Unknown/unreadable remains eligible; language never filters discovery.
+  return {...ref,ocrRank:{score,reasons,facts,index}};
+ }).sort((a,b)=>b.ocrRank.score-a.ocrRank.score||a.ocrRank.index-b.ocrRank.index);
+}
 // A reference can challenge a reading, but only two original-photo views can replace it.
 function reconcileOriginal208(l,readings,crops){
  const accepted=[],rejected=[];
@@ -56,9 +76,10 @@ function reconcileOriginal208(l,readings,crops){
  for(const row of list(readings)){
   const crop=crops.find(c=>c.id===row.crop_id),field=row.field;
   const full=String(row.full_text||'').trim(),detail=String(row.crop_text||'').trim();
-  const valid=crop&&crop.image_index===row.image_index&&fields.includes(field)&&row.evidence_found===true&&row.certainty==='clear'&&full&&norm(full)===norm(detail);
+  const sameView=field==='language'?!!E.language(full)&&!!E.language(detail)&&E.printingLanguageCompatible201(E.language(full),E.language(detail)):norm(full)===norm(detail);
+  const valid=crop&&crop.image_index===row.image_index&&fields.includes(field)&&row.evidence_found===true&&row.certainty==='clear'&&full&&sameView;
   if(!valid){rejected.push({field,reason:'original_views_not_confirmed'});continue;}
-  const value=field==='collector_number'?E.number(detail):field==='language'?E.language(detail):detail;
+  const value=field==='collector_number'?E.number(detail):field==='language'?E.language(full):detail;
   if(!value||field==='collector_number'&&!E.numberParts(value)||field==='serial'&&!E.serial(value)){rejected.push({field,reason:'invalid_value'});continue;}
   // Conflicting replies for the same field/image never win by array order.
   if(list(readings).some(o=>o!==row&&o.field===field&&o.image_index===row.image_index&&o.evidence_found===true&&o.certainty==='clear'&&norm(o.full_text)===norm(o.crop_text)&&norm(o.crop_text)!==norm(detail))){rejected.push({field,reason:'conflicting_original_views'});continue;}
@@ -95,7 +116,7 @@ function visualEntries206(reply,refs,l){
   const features=list(c.features).filter(f=>f.agrees===true&&f.certainty==='clear'&&f.original&&f.reference);
   const kinds=new Set(features.map(f=>f.field));
   if(kinds.size<2||!['artwork','layout','shape'].some(f=>kinds.has(f))||!['text','identifier','symbols','configuration'].some(f=>kinds.has(f)))reasons.push('insufficient_independent_details');
-  const title=ref.title+' '+ref.snippet,proof=e.proof||{};
+  const title=ref.title+' '+ref.snippet+' '+(ref.page_text||''),proof=e.proof||{};
   for(const field of ['subject','family'])if(!literal(e[field],proof[field])||!literal(proof[field],title))reasons.push('ungrounded_'+field);
   if(e.year&&(!literal(e.year,proof.year)||!literal(proof.year,title)))reasons.push('ungrounded_year');
   const original=c.original_reading||{},reference=c.reference_reading||{};
@@ -122,7 +143,7 @@ function visualEntries206(reply,refs,l){
   const source={url:ref.url,title:ref.title,provider:'searchapi_visual_comparison'};
   const entry={subject:e.subject,family:e.family,number:e.number,year:E.season(e.year),brand:e.brand||'',subset:e.subset||'',subset_known:!!e.subset,
    language:E.language(reference.language),aliases:unique([reference.subject,physical.subject]),identifier_type:'collector',variants:[],
-   grounded:true,entry_quote:ref.title+' '+ref.snippet,source,source_tier:'lens_visual_verified',image_url:ref.image_url||ref.thumbnail,
+   grounded:true,entry_quote:ref.title+' '+ref.snippet,reference_page:ref.page_text?{url:ref.page_url||ref.url,text:ref.page_text}:null,source,source_tier:'lens_visual_verified',image_url:ref.image_url||ref.thumbnail,
    requires_image_confirmation:true,visual_reference_id:ref.id,display_names:e.display_names||{},visual_proof:features,reference_reading:reference};
   // This explicitly denotes a comparison, never a new photographed identifier.
   l.add('catalogue_core',E.coreKey(entry),{source:'lens_image_comparison',certainty:'clear',image_index:1,reference_source:ref.url,reference_id:ref.id});
@@ -157,6 +178,6 @@ async function waitForService207(request,{now=()=>Date.now(),wait=ms=>new Promis
  }
  return {status:0,state:'service_startup_timeout',lastState:last?.state||null};
 }
-const api={reconcileOriginal208,retrievalPool208,partialTitle208,waitForService207,visualEntries206,present206,normalize,attributes,evaluate,select,ranked,fallbackReason,url};
+const api={candidateFacts209,rankOcr209,reconcileOriginal208,retrievalPool208,partialTitle208,waitForService207,visualEntries206,present206,normalize,attributes,evaluate,select,ranked,fallbackReason,url};
 if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckLens=api;
 })(typeof globalThis!=='undefined'?globalThis:this);
