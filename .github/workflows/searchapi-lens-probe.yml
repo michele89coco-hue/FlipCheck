@@ -1,0 +1,37 @@
+name: SearchApi Lens four-photo probe
+
+on:
+  push:
+    branches: ["experiment/searchapi-lens-20260909"]
+    paths:
+      - ".github/workflows/searchapi-lens-probe.yml"
+      - "tools/searchapi_lens_probe.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: searchapi-lens-probe
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Run four searches using repository secret
+        env:
+          SEARCHAPI_API_KEY: ${{ secrets.SEARCHAPI_API_KEY }}
+        run: python3 tools/searchapi_lens_probe.py
+      - name: Save sanitized report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: searchapi-lens-probe-${{ github.run_id }}
+          path: searchapi-results/report.json
+          if-no-files-found: warn
+          retention-days: 7
