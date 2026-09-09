@@ -48,6 +48,65 @@ function evaluate(c,l){
 function select(packet,l){return normalize(packet).map(c=>evaluate(c,l));}
 function ranked(evaluations){return evaluations.filter(c=>c.eligible).sort((a,b)=>b.matches.length-a.matches.length);}
 function fallbackReason(result){return result?.state==='ok'?'identity_not_verified':result?.state||'provider_unavailable';}
-const api={normalize,attributes,evaluate,select,ranked,fallbackReason,url};
+
+// Build 206: only actually downloaded, compared references can become evidence.
+function visualEntries206(reply,refs,l){
+ const accepted=[],rejected=[],keys=E.keyValues(l),physical=l.domain==='pokemon'?E.pokemonKeys204(l):{subject:keys.subject,number:l.pick('collector_number')?.value,year:keys.year,language:keys.language};
+ const seen=new Set(),literal=(value,text)=>!!String(value||'').trim()&&norm(text).includes(norm(value));
+ for(const c of list(reply?.comparisons)){
+  const ref=refs.find(r=>r.id===c.reference_id),e=c.identity||{},reasons=[];
+  if(!ref||!ref.image_data||seen.has(c.reference_id)){rejected.push({id:c.reference_id,reasons:['unknown_or_duplicate_reference']});continue;}seen.add(c.reference_id);
+  if(c.match!==true||c.ambiguous!==false||c.title_matches_image!==true||list(c.conflicts).length)reasons.push('unverified_image');
+  const features=list(c.features).filter(f=>f.agrees===true&&f.certainty==='clear'&&f.original&&f.reference);
+  const kinds=new Set(features.map(f=>f.field));
+  if(kinds.size<2||!['artwork','layout','shape'].some(f=>kinds.has(f))||!['text','identifier','symbols','configuration'].some(f=>kinds.has(f)))reasons.push('insufficient_independent_details');
+  const title=ref.title+' '+ref.snippet,proof=e.proof||{};
+  for(const field of ['subject','family'])if(!literal(e[field],proof[field])||!literal(proof[field],title))reasons.push('ungrounded_'+field);
+  if(e.year&&(!literal(e.year,proof.year)||!literal(proof.year,title)))reasons.push('ungrounded_year');
+  const original=c.original_reading||{},reference=c.reference_reading||{};
+  if(physical.subject&&(!original.subject||!E.subjectMatch(original.subject,physical.subject)))reasons.push('different_original_subject');
+  if(physical.number&&(!original.number||!E.numbersMatch(original.number,physical.number)))reasons.push('different_original_number');
+  if(physical.year&&original.year&&E.season(original.year)!==physical.year)reasons.push('different_original_year');
+  if(physical.year&&e.year&&physical.year!==E.season(e.year))reasons.push('different_year');
+  if(physical.language&&(!reference.language||!E.printingLanguageCompatible201(physical.language,reference.language)))reasons.push('different_reference_language');
+  if(physical.language&&original.language&&!E.printingLanguageCompatible201(physical.language,original.language))reasons.push('different_original_language');
+  const card=!['generic','sealed'].includes(l.domain);
+  if(card){
+   if(!physical.language)reasons.push('original_language_unresolved');
+   if(reference.year&&e.year&&E.season(reference.year)!==E.season(e.year))reasons.push('different_reference_year');
+   if(!e.number||!reference.number||!E.numbersMatch(e.number,reference.number))reasons.push('unreadable_reference_identifier');
+   if(physical.number&&!E.numbersMatch(e.number,physical.number))reasons.push('different_number');
+   if(!physical.number)reasons.push('original_identifier_unresolved');
+   if(!reference.subject)reasons.push('unreadable_reference_subject');
+  }
+  if(e.subset&&(!literal(e.subset,proof.subset)||!literal(proof.subset,title)))reasons.push('ungrounded_subset');
+  if(reasons.length){rejected.push({id:ref.id,reasons:unique(reasons)});continue;}
+  // Keep reference readings and original observations separate. No candidate title enters the photo ledger.
+  const source={url:ref.url,title:ref.title,provider:'searchapi_visual_comparison'};
+  const entry={subject:e.subject,family:e.family,number:e.number,year:E.season(e.year),brand:e.brand||'',subset:e.subset||'',subset_known:!!e.subset,
+   language:E.language(reference.language),aliases:unique([reference.subject,physical.subject]),identifier_type:'collector',variants:[],
+   grounded:true,entry_quote:ref.title+' '+ref.snippet,source,source_tier:'lens_visual_verified',image_url:ref.image_url||ref.thumbnail,
+   requires_image_confirmation:true,visual_reference_id:ref.id,display_names:e.display_names||{},visual_proof:features,reference_reading:reference};
+  // This explicitly denotes a comparison, never a new photographed identifier.
+  l.add('catalogue_core',E.coreKey(entry),{source:'lens_image_comparison',certainty:'clear',image_index:1,reference_source:ref.url,reference_id:ref.id});
+  accepted.push(entry);
+ }
+ return {accepted,rejected};
+}
+function present206(result,entries,l,titleLanguage='it'){
+ if(!result.card_identity||result.core_identity?.status!=='confirmed')return result;
+ const entry=entries.find(e=>e.visual_reference_id&&E.familyKey(e.family)===E.familyKey(result.family)&&E.numbersMatch(e.number,result.card_identity.number));if(!entry)return result;
+ const names=entry.display_names||{},name=String(names[titleLanguage]||names.en||entry.subject).trim(),physical=l.pick('subject')?.value||'';
+ const suffix=v=>String(v).match(/(?:VMAX|VSTAR|GX|EX|ex|V)\s*$/)?.[0]?.trim()||'';
+ const displayName=suffix(physical)&&suffix(name)!==suffix(physical)?physical:name;
+ const language=result.language,tag=({it:'ITA',en:'ENG',ja:'JPN',de:'DEU',fr:'FRA',es:'SPA',ko:'KOR',zh:'CHN','zh-hans':'CHN-S','zh-hant':'CHN-T'})[language]||language?.toUpperCase()||'Lingua da verificare';
+ const setCode=l.pick('set_code')?.value||'',parts=[displayName,setCode,result.card_identity.number,result.card_identity.date,result.family,result.card_identity.subset,result.variant];
+ if(result.card_identity.is_rookie)parts.push('RC');if(result.physical_serial?.value)parts.push(result.physical_serial.value);parts.push(tag);
+ result.title=unique(parts).join(' · ');result.identity_display=result.title;if(result.model)result.model=result.title;
+ result.display_language=titleLanguage;result.localized_subject=displayName;result.physical_language=language;result.language_suffix=tag;
+ if(result.market_ready)result.normalized_query=result.title;
+ return result;
+}
+const api={visualEntries206,present206,normalize,attributes,evaluate,select,ranked,fallbackReason,url};
 if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckLens=api;
 })(typeof globalThis!=='undefined'?globalThis:this);
