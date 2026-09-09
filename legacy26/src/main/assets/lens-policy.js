@@ -53,12 +53,13 @@ function fallbackReason(result){return result?.state==='ok'?'identity_not_verifi
 function candidateFacts209(text){
  const t=String(text||''),codes=unique((t.match(/\b(?:SWSH\s*\d{1,4}|SM\s*\d{1,4}|XY\s*\d{1,4}|SVP\s*\d{1,4}|(?:OP|ST|EB|PRB)\d{2}-\d{3}|P-\d{3}|CS\d+[a-z]?C?)\b/gi)||[]).map(x=>x.replace(/\s/g,'').toUpperCase()));
  const fractions=unique((t.match(/\b[A-Z]*\d{1,4}\s*\/\s*[A-Z]*\d{1,4}\b/gi)||[]).map(E.number));
- return {codes,fractions,years:unique(t.match(/\b(?:19|20)\d{2}\b/g)||[])};
+ const labelled=unique([...t.matchAll(/(?:#|\bNo\.?\s*)([A-Z]*\d{1,4})\b/gi)].map(m=>E.number(m[1])));
+ return {codes,fractions,labelled,years:unique(t.match(/\b(?:19|20)\d{2}\b/g)||[])};
 }
 function rankOcr209(refs,l){
  const keys=E.keyValues(l),physical=E.number(l.pick('collector_number')?.value||''),setCodes=keys.setCodes.map(x=>x.replace(/\s/g,'').toUpperCase());
  return refs.map((ref,index)=>{
-  const facts=candidateFacts209([ref.title,ref.snippet,ref.ocr?.text,ref.page_text].filter(Boolean).join(' ')),ids=[...facts.fractions,...facts.codes.filter(x=>!/^CS/.test(x))];
+  const facts=candidateFacts209([ref.title,ref.snippet,ref.ocr?.text,ref.page_text].filter(Boolean).join(' ')),ids=[...facts.fractions,...facts.labelled,...facts.codes.filter(x=>!/^CS/.test(x))];
   let score=0;const reasons=[];
   if(physical&&ids.length){if(ids.some(x=>E.numbersMatch(x,physical))){score+=100;reasons.push('identifier_agrees');}else{score-=80;reasons.push('identifier_differs');}}
   if(setCodes.length&&facts.codes.some(x=>setCodes.includes(x))){score+=60;reasons.push('set_agrees');}
