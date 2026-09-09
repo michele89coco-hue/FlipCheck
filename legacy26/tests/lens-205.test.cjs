@@ -4,7 +4,7 @@ const {test}=require('node:test'),assert=require('node:assert/strict'),fs=requir
 const E=require('../src/main/assets/catalogue-engine'),L=require('../src/main/assets/lens-policy');
 const D=JSON.parse(zlib.gunzipSync(fs.readFileSync(path.join(__dirname,'fixtures/lens-205-recorded.json.gz'))));
 function photo(domain,values,uncertain={}){const l=new E.Ledger({domain,kind:['generic','sealed'].includes(domain)?'object':'card',category:domain==='generic'?'Telecomando':'',object_unit:'single'});for(const [field,value] of Object.entries(values))l.add(field,value,{source:'vision',certainty:'clear',image_index:1,zone:field==='copyright'?'footer':'front'});for(const [field,value] of Object.entries(uncertain))l.add(field,value,{source:'vision',certainty:'uncertain',image_index:1});return l;}
-function evaluate(name,l){const out=L.select(D[name],l);assert.equal(out.length,20);assert.ok(out.every(c=>c.identity_verified===false));return out;}
+function evaluate(name,l){const out=L.select(D[name],l);assert.equal(out.length,Math.min(60,(D[name].candidates||D[name].visual_matches||[]).length));assert.ok(out.every(c=>c.identity_verified===false));return out;}
 test('Glurak: Box Topper 9/12 survives, 146/144 and #146 are rejected; German remains required',()=>{
  const l=photo('pokemon',{subject:'Glurak',collector_number:'9/12',copyright:'©2003',language:'de',finish:'holo'});l.add('subject_alias','Charizard',{level:'inferred',certainty:'uncertain'});
  const out=evaluate('glurak',l);assert.equal(out[0].eligible,false);assert.ok(out[0].reasons.includes('different_number'));assert.equal(out[1].eligible,true);assert.equal(out[1].attributes.format,'Box Topper');assert.ok(out[1].missing.includes('language'));assert.ok(out.filter(c=>c.attributes.numbers.includes('146/144')).every(c=>!c.eligible));
@@ -60,7 +60,7 @@ test('uncertain number cannot exclude another candidate or become a confirmed id
  const l=photo('pokemon',{subject:'Dragonite',language:'it'},{collector_number:'9/165'});assert.equal(L.select(D.dragonite,l)[0].eligible,true);assert.equal(l.pick('collector_number'),null);
 });
 test('normalization caps to 20, deduplicates, rejects unsafe links and never treats score as identity',()=>{
- const rows=Array.from({length:30},(_,i)=>({title:'Card '+i,link:'https://catalogue.example/'+i,score:100}));const out=L.normalize({visual_matches:[{title:'invalid',link:'javascript:alert(1)'},...rows,rows[0]]});assert.equal(out.length,20);assert.ok(out.every(c=>c.identity_verified===false));assert.equal(out[0].score,undefined);
+ const rows=Array.from({length:30},(_,i)=>({title:'Card '+i,link:'https://catalogue.example/'+i,score:100}));const out=L.normalize({visual_matches:[{title:'invalid',link:'javascript:alert(1)'},...rows,rows[0]]});assert.equal(out.length,30);assert.ok(out.every(c=>c.identity_verified===false));assert.equal(out[0].score,undefined);
 });
 test('timeouts, empty results and exhausted credits provide explicit fallback reasons',()=>{
  for(const state of ['timeout','empty_results','quota_exhausted','authentication_failed','not_configured'])assert.equal(L.fallbackReason({state}),state);assert.equal(L.fallbackReason({state:'ok'}),'identity_not_verified');

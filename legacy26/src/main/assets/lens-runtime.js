@@ -18,9 +18,9 @@ async function startLens205(ctx){
   if(cap.status!==200||!c?.enabled||c.provider!=='searchapi_google_lens'||c.protocol!==2)throw new Error(c?.state||cap.state||'service_not_configured');
   if(!Number.isFinite(c.unitUsd)||c.unitUsd<0)throw new Error('cost_not_configured');
   // Charge the same scan budget. Reserve before uploading and retain unknown billing on timeout.
+  const picture=await lensPicture211(ctx);guard164(ctx);if(!picture){state.state='front_required';event.state=state.state;return state;}
   reservation=ctx.budget.reserve('lens',c.unitUsd);state.reservedUsd=c.unitUsd;
-  const picture=await lensPicture211(ctx);guard164(ctx);
-  state.image={image_index:1,...picture.meta};state.maximumCandidates=20;event.state='attempted';
+  state.image={image_index:1,...picture.meta};state.maximumCandidates=60;event.state='attempted';
   state.backendCalls++;state.providerCalls=null;state.providerCallsConfirmed=false;const reply=await directCall165('lens',{server:config.server,access:config.access,scan_id:ctx.id,
    image_base64:picture.data.split(',')[1],remaining_usd:ctx.budget.maxUsd-ctx.budget.spent()+c.unitUsd},ctx,40000);
   if(reply.status!==200||!reply.body)throw new Error(reply.body?.state||reply.state||'provider_unavailable');
@@ -34,8 +34,8 @@ async function startLens205(ctx){
 }
 // Vision owns routing. Lens is requested only after the slab shortcut was evaluated.
 async function lensPicture211(ctx){
- const reading=ctx.rawObservation||lastVisionReading||{};
- if(reading.domain==='sports'){const plan=L205.frontPlan213(reading,validImageCount()),picture=await visualPhoto164({object_region:plan.region?{...plan.region,certain:true}:{image_index:plan.image_index,certain:false},object_unit:'single'});return {...picture,meta:{...picture.meta,source:'sports_front',selection:plan,uploadedImageCount:validImageCount()}};}
+ const reading=lastVisionReading||ctx.rawObservation||{};
+ if(reading.domain==='sports'){const plan=L205.frontPlan213(reading,validImageCount());if(plan.reason==='front_uncertain')return null;const picture=await visualPhoto164({object_region:plan.region?{...plan.region,certain:true}:{image_index:plan.image_index,certain:false},object_unit:'single'});return {...picture,meta:{...picture.meta,source:'sports_front',selection:plan,uploadedImageCount:validImageCount()}};}
  const photos=[];
  for(let i=1;i<=validImageCount();i++)photos.push(await visualPhoto164({object_region:{image_index:i,certain:false}}));
  guard164(ctx);
@@ -81,8 +81,8 @@ async function compareLensImages206(l,ctx){
  const ranked=state.evaluations,selected=[],seen=new Set();
  // Fetch diverse image URLs. Duplicated marketplace listings do not earn votes.
  for(const c of ranked){const key=c.image_url||c.thumbnail;if(!key||seen.has(key))continue;seen.add(key);selected.push(c);}
- const refs=[],deadline=Date.now()+90000;
- ctx.budget.deadline+=90000;report.extendedRecognitionMs=90000;
+ const refs=[],deadline=Date.now()+180000;
+ ctx.budget.deadline+=240000;report.extendedRecognitionMs=240000;
  status('<span class="loader"></span>Leggo le immagini candidate con OCR…');
  for(let i=0;i<selected.length;i+=4){
   const results=await Promise.allSettled(selected.slice(i,i+4).map(async c=>{
@@ -131,7 +131,11 @@ async function compareLensImages206(l,ctx){
   return {model:'gpt-5.6-luna',reasoning:{effort:'low'},store:false,max_output_tokens:2600,...schemaFormat('flipcheck_lens_image_comparison',object193({original_readings:{type:'array',maxItems:12,items:rereading},comparisons:{type:'array',maxItems:6,items:comparison}})),input:[{role:'user',content}]};};
  report.references=refs.map(({image_data,...r})=>r);report.comparedIds=[];report.batches=[];report.pages=[];report.originalReread={accepted:[],rejected:[]};
  ctx.lensReferenceImages213=new Map(refs.map(r=>[r.id,r.image_data]));
- const pending=new Set(refs.map(r=>r.id));let compactRetry=false;
+ const filtered=L205.filterOcr214(refs,l);report.textFilter={excluded:filtered.excluded,eligible:filtered.eligible.map(r=>r.id),reserve:filtered.reserve.map(r=>r.id)};
+ const allowed=new Set([...filtered.eligible,...filtered.reserve].map(r=>r.id));
+ const pending=new Set(refs.filter(r=>allowed.has(r.id)).map(r=>r.id));let compactRetry=false;
+ // A full web reserve fits only before spending comparison calls: recover identifiers now when OCR found no compatible one.
+ if(l.pick('collector_number')&&!filtered.eligible.some(r=>r.ocrRank.reasons.includes('identifier_agrees'))&&l.attempt('early-web-214')){const found=await searchCatalogue193(l,ctx,'identity',report.pages);ctx.earlyWeb214=found;report.pages.push(...found.pages);if(found.entries.length){report.entries.push(...found.entries);report.state='catalogue_recovery';report.stopReason='targeted_web_before_comparison';return {entries:report.entries};}}
  const comparisonLimit=Math.min(3,ctx.budget.visionCalls+2); // Always leave a Vision slot for decisive verification.
  while(pending.size){
   guard164(ctx);

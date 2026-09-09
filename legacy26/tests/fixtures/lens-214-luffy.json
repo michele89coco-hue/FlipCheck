@@ -1,0 +1,410 @@
+{
+  "vision": {
+    "domain": "onepiece",
+    "kind": "card",
+    "category": "One Piece card",
+    "language": "en",
+    "object_unit": "single",
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.101,
+        "y": 0.225,
+        "width": 0.802,
+        "height": 0.526,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "Monkey.D.Luffy",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.245,
+          "y": 0.704,
+          "width": 0.502,
+          "height": 0.044
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "collector_number",
+        "text": "P-110",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.79,
+          "y": 0.744,
+          "width": 0.047,
+          "height": 0.018
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "attack",
+        "text": "9000",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.645,
+          "y": 0.257,
+          "width": 0.139,
+          "height": 0.035
+        },
+        "zone": "statistics",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "COUNTER +1000",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.131,
+          "y": 0.426,
+          "width": 0.038,
+          "height": 0.123
+        },
+        "zone": "statistics",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "CHARACTER",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.409,
+          "y": 0.681,
+          "width": 0.126,
+          "height": 0.017
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "Elbaph/The Four Emperors/Straw Hat Crew",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.255,
+          "y": 0.75,
+          "width": 0.446,
+          "height": 0.022
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "copyright",
+        "text": "©Eiichiro Oda/Shueisha ©BANDAI ©2022 One Piece Card Game",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.793,
+          "y": 0.494,
+          "width": 0.027,
+          "height": 0.253
+        },
+        "zone": "footer",
+        "alternatives": []
+      }
+    ],
+    "features": [
+      {
+        "field": "pattern",
+        "value": "mattoncini colorati in rilievo",
+        "description": "Sfondo con motivo ripetuto di blocchi tipo mattoncini",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.104,
+          "y": 0.239,
+          "width": 0.789,
+          "height": 0.51
+        },
+        "zone": "artwork"
+      },
+      {
+        "field": "stamp",
+        "value": "4th Anniversary",
+        "description": "Logo/stemma promozionale visibile",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.155,
+          "y": 0.651,
+          "width": 0.147,
+          "height": 0.061
+        },
+        "zone": "label"
+      },
+      {
+        "field": "layout",
+        "value": "ritratto; illustrazione centrale; fascia blu con nome in basso; statistiche in alto",
+        "description": "Carta verticale con cornice decorativa multicolore",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.101,
+          "y": 0.225,
+          "width": 0.802,
+          "height": 0.526
+        },
+        "zone": "other"
+      },
+      {
+        "field": "finish",
+        "value": "unclear",
+        "description": "La plastica della confezione riflette la luce; finitura della carta non determinabile",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.101,
+          "y": 0.225,
+          "width": 0.802,
+          "height": 0.526
+        },
+        "zone": "surface"
+      }
+    ],
+    "hypotheses": [],
+    "slab_reading": null,
+    "engine_version": 193,
+    "brand": "",
+    "family": "",
+    "title": "Monkey.D.Luffy",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": {
+      "image_index": 1,
+      "x": 0.101,
+      "y": 0.225,
+      "width": 0.802,
+      "height": 0.526,
+      "certain": true
+    },
+    "photo_clues": [
+      {
+        "text": "Monkey.D.Luffy",
+        "role": "subject",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.245,
+          "y": 0.704,
+          "width": 0.502,
+          "height": 0.044,
+          "certain": true
+        }
+      },
+      {
+        "text": "P-110",
+        "role": "collector_number",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.79,
+          "y": 0.744,
+          "width": 0.047,
+          "height": 0.018,
+          "certain": true
+        }
+      },
+      {
+        "text": "9000",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.645,
+          "y": 0.257,
+          "width": 0.139,
+          "height": 0.035,
+          "certain": true
+        }
+      },
+      {
+        "text": "COUNTER +1000",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.131,
+          "y": 0.426,
+          "width": 0.038,
+          "height": 0.123,
+          "certain": true
+        }
+      },
+      {
+        "text": "CHARACTER",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.409,
+          "y": 0.681,
+          "width": 0.126,
+          "height": 0.017,
+          "certain": true
+        }
+      },
+      {
+        "text": "Elbaph/The Four Emperors/Straw Hat Crew",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.255,
+          "y": 0.75,
+          "width": 0.446,
+          "height": 0.022,
+          "certain": true
+        }
+      },
+      {
+        "text": "©Eiichiro Oda/Shueisha ©BANDAI ©2022 One Piece Card Game",
+        "role": "copyright",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.793,
+          "y": 0.494,
+          "width": 0.027,
+          "height": 0.253,
+          "certain": true
+        }
+      }
+    ],
+    "physical_observations": [
+      {
+        "feature": "pattern",
+        "text": "Sfondo con motivo ripetuto di blocchi tipo mattoncini",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Logo/stemma promozionale visibile",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Carta verticale con cornice decorativa multicolore",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "La plastica della confezione riflette la luce; finitura della carta non determinabile",
+        "certainty": "uncertain",
+        "entity": "target",
+        "image_index": 1
+      }
+    ]
+  },
+  "references": [],
+  "batches": [],
+  "crops": [],
+  "variant_comparisons": [
+    {
+      "comparisons": [
+        {
+          "reference_id": "variant0",
+          "match": true,
+          "conflicts": [],
+          "features": [
+            {
+              "field": "artwork",
+              "original": "Luffy con el pugno proteso e el cappello cornuto",
+              "reference": "Stessa illustrazione e posa",
+              "agrees": true,
+              "certainty": "clear"
+            },
+            {
+              "field": "layout",
+              "original": "Composizione con sfondo a mattoncini, logo 4th Anniversary e barra nome in basso",
+              "reference": "Stessa composizione e disposizione",
+              "agrees": true,
+              "certainty": "clear"
+            },
+            {
+              "field": "stamp",
+              "original": "Logo fisico 4th Anniversary, senza Winner",
+              "reference": "Logo 4th Anniversary, senza timbro Winner",
+              "agrees": true,
+              "certainty": "clear"
+            }
+          ]
+        },
+        {
+          "reference_id": "variant1",
+          "match": false,
+          "conflicts": [
+            "Presenza del timbro fisico Release Event WINNER e trattamento dorato del testo, assenti nell’originale."
+          ],
+          "features": [
+            {
+              "field": "artwork",
+              "original": "Luffy con il pugno proteso e il cappello cornuto",
+              "reference": "Stessa illustrazione e posa",
+              "agrees": true,
+              "certainty": "clear"
+            },
+            {
+              "field": "layout",
+              "original": "Composizione con sfondo a mattoncini, logo 4th Anniversary e barra nome in basso",
+              "reference": "Stessa composizione di base",
+              "agrees": true,
+              "certainty": "clear"
+            },
+            {
+              "field": "stamp",
+              "original": "Nessun timbro Winner",
+              "reference": "Timbro fisico Release Event WINNER in basso a destra",
+              "agrees": false,
+              "certainty": "clear"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

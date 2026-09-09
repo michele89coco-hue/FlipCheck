@@ -231,7 +231,7 @@ function evaluate(l,entry){
  const observedSubset=l.domain==='sports'?l.pick('subset')?.value:null;if(observedSubset&&l.catalogueSubsets202?.includes(subsetKey(observedSubset))&&entry.subset_known===true&&subsetKey(observedSubset)!==subsetKey(entry.subset))reasons.push('different_printed_subset');
  const seenProducts=k.products.filter(v=>norm(v)!=='prizm'||l.domain==='sports');
  for(const p of seenProducts)if(!norm([entry.family,entry.subset,entry.brand,entry.variant].join(' ')).includes(norm(p))&&!norm(p).includes(norm(entry.family)))reasons.push('different_printed_product');
- const visual=l.evidence('catalogue_core').some(a=>a.value===coreKey(entry));if(visual){score+=k.pokedex.length?40:25;if(l.domain==='sports'&&entry.source_tier==='lens_visual_verified'&&entry.field_proof?.number?.origin==='reference_text'&&entry.field_proof?.year&&entry.variants?.length)score+=20;matches.push('catalogue_image');if(needsSubjectVisual){if(!matches.includes('localized_candidate'))score+=35;matches.push('subject');}}else if(needsSubjectVisual)score=Math.min(score,70);
+ const visual=l.evidence('catalogue_core').some(a=>a.value===coreKey(entry));if(visual){score+=k.pokedex.length?40:25;if(l.domain==='sports'&&entry.source_tier==='lens_visual_verified'&&['reference_text','reference_image'].includes(entry.field_proof?.number?.origin)&&entry.field_proof?.year&&entry.variants?.length)score+=20;matches.push('catalogue_image');if(needsSubjectVisual){if(!matches.includes('localized_candidate'))score+=35;matches.push('subject');}}else if(needsSubjectVisual)score=Math.min(score,70);
  if(l.domain==='pokemon'&&(k.pokedex.length&&!k.numbers.length||['pokedex','unnumbered'].includes(entry.identifier_type))&&!visual){
   const yearAgrees=entry.year&&(k.year===season(entry.year)||l.evidence('copyright').some(a=>str(a.value).match(/\b(?:19|20)\d{2}\b/g)?.includes(season(entry.year))));
   if(!dexMatch||!yearAgrees)score=Math.min(score,70);
@@ -453,6 +453,7 @@ function applyDetails(l,details,requests){for(const d of list(details)){
  const req=requests.find(r=>r.field===d.field&&r.image_index===d.image_index);if(!req||d.certainty!=='clear'||d.evidence_found===false)continue;
  const raw=d.text??d.value,value=presenceFields.includes(d.field)?(['present','absent'].includes(raw)?raw:presenceText(d.field,raw)):d.field==='finish'?finish(raw):d.field==='language'?language(raw):d.field==='collector_number'?number(raw):raw;
  if(d.field==='collector_number'&&semanticField(l.domain,d.field,value)!==d.field){l.record('detail_rejected',{field:d.field,value,reason:'non_identifier_text'});continue;}
+ if(d.field==='copyright'&&!/\b(?:19|20)\d{2}\b/.test(str(value))){l.record('detail_rejected',{field:d.field,reason:'no_printed_year'});continue;}
  if(!value||d.field==='serial'&&!serial(value)||d.field==='collector_number'&&!numberParts(value))continue;
  if(presenceFields.includes(d.field)&&!['present','absent'].includes(value))continue;
  const correction=d.evidence_found===true&&(['catalogue_number_conflict','code_preflight','identity_band'].includes(req.reason)&&d.field==='collector_number'||req.reason==='printing_compatibility'&&d.field==='stamp');

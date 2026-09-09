@@ -239,7 +239,7 @@ mergeResolvedFingerprint=function(base,refined,sources,signature){
  return syncIdentity169(result);
 };
 shouldResolveOnline=function(base){if(window.FlipCheckCatalogueEngine&&scan164)return !base?.engine_final;if(S191.isSlab(lastVisionReading||base))return base?.slab_verification?.state!=='confirmed';const checked=enforceIdentificationPolicy(base);if(checked?.printing_check?.complete===false&&scan164&&validImageCount())return true;if(V164.ready(checked))return false;if(active164()&&validImageCount())return true;return priorShould164(checked);};
-async function decodeVisual164(file){if(window.createImageBitmap)return createImageBitmap(file,{imageOrientation:'from-image'});return new Promise((resolve,reject)=>{const u=URL.createObjectURL(file),im=new Image();im.onload=()=>{URL.revokeObjectURL(u);resolve(im);};im.onerror=()=>{URL.revokeObjectURL(u);reject(new Error('invalid_image'));};im.src=u;});}
+async function decodeVisual164(file){if(window.createImageBitmap)try{return await createImageBitmap(file,{imageOrientation:'from-image'});}catch(error){if(scan164)scan164.imageDecodeFallbacks=(scan164.imageDecodeFallbacks||0)+1;}return new Promise((resolve,reject)=>{const u=URL.createObjectURL(file),im=new Image();im.onload=()=>{URL.revokeObjectURL(u);resolve(im);};im.onerror=()=>{URL.revokeObjectURL(u);reject(new Error('invalid_image'));};im.src=u;});}
 function saveEvidence192(kind,data,metadata){try{window.FlipCheckGoogle?.storeEvidence?.(kind,data||'',JSON.stringify(metadata||{}));}catch(_){} }
 function evidenceInfo192(){try{return JSON.parse(window.FlipCheckGoogle?.evidenceInfo?.()||'{}');}catch(_){return {};}}
 async function visualPhoto164(base){
@@ -247,7 +247,7 @@ async function visualPhoto164(base){
  if(cache?.has(cacheKey)){ctx.imageCacheHits=(ctx.imageCacheHits||0)+1;return cache.get(cacheKey);}
  const sourceFiles=files.filter(Boolean),r=base.object_region;const index=r?.image_index>0&&r.image_index<=sourceFiles.length?r.image_index:1;
  if(ctx&&window.FlipCheckGoogle?.storeEvidence){const originals=ctx.originalsSaved||(ctx.originalsSaved=new Set());if(!originals.has(index)){originals.add(index);const original=sourceFiles[index-1];if(original.size<=8000000){const data=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=reject;reader.readAsDataURL(original);});guard164(ctx);saveEvidence192('original',data,{image_index:index,mime:original.type,bytes:original.size});}}}
- const image=await decodeVisual164(sourceFiles[index-1]);try{
+ let image;try{image=await decodeVisual164(sourceFiles[index-1]);}catch(error){const prepared=cache?.get(JSON.stringify([{image_index:index,certain:false},undefined,undefined,undefined]));if(!prepared)throw error;image=await decodeVisual164(await(await fetch(prepared.data)).blob());if(ctx)ctx.originalDecodeRecovery214=(ctx.originalDecodeRecovery214||0)+1;}try{
   if(ctx)guard164(ctx);
   const w=image.naturalWidth||image.width,h=image.naturalHeight||image.height;let rect={x:0,y:0,width:w,height:h},cropped=false;
   const minimum=base.detail_crop?.003:.05;

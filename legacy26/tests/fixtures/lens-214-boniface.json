@@ -1,0 +1,500 @@
+{
+  "vision": {
+    "domain": "sports",
+    "kind": "card",
+    "category": "soccer trading card",
+    "language": "en",
+    "object_unit": "single",
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.115,
+        "y": 0.285,
+        "width": 0.774,
+        "height": 0.507,
+        "certain": true
+      },
+      {
+        "image_index": 2,
+        "x": 0.132,
+        "y": 0.307,
+        "width": 0.783,
+        "height": 0.507,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "Victor Boniface",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.226,
+          "y": 0.735,
+          "width": 0.568,
+          "height": 0.046
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "brand",
+        "text": "Panini",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.173,
+          "y": 0.761,
+          "width": 0.083,
+          "height": 0.024
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "product",
+        "text": "2025-26 Panini - Select Road to FIFA World Cup 2026™ Soccer",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.18,
+          "y": 0.786,
+          "width": 0.592,
+          "height": 0.029
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "subset",
+        "text": "Terrace",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.432,
+          "y": 0.369,
+          "width": 0.132,
+          "height": 0.018
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "team",
+        "text": "Nigeria",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.422,
+          "y": 0.698,
+          "width": 0.164,
+          "height": 0.018
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "collector_number",
+        "text": "No. 21",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.429,
+          "y": 0.343,
+          "width": 0.133,
+          "height": 0.019
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "season",
+        "text": "2025-26",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.18,
+          "y": 0.786,
+          "width": 0.12,
+          "height": 0.018
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "serial",
+        "text": "2/15",
+        "certainty": "uncertain",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.81,
+          "y": 0.57,
+          "width": 0.028,
+          "height": 0.09
+        },
+        "zone": "border",
+        "alternatives": [
+          "?/15"
+        ]
+      },
+      {
+        "field": "text",
+        "text": "Road to FIFA World Cup 2026",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.408,
+          "y": 0.65,
+          "width": 0.25,
+          "height": 0.065
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "PRIZM",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.445,
+          "y": 0.729,
+          "width": 0.095,
+          "height": 0.019
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "copyright",
+        "text": "© 2026 Panini America, Inc.",
+        "certainty": "uncertain",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.178,
+          "y": 0.809,
+          "width": 0.4,
+          "height": 0.017
+        },
+        "zone": "footer",
+        "alternatives": [
+          "© 2026 Panini America, Inc."
+        ]
+      }
+    ],
+    "features": [
+      {
+        "field": "border_color",
+        "value": "green",
+        "description": "Green metallic outer border and geometric frame",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.115,
+          "y": 0.285,
+          "width": 0.774,
+          "height": 0.507
+        },
+        "zone": "border"
+      },
+      {
+        "field": "finish",
+        "value": "reflective",
+        "description": "Strong reflective/prismatic foil effect visible on the front",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.115,
+          "y": 0.285,
+          "width": 0.774,
+          "height": 0.507
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "pattern",
+        "value": "Geometric layered frame with curved and angular bands",
+        "description": "Repeated framed geometric bands around the portrait",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.115,
+          "y": 0.285,
+          "width": 0.774,
+          "height": 0.507
+        },
+        "zone": "artwork"
+      },
+      {
+        "field": "layout",
+        "value": "Portrait/action soccer design; centered full-body player; metallic geometric frame; Nigeria text band",
+        "description": "Front has a full-body footballer in action-oriented portrait layout",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.115,
+          "y": 0.285,
+          "width": 0.774,
+          "height": 0.507
+        },
+        "zone": "artwork"
+      },
+      {
+        "field": "stamp",
+        "value": "unclear",
+        "description": "No separate promotional stamp clearly observable",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": null,
+        "zone": "other"
+      }
+    ],
+    "hypotheses": [
+      {
+        "field": "family",
+        "value": "Panini Select Road to FIFA World Cup 2026 Soccer"
+      },
+      {
+        "field": "model",
+        "value": "Terrace No. 21"
+      }
+    ],
+    "slab_reading": null,
+    "engine_version": 193,
+    "brand": "Panini",
+    "family": "Panini Select Road to FIFA World Cup 2026 Soccer",
+    "title": "Victor Boniface",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": {
+      "image_index": 1,
+      "x": 0.115,
+      "y": 0.285,
+      "width": 0.774,
+      "height": 0.507,
+      "certain": true
+    },
+    "photo_clues": [
+      {
+        "text": "Victor Boniface",
+        "role": "subject",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.226,
+          "y": 0.735,
+          "width": 0.568,
+          "height": 0.046,
+          "certain": true
+        }
+      },
+      {
+        "text": "Panini",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.173,
+          "y": 0.761,
+          "width": 0.083,
+          "height": 0.024,
+          "certain": true
+        }
+      },
+      {
+        "text": "2025-26 Panini - Select Road to FIFA World Cup 2026™ Soccer",
+        "role": "model",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.18,
+          "y": 0.786,
+          "width": 0.592,
+          "height": 0.029,
+          "certain": true
+        }
+      },
+      {
+        "text": "Terrace",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.432,
+          "y": 0.369,
+          "width": 0.132,
+          "height": 0.018,
+          "certain": true
+        }
+      },
+      {
+        "text": "Nigeria",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.422,
+          "y": 0.698,
+          "width": 0.164,
+          "height": 0.018,
+          "certain": true
+        }
+      },
+      {
+        "text": "No. 21",
+        "role": "collector_number",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.429,
+          "y": 0.343,
+          "width": 0.133,
+          "height": 0.019,
+          "certain": true
+        }
+      },
+      {
+        "text": "2025-26",
+        "role": "season",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.18,
+          "y": 0.786,
+          "width": 0.12,
+          "height": 0.018,
+          "certain": true
+        }
+      },
+      {
+        "text": "2/15",
+        "role": "serial",
+        "certainty": "uncertain",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.81,
+          "y": 0.57,
+          "width": 0.028,
+          "height": 0.09,
+          "certain": true
+        }
+      },
+      {
+        "text": "Road to FIFA World Cup 2026",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.408,
+          "y": 0.65,
+          "width": 0.25,
+          "height": 0.065,
+          "certain": true
+        }
+      },
+      {
+        "text": "PRIZM",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.445,
+          "y": 0.729,
+          "width": 0.095,
+          "height": 0.019,
+          "certain": true
+        }
+      },
+      {
+        "text": "© 2026 Panini America, Inc.",
+        "role": "copyright",
+        "certainty": "uncertain",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.178,
+          "y": 0.809,
+          "width": 0.4,
+          "height": 0.017,
+          "certain": true
+        }
+      }
+    ],
+    "physical_observations": [
+      {
+        "feature": "color",
+        "text": "green border",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Strong reflective/prismatic foil effect visible on the front",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "pattern",
+        "text": "Repeated framed geometric bands around the portrait",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Front has a full-body footballer in action-oriented portrait layout",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "No separate promotional stamp clearly observable",
+        "certainty": "uncertain",
+        "entity": "target",
+        "image_index": 1
+      }
+    ]
+  },
+  "references": [],
+  "batches": [],
+  "crops": [],
+  "variant_comparisons": []
+}
