@@ -201,6 +201,20 @@ async function localShadow193(l,result,ctx){
  if(['present','absent'].includes(check.state))l.add('shadow',check.state,{source:'local_frame_measurement',certainty:'clear',image_index:1,raw:JSON.stringify(check),supersedes:l.values('shadow').filter(a=>a.image_index===1).map(a=>a.id)});
  l.record('local_shadow',check);
 }
+async function recoverPokemonDiscrepancies232(l,entries,ctx){
+ if(l.domain!=='pokemon')return;
+ const k=E193.pokemonKeys204(l),leads=entries.filter(e=>e.grounded&&E193.subjectMatch(k.subject,e.subject)&&E193.numbersMatch(k.number,e.number));
+ if(!leads.length)return;
+ const years=[...new Set(leads.map(e=>e.year).filter(Boolean))],requests=[];
+ if(years.length===1&&k.year&&k.year!==years[0]){l.catalogueDiscrepancy232=true;const region=E193.pokemonPanels202(l.base).find(p=>p.role==='lower')?.region;
+  for(const field of ['copyright','illustrator'])if(l.active(field).length)requests.push({key:'catalogue-discrepancy:'+field,field,reason:'catalogue_discrepancy',region:region||null,image_index:region?.image_index||1,readings:[]});
+ }
+ if(requests.length)await detailRead193(l,ctx,requests,entries);
+ // A foreign catalogue is a reference to the core, never a change of photo language.
+ const updated=E193.pokemonKeys204(l);
+ for(const e of leads)if(['en','it','fr','de','es','pt'].includes(updated.language)&&['en','it','fr','de','es','pt'].includes(e.language)&&updated.language!==e.language&&updated.year===e.year)e.reference_core_only=true;
+ l.record('pokemon_catalogue_reconciliation',{photo_year:updated.year,catalogue_years:years,requests:requests.map(r=>r.field),reference_only:leads.filter(e=>e.reference_core_only).map(e=>e.source?.url)});
+}
 async function compareCore193(l,entries,ctx,pages){
  const keys=E193.keyValues(l),candidates=E193.candidateGroups(l,entries).filter(g=>g.score>=35&&(g.entry.matches.includes('subject')||g.entry.matches.includes('localized_candidate')||/[\u3040-\u9fff]/.test(keys.subject))&&(g.entry.matches.includes('number')||E193.pokemonNumbers203(l).some(n=>E193.numbersMatch(n,g.entry.number))||keys.pokedex.length)).slice(0,3),refs=[];
  for(const g of candidates){
@@ -269,7 +283,7 @@ async function compareVariants193(l,result,ctx,pages,watermarkRetry=false){
  if(matches.length===1||consensus213){const c=matches[0],ref=refs.find(r=>r.id===c.reference_id);if(ref){for(const f of c.features.filter(f=>f.agrees&&f.certainty==='clear')){
    const values=f.field==='border_color'?E193.tokens(f.original,E193.COLOR_WORDS):f.field==='pattern'?E193.tokens(f.original,E193.PATTERNS):f.field==='finish'?[E193.finish(f.original)]:[];
    for(const value of values)if(value)l.add(f.field,value,{source:'variant_comparison',certainty:'clear',image_index:photo.meta.imageIndex,raw:f.original});
-  }l.add('catalogue_variant',ref.variant.id||ref.variant.name,{source:'variant_comparison',certainty:'clear',image_index:photo.meta.imageIndex,reference_source:ref.source,supersedes:l.active('catalogue_variant').map(a=>a.id)});}}
+  }const marketIdentity=FlipCheckMarketIdentity.fromComparison(c,ref.variant);if(marketIdentity)l.base.market_identity=marketIdentity;l.add('catalogue_variant',ref.variant.id||ref.variant.name,{source:'variant_comparison',certainty:'clear',image_index:photo.meta.imageIndex,reference_source:ref.source,supersedes:l.active('catalogue_variant').map(a=>a.id)});}}
  if(!matches.length&&l.domain==='sports'&&refs.some(r=>ctx.lens?.visualComparison?.entries?.some(e=>e.image_url===r.variant.image_url))){ctx.variantDetailNeeded213=true;l.add('catalogue_variant','unresolved',{source:'variant_comparison',certainty:'uncertain',image_index:photo.meta.imageIndex,supersedes:l.active('catalogue_variant').map(a=>a.id)});}
  l.record('variant_comparison',{reply,references:refs.map(({image_data,...ref})=>ref)});diagnosticPhases.push({stage:'flipcheck_variant_comparison',result:reply,webCalls:0,usage:response.usage||null});
  if(!matches.length&&!watermarkRetry&&l.domain==='onepiece'&&refs.every(r=>/(^|\.)onepiece-cardgame\.com$/.test(new URL(r.source).hostname))&&(reply.comparisons||[]).some(c=>(c.conflicts||[]).some(t=>/\bSAMPLE\b/i.test(t)))&&l.attempt('variant-watermark-retry:'+signature)){l.record('variant_watermark_recheck',{reason:'digital_SAMPLE_confused_with_physical_printing'});await compareVariants193(l,result,ctx,pages,true);}
@@ -341,12 +355,13 @@ async function resolveCatalogue193(base,ctx){
   if(l.domain==='pokemon'&&!ctx.lens?.visualComparison?.comparedIds?.length){const physical=E193.pokemonKeys204(l),requests=E193.recoveryRequests(l,{core_identity:{status:'partial'},variant_resolution:{pending:[]}}).filter(r=>r.field==='copyright'||r.field==='collector_number'&&!physical.number);if(requests.length)await detailRead193(l,ctx,requests,entries);}
   const lens=typeof lensCatalogue205==='function'?await lensCatalogue205(l,ctx):{entries:[],pages:[]};entries=lens.entries.concat(ctx.earlyCatalogue213?.entries||[],ctx.earlyWeb214?.entries||[]);pages=lens.pages.concat(ctx.earlyCatalogue213?.pages||[],ctx.earlyWeb214?.pages||[]);result=commitCatalogue193(l,entries,ctx);
   if(!result.market_ready){const lookup=await catalogueLookup193(l,ctx);entries.push(...lookup.entries);pages.push(...lookup.pages);ctx.textReferences=pages;result=commitCatalogue193(l,entries,ctx);}
+  await recoverPokemonDiscrepancies232(l,entries,ctx);result=commitCatalogue193(l,entries,ctx);
   if(l.domain==='sports'&&!l.pick('serial')){const serialRequests=E193.recoveryRequests(l,result).filter(r=>r.field==='serial');if(serialRequests.length){await detailRead193(l,ctx,serialRequests,entries);result=commitCatalogue193(l,entries,ctx);}}
   if(['onepiece','tcg'].includes(l.domain)&&entries.length&&result.core_identity.status!=='confirmed'){await compareCore193(l,entries,ctx,pages);result=commitCatalogue193(l,entries,ctx);}
   // Certain Pokémon photo keys have already been captured before lookup.
   // Uncertain readings remain hypotheses; partial catalogues can trigger search.
   if(!entries.length||result.core_identity.status!=='confirmed'||ctx.catalogueCoverage?.truncated){
-   const found=await searchCatalogue193(l,ctx,'identity',pages);entries.push(...found.entries);pages=found.pages;result=commitCatalogue193(l,entries,ctx);
+   const found=await searchCatalogue193(l,ctx,'identity',pages);entries.push(...found.entries);pages=found.pages;await recoverPokemonDiscrepancies232(l,entries,ctx);result=commitCatalogue193(l,entries,ctx);
   }
   if(result.core_identity.status!=='confirmed'||result.variant_resolution.pending.includes('catalogue_image'))await compareCore193(l,entries,ctx,pages);result=commitCatalogue193(l,entries,ctx);
   await localShadow193(l,result,ctx);result=commitCatalogue193(l,entries,ctx);
@@ -398,7 +413,7 @@ const priorLock199=lockPhotoControls;lockPhotoControls=function(){priorLock199()
  function summary(value){
   const c=value.card_identity||{},subject=value.localized_subject||c.subject||value.name_identity?.[value.title_language||'it']||value.core_identity?.fields?.find(f=>f.field==='subject')?.value||value.title||'Oggetto',family=c.set||value.family||'',date=c.date||value.source_confirmed_year||value.core_identity?.fields?.find(f=>f.field==='year')?.value||'';
   const variant=value.variant||c.observed_variant||'',variantBadge=variant.split(/\s+/).filter(w=>!E193.norm(family).split(' ').includes(E193.norm(w))).join(' ')||variant;
-  const badges=[variantBadge,c.autograph==='present'?'Auto':'',c.is_rookie?'RC':'',value.physical_serial?.value,({en:'ENG',it:'ITA',ja:'JPN',zh:'CHN','zh-hans':'CHN-S','zh-hant':'CHN-T',de:'DEU',fr:'FRA'})[value.language],value.grading?.grade?`${value.grading.company||''} ${value.grading.grade}`.trim():''].filter(Boolean);
+  const badges=[variantBadge,value.market_identity?.edition==='standard'?'Standard (non WINNER)':value.market_identity?.edition==='winner'?'WINNER':'',c.autograph==='present'?'Auto':'',c.is_rookie?'RC':'',value.physical_serial?.value,({en:'ENG',it:'ITA',ja:'JPN',zh:'CHN','zh-hans':'CHN-S','zh-hant':'CHN-T',de:'DEU',fr:'FRA'})[value.language],value.grading?.grade?`${value.grading.company||''} ${value.grading.grade}`.trim():''].filter(Boolean);
   return {subject,subtitle:[date&&!String(family).includes(date)?date:'',family,c.number?'#'+c.number:''].filter(Boolean).join(' · '),badges:[...new Set(badges)]};
  }
  async function thumbnail(value,token){

@@ -1,0 +1,2059 @@
+{
+  "vision": {
+    "domain": "onepiece",
+    "kind": "card",
+    "category": "trading card",
+    "language": "en",
+    "object_unit": "single",
+    "image_views": [
+      {
+        "image_index": 1,
+        "view": "front",
+        "certainty": "clear"
+      }
+    ],
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.1,
+        "y": 0.225,
+        "width": 0.8,
+        "height": 0.528,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "Monkey.D.Luffy",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.293,
+          "y": 0.731,
+          "width": 0.38,
+          "height": 0.031
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "collector_number",
+        "text": "P-110",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.788,
+          "y": 0.742,
+          "width": 0.044,
+          "height": 0.014
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "hp",
+        "text": "9000",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.65,
+          "y": 0.246,
+          "width": 0.115,
+          "height": 0.033
+        },
+        "zone": "statistics",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "COUNTER +1000",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.116,
+          "y": 0.431,
+          "width": 0.038,
+          "height": 0.13
+        },
+        "zone": "statistics",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "4th Anniversary",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.151,
+          "y": 0.635,
+          "width": 0.108,
+          "height": 0.061
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "CHARACTER",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.411,
+          "y": 0.703,
+          "width": 0.108,
+          "height": 0.015
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "Elbaph/The Four Emperors/Straw Hat Crew",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.258,
+          "y": 0.766,
+          "width": 0.36,
+          "height": 0.017
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "copyright",
+        "text": "©Eiichiro Oda/Shueisha ©BANDAI",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.778,
+          "y": 0.626,
+          "width": 0.025,
+          "height": 0.119
+        },
+        "zone": "border",
+        "alternatives": [
+          "©Eiichiro Oda/Shueisha"
+        ]
+      }
+    ],
+    "features": [
+      {
+        "field": "border_color",
+        "value": "yellow",
+        "description": "Bordo esterno giallo",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.1,
+          "y": 0.225,
+          "width": 0.8,
+          "height": 0.528
+        },
+        "zone": "border"
+      },
+      {
+        "field": "pattern",
+        "value": "motivo a mattoncini colorati",
+        "description": "Sfondo con motivo ripetuto di mattoncini",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.1,
+          "y": 0.225,
+          "width": 0.8,
+          "height": 0.528
+        },
+        "zone": "artwork"
+      },
+      {
+        "field": "finish",
+        "value": "unclear",
+        "description": "La confezione impedisce di valutare chiaramente la finitura",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.1,
+          "y": 0.225,
+          "width": 0.8,
+          "height": 0.528
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "stamp",
+        "value": "present",
+        "description": "Stamp/testo celebrativo “4th Anniversary”",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.151,
+          "y": 0.635,
+          "width": 0.108,
+          "height": 0.061
+        },
+        "zone": "label"
+      },
+      {
+        "field": "layout",
+        "value": "ritratto, personaggio in azione, cornice colorata, logo e statistiche in alto",
+        "description": "Layout frontale verticale",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.1,
+          "y": 0.225,
+          "width": 0.8,
+          "height": 0.528
+        },
+        "zone": "other"
+      }
+    ],
+    "hypotheses": [
+      {
+        "field": "family",
+        "value": "One Piece Card Game"
+      }
+    ],
+    "slab_reading": null,
+    "engine_version": 193,
+    "brand": "",
+    "family": "One Piece Card Game",
+    "title": "Monkey.D.Luffy",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": {
+      "image_index": 1,
+      "x": 0.1,
+      "y": 0.225,
+      "width": 0.8,
+      "height": 0.528,
+      "certain": true
+    },
+    "photo_clues": [
+      {
+        "text": "Monkey.D.Luffy",
+        "role": "subject",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.293,
+          "y": 0.731,
+          "width": 0.38,
+          "height": 0.031,
+          "certain": true
+        }
+      },
+      {
+        "text": "P-110",
+        "role": "collector_number",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.788,
+          "y": 0.742,
+          "width": 0.044,
+          "height": 0.014,
+          "certain": true
+        }
+      },
+      {
+        "text": "9000",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.65,
+          "y": 0.246,
+          "width": 0.115,
+          "height": 0.033,
+          "certain": true
+        }
+      },
+      {
+        "text": "COUNTER +1000",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.116,
+          "y": 0.431,
+          "width": 0.038,
+          "height": 0.13,
+          "certain": true
+        }
+      },
+      {
+        "text": "4th Anniversary",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.151,
+          "y": 0.635,
+          "width": 0.108,
+          "height": 0.061,
+          "certain": true
+        }
+      },
+      {
+        "text": "CHARACTER",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.411,
+          "y": 0.703,
+          "width": 0.108,
+          "height": 0.015,
+          "certain": true
+        }
+      },
+      {
+        "text": "Elbaph/The Four Emperors/Straw Hat Crew",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.258,
+          "y": 0.766,
+          "width": 0.36,
+          "height": 0.017,
+          "certain": true
+        }
+      },
+      {
+        "text": "©Eiichiro Oda/Shueisha ©BANDAI",
+        "role": "copyright",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.778,
+          "y": 0.626,
+          "width": 0.025,
+          "height": 0.119,
+          "certain": true
+        }
+      }
+    ],
+    "physical_observations": [
+      {
+        "feature": "color",
+        "text": "yellow border",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "pattern",
+        "text": "Sfondo con motivo ripetuto di mattoncini",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "La confezione impedisce di valutare chiaramente la finitura",
+        "certainty": "uncertain",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Stamp/testo celebrativo “4th Anniversary”",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Layout frontale verticale",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      }
+    ]
+  },
+  "phases": [
+    {
+      "stage": "vision",
+      "result": {
+        "domain": "onepiece",
+        "kind": "card",
+        "category": "trading card",
+        "language": "en",
+        "object_unit": "single",
+        "image_views": [
+          {
+            "image_index": 1,
+            "view": "front",
+            "certainty": "clear"
+          }
+        ],
+        "object_regions": [
+          {
+            "image_index": 1,
+            "x": 0.1,
+            "y": 0.225,
+            "width": 0.8,
+            "height": 0.528,
+            "certain": true
+          }
+        ],
+        "observations": [
+          {
+            "field": "subject",
+            "text": "Monkey.D.Luffy",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.293,
+              "y": 0.731,
+              "width": 0.38,
+              "height": 0.031
+            },
+            "zone": "front",
+            "alternatives": []
+          },
+          {
+            "field": "collector_number",
+            "text": "P-110",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.788,
+              "y": 0.742,
+              "width": 0.044,
+              "height": 0.014
+            },
+            "zone": "footer",
+            "alternatives": []
+          },
+          {
+            "field": "hp",
+            "text": "9000",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.65,
+              "y": 0.246,
+              "width": 0.115,
+              "height": 0.033
+            },
+            "zone": "statistics",
+            "alternatives": []
+          },
+          {
+            "field": "text",
+            "text": "COUNTER +1000",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.116,
+              "y": 0.431,
+              "width": 0.038,
+              "height": 0.13
+            },
+            "zone": "statistics",
+            "alternatives": []
+          },
+          {
+            "field": "text",
+            "text": "4th Anniversary",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.151,
+              "y": 0.635,
+              "width": 0.108,
+              "height": 0.061
+            },
+            "zone": "front",
+            "alternatives": []
+          },
+          {
+            "field": "text",
+            "text": "CHARACTER",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.411,
+              "y": 0.703,
+              "width": 0.108,
+              "height": 0.015
+            },
+            "zone": "label",
+            "alternatives": []
+          },
+          {
+            "field": "text",
+            "text": "Elbaph/The Four Emperors/Straw Hat Crew",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.258,
+              "y": 0.766,
+              "width": 0.36,
+              "height": 0.017
+            },
+            "zone": "footer",
+            "alternatives": []
+          },
+          {
+            "field": "copyright",
+            "text": "©Eiichiro Oda/Shueisha ©BANDAI",
+            "certainty": "uncertain",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.778,
+              "y": 0.626,
+              "width": 0.025,
+              "height": 0.119
+            },
+            "zone": "border",
+            "alternatives": [
+              "©Eiichiro Oda/Shueisha"
+            ]
+          }
+        ],
+        "features": [
+          {
+            "field": "border_color",
+            "value": "yellow",
+            "description": "Bordo esterno giallo",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.1,
+              "y": 0.225,
+              "width": 0.8,
+              "height": 0.528
+            },
+            "zone": "border"
+          },
+          {
+            "field": "pattern",
+            "value": "motivo a mattoncini colorati",
+            "description": "Sfondo con motivo ripetuto di mattoncini",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.1,
+              "y": 0.225,
+              "width": 0.8,
+              "height": 0.528
+            },
+            "zone": "artwork"
+          },
+          {
+            "field": "finish",
+            "value": "unclear",
+            "description": "La confezione impedisce di valutare chiaramente la finitura",
+            "certainty": "uncertain",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.1,
+              "y": 0.225,
+              "width": 0.8,
+              "height": 0.528
+            },
+            "zone": "surface"
+          },
+          {
+            "field": "stamp",
+            "value": "present",
+            "description": "Stamp/testo celebrativo “4th Anniversary”",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.151,
+              "y": 0.635,
+              "width": 0.108,
+              "height": 0.061
+            },
+            "zone": "label"
+          },
+          {
+            "field": "layout",
+            "value": "ritratto, personaggio in azione, cornice colorata, logo e statistiche in alto",
+            "description": "Layout frontale verticale",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.1,
+              "y": 0.225,
+              "width": 0.8,
+              "height": 0.528
+            },
+            "zone": "other"
+          }
+        ],
+        "hypotheses": [
+          {
+            "field": "family",
+            "value": "One Piece Card Game"
+          }
+        ],
+        "slab_reading": null,
+        "engine_version": 193,
+        "brand": "",
+        "family": "One Piece Card Game",
+        "title": "Monkey.D.Luffy",
+        "model": "",
+        "variant": "",
+        "model_confidence": 0,
+        "family_confidence": 0,
+        "market_ready": false,
+        "normalized_query": "",
+        "candidate_models": [],
+        "identifier_hints": [],
+        "evidence": [],
+        "missing_information": [],
+        "next_photo_request": null,
+        "object_region": {
+          "image_index": 1,
+          "x": 0.1,
+          "y": 0.225,
+          "width": 0.8,
+          "height": 0.528,
+          "certain": true
+        },
+        "photo_clues": [
+          {
+            "text": "Monkey.D.Luffy",
+            "role": "subject",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.293,
+              "y": 0.731,
+              "width": 0.38,
+              "height": 0.031,
+              "certain": true
+            }
+          },
+          {
+            "text": "P-110",
+            "role": "collector_number",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.788,
+              "y": 0.742,
+              "width": 0.044,
+              "height": 0.014,
+              "certain": true
+            }
+          },
+          {
+            "text": "9000",
+            "role": "text",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.65,
+              "y": 0.246,
+              "width": 0.115,
+              "height": 0.033,
+              "certain": true
+            }
+          },
+          {
+            "text": "COUNTER +1000",
+            "role": "text",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.116,
+              "y": 0.431,
+              "width": 0.038,
+              "height": 0.13,
+              "certain": true
+            }
+          },
+          {
+            "text": "4th Anniversary",
+            "role": "text",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.151,
+              "y": 0.635,
+              "width": 0.108,
+              "height": 0.061,
+              "certain": true
+            }
+          },
+          {
+            "text": "CHARACTER",
+            "role": "text",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.411,
+              "y": 0.703,
+              "width": 0.108,
+              "height": 0.015,
+              "certain": true
+            }
+          },
+          {
+            "text": "Elbaph/The Four Emperors/Straw Hat Crew",
+            "role": "text",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.258,
+              "y": 0.766,
+              "width": 0.36,
+              "height": 0.017,
+              "certain": true
+            }
+          },
+          {
+            "text": "©Eiichiro Oda/Shueisha ©BANDAI",
+            "role": "copyright",
+            "certainty": "uncertain",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.778,
+              "y": 0.626,
+              "width": 0.025,
+              "height": 0.119,
+              "certain": true
+            }
+          }
+        ],
+        "physical_observations": [
+          {
+            "feature": "color",
+            "text": "yellow border",
+            "certainty": "clear",
+            "entity": "target",
+            "image_index": 1
+          },
+          {
+            "feature": "pattern",
+            "text": "Sfondo con motivo ripetuto di mattoncini",
+            "certainty": "clear",
+            "entity": "target",
+            "image_index": 1
+          },
+          {
+            "feature": "finish",
+            "text": "La confezione impedisce di valutare chiaramente la finitura",
+            "certainty": "uncertain",
+            "entity": "target",
+            "image_index": 1
+          },
+          {
+            "feature": "finish",
+            "text": "Stamp/testo celebrativo “4th Anniversary”",
+            "certainty": "clear",
+            "entity": "target",
+            "image_index": 1
+          },
+          {
+            "feature": "finish",
+            "text": "Layout frontale verticale",
+            "certainty": "clear",
+            "entity": "target",
+            "image_index": 1
+          }
+        ]
+      },
+      "webCalls": 0,
+      "usage": {
+        "input_tokens": 5042,
+        "input_tokens_details": {
+          "cache_write_tokens": 5039,
+          "cached_tokens": 0
+        },
+        "output_tokens": 1170,
+        "output_tokens_details": {
+          "reasoning_tokens": 198
+        },
+        "total_tokens": 6212
+      }
+    },
+    {
+      "stage": "flipcheck_variant_comparison",
+      "result": {
+        "comparisons": [
+          {
+            "reference_id": "variant0",
+            "match": true,
+            "conflicts": [],
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Luffy in the same horned hat and punching pose",
+                "reference": "Same Luffy artwork and pose",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Same border, character placement and card layout",
+                "reference": "Same composition and layout",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "stamp",
+                "original": "4th Anniversary stamp, no Winner marking",
+                "reference": "4th Anniversary stamp, no Winner marking",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ]
+          },
+          {
+            "reference_id": "variant1",
+            "match": false,
+            "conflicts": [
+              "La reference presenta il timbro fisico/testo promozionale “Release Event WINNER”, assente nell’originale.",
+              "Il testo e la colorazione dorata di nome e fascia inferiore divergono dall’originale."
+            ],
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Luffy in the same horned hat and punching pose",
+                "reference": "Same Luffy artwork and pose",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Same overall composition and card layout",
+                "reference": "Same overall composition and card layout",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "stamp",
+                "original": "Only 4th Anniversary stamp",
+                "reference": "4th Anniversary plus Release Event WINNER stamp",
+                "agrees": false,
+                "certainty": "clear"
+              }
+            ]
+          }
+        ]
+      },
+      "webCalls": 0,
+      "usage": {
+        "input_tokens": 3252,
+        "input_tokens_details": {
+          "cache_write_tokens": 3249,
+          "cached_tokens": 0
+        },
+        "output_tokens": 383,
+        "output_tokens_details": {
+          "reasoning_tokens": 75
+        },
+        "total_tokens": 3635
+      }
+    },
+    {
+      "stage": "flipcheck_market",
+      "result": {
+        "market_status": "medium",
+        "exact_completed_sales_count": 2,
+        "active_listings_count": 327,
+        "market_low": 400,
+        "market_high": 700,
+        "quick_sale_price": 400,
+        "historical_new_price": null,
+        "currency": "USD",
+        "market_notes": "Valutazione limitata alla variante Winner/4th Anniversary Event in inglese, raw/non graded. Sono state contate solo 2 vendite individuali chiaramente verificabili: 400 USD e 700 USD. Le altre vendite visibili riguardano principalmente la promo P-110 standard, sealed o varianti non equivalenti e non sono state incluse. eBay sold/completed è parzialmente accessibile.",
+        "source_summary": "eBay mostra 2 transazioni concluse della variante Winner a 400 e 700 USD. Cardmarket mostra 327 annunci attivi della versione Winner da circa 145 EUR. OnePieceValues riporta ulteriori dati aggregati ma con risultati misti tra varianti, quindi non conteggiati come vendite esatte."
+      },
+      "webCalls": 1,
+      "usage": {
+        "input_tokens": 12760,
+        "input_tokens_details": {
+          "cache_write_tokens": 4752,
+          "cached_tokens": 0
+        },
+        "output_tokens": 706,
+        "output_tokens_details": {
+          "reasoning_tokens": 486
+        },
+        "total_tokens": 13466
+      }
+    }
+  ],
+  "entries": [
+    {
+      "subject": "Monkey.D.Luffy",
+      "number": "P-110",
+      "family": "One Piece Promo",
+      "catalogue_set": "4th Anniversary Event",
+      "year": "",
+      "language": "en",
+      "brand": "Bandai",
+      "rarity": "P",
+      "variants": [
+        {
+          "id": "https://en.onepiece-cardgame.com/images/cardlist/card/P-110.png?260828",
+          "name": "4th Anniversary Event",
+          "visual_required": true,
+          "image_url": "https://en.onepiece-cardgame.com/images/cardlist/card/P-110.png?260828",
+          "source": {
+            "url": "https://en.onepiece-cardgame.com/cardlist/?freewords=P-110",
+            "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site",
+            "provider": "bandai",
+            "retrieved_at": null
+          }
+        },
+        {
+          "id": "https://en.onepiece-cardgame.com/images/cardlist/card/P-110_p1.png?260828",
+          "name": "4th Anniversary Event",
+          "visual_required": true,
+          "image_url": "https://en.onepiece-cardgame.com/images/cardlist/card/P-110_p1.png?260828",
+          "source": {
+            "url": "https://en.onepiece-cardgame.com/cardlist/?freewords=P-110",
+            "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site",
+            "provider": "bandai",
+            "retrieved_at": null
+          }
+        }
+      ],
+      "source": {
+        "url": "https://en.onepiece-cardgame.com/cardlist/?freewords=P-110",
+        "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site",
+        "provider": "bandai",
+        "retrieved_at": null
+      },
+      "grounded": true,
+      "entry_quote": "P-110 | P | CHARACTER\n\nMonkey.D.Luffy\n\nTEXT VIEW\n\nCost\n7\n\nAttribute\n\nStrike\n\nPower\n9000\n\nCounter\n1000\n\nColor\nBlue\n\nBlock\n\nicon\n4\n\nType\nElbaph/The Four Emperors/Straw Hat Crew\n\nEffect\n-\n\nCard Set(s)\n4th Anniversary Event\n\nCARD VIEW\n\nボタン\n\n",
+      "subset": "",
+      "eligible": true,
+      "score": 75,
+      "matches": [
+        "subject",
+        "number"
+      ],
+      "reasons": []
+    },
+    {
+      "subject": "Monkey.D.Luffy",
+      "number": "P-110",
+      "family": "One Piece Promo",
+      "catalogue_set": "4th Anniversary Event",
+      "year": "",
+      "language": "en",
+      "brand": "Bandai",
+      "rarity": "P",
+      "variants": [
+        {
+          "id": "https://en.onepiece-cardgame.com/images/cardlist/card/P-110.png?260828",
+          "name": "4th Anniversary Event",
+          "visual_required": true,
+          "image_url": "https://en.onepiece-cardgame.com/images/cardlist/card/P-110.png?260828",
+          "source": {
+            "url": "https://en.onepiece-cardgame.com/cardlist/?freewords=P-110",
+            "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site",
+            "provider": "bandai",
+            "retrieved_at": null
+          }
+        },
+        {
+          "id": "https://en.onepiece-cardgame.com/images/cardlist/card/P-110_p1.png?260828",
+          "name": "4th Anniversary Event",
+          "visual_required": true,
+          "image_url": "https://en.onepiece-cardgame.com/images/cardlist/card/P-110_p1.png?260828",
+          "source": {
+            "url": "https://en.onepiece-cardgame.com/cardlist/?freewords=P-110",
+            "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site",
+            "provider": "bandai",
+            "retrieved_at": null
+          }
+        }
+      ],
+      "source": {
+        "url": "https://en.onepiece-cardgame.com/cardlist/?freewords=P-110",
+        "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site",
+        "provider": "bandai",
+        "retrieved_at": null
+      },
+      "grounded": true,
+      "entry_quote": "P-110 | P | CHARACTER\n\nMonkey.D.Luffy\n\nTEXT VIEW\n\nCost\n7\n\nAttribute\n\nStrike\n\nPower\n9000\n\nCounter\n1000\n\nColor\nBlue\n\nBlock\n\nicon\n4\n\nType\nElbaph/The Four Emperors/Straw Hat Crew\n\nEffect\n-\n\nCard Set(s)\n4th Anniversary Event\n\nCARD VIEW\n\nPREV\nNEXT\n\nPREV\n\nNEXT",
+      "subset": "",
+      "eligible": true,
+      "score": 75,
+      "matches": [
+        "subject",
+        "number"
+      ],
+      "reasons": []
+    },
+    {
+      "subject": "Monkey.D.Luffy",
+      "number": "EB04-061",
+      "family": "EB04",
+      "catalogue_set": "BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]",
+      "year": "",
+      "language": "en",
+      "brand": "Bandai",
+      "rarity": "SEC",
+      "variants": [
+        {
+          "id": "https://en.onepiece-cardgame.com/images/cardlist/card/EB04-061_p2.png?260828",
+          "name": "BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]",
+          "visual_required": true,
+          "image_url": "https://en.onepiece-cardgame.com/images/cardlist/card/EB04-061_p2.png?260828",
+          "source": {
+            "url": "https://en.onepiece-cardgame.com/cardlist/?series=569117",
+            "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site",
+            "provider": "en.onepiece-cardgame.com",
+            "retrieved_at": null
+          }
+        }
+      ],
+      "source": {
+        "url": "https://en.onepiece-cardgame.com/cardlist/?series=569117",
+        "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site",
+        "provider": "en.onepiece-cardgame.com",
+        "retrieved_at": null
+      },
+      "grounded": true,
+      "entry_quote": "EB04-061 | SEC | CHARACTER\n\nMonkey.D.Luffy\n\nTEXT VIEW\n\nCost\n10\n\nAttribute\n\nStrike\n\nPower\n12000\n\nCounter\n-\n\nColor\nYellow\n\nBlock\n\nicon\nX\n\nType\nEgghead/The Four Emperors/Straw Hat Crew\n\nEffect\nIf you have 1 or less Life cards, give this card in your hand −1 cost.\n\n[On Play] You may trash 1 card from your hand: Your Leader gains +2000 power until the end of your opponent's next End Phase. Then, this Character gains [Blocker] until the end of your opponent's next End Phase.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\n",
+      "subset": "",
+      "eligible": false,
+      "score": 35,
+      "matches": [
+        "subject"
+      ],
+      "reasons": [
+        "different_number"
+      ]
+    },
+    {
+      "subject": "Monkey.D.Luffy",
+      "number": "OP17-030",
+      "family": "OP17",
+      "catalogue_set": "BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]",
+      "year": "",
+      "language": "en",
+      "brand": "Bandai",
+      "rarity": "C",
+      "variants": [
+        {
+          "id": "https://en.onepiece-cardgame.com/images/cardlist/card/OP17-030.png?260828",
+          "name": "BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]",
+          "visual_required": true,
+          "image_url": "https://en.onepiece-cardgame.com/images/cardlist/card/OP17-030.png?260828",
+          "source": {
+            "url": "https://en.onepiece-cardgame.com/cardlist/?series=569117",
+            "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site",
+            "provider": "en.onepiece-cardgame.com",
+            "retrieved_at": null
+          }
+        }
+      ],
+      "source": {
+        "url": "https://en.onepiece-cardgame.com/cardlist/?series=569117",
+        "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site",
+        "provider": "en.onepiece-cardgame.com",
+        "retrieved_at": null
+      },
+      "grounded": true,
+      "entry_quote": "OP17-030 | C | CHARACTER\n\nMonkey.D.Luffy\n\nTEXT VIEW\n\nCost\n4\n\nAttribute\n\nStrike\n\nPower\n5000\n\nCounter\n1000\n\nColor\nGreen\n\nBlock\n\nicon\n5\n\nType\nEast Blue/Straw Hat Crew\n\nEffect\n[On Play] You may rest 1 of your DON!! cards: This Character gains [Rush] during this turn.\n\n[Activate: Main] [Once Per Turn] If you have 5 or less cards in your hand, set up to 1 of your DON!! cards as active.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\n",
+      "subset": "",
+      "eligible": false,
+      "score": 35,
+      "matches": [
+        "subject"
+      ],
+      "reasons": [
+        "different_number"
+      ]
+    },
+    {
+      "subject": "Monkey.D.Luffy",
+      "number": "OP17-079",
+      "family": "OP17",
+      "catalogue_set": "BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]",
+      "year": "",
+      "language": "en",
+      "brand": "Bandai",
+      "rarity": "L",
+      "variants": [
+        {
+          "id": "https://en.onepiece-cardgame.com/images/cardlist/card/OP17-079.png?260828",
+          "name": "BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]",
+          "visual_required": true,
+          "image_url": "https://en.onepiece-cardgame.com/images/cardlist/card/OP17-079.png?260828",
+          "source": {
+            "url": "https://en.onepiece-cardgame.com/cardlist/?series=569117",
+            "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site",
+            "provider": "en.onepiece-cardgame.com",
+            "retrieved_at": null
+          }
+        },
+        {
+          "id": "https://en.onepiece-cardgame.com/images/cardlist/card/OP17-079_p1.png?260828",
+          "name": "BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]",
+          "visual_required": true,
+          "image_url": "https://en.onepiece-cardgame.com/images/cardlist/card/OP17-079_p1.png?260828",
+          "source": {
+            "url": "https://en.onepiece-cardgame.com/cardlist/?series=569117",
+            "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site",
+            "provider": "en.onepiece-cardgame.com",
+            "retrieved_at": null
+          }
+        }
+      ],
+      "source": {
+        "url": "https://en.onepiece-cardgame.com/cardlist/?series=569117",
+        "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site",
+        "provider": "en.onepiece-cardgame.com",
+        "retrieved_at": null
+      },
+      "grounded": true,
+      "entry_quote": "OP17-079 | L | LEADER\n\nMonkey.D.Luffy\n\nTEXT VIEW\n\nLife\n5\n\nAttribute\n\nStrike\n\nPower\n5000\n\nCounter\n-\n\nColor\nBlack\n\nBlock\n\nicon\n5\n\nType\nElbaph/The Four Emperors/Straw Hat Crew\n\nEffect\nAll of your Characters with a cost of 12 or more gain [Blocker].\n\n(After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\n",
+      "subset": "",
+      "eligible": false,
+      "score": 35,
+      "matches": [
+        "subject"
+      ],
+      "reasons": [
+        "different_number"
+      ]
+    },
+    {
+      "subject": "Monkey.D.Luffy",
+      "number": "OP17-079",
+      "family": "OP17",
+      "catalogue_set": "BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]",
+      "year": "",
+      "language": "en",
+      "brand": "Bandai",
+      "rarity": "L",
+      "variants": [
+        {
+          "id": "https://en.onepiece-cardgame.com/images/cardlist/card/OP17-079.png?260828",
+          "name": "BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]",
+          "visual_required": true,
+          "image_url": "https://en.onepiece-cardgame.com/images/cardlist/card/OP17-079.png?260828",
+          "source": {
+            "url": "https://en.onepiece-cardgame.com/cardlist/?series=569117",
+            "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site",
+            "provider": "en.onepiece-cardgame.com",
+            "retrieved_at": null
+          }
+        },
+        {
+          "id": "https://en.onepiece-cardgame.com/images/cardlist/card/OP17-079_p1.png?260828",
+          "name": "BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]",
+          "visual_required": true,
+          "image_url": "https://en.onepiece-cardgame.com/images/cardlist/card/OP17-079_p1.png?260828",
+          "source": {
+            "url": "https://en.onepiece-cardgame.com/cardlist/?series=569117",
+            "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site",
+            "provider": "en.onepiece-cardgame.com",
+            "retrieved_at": null
+          }
+        }
+      ],
+      "source": {
+        "url": "https://en.onepiece-cardgame.com/cardlist/?series=569117",
+        "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site",
+        "provider": "en.onepiece-cardgame.com",
+        "retrieved_at": null
+      },
+      "grounded": true,
+      "entry_quote": "OP17-079 | L | LEADER\n\nMonkey.D.Luffy\n\nTEXT VIEW\n\nLife\n5\n\nAttribute\n\nStrike\n\nPower\n5000\n\nCounter\n-\n\nColor\nBlack\n\nBlock\n\nicon\n5\n\nType\nElbaph/The Four Emperors/Straw Hat Crew\n\nEffect\nAll of your Characters with a cost of 12 or more gain [Blocker].\n\n(After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\n",
+      "subset": "",
+      "eligible": false,
+      "score": 35,
+      "matches": [
+        "subject"
+      ],
+      "reasons": [
+        "different_number"
+      ]
+    },
+    {
+      "subject": "Monkey.D.Luffy",
+      "number": "OP17-079",
+      "family": "OP17",
+      "catalogue_set": "BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]",
+      "year": "",
+      "language": "en",
+      "brand": "Bandai",
+      "rarity": "L",
+      "variants": [
+        {
+          "id": "https://en.onepiece-cardgame.com/images/cardlist/card/OP17-079.png?260828",
+          "name": "BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]",
+          "visual_required": true,
+          "image_url": "https://en.onepiece-cardgame.com/images/cardlist/card/OP17-079.png?260828",
+          "source": {
+            "url": "https://en.onepiece-cardgame.com/cardlist/?series=569117",
+            "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site",
+            "provider": "en.onepiece-cardgame.com",
+            "retrieved_at": null
+          }
+        },
+        {
+          "id": "https://en.onepiece-cardgame.com/images/cardlist/card/OP17-079_p1.png?260828",
+          "name": "BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]",
+          "visual_required": true,
+          "image_url": "https://en.onepiece-cardgame.com/images/cardlist/card/OP17-079_p1.png?260828",
+          "source": {
+            "url": "https://en.onepiece-cardgame.com/cardlist/?series=569117",
+            "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site",
+            "provider": "en.onepiece-cardgame.com",
+            "retrieved_at": null
+          }
+        }
+      ],
+      "source": {
+        "url": "https://en.onepiece-cardgame.com/cardlist/?series=569117",
+        "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site",
+        "provider": "en.onepiece-cardgame.com",
+        "retrieved_at": null
+      },
+      "grounded": true,
+      "entry_quote": "OP17-079 | L | LEADER\n\nMonkey.D.Luffy\n\nTEXT VIEW\n\nLife\n5\n\nAttribute\n\nStrike\n\nPower\n5000\n\nCounter\n-\n\nColor\nBlack\n\nBlock\n\nicon\n5\n\nType\nElbaph/The Four Emperors/Straw Hat Crew\n\nEffect\nAll of your Characters with a cost of 12 or more gain [Blocker].\n\n(After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\n",
+      "subset": "",
+      "eligible": false,
+      "score": 35,
+      "matches": [
+        "subject"
+      ],
+      "reasons": [
+        "different_number"
+      ]
+    },
+    {
+      "subject": "Monkey.D.Luffy",
+      "number": "OP17-093",
+      "family": "OP17",
+      "catalogue_set": "BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]",
+      "year": "",
+      "language": "en",
+      "brand": "Bandai",
+      "rarity": "SR",
+      "variants": [
+        {
+          "name": "BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]",
+          "visual_required": true,
+          "image_url": "",
+          "source": {
+            "url": "https://en.onepiece-cardgame.com/cardlist/?series=569117",
+            "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site",
+            "provider": "en.onepiece-cardgame.com",
+            "retrieved_at": null
+          }
+        }
+      ],
+      "source": {
+        "url": "https://en.onepiece-cardgame.com/cardlist/?series=569117",
+        "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site",
+        "provider": "en.onepiece-cardgame.com",
+        "retrieved_at": null
+      },
+      "grounded": true,
+      "entry_quote": "OP17-093 | SR | CHARACTER\n\nMonkey.D.Luffy\n\nTEXT VIEW\n\nCost\n8\n\nAttribute\n\nStrike\n\nPower\n8000\n\nCounter\n-\n\nColor\nBlack\n\nBlock\n\nicon\n5\n\nType\nElbaph/The Four Emperors/Straw Hat Crew\n\nEffect\nIf there is a Character with a cost of 12 or more, this Character gains [Rush].\n\n[On Play] Draw 1 card and play up to 1 Character card with a cost of 2 or less from your trash.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\n",
+      "subset": "",
+      "eligible": false,
+      "score": 35,
+      "matches": [
+        "subject"
+      ],
+      "reasons": [
+        "different_number"
+      ]
+    },
+    {
+      "subject": "Monkey.D.Luffy",
+      "number": "OP17-093",
+      "family": "OP17",
+      "catalogue_set": "BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]",
+      "year": "",
+      "language": "en",
+      "brand": "Bandai",
+      "rarity": "SR",
+      "variants": [
+        {
+          "name": "BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]",
+          "visual_required": true,
+          "image_url": "",
+          "source": {
+            "url": "https://en.onepiece-cardgame.com/cardlist/?series=569117",
+            "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site",
+            "provider": "en.onepiece-cardgame.com",
+            "retrieved_at": null
+          }
+        }
+      ],
+      "source": {
+        "url": "https://en.onepiece-cardgame.com/cardlist/?series=569117",
+        "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site",
+        "provider": "en.onepiece-cardgame.com",
+        "retrieved_at": null
+      },
+      "grounded": true,
+      "entry_quote": "OP17-093 | SR | CHARACTER\n\nMonkey.D.Luffy\n\nTEXT VIEW\n\nCost\n8\n\nAttribute\n\nStrike\n\nPower\n8000\n\nCounter\n-\n\nColor\nBlack\n\nBlock\n\nicon\n5\n\nType\nElbaph/The Four Emperors/Straw Hat Crew\n\nEffect\nIf there is a Character with a cost of 12 or more, this Character gains [Rush].\n\n[On Play] Draw 1 card and play up to 1 Character card with a cost of 2 or less from your trash.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\n",
+      "subset": "",
+      "eligible": false,
+      "score": 35,
+      "matches": [
+        "subject"
+      ],
+      "reasons": [
+        "different_number"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "status": 200,
+      "url": "https://en.onepiece-cardgame.com/cardlist/?freewords=P-110",
+      "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site",
+      "structured_fields": [
+        {
+          "label": "ボタン P-110 | P | CHARACTER Monkey.D.Luffy",
+          "value": "TEXT VIEW Cost 7 Attribute Strike Power 9000 Counter 1000 Color Blue Block icon 4 Type Elbaph/The Four Emperors/Straw Hat Crew Effect - Card Set(s) 4th Anniversary Event CARD VIEW"
+        },
+        {
+          "label": "ボタン P-110 | P | CHARACTER Monkey.D.Luffy",
+          "value": "TEXT VIEW Cost 7 Attribute Strike Power 9000 Counter 1000 Color Blue Block icon 4 Type Elbaph/The Four Emperors/Straw Hat Crew Effect - Card Set(s) 4th Anniversary Event CARD VIEW"
+        }
+      ],
+      "catalogue_links": [
+        {
+          "title": "FIND CARDS",
+          "url": "https://en.onepiece-cardgame.com/cardlist/"
+        },
+        {
+          "title": "FIND CARDS",
+          "url": "https://en.onepiece-cardgame.com/cardlist/"
+        }
+      ],
+      "catalogue_rows": [],
+      "catalogue_text": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site\n\nCARD LIST\n\nRecording\nALL\nPREMIUM BOOSTER <br class=\"spInline\">-ONE PIECE CARD THE BEST vol.2- [PRB-02]\nPREMIUM BOOSTER <br class=\"spInline\">-ONE PIECE CARD THE BEST- [PRB-01]\nEXTRA BOOSTER <br class=\"spInline\">-ONE PIECE HEROINES EDITION- [EB-03]\nEXTRA BOOSTER <br class=\"spInline\">-Anime 25th Collection- [EB-02]\nEXTRA BOOSTER <br class=\"spInline\">-MEMORIAL COLLECTION- [EB-01]\nBOOSTER PACK <br class=\"spInline\">-THE WORLD’S STRONGEST WARRIORS- [OP-17]\nBOOSTER PACK <br class=\"spInline\">-THE TIME OF BATTLE- [OP-16]\nBOOSTER PACK <br class=\"spInline\">-ADVENTURE ON KAMI’S ISLAND- <br class=\"spInline\">[OP15-EB04]\nBOOSTER PACK <br class=\"spInline\">-THE AZURE SEA’S SEVEN- [OP14-EB04]\nBOOSTER PACK <br class=\"spInline\">-CARRYING ON HIS WILL- [OP-13]\nBOOSTER PACK <br class=\"spInline\">-LEGACY OF THE MASTER- [OP-12]\nBOOSTER PACK <br class=\"spInline\">-A FIST OF DIVINE SPEED- [OP-11]\nBOOSTER PACK <br class=\"spInline\">-ROYAL BLOOD- [OP-10]\nBOOSTER PACK <br class=\"spInline\">-EMPERORS IN THE NEW WORLD- [OP-09]\nBOOSTER PACK <br class=\"spInline\">-TWO LEGENDS- [OP-08]\nBOOSTER PACK <br class=\"spInline\">-500 YEARS IN THE FUTURE- [OP-07]\nBOOSTER PACK <br class=\"spInline\">-WINGS OF THE CAPTAIN- [OP-06]\nBOOSTER PACK <br class=\"spInline\">-AWAKENING OF THE NEW ERA- [OP-05]\nBOOSTER PACK <br class=\"spInline\">-KINGDOMS OF INTRIGUE- [OP-04]\nBOOSTER PACK <br class=\"spInline\">-PILLARS OF STRENGTH- [OP-03]\nBOOSTER PACK <br class=\"spInline\">-PARAMOUNT WAR- [OP-02]\nBOOSTER PACK <br class=\"spInline\">-ROMANCE DAWN- [OP-01]\nSTARTER DECK <br class=\"spInline\">-YELLOW Eustass\"Captain\"Kid- [ST-36]\nSTARTER DECK <br class=\"spInline\">-RED/BLACK Sabo- [ST-35]\nSTARTER DECK <br class=\"spInline\">-PURPLE Charlotte Katakuri- [ST-34]\nSTARTER DECK <br class=\"spInline\">-BLUE Kuzan- [ST-33]\nSTARTER DECK <br class=\"spInline\">-GREEN Roronoa Zoro- [ST-32]\nSTARTER DECK <br class=\"spInline\">-RED Monkey.D.Luffy- [ST-31]\nSTARTER DECK EX <br class=\"spInline\">-Luffy & Ace- [ST-30]\nSTARTER DECK <br class=\"spInline\">-Egghead- [ST-29]\nSTARTER DECK <br class=\"spInline\">-GREEN/YELLOW Yamato- [ST-28]\nSTARTER DECK <br class=\"spInline\">-BLACK Marshall.D.Teach- [ST-27]\nSTARTER DECK <br class=\"spInline\">-PURPLE/BLACK Monkey.D.Luffy- [ST-26]\nSTARTER DECK <br class=\"spInline\">-BLUE Buggy- [ST-25]\nSTARTER DECK <br class=\"spInline\">-GREEN Jewelry Bonney- [ST-24]\nSTARTER DECK <br class=\"spInline\">-RED Shanks- [ST-23]\nSTARTER DECK <br class=\"spInline\">-Ace & Newgate- [ST-22]\nSTARTER DECK EX <br class=\"spInline\">-GEAR5- [ST-21]\nSTARTER DECK <br class=\"spInline\">-Yellow Charlotte Katakuri- [ST-20]\nSTARTER DECK <br class=\"spInline\">-Black Smoker- [ST-19]\nSTARTER DECK <br class=\"spInline\">-Purple Monkey.D.Luffy- [ST-18]\nSTARTER DECK <br class=\"spInline\">-Blue Donquixote Doflamingo- [ST-17]\nSTARTER DECK <br class=\"spInline\">-Green Uta- [ST-16]\nSTARTER DECK <br class=\"spInline\">-Red Edward.Newgate- [ST-15]\nSTARTER DECK <br class=\"spInline\">-3D2Y- [ST-14]\nULTRA DECK <br class=\"spInline\">-The Three Brothers- [ST-13]\nSTARTER DECK <br class=\"spInline\">-Zoro and Sanji- [ST-12]\nSTARTER DECK <br class=\"spInline\">-Uta- [ST-11]\nULTRA DECK <br class=\"spInline\">-The Three Captains- [ST-10]\nSTARTER DECK <br class=\"spInline\">-Yamato- [ST-09]\nSTARTER DECK <br class=\"spInline\">-Monkey D. Luffy- [ST-08]\nSTARTER DECK <br class=\"spInline\">-Big Mom Pirates- [ST-07]\nSTARTER DECK <br class=\"spInline\">-Absolute Justice- [ST-06]\nSTARTER DECK <br class=\"spInline\">-ONE PIECE FILM edition- [ST-05]\nSTARTER DECK <br class=\"spInline\">-Animal Kingdom Pirates- [ST-04]\nSTARTER DECK <br class=\"spInline\">-The Seven Warlords of the Sea- [ST-03]\nSTARTER DECK <br class=\"spInline\">-Worst Generation- [ST-02]\nSTARTER DECK <br class=\"spInline\">-Straw Hat Crew- [ST-01]\nPromotion card\nOther Product Card\n\nAdd more\n\nColor\n\nALL\n\nRed\n\nGreen\n\nBlue\n\nPurple\n\nBlack\n\nYellow\n\nMulticolor\n\nCard type\n\nALL\n\nLeader\n\nCharacter\n\nStage\n\nEvent\n\nIllustration Type\n\nALL\n\nComic\n\nAnimation\n\nOriginal Illustrations\n\nOther\n\nBlock icon\n\nALL\n\n1\n\n2\n\n3\n\n4\n\n5\n\nX\n\nHide reprint cards\n\nSEARCH\n\n× Clear\n2 results\n\nPREV\nNEXT\n\nPREV\n\nNEXT\n\nボタン\n\nP-110 | P | CHARACTER\n\nMonkey.D.Luffy\n\nTEXT VIEW\n\nCost\n7\n\nAttribute\n\nStrike\n\nPower\n9000\n\nCounter\n1000\n\nColor\nBlue\n\nBlock\n\nicon\n4\n\nType\nElbaph/The Four Emperors/Straw Hat Crew\n\nEffect\n-\n\nCard Set(s)\n4th Anniversary Event\n\nCARD VIEW\n\nボタン\n\nP-110 | P | CHARACTER\n\nMonkey.D.Luffy\n\nTEXT VIEW\n\nCost\n7\n\nAttribute\n\nStrike\n\nPower\n9000\n\nCounter\n1000\n\nColor\nBlue\n\nBlock\n\nicon\n4\n\nType\nElbaph/The Four Emperors/Straw Hat Crew\n\nEffect\n-\n\nCard Set(s)\n4th Anniversary Event\n\nCARD VIEW\n\nPREV\nNEXT\n\nPREV\n\nNEXT",
+      "catalogue_text_truncated": false,
+      "text": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site\n\nCARD LIST\n\nRecording\nALL\nPREMIUM BOOSTER <br class=\"spInline\">-ONE PIECE CARD THE BEST vol.2- [PRB-02]\nPREMIUM BOOSTER <br class=\"spInline\">-ONE PIECE CARD THE BEST- [PRB-01]\nEXTRA BOOSTER <br class=\"spInline\">-ONE PIECE HEROINES EDITION- [EB-03]\nEXTRA BOOSTER <br class=\"spInline\">-Anime 25th Collection- [EB-02]\nEXTRA BOOSTER <br class=\"spInline\">-MEMORIAL COLLECTION- [EB-01]\nBOOSTER PACK <br class=\"spInline\">-THE WORLD’S STRONGEST WARRIORS- [OP-17]\nBOOSTER PACK <br class=\"spInline\">-THE TIME OF BATTLE- [OP-16]\nBOOSTER PACK <br class=\"spInline\">-ADVENTURE ON KAMI’S ISLAND- <br class=\"spInline\">[OP15-EB04]\nBOOSTER PACK <br class=\"spInline\">-THE AZURE SEA’S SEVEN- [OP14-EB04]\nBOOSTER PACK <br class=\"spInline\">-CARRYING ON HIS WILL- [OP-13]\nBOOSTER PACK <br class=\"spInline\">-LEGACY OF THE MASTER- [OP-12]\nBOOSTER PACK <br class=\"spInline\">-A FIST OF DIVINE SPEED- [OP-11]\nBOOSTER PACK <br class=\"spInline\">-ROYAL BLOOD- [OP-10]\nBOOSTER PACK <br class=\"spInline\">-EMPERORS IN THE NEW WORLD- [OP-09]\nBOOSTER PACK <br class=\"spInline\">-TWO LEGENDS- [OP-08]\nBOOSTER PACK <br class=\"spInline\">-500 YEARS IN THE FUTURE- [OP-07]\nBOOSTER PACK <br class=\"spInline\">-WINGS OF THE CAPTAIN- [OP-06]\nBOOSTER PACK <br class=\"spInline\">-AWAKENING OF THE NEW ERA- [OP-05]\nBOOSTER PACK <br class=\"spInline\">-KINGDOMS OF INTRIGUE- [OP-04]\nBOOSTER PACK <br class=\"spInline\">-PILLARS OF STRENGTH- [OP-03]\nBOOSTER PACK <br class=\"spInline\">-PARAMOUNT WAR- [OP-02]\nBOOSTER PACK <br class=\"spInline\">-ROMANCE DAWN- [OP-01]\nSTARTER DECK <br class=\"spInline\">-YELLOW Eustass\"Captain\"Kid- [ST-36]\nSTARTER DECK <br class=\"spInline\">-RED/BLACK Sabo- [ST-35]\nSTARTER DECK <br class=\"spInline\">-PURPLE Charlotte Katakuri- [ST-34]\nSTARTER DECK <br class=\"spInline\">-BLUE Kuzan- [ST-33]\nSTARTER DECK <br class=\"spInline\">-GREEN Roronoa Zoro- [ST-32]\nSTARTER DECK <br class=\"spInline\">-RED Monkey.D.Luffy- [ST-31]\nSTARTER DECK EX <br class=\"spInline\">-Luffy & Ace- [ST-30]\nSTARTER DECK <br class=\"spInline\">-Egghead- [ST-29]\nSTARTER DECK <br class=\"spInline\">-GREEN/YELLOW Yamato- [ST-28]\nSTARTER DECK <br class=\"spInline\">-BLACK Marshall.D.Teach- [ST-27]\nSTARTER DECK <br class=\"spInline\">-PURPLE/BLACK Monkey.D.Luffy- [ST-26]\nSTARTER DECK <br class=\"spInline\">-BLUE Buggy- [ST-25]\nSTARTER DECK <br class=\"spInline\">-GREEN Jewelry Bonney- [ST-24]\nSTARTER DECK <br class=\"spInline\">-RED Shanks- [ST-23]\nSTARTER DECK <br class=\"spInline\">-Ace & Newgate- [ST-22]\nSTARTER DECK EX <br class=\"spInline\">-GEAR5- [ST-21]\nSTARTER DECK <br class=\"spInline\">-Yellow Charlotte Katakuri- [ST-20]\nSTARTER DECK <br class=\"spInline\">-Black Smoker- [ST-19]\nSTARTER DECK <br class=\"spInline\">-Purple Monkey.D.Luffy- [ST-18]\nSTARTER DECK <br class=\"spInline\">-Blue Donquixote Doflamingo- [ST-17]\nSTARTER DECK <br class=\"spInline\">-Green Uta- [ST-16]\nSTARTER DECK <br class=\"spInline\">-Red Edward.Newgate- [ST-15]\nSTARTER DECK <br class=\"spInline\">-3D2Y- [ST-14]\nULTRA DECK <br class=\"spInline\">-The Three Brothers- [ST-13]\nSTARTER DECK <br class=\"spInline\">-Zoro and Sanji- [ST-12]\nSTARTER DECK <br class=\"spInline\">-Uta- [ST-11]\nULTRA DECK <br class=\"spInline\">-The Three Captains- [ST-10]\nSTARTER DECK <br class=\"spInline\">-Yamato- [ST-09]\nSTARTER DECK <br class=\"spInline\">-Monkey D. Luffy- [ST-08]\nSTARTER DECK <br class=\"spInline\">-Big Mom Pirates- [ST-07]\nSTARTER DECK <br class=\"spInline\">-Absolute Justice- [ST-06]\nSTARTER DECK <br class=\"spInline\">-ONE PIECE FILM edition- [ST-05]\nSTARTER DECK <br class=\"spInline\">-Animal Kingdom Pirates- [ST-04]\nSTARTER DECK <br class=\"spInline\">-The Seven Warlords of the Sea- [ST-03]\nSTARTER DECK <br class=\"spInline\">-Worst Generation- [ST-02]\nSTARTER DECK <br class=\"spInline\">-Straw Hat Crew- [ST-01]\nPromotion card\nOther Product Card\n\nAdd more\n\nColor\n\nALL\n\nRed\n\nGreen\n\nBlue\n\nPurple\n\nBlack\n\nYellow\n\nMulticolor\n\nCard type\n\nALL\n\nLeader\n\nCharacter\n\nStage\n\nEvent\n\nIllustration Type\n\nALL\n\nComic\n\nAnimation\n\nOriginal Illustrations\n\nOther\n\nBlock icon\n\nALL\n\n1\n\n2\n\n3\n\n4\n\n5\n\nX\n\nHide reprint cards\n\nSEARCH\n\n× Clear\n2 results\n\nPREV\nNEXT\n\nPREV\n\nNEXT\n\nボタン\n\nP-110 | P | CHARACTER\n\nMonkey.D.Luffy\n\nTEXT VIEW\n\nCost\n7\n\nAttribute\n\nStrike\n\nPower\n9000\n\nCounter\n1000\n\nColor\nBlue\n\nBlock\n\nicon\n4\n\nType\nElbaph/The Four Emperors/Straw Hat Crew\n\nEffect\n-\n\nCard Set(s)\n4th Anniversary Event\n\nCARD VIEW\n\nボタン\n\nP-110 | P | CHARACTER\n\nMonkey.D.Luffy\n\nTEXT VIEW\n\nCost\n7\n\nAttribute\n\nStrike\n\nPower\n9000\n\nCounter\n1000\n\nColor\nBlue\n\nBlock\n\nicon\n4\n\nType\nElbaph/The Four Emperors/Straw Hat Crew\n\nEffect\n-\n\nCard Set(s)\n4th Anniversary Event\n\nCARD VIEW\n\nPREV\nNEXT\n\nPREV\n\nNEXT",
+      "text_selection": "observed_terms",
+      "images": [
+        "https://en.onepiece-cardgame.com/ogp.png",
+        "https://en.onepiece-cardgame.com/images/cardlist/card/P-110.png?260828",
+        "https://en.onepiece-cardgame.com/images/cardlist/dummy.gif",
+        "https://en.onepiece-cardgame.com/images/cardlist/card/P-110_p1.png?260828",
+        "https://en.onepiece-cardgame.com/images/cardlist/attribute/ico_type01.png?v"
+      ],
+      "image_details": [
+        {
+          "image_url": "https://en.onepiece-cardgame.com/ogp.png",
+          "caption": "",
+          "width": 0,
+          "height": 0
+        },
+        {
+          "image_url": "https://en.onepiece-cardgame.com/images/cardlist/card/P-110.png?260828",
+          "caption": "Monkey.D.Luffy",
+          "width": 0,
+          "height": 0
+        },
+        {
+          "image_url": "https://en.onepiece-cardgame.com/images/cardlist/dummy.gif",
+          "caption": "Monkey.D.Luffy",
+          "width": 0,
+          "height": 0
+        },
+        {
+          "image_url": "https://en.onepiece-cardgame.com/images/cardlist/card/P-110_p1.png?260828",
+          "caption": "Monkey.D.Luffy",
+          "width": 0,
+          "height": 0
+        },
+        {
+          "image_url": "https://en.onepiece-cardgame.com/images/cardlist/attribute/ico_type01.png?v",
+          "caption": "Strike",
+          "width": 0,
+          "height": 0
+        }
+      ],
+      "image_links": [],
+      "is_collection": false,
+      "provider": "bandai"
+    },
+    {
+      "status": 200,
+      "url": "https://en.onepiece-cardgame.com/cardlist/?series=569117",
+      "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site",
+      "structured_fields": [
+        {
+          "label": "ボタン EB04-061 | SEC | CHARACTER Monkey.D.Luffy",
+          "value": "TEXT VIEW Cost 10 Attribute Strike Power 12000 Counter - Color Yellow Block icon X Type Egghead/The Four Emperors/Straw Hat Crew Effect If you have 1 or less Life cards, give this card in your hand −1 cost. [On Play] You may trash 1 card from your hand: Your Leader gains +2000 power until the end of your opponent's next End Phase. Then, this Character gains [Blocker] until the end of your opponent's next End Phase. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-001 | L | LEADER Edward.Newgate",
+          "value": "TEXT VIEW Life 5 Attribute Special Power 5000 Counter - Color Red Block icon 5 Type The Four Emperors/Whitebeard Pirates Effect [On Your Opponent's Attack] [Once Per Turn] You may trash 1 card from your hand: Up to 1 of your Leader or Characters gains +4000 power during this battle. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-001 | L | LEADER Edward.Newgate",
+          "value": "TEXT VIEW Life 5 Attribute Special Power 5000 Counter - Color Red Block icon 5 Type The Four Emperors/Whitebeard Pirates Effect [On Your Opponent's Attack] [Once Per Turn] You may trash 1 card from your hand: Up to 1 of your Leader or Characters gains +4000 power during this battle. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-002 | C | CHARACTER Atmos",
+          "value": "TEXT VIEW Cost 4 Attribute Slash Power 6000 Counter - Color Red Block icon 5 Type Whitebeard Pirates Effect [Opponent's Turn] This Character gains +3000 power. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-003 | R | CHARACTER Izo",
+          "value": "TEXT VIEW Cost 4 Attribute Ranged Power 6000 Counter - Color Red Block icon 5 Type Land of Wano/Whitebeard Pirates Effect [Rush: Character] [On Play] If your Leader is [Edward.Newgate] or has the {Land of Wano} type, give up to 1 of your opponent's rested Characters −6000 power during this turn. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-005 | SR | CHARACTER Edward.Newgate",
+          "value": "TEXT VIEW Cost 10 Attribute Special Power 12000 Counter - Color Red Block icon X Type The Four Emperors/Whitebeard Pirates Effect If your opponent has a Character with 10000 power or more, give this card in your hand −4 cost. [On Play] Your monocolored Leader's base power becomes 8000 until the end of your opponent's next End Phase. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-005 | SR | CHARACTER Edward.Newgate",
+          "value": "TEXT VIEW Cost 10 Attribute Special Power 12000 Counter - Color Red Block icon X Type The Four Emperors/Whitebeard Pirates Effect If your opponent has a Character with 10000 power or more, give this card in your hand −4 cost. [On Play] Your monocolored Leader's base power becomes 8000 until the end of your opponent's next End Phase. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-005 | SR | CHARACTER Edward.Newgate",
+          "value": "TEXT VIEW Cost 10 Attribute Special Power 12000 Counter - Color Red Block icon X Type The Four Emperors/Whitebeard Pirates Effect If your opponent has a Character with 10000 power or more, give this card in your hand −4 cost. [On Play] Your monocolored Leader's base power becomes 8000 until the end of your opponent's next End Phase. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-006 | C | CHARACTER Kingdew",
+          "value": "TEXT VIEW Cost 7 Attribute Strike Power 8000 Counter 2000 Color Red Block icon 5 Type Whitebeard Pirates Effect - Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-006 | C | CHARACTER Kingdew",
+          "value": "TEXT VIEW Cost 7 Attribute Strike Power 8000 Counter 2000 Color Red Block icon 5 Type Whitebeard Pirates Effect - Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-007 | R | CHARACTER Kouzuki Oden",
+          "value": "TEXT VIEW Cost 7 Attribute Slash Power 8000 Counter - Color Red Block icon 5 Type Land of Wano/Kouzuki Clan/Whitebeard Pirates Effect [On Play] If your Leader is [Edward.Newgate] or has the {Land of Wano} type, play up to 1 {Land of Wano} type Character card or Character card with a type including \"Whitebeard Pirates\" with 6000 power or less from your hand. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-008 | R | CHARACTER Jozu",
+          "value": "TEXT VIEW Cost 6 Attribute Strike Power 8000 Counter - Color Red Block icon 5 Type Whitebeard Pirates Effect [On Play] Your [Edward.Newgate] Leader's base power becomes 8000 until the end of your opponent's next End Phase. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-009 | UC | CHARACTER Haruta",
+          "value": "TEXT VIEW Cost 4 Attribute Slash Power 5000 Counter 1000 Color Red Block icon 5 Type Whitebeard Pirates Effect [Opponent's Turn] This Character gains +3000 power. [On Play] K.O. up to 1 of your opponent's Characters with 2000 base power or less. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-010 | C | CHARACTER Fossa",
+          "value": "TEXT VIEW Cost 1 Attribute Slash Power 3000 Counter - Color Red Block icon 5 Type Whitebeard Pirates Effect [Activate: Main] [Once Per Turn] If your opponent has a Character with 10000 power or more and you have no other [Fossa], this Character gains [Blocker] and +2000 power until the end of your opponent's next End Phase. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-011 | C | CHARACTER Blamenco",
+          "value": "TEXT VIEW Cost 5 Attribute Strike Power 6000 Counter 1000 Color Red Block icon 5 Type Whitebeard Pirates Effect [DON!! x2] [When Attacking] Give up to 1 of your opponent's Characters −4000 power during this turn. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-012 | C | CHARACTER Blenheim",
+          "value": "TEXT VIEW Cost 2 Attribute Slash Power 1000 Counter 1000 Color Red Block icon 5 Type Whitebeard Pirates Effect [Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [On K.O.] Play up to 1 card with a cost of 1 and a type including \"Whitebeard Pirates\" from your hand. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-013 | UC | CHARACTER Portgas.D.Ace",
+          "value": "TEXT VIEW Cost 6 Attribute Special Power 6000 Counter 1000 Color Red Block icon 5 Type Whitebeard Pirates Effect If your opponent has a Character with 10000 power or more, give this card in your hand −2 cost. [On Play] If your Leader is [Edward.Newgate], give up to 1 of your opponent's rested Characters −6000 power during this turn. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-014 | C | CHARACTER Whitey Bay",
+          "value": "TEXT VIEW Cost 1 Attribute Slash Power 1000 Counter 1000 Color Red Block icon 5 Type Whitebeard Pirates Allies Effect [On Play] K.O. up to 1 of your opponent's Characters with 2000 base power or less. [On Your Opponent's Attack] You may trash this Character: Your Leader gains +1000 power during this battle. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-015 | UC | CHARACTER Marco",
+          "value": "TEXT VIEW Cost 5 Attribute Special Power 6000 Counter 1000 Color Red Block icon 5 Type Whitebeard Pirates Effect If one of your Characters would be removed from the field by your opponent's effect, you may K.O. this Character instead. [On K.O.] You may trash 1 card with a type including \"Whitebeard Pirates\" from your hand: Play this Character card from your trash. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-016 | UC | CHARACTER Rakuyo",
+          "value": "TEXT VIEW Cost 3 Attribute Strike Power 2000 Counter 2000 Color Red Block icon 5 Type Whitebeard Pirates Effect [On Play] K.O. up to 2 of your opponent's Characters with 2000 base power or less. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-017 | C | EVENT Ga Ha Ha Ha!!",
+          "value": "TEXT VIEW Cost 1 Attribute - Power - Counter - Color Red Block icon 5 Type The Four Emperors/Whitebeard Pirates Effect [Counter] Up to 1 of your Leader with a type including \"Whitebeard Pirates\" or up to 1 of your Characters with a type including \"Whitebeard Pirates\" gains +2000 power during this battle. Then, give up to 1 of your opponent's Leader or Characters −2000 power during this turn. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-020 | L | LEADER Shanks",
+          "value": "TEXT VIEW Life 5 Attribute Slash Power 5000 Counter - Color Green Block icon 5 Type The Four Emperors/Red-Haired Pirates Effect [Activate: Main] [Once Per Turn] You may trash 1 card from your hand or rest 1 of your DON!! cards: Up to 1 of your opponent's rested Characters will not become active in your opponent's next Refresh Phase. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-020 | L | LEADER Shanks",
+          "value": "TEXT VIEW Life 5 Attribute Slash Power 5000 Counter - Color Green Block icon 5 Type The Four Emperors/Red-Haired Pirates Effect [Activate: Main] [Once Per Turn] You may trash 1 card from your hand or rest 1 of your DON!! cards: Up to 1 of your opponent's rested Characters will not become active in your opponent's next Refresh Phase. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-021 | UC | CHARACTER Crone Oli",
+          "value": "TEXT VIEW Cost 1 Attribute Slash Power - Counter 2000 Color Green Block icon 5 Type Red-Haired Pirates Allies Effect If your Character with a type including \"Red-Haired Pirates\" would be removed from the field by your opponent's effect, you may rest 1 of your cards instead. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-022 | SR | CHARACTER Shanks",
+          "value": "TEXT VIEW Cost 10 Attribute Slash Power 12000 Counter - Color Green Block icon X Type The Four Emperors/Red-Haired Pirates Effect [Rush] (This card can attack on the turn in which it is played.) [On Play] Set up to 2 of your DON!! cards as active. Then, rest all of your opponent's Characters. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-022 | SR | CHARACTER Shanks",
+          "value": "TEXT VIEW Cost 10 Attribute Slash Power 12000 Counter - Color Green Block icon X Type The Four Emperors/Red-Haired Pirates Effect [Rush] (This card can attack on the turn in which it is played.) [On Play] Set up to 2 of your DON!! cards as active. Then, rest all of your opponent's Characters. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-022 | SR | CHARACTER Shanks",
+          "value": "TEXT VIEW Cost 10 Attribute Slash Power 12000 Counter - Color Green Block icon X Type The Four Emperors/Red-Haired Pirates Effect [Rush] (This card can attack on the turn in which it is played.) [On Play] Set up to 2 of your DON!! cards as active. Then, rest all of your opponent's Characters. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-023 | UC | CHARACTER Nami",
+          "value": "TEXT VIEW Cost 1 Attribute Wisdom Power 1000 Counter 2000 Color Green Block icon 5 Type East Blue/Straw Hat Crew Effect If one of your {East Blue} or {Straw Hat Crew} type Characters would be K.O.'d, you may rest this Character instead. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-024 | C | CHARACTER Howling Gab",
+          "value": "TEXT VIEW Cost 8 Attribute Special Power 8000 Counter 1000 Color Green Block icon 5 Type Red-Haired Pirates Effect [Banish] (When this card deals damage, the target card is trashed without activating its Trigger.) [On Play] Rest up to 1 of your opponent's Characters. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-025 | UC | CHARACTER Building Snake",
+          "value": "TEXT VIEW Cost 4 Attribute Slash Power 5000 Counter 1000 Color Green Block icon 5 Type Red-Haired Pirates Effect [On K.O.] K.O. up to 1 of your opponent's rested Characters with a cost of 6 or less. [Activate: Main] [Once Per Turn] Give up to 1 rested DON!! card to your [Shanks] Leader. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-025 | UC | CHARACTER Building Snake",
+          "value": "TEXT VIEW Cost 4 Attribute Slash Power 5000 Counter 1000 Color Green Block icon 5 Type Red-Haired Pirates Effect [On K.O.] K.O. up to 1 of your opponent's rested Characters with a cost of 6 or less. [Activate: Main] [Once Per Turn] Give up to 1 rested DON!! card to your [Shanks] Leader. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-026 | UC | CHARACTER Fugar",
+          "value": "TEXT VIEW Cost 1 Attribute Slash Power 2000 Counter 2000 Color Green Block icon 5 Type Red-Haired Pirates Allies Effect [When Attacking] If your Leader has the {Red-Haired Pirates} type, rest up to 1 of your opponent's Characters with a cost of 2 or less. [On K.O.] Draw 1 card. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-027 | R | CHARACTER Benn.Beckman",
+          "value": "TEXT VIEW Cost 7 Attribute Ranged Power 9000 Counter - Color Green Block icon 5 Type Red-Haired Pirates Effect [Rush: Character] (This card can attack Characters on the turn in which it is played.) [On Play] If your Leader has the {Red-Haired Pirates} type, draw 1 card and rest up to 2 of your opponent's Characters. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-027 | R | CHARACTER Benn.Beckman",
+          "value": "TEXT VIEW Cost 7 Attribute Ranged Power 9000 Counter - Color Green Block icon 5 Type Red-Haired Pirates Effect [Rush: Character] (This card can attack Characters on the turn in which it is played.) [On Play] If your Leader has the {Red-Haired Pirates} type, draw 1 card and rest up to 2 of your opponent's Characters. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-028 | C | CHARACTER Bonk Punch & Monster",
+          "value": "TEXT VIEW Cost 4 Attribute Strike Power 3000 Counter 1000 Color Green Block icon 5 Type Animal/Red-Haired Pirates Effect [Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [On Play] K.O. up to 1 of your opponent's rested Characters with a cost of 6 or less. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-029 | R | CHARACTER Hongo",
+          "value": "TEXT VIEW Cost 4 Attribute Strike Power 4000 Counter 2000 Color Green Block icon 5 Type Red-Haired Pirates Effect [Blocker] [On Play] Set up to 1 of your DON!! cards as active. Then, rest up to 2 of your opponent's Characters with a cost of 2 or less. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-030 | C | CHARACTER Monkey.D.Luffy",
+          "value": "TEXT VIEW Cost 4 Attribute Strike Power 5000 Counter 1000 Color Green Block icon 5 Type East Blue/Straw Hat Crew Effect [On Play] You may rest 1 of your DON!! cards: This Character gains [Rush] during this turn. [Activate: Main] [Once Per Turn] If you have 5 or less cards in your hand, set up to 1 of your DON!! cards as active. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-031 | SR | CHARACTER Yasopp",
+          "value": "TEXT VIEW Cost 5 Attribute Ranged Power 6000 Counter 1000 Color Green Block icon 5 Type Red-Haired Pirates Effect [On Play] Draw 1 card and rest up to 1 of your opponent's Characters with a cost of 8 or less. [End of Your Turn] Set up to 1 of your Characters with a type including \"Red-Haired Pirates\" as active. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-031 | SR | CHARACTER Yasopp",
+          "value": "TEXT VIEW Cost 5 Attribute Ranged Power 6000 Counter 1000 Color Green Block icon 5 Type Red-Haired Pirates Effect [On Play] Draw 1 card and rest up to 1 of your opponent's Characters with a cost of 8 or less. [End of Your Turn] Set up to 1 of your Characters with a type including \"Red-Haired Pirates\" as active. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-032 | R | CHARACTER Limejuice",
+          "value": "TEXT VIEW Cost 1 Attribute Special Power 2000 Counter 2000 Color Green Block icon 5 Type Red-Haired Pirates Effect [On Play] Look at 3 cards from the top of your deck; reveal up to 1 card with a type including \"Red-Haired Pirates\" and add it to your hand. Then, place the rest at the bottom of your deck in any order. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-034 | C | CHARACTER Rockstar",
+          "value": "TEXT VIEW Cost 5 Attribute Slash Power 6000 Counter 1000 Color Green Block icon 5 Type Red-Haired Pirates Effect [Activate: Main] [Once Per Turn] If your opponent's Leader has 6000 power or more, set up to 1 of your DON!! cards as active. Then, your {Red-Haired Pirates} type Leader's base power becomes 6000 until the end of your opponent's next End Phase. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-035 | C | CHARACTER Roronoa Zoro",
+          "value": "TEXT VIEW Cost 7 Attribute Slash Power 8000 Counter 2000 Color Green Block icon 5 Type East Blue/Straw Hat Crew Effect - Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-039 | L | LEADER Rocks.D.Xebec",
+          "value": "TEXT VIEW Life 5 Attribute Slash Power 5000 Counter - Color Blue Block icon 5 Type Rocks Pirates Effect [When Attacking] You may trash 1 card from your hand: Reveal 1 card from the top of your deck. If the revealed card's type includes \"Rocks Pirates\", draw 2 cards. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-039 | L | LEADER Rocks.D.Xebec",
+          "value": "TEXT VIEW Life 5 Attribute Slash Power 5000 Counter - Color Blue Block icon 5 Type Rocks Pirates Effect [When Attacking] You may trash 1 card from your hand: Reveal 1 card from the top of your deck. If the revealed card's type includes \"Rocks Pirates\", draw 2 cards. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-040 | R | CHARACTER Edward.Newgate",
+          "value": "TEXT VIEW Cost 6 Attribute Special Power 8000 Counter - Color Blue Block icon 5 Type Rocks Pirates Effect [On Play] Draw 1 card. [Once Per Turn] When your Leader with a type including \"Rocks Pirates\" attacks or is attacked, you may trash 1 card from your hand to activate this effect. Your Leader gains +3000 power during this battle. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-040 | TR | CHARACTER Edward.Newgate",
+          "value": "TEXT VIEW Cost 6 Attribute Special Power 8000 Counter - Color Blue Block icon 5 Type Rocks Pirates Effect [On Play] Draw 1 card. [Once Per Turn] When your Leader with a type including \"Rocks Pirates\" attacks or is attacked, you may trash 1 card from your hand to activate this effect. Your Leader gains +3000 power during this battle. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-041 | UC | CHARACTER Wang Zhi",
+          "value": "TEXT VIEW Cost 4 Attribute Strike Power 6000 Counter - Color Blue Block icon 5 Type Rocks Pirates Effect [Blocker] [On Play] You may trash 1 card from your hand: Place all of your opponent's Characters with a base cost of 1 at the bottom of the owner's deck in any order of the owner's choosing. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-042 | R | CHARACTER Kaido",
+          "value": "TEXT VIEW Cost 4 Attribute Strike Power 6000 Counter - Color Blue Block icon 5 Type Rocks Pirates Effect [Blocker] [On Play] You may reveal 3 cards with a type including \"Rocks Pirates\" from your hand: Give up to 1 of your opponent's Characters −3000 power during this turn. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-043 | UC | CHARACTER Ganzui",
+          "value": "TEXT VIEW Cost 5 Attribute Special Power 7000 Counter - Color Blue Block icon 5 Type Rocks Pirates Effect If this Character would be removed from the field, you may trash 2 cards from your hand instead. [On Play] Your Leader's base power becomes 6000 until the end of your opponent's next End Phase. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-044 | UC | CHARACTER Captain John",
+          "value": "TEXT VIEW Cost 4 Attribute Special Power 6000 Counter - Color Blue Block icon 5 Type Rocks Pirates Effect If your Leader's type includes \"Rocks Pirates\" and this Character is rested, your opponent cannot attack any card other than the Character [Captain John]. [Activate: Main] You may rest this Character: Draw 1 card and trash 1 card from your hand. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-045 | UC | CHARACTER Kyo",
+          "value": "TEXT VIEW Cost 2 Attribute Slash Power 4000 Counter - Color Blue Block icon 5 Type Rocks Pirates Effect If one of your Characters would be removed from the field by your opponent's effect, you may trash 2 cards from your hand instead. [On Play] Draw 1 card. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-045 | UC | CHARACTER Kyo",
+          "value": "TEXT VIEW Cost 2 Attribute Slash Power 4000 Counter - Color Blue Block icon 5 Type Rocks Pirates Effect If one of your Characters would be removed from the field by your opponent's effect, you may trash 2 cards from your hand instead. [On Play] Draw 1 card. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-046 | SR | CHARACTER Gloriosa",
+          "value": "TEXT VIEW Cost 4 Attribute Wisdom Power 1000 Counter - Color Blue Block icon 5 Type Amazon Lily/Rocks Pirates Effect [Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [On Play] Place up to 1 Character with a cost of 5 or less at the bottom of the owner's deck. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-046 | SR | CHARACTER Gloriosa",
+          "value": "TEXT VIEW Cost 4 Attribute Wisdom Power 1000 Counter - Color Blue Block icon 5 Type Amazon Lily/Rocks Pirates Effect [Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [On Play] Place up to 1 Character with a cost of 5 or less at the bottom of the owner's deck. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-047 | C | CHARACTER Shiki",
+          "value": "TEXT VIEW Cost 9 Attribute Slash Power 10000 Counter - Color Blue Block icon 5 Type FILM/Impel Down/Golden Lion Pirates Effect [End of Your Turn] If you have 2 or less cards in your hand, your opponent places 1 card from their hand at the bottom of their deck. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-048 | SR | CHARACTER Shiki",
+          "value": "TEXT VIEW Cost 7 Attribute Slash Power 9000 Counter - Color Blue Block icon 5 Type Rocks Pirates Effect [Rush: Character] [When Attacking]/[On Your Opponent's Attack] [Once Per Turn] You may trash 1 card with a type including \"Rocks Pirates\" from your hand: Give up to 1 of your opponent's Characters −3000 power during this turn. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-048 | SR | CHARACTER Shiki",
+          "value": "TEXT VIEW Cost 7 Attribute Slash Power 9000 Counter - Color Blue Block icon 5 Type Rocks Pirates Effect [Rush: Character] [When Attacking]/[On Your Opponent's Attack] [Once Per Turn] You may trash 1 card with a type including \"Rocks Pirates\" from your hand: Give up to 1 of your opponent's Characters −3000 power during this turn. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-049 | R | CHARACTER Charlotte Linlin",
+          "value": "TEXT VIEW Cost 5 Attribute Special Power 7000 Counter - Color Blue Block icon 5 Type Rocks Pirates Effect [On Play] Your opponent chooses one: • Draw 2 cards. • Your opponent trashes 2 cards from their hand. [On Your Opponent's Attack] [Once Per Turn] You may trash 1 card from your hand: Up to 1 of your Leader or Characters gains +1000 power during this battle. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-049 | R | CHARACTER Charlotte Linlin",
+          "value": "TEXT VIEW Cost 5 Attribute Special Power 7000 Counter - Color Blue Block icon 5 Type Rocks Pirates Effect [On Play] Your opponent chooses one: • Draw 2 cards. • Your opponent trashes 2 cards from their hand. [On Your Opponent's Attack] [Once Per Turn] You may trash 1 card from your hand: Up to 1 of your Leader or Characters gains +1000 power during this battle. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-050 | C | CHARACTER Streusen",
+          "value": "TEXT VIEW Cost 1 Attribute Slash Power 2000 Counter - Color Blue Block icon 5 Type Rocks Pirates Effect [On Play] Look at 2 cards from the top of your deck, reorganize them in any order and place them at the top or bottom of your deck. Then, draw 1 card. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-051 | C | CHARACTER Jinbe",
+          "value": "TEXT VIEW Cost 7 Attribute Strike Power 8000 Counter 2000 Color Blue Block icon 5 Type Fish-Man/Impel Down/The Sun Pirates Effect - Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-052 | C | CHARACTER Don Marlon",
+          "value": "TEXT VIEW Cost 3 Attribute Ranged Power 5000 Counter - Color Blue Block icon 5 Type Rocks Pirates Effect [On Play] Add up to 1 blue Event with a cost of 0 from your trash to your hand. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-053 | C | CHARACTER Barbell",
+          "value": "TEXT VIEW Cost 5 Attribute Strike Power 7000 Counter - Color Blue Block icon 5 Type Fish-Man/Rocks Pirates Effect [On K.O.] Your opponent places 2 cards from their hand at the bottom of their deck in any order. [Activate: Main] [Once Per Turn] You may trash 1 card from your hand: This Character gains +3000 power during this turn. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-056 | UC | EVENT Rocks Pirates",
+          "value": "TEXT VIEW Cost - Attribute - Power - Counter - Color Blue Block icon 5 Type Rocks Pirates Effect [Main] You may rest 5 of your DON!! cards: Return up to 1 Character with a cost of 6 or less to the owner's hand. [Counter] Up to 1 of your Leader with a type including \"Rocks Pirates\" or up to 1 of your Characters with a type including \"Rocks Pirates\" gains +2000 power during this battle. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-057 | C | STAGE Fullalead",
+          "value": "TEXT VIEW Cost 1 Attribute - Power - Counter - Color Blue Block icon 5 Type Rocks Pirates Effect [On Your Opponent's Attack] You may rest this Stage and trash 1 card from your hand: Up to 1 of your Leader with a type including \"Rocks Pirates\" or up to 1 of your Characters with a type including \"Rocks Pirates\" gains +1000 power during this battle. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-058 | L | LEADER Kaido",
+          "value": "TEXT VIEW Life 5 Attribute Special Power 5000 Counter - Color Purple Block icon 5 Type The Four Emperors/Animal Kingdom Pirates Effect [When Attacking]/[On Your Opponent's Attack] [Once Per Turn] DON!! −1: Give up to 1 of your opponent's Characters −2000 power during this turn. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-058 | L | LEADER Kaido",
+          "value": "TEXT VIEW Life 5 Attribute Special Power 5000 Counter - Color Purple Block icon 5 Type The Four Emperors/Animal Kingdom Pirates Effect [When Attacking]/[On Your Opponent's Attack] [Once Per Turn] DON!! −1: Give up to 1 of your opponent's Characters −2000 power during this turn. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-059 | UC | CHARACTER Aramaki",
+          "value": "TEXT VIEW Cost 7 Attribute Special Power 8000 Counter - Color Purple Block icon 5 Type Admiral/Navy Effect [Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [On Play] DON!! −1: Draw 1 card and K.O. up to 2 of your opponent's Characters with a cost of 2 or less. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-060 | R | CHARACTER Ulti & Page One",
+          "value": "TEXT VIEW Cost 6 Attribute Strike Power 6000 Counter 1000 Color Purple Block icon 5 Type Animal Kingdom Pirates Effect [On Play] If your Leader has the {Animal Kingdom Pirates} type, add up to 1 DON!! card as active from your DON!! deck. Then, K.O. up to 1 of your opponent's Characters with 3000 power or less. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-061 | R | CHARACTER Lead Performers",
+          "value": "TEXT VIEW Cost 9 Attribute Strike/Special Power 11000 Counter - Color Purple Block icon 5 Type Fish-Man/Animal Kingdom Pirates Effect [On Play] DON!! −1: If your Leader has the {Animal Kingdom Pirates} type, add up to 1 card from the top of your deck to the top of your Life cards. [Activate: Main] You may trash this Character: Play up to 1 [King], [Queen], or [Jack] from your hand. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-061 | R | CHARACTER Lead Performers",
+          "value": "TEXT VIEW Cost 9 Attribute Strike/Special Power 11000 Counter - Color Purple Block icon 5 Type Fish-Man/Animal Kingdom Pirates Effect [On Play] DON!! −1: If your Leader has the {Animal Kingdom Pirates} type, add up to 1 card from the top of your deck to the top of your Life cards. [Activate: Main] You may trash this Character: Play up to 1 [King], [Queen], or [Jack] from your hand. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-062 | SR | CHARACTER Kaido",
+          "value": "TEXT VIEW Cost 10 Attribute Strike Power 12000 Counter - Color Purple Block icon X Type The Four Emperors/Animal Kingdom Pirates Effect [Blocker] [Your Turn] [Once Per Turn] When a DON!! card on your field is returned to your DON!! deck, add up to 1 DON!! card as active from your DON!! deck. Then, set up to 1 of your DON!! cards as active. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-062 | SR | CHARACTER Kaido",
+          "value": "TEXT VIEW Cost 10 Attribute Strike Power 12000 Counter - Color Purple Block icon X Type The Four Emperors/Animal Kingdom Pirates Effect [Blocker] [Your Turn] [Once Per Turn] When a DON!! card on your field is returned to your DON!! deck, add up to 1 DON!! card as active from your DON!! deck. Then, set up to 1 of your DON!! cards as active. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-062 | SR | CHARACTER Kaido",
+          "value": "TEXT VIEW Cost 10 Attribute Strike Power 12000 Counter - Color Purple Block icon X Type The Four Emperors/Animal Kingdom Pirates Effect [Blocker] [Your Turn] [Once Per Turn] When a DON!! card on your field is returned to your DON!! deck, add up to 1 DON!! card as active from your DON!! deck. Then, set up to 1 of your DON!! cards as active. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-062 | SR | CHARACTER Kaido",
+          "value": "TEXT VIEW Cost 10 Attribute Strike Power 12000 Counter - Color Purple Block icon X Type The Four Emperors/Animal Kingdom Pirates Effect [Blocker] [Your Turn] [Once Per Turn] When a DON!! card on your field is returned to your DON!! deck, add up to 1 DON!! card as active from your DON!! deck. Then, set up to 1 of your DON!! cards as active. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-063 | SR | CHARACTER Kaido",
+          "value": "TEXT VIEW Cost 10 Attribute Strike Power 12000 Counter - Color Purple Block icon 5 Type The Four Emperors/Animal Kingdom Pirates Effect All Character cards in your hand without a Counter have a +1000 Counter. [Activate: Main] [Once Per Turn] DON!! −1: If this Character was played on this turn, negate the effect of up to 1 of your opponent's Characters with a cost of 6 or less during this turn, and K.O. it. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-063 | SR | CHARACTER Kaido",
+          "value": "TEXT VIEW Cost 10 Attribute Strike Power 12000 Counter - Color Purple Block icon 5 Type The Four Emperors/Animal Kingdom Pirates Effect All Character cards in your hand without a Counter have a +1000 Counter. [Activate: Main] [Once Per Turn] DON!! −1: If this Character was played on this turn, negate the effect of up to 1 of your opponent's Characters with a cost of 6 or less during this turn, and K.O. it. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-064 | C | CHARACTER King",
+          "value": "TEXT VIEW Cost 9 Attribute Special Power 10000 Counter - Color Purple Block icon 5 Type Lunarian/Animal Kingdom Pirates Effect [Blocker] [On Your Opponent's Attack] [Once Per Turn] You may trash 1 card from your hand: Up to 1 of your Leader or Characters gains +2000 power during this battle. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-065 | UC | CHARACTER Queen",
+          "value": "TEXT VIEW Cost 9 Attribute Strike Power 10000 Counter - Color Purple Block icon 5 Type Animal Kingdom Pirates Effect [Banish] [On Play] DON!! −1: Draw 1 card, and up to 2 of your opponent's Characters with a cost of 5 or less cannot attack until the end of your opponent's next End Phase. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        },
+        {
+          "label": "ボタン OP17-066 | C | CHARACTER Kurozumi Orochi",
+          "value": "TEXT VIEW Cost 1 Attribute Wisdom Power - Counter 1000 Color Purple Block icon 5 Type Land of Wano/Kurozumi Clan Effect [On Play] DON!! −1: If you have a Character with a cost of 10 or more, draw 2 cards and trash 1 card from your hand. Card Set(s) BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17] CARD VIEW"
+        }
+      ],
+      "catalogue_links": [
+        {
+          "title": "FIND CARDS",
+          "url": "https://en.onepiece-cardgame.com/cardlist/"
+        },
+        {
+          "title": "FIND CARDS",
+          "url": "https://en.onepiece-cardgame.com/cardlist/"
+        }
+      ],
+      "catalogue_rows": [],
+      "catalogue_text": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site\n\nCARD LIST\n\nRecording\nALL\nPREMIUM BOOSTER <br class=\"spInline\">-ONE PIECE CARD THE BEST vol.2- [PRB-02]\nPREMIUM BOOSTER <br class=\"spInline\">-ONE PIECE CARD THE BEST- [PRB-01]\nEXTRA BOOSTER <br class=\"spInline\">-ONE PIECE HEROINES EDITION- [EB-03]\nEXTRA BOOSTER <br class=\"spInline\">-Anime 25th Collection- [EB-02]\nEXTRA BOOSTER <br class=\"spInline\">-MEMORIAL COLLECTION- [EB-01]\nBOOSTER PACK <br class=\"spInline\">-THE WORLD’S STRONGEST WARRIORS- [OP-17]\nBOOSTER PACK <br class=\"spInline\">-THE TIME OF BATTLE- [OP-16]\nBOOSTER PACK <br class=\"spInline\">-ADVENTURE ON KAMI’S ISLAND- <br class=\"spInline\">[OP15-EB04]\nBOOSTER PACK <br class=\"spInline\">-THE AZURE SEA’S SEVEN- [OP14-EB04]\nBOOSTER PACK <br class=\"spInline\">-CARRYING ON HIS WILL- [OP-13]\nBOOSTER PACK <br class=\"spInline\">-LEGACY OF THE MASTER- [OP-12]\nBOOSTER PACK <br class=\"spInline\">-A FIST OF DIVINE SPEED- [OP-11]\nBOOSTER PACK <br class=\"spInline\">-ROYAL BLOOD- [OP-10]\nBOOSTER PACK <br class=\"spInline\">-EMPERORS IN THE NEW WORLD- [OP-09]\nBOOSTER PACK <br class=\"spInline\">-TWO LEGENDS- [OP-08]\nBOOSTER PACK <br class=\"spInline\">-500 YEARS IN THE FUTURE- [OP-07]\nBOOSTER PACK <br class=\"spInline\">-WINGS OF THE CAPTAIN- [OP-06]\nBOOSTER PACK <br class=\"spInline\">-AWAKENING OF THE NEW ERA- [OP-05]\nBOOSTER PACK <br class=\"spInline\">-KINGDOMS OF INTRIGUE- [OP-04]\nBOOSTER PACK <br class=\"spInline\">-PILLARS OF STRENGTH- [OP-03]\nBOOSTER PACK <br class=\"spInline\">-PARAMOUNT WAR- [OP-02]\nBOOSTER PACK <br class=\"spInline\">-ROMANCE DAWN- [OP-01]\nSTARTER DECK <br class=\"spInline\">-YELLOW Eustass\"Captain\"Kid- [ST-36]\nSTARTER DECK <br class=\"spInline\">-RED/BLACK Sabo- [ST-35]\nSTARTER DECK <br class=\"spInline\">-PURPLE Charlotte Katakuri- [ST-34]\nSTARTER DECK <br class=\"spInline\">-BLUE Kuzan- [ST-33]\nSTARTER DECK <br class=\"spInline\">-GREEN Roronoa Zoro- [ST-32]\nSTARTER DECK <br class=\"spInline\">-RED Monkey.D.Luffy- [ST-31]\nSTARTER DECK EX <br class=\"spInline\">-Luffy & Ace- [ST-30]\nSTARTER DECK <br class=\"spInline\">-Egghead- [ST-29]\nSTARTER DECK <br class=\"spInline\">-GREEN/YELLOW Yamato- [ST-28]\nSTARTER DECK <br class=\"spInline\">-BLACK Marshall.D.Teach- [ST-27]\nSTARTER DECK <br class=\"spInline\">-PURPLE/BLACK Monkey.D.Luffy- [ST-26]\nSTARTER DECK <br class=\"spInline\">-BLUE Buggy- [ST-25]\nSTARTER DECK <br class=\"spInline\">-GREEN Jewelry Bonney- [ST-24]\nSTARTER DECK <br class=\"spInline\">-RED Shanks- [ST-23]\nSTARTER DECK <br class=\"spInline\">-Ace & Newgate- [ST-22]\nSTARTER DECK EX <br class=\"spInline\">-GEAR5- [ST-21]\nSTARTER DECK <br class=\"spInline\">-Yellow Charlotte Katakuri- [ST-20]\nSTARTER DECK <br class=\"spInline\">-Black Smoker- [ST-19]\nSTARTER DECK <br class=\"spInline\">-Purple Monkey.D.Luffy- [ST-18]\nSTARTER DECK <br class=\"spInline\">-Blue Donquixote Doflamingo- [ST-17]\nSTARTER DECK <br class=\"spInline\">-Green Uta- [ST-16]\nSTARTER DECK <br class=\"spInline\">-Red Edward.Newgate- [ST-15]\nSTARTER DECK <br class=\"spInline\">-3D2Y- [ST-14]\nULTRA DECK <br class=\"spInline\">-The Three Brothers- [ST-13]\nSTARTER DECK <br class=\"spInline\">-Zoro and Sanji- [ST-12]\nSTARTER DECK <br class=\"spInline\">-Uta- [ST-11]\nULTRA DECK <br class=\"spInline\">-The Three Captains- [ST-10]\nSTARTER DECK <br class=\"spInline\">-Yamato- [ST-09]\nSTARTER DECK <br class=\"spInline\">-Monkey D. Luffy- [ST-08]\nSTARTER DECK <br class=\"spInline\">-Big Mom Pirates- [ST-07]\nSTARTER DECK <br class=\"spInline\">-Absolute Justice- [ST-06]\nSTARTER DECK <br class=\"spInline\">-ONE PIECE FILM edition- [ST-05]\nSTARTER DECK <br class=\"spInline\">-Animal Kingdom Pirates- [ST-04]\nSTARTER DECK <br class=\"spInline\">-The Seven Warlords of the Sea- [ST-03]\nSTARTER DECK <br class=\"spInline\">-Worst Generation- [ST-02]\nSTARTER DECK <br class=\"spInline\">-Straw Hat Crew- [ST-01]\nPromotion card\nOther Product Card\n\nAdd more\n\nColor\n\nALL\n\nRed\n\nGreen\n\nBlue\n\nPurple\n\nBlack\n\nYellow\n\nMulticolor\n\nCard type\n\nALL\n\nLeader\n\nCharacter\n\nStage\n\nEvent\n\nIllustration Type\n\nALL\n\nComic\n\nAnimation\n\nOriginal Illustrations\n\nOther\n\nBlock icon\n\nALL\n\n1\n\n2\n\n3\n\n4\n\n5\n\nX\n\nHide reprint cards\n\nSEARCH\n\n× Clear\n169 results\n\nPREV\nNEXT\n\nPREV\n\nNEXT\n\nボタン\n\nEB04-061 | SEC | CHARACTER\n\nMonkey.D.Luffy\n\nTEXT VIEW\n\nCost\n10\n\nAttribute\n\nStrike\n\nPower\n12000\n\nCounter\n-\n\nColor\nYellow\n\nBlock\n\nicon\nX\n\nType\nEgghead/The Four Emperors/Straw Hat Crew\n\nEffect\nIf you have 1 or less Life cards, give this card in your hand −1 cost.\n\n[On Play] You may trash 1 card from your hand: Your Leader gains +2000 power until the end of your opponent's next End Phase. Then, this Character gains [Blocker] until the end of your opponent's next End Phase.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-001 | L | LEADER\n\nEdward.Newgate\n\nTEXT VIEW\n\nLife\n5\n\nAttribute\n\nSpecial\n\nPower\n5000\n\nCounter\n-\n\nColor\nRed\n\nBlock\n\nicon\n5\n\nType\nThe Four Emperors/Whitebeard Pirates\n\nEffect\n[On Your Opponent's Attack] [Once Per Turn] You may trash 1 card from your hand: Up to 1 of your Leader or Characters gains +4000 power during this battle.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-001 | L | LEADER\n\nEdward.Newgate\n\nTEXT VIEW\n\nLife\n5\n\nAttribute\n\nSpecial\n\nPower\n5000\n\nCounter\n-\n\nColor\nRed\n\nBlock\n\nicon\n5\n\nType\nThe Four Emperors/Whitebeard Pirates\n\nEffect\n[On Your Opponent's Attack] [Once Per Turn] You may trash 1 card from your hand: Up to 1 of your Leader or Characters gains +4000 power during this battle.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-002 | C | CHARACTER\n\nAtmos\n\nTEXT VIEW\n\nCost\n4\n\nAttribute\n\nSlash\n\nPower\n6000\n\nCounter\n-\n\nColor\nRed\n\nBlock\n\nicon\n5\n\nType\nWhitebeard Pirates\n\nEffect\n[Opponent's Turn] This Character gains +3000 power.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-003 | R | CHARACTER\n\nIzo\n\nTEXT VIEW\n\nCost\n4\n\nAttribute\n\nRanged\n\nPower\n6000\n\nCounter\n-\n\nColor\nRed\n\nBlock\n\nicon\n5\n\nType\nLand of Wano/Whitebeard Pirates\n\nEffect\n[Rush: Character]\n\n[On Play] If your Leader is [Edward.Newgate] or has the {Land of Wano} type, give up to 1 of your opponent's rested Characters −6000 power during this turn.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-004 | C | CHARACTER\n\nInuarashi & Nekomamushi\n\nTEXT VIEW\n\nCost\n3\n\nAttribute\n\nSlash\n\nPower\n2000\n\nCounter\n2000\n\nColor\nRed\n\nBlock\n\nicon\n5\n\nType\nMinks/Land of Wano/Whitebeard Pirates\n\nEffect\n[On Play] Up to 1 of your {Land of Wano} type Characters or up to 1 of your Characters with a type including \"Whitebeard Pirates\" gains [Rush] during this turn.\n\n(This card can attack on the turn in which it is played.)\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-005 | SR | CHARACTER\n\nEdward.Newgate\n\nTEXT VIEW\n\nCost\n10\n\nAttribute\n\nSpecial\n\nPower\n12000\n\nCounter\n-\n\nColor\nRed\n\nBlock\n\nicon\nX\n\nType\nThe Four Emperors/Whitebeard Pirates\n\nEffect\nIf your opponent has a Character with 10000 power or more, give this card in your hand −4 cost.\n\n[On Play] Your monocolored Leader's base power becomes 8000 until the end of your opponent's next End Phase.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-005 | SR | CHARACTER\n\nEdward.Newgate\n\nTEXT VIEW\n\nCost\n10\n\nAttribute\n\nSpecial\n\nPower\n12000\n\nCounter\n-\n\nColor\nRed\n\nBlock\n\nicon\nX\n\nType\nThe Four Emperors/Whitebeard Pirates\n\nEffect\nIf your opponent has a Character with 10000 power or more, give this card in your hand −4 cost.\n\n[On Play] Your monocolored Leader's base power becomes 8000 until the end of your opponent's next End Phase.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-005 | SR | CHARACTER\n\nEdward.Newgate\n\nTEXT VIEW\n\nCost\n10\n\nAttribute\n\nSpecial\n\nPower\n12000\n\nCounter\n-\n\nColor\nRed\n\nBlock\n\nicon\nX\n\nType\nThe Four Emperors/Whitebeard Pirates\n\nEffect\nIf your opponent has a Character with 10000 power or more, give this card in your hand −4 cost.\n\n[On Play] Your monocolored Leader's base power becomes 8000 until the end of your opponent's next End Phase.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-006 | C | CHARACTER\n\nKingdew\n\nTEXT VIEW\n\nCost\n7\n\nAttribute\n\nStrike\n\nPower\n8000\n\nCounter\n2000\n\nColor\nRed\n\nBlock\n\nicon\n5\n\nType\nWhitebeard Pirates\n\nEffect\n-\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-006 | C | CHARACTER\n\nKingdew\n\nTEXT VIEW\n\nCost\n7\n\nAttribute\n\nStrike\n\nPower\n8000\n\nCounter\n2000\n\nColor\nRed\n\nBlock\n\nicon\n5\n\nType\nWhitebeard Pirates\n\nEffect\n-\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-007 | R | CHARACTER\n\nKouzuki Oden\n\nTEXT VIEW\n\nCost\n7\n\nAttribute\n\nSlash\n\nPower\n8000\n\nCounter\n-\n\nColor\nRed\n\nBlock\n\nicon\n5\n\nType\nLand of Wano/Kouzuki Clan/Whitebeard Pirates\n\nEffect\n[On Play] If your Leader is [Edward.Newgate] or has the {Land of Wano} type, play up to 1 {Land of Wano} type Character card or Character card with a type including \"Whitebeard Pirates\" with 6000 power or less from your hand.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-008 | R | CHARACTER\n\nJozu\n\nTEXT VIEW\n\nCost\n6\n\nAttribute\n\nStrike\n\nPower\n8000\n\nCounter\n-\n\nColor\nRed\n\nBlock\n\nicon\n5\n\nType\nWhitebeard Pirates\n\nEffect\n[On Play] Your [Edward.Newgate] Leader's base power becomes 8000 until the end of your opponent's next End Phase.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-009 | UC | CHARACTER\n\nHaruta\n\nTEXT VIEW\n\nCost\n4\n\nAttribute\n\nSlash\n\nPower\n5000\n\nCounter\n1000\n\nColor\nRed\n\nBlock\n\nicon\n5\n\nType\nWhitebeard Pirates\n\nEffect\n[Opponent's Turn] This Character gains +3000 power.\n\n[On Play] K.O. up to 1 of your opponent's Characters with 2000 base power or less.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-010 | C | CHARACTER\n\nFossa\n\nTEXT VIEW\n\nCost\n1\n\nAttribute\n\nSlash\n\nPower\n3000\n\nCounter\n-\n\nColor\nRed\n\nBlock\n\nicon\n5\n\nType\nWhitebeard Pirates\n\nEffect\n[Activate: Main] [Once Per Turn] If your opponent has a Character with 10000 power or more and you have no other [Fossa], this Character gains [Blocker] and +2000 power until the end of your opponent's next End Phase.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-011 | C | CHARACTER\n\nBlamenco\n\nTEXT VIEW\n\nCost\n5\n\nAttribute\n\nStrike\n\nPower\n6000\n\nCounter\n1000\n\nColor\nRed\n\nBlock\n\nicon\n5\n\nType\nWhitebeard Pirates\n\nEffect\n[DON!! x2] [When Attacking] Give up to 1 of your opponent's Characters −4000 power during this turn.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-012 | C | CHARACTER\n\nBlenheim\n\nTEXT VIEW\n\nCost\n2\n\nAttribute\n\nSlash\n\nPower\n1000\n\nCounter\n1000\n\nColor\nRed\n\nBlock\n\nicon\n5\n\nType\nWhitebeard Pirates\n\nEffect\n[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n\n[On K.O.] Play up to 1 card with a cost of 1 and a type including \"Whitebeard Pirates\" from your hand.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-013 | UC | CHARACTER\n\nPortgas.D.Ace\n\nTEXT VIEW\n\nCost\n6\n\nAttribute\n\nSpecial\n\nPower\n6000\n\nCounter\n1000\n\nColor\nRed\n\nBlock\n\nicon\n5\n\nType\nWhitebeard Pirates\n\nEffect\nIf your opponent has a Character with 10000 power or more, give this card in your hand −2 cost.\n\n[On Play] If your Leader is [Edward.Newgate], give up to 1 of your opponent's rested Characters −6000 power during this turn.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-014 | C | CHARACTER\n\nWhitey Bay\n\nTEXT VIEW\n\nCost\n1\n\nAttribute\n\nSlash\n\nPower\n1000\n\nCounter\n1000\n\nColor\nRed\n\nBlock\n\nicon\n5\n\nType\nWhitebeard Pirates Allies\n\nEffect\n[On Play] K.O. up to 1 of your opponent's Characters with 2000 base power or less.\n\n[On Your Opponent's Attack] You may trash this Character: Your Leader gains +1000 power during this battle.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-015 | UC | CHARACTER\n\nMarco\n\nTEXT VIEW\n\nCost\n5\n\nAttribute\n\nSpecial\n\nPower\n6000\n\nCounter\n1000\n\nColor\nRed\n\nBlock\n\nicon\n5\n\nType\nWhitebeard Pirates\n\nEffect\nIf one of your Characters would be removed from the field by your opponent's effect, you may K.O. this Character instead.\n\n[On K.O.] You may trash 1 card with a type including \"Whitebeard Pirates\" from your hand: Play this Character card from your trash.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-016 | UC | CHARACTER\n\nRakuyo\n\nTEXT VIEW\n\nCost\n3\n\nAttribute\n\nStrike\n\nPower\n2000\n\nCounter\n2000\n\nColor\nRed\n\nBlock\n\nicon\n5\n\nType\nWhitebeard Pirates\n\nEffect\n[On Play] K.O. up to 2 of your opponent's Characters with 2000 base power or less.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-017 | C | EVENT\n\nGa Ha Ha Ha!!\n\nTEXT VIEW\n\nCost\n1\n\nAttribute\n\n-\n\nPower\n-\n\nCounter\n-\n\nColor\nRed\n\nBlock\n\nicon\n5\n\nType\nThe Four Emperors/Whitebeard Pirates\n\nEffect\n[Counter] Up to 1 of your Leader with a type including \"Whitebeard Pirates\" or up to 1 of your Characters with a type including \"Whitebeard Pirates\" gains +2000 power during this battle. Then, give up to 1 of your opponent's Leader or Characters −2000 power during this turn.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-018 | UC | EVENT\n\nThe Power to Destroy the World\n\nTEXT VIEW\n\nCost\n1\n\nAttribute\n\n-\n\nPower\n-\n\nCounter\n-\n\nColor\nRed\n\nBlock\n\nicon\n5\n\nType\nThe Four Emperors/Whitebeard Pirates\n\nEffect\n[Main] You may rest 2 of your DON!! cards: K.O. up to 1 of your opponent's Stages.\n\n[Counter] If you have 2 or more Characters with 8000 base power or more, up to 1 of your Leader or Characters gains +4000 power during this battle.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-019 | R | EVENT\n\nI Don't Have Time to Chat with Snot-Nosed Brats\n\nTEXT VIEW\n\nCost\n1\n\nAttribute\n\n-\n\nPower\n-\n\nCounter\n-\n\nColor\nRed\n\nBlock\n\nicon\n5\n\nType\nThe Four Emperors/Whitebeard Pirates\n\nEffect\n[Main] Look at 5 cards from the top of your deck; reveal up to 1 card with a type including \"Whitebeard Pirates\" and add it to your hand. Then, place the rest at the bottom of your deck in any order.\n\nTrigger\n[Trigger] Your Leader gains +1000 power during this turn.\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-020 | L | LEADER\n\nShanks\n\nTEXT VIEW\n\nLife\n5\n\nAttribute\n\nSlash\n\nPower\n5000\n\nCounter\n-\n\nColor\nGreen\n\nBlock\n\nicon\n5\n\nType\nThe Four Emperors/Red-Haired Pirates\n\nEffect\n[Activate: Main] [Once Per Turn] You may trash 1 card from your hand or rest 1 of your DON!! cards: Up to 1 of your opponent's rested Characters will not become active in your opponent's next Refresh Phase.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-020 | L | LEADER\n\nShanks\n\nTEXT VIEW\n\nLife\n5\n\nAttribute\n\nSlash\n\nPower\n5000\n\nCounter\n-\n\nColor\nGreen\n\nBlock\n\nicon\n5\n\nType\nThe Four Emperors/Red-Haired Pirates\n\nEffect\n[Activate: Main] [Once Per Turn] You may trash 1 card from your hand or rest 1 of your DON!! cards: Up to 1 of your opponent's rested Characters will not become active in your opponent's next Refresh Phase.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-021 | UC | CHARACTER\n\nCrone Oli\n\nTEXT VIEW\n\nCost\n1\n\nAttribute\n\nSlash\n\nPower\n-\n\nCounter\n2000\n\nColor\nGreen\n\nBlock\n\nicon\n5\n\nType\nRed-Haired Pirates Allies\n\nEffect\nIf your Character with a type including \"Red-Haired Pirates\" would be removed from the field by your opponent's effect, you may rest 1 of your cards instead.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-022 | SR | CHARACTER\n\nShanks\n\nTEXT VIEW\n\nCost\n10\n\nAttribute\n\nSlash\n\nPower\n12000\n\nCounter\n-\n\nColor\nGreen\n\nBlock\n\nicon\nX\n\nType\nThe Four Emperors/Red-Haired Pirates\n\nEffect\n[Rush] (This card can attack on the turn in which it is played.)\n\n[On Play] Set up to 2 of your DON!! cards as active. Then, rest all of your opponent's Characters.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-022 | SR | CHARACTER\n\nShanks\n\nTEXT VIEW\n\nCost\n10\n\nAttribute\n\nSlash\n\nPower\n12000\n\nCounter\n-\n\nColor\nGreen\n\nBlock\n\nicon\nX\n\nType\nThe Four Emperors/Red-Haired Pirates\n\nEffect\n[Rush] (This card can attack on the turn in which it is played.)\n\n[On Play] Set up to 2 of your DON!! cards as active. Then, rest all of your opponent's Characters.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-022 | SR | CHARACTER\n\nShanks\n\nTEXT VIEW\n\nCost\n10\n\nAttribute\n\nSlash\n\nPower\n12000\n\nCounter\n-\n\nColor\nGreen\n\nBlock\n\nicon\nX\n\nType\nThe Four Emperors/Red-Haired Pirates\n\nEffect\n[Rush] (This card can attack on the turn in which it is played.)\n\n[On Play] Set up to 2 of your DON!! cards as active. Then, rest all of your opponent's Characters.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-023 | UC | CHARACTER\n\nNami\n\nTEXT VIEW\n\nCost\n1\n\nAttribute\n\nWisdom\n\nPower\n1000\n\nCounter\n2000\n\nColor\nGreen\n\nBlock\n\nicon\n5\n\nType\nEast Blue/Straw Hat Crew\n\nEffect\nIf one of your {East Blue} or {Straw Hat Crew} type Characters would be K.O.'d, you may rest this Character instead.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-024 | C | CHARACTER\n\nHowling Gab\n\nTEXT VIEW\n\nCost\n8\n\nAttribute\n\nSpecial\n\nPower\n8000\n\nCounter\n1000\n\nColor\nGreen\n\nBlock\n\nicon\n5\n\nType\nRed-Haired Pirates\n\nEffect\n[Banish] (When this card deals damage, the target card is trashed without activating its Trigger.)\n\n[On Play] Rest up to 1 of your opponent's Characters.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-025 | UC | CHARACTER\n\nBuilding Snake\n\nTEXT VIEW\n\nCost\n4\n\nAttribute\n\nSlash\n\nPower\n5000\n\nCounter\n1000\n\nColor\nGreen\n\nBlock\n\nicon\n5\n\nType\nRed-Haired Pirates\n\nEffect\n[On K.O.] K.O. up to 1 of your opponent's rested Characters with a cost of 6 or less.\n\n[Activate: Main] [Once Per Turn] Give up to 1 rested DON!! card to your [Shanks] Leader.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-025 | UC | CHARACTER\n\nBuilding Snake\n\nTEXT VIEW\n\nCost\n4\n\nAttribute\n\nSlash\n\nPower\n5000\n\nCounter\n1000\n\nColor\nGreen\n\nBlock\n\nicon\n5\n\nType\nRed-Haired Pirates\n\nEffect\n[On K.O.] K.O. up to 1 of your opponent's rested Characters with a cost of 6 or less.\n\n[Activate: Main] [Once Per Turn] Give up to 1 rested DON!! card to your [Shanks] Leader.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-026 | UC | CHARACTER\n\nFugar\n\nTEXT VIEW\n\nCost\n1\n\nAttribute\n\nSlash\n\nPower\n2000\n\nCounter\n2000\n\nColor\nGreen\n\nBlock\n\nicon\n5\n\nType\nRed-Haired Pirates Allies\n\nEffect\n[When Attacking] If your Leader has the {Red-Haired Pirates} type, rest up to 1 of your opponent's Characters with a cost of 2 or less.\n\n[On K.O.] Draw 1 card.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-027 | R | CHARACTER\n\nBenn.Beckman\n\nTEXT VIEW\n\nCost\n7\n\nAttribute\n\nRanged\n\nPower\n9000\n\nCounter\n-\n\nColor\nGreen\n\nBlock\n\nicon\n5\n\nType\nRed-Haired Pirates\n\nEffect\n[Rush: Character] (This card can attack Characters on the turn in which it is played.)\n\n[On Play] If your Leader has the {Red-Haired Pirates} type, draw 1 card and rest up to 2 of your opponent's Characters.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-027 | R | CHARACTER\n\nBenn.Beckman\n\nTEXT VIEW\n\nCost\n7\n\nAttribute\n\nRanged\n\nPower\n9000\n\nCounter\n-\n\nColor\nGreen\n\nBlock\n\nicon\n5\n\nType\nRed-Haired Pirates\n\nEffect\n[Rush: Character] (This card can attack Characters on the turn in which it is played.)\n\n[On Play] If your Leader has the {Red-Haired Pirates} type, draw 1 card and rest up to 2 of your opponent's Characters.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-028 | C | CHARACTER\n\nBonk Punch & Monster\n\nTEXT VIEW\n\nCost\n4\n\nAttribute\n\nStrike\n\nPower\n3000\n\nCounter\n1000\n\nColor\nGreen\n\nBlock\n\nicon\n5\n\nType\nAnimal/Red-Haired Pirates\n\nEffect\n[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n\n[On Play] K.O. up to 1 of your opponent's rested Characters with a cost of 6 or less.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-029 | R | CHARACTER\n\nHongo\n\nTEXT VIEW\n\nCost\n4\n\nAttribute\n\nStrike\n\nPower\n4000\n\nCounter\n2000\n\nColor\nGreen\n\nBlock\n\nicon\n5\n\nType\nRed-Haired Pirates\n\nEffect\n[Blocker]\n\n[On Play] Set up to 1 of your DON!! cards as active. Then, rest up to 2 of your opponent's Characters with a cost of 2 or less.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-030 | C | CHARACTER\n\nMonkey.D.Luffy\n\nTEXT VIEW\n\nCost\n4\n\nAttribute\n\nStrike\n\nPower\n5000\n\nCounter\n1000\n\nColor\nGreen\n\nBlock\n\nicon\n5\n\nType\nEast Blue/Straw Hat Crew\n\nEffect\n[On Play] You may rest 1 of your DON!! cards: This Character gains [Rush] during this turn.\n\n[Activate: Main] [Once Per Turn] If you have 5 or less cards in your hand, set up to 1 of your DON!! cards as active.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-031 | SR | CHARACTER\n\nYasopp\n\nTEXT VIEW\n\nCost\n5\n\nAttribute\n\nRanged\n\nPower\n6000\n\nCounter\n1000\n\nColor\nGreen\n\nBlock\n\nicon\n5\n\nType\nRed-Haired Pirates\n\nEffect\n[On Play] Draw 1 card and rest up to 1 of your opponent's Characters with a cost of 8 or less.\n\n[End of Your Turn] Set up to 1 of your Characters with a type including \"Red-Haired Pirates\" as active.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-031 | SR | CHARACTER\n\nYasopp\n\nTEXT VIEW\n\nCost\n5\n\nAttribute\n\nRanged\n\nPower\n6000\n\nCounter\n1000\n\nColor\nGreen\n\nBlock\n\nicon\n5\n\nType\nRed-Haired Pirates\n\nEffect\n[On Play] Draw 1 card and rest up to 1 of your opponent's Characters with a cost of 8 or less.\n\n[End of Your Turn] Set up to 1 of your Characters with a type including \"Red-Haired Pirates\" as active.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-032 | R | CHARACTER\n\nLimejuice\n\nTEXT VIEW\n\nCost\n1\n\nAttribute\n\nSpecial\n\nPower\n2000\n\nCounter\n2000\n\nColor\nGreen\n\nBlock\n\nicon\n5\n\nType\nRed-Haired Pirates\n\nEffect\n[On Play] Look at 3 cards from the top of your deck; reveal up to 1 card with a type including \"Red-Haired Pirates\" and add it to your hand. Then, place the rest at the bottom of your deck in any order.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-033 | R | CHARACTER\n\nLucky.Roux\n\nTEXT VIEW\n\nCost\n4\n\nAttribute\n\nRanged\n\nPower\n5000\n\nCounter\n1000\n\nColor\nGreen\n\nBlock\n\nicon\n5\n\nType\nRed-Haired Pirates\n\nEffect\n[On Play] Look at 3 cards from the top of your deck; reveal up to 1 card with a type including \"Red-Haired Pirates\" and add it to your hand. Then, place the rest at the bottom of your deck in any order.\n\n[On Your Opponent's Attack] You may trash this Character: Rest up to 1 of your opponent's Leader or Characters.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-034 | C | CHARACTER\n\nRockstar\n\nTEXT VIEW\n\nCost\n5\n\nAttribute\n\nSlash\n\nPower\n6000\n\nCounter\n1000\n\nColor\nGreen\n\nBlock\n\nicon\n5\n\nType\nRed-Haired Pirates\n\nEffect\n[Activate: Main] [Once Per Turn] If your opponent's Leader has 6000 power or more, set up to 1 of your DON!! cards as active. Then, your {Red-Haired Pirates} type Leader's base power becomes 6000 until the end of your opponent's next End Phase.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-035 | C | CHARACTER\n\nRoronoa Zoro\n\nTEXT VIEW\n\nCost\n7\n\nAttribute\n\nSlash\n\nPower\n8000\n\nCounter\n2000\n\nColor\nGreen\n\nBlock\n\nicon\n5\n\nType\nEast Blue/Straw Hat Crew\n\nEffect\n-\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-036 | UC | EVENT\n\nWithdraw Now and Allow Me to Save Face\n\nTEXT VIEW\n\nCost\n1\n\nAttribute\n\n-\n\nPower\n-\n\nCounter\n-\n\nColor\nGreen\n\nBlock\n\nicon\n5\n\nType\nThe Four Emperors/Red-Haired Pirates\n\nEffect\n[Main] You may rest 6 of your DON!! cards: Rest up to 1 of your opponent's Characters. Then, K.O. up to 2 of your opponent's rested Characters with a cost of 6 or less.\n\n[Counter] Up to 1 of your [Shanks] gains +4000 power during this battle.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-037 | R | EVENT\n\nAre You That Afraid of the New Era?!!\n\nTEXT VIEW\n\nCost\n1\n\nAttribute\n\n-\n\nPower\n-\n\nCounter\n-\n\nColor\nGreen\n\nBlock\n\nicon\n5\n\nType\nThe Four Emperors/Red-Haired Pirates\n\nEffect\n[Main] Look at 5 cards from the top of your deck; reveal up to 1 card with a type including \"Red-Haired Pirates\" and add it to your hand. Then, place the rest at the bottom of your deck in any order.\n\n[Counter] You may rest 1 of your cards: Up to 1 of your Leader or Characters gains +3000 power during this battle.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-037 | R | EVENT\n\nAre You That Afraid of the New Era?!!\n\nTEXT VIEW\n\nCost\n1\n\nAttribute\n\n-\n\nPower\n-\n\nCounter\n-\n\nColor\nGreen\n\nBlock\n\nicon\n5\n\nType\nThe Four Emperors/Red-Haired Pirates\n\nEffect\n[Main] Look at 5 cards from the top of your deck; reveal up to 1 card with a type including \"Red-Haired Pirates\" and add it to your hand. Then, place the rest at the bottom of your deck in any order.\n\n[Counter] You may rest 1 of your cards: Up to 1 of your Leader or Characters gains +3000 power during this battle.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-038 | C | EVENT\n\nI Think He's Seen an Ugly Future...\n\nTEXT VIEW\n\nCost\n-\n\nAttribute\n\n-\n\nPower\n-\n\nCounter\n-\n\nColor\nGreen\n\nBlock\n\nicon\n5\n\nType\nRed-Haired Pirates\n\nEffect\n[Main] You may rest 4 of your cards: Rest up to 1 of your opponent's Characters.\n\n[Counter] You may trash 1 card from your hand: Up to 1 of your Leader or Characters gains +3000 power during this battle.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-039 | L | LEADER\n\nRocks.D.Xebec\n\nTEXT VIEW\n\nLife\n5\n\nAttribute\n\nSlash\n\nPower\n5000\n\nCounter\n-\n\nColor\nBlue\n\nBlock\n\nicon\n5\n\nType\nRocks Pirates\n\nEffect\n[When Attacking] You may trash 1 card from your hand: Reveal 1 card from the top of your deck. If the revealed card's type includes \"Rocks Pirates\", draw 2 cards.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-039 | L | LEADER\n\nRocks.D.Xebec\n\nTEXT VIEW\n\nLife\n5\n\nAttribute\n\nSlash\n\nPower\n5000\n\nCounter\n-\n\nColor\nBlue\n\nBlock\n\nicon\n5\n\nType\nRocks Pirates\n\nEffect\n[When Attacking] You may trash 1 card from your hand: Reveal 1 card from the top of your deck. If the revealed card's type includes \"Rocks Pirates\", draw 2 cards.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-040 | R | CHARACTER\n\nEdward.Newgate\n\nTEXT VIEW\n\nCost\n6\n\nAttribute\n\nSpecial\n\nPower\n8000\n\nCounter\n-\n\nColor\nBlue\n\nBlock\n\nicon\n5\n\nType\nRocks Pirates\n\nEffect\n[On Play] Draw 1 card.\n\n[Once Per Turn] When your Leader with a type including \"Rocks Pirates\" attacks or is attacked, you may trash 1 card from your hand to activate this effect. Your Leader gains +3000 power during this battle.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-040 | TR | CHARACTER\n\nEdward.Newgate\n\nTEXT VIEW\n\nCost\n6\n\nAttribute\n\nSpecial\n\nPower\n8000\n\nCounter\n-\n\nColor\nBlue\n\nBlock\n\nicon\n5\n\nType\nRocks Pirates\n\nEffect\n[On Play] Draw 1 card.\n\n[Once Per Turn] When your Leader with a type including \"Rocks Pirates\" attacks or is attacked, you may trash 1 card from your hand to activate this effect. Your Leader gains +3000 power during this battle.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-041 | UC | CHARACTER\n\nWang Zhi\n\nTEXT VIEW\n\nCost\n4\n\nAttribute\n\nStrike\n\nPower\n6000\n\nCounter\n-\n\nColor\nBlue\n\nBlock\n\nicon\n5\n\nType\nRocks Pirates\n\nEffect\n[Blocker]\n\n[On Play] You may trash 1 card from your hand: Place all of your opponent's Characters with a base cost of 1 at the bottom of the owner's deck in any order of the owner's choosing.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-042 | R | CHARACTER\n\nKaido\n\nTEXT VIEW\n\nCost\n4\n\nAttribute\n\nStrike\n\nPower\n6000\n\nCounter\n-\n\nColor\nBlue\n\nBlock\n\nicon\n5\n\nType\nRocks Pirates\n\nEffect\n[Blocker]\n\n[On Play] You may reveal 3 cards with a type including \"Rocks Pirates\" from your hand: Give up to 1 of your opponent's Characters −3000 power during this turn.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-043 | UC | CHARACTER\n\nGanzui\n\nTEXT VIEW\n\nCost\n5\n\nAttribute\n\nSpecial\n\nPower\n7000\n\nCounter\n-\n\nColor\nBlue\n\nBlock\n\nicon\n5\n\nType\nRocks Pirates\n\nEffect\nIf this Character would be removed from the field, you may trash 2 cards from your hand instead.\n\n[On Play] Your Leader's base power becomes 6000 until the end of your opponent's next End Phase.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-044 | UC | CHARACTER\n\nCaptain John\n\nTEXT VIEW\n\nCost\n4\n\nAttribute\n\nSpecial\n\nPower\n6000\n\nCounter\n-\n\nColor\nBlue\n\nBlock\n\nicon\n5\n\nType\nRocks Pirates\n\nEffect\nIf your Leader's type includes \"Rocks Pirates\" and this Character is rested, your opponent cannot attack any card other than the Character [Captain John].\n\n[Activate: Main] You may rest this Character: Draw 1 card and trash 1 card from your hand.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-045 | UC | CHARACTER\n\nKyo\n\nTEXT VIEW\n\nCost\n2\n\nAttribute\n\nSlash\n\nPower\n4000\n\nCounter\n-\n\nColor\nBlue\n\nBlock\n\nicon\n5\n\nType\nRocks Pirates\n\nEffect\nIf one of your Characters would be removed from the field by your opponent's effect, you may trash 2 cards from your hand instead.\n\n[On Play] Draw 1 card.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-045 | UC | CHARACTER\n\nKyo\n\nTEXT VIEW\n\nCost\n2\n\nAttribute\n\nSlash\n\nPower\n4000\n\nCounter\n-\n\nColor\nBlue\n\nBlock\n\nicon\n5\n\nType\nRocks Pirates\n\nEffect\nIf one of your Characters would be removed from the field by your opponent's effect, you may trash 2 cards from your hand instead.\n\n[On Play] Draw 1 card.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-046 | SR | CHARACTER\n\nGloriosa\n\nTEXT VIEW\n\nCost\n4\n\nAttribute\n\nWisdom\n\nPower\n1000\n\nCounter\n-\n\nColor\nBlue\n\nBlock\n\nicon\n5\n\nType\nAmazon Lily/Rocks Pirates\n\nEffect\n[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n\n[On Play] Place up to 1 Character with a cost of 5 or less at the bottom of the owner's deck.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-046 | SR | CHARACTER\n\nGloriosa\n\nTEXT VIEW\n\nCost\n4\n\nAttribute\n\nWisdom\n\nPower\n1000\n\nCounter\n-\n\nColor\nBlue\n\nBlock\n\nicon\n5\n\nType\nAmazon Lily/Rocks Pirates\n\nEffect\n[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n\n[On Play] Place up to 1 Character with a cost of 5 or less at the bottom of the owner's deck.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-047 | C | CHARACTER\n\nShiki\n\nTEXT VIEW\n\nCost\n9\n\nAttribute\n\nSlash\n\nPower\n10000\n\nCounter\n-\n\nColor\nBlue\n\nBlock\n\nicon\n5\n\nType\nFILM/Impel Down/Golden Lion Pirates\n\nEffect\n[End of Your Turn] If you have 2 or less cards in your hand, your opponent places 1 card from their hand at the bottom of their deck.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-048 | SR | CHARACTER\n\nShiki\n\nTEXT VIEW\n\nCost\n7\n\nAttribute\n\nSlash\n\nPower\n9000\n\nCounter\n-\n\nColor\nBlue\n\nBlock\n\nicon\n5\n\nType\nRocks Pirates\n\nEffect\n[Rush: Character]\n\n[When Attacking]/[On Your Opponent's Attack] [Once Per Turn] You may trash 1 card with a type including \"Rocks Pirates\" from your hand: Give up to 1 of your opponent's Characters −3000 power during this turn.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-048 | SR | CHARACTER\n\nShiki\n\nTEXT VIEW\n\nCost\n7\n\nAttribute\n\nSlash\n\nPower\n9000\n\nCounter\n-\n\nColor\nBlue\n\nBlock\n\nicon\n5\n\nType\nRocks Pirates\n\nEffect\n[Rush: Character]\n\n[When Attacking]/[On Your Opponent's Attack] [Once Per Turn] You may trash 1 card with a type including \"Rocks Pirates\" from your hand: Give up to 1 of your opponent's Characters −3000 power during this turn.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-049 | R | CHARACTER\n\nCharlotte Linlin\n\nTEXT VIEW\n\nCost\n5\n\nAttribute\n\nSpecial\n\nPower\n7000\n\nCounter\n-\n\nColor\nBlue\n\nBlock\n\nicon\n5\n\nType\nRocks Pirates\n\nEffect\n[On Play] Your opponent chooses one:\n\n• Draw 2 cards.\n\n• Your opponent trashes 2 cards from their hand.\n\n[On Your Opponent's Attack] [Once Per Turn] You may trash 1 card from your hand: Up to 1 of your Leader or Characters gains +1000 power during this battle.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-049 | R | CHARACTER\n\nCharlotte Linlin\n\nTEXT VIEW\n\nCost\n5\n\nAttribute\n\nSpecial\n\nPower\n7000\n\nCounter\n-\n\nColor\nBlue\n\nBlock\n\nicon\n5\n\nType\nRocks Pirates\n\nEffect\n[On Play] Your opponent chooses one:\n\n• Draw 2 cards.\n\n• Your opponent trashes 2 cards from their hand.\n\n[On Your Opponent's Attack] [Once Per Turn] You may trash 1 card from your hand: Up to 1 of your Leader or Characters gains +1000 power during this battle.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-050 | C | CHARACTER\n\nStreusen\n\nTEXT VIEW\n\nCost\n1\n\nAttribute\n\nSlash\n\nPower\n2000\n\nCounter\n-\n\nColor\nBlue\n\nBlock\n\nicon\n5\n\nType\nRocks Pirates\n\nEffect\n[On Play] Look at 2 cards from the top of your deck, reorganize them in any order and place them at the top or bottom of your deck. Then, draw 1 card.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-051 | C | CHARACTER\n\nJinbe\n\nTEXT VIEW\n\nCost\n7\n\nAttribute\n\nStrike\n\nPower\n8000\n\nCounter\n2000\n\nColor\nBlue\n\nBlock\n\nicon\n5\n\nType\nFish-Man/Impel Down/The Sun Pirates\n\nEffect\n-\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-052 | C | CHARACTER\n\nDon Marlon\n\nTEXT VIEW\n\nCost\n3\n\nAttribute\n\nRanged\n\nPower\n5000\n\nCounter\n-\n\nColor\nBlue\n\nBlock\n\nicon\n5\n\nType\nRocks Pirates\n\nEffect\n[On Play] Add up to 1 blue Event with a cost of 0 from your trash to your hand.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-053 | C | CHARACTER\n\nBarbell\n\nTEXT VIEW\n\nCost\n5\n\nAttribute\n\nStrike\n\nPower\n7000\n\nCounter\n-\n\nColor\nBlue\n\nBlock\n\nicon\n5\n\nType\nFish-Man/Rocks Pirates\n\nEffect\n[On K.O.] Your opponent places 2 cards from their hand at the bottom of their deck in any order.\n\n[Activate: Main] [Once Per Turn] You may trash 1 card from your hand: This Character gains +3000 power during this turn.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-054 | R | CHARACTER\n\nMiss Buckingham Stussy\n\nTEXT VIEW\n\nCost\n3\n\nAttribute\n\nWisdom\n\nPower\n5000\n\nCounter\n-\n\nColor\nBlue\n\nBlock\n\nicon\n5\n\nType\nRocks Pirates\n\nEffect\n[On Play] Up to 1 of your opponent's Characters with a base cost of 6 or less cannot attack until the end of your opponent's next End Phase.\n\n[Activate: Main] You may rest 3 of your DON!! cards and this Character: Up to 1 of your opponent's Characters cannot attack until the end of your opponent's next End Phase.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-054 | R | CHARACTER\n\nMiss Buckingham Stussy\n\nTEXT VIEW\n\nCost\n3\n\nAttribute\n\nWisdom\n\nPower\n5000\n\nCounter\n-\n\nColor\nBlue\n\nBlock\n\nicon\n5\n\nType\nRocks Pirates\n\nEffect\n[On Play] Up to 1 of your opponent's Characters with a base cost of 6 or less cannot attack until the end of your opponent's next End Phase.\n\n[Activate: Main] You may rest 3 of your DON!! cards and this Character: Up to 1 of your opponent's Characters cannot attack until the end of your opponent's next End Phase.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-055 | R | EVENT\n\nThere's No Authority in the World That Lasts Forever!!!\n\nTEXT VIEW\n\nCost\n-\n\nAttribute\n\n-\n\nPower\n-\n\nCounter\n-\n\nColor\nBlue\n\nBlock\n\nicon\n5\n\nType\nRocks Pirates\n\nEffect\n[Main] You may rest 1 of your DON!! cards: Up to 1 of your [Rocks.D.Xebec] gains [Unblockable] during this turn.\n\n[Counter] Up to 1 of your Leader with a type including \"Rocks Pirates\" or up to 1 of your Character with a type including \"Rocks Pirates\" gains +2000 power during this battle.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-056 | UC | EVENT\n\nRocks Pirates\n\nTEXT VIEW\n\nCost\n-\n\nAttribute\n\n-\n\nPower\n-\n\nCounter\n-\n\nColor\nBlue\n\nBlock\n\nicon\n5\n\nType\nRocks Pirates\n\nEffect\n[Main] You may rest 5 of your DON!! cards: Return up to 1 Character with a cost of 6 or less to the owner's hand.\n\n[Counter] Up to 1 of your Leader with a type including \"Rocks Pirates\" or up to 1 of your Characters with a type including \"Rocks Pirates\" gains +2000 power during this battle.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-057 | C | STAGE\n\nFullalead\n\nTEXT VIEW\n\nCost\n1\n\nAttribute\n\n-\n\nPower\n-\n\nCounter\n-\n\nColor\nBlue\n\nBlock\n\nicon\n5\n\nType\nRocks Pirates\n\nEffect\n[On Your Opponent's Attack] You may rest this Stage and trash 1 card from your hand: Up to 1 of your Leader with a type including \"Rocks Pirates\" or up to 1 of your Characters with a type including \"Rocks Pirates\" gains +1000 power during this battle.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-058 | L | LEADER\n\nKaido\n\nTEXT VIEW\n\nLife\n5\n\nAttribute\n\nSpecial\n\nPower\n5000\n\nCounter\n-\n\nColor\nPurple\n\nBlock\n\nicon\n5\n\nType\nThe Four Emperors/Animal Kingdom Pirates\n\nEffect\n[When Attacking]/[On Your Opponent's Attack] [Once Per Turn] DON!! −1: Give up to 1 of your opponent's Characters −2000 power during this turn.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-058 | L | LEADER\n\nKaido\n\nTEXT VIEW\n\nLife\n5\n\nAttribute\n\nSpecial\n\nPower\n5000\n\nCounter\n-\n\nColor\nPurple\n\nBlock\n\nicon\n5\n\nType\nThe Four Emperors/Animal Kingdom Pirates\n\nEffect\n[When Attacking]/[On Your Opponent's Attack] [Once Per Turn] DON!! −1: Give up to 1 of your opponent's Characters −2000 power during this turn.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-059 | UC | CHARACTER\n\nAramaki\n\nTEXT VIEW\n\nCost\n7\n\nAttribute\n\nSpecial\n\nPower\n8000\n\nCounter\n-\n\nColor\nPurple\n\nBlock\n\nicon\n5\n\nType\nAdmiral/Navy\n\nEffect\n[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n\n[On Play] DON!! −1: Draw 1 card and K.O. up to 2 of your opponent's Characters with a cost of 2 or less.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-060 | R | CHARACTER\n\nUlti & Page One\n\nTEXT VIEW\n\nCost\n6\n\nAttribute\n\nStrike\n\nPower\n6000\n\nCounter\n1000\n\nColor\nPurple\n\nBlock\n\nicon\n5\n\nType\nAnimal Kingdom Pirates\n\nEffect\n[On Play] If your Leader has the {Animal Kingdom Pirates} type, add up to 1 DON!! card as active from your DON!! deck. Then, K.O. up to 1 of your opponent's Characters with 3000 power or less.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-061 | R | CHARACTER\n\nLead Performers\n\nTEXT VIEW\n\nCost\n9\n\nAttribute\n\nStrike/Special\n\nPower\n11000\n\nCounter\n-\n\nColor\nPurple\n\nBlock\n\nicon\n5\n\nType\nFish-Man/Animal Kingdom Pirates\n\nEffect\n[On Play] DON!! −1: If your Leader has the {Animal Kingdom Pirates} type, add up to 1 card from the top of your deck to the top of your Life cards.\n\n[Activate: Main] You may trash this Character: Play up to 1 [King], [Queen], or [Jack] from your hand.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-061 | R | CHARACTER\n\nLead Performers\n\nTEXT VIEW\n\nCost\n9\n\nAttribute\n\nStrike/Special\n\nPower\n11000\n\nCounter\n-\n\nColor\nPurple\n\nBlock\n\nicon\n5\n\nType\nFish-Man/Animal Kingdom Pirates\n\nEffect\n[On Play] DON!! −1: If your Leader has the {Animal Kingdom Pirates} type, add up to 1 card from the top of your deck to the top of your Life cards.\n\n[Activate: Main] You may trash this Character: Play up to 1 [King], [Queen], or [Jack] from your hand.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-062 | SR | CHARACTER\n\nKaido\n\nTEXT VIEW\n\nCost\n10\n\nAttribute\n\nStrike\n\nPower\n12000\n\nCounter\n-\n\nColor\nPurple\n\nBlock\n\nicon\nX\n\nType\nThe Four Emperors/Animal Kingdom Pirates\n\nEffect\n[Blocker]\n\n[Your Turn] [Once Per Turn] When a DON!! card on your field is returned to your DON!! deck, add up to 1 DON!! card as active from your DON!! deck. Then, set up to 1 of your DON!! cards as active.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-062 | SR | CHARACTER\n\nKaido\n\nTEXT VIEW\n\nCost\n10\n\nAttribute\n\nStrike\n\nPower\n12000\n\nCounter\n-\n\nColor\nPurple\n\nBlock\n\nicon\nX\n\nType\nThe Four Emperors/Animal Kingdom Pirates\n\nEffect\n[Blocker]\n\n[Your Turn] [Once Per Turn] When a DON!! card on your field is returned to your DON!! deck, add up to 1 DON!! card as active from your DON!! deck. Then, set up to 1 of your DON!! cards as active.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-062 | SR | CHARACTER\n\nKaido\n\nTEXT VIEW\n\nCost\n10\n\nAttribute\n\nStrike\n\nPower\n12000\n\nCounter\n-\n\nColor\nPurple\n\nBlock\n\nicon\nX\n\nType\nThe Four Emperors/Animal Kingdom Pirates\n\nEffect\n[Blocker]\n\n[Your Turn] [Once Per Turn] When a DON!! card on your field is returned to your DON!! deck, add up to 1 DON!! card as active from your DON!! deck. Then, set up to 1 of your DON!! cards as active.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-062 | SR | CHARACTER\n\nKaido\n\nTEXT VIEW\n\nCost\n10\n\nAttribute\n\nStrike\n\nPower\n12000\n\nCounter\n-\n\nColor\nPurple\n\nBlock\n\nicon\nX\n\nType\nThe Four Emperors/Animal Kingdom Pirates\n\nEffect\n[Blocker]\n\n[Your Turn] [Once Per Turn] When a DON!! card on your field is returned to your DON!! deck, add up to 1 DON!! card as active from your DON!! deck. Then, set up to 1 of your DON!! cards as active.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-063 | SR | CHARACTER\n\nKaido\n\nTEXT VIEW\n\nCost\n10\n\nAttribute\n\nStrike\n\nPower\n12000\n\nCounter\n-\n\nColor\nPurple\n\nBlock\n\nicon\n5\n\nType\nThe Four Emperors/Animal Kingdom Pirates\n\nEffect\nAll Character cards in your hand without a Counter have a +1000 Counter.\n\n[Activate: Main] [Once Per Turn] DON!! −1: If this Character was played on this turn, negate the effect of up to 1 of your opponent's Characters with a cost of 6 or less during this turn, and K.O. it.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-063 | SR | CHARACTER\n\nKaido\n\nTEXT VIEW\n\nCost\n10\n\nAttribute\n\nStrike\n\nPower\n12000\n\nCounter\n-\n\nColor\nPurple\n\nBlock\n\nicon\n5\n\nType\nThe Four Emperors/Animal Kingdom Pirates\n\nEffect\nAll Character cards in your hand without a Counter have a +1000 Counter.\n\n[Activate: Main] [Once Per Turn] DON!! −1: If this Character was played on this turn, negate the effect of up to 1 of your opponent's Characters with a cost of 6 or less during this turn, and K.O. it.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-064 | C | CHARACTER\n\nKing\n\nTEXT VIEW\n\nCost\n9\n\nAttribute\n\nSpecial\n\nPower\n10000\n\nCounter\n-\n\nColor\nPurple\n\nBlock\n\nicon\n5\n\nType\nLunarian/Animal Kingdom Pirates\n\nEffect\n[Blocker]\n\n[On Your Opponent's Attack] [Once Per Turn] You may trash 1 card from your hand: Up to 1 of your Leader or Characters gains +2000 power during this battle.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-065 | UC | CHARACTER\n\nQueen\n\nTEXT VIEW\n\nCost\n9\n\nAttribute\n\nStrike\n\nPower\n10000\n\nCounter\n-\n\nColor\nPurple\n\nBlock\n\nicon\n5\n\nType\nAnimal Kingdom Pirates\n\nEffect\n[Banish]\n\n[On Play] DON!! −1: Draw 1 card, and up to 2 of your opponent's Characters with a cost of 5 or less cannot attack until the end of your opponent's next End Phase.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-066 | C | CHARACTER\n\nKurozumi Orochi\n\nTEXT VIEW\n\nCost\n1\n\nAttribute\n\nWisdom\n\nPower\n-\n\nCounter\n1000\n\nColor\nPurple\n\nBlock\n\nicon\n5\n\nType\nLand of Wano/Kurozumi Clan\n\nEffect\n[On Play] DON!! −1: If you have a Character with a cost of 10 or more, draw 2 cards and trash 1 card from your hand.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-067 | C | CHARACTER\n\nKurozumi Kanjuro\n\nTEXT VIEW\n\nCost\n2\n\nAttribute\n\nSlash\n\nPower\n3000\n\nCounter\n1000\n\nColor\nPurple\n\nBlock\n\nicon\n5\n\nType\nLand of Wano/Kurozumi Clan\n\nEffect\n[On Play] DON!! −1: If you have a Character with a cost of 10 or more, rest up to 1 of your opponent's Characters.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-068 | C | CHARACTER\n\nSasaki\n\nTEXT VIEW\n\nCost\n3\n\nAttribute\n\nSlash\n\nPower\n4000\n\nCounter\n2000\n\nColor\nPurple\n\nBlock\n\nicon\n5\n\nType\nAnimal Kingdom Pirates\n\nEffect\n[When Attacking] You may trash 2 cards from your hand: If your Leader has the {Animal Kingdom Pirates} type, add up to 2 DON!! cards as rested from your DON!! deck.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-069 | UC | CHARACTER\n\nJack\n\nTEXT VIEW\n\nCost\n9\n\nAttribute\n\nStrike\n\nPower\n10000\n\nCounter\n-\n\nColor\nPurple\n\nBlock\n\nicon\n5\n\nType\nFish-Man/Animal Kingdom Pirates\n\nEffect\n[Rush: Character] (This card can attack Characters on the turn in which it is played.)\n\n[On Play] DON!! −1: If your Leader has the {Animal Kingdom Pirates} type, give up to 1 of your opponent's Characters −2000 power during this turn.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-070 | C | CHARACTER\n\nScratchmen Apoo\n\nTEXT VIEW\n\nCost\n6\n\nAttribute\n\nSpecial\n\nPower\n7000\n\nCounter\n2000\n\nColor\nPurple\n\nBlock\n\nicon\n5\n\nType\nOn-Air Pirates/Animal Kingdom Pirates\n\nEffect\n-\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-070 | C | CHARACTER\n\nScratchmen Apoo\n\nTEXT VIEW\n\nCost\n6\n\nAttribute\n\nSpecial\n\nPower\n7000\n\nCounter\n2000\n\nColor\nPurple\n\nBlock\n\nicon\n5\n\nType\nOn-Air Pirates/Animal Kingdom Pirates\n\nEffect\n-\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-071 | C | CHARACTER\n\nWho's.Who\n\nTEXT VIEW\n\nCost\n2\n\nAttribute\n\nSlash\n\nPower\n3000\n\nCounter\n1000\n\nColor\nPurple\n\nBlock\n\nicon\n5\n\nType\nAnimal Kingdom Pirates/Former CP9\n\nEffect\n[On Play] DON!! −1: K.O. up to 2 of your opponent's Characters with a cost of 2 or less.\n\nTrigger\n[Trigger] Play this card.\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-072 | C | CHARACTER\n\nBlack Maria\n\nTEXT VIEW\n\nCost\n2\n\nAttribute\n\nSpecial\n\nPower\n1000\n\nCounter\n1000\n\nColor\nPurple\n\nBlock\n\nicon\n5\n\nType\nAnimal Kingdom Pirates\n\nEffect\n[Blocker]\n\n[On Your Opponent's Attack] [Once Per Turn] You may trash 1 card from your hand: Up to 1 of your Leader or Characters gains +1000 power during this battle.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-073 | UC | CHARACTER\n\nBasil Hawkins\n\nTEXT VIEW\n\nCost\n3\n\nAttribute\n\nSlash\n\nPower\n1000\n\nCounter\n2000\n\nColor\nPurple\n\nBlock\n\nicon\n5\n\nType\nAnimal Kingdom Pirates/Hawkins Pirates\n\nEffect\n[On Play] You may trash 1 card from your hand: If your Leader has the {Animal Kingdom Pirates} type, add up to 1 DON!! card as active from your DON!! deck.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-074 | R | CHARACTER\n\nYamato\n\nTEXT VIEW\n\nCost\n3\n\nAttribute\n\nStrike\n\nPower\n1000\n\nCounter\n1000\n\nColor\nPurple\n\nBlock\n\nicon\n5\n\nType\nLand of Wano\n\nEffect\n[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n\n[On Play] Add up to 1 DON!! card as rested from your DON!! deck.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-075 | C | CHARACTER\n\nX.Drake\n\nTEXT VIEW\n\nCost\n2\n\nAttribute\n\nSlash\n\nPower\n2000\n\nCounter\n2000\n\nColor\nPurple\n\nBlock\n\nicon\n5\n\nType\nNavy/Drake Pirates/Animal Kingdom Pirates\n\nEffect\n[On Play] DON!! −2: Trash 1 card from your opponent's hand.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-076 | R | EVENT\n\nWo Ro Ro Ro Ro... I Think I've Sobered Up\n\nTEXT VIEW\n\nCost\n-\n\nAttribute\n\n-\n\nPower\n-\n\nCounter\n-\n\nColor\nPurple\n\nBlock\n\nicon\n5\n\nType\nThe Four Emperors/Animal Kingdom Pirates\n\nEffect\n[Counter] You may trash 1 card from your hand: Up to 1 of your Leader or Charactes gains +3000 power during this battle.\n\nTrigger\n[Trigger] DON!! −1: Draw 2 cards.\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-077 | UC | EVENT\n\nKundali Dragon Swarm\n\nTEXT VIEW\n\nCost\n1\n\nAttribute\n\n-\n\nPower\n-\n\nCounter\n-\n\nColor\nPurple\n\nBlock\n\nicon\n5\n\nType\nThe Four Emperors/Animal Kingdom Pirates\n\nEffect\n[Main] You may rest 3 of your DON!! cards and trash 2 cards from your hand: If your Leader has the {Animal Kingdom Pirates} type, add up to 3 DON!! cards as rested from your DON!! deck.\n\n[Counter] DON!! −1: Your Leader gains +4000 power during this battle.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-078 | C | EVENT\n\nDrunken Dragon Bagua\n\nTEXT VIEW\n\nCost\n2\n\nAttribute\n\n-\n\nPower\n-\n\nCounter\n-\n\nColor\nPurple\n\nBlock\n\nicon\n5\n\nType\nThe Four Emperors/Animal Kingdom Pirates\n\nEffect\n[Main] You may rest 2 of your DON!! cards and trash 2 cards from your hand: If your Leader has the {Animal Kingdom Pirates} type, add up to 3 DON!! cards as rested from your DON!! deck.\n\n[Counter] Up to 1 of your Leader or Characters gains +4000 power during this battle.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-079 | L | LEADER\n\nMonkey.D.Luffy\n\nTEXT VIEW\n\nLife\n5\n\nAttribute\n\nStrike\n\nPower\n5000\n\nCounter\n-\n\nColor\nBlack\n\nBlock\n\nicon\n5\n\nType\nElbaph/The Four Emperors/Straw Hat Crew\n\nEffect\nAll of your Characters with a cost of 12 or more gain [Blocker].\n\n(After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-079 | L | LEADER\n\nMonkey.D.Luffy\n\nTEXT VIEW\n\nLife\n5\n\nAttribute\n\nStrike\n\nPower\n5000\n\nCounter\n-\n\nColor\nBlack\n\nBlock\n\nicon\n5\n\nType\nElbaph/The Four Emperors/Straw Hat Crew\n\nEffect\nAll of your Characters with a cost of 12 or more gain [Blocker].\n\n(After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-079 | L | LEADER\n\nMonkey.D.Luffy\n\nTEXT VIEW\n\nLife\n5\n\nAttribute\n\nStrike\n\nPower\n5000\n\nCounter\n-\n\nColor\nBlack\n\nBlock\n\nicon\n5\n\nType\nElbaph/The Four Emperors/Straw Hat Crew\n\nEffect\nAll of your Characters with a cost of 12 or more gain [Blocker].\n\n(After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-080 | SR | CHARACTER\n\nUsopp\n\nTEXT VIEW\n\nCost\n2\n\nAttribute\n\nRanged\n\nPower\n2000\n\nCounter\n1000\n\nColor\nBlack\n\nBlock\n\nicon\n5\n\nType\nElbaph/Straw Hat Crew\n\nEffect\nIf there is a Character with a cost of 12 or more, this Character gains +3000 power.\n\n[On Play] Look at 3 cards from the top of your deck; reveal up to 1 {Elbaph} type card and add it to your hand. Then, trash the rest.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-080 | SR | CHARACTER\n\nUsopp\n\nTEXT VIEW\n\nCost\n2\n\nAttribute\n\nRanged\n\nPower\n2000\n\nCounter\n1000\n\nColor\nBlack\n\nBlock\n\nicon\n5\n\nType\nElbaph/Straw Hat Crew\n\nEffect\nIf there is a Character with a cost of 12 or more, this Character gains +3000 power.\n\n[On Play] Look at 3 cards from the top of your deck; reveal up to 1 {Elbaph} type card and add it to your hand. Then, trash the rest.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-081 | R | CHARACTER\n\nGerd\n\nTEXT VIEW\n\nCost\n2\n\nAttribute\n\nSlash\n\nPower\n3000\n\nCounter\n2000\n\nColor\nBlack\n\nBlock\n\nicon\n5\n\nType\nGiant/Elbaph/New Giant Pirates\n\nEffect\nIf your Leader has the {Elbaph} type, this Character gains +12 cost.\n\n[On Play] You may trash 1 card from your hand: Add up to 1 Character card with a cost of 8 or less other than [Gerd] from your trash to your hand.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-082 | C | CHARACTER\n\nSanji\n\nTEXT VIEW\n\nCost\n2\n\nAttribute\n\nStrike\n\nPower\n2000\n\nCounter\n1000\n\nColor\nBlack\n\nBlock\n\nicon\n5\n\nType\nElbaph/Straw Hat Crew\n\nEffect\nIf there is a Character with a cost of 12 or more, this Character gains +3000 power.\n\n[On Play] Draw 2 cards and trash 2 cards from your hand.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-083 | C | CHARACTER\n\nJinbe\n\nTEXT VIEW\n\nCost\n2\n\nAttribute\n\nStrike\n\nPower\n2000\n\nCounter\n1000\n\nColor\nBlack\n\nBlock\n\nicon\n5\n\nType\nFish-Man/Elbaph/Straw Hat Crew\n\nEffect\nIf there is a Character with a cost of 12 or more, this Character gains [Blocker] and +3000 power.\n\n(After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-084 | UC | CHARACTER\n\nTony Tony.Chopper\n\nTEXT VIEW\n\nCost\n1\n\nAttribute\n\nStrike\n\nPower\n2000\n\nCounter\n2000\n\nColor\nBlack\n\nBlock\n\nicon\n5\n\nType\nAnimal/Elbaph/Straw Hat Crew\n\nEffect\n[On Play] If there is a Character with a cost of 12 or more, up to 1 of your Characters gains [Unblockable] during this turn.\n\n(This card cannot be blocked.)\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-085 | UC | CHARACTER\n\nDorry\n\nTEXT VIEW\n\nCost\n5\n\nAttribute\n\nSlash\n\nPower\n5000\n\nCounter\n1000\n\nColor\nBlack\n\nBlock\n\nicon\n5\n\nType\nGiant/Elbaph/Giant Pirates\n\nEffect\nThis Character gains +12 cost.\n\n[On Play] If your Leader has the {Elbaph} type, play up to 1 [Brogy] with a cost of 5 or less from your hand or trash. Then, you cannot play Character cards during this turn.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-086 | UC | CHARACTER\n\nNami\n\nTEXT VIEW\n\nCost\n1\n\nAttribute\n\nSpecial\n\nPower\n2000\n\nCounter\n1000\n\nColor\nBlack\n\nBlock\n\nicon\n5\n\nType\nElbaph/Straw Hat Crew\n\nEffect\n[On Play] You may trash 1 {Elbaph} type card from your hand: Draw 2 cards.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-087 | R | CHARACTER\n\nNico Robin\n\nTEXT VIEW\n\nCost\n2\n\nAttribute\n\nStrike\n\nPower\n2000\n\nCounter\n1000\n\nColor\nBlack\n\nBlock\n\nicon\n5\n\nType\nElbaph/Straw Hat Crew\n\nEffect\nIf there is a Character with a cost of 12 or more, this Character gains +3000 power.\n\n[On Play] If there is a Character with a cost of 12 or more, give up to 1 of your opponent's Characters −3000 power during this turn.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-087 | R | CHARACTER\n\nNico Robin\n\nTEXT VIEW\n\nCost\n2\n\nAttribute\n\nStrike\n\nPower\n2000\n\nCounter\n1000\n\nColor\nBlack\n\nBlock\n\nicon\n5\n\nType\nElbaph/Straw Hat Crew\n\nEffect\nIf there is a Character with a cost of 12 or more, this Character gains +3000 power.\n\n[On Play] If there is a Character with a cost of 12 or more, give up to 1 of your opponent's Characters −3000 power during this turn.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-088 | C | CHARACTER\n\nHajrudin\n\nTEXT VIEW\n\nCost\n7\n\nAttribute\n\nStrike\n\nPower\n8000\n\nCounter\n2000\n\nColor\nBlack\n\nBlock\n\nicon\n5\n\nType\nGiant/Elbaph/New Giant Pirates\n\nEffect\n-\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-088 | C | CHARACTER\n\nHajrudin\n\nTEXT VIEW\n\nCost\n7\n\nAttribute\n\nStrike\n\nPower\n8000\n\nCounter\n2000\n\nColor\nBlack\n\nBlock\n\nicon\n5\n\nType\nGiant/Elbaph/New Giant Pirates\n\nEffect\n-\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-089 | R | CHARACTER\n\nJaguar.D.Saul\n\nTEXT VIEW\n\nCost\n4\n\nAttribute\n\nStrike\n\nPower\n6000\n\nCounter\n-\n\nColor\nBlack\n\nBlock\n\nicon\n5\n\nType\nGiant/Elbaph/Former Navy\n\nEffect\nThis Character gains +12 cost.\n\n[On Play] Look at 3 cards from the top of your deck; reveal up to 1 {Elbaph} type card and add it to your hand. Then, trash the rest.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-090 | C | CHARACTER\n\nFranky\n\nTEXT VIEW\n\nCost\n2\n\nAttribute\n\nStrike\n\nPower\n2000\n\nCounter\n1000\n\nColor\nBlack\n\nBlock\n\nicon\n5\n\nType\nElbaph/Straw Hat Crew\n\nEffect\nIf there is a Character with a cost of 12 or more, this Character gains +3000 power.\n\n[On Play] If there is a Character with a cost of 12 or more, K.O. up to 1 of your opponent's Characters with a cost of 2 or less.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-091 | C | CHARACTER\n\nBrook\n\nTEXT VIEW\n\nCost\n2\n\nAttribute\n\nSlash\n\nPower\n2000\n\nCounter\n1000\n\nColor\nBlack\n\nBlock\n\nicon\n5\n\nType\nElbaph/Straw Hat Crew\n\nEffect\nIf there is a Character with a cost of 12 or more, this Character gains +3000 power.\n\n[On Play] If there is a Character with a cost of 12 or more, your opponent trashes 1 card from their hand.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-092 | UC | CHARACTER\n\nBrogy\n\nTEXT VIEW\n\nCost\n5\n\nAttribute\n\nSlash\n\nPower\n5000\n\nCounter\n1000\n\nColor\nBlack\n\nBlock\n\nicon\n5\n\nType\nGiant/Elbaph/Giant Pirates\n\nEffect\nThis Character gains +12 cost.\n\n[On Play] If your Leader has the {Elbaph} type, play up to 1 [Dorry] with a cost of 5 or less from your hand or trash. Then, you cannot play Character cards during this turn.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-093 | SR | CHARACTER\n\nMonkey.D.Luffy\n\nTEXT VIEW\n\nCost\n8\n\nAttribute\n\nStrike\n\nPower\n8000\n\nCounter\n-\n\nColor\nBlack\n\nBlock\n\nicon\n5\n\nType\nElbaph/The Four Emperors/Straw Hat Crew\n\nEffect\nIf there is a Character with a cost of 12 or more, this Character gains [Rush].\n\n[On Play] Draw 1 card and play up to 1 Character card with a cost of 2 or less from your trash.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-093 | SR | CHARACTER\n\nMonkey.D.Luffy\n\nTEXT VIEW\n\nCost\n8\n\nAttribute\n\nStrike\n\nPower\n8000\n\nCounter\n-\n\nColor\nBlack\n\nBlock\n\nicon\n5\n\nType\nElbaph/The Four Emperors/Straw Hat Crew\n\nEffect\nIf there is a Character with a cost of 12 or more, this Character gains [Rush].\n\n[On Play] Draw 1 card and play up to 1 Character card with a cost of 2 or less from your trash.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-094 | UC | CHARACTER\n\nRodo\n\nTEXT VIEW\n\nCost\n1\n\nAttribute\n\nSlash\n\nPower\n2000\n\nCounter\n2000\n\nColor\nBlack\n\nBlock\n\nicon\n5\n\nType\nGiant/Elbaph/New Giant Pirates\n\nEffect\nIf your Leader has the {Elbaph} type, this Character gains +12 cost.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-095 | C | CHARACTER\n\nRoronoa Zoro\n\nTEXT VIEW\n\nCost\n2\n\nAttribute\n\nSlash\n\nPower\n2000\n\nCounter\n2000\n\nColor\nBlack\n\nBlock\n\nicon\n5\n\nType\nElbaph/Straw Hat Crew\n\nEffect\nIf there is a Character with a cost of 12 or more, this Character gains +3000 power.\n\nIf one of your Characters would be removed from the field by your opponent's effect, you may place 3 cards from your trash at the bottom of your deck in any order instead.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-096 | R | EVENT\n\nI'm Luffy!! The Man Who Will Be King of the Pirates!!\n\nTEXT VIEW\n\nCost\n1\n\nAttribute\n\n-\n\nPower\n-\n\nCounter\n-\n\nColor\nBlack\n\nBlock\n\nicon\n5\n\nType\nElbaph/The Four Emperors/Straw Hat Crew\n\nEffect\n[Counter] If there is a Character with a cost of 12 or more, up to 1 of your Leader or Characters gains +4000 power during this battle.\n\nTrigger\n[Trigger] Add up to 1 {Elbaph} type card from your trash to your hand.\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-097 | C | EVENT\n\nI'll Feed on This Rage and Use It to Bring the World to Ruin!!!\n\nTEXT VIEW\n\nCost\n1\n\nAttribute\n\n-\n\nPower\n-\n\nCounter\n-\n\nColor\nBlack\n\nBlock\n\nicon\n5\n\nType\nGiant/Elbaph\n\nEffect\n[Main] Give all of your opponent's Characters −1 cost during this turn.\n\n[Counter] Your Leader gains +3000 power during this battle.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-098 | C | EVENT\n\nGum-Gum Kong Gun\n\nTEXT VIEW\n\nCost\n1\n\nAttribute\n\n-\n\nPower\n-\n\nCounter\n-\n\nColor\nBlack\n\nBlock\n\nicon\n5\n\nType\nElbaph/The Four Emperors/Straw Hat Crew\n\nEffect\n[Main] You may rest 6 of your DON!! cards: If there is a Character with a cost of 12 or more, K.O. up to 2 of your opponent's Characters with a cost of 6 or less.\n\n[Counter] Your Leader gains +3000 power during this battle.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-099 | L | LEADER\n\nCharlotte Linlin\n\nTEXT VIEW\n\nLife\n5\n\nAttribute\n\nSpecial\n\nPower\n5000\n\nCounter\n-\n\nColor\nYellow\n\nBlock\n\nicon\n5\n\nType\nThe Four Emperors/Big Mom Pirates\n\nEffect\n[When Attacking] You may trash 1 card from your hand: Your opponent chooses one:\n\n• Trash 1 card from your hand. Then, add up to 1 card from the top of your deck to the top of your Life cards.\n\n• Trash 1 card from your opponent's hand.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-099 | L | LEADER\n\nCharlotte Linlin\n\nTEXT VIEW\n\nLife\n5\n\nAttribute\n\nSpecial\n\nPower\n5000\n\nCounter\n-\n\nColor\nYellow\n\nBlock\n\nicon\n5\n\nType\nThe Four Emperors/Big Mom Pirates\n\nEffect\n[When Attacking] You may trash 1 card from your hand: Your opponent chooses one:\n\n• Trash 1 card from your hand. Then, add up to 1 card from the top of your deck to the top of your Life cards.\n\n• Trash 1 card from your opponent's hand.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-100 | C | CHARACTER\n\nCapone\"Gang\"Bege\n\nTEXT VIEW\n\nCost\n7\n\nAttribute\n\nRanged\n\nPower\n8000\n\nCounter\n2000\n\nColor\nYellow\n\nBlock\n\nicon\n5\n\nType\nSupernovas/Firetank Pirates\n\nEffect\n-\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-101 | C | CHARACTER\n\nCaribou\n\nTEXT VIEW\n\nCost\n5\n\nAttribute\n\nSpecial\n\nPower\n6000\n\nCounter\n1000\n\nColor\nYellow\n\nBlock\n\nicon\n5\n\nType\nSupernovas/Caribou Pirates\n\nEffect\n[Activate: Main] [Once Per Turn] You may add 1 card from the top of your Life cards to your hand: Give up to 1 of your opponent's Characters −3000 power during this turn.\n\nTrigger\n[Trigger] You may trash 1 card from your hand: K.O. up to 1 of your opponent's Characters with a cost of 5 or less.\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-102 | UC | CHARACTER\n\nCharlotte Oven\n\nTEXT VIEW\n\nCost\n4\n\nAttribute\n\nSpecial\n\nPower\n4000\n\nCounter\n1000\n\nColor\nYellow\n\nBlock\n\nicon\n5\n\nType\nBig Mom Pirates\n\nEffect\n[On K.O.] Play up to 1 Character card with 4000 power or less other than [Charlotte Oven] from your trash.\n\nTrigger\n[Trigger] Play this card.\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-103 | UC | CHARACTER\n\nCharlotte Katakuri\n\nTEXT VIEW\n\nCost\n6\n\nAttribute\n\nStrike\n\nPower\n4000\n\nCounter\n1000\n\nColor\nYellow\n\nBlock\n\nicon\n5\n\nType\nBig Mom Pirates\n\nEffect\n[Your Turn] [On Play] If your Leader has the {Big Mom Pirates} type, add up to 1 card from the top of your deck to the top of your Life cards. Then, give up to 1 of your opponent's Characters −3000 power during this turn.\n\nTrigger\n[Trigger] Play this card.\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-104 | UC | CHARACTER\n\nCharlotte Cracker\n\nTEXT VIEW\n\nCost\n3\n\nAttribute\n\nSlash\n\nPower\n4000\n\nCounter\n1000\n\nColor\nYellow\n\nBlock\n\nicon\n5\n\nType\nBig Mom Pirates\n\nEffect\n[Your Turn] [On Play] You may rest 2 of your DON!! cards: If your Leader has the {Big Mom Pirates} type, add up to 1 card from the top of your deck to the top of your Life cards.\n\nTrigger\n[Trigger] Play this card.\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-105 | C | CHARACTER\n\nCharlotte Chiffon\n\nTEXT VIEW\n\nCost\n5\n\nAttribute\n\nWisdom\n\nPower\n-\n\nCounter\n1000\n\nColor\nYellow\n\nBlock\n\nicon\n5\n\nType\nFiretank Pirates/Former Big Mom Pirates\n\nEffect\n[On Play] You may trash 1 card with a [Trigger] from your hand: Return up to 1 of your opponent's Characters with a [Trigger] to the owner's hand.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-106 | C | CHARACTER\n\nCharlotte Smoothie\n\nTEXT VIEW\n\nCost\n5\n\nAttribute\n\nSpecial\n\nPower\n4000\n\nCounter\n1000\n\nColor\nYellow\n\nBlock\n\nicon\n5\n\nType\nBig Mom Pirates\n\nEffect\n[Your Turn] [On Play] You may rest 2 of your DON!! cards: Add up to 1 card from the top of your deck to the top of your Life cards. Then, your opponent trashes 1 card from their hand.\n\nTrigger\n[Trigger] Play this card.\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-107 | UC | CHARACTER\n\nCharlotte Daifuku\n\nTEXT VIEW\n\nCost\n3\n\nAttribute\n\nSlash\n\nPower\n4000\n\nCounter\n2000\n\nColor\nYellow\n\nBlock\n\nicon\n5\n\nType\nBig Mom Pirates\n\nEffect\n-\n\nTrigger\n[Trigger] Play this card.\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-107 | UC | CHARACTER\n\nCharlotte Daifuku\n\nTEXT VIEW\n\nCost\n3\n\nAttribute\n\nSlash\n\nPower\n4000\n\nCounter\n2000\n\nColor\nYellow\n\nBlock\n\nicon\n5\n\nType\nBig Mom Pirates\n\nEffect\n-\n\nTrigger\n[Trigger] Play this card.\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-108 | C | CHARACTER\n\nCharlotte Brulee\n\nTEXT VIEW\n\nCost\n3\n\nAttribute\n\nSpecial\n\nPower\n4000\n\nCounter\n1000\n\nColor\nYellow\n\nBlock\n\nicon\n5\n\nType\nBig Mom Pirates\n\nEffect\n[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n\nTrigger\n[Trigger] Rest up to 1 of your opponent's Characters with a cost of 6 or less.\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-109 | R | CHARACTER\n\nCharlotte Pudding\n\nTEXT VIEW\n\nCost\n3\n\nAttribute\n\nWisdom\n\nPower\n4000\n\nCounter\n1000\n\nColor\nYellow\n\nBlock\n\nicon\n5\n\nType\nBig Mom Pirates\n\nEffect\n[On Play] You may trash 1 card with a [Trigger] from your hand: Draw 3 cards.\n\nTrigger\n[Trigger] Look at 5 cards from the top of your deck; reveal up to 1 {Big Mom Pirates} type card and add it to your hand. Then, place the rest at the bottom of your deck in any order.\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-110 | C | CHARACTER\n\nCharlotte Perospero\n\nTEXT VIEW\n\nCost\n7\n\nAttribute\n\nSpecial\n\nPower\n4000\n\nCounter\n1000\n\nColor\nYellow\n\nBlock\n\nicon\n5\n\nType\nBig Mom Pirates\n\nEffect\n[Your Turn] [On Play] Play up to 1 {Big Mom Pirates} type Character card with a cost of 6 or less from your hand. Then, this Character gains [Rush] during this turn.\n\nTrigger\n[Trigger] Play this card.\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-111 | C | CHARACTER\n\nCharlotte Mont-d'or\n\nTEXT VIEW\n\nCost\n3\n\nAttribute\n\nSpecial\n\nPower\n4000\n\nCounter\n1000\n\nColor\nYellow\n\nBlock\n\nicon\n5\n\nType\nBig Mom Pirates\n\nEffect\n[On Play] You may reveal 2 cards with a [Trigger] from your hand: K.O. up to 2 of your opponent's Characters with a cost of 1 or less.\n\nTrigger\n[Trigger] Play this card.\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-112 | SR | CHARACTER\n\nCharlotte Linlin\n\nTEXT VIEW\n\nCost\n10\n\nAttribute\n\nSpecial\n\nPower\n12000\n\nCounter\n-\n\nColor\nYellow\n\nBlock\n\nicon\nX\n\nType\nThe Four Emperors/Big Mom Pirates\n\nEffect\n[Your Turn] The base power of all of your Characters with a [Trigger] and 4000 base power becomes 8000.\n\n[On Play] Draw 1 card, then choose one:\n\n• Add up to 1 card from the top of your deck to the top of your Life cards.\n\n• Add up to 1 card from the top of your opponent's Life cards to the owner's hand.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-112 | SR | CHARACTER\n\nCharlotte Linlin\n\nTEXT VIEW\n\nCost\n10\n\nAttribute\n\nSpecial\n\nPower\n12000\n\nCounter\n-\n\nColor\nYellow\n\nBlock\n\nicon\nX\n\nType\nThe Four Emperors/Big Mom Pirates\n\nEffect\n[Your Turn] The base power of all of your Characters with a [Trigger] and 4000 base power becomes 8000.\n\n[On Play] Draw 1 card, then choose one:\n\n• Add up to 1 card from the top of your deck to the top of your Life cards.\n\n• Add up to 1 card from the top of your opponent's Life cards to the owner's hand.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-112 | SR | CHARACTER\n\nCharlotte Linlin\n\nTEXT VIEW\n\nCost\n10\n\nAttribute\n\nSpecial\n\nPower\n12000\n\nCounter\n-\n\nColor\nYellow\n\nBlock\n\nicon\nX\n\nType\nThe Four Emperors/Big Mom Pirates\n\nEffect\n[Your Turn] The base power of all of your Characters with a [Trigger] and 4000 base power becomes 8000.\n\n[On Play] Draw 1 card, then choose one:\n\n• Add up to 1 card from the top of your deck to the top of your Life cards.\n\n• Add up to 1 card from the top of your opponent's Life cards to the owner's hand.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-113 | R | CHARACTER\n\nStreusen\n\nTEXT VIEW\n\nCost\n1\n\nAttribute\n\nSlash\n\nPower\n2000\n\nCounter\n2000\n\nColor\nYellow\n\nBlock\n\nicon\n5\n\nType\nBig Mom Pirates\n\nEffect\n[On Play] Look at 3 cards from the top of your deck; reveal up to 1 {Big Mom Pirates} type card and add it to your hand. Then, place the rest at the bottom of your deck in any order.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-114 | R | CHARACTER\n\nSweet 3 Generals\n\nTEXT VIEW\n\nCost\n6\n\nAttribute\n\nSlash/Strike\n\nPower\n4000\n\nCounter\n1000\n\nColor\nYellow\n\nBlock\n\nicon\n5\n\nType\nBig Mom Pirates\n\nEffect\n[Your Turn] [On Play] You may rest 2 of your DON!! cards: Draw 1 card and add up to 1 card from the top of your deck to the top of your Life cards. Then, give up to 2 of your opponent's Characters −3000 power during this turn.\n\nTrigger\n[Trigger] Play this card.\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-114 | R | CHARACTER\n\nSweet 3 Generals\n\nTEXT VIEW\n\nCost\n6\n\nAttribute\n\nSlash/Strike\n\nPower\n4000\n\nCounter\n1000\n\nColor\nYellow\n\nBlock\n\nicon\n5\n\nType\nBig Mom Pirates\n\nEffect\n[Your Turn] [On Play] You may rest 2 of your DON!! cards: Draw 1 card and add up to 1 card from the top of your deck to the top of your Life cards. Then, give up to 2 of your opponent's Characters −3000 power during this turn.\n\nTrigger\n[Trigger] Play this card.\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-115 | R | EVENT\n\nDon't you know that even in the cruel world of pirates there's still a code of honor?!!\n\nTEXT VIEW\n\nCost\n1\n\nAttribute\n\n-\n\nPower\n-\n\nCounter\n-\n\nColor\nYellow\n\nBlock\n\nicon\n5\n\nType\nThe Four Emperors/Big Mom Pirates\n\nEffect\n[Main] Your [Charlotte Linlin] Leader gains [Unblockable] during this turn.\n\n[Counter] Up to 1 of your [Charlotte Linlin] gains +4000 power during this battle.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-116 | UC | EVENT\n\nFulgora\n\nTEXT VIEW\n\nCost\n1\n\nAttribute\n\n-\n\nPower\n-\n\nCounter\n-\n\nColor\nYellow\n\nBlock\n\nicon\n5\n\nType\nThe Four Emperors/Big Mom Pirates\n\nEffect\n[Main] You may rest 2 of your DON!! cards: K.O. up to 1 of your opponent's Stages.\n\n[Counter] If you have 2 or more Characters with a [Trigger], up to 1 of your Leader or Characters gains +4000 power during this battle.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-117 | C | EVENT\n\nMaser Saber\n\nTEXT VIEW\n\nCost\n1\n\nAttribute\n\n-\n\nPower\n-\n\nCounter\n-\n\nColor\nYellow\n\nBlock\n\nicon\n5\n\nType\nThe Four Emperors/Big Mom Pirates\n\nEffect\n[Counter] Up to 1 of your [Charlotte Linlin] gains +3000 power during this battle.\n\nTrigger\n[Trigger] Your opponent may trash 3 cards from their hand. If they do not, K.O. up to 1 of your opponent's Characters with a cost of 6 or less.\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-118 | SEC | CHARACTER\n\nRocks.D.Xebec\n\nTEXT VIEW\n\nCost\n10\n\nAttribute\n\nSlash\n\nPower\n12000\n\nCounter\n-\n\nColor\nBlue\n\nBlock\n\nicon\nX\n\nType\nRocks Pirates\n\nEffect\nIf you only have Characters without a Counter, this card in your hand has a +2000 Counter.\n\n[On Play] Draw 1 card and play up to 2 {Rocks Pirates} type cards with different card names and a total cost of 9 or less from your hand.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-118 | SEC | CHARACTER\n\nRocks.D.Xebec\n\nTEXT VIEW\n\nCost\n10\n\nAttribute\n\nSlash\n\nPower\n12000\n\nCounter\n-\n\nColor\nBlue\n\nBlock\n\nicon\nX\n\nType\nRocks Pirates\n\nEffect\nIf you only have Characters without a Counter, this card in your hand has a +2000 Counter.\n\n[On Play] Draw 1 card and play up to 2 {Rocks Pirates} type cards with different card names and a total cost of 9 or less from your hand.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-118 | SEC | CHARACTER\n\nRocks.D.Xebec\n\nTEXT VIEW\n\nCost\n10\n\nAttribute\n\nSlash\n\nPower\n12000\n\nCounter\n-\n\nColor\nBlue\n\nBlock\n\nicon\nX\n\nType\nRocks Pirates\n\nEffect\nIf you only have Characters without a Counter, this card in your hand has a +2000 Counter.\n\n[On Play] Draw 1 card and play up to 2 {Rocks Pirates} type cards with different card names and a total cost of 9 or less from your hand.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-119 | SEC | CHARACTER\n\nLoki\n\nTEXT VIEW\n\nCost\n6\n\nAttribute\n\nStrike\n\nPower\n8000\n\nCounter\n-\n\nColor\nBlack\n\nBlock\n\nicon\n5\n\nType\nGiant/Elbaph\n\nEffect\nThis Character gains +12 cost, and if it is your opponent's turn, this Character gains +3000 power.\n\n[On Play] K.O. your opponent's Characters with a total cost of 4 or less.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP17-119 | SEC | CHARACTER\n\nLoki\n\nTEXT VIEW\n\nCost\n6\n\nAttribute\n\nStrike\n\nPower\n8000\n\nCounter\n-\n\nColor\nBlack\n\nBlock\n\nicon\n5\n\nType\nGiant/Elbaph\n\nEffect\nThis Character gains +12 cost, and if it is your opponent's turn, this Character gains +3000 power.\n\n[On Play] K.O. your opponent's Characters with a total cost of 4 or less.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nEB04-007 | SP CARD | CHARACTER\n\nRoronoa Zoro\n\nTEXT VIEW\n\nCost\n7\n\nAttribute\n\nSlash\n\nPower\n9000\n\nCounter\n-\n\nColor\nRed\n\nBlock\n\nicon\n4\n\nType\nEgghead/Straw Hat Crew\n\nEffect\n[On Play] Your Leader gains +2000 power until the end of your opponent's next End Phase.\n\n[Activate: Main] [Once Per Turn] If your opponent has a Character with 8000 power or more, this Character gains [Rush: Character] during this turn.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP12-056 | SP CARD | CHARACTER\n\nMonkey.D.Garp\n\nTEXT VIEW\n\nCost\n8\n\nAttribute\n\nStrike\n\nPower\n8000\n\nCounter\n-\n\nColor\nBlue\n\nBlock\n\nicon\n3\n\nType\nNavy\n\nEffect\n[On Play] You may trash 1 card from your hand: Play up to 1 blue {Navy} type Character card with 8000 power or less other than [Monkey.D.Garp] from your hand.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP13-028 | SP CARD | CHARACTER\n\nShanks\n\nTEXT VIEW\n\nCost\n10\n\nAttribute\n\nSlash\n\nPower\n12000\n\nCounter\n-\n\nColor\nGreen\n\nBlock\n\nicon\n4\n\nType\nFILM/The Four Emperors/Red-Haired Pirates\n\nEffect\n[On Play] Set all of your DON!! cards as active. Then, you cannot play cards from your hand during this turn.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP14-108 | SP CARD | CHARACTER\n\nSilvers Rayleigh\n\nTEXT VIEW\n\nCost\n6\n\nAttribute\n\nSlash\n\nPower\n6000\n\nCounter\n1000\n\nColor\nYellow\n\nBlock\n\nicon\n4\n\nType\nFormer Roger Pirates\n\nEffect\n[On Play] If your Leader is multicolored and your opponent has 3 or less Life cards, K.O. up to 1 of your opponent's Characters with 7000 base power or less.\n\nTrigger\n[Trigger] Activate this card's [On Play] effect.\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nOP16-098 | SP CARD | CHARACTER\n\nYamato\n\nTEXT VIEW\n\nCost\n6\n\nAttribute\n\nStrike\n\nPower\n5000\n\nCounter\n1000\n\nColor\nBlack\n\nBlock\n\nicon\n5\n\nType\nLand of Wano\n\nEffect\n[On Play] Draw 1 card and trash 1 card from your hand.\n\n[Activate: Main] You may trash this Character: Play up to 1 black [Yamato] with a cost of 8 from your trash.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nP-084 | SP CARD | CHARACTER\n\nBuggy\n\nTEXT VIEW\n\nCost\n7\n\nAttribute\n\nSlash\n\nPower\n8000\n\nCounter\n-\n\nColor\nBlue\n\nBlock\n\nicon\n3\n\nType\nThe Four Emperors/Cross Guild\n\nEffect\nThis Character cannot attack.\n\nIf your Leader is [Buggy], all Characters with a cost of 3 or 4 cannot attack.\n\n[On Play] Play up to 1 {Cross Guild} type Character card with a cost of 6 or less from your hand.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nP-107 | SP CARD | CHARACTER\n\nGol.D.Roger\n\nTEXT VIEW\n\nCost\n8\n\nAttribute\n\nSlash\n\nPower\n10000\n\nCounter\n-\n\nColor\nPurple\n\nBlock\n\nicon\n4\n\nType\nKing of the Pirates/Roger Pirates\n\nEffect\n[On Play] If either you or your opponent has 10 DON!! cards on the field, your Leader gains +2000 power until the end of your opponent's next End Phase.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nST27-005 | SP CARD | CHARACTER\n\nMarshall.D.Teach\n\nTEXT VIEW\n\nCost\n7\n\nAttribute\n\nSpecial\n\nPower\n8000\n\nCounter\n-\n\nColor\nBlack\n\nBlock\n\nicon\n3\n\nType\nThe Four Emperors/Blackbeard Pirates\n\nEffect\n[Activate: Main] You may rest this Character: K.O. up to 1 Character with a cost of 3 or less.\n\n[On K.O.] Add up to 1 black card from your trash to your hand.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nST31-004 | SP CARD | CHARACTER\n\nMonkey.D.Luffy\n\nTEXT VIEW\n\nCost\n7\n\nAttribute\n\nStrike\n\nPower\n9000\n\nCounter\n-\n\nColor\nRed\n\nBlock\n\nicon\n5\n\nType\nThe Four Emperors/Straw Hat Crew\n\nEffect\nIf you have a total of 3 or more given DON!! cards, this Character gains [Rush].\n\n(This card can attack on the turn in which it is played.)\n\n[On Play] For every {Straw Hat Crew} type card on your field, give up to 1 of your opponent's Characters −1000 power during this turn.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nボタン\n\nST32-002 | SP CARD | CHARACTER\n\nKouzuki Oden\n\nTEXT VIEW\n\nCost\n5\n\nAttribute\n\nSlash\n\nPower\n6000\n\nCounter\n1000\n\nColor\nGreen\n\nBlock\n\nicon\n5\n\nType\nLand of Wano/Kouzuki Clan\n\nEffect\n[On Play] Draw 1 card, and up to 1 of your opponent's Characters with a base cost of 6 or less cannot be rested until the end of your opponent's next End Phase.\n\nCard Set(s)\nBOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]\n\nCARD VIEW\n\nPREV\nNEXT\n\nPREV\n\nNEXT",
+      "catalogue_text_truncated": false,
+      "text": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site\n\nCARD LIST\n\nRecording\nALL\nPREMIUM BOOSTER <br class=\"spInline\">-ONE PIECE CARD THE BEST vol.2- [PRB-02]\nPREMIUM BOOSTER <br class=\"spInline\">-ONE PIECE CARD THE BEST- [PRB-01]\nEXTRA BOOSTER <br class=\"spInline\">-ONE PIECE HEROINES EDITION- [EB-03]\nEXTRA BOOSTER <br class=\"spInline\">-Anime 25th Collection- [EB-02]\nEXTRA BOOSTER <br class=\"spInline\">-MEMORIAL COLLECTION- [EB-01]\nBOOSTER PACK <br class=\"spInline\">-THE WORLD’S STRONGEST WARRIORS- [OP-17]\nBOOSTER PACK <br class=\"spInline\">-THE TIME OF BATTLE- [OP-16]\nBOOSTER PACK <br class=\"spInline\">-ADVENTURE ON KAMI’S ISLAND- <br class=\"spInline\">[OP15-EB04]\nBOOSTER PACK <br class=\"spInline\">-THE AZURE SEA’S SEVEN- [OP14-EB04]\nBOOSTER PACK <br class=\"spInline\">-CARRYING ON HIS WILL- [OP-13]\nBOOSTER PACK <br class=\"spInline\">-LEGACY OF THE MASTER- [OP-12]\nBOOSTER PACK <br class=\"spInline\">-A FIST OF DIVINE SPEED- [OP-11]\nBOOSTER PACK <br class=\"spInline\">-ROYAL BLOOD- [OP-10]\nBOOSTER PACK <br class=\"spInline\">-EMPERORS IN THE NEW WORLD- [OP-09]\nBOOSTER PACK <br class=\"spInline\">-TWO LEGENDS- [OP-08]\nBOOSTER PACK <br class=\"spInline\">-500 YEARS IN THE FUTURE- [OP-07]\nBOOSTER PACK <br class=\"spInline\">-WINGS OF THE CAPTAIN- [OP-06]\nBOOSTER PACK <br class=\"spInline\">-AWAKENING OF THE NEW ERA- [OP-05]\nBOOSTER PACK <br class=\"spInline\">-KINGDOMS OF INTRIGUE- [OP-04]\nBOOSTER PACK <br class=\"spInline\">-PILLARS OF STRENGTH- [OP-03]\nBOOSTER PACK <br class=\"spInline\">-PARAMOUNT WAR- [OP-02]\nBOOSTER PACK <br class=\"spInline\">-ROMANCE DAWN- [OP-01]\nSTARTER DECK <br class=\"spInline\">-YELLOW Eustass\"Captain\"Kid- [ST-36]\nSTARTER DECK <br class=\"spInline\">-RED/BLACK Sabo- [ST-35]\nSTARTER DECK <br class=\"spInline\">-PURPLE Charlotte Katakuri- [ST-34]\nSTARTER DECK <br class=\"spInline\">-BLUE Kuzan- [ST-33]\nSTARTER DECK <br class=\"spInline\">-GREEN Roronoa Zoro- [ST-32]\nSTARTER DECK <br class=\"spInline\">-RED Monkey.D.Luffy- [ST-31]\nSTARTER DECK EX <br class=\"spInline\">-Luffy & Ace- [ST-30]\nSTARTER DECK <br class=\"spInline\">-Egghead- [ST-29]\nSTARTER DECK <br class=\"spInline\">-GREEN/YELLOW Yamato- [ST-28]\nSTARTER DECK <br class=\"spInline\">-BLACK Marshall.D.Teach- [ST-27]\nSTARTER DECK <br class=\"spInline\">-PURPLE/BLACK Monkey.D.Luffy- [ST-26]\nSTARTER DECK <br class=\"spInline\">-BLUE Buggy- [ST-25]\nSTARTER DECK <br class=\"spInline\">-GREEN Jewelry Bonney- [ST-24]\nSTARTER DECK <br class=\"spInline\">-RED Shanks- [ST-23]\nSTARTER DECK <br class=\"spInline\">-Ace & Newgate- [ST-22]\nSTARTER DECK EX <br class=\"spInline\">-GEAR5- [ST-21]\nSTARTER DECK <br class=\"spInline\">-Yellow Charlotte Katakuri- [ST-20]",
+      "text_selection": "observed_terms",
+      "images": [
+        "https://en.onepiece-cardgame.com/ogp.png",
+        "https://en.onepiece-cardgame.com/images/cardlist/card/EB04-061_p2.png?260828",
+        "https://en.onepiece-cardgame.com/images/cardlist/dummy.gif",
+        "https://en.onepiece-cardgame.com/images/cardlist/card/OP17-030.png?260828",
+        "https://en.onepiece-cardgame.com/images/cardlist/card/OP17-079.png?260828",
+        "https://en.onepiece-cardgame.com/images/cardlist/card/OP17-079_p1.png?260828"
+      ],
+      "image_details": [
+        {
+          "image_url": "https://en.onepiece-cardgame.com/ogp.png",
+          "caption": "",
+          "width": 0,
+          "height": 0
+        },
+        {
+          "image_url": "https://en.onepiece-cardgame.com/images/cardlist/card/EB04-061_p2.png?260828",
+          "caption": "Monkey.D.Luffy",
+          "width": 0,
+          "height": 0
+        },
+        {
+          "image_url": "https://en.onepiece-cardgame.com/images/cardlist/dummy.gif",
+          "caption": "Kouzuki Oden",
+          "width": 0,
+          "height": 0
+        },
+        {
+          "image_url": "https://en.onepiece-cardgame.com/images/cardlist/card/OP17-030.png?260828",
+          "caption": "Monkey.D.Luffy",
+          "width": 0,
+          "height": 0
+        },
+        {
+          "image_url": "https://en.onepiece-cardgame.com/images/cardlist/card/OP17-079.png?260828",
+          "caption": "Monkey.D.Luffy",
+          "width": 0,
+          "height": 0
+        },
+        {
+          "image_url": "https://en.onepiece-cardgame.com/images/cardlist/card/OP17-079_p1.png?260828",
+          "caption": "Monkey.D.Luffy",
+          "width": 0,
+          "height": 0
+        }
+      ],
+      "image_links": [],
+      "is_collection": false
+    }
+  ],
+  "identification": {
+    "engine_version": 193,
+    "engine_final": true,
+    "kind": "card",
+    "category": "trading card",
+    "brand": "Bandai",
+    "family": "One Piece Promo",
+    "model": "One Piece Promo · #P-110 · Monkey.D.Luffy · 4th Anniversary Event · EN",
+    "title": "One Piece Promo · #P-110 · Monkey.D.Luffy · 4th Anniversary Event · EN",
+    "variant": "4th Anniversary Event",
+    "language": "en",
+    "condition": "",
+    "closure_status": "resolved",
+    "job_status": "variant_resolved",
+    "status": "identified",
+    "identity_status": "confirmed",
+    "exact_identity_status": "confirmed",
+    "market_ready": true,
+    "model_verified": true,
+    "catalogue_core_verified": true,
+    "catalogue_verified": true,
+    "model_confidence": null,
+    "family_confidence": 90,
+    "catalogue_reference_language": "en",
+    "language_origin": "original_photo",
+    "core_identity": {
+      "status": "confirmed",
+      "origin": "catalogue_engine",
+      "model": "One Piece Promo · #P-110 · Monkey.D.Luffy",
+      "fields": [
+        {
+          "field": "subject",
+          "value": "Monkey.D.Luffy",
+          "origin": "catalogue_and_photo",
+          "source": {
+            "url": "https://en.onepiece-cardgame.com/cardlist/?freewords=P-110",
+            "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site",
+            "provider": "bandai",
+            "retrieved_at": null
+          }
+        },
+        {
+          "field": "family",
+          "value": "One Piece Promo",
+          "origin": "catalogue_and_photo",
+          "source": {
+            "url": "https://en.onepiece-cardgame.com/cardlist/?freewords=P-110",
+            "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site",
+            "provider": "bandai",
+            "retrieved_at": null
+          }
+        },
+        {
+          "field": "catalog_number",
+          "value": "P-110",
+          "origin": "catalogue_and_photo",
+          "source": {
+            "url": "https://en.onepiece-cardgame.com/cardlist/?freewords=P-110",
+            "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site",
+            "provider": "bandai",
+            "retrieved_at": null
+          }
+        },
+        {
+          "field": "brand",
+          "value": "Bandai",
+          "origin": "catalogue_and_photo",
+          "source": {
+            "url": "https://en.onepiece-cardgame.com/cardlist/?freewords=P-110",
+            "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site",
+            "provider": "bandai",
+            "retrieved_at": null
+          }
+        }
+      ],
+      "pending_fields": []
+    },
+    "identity_keys": {
+      "subject": {
+        "value": "Monkey.D.Luffy"
+      },
+      "number": {
+        "value": "P-110"
+      },
+      "date": {
+        "value": ""
+      },
+      "language": {
+        "value": "en"
+      }
+    },
+    "physical_card_number": "P-110",
+    "pokedex_number": null,
+    "source_confirmed_catalog_number": "P-110",
+    "source_confirmed_year": null,
+    "physical_serial": null,
+    "serial_number": null,
+    "variant_needs_verification": false,
+    "variant_check": "confirmed",
+    "variant_resolution": {
+      "status": "confirmed",
+      "pending": [],
+      "labels": [
+        "4th Anniversary Event"
+      ],
+      "proof": [
+        {
+          "field": "variant",
+          "value": "4th Anniversary Event",
+          "source": {
+            "url": "https://en.onepiece-cardgame.com/cardlist/?freewords=P-110",
+            "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site",
+            "provider": "bandai",
+            "retrieved_at": null
+          },
+          "image_url": "https://en.onepiece-cardgame.com/images/cardlist/card/P-110.png?260828",
+          "origin": "visual_comparison"
+        }
+      ],
+      "variant_candidates": [
+        {
+          "id": "https://en.onepiece-cardgame.com/images/cardlist/card/P-110.png?260828",
+          "name": "4th Anniversary Event",
+          "visual_required": true,
+          "image_url": "https://en.onepiece-cardgame.com/images/cardlist/card/P-110.png?260828",
+          "source": {
+            "url": "https://en.onepiece-cardgame.com/cardlist/?freewords=P-110",
+            "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site",
+            "provider": "bandai",
+            "retrieved_at": null
+          }
+        },
+        {
+          "id": "https://en.onepiece-cardgame.com/images/cardlist/card/P-110_p1.png?260828",
+          "name": "4th Anniversary Event",
+          "visual_required": true,
+          "image_url": "https://en.onepiece-cardgame.com/images/cardlist/card/P-110_p1.png?260828",
+          "source": {
+            "url": "https://en.onepiece-cardgame.com/cardlist/?freewords=P-110",
+            "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site",
+            "provider": "bandai",
+            "retrieved_at": null
+          }
+        }
+      ],
+      "needs_catalogue": true,
+      "variant_origin": "visual_comparison"
+    },
+    "assistance_state": "confirmed",
+    "missing_information": [],
+    "next_photo_request": null,
+    "verification_summary": "Carta e stampa identificate tramite letture e catalogo.",
+    "normalized_query": "One Piece Promo · #P-110 · Monkey.D.Luffy 4th Anniversary Event en",
+    "candidate_models": [],
+    "catalogue_data": [
+      {
+        "field": "subject",
+        "value": "Monkey.D.Luffy",
+        "origin": "catalogue_and_photo",
+        "source": {
+          "url": "https://en.onepiece-cardgame.com/cardlist/?freewords=P-110",
+          "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site",
+          "provider": "bandai",
+          "retrieved_at": null
+        }
+      },
+      {
+        "field": "family",
+        "value": "One Piece Promo",
+        "origin": "catalogue_and_photo",
+        "source": {
+          "url": "https://en.onepiece-cardgame.com/cardlist/?freewords=P-110",
+          "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site",
+          "provider": "bandai",
+          "retrieved_at": null
+        }
+      },
+      {
+        "field": "catalog_number",
+        "value": "P-110",
+        "origin": "catalogue_and_photo",
+        "source": {
+          "url": "https://en.onepiece-cardgame.com/cardlist/?freewords=P-110",
+          "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site",
+          "provider": "bandai",
+          "retrieved_at": null
+        }
+      },
+      {
+        "field": "brand",
+        "value": "Bandai",
+        "origin": "catalogue_and_photo",
+        "source": {
+          "url": "https://en.onepiece-cardgame.com/cardlist/?freewords=P-110",
+          "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site",
+          "provider": "bandai",
+          "retrieved_at": null
+        }
+      }
+    ],
+    "identification_sources": [
+      {
+        "url": "https://en.onepiece-cardgame.com/cardlist/?freewords=P-110",
+        "title": "CARD LIST｜ONE PIECE CARD GAME - Official Web Site"
+      }
+    ],
+    "evidence": [
+      "subject: Monkey.D.Luffy",
+      "family: One Piece Promo",
+      "catalog_number: P-110",
+      "brand: Bandai"
+    ],
+    "object_unit": "single",
+    "card_identity": {
+      "autograph": "unclear",
+      "patch": "unclear",
+      "manufacturer": "Bandai",
+      "subject": "Monkey.D.Luffy",
+      "set": "One Piece Promo",
+      "number": "P-110",
+      "date": null,
+      "language": "en",
+      "variant": "4th Anniversary Event",
+      "rarity": "P",
+      "rarity_symbol": "unclear",
+      "serial": null
+    },
+    "identity_display": "One Piece Promo · #P-110 · Monkey.D.Luffy · 4th Anniversary Event · EN"
+  }
+}

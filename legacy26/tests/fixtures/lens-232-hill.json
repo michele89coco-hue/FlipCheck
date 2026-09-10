@@ -1,0 +1,1656 @@
+{
+  "vision": {
+    "domain": "sports",
+    "kind": "card",
+    "category": "football trading card",
+    "language": "en",
+    "object_unit": "single",
+    "image_views": [
+      {
+        "image_index": 1,
+        "view": "front",
+        "certainty": "clear"
+      },
+      {
+        "image_index": 2,
+        "view": "back",
+        "certainty": "clear"
+      }
+    ],
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.04,
+        "y": 0.22,
+        "width": 0.92,
+        "height": 0.65,
+        "certain": true
+      },
+      {
+        "image_index": 2,
+        "x": 0.03,
+        "y": 0.37,
+        "width": 0.94,
+        "height": 0.34,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "Anthony Hill Jr.",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.29,
+          "y": 0.7,
+          "width": 0.31,
+          "height": 0.05
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "subject",
+        "text": "Anthony Hill Jr.",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.23,
+          "y": 0.39,
+          "width": 0.35,
+          "height": 0.03
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "brand",
+        "text": "Topps",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.13,
+          "y": 0.66,
+          "width": 0.08,
+          "height": 0.03
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "product",
+        "text": "Bowman Chrome",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.76,
+          "y": 0.77,
+          "width": 0.12,
+          "height": 0.04
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "subset",
+        "text": "Bowman Chrome Prospect Autograph Variation",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.23,
+          "y": 0.48,
+          "width": 0.55,
+          "height": 0.05
+        },
+        "zone": "back",
+        "alternatives": []
+      },
+      {
+        "field": "team",
+        "text": "Texas",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.34,
+          "y": 0.75,
+          "width": 0.12,
+          "height": 0.03
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "season",
+        "text": "2025",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.24,
+          "y": 0.54,
+          "width": 0.4,
+          "height": 0.03
+        },
+        "zone": "back",
+        "alternatives": []
+      },
+      {
+        "field": "copyright",
+        "text": "© & © 2025 THE TOPPS COMPANY, INC. ALL RIGHTS RESERVED. TOPPS AND BOWMAN CHROME ARE TRADEMARKS OF THE TOPPS COMPANY, INC. The collegiate indicia used herein are trademarks owned by the respective collegiate institutions. WWW.TOPPS.COM. CODE#CMP111814.",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.13,
+          "y": 0.68,
+          "width": 0.76,
+          "height": 0.03
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "Topps Certified Autograph Issue",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.3,
+          "y": 0.67,
+          "width": 0.37,
+          "height": 0.03
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "Texas / LB",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.34,
+          "y": 0.77,
+          "width": 0.14,
+          "height": 0.03
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "BCA-AHJ",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.8,
+          "y": 0.4,
+          "width": 0.1,
+          "height": 0.03
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "SuperFractor™",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.8,
+          "y": 0.43,
+          "width": 0.13,
+          "height": 0.02
+        },
+        "zone": "label",
+        "alternatives": []
+      }
+    ],
+    "features": [
+      {
+        "field": "border_color",
+        "value": "gold",
+        "description": "Gold-toned finished border",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.04,
+          "y": 0.22,
+          "width": 0.92,
+          "height": 0.65
+        },
+        "zone": "border"
+      },
+      {
+        "field": "pattern",
+        "value": "Fine dotted and concentric wave pattern",
+        "description": "Visible metallic patterned background and border",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.05,
+          "y": 0.23,
+          "width": 0.9,
+          "height": 0.63
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "finish",
+        "value": "reflective",
+        "description": "Highly reflective metallic finish",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.04,
+          "y": 0.22,
+          "width": 0.92,
+          "height": 0.65
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "autograph",
+        "value": "present",
+        "description": "Blue ink autograph on front",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.2,
+          "y": 0.57,
+          "width": 0.45,
+          "height": 0.13
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "rookie",
+        "value": "unclear",
+        "description": "No RC/Rookie badge clearly visible",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": null,
+        "zone": "label"
+      },
+      {
+        "field": "layout",
+        "value": "Portrait football action image with autograph panel, team logo and player identification bar",
+        "description": "Front design layout",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.04,
+          "y": 0.22,
+          "width": 0.92,
+          "height": 0.65
+        },
+        "zone": "other"
+      }
+    ],
+    "hypotheses": [
+      {
+        "field": "family",
+        "value": "Bowman Chrome University Football"
+      },
+      {
+        "field": "brand",
+        "value": "Topps"
+      },
+      {
+        "field": "model",
+        "value": "SuperFractor autograph variation"
+      }
+    ],
+    "slab_reading": null,
+    "engine_version": 193,
+    "brand": "Topps",
+    "family": "Bowman Chrome University Football",
+    "title": "Anthony Hill Jr.",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": {
+      "image_index": 1,
+      "x": 0.04,
+      "y": 0.22,
+      "width": 0.92,
+      "height": 0.65,
+      "certain": true
+    },
+    "photo_clues": [
+      {
+        "text": "Anthony Hill Jr.",
+        "role": "subject",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.29,
+          "y": 0.7,
+          "width": 0.31,
+          "height": 0.05,
+          "certain": true
+        }
+      },
+      {
+        "text": "Anthony Hill Jr.",
+        "role": "subject",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.23,
+          "y": 0.39,
+          "width": 0.35,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "Topps",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.13,
+          "y": 0.66,
+          "width": 0.08,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "Bowman Chrome",
+        "role": "model",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.76,
+          "y": 0.77,
+          "width": 0.12,
+          "height": 0.04,
+          "certain": true
+        }
+      },
+      {
+        "text": "Bowman Chrome Prospect Autograph Variation",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.23,
+          "y": 0.48,
+          "width": 0.55,
+          "height": 0.05,
+          "certain": true
+        }
+      },
+      {
+        "text": "Texas",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.34,
+          "y": 0.75,
+          "width": 0.12,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "2025",
+        "role": "season",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.24,
+          "y": 0.54,
+          "width": 0.4,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "© & © 2025 THE TOPPS COMPANY, INC. ALL RIGHTS RESERVED. TOPPS AND BOWMAN CHROME ARE TRADEMARKS OF THE TOPPS COMPANY, INC. The collegiate indicia used herein are trademarks owned by the respective collegiate institutions. WWW.TOPPS.COM. CODE#CMP111814.",
+        "role": "copyright",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.13,
+          "y": 0.68,
+          "width": 0.76,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "Topps Certified Autograph Issue",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.3,
+          "y": 0.67,
+          "width": 0.37,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "Texas / LB",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.34,
+          "y": 0.77,
+          "width": 0.14,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "BCA-AHJ",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.8,
+          "y": 0.4,
+          "width": 0.1,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "SuperFractor™",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.8,
+          "y": 0.43,
+          "width": 0.13,
+          "height": 0.02,
+          "certain": true
+        }
+      }
+    ],
+    "physical_observations": [
+      {
+        "feature": "color",
+        "text": "gold border",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "pattern",
+        "text": "Visible metallic patterned background and border",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Highly reflective metallic finish",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Blue ink autograph on front",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "No RC/Rookie badge clearly visible",
+        "certainty": "uncertain",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Front design layout",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      }
+    ]
+  },
+  "phases": [
+    {
+      "stage": "vision",
+      "result": {
+        "domain": "sports",
+        "kind": "card",
+        "category": "football trading card",
+        "language": "en",
+        "object_unit": "single",
+        "image_views": [
+          {
+            "image_index": 1,
+            "view": "front",
+            "certainty": "clear"
+          },
+          {
+            "image_index": 2,
+            "view": "back",
+            "certainty": "clear"
+          }
+        ],
+        "object_regions": [
+          {
+            "image_index": 1,
+            "x": 0.04,
+            "y": 0.22,
+            "width": 0.92,
+            "height": 0.65,
+            "certain": true
+          },
+          {
+            "image_index": 2,
+            "x": 0.03,
+            "y": 0.37,
+            "width": 0.94,
+            "height": 0.34,
+            "certain": true
+          }
+        ],
+        "observations": [
+          {
+            "field": "subject",
+            "text": "Anthony Hill Jr.",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.29,
+              "y": 0.7,
+              "width": 0.31,
+              "height": 0.05
+            },
+            "zone": "label",
+            "alternatives": []
+          },
+          {
+            "field": "subject",
+            "text": "Anthony Hill Jr.",
+            "certainty": "clear",
+            "image_index": 2,
+            "region": {
+              "image_index": 2,
+              "x": 0.23,
+              "y": 0.39,
+              "width": 0.35,
+              "height": 0.03
+            },
+            "zone": "label",
+            "alternatives": []
+          },
+          {
+            "field": "brand",
+            "text": "Topps",
+            "certainty": "clear",
+            "image_index": 2,
+            "region": {
+              "image_index": 2,
+              "x": 0.13,
+              "y": 0.66,
+              "width": 0.08,
+              "height": 0.03
+            },
+            "zone": "footer",
+            "alternatives": []
+          },
+          {
+            "field": "product",
+            "text": "Bowman Chrome",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.76,
+              "y": 0.77,
+              "width": 0.12,
+              "height": 0.04
+            },
+            "zone": "label",
+            "alternatives": []
+          },
+          {
+            "field": "subset",
+            "text": "Bowman Chrome Prospect Autograph Variation",
+            "certainty": "clear",
+            "image_index": 2,
+            "region": {
+              "image_index": 2,
+              "x": 0.23,
+              "y": 0.48,
+              "width": 0.55,
+              "height": 0.05
+            },
+            "zone": "back",
+            "alternatives": []
+          },
+          {
+            "field": "team",
+            "text": "Texas",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.34,
+              "y": 0.75,
+              "width": 0.12,
+              "height": 0.03
+            },
+            "zone": "label",
+            "alternatives": []
+          },
+          {
+            "field": "season",
+            "text": "2025",
+            "certainty": "clear",
+            "image_index": 2,
+            "region": {
+              "image_index": 2,
+              "x": 0.24,
+              "y": 0.54,
+              "width": 0.4,
+              "height": 0.03
+            },
+            "zone": "back",
+            "alternatives": []
+          },
+          {
+            "field": "copyright",
+            "text": "© & © 2025 THE TOPPS COMPANY, INC. ALL RIGHTS RESERVED. TOPPS AND BOWMAN CHROME ARE TRADEMARKS OF THE TOPPS COMPANY, INC. The collegiate indicia used herein are trademarks owned by the respective collegiate institutions. WWW.TOPPS.COM. CODE#CMP111814.",
+            "certainty": "clear",
+            "image_index": 2,
+            "region": {
+              "image_index": 2,
+              "x": 0.13,
+              "y": 0.68,
+              "width": 0.76,
+              "height": 0.03
+            },
+            "zone": "footer",
+            "alternatives": []
+          },
+          {
+            "field": "text",
+            "text": "Topps Certified Autograph Issue",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.3,
+              "y": 0.67,
+              "width": 0.37,
+              "height": 0.03
+            },
+            "zone": "front",
+            "alternatives": []
+          },
+          {
+            "field": "text",
+            "text": "Texas / LB",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.34,
+              "y": 0.77,
+              "width": 0.14,
+              "height": 0.03
+            },
+            "zone": "label",
+            "alternatives": []
+          },
+          {
+            "field": "text",
+            "text": "BCA-AHJ",
+            "certainty": "clear",
+            "image_index": 2,
+            "region": {
+              "image_index": 2,
+              "x": 0.8,
+              "y": 0.4,
+              "width": 0.1,
+              "height": 0.03
+            },
+            "zone": "label",
+            "alternatives": []
+          },
+          {
+            "field": "text",
+            "text": "SuperFractor™",
+            "certainty": "clear",
+            "image_index": 2,
+            "region": {
+              "image_index": 2,
+              "x": 0.8,
+              "y": 0.43,
+              "width": 0.13,
+              "height": 0.02
+            },
+            "zone": "label",
+            "alternatives": []
+          }
+        ],
+        "features": [
+          {
+            "field": "border_color",
+            "value": "gold",
+            "description": "Gold-toned finished border",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.04,
+              "y": 0.22,
+              "width": 0.92,
+              "height": 0.65
+            },
+            "zone": "border"
+          },
+          {
+            "field": "pattern",
+            "value": "Fine dotted and concentric wave pattern",
+            "description": "Visible metallic patterned background and border",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.05,
+              "y": 0.23,
+              "width": 0.9,
+              "height": 0.63
+            },
+            "zone": "surface"
+          },
+          {
+            "field": "finish",
+            "value": "reflective",
+            "description": "Highly reflective metallic finish",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.04,
+              "y": 0.22,
+              "width": 0.92,
+              "height": 0.65
+            },
+            "zone": "surface"
+          },
+          {
+            "field": "autograph",
+            "value": "present",
+            "description": "Blue ink autograph on front",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.2,
+              "y": 0.57,
+              "width": 0.45,
+              "height": 0.13
+            },
+            "zone": "surface"
+          },
+          {
+            "field": "rookie",
+            "value": "unclear",
+            "description": "No RC/Rookie badge clearly visible",
+            "certainty": "uncertain",
+            "image_index": 1,
+            "region": null,
+            "zone": "label"
+          },
+          {
+            "field": "layout",
+            "value": "Portrait football action image with autograph panel, team logo and player identification bar",
+            "description": "Front design layout",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.04,
+              "y": 0.22,
+              "width": 0.92,
+              "height": 0.65
+            },
+            "zone": "other"
+          }
+        ],
+        "hypotheses": [
+          {
+            "field": "family",
+            "value": "Bowman Chrome University Football"
+          },
+          {
+            "field": "brand",
+            "value": "Topps"
+          },
+          {
+            "field": "model",
+            "value": "SuperFractor autograph variation"
+          }
+        ],
+        "slab_reading": null,
+        "engine_version": 193,
+        "brand": "Topps",
+        "family": "Bowman Chrome University Football",
+        "title": "Anthony Hill Jr.",
+        "model": "",
+        "variant": "",
+        "model_confidence": 0,
+        "family_confidence": 0,
+        "market_ready": false,
+        "normalized_query": "",
+        "candidate_models": [],
+        "identifier_hints": [],
+        "evidence": [],
+        "missing_information": [],
+        "next_photo_request": null,
+        "object_region": {
+          "image_index": 1,
+          "x": 0.04,
+          "y": 0.22,
+          "width": 0.92,
+          "height": 0.65,
+          "certain": true
+        },
+        "photo_clues": [
+          {
+            "text": "Anthony Hill Jr.",
+            "role": "subject",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.29,
+              "y": 0.7,
+              "width": 0.31,
+              "height": 0.05,
+              "certain": true
+            }
+          },
+          {
+            "text": "Anthony Hill Jr.",
+            "role": "subject",
+            "certainty": "clear",
+            "image_index": 2,
+            "region": {
+              "image_index": 2,
+              "x": 0.23,
+              "y": 0.39,
+              "width": 0.35,
+              "height": 0.03,
+              "certain": true
+            }
+          },
+          {
+            "text": "Topps",
+            "role": "text",
+            "certainty": "clear",
+            "image_index": 2,
+            "region": {
+              "image_index": 2,
+              "x": 0.13,
+              "y": 0.66,
+              "width": 0.08,
+              "height": 0.03,
+              "certain": true
+            }
+          },
+          {
+            "text": "Bowman Chrome",
+            "role": "model",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.76,
+              "y": 0.77,
+              "width": 0.12,
+              "height": 0.04,
+              "certain": true
+            }
+          },
+          {
+            "text": "Bowman Chrome Prospect Autograph Variation",
+            "role": "text",
+            "certainty": "clear",
+            "image_index": 2,
+            "region": {
+              "image_index": 2,
+              "x": 0.23,
+              "y": 0.48,
+              "width": 0.55,
+              "height": 0.05,
+              "certain": true
+            }
+          },
+          {
+            "text": "Texas",
+            "role": "text",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.34,
+              "y": 0.75,
+              "width": 0.12,
+              "height": 0.03,
+              "certain": true
+            }
+          },
+          {
+            "text": "2025",
+            "role": "season",
+            "certainty": "clear",
+            "image_index": 2,
+            "region": {
+              "image_index": 2,
+              "x": 0.24,
+              "y": 0.54,
+              "width": 0.4,
+              "height": 0.03,
+              "certain": true
+            }
+          },
+          {
+            "text": "© & © 2025 THE TOPPS COMPANY, INC. ALL RIGHTS RESERVED. TOPPS AND BOWMAN CHROME ARE TRADEMARKS OF THE TOPPS COMPANY, INC. The collegiate indicia used herein are trademarks owned by the respective collegiate institutions. WWW.TOPPS.COM. CODE#CMP111814.",
+            "role": "copyright",
+            "certainty": "clear",
+            "image_index": 2,
+            "region": {
+              "image_index": 2,
+              "x": 0.13,
+              "y": 0.68,
+              "width": 0.76,
+              "height": 0.03,
+              "certain": true
+            }
+          },
+          {
+            "text": "Topps Certified Autograph Issue",
+            "role": "text",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.3,
+              "y": 0.67,
+              "width": 0.37,
+              "height": 0.03,
+              "certain": true
+            }
+          },
+          {
+            "text": "Texas / LB",
+            "role": "text",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.34,
+              "y": 0.77,
+              "width": 0.14,
+              "height": 0.03,
+              "certain": true
+            }
+          },
+          {
+            "text": "BCA-AHJ",
+            "role": "text",
+            "certainty": "clear",
+            "image_index": 2,
+            "region": {
+              "image_index": 2,
+              "x": 0.8,
+              "y": 0.4,
+              "width": 0.1,
+              "height": 0.03,
+              "certain": true
+            }
+          },
+          {
+            "text": "SuperFractor™",
+            "role": "text",
+            "certainty": "clear",
+            "image_index": 2,
+            "region": {
+              "image_index": 2,
+              "x": 0.8,
+              "y": 0.43,
+              "width": 0.13,
+              "height": 0.02,
+              "certain": true
+            }
+          }
+        ],
+        "physical_observations": [
+          {
+            "feature": "color",
+            "text": "gold border",
+            "certainty": "clear",
+            "entity": "target",
+            "image_index": 1
+          },
+          {
+            "feature": "pattern",
+            "text": "Visible metallic patterned background and border",
+            "certainty": "clear",
+            "entity": "target",
+            "image_index": 1
+          },
+          {
+            "feature": "finish",
+            "text": "Highly reflective metallic finish",
+            "certainty": "clear",
+            "entity": "target",
+            "image_index": 1
+          },
+          {
+            "feature": "finish",
+            "text": "Blue ink autograph on front",
+            "certainty": "clear",
+            "entity": "target",
+            "image_index": 1
+          },
+          {
+            "feature": "finish",
+            "text": "No RC/Rookie badge clearly visible",
+            "certainty": "uncertain",
+            "entity": "target",
+            "image_index": 1
+          },
+          {
+            "feature": "finish",
+            "text": "Front design layout",
+            "certainty": "clear",
+            "entity": "target",
+            "image_index": 1
+          }
+        ]
+      },
+      "webCalls": 0,
+      "usage": {
+        "input_tokens": 7350,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 7347
+        },
+        "output_tokens": 1407,
+        "output_tokens_details": {
+          "reasoning_tokens": 103
+        },
+        "total_tokens": 8757
+      }
+    },
+    {
+      "stage": "flipcheck_evidence_detail",
+      "result": {
+        "details": [
+          {
+            "field": "collector_number",
+            "text": "BCA-AHJ",
+            "certainty": "clear",
+            "evidence_found": true,
+            "image_index": 2
+          }
+        ]
+      },
+      "webCalls": 0,
+      "usage": {
+        "input_tokens": 3177,
+        "input_tokens_details": {
+          "cache_write_tokens": 3174,
+          "cached_tokens": 0
+        },
+        "output_tokens": 158,
+        "output_tokens_details": {
+          "reasoning_tokens": 113
+        },
+        "total_tokens": 3335
+      }
+    },
+    {
+      "stage": "flipcheck_catalogue_search",
+      "result": {
+        "entries": [
+          {
+            "identifier_type": "collector",
+            "illustrator": "",
+            "subject": "Anthony Hill Jr.",
+            "family": "Bowman University Chrome",
+            "number": "BCA-AHJ",
+            "year": "2025",
+            "brand": "Topps",
+            "language": "en",
+            "subset": "Bowman Chrome Prospect Autographs I",
+            "rarity": "Autograph",
+            "hp": null,
+            "attacks": [],
+            "source_url": "https://cardsinventory.com/checklists/2025-bowman-university-chrome-football?tab=Autographs",
+            "entry_quote": "BCA-AHJ  | Anthony Hill  | Jr. Texas  |",
+            "proof": {
+              "subject": "Anthony Hill Jr.",
+              "family": "Bowman University Chrome",
+              "number": "BCA-AHJ",
+              "year": "2025"
+            },
+            "variants": []
+          },
+          {
+            "identifier_type": "collector",
+            "illustrator": "",
+            "subject": "Anthony Hill Jr.",
+            "family": "Bowman University Chrome",
+            "number": "BCA-AHJ",
+            "year": "2025",
+            "brand": "Topps",
+            "language": "en",
+            "subset": "Prospect Autographs Refractor",
+            "rarity": "Autograph",
+            "hp": null,
+            "attacks": [],
+            "source_url": "https://www.tcdb.com/Checklist.cfm/sid/566817/2025-Bowman-University-Chrome-Prospect-Autographs-Refractor",
+            "entry_quote": "BCA-AHJ  |  |  |  | Anthony Hill Jr.",
+            "proof": {
+              "subject": "Anthony Hill Jr.",
+              "family": "Bowman University Chrome",
+              "number": "BCA-AHJ",
+              "year": "2025"
+            },
+            "variants": [
+              {
+                "name": "Refractor",
+                "print_run": 299,
+                "colors": [],
+                "patterns": [],
+                "finish": "Refractor",
+                "quote": "Anthony Hill Jr. AU, SN299",
+                "image_url": "",
+                "visual_required": false
+              }
+            ]
+          },
+          {
+            "identifier_type": "collector",
+            "illustrator": "",
+            "subject": "Anthony Hill Jr.",
+            "family": "Bowman University Chrome",
+            "number": "BCA-AHJ",
+            "year": "2025",
+            "brand": "Topps",
+            "language": "en",
+            "subset": "Prospect Autographs Gold Refractor",
+            "rarity": "Autograph",
+            "hp": null,
+            "attacks": [],
+            "source_url": "https://www.tcdb.com/Checklist.cfm/sid/566823/2025-Bowman-University-Chrome-Prospect-Autographs-Gold-Shimmer-Refractor",
+            "entry_quote": "BCA-AHJ  |  |  |  | Anthony Hill Jr.",
+            "proof": {
+              "subject": "Anthony Hill Jr.",
+              "family": "Bowman University Chrome",
+              "number": "BCA-AHJ",
+              "year": "2025"
+            },
+            "variants": [
+              {
+                "name": "Gold Shimmer Refractor",
+                "print_run": 50,
+                "colors": [
+                  "gold"
+                ],
+                "patterns": [
+                  "shimmer"
+                ],
+                "finish": "Refractor",
+                "quote": "Anthony Hill Jr. AU, SN50",
+                "image_url": "",
+                "visual_required": false
+              }
+            ]
+          },
+          {
+            "identifier_type": "collector",
+            "illustrator": "",
+            "subject": "Anthony Hill Jr.",
+            "family": "Bowman University Chrome",
+            "number": "BCA-AHJ",
+            "year": "2025",
+            "brand": "Topps",
+            "language": "en",
+            "subset": "Prospect Autographs Gold Refractor",
+            "rarity": "Autograph",
+            "hp": null,
+            "attacks": [],
+            "source_url": "https://www.sportscardspro.com/console/football-cards-2025-bowman-chrome-university-prospect-autograph",
+            "entry_quote": "Anthony Hill Jr. [Gold Refractor] #BCA-AHJ /50",
+            "proof": {
+              "subject": "Anthony Hill Jr.",
+              "family": "Bowman University Chrome",
+              "number": "BCA-AHJ",
+              "year": "2025"
+            },
+            "variants": [
+              {
+                "name": "Gold Refractor",
+                "print_run": 50,
+                "colors": [
+                  "gold"
+                ],
+                "patterns": [],
+                "finish": "Refractor",
+                "quote": "Anthony Hill Jr. [Gold Refractor] #BCA-AHJ /50",
+                "image_url": "",
+                "visual_required": false
+              }
+            ]
+          }
+        ]
+      },
+      "webCalls": 1,
+      "usage": {
+        "input_tokens": 13766,
+        "input_tokens_details": {
+          "cache_write_tokens": 827,
+          "cached_tokens": 4651
+        },
+        "output_tokens": 1181,
+        "output_tokens_details": {
+          "reasoning_tokens": 405
+        },
+        "total_tokens": 14947
+      }
+    },
+    {
+      "stage": "flipcheck_catalogue_search",
+      "result": {
+        "entries": [
+          {
+            "identifier_type": "collector",
+            "illustrator": "",
+            "subject": "Anthony Hill Jr.",
+            "family": "Bowman University Chrome",
+            "number": "BCA-AHJ",
+            "year": "2025",
+            "brand": "",
+            "language": "",
+            "subset": "Bowman Chrome Prospect Autographs I",
+            "rarity": "",
+            "hp": null,
+            "attacks": [],
+            "source_url": "https://www.diamondcardsonline.com/blog/2025-bowman-university-chrome-football-cards-checklist/",
+            "entry_quote": "BCA-AHJ Anthony Hill Jr. Texas",
+            "proof": {
+              "subject": "BCA-AHJ Anthony Hill Jr. Texas",
+              "family": "2025 Bowman University Chrome Football Autograph Checklist",
+              "number": "BCA-AHJ Anthony Hill Jr. Texas",
+              "year": "2025 Bowman University Chrome Football Autograph Checklist"
+            },
+            "variants": []
+          }
+        ]
+      },
+      "webCalls": 0,
+      "usage": {
+        "input_tokens": 3019,
+        "input_tokens_details": {
+          "cache_write_tokens": 3016,
+          "cached_tokens": 0
+        },
+        "output_tokens": 490,
+        "output_tokens_details": {
+          "reasoning_tokens": 316
+        },
+        "total_tokens": 3509
+      }
+    }
+  ],
+  "entries": [
+    {
+      "identifier_type": "collector",
+      "illustrator": "",
+      "subject": "Anthony Hill Jr.",
+      "family": "Bowman University Chrome",
+      "number": "BCA-AHJ",
+      "year": "2025",
+      "brand": "Topps",
+      "language": "en",
+      "subset": "Prospect Autographs",
+      "rarity": "Autograph",
+      "hp": null,
+      "attacks": [],
+      "source_url": "https://www.tcdb.com/Checklist.cfm/sid/566817/2025-Bowman-University-Chrome-Prospect-Autographs-Refractor",
+      "entry_quote": "BCA-AHJ  |  |  |  | Anthony Hill Jr.",
+      "proof": {
+        "subject": "Anthony Hill Jr.",
+        "family": "Bowman University Chrome",
+        "number": "BCA-AHJ",
+        "year": "2025"
+      },
+      "variants": [],
+      "reported_subset": "Prospect Autographs Refractor",
+      "aliases": [],
+      "configuration_quote": "",
+      "source": {
+        "url": "https://www.tcdb.com/Checklist.cfm/sid/566817/2025-Bowman-University-Chrome-Prospect-Autographs-Refractor",
+        "title": "2025 Bowman University Chrome - Prospect Autographs Refractor Football Checklist | Trading Card Database",
+        "provider": "www.tcdb.com",
+        "retrieved_at": null
+      },
+      "grounded": true,
+      "eligible": false,
+      "score": 88,
+      "matches": [
+        "subject",
+        "number",
+        "season"
+      ],
+      "reasons": [
+        "different_printed_product"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "type": "text_result",
+      "snippet": "citeturn0search0 [wordlim: 200] Published: 10 months ago; Crawled: today; BOWMAN CHROME PROSPECT AUTOGRAPHS I BOWMAN CHROME PROSPECTS AUTOGRAPHS II BOWMAN CHROME PROSPECTS SHORT PRINT IMAGE AUTOGRAPH VARIATIONS BOWMAN CHROME MASCOTS AUTOGRAPH VARIATIONS CAMPUS STAR SIGNATURES CAMPUS VISIT AUTOGRAPHS ACROPOLIS AUTOGRAPH VARIATION THE BIG KAHUNA AUTOGRAPH ... BCA-AHJ  | Anthony Hill  | Jr. ... 1955  | BOWMAN AUTOGRAPH  | VARIATION  |\n\nActive fixed-price listings — click any to view on eBay. As an eBay Partner, we may earn from qualifying purchases.\n\nBase(200)Inserts(196)Autographs(361)\n\nBOWMAN CHROME PROSPECT AUTOGRAPHS IBOWMAN CHROME PROSPECTS AUTOGRAPHS IIBOWMAN CHROME PROSPECTS SHORT PRINT IMAGE AUTOGRAPH VARIATIONSBOWMAN CHROME MASCOTS AUTOGRAPH VARIATIONSCAMPUS STAR SIGNATURESCAMPUS VISIT AUTOGRAPHSACROPOLIS AUTOGRAPH VARIATIONTHE BIG KAHUNA AUTOGRAPH\n\n## Autographs\n\n### BOWMAN CHROME PROSPECT AUTOGRAPHS I\n\n97 cards\n\n#  | Name  | Team  | Notes\n--- | --- | --- | ---\nBCA-AB  | Alonza Barnett  | III James Madison  | \nBCA-AG  | Aaron Graves  | Iowa  | \nBCA-AH  | Anthony Hankerson  | Oregon State  | \nBCA-AHJ  | Anthony Hill  | Jr. Texas  | \nBCA-AJ  | Avery Johnson  | Kansas State  | \nBCA-AM  | Aidan Mizell  | Florida  | \nBCA-AN  | Adrian Norton  | Akron  | \nBCA-AR  | Anthony Rogers  | Ohio State  | \nBCA-AT  | A.J. Turner  | Minnesota  | \nBCA-JOE  | Joey Aguilar  | Tennessee  | \nBCA-JPR  | Jadarian Price  | Notre Dame  | \nBCA-JRO  | Joe Royer  | Cincinnati  | \nBCA-JTR  | Javon Tracy  | Minnesota  | \nBCA-JUL  | Justius Lowe  | Oregon  | \nBCA-JVM  | Jayden Virgin-Morgan  | Boise State  | \nBCA-JWI  | Jamarion Wilcox  | Kentucky  | \nBCA-KB  | Kyson Brown  | Arizona State  | \nBCA-KH  | Katin Houser  | ECU  | \nBCA-KJ  | Kevin Jennings  | SMU  | \nBCA-KJE  | Keyone Jenkins  | FIU  | \nBCA-KP  | Koi Perich  | Minnesota  | \nBCA-KSA  | Kaidon Salter  | Colorado  | \nBCA-KUD  | Kanye Udoh  | Arizona State  | \nBCA-LBJ  | Lee Beebe  | Jr. Indiana  | \nBCA-LM  | LJ Martin  | BYU  | \nBCA-LNS  | LaNorris Sellers  | South Carolina  | \nBCA-MAM  | Maalik Murphy  | Oregon State  | \nBCA-MC  | Mario Craver  | Texas A&M  | \nBCA-MG  | Mark Gronowski  | Iowa  | \nBCA-MJ  | Matt Jones  | Southern Miss  | \nBCA-MKE  | Mikey Keene  | Michigan  | \nBCA-MLA  | Matt Lauter  | Boise State  | \nBCA-MMO  | Miller Moss  | Louisville  | \nBCA-MMU  | Malik Muhammad  | Texas  | \nBCA-MRE  | Marcel Reed  | Texas A&M  | \nBCA-OM  | Owen McCown  | UTSA  | \nBCA-PB  | Peyton Bowen  | The University of Oklahoma  | \nBCA-PS  | Preston Stone  | Northwestern  | \nBCA-QMJ  | Quinton Martin  | Jr. Penn State  | \nBCA-QW  | Quintrevion Wisner  | Texas  | \nBCA-RB  | Rocco Becht  | Iowa State  | \nBCA-RJM  | RJ Maryland  | SMU  | \nBCA-RV  | Reggie Virgil  | Texas Tech  | \nBCA-SL  | Sam Leavitt  | Arizona State  | \nBCA-TJP  | T.J. Parker  | Clemson  | \nBCA-TR  | Traylon Ray  | Ole Miss  | \nBCA-TS  | Ty Simpson  | Alabama  | \nBCA-TST  | Troy Stellato  | Kentucky  | \nBCA-TT  | Taylor Tatum  | The University of Oklahoma  | \nBCA-TTA  | Talyn Taylor  | Georgia  | \nBCA-VA  | Vinny Anthony  | II Wisconsin  | \nBCA-WW  | Whit Weeks  | LSU  | \n\n\n### BOWMAN CHROME PROSPECTS SHORT PRINT IMAGE AUTOGRAPH VARIATIONS\n\n24 cards\n\n",
+      "title": "2025 Bowman University Chrome Checklist - Every Card, Parallel & Rookie | Cards Inventory",
+      "url": "https://cardsinventory.com/checklists/2025-bowman-university-chrome-football?tab=Autographs",
+      "text": "citeturn0search0 [wordlim: 200] Published: 10 months ago; Crawled: today; BOWMAN CHROME PROSPECT AUTOGRAPHS I BOWMAN CHROME PROSPECTS AUTOGRAPHS II BOWMAN CHROME PROSPECTS SHORT PRINT IMAGE AUTOGRAPH VARIATIONS BOWMAN CHROME MASCOTS AUTOGRAPH VARIATIONS CAMPUS STAR SIGNATURES CAMPUS VISIT AUTOGRAPHS ACROPOLIS AUTOGRAPH VARIATION THE BIG KAHUNA AUTOGRAPH ... BCA-AHJ  | Anthony Hill  | Jr. ... 1955  | BOWMAN AUTOGRAPH  | VARIATION  |\n\nActive fixed-price listings — click any to view on eBay. As an eBay Partner, we may earn from qualifying purchases.\n\nBase(200)Inserts(196)Autographs(361)\n\nBOWMAN CHROME PROSPECT AUTOGRAPHS IBOWMAN CHROME PROSPECTS AUTOGRAPHS IIBOWMAN CHROME PROSPECTS SHORT PRINT IMAGE AUTOGRAPH VARIATIONSBOWMAN CHROME MASCOTS AUTOGRAPH VARIATIONSCAMPUS STAR SIGNATURESCAMPUS VISIT AUTOGRAPHSACROPOLIS AUTOGRAPH VARIATIONTHE BIG KAHUNA AUTOGRAPH\n\n## Autographs\n\n### BOWMAN CHROME PROSPECT AUTOGRAPHS I\n\n97 cards\n\n#  | Name  | Team  | Notes\n--- | --- | --- | ---\nBCA-AB  | Alonza Barnett  | III James Madison  | \nBCA-AG  | Aaron Graves  | Iowa  | \nBCA-AH  | Anthony Hankerson  | Oregon State  | \nBCA-AHJ  | Anthony Hill  | Jr. Texas  | \nBCA-AJ  | Avery Johnson  | Kansas State  | \nBCA-AM  | Aidan Mizell  | Florida  | \nBCA-AN  | Adrian Norton  | Akron  | \nBCA-AR  | Anthony Rogers  | Ohio State  | \nBCA-AT  | A.J. Turner  | Minnesota  | \nBCA-JOE  | Joey Aguilar  | Tennessee  | \nBCA-JPR  | Jadarian Price  | Notre Dame  | \nBCA-JRO  | Joe Royer  | Cincinnati  | \nBCA-JTR  | Javon Tracy  | Minnesota  | \nBCA-JUL  | Justius Lowe  | Oregon  | \nBCA-JVM  | Jayden Virgin-Morgan  | Boise State  | \nBCA-JWI  | Jamarion Wilcox  | Kentucky  | \nBCA-KB  | Kyson Brown  | Arizona State  | \nBCA-KH  | Katin Houser  | ECU  | \nBCA-KJ  | Kevin Jennings  | SMU  | \nBCA-KJE  | Keyone Jenkins  | FIU  | \nBCA-KP  | Koi Perich  | Minnesota  | \nBCA-KSA  | Kaidon Salter  | Colorado  | \nBCA-KUD  | Kanye Udoh  | Arizona State  | \nBCA-LBJ  | Lee Beebe  | Jr. Indiana  | \nBCA-LM  | LJ Martin  | BYU  | \nBCA-LNS  | LaNorris Sellers  | South Carolina  | \nBCA-MAM  | Maalik Murphy  | Oregon State  | \nBCA-MC  | Mario Craver  | Texas A&M  | \nBCA-MG  | Mark Gronowski  | Iowa  | \nBCA-MJ  | Matt Jones  | Southern Miss  | \nBCA-MKE  | Mikey Keene  | Michigan  | \nBCA-MLA  | Matt Lauter  | Boise State  | \nBCA-MMO  | Miller Moss  | Louisville  | \nBCA-MMU  | Malik Muhammad  | Texas  | \nBCA-MRE  | Marcel Reed  | Texas A&M  | \nBCA-OM  | Owen McCown  | UTSA  | \nBCA-PB  | Peyton Bowen  | The University of Oklahoma  | \nBCA-PS  | Preston Stone  | Northwestern  | \nBCA-QMJ  | Quinton Martin  | Jr. Penn State  | \nBCA-QW  | Quintrevion Wisner  | Texas  | \nBCA-RB  | Rocco Becht  | Iowa State  | \nBCA-RJM  | RJ Maryland  | SMU  | \nBCA-RV  | Reggie Virgil  | Texas Tech  | \nBCA-SL  | Sam Leavitt  | Arizona State  | \nBCA-TJP  | T.J. Parker  | Clemson  | \nBCA-TR  | Traylon Ray  | Ole Miss  | \nBCA-TS  | Ty Simpson  | Alabama  | \nBCA-TST  | Troy Stellato  | Kentucky  | \nBCA-TT  | Taylor Tatum  | The University of Oklahoma  | \nBCA-TTA  | Talyn Taylor  | Georgia  | \nBCA-VA  | Vinny Anthony  | II Wisconsin  | \nBCA-WW  | Whit Weeks  | LSU  | \n\n\n### BOWMAN CHROME PROSPECTS SHORT PRINT IMAGE AUTOGRAPH VARIATIONS\n\n24 cards\n\n"
+    },
+    {
+      "type": "text_result",
+      "snippet": "citeturn0search1 [wordlim: 200] Published: 6 months ago; Crawled: 3 days ago; ## 2025 Bowman University Chrome Football Autograph Checklist ... BOWMAN CHROME PROSPECT AUTOGRAPHS I SET CHECKLIST ... BCA-AHJ Anthony Hill Jr.\n## 2025 Bowman University Chrome Football Autograph Checklist\n\n### \nBOWMAN CHROME PROSPECT AUTOGRAPHS I SET CHECKLIST\n\nBCA-AB Alonza Barnett III James Madison\nBCA-AG Aaron Graves Iowa\nBCA-AH Anthony Hankerson Oregon State\nBCA-AHJ Anthony Hill Jr. Texas\nBCA-AJ Avery Johnson Kansas State\nBCA-AM Aidan Mizell Florida\nBCA-AN Adrian Norton Akron\nBCA-AR Anthony Rogers Ohio State\nBCA-AT A.J. Turner Minnesota\nBCA-BE Billy Edwards Jr. Wisconsin\nBCA-BL Brendon Lewis Memphis\nBCA-BLO Braedyn Locke Arizona\nBCA-BP Beau Pribula Missouri\nBCA-BT Boubacar Traore Notre Dame\nBCA-BW Bryant Wesco Jr. Clemson\nBCA-BWA Bryson Washington Baylor\nBCA-CA Cyrus Allen Cincinnati\nBCA-CB Chris Brazzell II Tennessee\nBCA-CD Caleb Douglas Texas Tech\nBCA-CE Coy Eakin Texas Tech\nBCA-CH Carson Hansen Iowa State\nBCA-CL Cayden Lee Ole Miss\nBCA-CR Chase Roberts BYU\nBCA-CV Caden Veltkamp Florida Atlantic\nBCA-DAL Deuce Alexander Ole Miss\nBCA-DB Denzel Boston Washington\nBCA-DBI DeSean Bishop Tennessee\nBCA-DD Decker DeGraaf Washington\nBCA-DDA Devon Dampier Utah\n",
+      "title": "2025 Bowman University Chrome Football Cards Checklist - Diamond Cards Online Store",
+      "url": "https://www.diamondcardsonline.com/blog/2025-bowman-university-chrome-football-cards-checklist/",
+      "text": "citeturn0search1 [wordlim: 200] Published: 6 months ago; Crawled: 3 days ago; ## 2025 Bowman University Chrome Football Autograph Checklist ... BOWMAN CHROME PROSPECT AUTOGRAPHS I SET CHECKLIST ... BCA-AHJ Anthony Hill Jr.\n## 2025 Bowman University Chrome Football Autograph Checklist\n\n### \nBOWMAN CHROME PROSPECT AUTOGRAPHS I SET CHECKLIST\n\nBCA-AB Alonza Barnett III James Madison\nBCA-AG Aaron Graves Iowa\nBCA-AH Anthony Hankerson Oregon State\nBCA-AHJ Anthony Hill Jr. Texas\nBCA-AJ Avery Johnson Kansas State\nBCA-AM Aidan Mizell Florida\nBCA-AN Adrian Norton Akron\nBCA-AR Anthony Rogers Ohio State\nBCA-AT A.J. Turner Minnesota\nBCA-BE Billy Edwards Jr. Wisconsin\nBCA-BL Brendon Lewis Memphis\nBCA-BLO Braedyn Locke Arizona\nBCA-BP Beau Pribula Missouri\nBCA-BT Boubacar Traore Notre Dame\nBCA-BW Bryant Wesco Jr. Clemson\nBCA-BWA Bryson Washington Baylor\nBCA-CA Cyrus Allen Cincinnati\nBCA-CB Chris Brazzell II Tennessee\nBCA-CD Caleb Douglas Texas Tech\nBCA-CE Coy Eakin Texas Tech\nBCA-CH Carson Hansen Iowa State\nBCA-CL Cayden Lee Ole Miss\nBCA-CR Chase Roberts BYU\nBCA-CV Caden Veltkamp Florida Atlantic\nBCA-DAL Deuce Alexander Ole Miss\nBCA-DB Denzel Boston Washington\nBCA-DBI DeSean Bishop Tennessee\nBCA-DD Decker DeGraaf Washington\nBCA-DDA Devon Dampier Utah\n"
+    },
+    {
+      "type": "text_result",
+      "snippet": "citeturn0search2 [wordlim: 200] Crawled: 6 days ago; 2025 Bowman University Chrome - Prospect Autographs ...  |  |    |  |  |  |  |  |  | BCA-AHJ  |  |    |  |  |  |  |  |  | Anthony Hill Jr.\n |  |    |  |  |  |  |  |  | BCA-AHJ  |  |    |  |  |  |  |  |  | Anthony Hill Jr. AU  |    |  |  |  |  |  |  | Texas Longhorns\n |  |    |  |  |  |  |  |  | BCA-AJ  |  |    |  |  |  |  |  |  | Avery Johnson AU  |    |  |  |  |  |  |  | Kansas State Wildcats\n |  |    |  |  |  |  |  |  | BCA-AM  |  |    |  |  |  |  |  |  | Aidan Mizell AU  |    |  |  |  |  |  |  | Florida Gators\n |  |    |  |  |  |  |  |  | BCA-AN  |  |    |  |  |  |  |  |  | Adrian Norton AU  |    |  |  |  |  |  |  | Akron Zips\n |  |    |  |  |  |  |  |  | BCA-ANG  |  |    |  |  |  |  |  |  | Steve Angeli AU  |    |  |  |  |  |  |  | Syracuse Orange\n |  |    |  |  |  |  |  |  | BCA-AR  |  |    |  |  |  |  |  |  | Anthony Rogers AU  |    |  |  |  |  |  |  | Ohio State Buckeyes\n |  |    |  |  |  |  |  |  | BCA-AT  |  |    |  |  |  |  |  |  | A.J. Turner AU  |    |  |  |  |  |  |  | Minnesota Golden Gophers\n",
+      "title": "2025 Bowman University Chrome - Prospect Autographs Football Checklist | Trading Card Database",
+      "url": "https://www.tcdb.com/Checklist.cfm/sid/566340/2025-Bowman-University-Chrome-Prospect-Autographs",
+      "text": "citeturn0search2 [wordlim: 200] Crawled: 6 days ago; 2025 Bowman University Chrome - Prospect Autographs ...  |  |    |  |  |  |  |  |  | BCA-AHJ  |  |    |  |  |  |  |  |  | Anthony Hill Jr.\n |  |    |  |  |  |  |  |  | BCA-AHJ  |  |    |  |  |  |  |  |  | Anthony Hill Jr. AU  |    |  |  |  |  |  |  | Texas Longhorns\n |  |    |  |  |  |  |  |  | BCA-AJ  |  |    |  |  |  |  |  |  | Avery Johnson AU  |    |  |  |  |  |  |  | Kansas State Wildcats\n |  |    |  |  |  |  |  |  | BCA-AM  |  |    |  |  |  |  |  |  | Aidan Mizell AU  |    |  |  |  |  |  |  | Florida Gators\n |  |    |  |  |  |  |  |  | BCA-AN  |  |    |  |  |  |  |  |  | Adrian Norton AU  |    |  |  |  |  |  |  | Akron Zips\n |  |    |  |  |  |  |  |  | BCA-ANG  |  |    |  |  |  |  |  |  | Steve Angeli AU  |    |  |  |  |  |  |  | Syracuse Orange\n |  |    |  |  |  |  |  |  | BCA-AR  |  |    |  |  |  |  |  |  | Anthony Rogers AU  |    |  |  |  |  |  |  | Ohio State Buckeyes\n |  |    |  |  |  |  |  |  | BCA-AT  |  |    |  |  |  |  |  |  | A.J. Turner AU  |    |  |  |  |  |  |  | Minnesota Golden Gophers\n"
+    },
+    {
+      "type": "text_result",
+      "snippet": "citeturn0search3 [wordlim: 200] Crawled: last month; 2025 Bowman University Chrome - Prospect Autographs Gold Shimmer Refractor ...  |  |    |  |  |  | BCA-AHJ  |  |    |  |  |  | Anthony Hill Jr.\n |  |    |  |  |  | BCA-AHJ  |  |    |  |  |  | Anthony Hill Jr. AU, SN50  |    |  |  |  | Texas Longhorns\n |  |    |  |  |  | BCA-AJ  |  |    |  |  |  | Avery Johnson AU, SN50  |    |  |  |  | Kansas State Wildcats\n |  |    |  |  |  | BCA-AM  |  |    |  |  |  | Aidan Mizell AU, SN50  |    |  |  |  | Florida Gators\n |  |    |  |  |  | BCA-AN  |  |    |  |  |  | Adrian Norton AU, SN50  |    |  |  |  | Akron Zips\n |  |    |  |  |  | BCA-ANG  |  |    |  |  |  | Steve Angeli AU, SN50  |    |  |  |  | Syracuse Orange\n |  |    |  |  |  | BCA-AR  |  |    |  |  |  | Anthony Rogers AU, SN50  |    |  |  |  | Ohio State Buckeyes\n |  |    |  |  |  | BCA-AT  |  |    |  |  |  | A.J. Turner AU, SN50  |    |  |  |  | Minnesota Golden Gophers\n |  |    |  |  |  | BCA-BE  |  |    |  |  |  | Billy Edwards Jr. AU, SN50  |    |  |  |  | Wisconsin Badgers\n |  |    |  |  |  | BCA-BL  |  |    |  |  |  | Brendon Lewis AU, SN50  |    |  |  |  | Memphis Tigers\n",
+      "title": "2025 Bowman University Chrome - Prospect Autographs Gold Shimmer Refractor Football Checklist | Trading Card Database",
+      "url": "https://www.tcdb.com/Checklist.cfm/sid/566823/2025-Bowman-University-Chrome-Prospect-Autographs-Gold-Shimmer-Refractor",
+      "text": "citeturn0search3 [wordlim: 200] Crawled: last month; 2025 Bowman University Chrome - Prospect Autographs Gold Shimmer Refractor ...  |  |    |  |  |  | BCA-AHJ  |  |    |  |  |  | Anthony Hill Jr.\n |  |    |  |  |  | BCA-AHJ  |  |    |  |  |  | Anthony Hill Jr. AU, SN50  |    |  |  |  | Texas Longhorns\n |  |    |  |  |  | BCA-AJ  |  |    |  |  |  | Avery Johnson AU, SN50  |    |  |  |  | Kansas State Wildcats\n |  |    |  |  |  | BCA-AM  |  |    |  |  |  | Aidan Mizell AU, SN50  |    |  |  |  | Florida Gators\n |  |    |  |  |  | BCA-AN  |  |    |  |  |  | Adrian Norton AU, SN50  |    |  |  |  | Akron Zips\n |  |    |  |  |  | BCA-ANG  |  |    |  |  |  | Steve Angeli AU, SN50  |    |  |  |  | Syracuse Orange\n |  |    |  |  |  | BCA-AR  |  |    |  |  |  | Anthony Rogers AU, SN50  |    |  |  |  | Ohio State Buckeyes\n |  |    |  |  |  | BCA-AT  |  |    |  |  |  | A.J. Turner AU, SN50  |    |  |  |  | Minnesota Golden Gophers\n |  |    |  |  |  | BCA-BE  |  |    |  |  |  | Billy Edwards Jr. AU, SN50  |    |  |  |  | Wisconsin Badgers\n |  |    |  |  |  | BCA-BL  |  |    |  |  |  | Brendon Lewis AU, SN50  |    |  |  |  | Memphis Tigers\n"
+    },
+    {
+      "type": "text_result",
+      "snippet": "citeturn0search4 [wordlim: 200] Crawled: 2 months ago; 2025 Bowman University Chrome - Prospect Autographs ...  |  |    |  |  |  |  |  |  |  |  |  |  | BCA-AHJ  |  |    |  |  |  |  |  |  |  |  |  |  | Anthony Hill Jr.\n |  |    |  |  |  |  |  |  |  |  |  |  | BCA-AHA  |  |    |  |  |  |  |  |  |  |  |  |  | Ahmad Hardy AU  |    |  |  |  |  |  |  |  |  |  |  | Missouri Tigers\n |  |    |  |  |  |  |  |  |  |  |  |  | BCA-AHJ  |  |    |  |  |  |  |  |  |  |  |  |  | Anthony Hill Jr. AU  |    |  |  |  |  |  |  |  |  |  |  | Texas Longhorns\n |  |    |  |  |  |  |  |  |  |  |  |  | BCA-AJ  |  |    |  |  |  |  |  |  |  |  |  |  | Avery Johnson AU  |    |  |  |  |  |  |  |  |  |  |  | Kansas State Wildcats\n |  |    |  |  |  |  |  |  |  |  |  |  | BCA-AM  |  |    |  |  |  |  |  |  |  |  |  |  | Aidan Mizell AU  |    |  |  |  |  |  |  |  |  |  |  | Florida Gators\n |  |    |  |  |  |  |  |  |  |  |  |  | BCA-AN  |  |    |  |  |  |  |  |  |  |  |  |  | Adrian Norton AU  |    |  |  |  |  |  |  |  |  |  |  | Akron Zips\n |  |    |  |  |  |  |  |  |  |  |  |  | BCA-ANG  |  |    |  |  |  |  |  |  |  |  |  |  | Steve Angeli AU  |    |  |  |  |  |  |  |  |  |  |  | Syracuse Orange\n |  |    |  |  |  |  |  |  |  |  |  |  | BCA-AR  |  |    |  |  |  |  |  |  |  |  |  |  | Anthony Rogers AU  |    |  |  |  |  |  |  |  |  |  |  | Ohio State Buckeyes\n",
+      "title": "2025 Bowman University Chrome - Prospect Autographs Football Checklist | Trading Card Database",
+      "url": "https://www.tcdb.com/Checklist.cfm/sid/566340/2025-Bowman-Chrome-University---Chrome-Prospect-Autographs",
+      "text": "citeturn0search4 [wordlim: 200] Crawled: 2 months ago; 2025 Bowman University Chrome - Prospect Autographs ...  |  |    |  |  |  |  |  |  |  |  |  |  | BCA-AHJ  |  |    |  |  |  |  |  |  |  |  |  |  | Anthony Hill Jr.\n |  |    |  |  |  |  |  |  |  |  |  |  | BCA-AHA  |  |    |  |  |  |  |  |  |  |  |  |  | Ahmad Hardy AU  |    |  |  |  |  |  |  |  |  |  |  | Missouri Tigers\n |  |    |  |  |  |  |  |  |  |  |  |  | BCA-AHJ  |  |    |  |  |  |  |  |  |  |  |  |  | Anthony Hill Jr. AU  |    |  |  |  |  |  |  |  |  |  |  | Texas Longhorns\n |  |    |  |  |  |  |  |  |  |  |  |  | BCA-AJ  |  |    |  |  |  |  |  |  |  |  |  |  | Avery Johnson AU  |    |  |  |  |  |  |  |  |  |  |  | Kansas State Wildcats\n |  |    |  |  |  |  |  |  |  |  |  |  | BCA-AM  |  |    |  |  |  |  |  |  |  |  |  |  | Aidan Mizell AU  |    |  |  |  |  |  |  |  |  |  |  | Florida Gators\n |  |    |  |  |  |  |  |  |  |  |  |  | BCA-AN  |  |    |  |  |  |  |  |  |  |  |  |  | Adrian Norton AU  |    |  |  |  |  |  |  |  |  |  |  | Akron Zips\n |  |    |  |  |  |  |  |  |  |  |  |  | BCA-ANG  |  |    |  |  |  |  |  |  |  |  |  |  | Steve Angeli AU  |    |  |  |  |  |  |  |  |  |  |  | Syracuse Orange\n |  |    |  |  |  |  |  |  |  |  |  |  | BCA-AR  |  |    |  |  |  |  |  |  |  |  |  |  | Anthony Rogers AU  |    |  |  |  |  |  |  |  |  |  |  | Ohio State Buckeyes\n"
+    },
+    {
+      "type": "text_result",
+      "snippet": "citeturn0search5 [wordlim: 200] Crawled: 4 days ago; 2025 Bowman University Chrome - Prospect Autographs Refractor ...  |  |    |  | BCA-AHJ  |  |    |  | Anthony Hill Jr.\n |  |    |  | BCA-AE  |  |    |  | Anthony Evans III AU, SN299  |    |  | Mississippi State Bulldogs\n |  |    |  | BCA-AG  |  |    |  | Aaron Graves AU, SN299  |    |  | Iowa Hawkeyes\n |  |    |  | BCA-AH  |  |    |  | Anthony Hankerson AU, SN299  |    |  | Oregon State Beavers\n |  |    |  | BCA-AHA  |  |    |  | Ahmad Hardy AU, SN299  |    |  | Missouri Tigers\n |  |    |  | BCA-AHJ  |  |    |  | Anthony Hill Jr. AU, SN299  |    |  | Texas Longhorns\n |  |    |  | BCA-AJ  |  |    |  | Avery Johnson AU, SN299  |    |  | Kansas State Wildcats\n |  |    |  | BCA-AM  |  |    |  | Aidan Mizell AU, SN299  |    |  | Florida Gators\n |  |    |  | BCA-AN  |  |    |  | Adrian Norton AU, SN299  |    |  | Akron Zips\n |  |    |  | BCA-ANG  |  |    |  | Steve Angeli AU, SN299  |    |  | Syracuse Orange\n |  |    |  | BCA-AR  |  |    |  | Anthony Rogers AU, SN299  |    |  | Ohio State Buckeyes\n |  |    |  | BCA-AT  |  |    |  | A.J. Turner AU, SN299  |    |  | Minnesota Golden Gophers\n",
+      "title": "2025 Bowman University Chrome - Prospect Autographs Refractor Football Checklist | Trading Card Database",
+      "url": "https://www.tcdb.com/Checklist.cfm/sid/566817/2025-Bowman-University-Chrome-Prospect-Autographs-Refractor",
+      "text": "citeturn0search5 [wordlim: 200] Crawled: 4 days ago; 2025 Bowman University Chrome - Prospect Autographs Refractor ...  |  |    |  | BCA-AHJ  |  |    |  | Anthony Hill Jr.\n |  |    |  | BCA-AE  |  |    |  | Anthony Evans III AU, SN299  |    |  | Mississippi State Bulldogs\n |  |    |  | BCA-AG  |  |    |  | Aaron Graves AU, SN299  |    |  | Iowa Hawkeyes\n |  |    |  | BCA-AH  |  |    |  | Anthony Hankerson AU, SN299  |    |  | Oregon State Beavers\n |  |    |  | BCA-AHA  |  |    |  | Ahmad Hardy AU, SN299  |    |  | Missouri Tigers\n |  |    |  | BCA-AHJ  |  |    |  | Anthony Hill Jr. AU, SN299  |    |  | Texas Longhorns\n |  |    |  | BCA-AJ  |  |    |  | Avery Johnson AU, SN299  |    |  | Kansas State Wildcats\n |  |    |  | BCA-AM  |  |    |  | Aidan Mizell AU, SN299  |    |  | Florida Gators\n |  |    |  | BCA-AN  |  |    |  | Adrian Norton AU, SN299  |    |  | Akron Zips\n |  |    |  | BCA-ANG  |  |    |  | Steve Angeli AU, SN299  |    |  | Syracuse Orange\n |  |    |  | BCA-AR  |  |    |  | Anthony Rogers AU, SN299  |    |  | Ohio State Buckeyes\n |  |    |  | BCA-AT  |  |    |  | A.J. Turner AU, SN299  |    |  | Minnesota Golden Gophers\n"
+    },
+    {
+      "type": "text_result",
+      "snippet": "citeturn0search6 [wordlim: 200] Published: 10 months ago; Crawled: 2 days ago; Image Anthony Hill Jr. ... Auto  | Bowman Chrome Prospect Autographs I  | BCA-AHJ  | ... Auto  | 1955 Bowman Autograph Variation  | 55AV-AJ  |\n\nImageAlonza Barnett III\n\nCard Type  | Card  | #  | \nBase  | Base Cards I  | 35  | \nInsert  | Lettered Up  | LU-25  | \nInsert  | Bowman Chrome Prospects Short Print Image Variations  | SP-23  | \nAuto  | Bowman Chrome Prospect Autographs I  | BCA-AB  | \nAuto  | Bowman Chrome Prospects Short Print Image Autograph Variations  | SPA-AB  | \n\nImageAnthony Evans III\n\nCard Type  | Card  | #  | \nBase  | Base Cards II  | 172  | \nAuto  | Bowman Chrome Prospects Autographs II  | BCA-AE  | \n\nImageAnthony Hankerson\n\nCard Type  | Card  | #  | \nBase  | Base Cards I  | 21  | \nAuto  | Bowman Chrome Prospect Autographs I  | BCA-AH  | \n\nImageAnthony Hill Jr.\n\nCard Type  | Card  | #  | \nBase  | Base Cards I  | 84  | \nAuto  | Bowman Chrome Prospect Autographs I  | BCA-AHJ  | \n\nImageAnthony Rogers\n\nCard Type  | Card  | #  | \nBase  | Base Cards I  | 68  | \nAuto  | Bowman Chrome Prospect Autographs I  | BCA-AR  | \n\nImageAubie The Tiger\n\nCard Type  | Card  | #  | \nInsert  | Bowman Chrome Mascots  | BCM-2  | \n",
+      "title": "2025 Bowman University Chrome Football Hobby Checklist",
+      "url": "https://cardsmithsbreaks.com/full-checklist/2025-bowman-university-chrome-football-hobby/player/",
+      "text": "citeturn0search6 [wordlim: 200] Published: 10 months ago; Crawled: 2 days ago; Image Anthony Hill Jr. ... Auto  | Bowman Chrome Prospect Autographs I  | BCA-AHJ  | ... Auto  | 1955 Bowman Autograph Variation  | 55AV-AJ  |\n\nImageAlonza Barnett III\n\nCard Type  | Card  | #  | \nBase  | Base Cards I  | 35  | \nInsert  | Lettered Up  | LU-25  | \nInsert  | Bowman Chrome Prospects Short Print Image Variations  | SP-23  | \nAuto  | Bowman Chrome Prospect Autographs I  | BCA-AB  | \nAuto  | Bowman Chrome Prospects Short Print Image Autograph Variations  | SPA-AB  | \n\nImageAnthony Evans III\n\nCard Type  | Card  | #  | \nBase  | Base Cards II  | 172  | \nAuto  | Bowman Chrome Prospects Autographs II  | BCA-AE  | \n\nImageAnthony Hankerson\n\nCard Type  | Card  | #  | \nBase  | Base Cards I  | 21  | \nAuto  | Bowman Chrome Prospect Autographs I  | BCA-AH  | \n\nImageAnthony Hill Jr.\n\nCard Type  | Card  | #  | \nBase  | Base Cards I  | 84  | \nAuto  | Bowman Chrome Prospect Autographs I  | BCA-AHJ  | \n\nImageAnthony Rogers\n\nCard Type  | Card  | #  | \nBase  | Base Cards I  | 68  | \nAuto  | Bowman Chrome Prospect Autographs I  | BCA-AR  | \n\nImageAubie The Tiger\n\nCard Type  | Card  | #  | \nInsert  | Bowman Chrome Mascots  | BCM-2  | \n"
+    },
+    {
+      "type": "text_result",
+      "snippet": "citeturn0search7 [wordlim: 200] Published: 10 months ago; Crawled: 2 days ago; ## 2025 Bowman Chrome University Football Checklist – Autographs ... BCA-AHJ Anthony Hill Jr., Texas ... ### Chrome Prospect Autographs Image Variations\n## 2025 Bowman Chrome University Football Checklist – Autographs\n\n### Chrome Prospect Autographs\n\n189 cards\nHobby – 1:25; Breaker – 1:2; Jumbo – 1:8; Mega – 1:28; Blaster – 1:163\nParallels\n\n  * Stealth Refractor (Breaker – 1:2)\n  * Refractor /299 (Hobby – 1:64; Breaker – 1:4; Jumbo – 1:20; Mega – 1:73; Blaster – 1:424)\n  * Blue Refractor /150 (Hobby – 1:126; Breaker – 1:7; Jumbo – 1:39; Mega – 1:145; Blaster – 1:845)\n  * Blue Mini-Diamond Refractor /150 (Hobby – 1:126; Breaker – 1:7; Jumbo – 1:39; Mega – 1:145; Blaster – 1:845)\n  * Green Refractor /99 (Hobby – 1:191; Breaker – 1:10; Jumbo – 1:59; Mega – 1:220; Blaster – 1:1,279)\n  * Purple Refractor /75 (Hobby – 1:252; Breaker – 1:13; Jumbo – 1:78; Mega – 1:290; Blaster – 1:1,689)\n  * Gold Shimmer Refractor /50 (Hobby – 1:304; Jumbo – 1:61)\n  * Gold Refractor /50 (Hobby – 1:378; Breaker – 1:19; Jumbo – 1:116; Mega – 1:435; Blaster – 1:2,535)\n  * Black & Gold Stealth Refractor /25 (Breaker – 1:4)\n  * Orange Refractor /25 (Hobby – 1:755; Breaker – 1:37; Jumbo – 1:232; Mega – 1:869; Blaster – 1:5,077)\n  * White Refractor /15 (Hobby – 1:1,259; Breaker – 1:61; Jumbo – 1:387; Mega – 1:1,448; Blaster – 1:8,445)\n  * Black Refractor /10 (Hobby – 1:1,889; Breaker – 1:91; Jumbo – 1:580; Mega – 1:2,172; Blaster – 1:12,727)\n  * Black Shimmer Refractor /10 (Hobby – 1:1,520; Breaker – 1:15,050; Jumbo – 1:304; Mega – 1:707,761; Blaster – 1:1,807,121)\n  * Red Refractor /5 (Hobby – 1:3,783; Breaker – 1:182; Jumbo – 1:1,159; Mega – 1:4,343; Blaster – 1:25,453)\n  * Red Shimmer Refractor /5 (Hobby – 1:3,042; Jumbo – 1:608)\n  * SuperFractor /1 (Hobby – 1:19,011; Breaker – 1:941; Jumbo – 1:5,888; Mega – 1:22,118; Blaster – 1:129,081)\n\nBCA-AB Alonza Barnett III, James Madison\nBCA-AG Aaron Graves, Iowa\nBCA-AH Anthony Hankerson, Oregon State\nBCA-AHJ Anthony Hill Jr., Texas\nBCA-AJ Avery Johnson, Kansas State\nBCA-AM Aidan Mizell, Florida\nBCA-AN Adrian Norton, Akron\nBCA-AR Anthony Rogers, Ohio State\nBCA-AT A.J. Turner, Minnesota\nBCA-BE Billy Edwards Jr., Wisconsin\nBCA-BL Brendon Lewis, Memphis\nBCA-BLO Braedyn Locke, Arizona\nBCA-BP Beau Pribula, Missouri\nBCA-BT Boubacar Traore, Notre Dame\nBCA-BW Bryant Wesco Jr., Clemson\nBCA-BWA Bryson Washington, Baylor\nBCA-CA Cyrus Allen, Cincinnati\nBCA-CB Chris Brazzell II, Tennessee\nBCA-CD Caleb Douglas, Texas Tech\nBCA-CE Coy Eakin, Texas Tech\nBCA-CH Carson Hansen, Iowa State\nBCA-CL Cayden Lee, Ole Miss\nBCA-CR Chase Roberts, BYU\nBCA-CV Caden Veltkamp, Florida Atlantic\nBCA-DAL Deuce Alexander, Ole Miss\n### Chrome Prospect Autographs Image Variations\n\n24 cards\n(Hobby – 1:6,020; Breaker – 1:290; Jumbo – 1:1,850; Mega – 1:6,615; Blaster – 1:39,286)\nParallels\n\n  * Red Refractor /5 (Hobby – 1:28,896; Breaker – 1:1,505; Jumbo – 1:9,015; Mega – 1:33,703; Blaster – 1:200,792)\n  * Superfractor /1 (Hobby – 1:160,534; Breaker – 1:7,525; Jumbo – 1:48,080; Mega – 1:176,941; Blaster – 1:1,807,121)\n\nSPA-AB Alonza Barnett III, James Madison /25\nSPA-ACH Aidan Chiles, Michigan State /25\nSPA-AJ Avery Johnson, Kansas State /25\nSPA-BM Behren Morton, Texas Tech /25\nSPA-BSO Brendan Sorsby, Cincinnati /25\nSPA-BU Bryce Underwood, Michigan /25\nSPA-DM Dante Moore, Oregon /25\nSPA-DPA Diego Pavia, Vanderbilt /25\nSPA-DT Darius Taylor, Minnesota /25\nSPA-EH Eli Holstein, Pittsburgh /25\nSPA-GN Garrett Nussmeier, LSU /25\nSPA-GS Gunner Stockton, Georgia /25\nSPA-JBA Jadan Baugh, Florida /25\nSPA-KA Kaytron Allen, Penn State /25\nSPA-KJ Kevin Jennings, SMU /25\nSPA-KOI Koi Perich, Minnesota /25\nSPA-LA Luke Altmyer, Illinois /25\n",
+      "title": "2025 Bowman Chrome University Football Checklist & Box Details",
+      "url": "https://www.beckett.com/news/2025-bowman-chrome-university-football-cards/",
+      "text": "citeturn0search7 [wordlim: 200] Published: 10 months ago; Crawled: 2 days ago; ## 2025 Bowman Chrome University Football Checklist – Autographs ... BCA-AHJ Anthony Hill Jr., Texas ... ### Chrome Prospect Autographs Image Variations\n## 2025 Bowman Chrome University Football Checklist – Autographs\n\n### Chrome Prospect Autographs\n\n189 cards\nHobby – 1:25; Breaker – 1:2; Jumbo – 1:8; Mega – 1:28; Blaster – 1:163\nParallels\n\n  * Stealth Refractor (Breaker – 1:2)\n  * Refractor /299 (Hobby – 1:64; Breaker – 1:4; Jumbo – 1:20; Mega – 1:73; Blaster – 1:424)\n  * Blue Refractor /150 (Hobby – 1:126; Breaker – 1:7; Jumbo – 1:39; Mega – 1:145; Blaster – 1:845)\n  * Blue Mini-Diamond Refractor /150 (Hobby – 1:126; Breaker – 1:7; Jumbo – 1:39; Mega – 1:145; Blaster – 1:845)\n  * Green Refractor /99 (Hobby – 1:191; Breaker – 1:10; Jumbo – 1:59; Mega – 1:220; Blaster – 1:1,279)\n  * Purple Refractor /75 (Hobby – 1:252; Breaker – 1:13; Jumbo – 1:78; Mega – 1:290; Blaster – 1:1,689)\n  * Gold Shimmer Refractor /50 (Hobby – 1:304; Jumbo – 1:61)\n  * Gold Refractor /50 (Hobby – 1:378; Breaker – 1:19; Jumbo – 1:116; Mega – 1:435; Blaster – 1:2,535)\n  * Black & Gold Stealth Refractor /25 (Breaker – 1:4)\n  * Orange Refractor /25 (Hobby – 1:755; Breaker – 1:37; Jumbo – 1:232; Mega – 1:869; Blaster – 1:5,077)\n  * White Refractor /15 (Hobby – 1:1,259; Breaker – 1:61; Jumbo – 1:387; Mega – 1:1,448; Blaster – 1:8,445)\n  * Black Refractor /10 (Hobby – 1:1,889; Breaker – 1:91; Jumbo – 1:580; Mega – 1:2,172; Blaster – 1:12,727)\n  * Black Shimmer Refractor /10 (Hobby – 1:1,520; Breaker – 1:15,050; Jumbo – 1:304; Mega – 1:707,761; Blaster – 1:1,807,121)\n  * Red Refractor /5 (Hobby – 1:3,783; Breaker – 1:182; Jumbo – 1:1,159; Mega – 1:4,343; Blaster – 1:25,453)\n  * Red Shimmer Refractor /5 (Hobby – 1:3,042; Jumbo – 1:608)\n  * SuperFractor /1 (Hobby – 1:19,011; Breaker – 1:941; Jumbo – 1:5,888; Mega – 1:22,118; Blaster – 1:129,081)\n\nBCA-AB Alonza Barnett III, James Madison\nBCA-AG Aaron Graves, Iowa\nBCA-AH Anthony Hankerson, Oregon State\nBCA-AHJ Anthony Hill Jr., Texas\nBCA-AJ Avery Johnson, Kansas State\nBCA-AM Aidan Mizell, Florida\nBCA-AN Adrian Norton, Akron\nBCA-AR Anthony Rogers, Ohio State\nBCA-AT A.J. Turner, Minnesota\nBCA-BE Billy Edwards Jr., Wisconsin\nBCA-BL Brendon Lewis, Memphis\nBCA-BLO Braedyn Locke, Arizona\nBCA-BP Beau Pribula, Missouri\nBCA-BT Boubacar Traore, Notre Dame\nBCA-BW Bryant Wesco Jr., Clemson\nBCA-BWA Bryson Washington, Baylor\nBCA-CA Cyrus Allen, Cincinnati\nBCA-CB Chris Brazzell II, Tennessee\nBCA-CD Caleb Douglas, Texas Tech\nBCA-CE Coy Eakin, Texas Tech\nBCA-CH Carson Hansen, Iowa State\nBCA-CL Cayden Lee, Ole Miss\nBCA-CR Chase Roberts, BYU\nBCA-CV Caden Veltkamp, Florida Atlantic\nBCA-DAL Deuce Alexander, Ole Miss\n### Chrome Prospect Autographs Image Variations\n\n24 cards\n(Hobby – 1:6,020; Breaker – 1:290; Jumbo – 1:1,850; Mega – 1:6,615; Blaster – 1:39,286)\nParallels\n\n  * Red Refractor /5 (Hobby – 1:28,896; Breaker – 1:1,505; Jumbo – 1:9,015; Mega – 1:33,703; Blaster – 1:200,792)\n  * Superfractor /1 (Hobby – 1:160,534; Breaker – 1:7,525; Jumbo – 1:48,080; Mega – 1:176,941; Blaster – 1:1,807,121)\n\nSPA-AB Alonza Barnett III, James Madison /25\nSPA-ACH Aidan Chiles, Michigan State /25\nSPA-AJ Avery Johnson, Kansas State /25\nSPA-BM Behren Morton, Texas Tech /25\nSPA-BSO Brendan Sorsby, Cincinnati /25\nSPA-BU Bryce Underwood, Michigan /25\nSPA-DM Dante Moore, Oregon /25\nSPA-DPA Diego Pavia, Vanderbilt /25\nSPA-DT Darius Taylor, Minnesota /25\nSPA-EH Eli Holstein, Pittsburgh /25\nSPA-GN Garrett Nussmeier, LSU /25\nSPA-GS Gunner Stockton, Georgia /25\nSPA-JBA Jadan Baugh, Florida /25\nSPA-KA Kaytron Allen, Penn State /25\nSPA-KJ Kevin Jennings, SMU /25\nSPA-KOI Koi Perich, Minnesota /25\nSPA-LA Luke Altmyer, Illinois /25\n"
+    },
+    {
+      "type": "text_result",
+      "snippet": "citeturn0search8 [wordlim: 200] Published: 10 months ago; Crawled: yesterday; ### 2025 Bowman Chrome University – Chrome Prospect Auto Set ... BCA-AHJ Anthony Hill Jr. – Texas\n### 2025 Bowman Chrome University – Chrome Prospect Auto Set\n\n189 Cards – 1:25 Hobby; 1:2 Breaker; 1:8 Jumbo; 1:28 Mega; 1:163 Blaster\nRefractor Parallels: Refractor (1:64 Hobby; 1:4 Breaker; 1:20 Jumbo; 1:73 Mega; 1:424 Blaster); Stealth (1:2 Breaker); Blue #/150; Blue Mini-Diamond #/150; Green #/99; Purple #/75; Gold Shimmer #/50 (Hobby/Jumbo Exclusive); Gold #/50; Black & Gold Stealth #/25 (Breaker Exclusive); Orange #/25; White #/15; Black #/10; Black Shimmer #/10; Red #/5; Red Shimmer #/5 (Hobby/Jumbo Exclusive); SuperFractor 1/1\n\nImage\n\nBCA-AB Alonza Barnett III – James Madison®\nBCA-ACH Aidan Chiles – Michigan State®\nBCA-AE Anthony Evans III – Mississippi State®\nBCA-AG Aaron Graves – Iowa®\nBCA-AH Anthony Hankerson – Oregon State™\nBCA-AHA Ahmad Hardy – Missouri®\nBCA-AHJ Anthony Hill Jr. – Texas\nBCA-AJ Avery Johnson – Kansas State®\nBCA-AM Aidan Mizell – Florida™\nBCA-AN Adrian Norton – Akron®\nBCA-ANG Steve Angeli – Syracuse®\nBCA-AR Anthony Rogers – Ohio State®\n",
+      "title": "2025 Bowman Chrome University - Football Card Checklist - Checklistcenter.com",
+      "url": "https://www.checklistcenter.com/2025-bowman-chrome-university-football-card-checklist/",
+      "text": "citeturn0search8 [wordlim: 200] Published: 10 months ago; Crawled: yesterday; ### 2025 Bowman Chrome University – Chrome Prospect Auto Set ... BCA-AHJ Anthony Hill Jr. – Texas\n### 2025 Bowman Chrome University – Chrome Prospect Auto Set\n\n189 Cards – 1:25 Hobby; 1:2 Breaker; 1:8 Jumbo; 1:28 Mega; 1:163 Blaster\nRefractor Parallels: Refractor (1:64 Hobby; 1:4 Breaker; 1:20 Jumbo; 1:73 Mega; 1:424 Blaster); Stealth (1:2 Breaker); Blue #/150; Blue Mini-Diamond #/150; Green #/99; Purple #/75; Gold Shimmer #/50 (Hobby/Jumbo Exclusive); Gold #/50; Black & Gold Stealth #/25 (Breaker Exclusive); Orange #/25; White #/15; Black #/10; Black Shimmer #/10; Red #/5; Red Shimmer #/5 (Hobby/Jumbo Exclusive); SuperFractor 1/1\n\nImage\n\nBCA-AB Alonza Barnett III – James Madison®\nBCA-ACH Aidan Chiles – Michigan State®\nBCA-AE Anthony Evans III – Mississippi State®\nBCA-AG Aaron Graves – Iowa®\nBCA-AH Anthony Hankerson – Oregon State™\nBCA-AHA Ahmad Hardy – Missouri®\nBCA-AHJ Anthony Hill Jr. – Texas\nBCA-AJ Avery Johnson – Kansas State®\nBCA-AM Aidan Mizell – Florida™\nBCA-AN Adrian Norton – Akron®\nBCA-ANG Steve Angeli – Syracuse®\nBCA-AR Anthony Rogers – Ohio State®\n"
+    },
+    {
+      "type": "text_result",
+      "snippet": "citeturn0search9 [wordlim: 200] Crawled: today;  | Anthony Hill Jr. ... [Gold Refractor] #BCA-AHJ /50  | $19.50  |  |  | ... [Red Refractor] #BCA-AHJ /5  |  |  |  |\n\n  *     * + Collection In One Click\n    * + Collection With Details\n    * + Wishlist\n+ Collection\n\n  * + Wishlist\n | Anthony Hill Jr. [Purple Refractor] #BCA-AHJ /75  | $18.50  |  |  | \n\n  *     * + Collection In One Click\n    * + Collection With Details\n    * + Wishlist\n+ Collection\n\n  * + Wishlist\n | Anthony Hill Jr. [Gold Refractor] #BCA-AHJ /50  | $19.50  |  |  | \n\n  *     * + Collection In One Click\n    * + Collection With Details\n    * + Wishlist\n+ Collection\n\n  * + Wishlist\n | Anthony Hill Jr. [Gold Shimmer Refractor] #BCA-AHJ /50  | $53.50  |  |  | \n\n  *     * + Collection In One Click\n    * + Collection With Details\n    * + Wishlist\n+ Collection\n\n  * + Wishlist\n | Anthony Hill Jr. [Black Gold Stealth Refractor] #BCA-AHJ /25  |  |  |  | \n\n  *     * + Collection In One Click\n    * + Collection With Details\n    * + Wishlist\n+ Collection\n\n  * + Wishlist\n | Anthony Hill Jr. [Orange Refractor] #BCA-AHJ /25  |  |  |  | \n\n",
+      "title": "Checklist: 2025 Bowman Chrome University Prospect Autograph Football Cards",
+      "url": "https://www.sportscardspro.com/console/football-cards-2025-bowman-chrome-university-prospect-autograph",
+      "text": "citeturn0search9 [wordlim: 200] Crawled: today;  | Anthony Hill Jr. ... [Gold Refractor] #BCA-AHJ /50  | $19.50  |  |  | ... [Red Refractor] #BCA-AHJ /5  |  |  |  |\n\n  *     * + Collection In One Click\n    * + Collection With Details\n    * + Wishlist\n+ Collection\n\n  * + Wishlist\n | Anthony Hill Jr. [Purple Refractor] #BCA-AHJ /75  | $18.50  |  |  | \n\n  *     * + Collection In One Click\n    * + Collection With Details\n    * + Wishlist\n+ Collection\n\n  * + Wishlist\n | Anthony Hill Jr. [Gold Refractor] #BCA-AHJ /50  | $19.50  |  |  | \n\n  *     * + Collection In One Click\n    * + Collection With Details\n    * + Wishlist\n+ Collection\n\n  * + Wishlist\n | Anthony Hill Jr. [Gold Shimmer Refractor] #BCA-AHJ /50  | $53.50  |  |  | \n\n  *     * + Collection In One Click\n    * + Collection With Details\n    * + Wishlist\n+ Collection\n\n  * + Wishlist\n | Anthony Hill Jr. [Black Gold Stealth Refractor] #BCA-AHJ /25  |  |  |  | \n\n  *     * + Collection In One Click\n    * + Collection With Details\n    * + Wishlist\n+ Collection\n\n  * + Wishlist\n | Anthony Hill Jr. [Orange Refractor] #BCA-AHJ /25  |  |  |  | \n\n"
+    },
+    {
+      "type": "text_result",
+      "snippet": "citeturn0search10 [wordlim: 200] Published: 9 months ago; Crawled: today; ### 2025 Bowman Chrome Sapphire University – Chrome Sapphire Prospect Auto Set ... BCA-AHJ Anthony Hill Jr. – Texas\n## Autographs Set\n\n### 2025 Bowman Chrome Sapphire University – Chrome Sapphire Prospect Auto Set\n\nImage: Chrome Sapphire Prospect Auto Orange Diego Pavia MOCK UP\n134 Cards – 1:20 Packs\nSapphire Parallels: Orange #/25; Black #/10; Red #/5; Padparadscha 1/1\n\nImage\n\nBCA-AB Alonza Barnett III – James Madison\nBCA-ACH Aidan Chiles – Michigan State\nBCA-AH Anthony Hankerson – Oregon State\nBCA-AHA Ahmad Hardy – Missouri\nBCA-AHJ Anthony Hill Jr. – Texas\nBCA-AJ Avery Johnson – Kansas State\nBCA-AM Aidan Mizell – Florida\nBCA-ANG Steve Angeli – Syracuse\nBCA-AR Anthony Rogers – Ohio State\nBCA-BE Billy Edwards Jr. – Wisconsin\nBCA-BL Brendon Lewis – Memphis\nBCA-BM Behren Morton – Texas Tech\nBCA-BP Beau Pribula – Missouri\nBCA-BR Braylen Russell – Arkansas\nBCA-BS Brendan Sorsby – Cincinnati\nBCA-BUN Bryce Underwood – Michigan\nBCA-BW Bryant Wesco Jr. – Clemson\nBCA-BWA Bryson Washington – Baylor\nBCA-CBE Carson Beck – Miami\nBCA-CD Caleb Douglas – Texas Tech\nBCA-CE Coy Eakin – Texas Tech\n",
+      "title": "2025 Bowman Chrome Sapphire University - Football Card Checklist - Checklistcenter.com",
+      "url": "https://www.checklistcenter.com/2025-bowman-chrome-sapphire-university-football-card-checklist/",
+      "text": "citeturn0search10 [wordlim: 200] Published: 9 months ago; Crawled: today; ### 2025 Bowman Chrome Sapphire University – Chrome Sapphire Prospect Auto Set ... BCA-AHJ Anthony Hill Jr. – Texas\n## Autographs Set\n\n### 2025 Bowman Chrome Sapphire University – Chrome Sapphire Prospect Auto Set\n\nImage: Chrome Sapphire Prospect Auto Orange Diego Pavia MOCK UP\n134 Cards – 1:20 Packs\nSapphire Parallels: Orange #/25; Black #/10; Red #/5; Padparadscha 1/1\n\nImage\n\nBCA-AB Alonza Barnett III – James Madison\nBCA-ACH Aidan Chiles – Michigan State\nBCA-AH Anthony Hankerson – Oregon State\nBCA-AHA Ahmad Hardy – Missouri\nBCA-AHJ Anthony Hill Jr. – Texas\nBCA-AJ Avery Johnson – Kansas State\nBCA-AM Aidan Mizell – Florida\nBCA-ANG Steve Angeli – Syracuse\nBCA-AR Anthony Rogers – Ohio State\nBCA-BE Billy Edwards Jr. – Wisconsin\nBCA-BL Brendon Lewis – Memphis\nBCA-BM Behren Morton – Texas Tech\nBCA-BP Beau Pribula – Missouri\nBCA-BR Braylen Russell – Arkansas\nBCA-BS Brendan Sorsby – Cincinnati\nBCA-BUN Bryce Underwood – Michigan\nBCA-BW Bryant Wesco Jr. – Clemson\nBCA-BWA Bryson Washington – Baylor\nBCA-CBE Carson Beck – Miami\nBCA-CD Caleb Douglas – Texas Tech\nBCA-CE Coy Eakin – Texas Tech\n"
+    },
+    {
+      "type": "text_result",
+      "snippet": "citeturn0search11 [wordlim: 200] Crawled: 6 days ago; 2025 Bowman University Chrome - Prospect Autographs Black & Gold Stealth Refractor ...  |  |  | #BCA-AHJ  | Anthony Hill Jr.\n### 63.\n\n |  |  | #BCA-AHA  | Ahmad Hardy AU, SN25  | Missouri Tigers\n\n### 64.\n\n |  |  | #BCA-RHA  | Reed Harris AU, SN25  | Boston College Eagles\n\n### 65.\n\n |  |  | #BCA-LH  | Luke Hasz AU, SN25  | Ole Miss Rebels\n\n### 66.\n\n |  |  | #BCA-DHA  | Dallan Hayden AU, SN25  | Colorado Buffaloes\n\n### 67.\n\n |  |  | #BCA-JHA  | Jay Haynes AU, SN25  | Clemson Tigers\n\n### 68.\n\n |  |  | #BCA-JHI  | Jyaire Hill AU, SN25  | Michigan Wolverines\n\n### 69.\n\n |  |  | #BCA-AHJ  | Anthony Hill Jr. AU, SN25  | Texas Longhorns\n\n### 70.\n\n |  |  | #BCA-EHO  | Eli Holstein AU, SN25  | Pittsburgh Panthers\n\n### 71.\n\n |  |  | #BCA-JHO  | Josh Hoover AU, SN25  | TCU Horned Frogs\n\n### 72.\n\n |  |  | #BCA-KH  | Katin Houser AU, SN25  | East Carolina Pirates\n\n### 73.\n\n |  |  | #BCA-NH  | Nyziah Hunter AU, SN25  | Nebraska Cornhuskers\n\n### 74.\n\n |  |  | #BCA-JKJ  | Ja'Kobi Jackson AU, SN25  | Florida Gators\n\n### 75.\n\n |  |  | #BCA-GJ  | Grayson James AU, SN25  | Boston College Eagles\n\n",
+      "title": "2025 Bowman University Chrome - Prospect Autographs Black & Gold Stealth Refractor Football - Checklist By Last Name | Trading Card Database",
+      "url": "https://www.tcdb.com/ChecklistByLastName.cfm/sid/566825/2025-Bowman-University-Chrome---Chrome-Prospect-Autographs-Black-%26-Gold-Stealth-Refractor",
+      "text": "citeturn0search11 [wordlim: 200] Crawled: 6 days ago; 2025 Bowman University Chrome - Prospect Autographs Black & Gold Stealth Refractor ...  |  |  | #BCA-AHJ  | Anthony Hill Jr.\n### 63.\n\n |  |  | #BCA-AHA  | Ahmad Hardy AU, SN25  | Missouri Tigers\n\n### 64.\n\n |  |  | #BCA-RHA  | Reed Harris AU, SN25  | Boston College Eagles\n\n### 65.\n\n |  |  | #BCA-LH  | Luke Hasz AU, SN25  | Ole Miss Rebels\n\n### 66.\n\n |  |  | #BCA-DHA  | Dallan Hayden AU, SN25  | Colorado Buffaloes\n\n### 67.\n\n |  |  | #BCA-JHA  | Jay Haynes AU, SN25  | Clemson Tigers\n\n### 68.\n\n |  |  | #BCA-JHI  | Jyaire Hill AU, SN25  | Michigan Wolverines\n\n### 69.\n\n |  |  | #BCA-AHJ  | Anthony Hill Jr. AU, SN25  | Texas Longhorns\n\n### 70.\n\n |  |  | #BCA-EHO  | Eli Holstein AU, SN25  | Pittsburgh Panthers\n\n### 71.\n\n |  |  | #BCA-JHO  | Josh Hoover AU, SN25  | TCU Horned Frogs\n\n### 72.\n\n |  |  | #BCA-KH  | Katin Houser AU, SN25  | East Carolina Pirates\n\n### 73.\n\n |  |  | #BCA-NH  | Nyziah Hunter AU, SN25  | Nebraska Cornhuskers\n\n### 74.\n\n |  |  | #BCA-JKJ  | Ja'Kobi Jackson AU, SN25  | Florida Gators\n\n### 75.\n\n |  |  | #BCA-GJ  | Grayson James AU, SN25  | Boston College Eagles\n\n"
+    }
+  ],
+  "identification": {
+    "engine_version": 193,
+    "engine_final": true,
+    "kind": "card",
+    "category": "football trading card",
+    "brand": "Topps",
+    "family": "Bowman Chrome",
+    "model": "",
+    "title": "2025 · #BCA-AHJ · Anthony Hill Jr. · Bowman Chrome Prospect Autograph Variation",
+    "variant": "",
+    "language": "en",
+    "condition": "",
+    "closure_status": "pending",
+    "job_status": "identity_pending",
+    "status": "uncertain",
+    "identity_status": "partial",
+    "exact_identity_status": "unresolved",
+    "market_ready": false,
+    "model_verified": false,
+    "catalogue_core_verified": false,
+    "catalogue_verified": false,
+    "model_confidence": null,
+    "family_confidence": 90,
+    "catalogue_reference_language": null,
+    "language_origin": "original_photo",
+    "core_identity": {
+      "status": "partial",
+      "origin": "catalogue_engine",
+      "model": "2025 · Bowman Chrome · #BCA-AHJ · Anthony Hill Jr.",
+      "fields": [
+        {
+          "field": "subject",
+          "value": "Anthony Hill Jr.",
+          "origin": "photo",
+          "source": null
+        },
+        {
+          "field": "family",
+          "value": "Bowman Chrome",
+          "origin": "photo",
+          "source": null
+        },
+        {
+          "field": "catalog_number",
+          "value": "BCA-AHJ",
+          "origin": "photo",
+          "source": null
+        },
+        {
+          "field": "year",
+          "value": "2025",
+          "origin": "photo",
+          "source": null
+        },
+        {
+          "field": "brand",
+          "value": "Topps",
+          "origin": "photo",
+          "source": null
+        }
+      ],
+      "pending_fields": [
+        "catalogue"
+      ]
+    },
+    "identity_keys": {
+      "subject": {
+        "value": "Anthony Hill Jr."
+      },
+      "number": {
+        "value": "BCA-AHJ"
+      },
+      "date": {
+        "value": "2025"
+      },
+      "language": {
+        "value": "en"
+      }
+    },
+    "physical_card_number": "BCA-AHJ",
+    "pokedex_number": null,
+    "source_confirmed_catalog_number": null,
+    "source_confirmed_year": null,
+    "physical_serial": null,
+    "serial_number": null,
+    "variant_needs_verification": true,
+    "variant_check": "pending",
+    "variant_resolution": {
+      "status": "pending",
+      "pending": [
+        "catalogue"
+      ],
+      "labels": [],
+      "proof": []
+    },
+    "assistance_state": "unidentified",
+    "missing_information": [
+      "Riscontro catalografico"
+    ],
+    "next_photo_request": null,
+    "verification_summary": "Letture conservate; identità catalografica da completare.",
+    "normalized_query": "",
+    "candidate_models": [],
+    "catalogue_data": [
+      {
+        "field": "subject",
+        "value": "Anthony Hill Jr.",
+        "origin": "photo",
+        "source": null
+      },
+      {
+        "field": "family",
+        "value": "Bowman Chrome",
+        "origin": "photo",
+        "source": null
+      },
+      {
+        "field": "catalog_number",
+        "value": "BCA-AHJ",
+        "origin": "photo",
+        "source": null
+      },
+      {
+        "field": "year",
+        "value": "2025",
+        "origin": "photo",
+        "source": null
+      },
+      {
+        "field": "brand",
+        "value": "Topps",
+        "origin": "photo",
+        "source": null
+      }
+    ],
+    "identification_sources": [],
+    "evidence": [
+      "subject: Anthony Hill Jr.",
+      "family: Bowman Chrome",
+      "catalog_number: BCA-AHJ",
+      "year: 2025",
+      "brand: Topps"
+    ],
+    "object_unit": "single",
+    "card_identity": {
+      "autograph": "present",
+      "patch": "unclear",
+      "manufacturer": "Topps",
+      "subject": "Anthony Hill Jr.",
+      "set": "Bowman Chrome",
+      "number": "BCA-AHJ",
+      "date": "2025",
+      "language": "en",
+      "variant": null,
+      "rarity": null,
+      "rarity_symbol": "unclear",
+      "serial": null,
+      "is_rookie": null,
+      "rookie_origin": null,
+      "product": "Bowman Chrome",
+      "subset": "Bowman Chrome Prospect Autograph Variation",
+      "observed_variant": "SuperFractor"
+    },
+    "identity_display": "2025 · #BCA-AHJ · Anthony Hill Jr. · Bowman Chrome Prospect Autograph Variation",
+    "observed_variant": {
+      "value": "SuperFractor",
+      "origin": "physical_semantic_normalization",
+      "observation": "e25"
+    }
+  }
+}

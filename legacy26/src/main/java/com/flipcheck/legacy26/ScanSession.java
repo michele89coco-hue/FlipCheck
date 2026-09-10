@@ -66,7 +66,7 @@ final class ScanSession {
                 if (!"https".equals(uri.getScheme()) || !"flipcheck.local".equals(uri.getHost())) return null;
                 String path = uri.getPath();
                 if (path == null || path.equals("/")) path = "/index.html";
-                if (!path.matches("/(index\\.html|editions\\.js|targeted-fixes\\.js|visual-policy\\.js|visual-runtime\\.js|google-direct\\.js|background-runtime\\.js|identity-names\\.js|slab-identity\\.js|identity-final\\.js|image-evidence\\.js|catalogue-engine\\.js|catalogue-sources\\.js|catalogue-runtime\\.js|lens-policy\\.js|lens-runtime\\.js)"))
+                if (!path.matches("/(index\\.html|editions\\.js|targeted-fixes\\.js|visual-policy\\.js|visual-runtime\\.js|google-direct\\.js|background-runtime\\.js|identity-names\\.js|slab-identity\\.js|identity-final\\.js|image-evidence\\.js|market-identity\\.js|catalogue-engine\\.js|catalogue-sources\\.js|catalogue-runtime\\.js|lens-policy\\.js|lens-runtime\\.js)"))
                     return missing();
                 try { return new WebResourceResponse(path.endsWith(".js") ? "application/javascript" : "text/html", "UTF-8", app.getAssets().open(path.substring(1))); }
                 catch (Exception ignored) { return missing(); }

@@ -1,0 +1,1242 @@
+{
+  "vision": {
+    "domain": "pokemon",
+    "kind": "card",
+    "category": "Pokémon",
+    "language": "it",
+    "object_unit": "single",
+    "image_views": [
+      {
+        "image_index": 1,
+        "view": "front",
+        "certainty": "clear"
+      }
+    ],
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.03,
+        "y": 0.01,
+        "width": 0.96,
+        "height": 0.98,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "Politoed",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.33,
+          "y": 0.07,
+          "width": 0.2,
+          "height": 0.06
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "language",
+        "text": "Italiano",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.3,
+          "y": 0.5,
+          "width": 0.45,
+          "height": 0.25
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "hp",
+        "text": "110 PV",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.69,
+          "y": 0.07,
+          "width": 0.17,
+          "height": 0.06
+        },
+        "zone": "statistics",
+        "alternatives": []
+      },
+      {
+        "field": "illustrator",
+        "text": "Mitsuhiro Arita",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.5,
+          "y": 0.88,
+          "width": 0.14,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "copyright",
+        "text": "© 2001 Pokémon / Nintendo",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.27,
+          "y": 0.88,
+          "width": 0.23,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "FASE 2; Evoluzione da Poliwag; Politormento di Fase 2; Crescita Improvvisa; Ranabalzo; Spruzza Energia",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.2,
+          "y": 0.02,
+          "width": 0.7,
+          "height": 0.65
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "collector_number",
+        "text": "H23H?",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.74,
+          "y": 0.88,
+          "width": 0.1,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": [
+          "H23H?",
+          "H23H??"
+        ]
+      }
+    ],
+    "features": [
+      {
+        "field": "border_color",
+        "value": "yellow",
+        "description": "Bordo giallo",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.03,
+          "y": 0.01,
+          "width": 0.96,
+          "height": 0.98
+        },
+        "zone": "border"
+      },
+      {
+        "field": "finish",
+        "value": "holo",
+        "description": "Area illustrata con motivo olografico",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.17,
+          "y": 0.12,
+          "width": 0.72,
+          "height": 0.36
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "layout",
+        "value": "Carta Pokémon verticale con illustrazione superiore e testo degli attacchi nella metà inferiore",
+        "description": "Impaginazione standard verticale",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.14,
+          "y": 0.02,
+          "width": 0.75,
+          "height": 0.9
+        },
+        "zone": "other"
+      }
+    ],
+    "hypotheses": [
+      {
+        "field": "family",
+        "value": "Pokémon"
+      }
+    ],
+    "slab_reading": null,
+    "engine_version": 193,
+    "brand": "",
+    "family": "Pokémon",
+    "title": "Politoed",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": {
+      "image_index": 1,
+      "x": 0.03,
+      "y": 0.01,
+      "width": 0.96,
+      "height": 0.98,
+      "certain": true
+    },
+    "photo_clues": [
+      {
+        "text": "Politoed",
+        "role": "subject",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.33,
+          "y": 0.07,
+          "width": 0.2,
+          "height": 0.06,
+          "certain": true
+        }
+      },
+      {
+        "text": "Italiano",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.3,
+          "y": 0.5,
+          "width": 0.45,
+          "height": 0.25,
+          "certain": true
+        }
+      },
+      {
+        "text": "110 PV",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.69,
+          "y": 0.07,
+          "width": 0.17,
+          "height": 0.06,
+          "certain": true
+        }
+      },
+      {
+        "text": "Mitsuhiro Arita",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.5,
+          "y": 0.88,
+          "width": 0.14,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "© 2001 Pokémon / Nintendo",
+        "role": "copyright",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.27,
+          "y": 0.88,
+          "width": 0.23,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "FASE 2; Evoluzione da Poliwag; Politormento di Fase 2; Crescita Improvvisa; Ranabalzo; Spruzza Energia",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.2,
+          "y": 0.02,
+          "width": 0.7,
+          "height": 0.65,
+          "certain": true
+        }
+      },
+      {
+        "text": "H23H?",
+        "role": "collector_number",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.74,
+          "y": 0.88,
+          "width": 0.1,
+          "height": 0.02,
+          "certain": true
+        }
+      }
+    ],
+    "physical_observations": [
+      {
+        "feature": "color",
+        "text": "yellow border",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Area illustrata con motivo olografico",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Impaginazione standard verticale",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      }
+    ],
+    "pokemon_printing": {
+      "is_pokemon": true,
+      "language": "it",
+      "set_name": "Pokémon",
+      "card_type": "pokemon",
+      "first_edition_stamp": "unclear",
+      "stamp_image": 0,
+      "stamp_location": "",
+      "stamp_text": "",
+      "artwork_shadow": "unclear",
+      "shadow_image": 0,
+      "shadow_location": "",
+      "copyright_text": "© 2001 Pokémon / Nintendo",
+      "copyright_image": 1
+    }
+  },
+  "phases": [
+    {
+      "stage": "vision",
+      "result": {
+        "domain": "pokemon",
+        "kind": "card",
+        "category": "Pokémon",
+        "language": "it",
+        "object_unit": "single",
+        "image_views": [
+          {
+            "image_index": 1,
+            "view": "front",
+            "certainty": "clear"
+          }
+        ],
+        "object_regions": [
+          {
+            "image_index": 1,
+            "x": 0.03,
+            "y": 0.01,
+            "width": 0.96,
+            "height": 0.98,
+            "certain": true
+          }
+        ],
+        "observations": [
+          {
+            "field": "subject",
+            "text": "Politoed",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.33,
+              "y": 0.07,
+              "width": 0.2,
+              "height": 0.06
+            },
+            "zone": "front",
+            "alternatives": []
+          },
+          {
+            "field": "language",
+            "text": "Italiano",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.3,
+              "y": 0.5,
+              "width": 0.45,
+              "height": 0.25
+            },
+            "zone": "front",
+            "alternatives": []
+          },
+          {
+            "field": "hp",
+            "text": "110 PV",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.69,
+              "y": 0.07,
+              "width": 0.17,
+              "height": 0.06
+            },
+            "zone": "statistics",
+            "alternatives": []
+          },
+          {
+            "field": "illustrator",
+            "text": "Mitsuhiro Arita",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.5,
+              "y": 0.88,
+              "width": 0.14,
+              "height": 0.02
+            },
+            "zone": "footer",
+            "alternatives": []
+          },
+          {
+            "field": "copyright",
+            "text": "© 2001 Pokémon / Nintendo",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.27,
+              "y": 0.88,
+              "width": 0.23,
+              "height": 0.02
+            },
+            "zone": "footer",
+            "alternatives": []
+          },
+          {
+            "field": "text",
+            "text": "FASE 2; Evoluzione da Poliwag; Politormento di Fase 2; Crescita Improvvisa; Ranabalzo; Spruzza Energia",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.2,
+              "y": 0.02,
+              "width": 0.7,
+              "height": 0.65
+            },
+            "zone": "front",
+            "alternatives": []
+          },
+          {
+            "field": "collector_number",
+            "text": "H23H?",
+            "certainty": "uncertain",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.74,
+              "y": 0.88,
+              "width": 0.1,
+              "height": 0.02
+            },
+            "zone": "footer",
+            "alternatives": [
+              "H23H?",
+              "H23H??"
+            ]
+          }
+        ],
+        "features": [
+          {
+            "field": "border_color",
+            "value": "yellow",
+            "description": "Bordo giallo",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.03,
+              "y": 0.01,
+              "width": 0.96,
+              "height": 0.98
+            },
+            "zone": "border"
+          },
+          {
+            "field": "finish",
+            "value": "holo",
+            "description": "Area illustrata con motivo olografico",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.17,
+              "y": 0.12,
+              "width": 0.72,
+              "height": 0.36
+            },
+            "zone": "surface"
+          },
+          {
+            "field": "layout",
+            "value": "Carta Pokémon verticale con illustrazione superiore e testo degli attacchi nella metà inferiore",
+            "description": "Impaginazione standard verticale",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.14,
+              "y": 0.02,
+              "width": 0.75,
+              "height": 0.9
+            },
+            "zone": "other"
+          }
+        ],
+        "hypotheses": [
+          {
+            "field": "family",
+            "value": "Pokémon"
+          }
+        ],
+        "slab_reading": null,
+        "engine_version": 193,
+        "brand": "",
+        "family": "Pokémon",
+        "title": "Politoed",
+        "model": "",
+        "variant": "",
+        "model_confidence": 0,
+        "family_confidence": 0,
+        "market_ready": false,
+        "normalized_query": "",
+        "candidate_models": [],
+        "identifier_hints": [],
+        "evidence": [],
+        "missing_information": [],
+        "next_photo_request": null,
+        "object_region": {
+          "image_index": 1,
+          "x": 0.03,
+          "y": 0.01,
+          "width": 0.96,
+          "height": 0.98,
+          "certain": true
+        },
+        "photo_clues": [
+          {
+            "text": "Politoed",
+            "role": "subject",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.33,
+              "y": 0.07,
+              "width": 0.2,
+              "height": 0.06,
+              "certain": true
+            }
+          },
+          {
+            "text": "Italiano",
+            "role": "text",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.3,
+              "y": 0.5,
+              "width": 0.45,
+              "height": 0.25,
+              "certain": true
+            }
+          },
+          {
+            "text": "110 PV",
+            "role": "text",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.69,
+              "y": 0.07,
+              "width": 0.17,
+              "height": 0.06,
+              "certain": true
+            }
+          },
+          {
+            "text": "Mitsuhiro Arita",
+            "role": "text",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.5,
+              "y": 0.88,
+              "width": 0.14,
+              "height": 0.02,
+              "certain": true
+            }
+          },
+          {
+            "text": "© 2001 Pokémon / Nintendo",
+            "role": "copyright",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.27,
+              "y": 0.88,
+              "width": 0.23,
+              "height": 0.02,
+              "certain": true
+            }
+          },
+          {
+            "text": "FASE 2; Evoluzione da Poliwag; Politormento di Fase 2; Crescita Improvvisa; Ranabalzo; Spruzza Energia",
+            "role": "text",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.2,
+              "y": 0.02,
+              "width": 0.7,
+              "height": 0.65,
+              "certain": true
+            }
+          },
+          {
+            "text": "H23H?",
+            "role": "collector_number",
+            "certainty": "uncertain",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.74,
+              "y": 0.88,
+              "width": 0.1,
+              "height": 0.02,
+              "certain": true
+            }
+          }
+        ],
+        "physical_observations": [
+          {
+            "feature": "color",
+            "text": "yellow border",
+            "certainty": "clear",
+            "entity": "target",
+            "image_index": 1
+          },
+          {
+            "feature": "finish",
+            "text": "Area illustrata con motivo olografico",
+            "certainty": "clear",
+            "entity": "target",
+            "image_index": 1
+          },
+          {
+            "feature": "finish",
+            "text": "Impaginazione standard verticale",
+            "certainty": "clear",
+            "entity": "target",
+            "image_index": 1
+          }
+        ],
+        "pokemon_printing": {
+          "is_pokemon": true,
+          "language": "it",
+          "set_name": "Pokémon",
+          "card_type": "pokemon",
+          "first_edition_stamp": "unclear",
+          "stamp_image": 0,
+          "stamp_location": "",
+          "stamp_text": "",
+          "artwork_shadow": "unclear",
+          "shadow_image": 0,
+          "shadow_location": "",
+          "copyright_text": "© 2001 Pokémon / Nintendo",
+          "copyright_image": 1
+        }
+      },
+      "webCalls": 0,
+      "usage": {
+        "input_tokens": 4350,
+        "input_tokens_details": {
+          "cache_write_tokens": 4347,
+          "cached_tokens": 0
+        },
+        "output_tokens": 1006,
+        "output_tokens_details": {
+          "reasoning_tokens": 227
+        },
+        "total_tokens": 5356
+      }
+    },
+    {
+      "stage": "flipcheck_pokemon_identity_bands",
+      "result": {
+        "observations": [
+          {
+            "field": "subject",
+            "text": "Politoed",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.222,
+              "y": 0.05076800000000001,
+              "width": 0.40319999999999995,
+              "height": 0.020384000000000003
+            },
+            "zone": "label",
+            "alternatives": [
+              "Politoed"
+            ],
+            "panel_role": "upper",
+            "panel_region": {
+              "image_index": 1,
+              "x": 0.2,
+              "y": 0.16,
+              "width": 0.42,
+              "height": 0.08
+            }
+          },
+          {
+            "field": "subset",
+            "text": "FASE 2",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.1548,
+              "y": 0.022740000000000003,
+              "width": 0.1152,
+              "height": 0.010192000000000001
+            },
+            "zone": "label",
+            "alternatives": [],
+            "panel_role": "upper",
+            "panel_region": {
+              "image_index": 1,
+              "x": 0.13,
+              "y": 0.05,
+              "width": 0.12,
+              "height": 0.04
+            }
+          },
+          {
+            "field": "hp",
+            "text": "110 PV",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.6828000000000001,
+              "y": 0.05076800000000001,
+              "width": 0.192,
+              "height": 0.017836000000000005
+            },
+            "zone": "statistics",
+            "alternatives": [],
+            "panel_role": "upper",
+            "panel_region": {
+              "image_index": 1,
+              "x": 0.68,
+              "y": 0.16,
+              "width": 0.2,
+              "height": 0.07
+            }
+          },
+          {
+            "field": "copyright",
+            "text": "© 2001 Pokémon / Nintendo",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.2508,
+              "y": 0.9429599999999999,
+              "width": 0.192,
+              "height": 0.00882
+            },
+            "zone": "footer",
+            "alternatives": [],
+            "panel_role": "lower",
+            "panel_region": {
+              "image_index": 1,
+              "x": 0.23,
+              "y": 0.84,
+              "width": 0.2,
+              "height": 0.03
+            }
+          },
+          {
+            "field": "illustrator",
+            "text": "Mitsuhiro Arita",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.5004,
+              "y": 0.9429599999999999,
+              "width": 0.1536,
+              "height": 0.00882
+            },
+            "zone": "footer",
+            "alternatives": [],
+            "panel_role": "lower",
+            "panel_region": {
+              "image_index": 1,
+              "x": 0.49,
+              "y": 0.84,
+              "width": 0.16,
+              "height": 0.03
+            }
+          },
+          {
+            "field": "collector_number",
+            "text": "H23/??",
+            "certainty": "uncertain",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.7212,
+              "y": 0.9429599999999999,
+              "width": 0.13440000000000002,
+              "height": 0.00882
+            },
+            "zone": "footer",
+            "alternatives": [],
+            "panel_role": "lower",
+            "panel_region": {
+              "image_index": 1,
+              "x": 0.72,
+              "y": 0.84,
+              "width": 0.14,
+              "height": 0.03
+            }
+          },
+          {
+            "field": "text",
+            "text": "ID #186",
+            "certainty": "uncertain",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.558,
+              "y": 0.4706,
+              "width": 0.192,
+              "height": 0.01764
+            },
+            "zone": "label",
+            "alternatives": [],
+            "panel_role": "artwork",
+            "panel_region": {
+              "image_index": 1,
+              "x": 0.55,
+              "y": 0.5,
+              "width": 0.2,
+              "height": 0.03
+            }
+          }
+        ],
+        "features": [
+          {
+            "field": "finish",
+            "value": "present",
+            "description": "Finitura holo visibile nell'ampia area illustrata, con motivo scintillante.",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.1452,
+              "y": 0.25892000000000004,
+              "width": 0.7296,
+              "height": 0.22932
+            },
+            "zone": "artwork",
+            "panel_role": "artwork",
+            "panel_region": {
+              "image_index": 1,
+              "x": 0.12,
+              "y": 0.14,
+              "width": 0.76,
+              "height": 0.39
+            }
+          },
+          {
+            "field": "rarity_symbol",
+            "value": "unclear",
+            "description": "Il simbolo di rarità non è identificabile con certezza.",
+            "certainty": "uncertain",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.8363999999999999,
+              "y": 0.9194399999999999,
+              "width": 0.0768,
+              "height": 0.02058
+            },
+            "zone": "footer",
+            "panel_role": "lower",
+            "panel_region": {
+              "image_index": 1,
+              "x": 0.84,
+              "y": 0.76,
+              "width": 0.08,
+              "height": 0.07
+            }
+          },
+          {
+            "field": "stamp",
+            "value": "absent",
+            "description": "Nessun timbro First Edition visibile nella fascia sotto l'illustrazione.",
+            "certainty": "clear",
+            "image_index": 1,
+            "region": {
+              "image_index": 1,
+              "x": 0.1452,
+              "y": 0.4118,
+              "width": 0.7296,
+              "height": 0.04704
+            },
+            "zone": "artwork",
+            "panel_role": "artwork",
+            "panel_region": {
+              "image_index": 1,
+              "x": 0.12,
+              "y": 0.4,
+              "width": 0.76,
+              "height": 0.08
+            }
+          }
+        ]
+      },
+      "webCalls": 0,
+      "usage": {
+        "input_tokens": 3980,
+        "input_tokens_details": {
+          "cache_write_tokens": 3977,
+          "cached_tokens": 0
+        },
+        "output_tokens": 1141,
+        "output_tokens_details": {
+          "reasoning_tokens": 422
+        },
+        "total_tokens": 5121
+      }
+    },
+    {
+      "stage": "flipcheck_evidence_detail",
+      "result": {
+        "details": [
+          {
+            "field": "collector_number",
+            "text": "H23/H32",
+            "certainty": "clear",
+            "evidence_found": true,
+            "image_index": 1
+          }
+        ]
+      },
+      "webCalls": 0,
+      "usage": {
+        "input_tokens": 3369,
+        "input_tokens_details": {
+          "cache_write_tokens": 3366,
+          "cached_tokens": 0
+        },
+        "output_tokens": 236,
+        "output_tokens_details": {
+          "reasoning_tokens": 191
+        },
+        "total_tokens": 3605
+      }
+    },
+    {
+      "stage": "flipcheck_catalogue_search",
+      "result": {
+        "entries": []
+      },
+      "webCalls": 1,
+      "usage": {
+        "input_tokens": 5331,
+        "input_tokens_details": {
+          "cache_write_tokens": 505,
+          "cached_tokens": 4651
+        },
+        "output_tokens": 136,
+        "output_tokens_details": {
+          "reasoning_tokens": 119
+        },
+        "total_tokens": 5467
+      }
+    }
+  ],
+  "entries": [
+    {
+      "id": "ecard3-H23",
+      "subject": "Politoed",
+      "number": "H23",
+      "local_number": "H23",
+      "family": "Skyridge",
+      "set_id": "ecard3",
+      "year": "2003",
+      "language": "en",
+      "brand": "Pokémon",
+      "hp": 110,
+      "illustrator": "Atsuko Nishida",
+      "attacks": [
+        "Sudden Growth",
+        "Frog Hop",
+        "Energy Splash"
+      ],
+      "attacks_language": "en",
+      "rarity": "Holo Rare",
+      "variants": [
+        {
+          "name": "Holo",
+          "finish": "holo"
+        }
+      ],
+      "printing_options": [],
+      "image_url": null,
+      "source": {
+        "url": "https://api.tcgdex.net/v2/en/cards/ecard3-H23",
+        "provider": "tcgdex",
+        "title": "Politoed · Skyridge"
+      },
+      "grounded": true,
+      "entry_quote": "{\"id\":\"ecard3-H23\",\"name\":\"Politoed\",\"localId\":\"H23\",\"set\":{\"cardCount\":{\"official\":144,\"total\":182},\"id\":\"ecard3\",\"logo\":\"https://assets.tcgdex.net/en/ecard/ecard3/logo\",\"name\":\"Skyridge\",\"symbol\":\"https://assets.tcgdex.net/univ/ecard/ecard3/symbol\"},\"variants\":{\"firstEdition\":false,\"holo\":true,\"normal\":false,\"reverse\":false,\"wPromo\":false}}",
+      "coverage": "documented_variants",
+      "subset": "",
+      "eligible": false,
+      "score": 80,
+      "matches": [
+        "subject",
+        "number",
+        "hp"
+      ],
+      "reasons": [
+        "different_printing_language",
+        "different_product_season"
+      ],
+      "nonblocking_differences": [
+        "different_illustrator"
+      ],
+      "photo_keys": {
+        "subject": "Politoed",
+        "number": "H23/H32",
+        "number_role": "collector_number",
+        "year": "2001",
+        "year_origin": "photo_copyright",
+        "language": "it",
+        "complete": true
+      }
+    }
+  ],
+  "pages": [],
+  "identification": {
+    "engine_version": 193,
+    "engine_final": true,
+    "kind": "card",
+    "category": "Pokémon",
+    "brand": "",
+    "family": "",
+    "model": "",
+    "title": "2001 · #H23/H32 · Politoed · IT",
+    "variant": "",
+    "language": "it",
+    "condition": "",
+    "closure_status": "pending",
+    "job_status": "identity_pending",
+    "status": "uncertain",
+    "identity_status": "partial",
+    "exact_identity_status": "unresolved",
+    "market_ready": false,
+    "model_verified": false,
+    "catalogue_core_verified": false,
+    "catalogue_verified": false,
+    "model_confidence": null,
+    "family_confidence": 0,
+    "catalogue_reference_language": null,
+    "language_origin": "original_photo",
+    "core_identity": {
+      "status": "partial",
+      "origin": "catalogue_engine",
+      "model": "2001 · #H23/H32 · Politoed",
+      "fields": [
+        {
+          "field": "subject",
+          "value": "Politoed",
+          "origin": "photo",
+          "source": null
+        },
+        {
+          "field": "catalog_number",
+          "value": "H23/H32",
+          "origin": "photo",
+          "source": null
+        },
+        {
+          "field": "year",
+          "value": "2001",
+          "origin": "photo",
+          "source": null
+        }
+      ],
+      "pending_fields": [
+        "catalogue"
+      ]
+    },
+    "identity_keys": {
+      "subject": {
+        "value": "Politoed"
+      },
+      "number": {
+        "value": "H23/H32"
+      },
+      "date": {
+        "value": "2001"
+      },
+      "language": {
+        "value": "it"
+      }
+    },
+    "photo_identity_keys": {
+      "subject": "Politoed",
+      "number": "H23/H32",
+      "number_role": "collector_number",
+      "year": "2001",
+      "year_origin": "photo_copyright",
+      "language": "it",
+      "complete": true
+    },
+    "physical_card_number": "H23/H32",
+    "pokedex_number": null,
+    "source_confirmed_catalog_number": null,
+    "source_confirmed_year": null,
+    "catalogue_release_year": null,
+    "printed_year": "2001",
+    "physical_serial": null,
+    "serial_number": null,
+    "variant_needs_verification": true,
+    "variant_check": "pending",
+    "variant_resolution": {
+      "status": "pending",
+      "pending": [
+        "catalogue"
+      ],
+      "labels": [],
+      "proof": []
+    },
+    "assistance_state": "unidentified",
+    "missing_information": [
+      "Riscontro catalografico"
+    ],
+    "next_photo_request": null,
+    "verification_summary": "Letture conservate; identità catalografica da completare.",
+    "normalized_query": "",
+    "candidate_models": [],
+    "catalogue_data": [
+      {
+        "field": "subject",
+        "value": "Politoed",
+        "origin": "photo",
+        "source": null
+      },
+      {
+        "field": "catalog_number",
+        "value": "H23/H32",
+        "origin": "photo",
+        "source": null
+      },
+      {
+        "field": "year",
+        "value": "2001",
+        "origin": "photo",
+        "source": null
+      }
+    ],
+    "identification_sources": [],
+    "evidence": [
+      "subject: Politoed",
+      "catalog_number: H23/H32",
+      "year: 2001"
+    ],
+    "object_unit": "single",
+    "pokemon_printing": {
+      "is_pokemon": true,
+      "language": "it",
+      "set_name": "Pokémon",
+      "card_type": "pokemon",
+      "first_edition_stamp": "unclear",
+      "stamp_image": 0,
+      "stamp_location": "",
+      "stamp_text": "",
+      "artwork_shadow": "unclear",
+      "shadow_image": 0,
+      "shadow_location": "",
+      "copyright_text": "© 2001 Pokémon / Nintendo",
+      "copyright_image": 1
+    },
+    "card_identity": {
+      "autograph": "unclear",
+      "patch": "unclear",
+      "manufacturer": null,
+      "subject": "Politoed",
+      "set": "",
+      "number": "H23/H32",
+      "date": "2001",
+      "language": "it",
+      "variant": null,
+      "rarity": null,
+      "rarity_symbol": "unclear",
+      "serial": null,
+      "has_rarity_symbol": null
+    },
+    "identity_display": "2001 · #H23/H32 · Politoed · IT"
+  }
+}
