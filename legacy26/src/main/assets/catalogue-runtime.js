@@ -396,7 +396,7 @@ const priorLock199=lockPhotoControls;lockPhotoControls=function(){priorLock199()
  let generation=0;
  const oldRender=renderIdent;
  function summary(value){
-  const c=value.card_identity||{},subject=value.localized_subject||c.subject||value.title||'Oggetto',family=c.set||value.family||'',date=c.date||value.source_confirmed_year||'';
+  const c=value.card_identity||{},subject=value.localized_subject||c.subject||value.name_identity?.[value.title_language||'it']||value.core_identity?.fields?.find(f=>f.field==='subject')?.value||value.title||'Oggetto',family=c.set||value.family||'',date=c.date||value.source_confirmed_year||value.core_identity?.fields?.find(f=>f.field==='year')?.value||'';
   const badges=[value.variant,c.autograph==='present'?'Auto':'',c.is_rookie?'RC':'',value.physical_serial?.value,({en:'ENG',it:'ITA',ja:'JPN',zh:'CHN','zh-hans':'CHN-S','zh-hant':'CHN-T',de:'DEU',fr:'FRA'})[value.language],value.grading?.grade?`${value.grading.company||''} ${value.grading.grade}`.trim():''].filter(Boolean);
   return {subject,subtitle:[date,family].filter(Boolean).join(' · '),badges:[...new Set(badges)]};
  }
@@ -421,11 +421,17 @@ const priorLock199=lockPhotoControls;lockPhotoControls=function(){priorLock199()
   header.innerHTML=`<div class="identity-eyebrow">ANALISI ${value.kind==='card'?'CARTA':'OGGETTO'}</div><div class="identity-row"><figure><img id="identityPhoto229" class="hide" alt=""><figcaption id="identityPhotoCaption229"></figcaption></figure><div class="identity-copy"><h2>${esc(s.subject)}</h2><p>${esc(s.subtitle)}</p><div class="identity-badges">${s.badges.map(b=>`<span>${esc(b)}</span>`).join('')}</div><div class="identity-state ${ready?'verified':'pending'}">${ready?'✓ Identità verificata':value.core_identity?.status==='confirmed'?'Dettaglio da verificare':'Identificazione da completare'}</div></div></div>`;
   $('identTitle').classList.add('hide');$('tags').classList.add('hide');
   panel.querySelector(':scope > .label')?.classList.add('hide');
-  const note=$('identNote');note.innerHTML=`${!ready?`<div class="identity-warning">${esc(value.next_photo_request||value.verification_summary||'Servono ulteriori prove.')}</div>`:''}<details><summary>Dettagli e fonti</summary><p>${esc([value.brand,value.physical_card_number?'Numero carta: '+value.physical_card_number:'',value.grading?.certificate?'Certificato: '+value.grading.certificate:''].filter(Boolean).join(' · '))}</p>${(value.identification_sources||[]).map(r=>safeSourceUrl189(r.url)?`<p><a href="${esc(safeSourceUrl189(r.url))}" rel="noopener noreferrer">${esc(r.title||'Fonte verificata')}</a></p>`:'').join('')}</details>`;
-  ['visualResult','identityState191'].forEach(id=>document.getElementById(id)?.remove());
+  const note=$('identNote'),printing=document.getElementById('printingPanel'),grading=document.getElementById('gradingIdentity191');note.innerHTML=`${!ready?`<div class="identity-warning">${esc(value.next_photo_request||value.verification_summary||'Servono ulteriori prove.')}</div>`:''}<details><summary>Dettagli e fonti</summary><p>${esc([value.brand,value.physical_card_number?'Numero carta: '+value.physical_card_number:'',value.grading?.certificate?'Certificato: '+value.grading.certificate:''].filter(Boolean).join(' · '))}</p>${(value.identification_sources||[]).map(r=>safeSourceUrl189(r.url)?`<p><a href="${esc(safeSourceUrl189(r.url))}" rel="noopener noreferrer">${esc(r.title||'Fonte verificata')}</a></p>`:'').join('')}</details>`;
+  if(printing)note.querySelector('details').appendChild(printing);if(grading)note.querySelector('details').appendChild(grading);
+  ['visualResult','identityState191'].forEach(id=>document.getElementById(id)?.classList.add('hide'));
   const input=$('confirmed');input.classList.toggle('hide',ready);if(input.previousElementSibling?.classList.contains('label'))input.previousElementSibling.classList.toggle('hide',ready);
   $('failBtn').classList.toggle('hide',ready);$('marketBtn').textContent=ready?'CERCA VALORE':'CONFERMA E CERCA MERCATO';
   let edit=$('editIdentity229');if(!edit){edit=document.createElement('button');edit.id='editIdentity229';edit.type='button';edit.className='btn ghost';edit.textContent='Modifica identificazione';$('marketBtn').after(edit);edit.onclick=()=>{input.classList.remove('hide');input.previousElementSibling?.classList.remove('hide');input.focus();};}edit.classList.toggle('hide',!ready);
   thumbnail(value,token).catch(()=>{});
  };
 })();
+// Market figures use only returned values; the concept's example prices are never shown.
+(function(){const previous=renderResult;renderResult=function(m,sources,ask,q){previous(m,sources,ask,q);const panel=$('resultPanel'),currency=m.currency||$('currency').value,low=Number(m.market_low),high=Number(m.market_high),resale=Number(m.quick_sale_price||m.market_low),fee=(Number($('feeRate').value)||0)/100;
+ const summary=document.createElement('div');summary.className='market-summary229';const valid=m.market_status!=='insufficient'&&low>0&&high>=low;
+ summary.innerHTML=`<div class="label">Valore di rivendita stimato</div><div class="market-range229">${valid?money(low,currency)+'–'+money(high,currency):'Dati insufficienti'}</div><p class="note">${Number(m.exact_completed_sales_count)||0} vendite esatte riportate dalle fonti</p>${ask!==null&&resale>0&&m.market_status!=='insufficient'?`<div class="purchase229"><div>Rivendita ipotizzata <b>${money(resale,currency)}</b></div><div>Spese stimate <b>− ${money(resale*fee,currency)}</b></div><div>Costo di acquisto <b>− ${money(ask,currency)}</b></div><div class="profit229">Margine stimato <b>${money(resale*(1-fee)-ask,currency)}</b></div></div>`:''}`;panel.prepend(summary);
+};})();

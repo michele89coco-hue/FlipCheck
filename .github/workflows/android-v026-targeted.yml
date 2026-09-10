@@ -58,6 +58,7 @@ jobs:
           cp /tmp/flipcheck26-printing.png artifact/browser-printing.png
           cp /tmp/flipcheck229-identity.png artifact/identity-screen.png
           cp /tmp/flipcheck229-slab.png artifact/slab-screen.png
+          cp /tmp/flipcheck229-market.png artifact/market-screen.png
       - name: Enable emulator acceleration
         run: sudo chmod a+rw /dev/kvm
       - name: Android 16 background, navigation and photo-picker checks without API
