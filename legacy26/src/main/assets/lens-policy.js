@@ -170,8 +170,8 @@ function reconcileOriginal208(l,readings,crops){
   }
   if(!value||field==='collector_number'&&!E.numberParts(value)||field==='serial'&&!E.serial(value)){rejected.push({field,reason:'invalid_value'});continue;}
   // Conflicting replies for the same field/image never win by array order.
-  if(list(readings).some(o=>o!==row&&E.semanticField(l.domain,o.field,o.crop_text)===field&&o.image_index===row.image_index&&(field!=='subject'||!panel221(l)||o.crop_id===row.crop_id)&&o.evidence_found===true&&o.certainty==='clear'&&norm(o.full_text)===norm(o.crop_text)&&norm(o.crop_text)!==norm(detail))){rejected.push({field,reason:'conflicting_original_views'});continue;}
-  const old=l.active(field).filter(a=>a.image_index===row.image_index&&(field!=='text'&&!(field==='subject'&&panel221(l))||norm(a.value)===norm(value)||field==='subject'&&a.original_views?.crop_id===crop.id)&&['vision','focused_vision','local_ocr','identity_band','lens_original_reread'].includes(a.source));
+  if(list(readings).some(o=>o!==row&&E.semanticField(l.domain,o.field,o.crop_text)===field&&o.image_index===row.image_index&&(field!=='subject'||!panel221(l))&&o.evidence_found===true&&o.certainty==='clear'&&norm(o.full_text)===norm(o.crop_text)&&norm(o.crop_text)!==norm(detail))){rejected.push({field,reason:'conflicting_original_views'});continue;}
+  const old=l.active(field).filter(a=>a.image_index===row.image_index&&(field!=='text'&&!(field==='subject'&&panel221(l))||norm(a.value)===norm(value))&&['vision','focused_vision','local_ocr','identity_band','lens_original_reread'].includes(a.source));
   if(field==='language'&&value==='zh'){const specific=old.find(a=>/^zh-(hans|hant)$/.test(a.value));if(specific)value=specific.value;}
   const atom=l.add(field,value,{source:'lens_original_reread',certainty:'clear',image_index:row.image_index,region:crop.region,raw:detail,supersedes:old.map(a=>a.id),original_views:{full,detail,crop_id:crop.id}});
   accepted.push({field,value,observation:atom.id,superseded:old.map(a=>a.id)});

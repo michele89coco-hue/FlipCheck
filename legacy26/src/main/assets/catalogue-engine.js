@@ -38,6 +38,7 @@ function semanticField(domain,field,value){
 }
 // Reuse independently typed original readings; a product logo is not a second person.
 function observationRole220(l,field,value){
+ if(field==='product'&&/^1st\s+/i.test(str(value))&&list(l.base.observations).some(o=>o.field==='product'&&o.certainty==='clear'&&norm(o.text||o.value).split(' ').includes(norm(value).replace(/^1st /,''))))return 'badge';
  if(field==='season'&&/championship|career|averaged|scored|born|biograf|campionat|stagione precedente|previous season/i.test(str(value)))return 'biography_text';
  if(field==='brand'&&/(?:©|copyright|all rights reserved|printed in)/i.test(str(value)))return 'copyright';
  if(field==='subset'&&list(l.base.observations).some(o=>o.field==='product'&&o.certainty==='clear'&&(' '+norm(o.text)+' ').includes(' '+norm(value)+' ')))return 'product';
@@ -102,7 +103,7 @@ function subjectMatch(a,b){const x=norm(a),y=norm(b);return x===y||x.split(' ').
 function profile(base){if(base.kind==='card'&&/magic|yu[ -]?gi|digimon|lorcana|dragon ball|standard tcg/i.test([base.category,base.family].join(' ')))return 'tcg';if(base.domain&&base.domain!=='unknown')return base.domain;if(base.object_unit==='box'||base.object_unit==='case'||/\bbox\b|confezione|sealed/i.test(base.category||''))return 'sealed';if(base.pokemon_printing?.is_pokemon||/pokemon|pokémon/i.test(base.category||''))return 'pokemon';if(/one piece/i.test([base.category,base.family].join(' ')))return 'onepiece';if(base.kind==='card'&&/panini|topps|upper deck|leaf|fleer|skybox|sports|basket|soccer|football|baseball|hockey/i.test([base.brand,base.family,base.category].join(' ')))return 'sports';return 'generic';}
 // Keep the explicitly typed subject when a later reading appends adjacent card text.
 function subject223(l,atoms){
- if(l.base.object_unit==='panel'){const names=unique(atoms.map(a=>a.value));return {...atoms[0],value:names.join(' & '),subjects:names,composed_from:atoms.map(a=>a.id)};}
+ if(l.base.object_unit==='panel'){const names=atoms.filter((a,i)=>atoms.findIndex(b=>subjectMatch(a.value,b.value))===i).map(a=>a.value);return {...atoms[0],value:names.join(' & '),subjects:names,composed_from:atoms.map(a=>a.id)};}
  const initial=list(l.base.observations).filter(o=>o.field==='subject'&&o.certainty==='clear');
  if(initial.length===1&&atoms.some(a=>!subjectMatch(a.value,initial[0].text||initial[0].value))){const anchor=initial[0].text||initial[0].value,words=norm(anchor).split(' '),context=new Set(list(l.base.observations).filter(o=>o.field==='text'&&o.certainty==='clear').flatMap(o=>norm(o.text||o.value).split(' ')));
   if(atoms.every(a=>{const w=norm(a.value).split(' ');return words.every(v=>w.includes(v))&&w.every(v=>words.includes(v)||context.has(v));}))return {...atoms[0],value:anchor,composed_from:atoms.map(a=>a.id)};
