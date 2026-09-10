@@ -1,0 +1,1464 @@
+{
+  "vision": {
+    "domain": "sports",
+    "kind": "card",
+    "category": "basketball trading card",
+    "language": "en",
+    "object_unit": "single",
+    "image_views": [
+      {
+        "image_index": 1,
+        "view": "front",
+        "certainty": "clear"
+      },
+      {
+        "image_index": 2,
+        "view": "back",
+        "certainty": "clear"
+      }
+    ],
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.05,
+        "y": 0.16,
+        "width": 0.91,
+        "height": 0.61,
+        "certain": true
+      },
+      {
+        "image_index": 2,
+        "x": 0.05,
+        "y": 0.18,
+        "width": 0.91,
+        "height": 0.62,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "LUKA DONCIC",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.52,
+          "y": 0.69,
+          "width": 0.32,
+          "height": 0.04
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "brand",
+        "text": "PANINI",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.69,
+          "y": 0.74,
+          "width": 0.09,
+          "height": 0.03
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "product",
+        "text": "2018-19 PANINI PRIZM BASKETBALL",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.1,
+          "y": 0.68,
+          "width": 0.3,
+          "height": 0.03
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "team",
+        "text": "DALLAS MAVERICKS",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.56,
+          "y": 0.74,
+          "width": 0.26,
+          "height": 0.03
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "collector_number",
+        "text": "NO. 280",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.1,
+          "y": 0.23,
+          "width": 0.12,
+          "height": 0.03
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "season",
+        "text": "2018-19",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.1,
+          "y": 0.68,
+          "width": 0.08,
+          "height": 0.03
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "copyright",
+        "text": "© 2018 Panini America, Inc. © 2018 NBA Properties, Inc. Printed in the USA.",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.1,
+          "y": 0.77,
+          "width": 0.42,
+          "height": 0.05
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "RC",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.09,
+          "y": 0.22,
+          "width": 0.07,
+          "height": 0.06
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "SEASON TEAM G FG% FT% 3PM RPG APG STL BLK PTS PPG",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.1,
+          "y": 0.63,
+          "width": 0.72,
+          "height": 0.03
+        },
+        "zone": "statistics",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "With Real Madrid, Doncic donned jersey No. 7 en route to claiming MVP honors and leading the Spanish side to a Euroleague crown in 2017-18.",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.1,
+          "y": 0.53,
+          "width": 0.75,
+          "height": 0.08
+        },
+        "zone": "back",
+        "alternatives": []
+      }
+    ],
+    "features": [
+      {
+        "field": "border_color",
+        "value": "green",
+        "description": "bordo/finitura verde",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.07,
+          "y": 0.18,
+          "width": 0.85,
+          "height": 0.57
+        },
+        "zone": "border"
+      },
+      {
+        "field": "pattern",
+        "value": "geometric diagonal lines and dotted prismatic pattern",
+        "description": "linee diagonali e trama puntinata prismatica",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.12,
+          "y": 0.2,
+          "width": 0.78,
+          "height": 0.55
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "finish",
+        "value": "reflective",
+        "description": "finitura prismatico-riflettente",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.07,
+          "y": 0.18,
+          "width": 0.85,
+          "height": 0.57
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "stamp",
+        "value": "present",
+        "description": "badge RC visibile",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.09,
+          "y": 0.22,
+          "width": 0.07,
+          "height": 0.06
+        },
+        "zone": "label"
+      },
+      {
+        "field": "rookie",
+        "value": "present",
+        "description": "badge RC",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.09,
+          "y": 0.22,
+          "width": 0.07,
+          "height": 0.06
+        },
+        "zone": "label"
+      },
+      {
+        "field": "layout",
+        "value": "vertical action portrait with Prizm logo and team nameplate",
+        "description": "ritratto verticale d'azione",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.07,
+          "y": 0.18,
+          "width": 0.85,
+          "height": 0.57
+        },
+        "zone": "other"
+      }
+    ],
+    "hypotheses": [],
+    "slab_reading": {
+      "grader": "",
+      "label_text": "",
+      "card_title": "",
+      "subject": "",
+      "family": "",
+      "model": "",
+      "year": "",
+      "card_number": "",
+      "variant": "",
+      "grade": "",
+      "certificate": "",
+      "match_details": "",
+      "grader_mark": "",
+      "grader_certainty": "uncertain",
+      "normalized_subject": {
+        "original": "LUKA DONCIC",
+        "it": "Luka Dončić",
+        "en": "Luka Dončić",
+        "certainty": "clear"
+      },
+      "present": false,
+      "certainty": "clear",
+      "title_certainty": "uncertain",
+      "grade_certainty": "uncertain",
+      "certificate_certainty": "uncertain",
+      "secondary_text_incomplete": false,
+      "subgrades": [],
+      "image_index": 1,
+      "object_match": "unclear"
+    },
+    "engine_version": 193,
+    "brand": "PANINI",
+    "family": "2018-19 PANINI PRIZM BASKETBALL",
+    "title": "LUKA DONCIC",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": {
+      "image_index": 1,
+      "x": 0.05,
+      "y": 0.16,
+      "width": 0.91,
+      "height": 0.61,
+      "certain": true
+    },
+    "photo_clues": [
+      {
+        "text": "LUKA DONCIC",
+        "role": "subject",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.52,
+          "y": 0.69,
+          "width": 0.32,
+          "height": 0.04,
+          "certain": true
+        }
+      },
+      {
+        "text": "PANINI",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.69,
+          "y": 0.74,
+          "width": 0.09,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "2018-19 PANINI PRIZM BASKETBALL",
+        "role": "model",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.1,
+          "y": 0.68,
+          "width": 0.3,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "DALLAS MAVERICKS",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.56,
+          "y": 0.74,
+          "width": 0.26,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "NO. 280",
+        "role": "collector_number",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.1,
+          "y": 0.23,
+          "width": 0.12,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "2018-19",
+        "role": "season",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.1,
+          "y": 0.68,
+          "width": 0.08,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "© 2018 Panini America, Inc. © 2018 NBA Properties, Inc. Printed in the USA.",
+        "role": "copyright",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.1,
+          "y": 0.77,
+          "width": 0.42,
+          "height": 0.05,
+          "certain": true
+        }
+      },
+      {
+        "text": "RC",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.09,
+          "y": 0.22,
+          "width": 0.07,
+          "height": 0.06,
+          "certain": true
+        }
+      },
+      {
+        "text": "SEASON TEAM G FG% FT% 3PM RPG APG STL BLK PTS PPG",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.1,
+          "y": 0.63,
+          "width": 0.72,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "With Real Madrid, Doncic donned jersey No. 7 en route to claiming MVP honors and leading the Spanish side to a Euroleague crown in 2017-18.",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.1,
+          "y": 0.53,
+          "width": 0.75,
+          "height": 0.08,
+          "certain": true
+        }
+      }
+    ],
+    "physical_observations": [
+      {
+        "feature": "color",
+        "text": "green border",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "pattern",
+        "text": "linee diagonali e trama puntinata prismatica",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "finitura prismatico-riflettente",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "badge RC visibile",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "badge RC",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "ritratto verticale d'azione",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      }
+    ]
+  },
+  "batches": [
+    {
+      "ids": [
+        "lens-1"
+      ],
+      "reply": {
+        "original_readings": [],
+        "comparisons": [
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.048,
+                "y": 0.166
+              },
+              {
+                "x": 0.952,
+                "y": 0.166
+              },
+              {
+                "x": 0.952,
+                "y": 0.769
+              },
+              {
+                "x": 0.048,
+                "y": 0.769
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.099,
+                "y": 0.279
+              },
+              {
+                "x": 0.894,
+                "y": 0.279
+              },
+              {
+                "x": 0.894,
+                "y": 0.939
+              },
+              {
+                "x": 0.099,
+                "y": 0.939
+              }
+            ],
+            "reference_id": "lens-1",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "LUKA DONCIC",
+              "number": "280",
+              "year": "",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Doncic shooting with raised basketball",
+                "reference": "Same shooting pose and artwork",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Green geometric Prizm border and blue nameplate",
+                "reference": "Green geometric Prizm border and blue nameplate",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "identifier",
+                "original": "No. 280 visible only on back",
+                "reference": "#280 on slab label",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "LUKA DONCIC",
+              "family": "2018-19 PANINI PRIZM BASKETBALL",
+              "number": "280",
+              "year": "2018",
+              "brand": "PANINI",
+              "subset": "Green Prizm",
+              "proof": {
+                "subject": "LUKA DONCIC",
+                "family": "2018 PANINI PRIZM",
+                "year": "2018",
+                "subset": "GREEN PRIZM"
+              },
+              "display_names": {
+                "it": "Luka Dončić",
+                "en": "Luka Dončić"
+              }
+            },
+            "local_appearance": {
+              "original": {
+                "state": "measured",
+                "method": "quad_normalized_hsv_texture",
+                "regions": {
+                  "frame": {
+                    "hist": [
+                      0.07903780068728522,
+                      0.015654830087819777,
+                      0.0061092019854906456,
+                      0.0683466972126766,
+                      0.24856815578465064,
+                      0.0782741504390989,
+                      0.01718213058419244,
+                      0.039709812905689194,
+                      0.05154639175257732,
+                      0.009545628102329133,
+                      0.012218403970981291,
+                      0.031309660175639555
+                    ],
+                    "n": 2619,
+                    "texture": 0.08065682151437638,
+                    "glare_fraction": 0.003436426116838488,
+                    "neutral_fraction": 0.33906071019473083
+                  },
+                  "background": {
+                    "hist": [
+                      0.08236705317872851,
+                      0.0059976009596161535,
+                      0.001599360255897641,
+                      0.003598560575769692,
+                      0.005197920831667333,
+                      0.022790883646541384,
+                      0.04078368652538984,
+                      0.33426629348260695,
+                      0.1675329868052779,
+                      0.040383846461415435,
+                      0.029188324670131948,
+                      0.0699720111955218
+                    ],
+                    "n": 2501,
+                    "texture": 0.10372266196078438,
+                    "glare_fraction": 0.00039984006397441024,
+                    "neutral_fraction": 0.19592163134746102
+                  }
+                },
+                "frame_color": "green",
+                "foil": "undetermined",
+                "paid_requests": 0,
+                "identity_proof": false
+              },
+              "reference": {
+                "state": "measured",
+                "method": "quad_normalized_hsv_texture",
+                "regions": {
+                  "frame": {
+                    "hist": [
+                      0.048109965635738834,
+                      0.018709431080565102,
+                      0.005345551737304314,
+                      0.004581901489117984,
+                      0.06872852233676977,
+                      0.3829705994654448,
+                      0.012218403970981291,
+                      0.053073692248949984,
+                      0.018709431080565102,
+                      0.004200076365024819,
+                      0.010691103474608629,
+                      0.0572737686139748
+                    ],
+                    "n": 2619,
+                    "texture": 0.07458125101280184,
+                    "glare_fraction": 0.0015273004963726614,
+                    "neutral_fraction": 0.2699503627338679
+                  },
+                  "background": {
+                    "hist": [
+                      0.1519392243102759,
+                      0.09236305477808876,
+                      0.001999200319872051,
+                      0,
+                      0,
+                      0.0011995201919232307,
+                      0.011995201919232307,
+                      0.2383046781287485,
+                      0.1283486605357857,
+                      0.03318672530987605,
+                      0.015193922431027589,
+                      0.010795681727309077
+                    ],
+                    "n": 2501,
+                    "texture": 0.10273399395727563,
+                    "glare_fraction": 0.0007996801279488205,
+                    "neutral_fraction": 0.1995201919232307
+                  }
+                },
+                "frame_color": "mixed",
+                "foil": "undetermined",
+                "paid_requests": 0,
+                "identity_proof": false
+              },
+              "comparison": {
+                "state": "measured",
+                "frame_histogram_distance": 0.3335242458953799,
+                "frame_color_agrees": false,
+                "frame_color": "green",
+                "texture_difference": 0.006075570501574534,
+                "foil": "undetermined",
+                "identity_proof": false
+              }
+            }
+          }
+        ]
+      },
+      "accepted": [
+        "lens-1"
+      ]
+    }
+  ],
+  "references": [
+    {
+      "id": "lens-1",
+      "position": 1,
+      "title": "2018 LUKA DONCIC PANINI PRIZM GREEN PRIZM CARD #280 PSA GEM ...",
+      "url": "https://www.ebay.com/itm/375460430496",
+      "image_url": "https://i.ebayimg.com/images/g/xoMAAOSwOmxmWhvL/s-l1200.png",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRhwfrqua46tvxK5kIubtehJi9pOVHLDR8RtxszJOc1HIdt2SEr",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "280"
+        ],
+        "languages": [],
+        "years": [
+          "2018"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_year"
+      ],
+      "matches": [
+        "number",
+        "subject",
+        "brand"
+      ],
+      "missing": [
+        "finish",
+        "stamp"
+      ],
+      "verification_state": "rejected",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 173,
+        "reasons": [
+          "identifier_agrees",
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [
+            "280"
+          ],
+          "years": [
+            "2018"
+          ]
+        },
+        "index": 0
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "2018 PANINI PRIZM\nLUKA DONCIC\nGREEN PRIZM\nRC\n#280\nGEM MT\n10\n42872 143\nLUKA DONCIC\nDALLAS MAVERICKS",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-4",
+      "position": 4,
+      "title": "Luka Doncic 2018 Prizm #280 Choice Green /8 Price Guide ...",
+      "url": "https://www.sportscardinvestor.com/cards/luka-doncic-basketball/2018-prizm-choice-green-280",
+      "image_url": "https://images.production.sportscardinvestor.com/3_18_1923_280-L",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRJFNdOUWiIgbIaod4MCPCHjvgnIwPOGjUq-w0AFbSKcup-nOlv",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "280"
+        ],
+        "languages": [],
+        "years": [
+          "2018"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_year"
+      ],
+      "matches": [
+        "number",
+        "subject"
+      ],
+      "missing": [
+        "finish",
+        "stamp"
+      ],
+      "verification_state": "rejected",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 173,
+        "reasons": [
+          "identifier_agrees",
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [
+            "280"
+          ],
+          "years": [
+            "2018"
+          ]
+        },
+        "index": 3
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "DALLAS MAVERICKS\nLUKA DONCTC",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-8",
+      "position": 8,
+      "title": "Luka Doncic 2018 Prizm #280 Green Pulsar /25 Price Guide ...",
+      "url": "https://www.sportscardinvestor.com/cards/luka-doncic-basketball/2018-prizm-green-pulsar-280",
+      "image_url": "https://images.production.sportscardinvestor.com/3_18_1873-L",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSnwFYTWxMsrAAoW2uicx9TE39HfvlFNg_hIFQ5eFNAc5kNFhWb",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "280"
+        ],
+        "languages": [],
+        "years": [
+          "2018"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_year"
+      ],
+      "matches": [
+        "number",
+        "subject"
+      ],
+      "missing": [
+        "finish",
+        "stamp"
+      ],
+      "verification_state": "rejected",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 173,
+        "reasons": [
+          "identifier_agrees",
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [
+            "280"
+          ],
+          "years": [
+            "2018"
+          ]
+        },
+        "index": 7
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "PRN\nDALLAS MAVERICKS\nLUKADO",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-12",
+      "position": 12,
+      "title": "2018-19 Panini Prizm- Luka Dončić #280 (RC) Green Prizm RC PSA9",
+      "url": "https://www.efix.uz/?n=37546914111100",
+      "image_url": "https://i.ebayimg.com/thumbs/images/g/fIMAAOSwRFBjd7Li/s-l1600.jpg",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTBipbwgP7VvN0LBX4L71cbscxVYRT785JFji4sTi6N1uJD-cGK",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "280"
+        ],
+        "languages": [],
+        "years": [
+          "2018-19"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "number",
+        "year",
+        "subject",
+        "brand"
+      ],
+      "missing": [
+        "finish",
+        "stamp"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 173,
+        "reasons": [
+          "identifier_agrees",
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [
+            "280"
+          ],
+          "years": [
+            "2018"
+          ]
+        },
+        "index": 11
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "PRZn\nLUKA DONCIe\nDALLAS MAVERICKS",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-35",
+      "position": 35,
+      "title": "Luka Doncic 2018 Prizm #280 Choice Blue Yellow Green Price ...",
+      "url": "https://www.sportscardinvestor.com/cards/luka-doncic-basketball/2018-prizm-choice-blue-yellow-green-280",
+      "image_url": "https://i.ebayimg.com/thumbs/images/g/B4AAAOSwBJxleR5b/s-l1600.jpg",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRyUAPkkuJPunWnL_v6HbhvkDv_ceKmwaWqguYKC9sOFZyclCvS",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "280"
+        ],
+        "languages": [],
+        "years": [
+          "2018"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_year"
+      ],
+      "matches": [
+        "number",
+        "subject"
+      ],
+      "missing": [
+        "finish",
+        "stamp"
+      ],
+      "verification_state": "rejected",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 173,
+        "reasons": [
+          "identifier_agrees",
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [
+            "280"
+          ],
+          "years": [
+            "2018"
+          ]
+        },
+        "index": 34
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "RC\nCARO\nLUKA DONCIC\nDALLAS MAVERICKS",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-41",
+      "position": 41,
+      "title": "2018 Panini Prizm Green Prizms Luka Doncic ROOKIE #280 PSA ...",
+      "url": "https://www.fanaticscollect.com/buy-now/aab55220-b6f1-40f1-abfd-9d4480b0ef42/2018-panini-prizm-green-prizms-luka-doncic-rookie-280-psa-10-gem-mint",
+      "image_url": "https://cdn-vault.fanaticscollect.com/2022/9/23/rm2/medium/v450440_2022092311153962R_21.jpg",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSjeIsa3rVjNA8Avb9Qj5AWJZR9wJeEWjPqIyzlSUtGokHjaw0L",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "280"
+        ],
+        "languages": [],
+        "years": [
+          "2018"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_year"
+      ],
+      "matches": [
+        "number",
+        "subject",
+        "brand"
+      ],
+      "missing": [
+        "finish",
+        "stamp"
+      ],
+      "verification_state": "rejected",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 173,
+        "reasons": [
+          "identifier_agrees",
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [
+            "280"
+          ],
+          "years": [
+            "2018"
+          ]
+        },
+        "index": 40
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "2018 PANINI PRIZM\nLUKA DONCIC\nGREEN PRIZM\nRC\nCARD\n#280\nGEM MT\n10\n65707652\nPRZ\nLUKA DONCIC\nDALLAS MAVERICKS",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-46",
+      "position": 46,
+      "title": "2018/19 Panini Prizm Luka Doncic Green Prizm Rookie #280 PSA ...",
+      "url": "https://www.dacardworld.com/singles/2018-panini-prizm-luka-doncic-green-prizm-rookie-280-psa-9",
+      "image_url": "https://assets.dacw.co/itemimages/965880f.jpg",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRjHISYwECMfbVCnaGaCPHGzTawUJNqjn2nFX_CjGTY6-uq9VEW",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "2018/19"
+        ],
+        "languages": [],
+        "years": [
+          "2018-19"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_number"
+      ],
+      "matches": [
+        "year",
+        "subject",
+        "brand"
+      ],
+      "missing": [
+        "finish",
+        "stamp"
+      ],
+      "verification_state": "rejected",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 173,
+        "reasons": [
+          "identifier_agrees",
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [
+            "2018/19"
+          ],
+          "labelled": [
+            "280"
+          ],
+          "years": [
+            "2018"
+          ]
+        },
+        "index": 45
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "2018 PANINI PRIZM\nLUKA DONCIC\nGREEN PRIZM\nRC\nCARD\n-A\n#280\nMINT\n42981027\nPRZN\nLUKA DONCIC\nDALLAS MAVERICKS\n9",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-10",
+      "position": 10,
+      "title": "Luka Doncic [Pink Ice Prizm] #280 Prices | 2018 Panini Prizm ...",
+      "url": "https://www.sportscardspro.com/game/basketball-cards-2018-panini-prizm/luka-doncic-pink-ice-prizm-280",
+      "image_url": "https://storage.googleapis.com/images.pricecharting.com/jvv4y2brau5mqgax/1600.jpg",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQptXWa2J7fDxxgfchTtev_fvx9JeP5C1MeAyn2TLrxPrEqp1R0",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "280"
+        ],
+        "languages": [],
+        "years": [
+          "2018"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_year"
+      ],
+      "matches": [
+        "number",
+        "subject",
+        "brand"
+      ],
+      "missing": [
+        "finish",
+        "stamp"
+      ],
+      "verification_state": "rejected",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 143,
+        "reasons": [
+          "identifier_agrees",
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [
+            "280"
+          ],
+          "years": [
+            "2018"
+          ]
+        },
+        "index": 9
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "LUKA DONCIe\nDALLAS MAVERICKS\nL",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-25",
+      "position": 25,
+      "title": "Luka Doncic Signed 2018-19 Panini Prizm Hyper #280 Auto PSA ...",
+      "url": "https://www.ebay.com/itm/256350287493",
+      "image_url": "https://i.ebayimg.com/images/g/VFkAAOSw~c1lhL6h/s-l1200.jpg",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSMZaTmte5mqp2YiE9HCoa_SUTXHLom1maO_-dS4Bnx0KBCkyBn",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "280"
+        ],
+        "languages": [],
+        "years": [
+          "2018-19"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "number",
+        "year",
+        "subject",
+        "brand"
+      ],
+      "missing": [
+        "finish",
+        "stamp"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 143,
+        "reasons": [
+          "identifier_agrees",
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [
+            "280"
+          ],
+          "years": [
+            "2018"
+          ]
+        },
+        "index": 24
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "TRADING CARD\nLUKA DONCIC\nPSA/DNA CERTIFIED\nRC\nAUTHENTIC\nAUTO\n85148249\nUKA DONCIC\nBALLAS MAVERIICKS",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-37",
+      "position": 37,
+      "title": "2018-19 prizm luka doncic RWB Rc #280 | eBay",
+      "url": "https://www.ebay.com/itm/255459780226",
+      "image_url": "https://i.ebayimg.com/images/g/Qv4AAOSwjt1iQfQQ/s-l400.jpg",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQKtrlAJPhpwQpdXxE1VlZHp6q0qIfGWmJkH0wQo2gjgD9u_nqa",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "280"
+        ],
+        "languages": [],
+        "years": [
+          "2018-19"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "number",
+        "year",
+        "subject"
+      ],
+      "missing": [
+        "finish",
+        "stamp"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 143,
+        "reasons": [
+          "identifier_agrees",
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [
+            "280"
+          ],
+          "years": [
+            "2018"
+          ]
+        },
+        "index": 36
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "DALLAS MAVERICKS\nLUKA DONCIC",
+        "origin": "candidate_image_ocr"
+      }
+    }
+  ],
+  "crops": [
+    {
+      "id": "original-1-upper",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.03425925925925926,
+        "y": 0.14487179487179488,
+        "width": 0.9407407407407408,
+        "height": 0.21324786324786324
+      }
+    },
+    {
+      "id": "original-1-lower",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.03425925925925926,
+        "y": 0.5594017094017094,
+        "width": 0.9407407407407408,
+        "height": 0.22564102564102564
+      }
+    },
+    {
+      "id": "original-2-upper",
+      "image_index": 2,
+      "region": {
+        "image_index": 2,
+        "x": 0.03425925925925926,
+        "y": 0.16495726495726495,
+        "width": 0.9407407407407408,
+        "height": 0.21623931623931625
+      }
+    },
+    {
+      "id": "original-2-lower",
+      "image_index": 2,
+      "region": {
+        "image_index": 2,
+        "x": 0.03425925925925926,
+        "y": 0.5863247863247864,
+        "width": 0.9407407407407408,
+        "height": 0.22905982905982905
+      }
+    }
+  ],
+  "details": {},
+  "lens_state": "ok"
+}

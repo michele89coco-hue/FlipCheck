@@ -1,0 +1,306 @@
+{
+  "vision": {
+    "domain": "sports",
+    "kind": "card",
+    "category": "sports collectible panel",
+    "language": "",
+    "object_unit": "panel",
+    "image_views": [
+      {
+        "image_index": 1,
+        "view": "front",
+        "certainty": "clear"
+      }
+    ],
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.07,
+        "y": 0.35,
+        "width": 0.86,
+        "height": 0.29,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "Manoel Francisco Santos",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.13,
+          "y": 0.58,
+          "width": 0.27,
+          "height": 0.02
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "subject",
+        "text": "Edvaldo Alves Santa Rosa “Pelé”",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.43,
+          "y": 0.58,
+          "width": 0.32,
+          "height": 0.02
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "MANOEL FRANCISCO SANTOS",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.13,
+          "y": 0.58,
+          "width": 0.27,
+          "height": 0.02
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "EDVALDO ALVES SANTAROSA “PELÉ”",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.43,
+          "y": 0.58,
+          "width": 0.32,
+          "height": 0.02
+        },
+        "zone": "front",
+        "alternatives": [
+          "EDVALDO ALVES SANTA ROSA “PELÉ”"
+        ]
+      }
+    ],
+    "features": [
+      {
+        "field": "border_color",
+        "value": "red",
+        "description": "Cornice esterna rossa",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.07,
+          "y": 0.35,
+          "width": 0.68,
+          "height": 0.28
+        },
+        "zone": "border"
+      },
+      {
+        "field": "layout",
+        "value": "pannello doppio con due ritratti affiancati e divisore centrale",
+        "description": "Due ritratti frontali su sfondo azzurro",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.1,
+          "y": 0.38,
+          "width": 0.65,
+          "height": 0.24
+        },
+        "zone": "artwork"
+      },
+      {
+        "field": "finish",
+        "value": "normal",
+        "description": "Superficie apparentemente non olografica",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.1,
+          "y": 0.35,
+          "width": 0.65,
+          "height": 0.28
+        },
+        "zone": "surface"
+      }
+    ],
+    "hypotheses": [
+      {
+        "field": "family",
+        "value": "calcio brasiliano"
+      },
+      {
+        "field": "brand",
+        "value": "sconosciuto"
+      },
+      {
+        "field": "model",
+        "value": "sconosciuto"
+      }
+    ],
+    "slab_reading": null,
+    "engine_version": 193,
+    "brand": "sconosciuto",
+    "family": "calcio brasiliano",
+    "title": "Manoel Francisco Santos",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": {
+      "image_index": 1,
+      "x": 0.07,
+      "y": 0.35,
+      "width": 0.86,
+      "height": 0.29,
+      "certain": true
+    },
+    "photo_clues": [
+      {
+        "text": "Manoel Francisco Santos",
+        "role": "subject",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.13,
+          "y": 0.58,
+          "width": 0.27,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "Edvaldo Alves Santa Rosa “Pelé”",
+        "role": "subject",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.43,
+          "y": 0.58,
+          "width": 0.32,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "MANOEL FRANCISCO SANTOS",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.13,
+          "y": 0.58,
+          "width": 0.27,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "EDVALDO ALVES SANTAROSA “PELÉ”",
+        "role": "text",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.43,
+          "y": 0.58,
+          "width": 0.32,
+          "height": 0.02,
+          "certain": true
+        }
+      }
+    ],
+    "physical_observations": [
+      {
+        "feature": "color",
+        "text": "red border",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Due ritratti frontali su sfondo azzurro",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Superficie apparentemente non olografica",
+        "certainty": "uncertain",
+        "entity": "target",
+        "image_index": 1
+      }
+    ]
+  },
+  "batches": [],
+  "references": [],
+  "crops": [],
+  "details": {
+    "attempted": true,
+    "requested": [
+      {
+        "key": "detail:collector_number:front",
+        "field": "collector_number",
+        "region": null,
+        "image_index": 1,
+        "rotation": 0,
+        "readings": []
+      }
+    ],
+    "images": [
+      {
+        "originalWidth": 1080,
+        "originalHeight": 2340,
+        "imageIndex": 1,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 2340
+        },
+        "cropped": false,
+        "searchWindow": false,
+        "sentWidth": 945,
+        "sentHeight": 2048,
+        "mimeType": "image/jpeg",
+        "jpegQuality": 0.94,
+        "source": "original_file",
+        "orientation": "from-image",
+        "unit": "unknown"
+      }
+    ],
+    "updates": [
+      {
+        "field": "collector_number",
+        "text": "",
+        "certainty": "uncertain",
+        "evidence_found": false,
+        "image_index": 1
+      }
+    ],
+    "evidence_found": false,
+    "committed_revision": 6
+  },
+  "lens_state": "quota_exhausted"
+}
