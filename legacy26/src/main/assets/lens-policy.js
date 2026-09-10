@@ -85,7 +85,7 @@ function filterOcr214(refs,l){
  for(const ref of ranked){const text=[ref.title,ref.snippet,ref.ocr?.text,ref.page_text].filter(Boolean).join(' ').trim(),reasons=[];
   const facts=ref.ocrRank.facts,physical=l.pick('collector_number')?.value;
   // Bare OCR numerals are not identifiers. Only labelled/full codes can eliminate a reference.
-  if(physical&&ref.ocrRank.reasons.includes('identifier_differs'))reasons.push('incompatible_identifier');
+  if(physical&&ref.ocr?.state==='ok'&&ref.ocrRank.reasons.includes('identifier_differs'))reasons.push('incompatible_identifier');
   const model=l.pick('model_code')?.value||l.pick('sku')?.value;
   if(model&&!norm(text).includes(norm(model))&&/\b(?:model|modello|sku)\s*[:#]/i.test(text))reasons.push('incompatible_model');
   if(!text)reasons.push('no_associated_text');

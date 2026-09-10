@@ -135,7 +135,7 @@ async function compareLensImages206(l,ctx){
  const allowed=new Set([...filtered.eligible,...filtered.reserve].map(r=>r.id));
  const pending=new Set(refs.filter(r=>allowed.has(r.id)).map(r=>r.id));let compactRetry=false;
  // A full web reserve fits only before spending comparison calls: recover identifiers now when OCR found no compatible one.
- if(l.pick('collector_number')&&!filtered.eligible.some(r=>r.ocrRank.reasons.includes('identifier_agrees'))&&l.attempt('early-web-214')){const found=await searchCatalogue193(l,ctx,'identity',report.pages);ctx.earlyWeb214=found;report.pages.push(...found.pages);if(found.entries.length){report.entries.push(...found.entries);report.state='catalogue_recovery';report.stopReason='targeted_web_before_comparison';return {entries:report.entries};}}
+ if(l.pick('collector_number')&&filtered.excluded.length===refs.length&&filtered.excluded.every(r=>r.reasons.includes('incompatible_identifier'))&&l.attempt('early-web-214')){const found=await searchCatalogue193(l,ctx,'identity',report.pages);ctx.earlyWeb214=found;report.pages.push(...found.pages);if(found.entries.length){report.entries.push(...found.entries);report.state='catalogue_recovery';report.stopReason='targeted_web_before_comparison';return {entries:report.entries};}}
  const comparisonLimit=Math.min(3,ctx.budget.visionCalls+2); // Always leave a Vision slot for decisive verification.
  while(pending.size){
   guard164(ctx);
