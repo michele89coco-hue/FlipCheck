@@ -147,6 +147,10 @@ function reconcileOriginal208(l,readings,crops){
   if(field==='subject'&&(/^(?:CHARACTER|LEADER|EVENT|STAGE)\b/i.test(full)||full.includes('\n')||l.domain==='onepiece'&&full.includes('/'))){rejected.push({field,reason:'subject_contains_other_fields'});continue;}
   if(!valid){rejected.push({field,reason:'original_views_not_confirmed'});continue;}
   let value=['collector_number','pokedex_number'].includes(field)?E.number(detail):field==='language'?E.language(full):detail;
+  if(field==='subject'&&l.domain==='sports'){
+   // Remove only independently observed team text. Retain the literal OCR in raw/original_views.
+   for(const team of l.evidence('team')){const t=norm(team.value),v=norm(value);if(t&&v.endsWith(' '+t))value=value.slice(0,value.length-team.value.length).trim();}
+  }
   if(!value||field==='collector_number'&&!E.numberParts(value)||field==='serial'&&!E.serial(value)){rejected.push({field,reason:'invalid_value'});continue;}
   // Conflicting replies for the same field/image never win by array order.
   if(list(readings).some(o=>o!==row&&o.field===field&&o.image_index===row.image_index&&o.evidence_found===true&&o.certainty==='clear'&&norm(o.full_text)===norm(o.crop_text)&&norm(o.crop_text)!==norm(detail))){rejected.push({field,reason:'conflicting_original_views'});continue;}
@@ -268,9 +272,61 @@ function visualEntries206(reply,refs,l){
  return {accepted,rejected,support};
 }
 // Reuse actual replies and attributed images after original OCR changes.
+function sportsConsensus218(l,batches,refs,checked){
+ if(l.domain!=='sports'||!l.pick('subject'))return [];
+ // A missing number is not a disagreement. Actual contradictory observations remain binding.
+ if(l.active('serial').length||['autograph','patch'].some(f=>l.pick(f)?.value==='present'))return [];
+ const permitted=new Set(['unreadable_reference_identifier','original_identifier_unresolved']);
+ const candidates=[],subject=l.pick('subject').value,k=E.keyValues(l);
+ for(const batch of batches)for(const c of list(batch.reply?.comparisons)){
+  const ref=refs.find(r=>r.id===c.reference_id),rejection=checked.rejected.find(r=>r.id===c.reference_id);
+  if(!ref?.image_data||!rejection||rejection.reasons.some(r=>!permitted.has(r)))continue;
+  if(c.original_view!=='front'||c.reference_view!=='front'||c.match!==true||c.ambiguous!==false||c.title_matches_image!==true||list(c.conflicts).length)continue;
+  const e=c.identity||{},features=list(c.features).filter(f=>f.agrees===true&&f.certainty==='clear'&&f.original&&f.reference),kinds=new Set(features.map(f=>f.field));
+  if(!E.subjectMatch(e.subject,subject)||!E.subjectMatch(c.reference_reading?.subject,subject)||!kinds.has('artwork')||!kinds.has('layout')||features.length<3)continue;
+  const text=[ref.title,ref.snippet,ref.page_text].filter(Boolean).join(' '),family=family214(e.family,e.brand,e.year,text);
+  if(!family.grounded)continue;
+  const brand=norm(e.brand),photoBrands=k.brands.map(norm);if(brand&&photoBrands.length&&!photoBrands.every(b=>b===brand||b.includes(brand)||brand.includes(b)))continue;
+  // URL tokens are catalog evidence, never photographed OCR; accept only explicitly labelled numbers.
+  const urlText=decodeURIComponent(ref.url||'').replace(/[-_]/g,' '),sourceNumber=E.number(e.number);
+  const numberProof=sourceNumber&&((' '+norm(text)+' ').includes(' '+norm(sourceNumber)+' ')||new RegExp('(?:number|card|no) '+sourceNumber+'(?: |$)','i').test(urlText));
+  const number=numberProof?sourceNumber:'';
+  if(l.evidence('collector_number').some(a=>number&&!E.numbersMatch(a.value,number)))continue;
+  let year=E.season(text.match(/\b(?:19|20)\d{2}(?:[-/]\d{2,4})?\b/)?.[0]||'');
+  if(!year&&e.year&&norm(text).includes(norm(e.year)))year=E.season(e.year);
+  const short=text.match(/\b(\d{2})-(\d{2})\b/);
+  candidates.push({ref,c,e,family:family.value,features,number,numberProof,year,short:short?.[0],text});
+ }
+ const groups=[];
+ for(const a of candidates){let g=groups.find(g=>E.productEquivalent217(g[0].family,a.family));if(!g){g=[];groups.push(g);}g.push(a);}
+ const out=[];
+ for(const group of groups){
+  const sourceKey=r=>{try{const u=new URL(r.url);return /ebay\./.test(u.hostname)&&u.pathname.match(/\d{10,}/)?'ebay:'+u.pathname.match(/\d{10,}/)[0]:u.origin+u.pathname;}catch(_){return '';}};
+  const distinct=group.filter((a,i)=>sourceKey(a.ref)&&group.findIndex(b=>sourceKey(a.ref)===sourceKey(b.ref))===i&&group.findIndex(b=>(a.ref.image_url||a.ref.thumbnail)===(b.ref.image_url||b.ref.thumbnail))===i);
+  if(distinct.length<2||!distinct.some(a=>a.features.some(f=>f.field==='configuration')))continue;
+  const nums=unique(distinct.map(a=>a.number).filter(Boolean));if(nums.length>1)continue;
+  const years=distinct.map(a=>a.year).filter(Boolean);if(!years.length||years.some(y=>!E.sportsSeason215(y,years[0])))continue;
+  let year=years.sort((a,b)=>b.length-a.length)[0];const short=distinct.find(a=>a.short&&a.short.slice(0,2)===year.slice(2,4));if(short)year=year.slice(0,2)+short.short;
+  if(l.evidence('season').some(a=>!E.sportsSeason215(a.value,year)))continue;
+  // Do not silently resolve named parallels or serial variants as an ordinary printing.
+  if(distinct.some(a=>/\b(?:refractor|prizm|pulsar|parallel|gold|green|blue|red|silver|black|ice|wave|auto|autograph|patch|reprint)\b/i.test(a.text)))continue;
+  for(const a of distinct){
+   const entry={subject,aliases:[subject],family:a.family,number:nums[0]||'',year,brand:k.brands.find(b=>!a.e.brand||norm(b).includes(norm(a.e.brand)))||((' '+norm(a.text)+' ').includes(' '+norm(a.e.brand)+' ')?a.e.brand:''),subset:'',subset_known:false,variants:[],grounded:true,
+    source:{url:a.ref.url,title:a.ref.title,provider:'searchapi_visual_comparison'},source_tier:'lens_visual_verified',entry_quote:a.text,
+    visual_reference_id:a.ref.id,image_url:a.ref.image_url||a.ref.thumbnail,visual_proof:a.features,reference_reading:a.c.reference_reading,
+    view_evidence:{original_image_index:a.c.original_image_index,original_view:'front',reference_view:'front'},
+    field_proof:{subject:{origin:'compared_images'},family:{origin:'reference_text'},year:{origin:'reference_text'},...(nums.length?{number:{origin:'reference_text',value:nums[0],url:distinct.find(x=>x.number)?.ref.url}}:{})},
+    visual_consensus:{references:distinct.map(x=>x.ref.id),sources:distinct.map(x=>x.ref.url),number_status:nums.length?'catalogue_confirmed':'not_recovered',printing:'visually_matched'}};
+   l.add('catalogue_core',E.coreKey(entry),{source:'lens_image_comparison',certainty:'clear',image_index:1,reference_source:a.ref.url,reference_id:a.ref.id});
+   l.add('visual_consensus',E.coreKey(entry),{source:'lens_consensus',certainty:'clear',image_index:1,references:entry.visual_consensus.references});out.push(entry);
+  }
+ }
+ return out;
+}
 function resolveComparisons217(l,batches,refs){
  const accepted=[],rejected=[],support=[];
  for(const batch of batches){const checked=visualEntries206(batch.reply,refs.filter(r=>batch.ids.includes(r.id)),l);accepted.push(...checked.accepted);rejected.push(...checked.rejected);support.push(...checked.support);}
+ accepted.push(...sportsConsensus218(l,batches,refs,{accepted,rejected}));
  const acceptedIds=new Set(accepted.map(e=>e.visual_reference_id));
  return {accepted:accepted.filter((e,i,a)=>a.findIndex(x=>x.visual_reference_id===e.visual_reference_id)===i),rejected:rejected.filter(e=>!acceptedIds.has(e.id)),support};
 }

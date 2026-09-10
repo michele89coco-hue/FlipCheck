@@ -174,7 +174,7 @@ Abbina esplicitamente le viste: seleziona original_image_index corrispondente al
    state.evaluations=L205.select(state,l);const checked=L205.visualEntries206(reply,compared,l);
    report.support.push(...(checked.support||[]));report.entries.push(...checked.accepted);report.rejected.push(...checked.rejected);report.reply=reply;
    report.batches.push({ids:compared.map(r=>r.id),reply,accepted:checked.accepted.map(e=>e.visual_reference_id)});
-   if(reread.accepted.length&&report.batches.length>1){
+   if(report.batches.length>1){
     const resolved=L205.resolveComparisons217(l,report.batches,refs);
     report.entries=resolved.accepted;report.rejected=resolved.rejected;report.support=resolved.support;
     l.record('comparison_revalidated',{reason:'original_reading_corrected',accepted:resolved.accepted.map(e=>e.visual_reference_id),extra_api_calls:0});

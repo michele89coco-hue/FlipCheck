@@ -810,20 +810,11 @@ async function finishIdentity171(value,ctx){
  return syncIdentity169(rememberEvidence189(value,ctx,'after_final_policy'));
 }
 async function resolveSlab191(base,ctx){
- const facts=S191.labelFacts(lastVisionReading||base),plan=S191.certificatePlan(facts);
- ctx.route='slab_certificate';ctx.certificateLookup={...plan};
- let record={state:plan.state};
- if(plan.state==='ready'){
-  const started=Date.now();
-  try{
-   const page=await directCall165('page',{url:plan.url,terms:[plan.certificate,facts.subject,facts.family,'Cert','Grade','Description'].filter(Boolean)},ctx,6500);
-   guard164(ctx);record=S191.officialRecord(plan,page,facts);
-  }catch(error){guard164(ctx);record={state:error.message==='scan_timeout'?'timeout':'unavailable'};}
-  ctx.certificateLookup={...plan,state:record.state,elapsedMs:Date.now()-started,paid_requests:0};
- }
- const result=S191.close(base,facts,record);
+ const facts=S191.labelFacts(lastVisionReading||base);
+ ctx.route='slab_label';ctx.certificateLookup={state:'not_requested',paid_requests:0};
+ const title_language=typeof lensConfig205==='function'?lensConfig205().titleLanguage:'it';
+ const result=S191.close({...base,title_language},facts,{state:'not_requested'});
  ctx.slabIdentity=result;ctx.slabVerification=result.slab_verification;ctx.jobStatus=result.job_status;ctx.provider.state='skipped_slab_identity';
- if(record.state!=='verified')ctx.route='slab_label';
  recordClosure164(result,'production_after_slab_check');return result;
 }
 resolveIdentificationCheap=async function(base,user){

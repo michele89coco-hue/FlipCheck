@@ -1,0 +1,449 @@
+{
+  "vision": {
+    "domain": "pokemon",
+    "kind": "card",
+    "category": "graded trading card",
+    "language": "zh",
+    "object_unit": "single",
+    "image_views": [
+      {
+        "image_index": 1,
+        "view": "front",
+        "certainty": "clear"
+      }
+    ],
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.11,
+        "y": 0.39,
+        "width": 0.78,
+        "height": 0.51,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "超梦V",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.25,
+          "y": 0.415,
+          "width": 0.18,
+          "height": 0.025
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "hp",
+        "text": "220",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.68,
+          "y": 0.415,
+          "width": 0.09,
+          "height": 0.025
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "collector_number",
+        "text": "135/127",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.32,
+          "y": 0.875,
+          "width": 0.12,
+          "height": 0.018
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "rarity_text",
+        "text": "SR",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.45,
+          "y": 0.875,
+          "width": 0.04,
+          "height": 0.018
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "attack",
+        "text": "50",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.78,
+          "y": 0.742,
+          "width": 0.04,
+          "height": 0.02
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "attack",
+        "text": "160",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.77,
+          "y": 0.781,
+          "width": 0.05,
+          "height": 0.02
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "copyright",
+        "text": "©2024 Pokémon/Nintendo/Creatures/GAME FREAK",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.34,
+          "y": 0.897,
+          "width": 0.25,
+          "height": 0.012
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "language",
+        "text": "cinese; testo in caratteri cinesi",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.25,
+          "y": 0.415,
+          "width": 0.45,
+          "height": 0.47
+        },
+        "zone": "front",
+        "alternatives": []
+      }
+    ],
+    "features": [
+      {
+        "field": "finish",
+        "value": "holo",
+        "description": "Superficie con riflessi olografici multicolore",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.12,
+          "y": 0.39,
+          "width": 0.76,
+          "height": 0.52
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "rarity_symbol",
+        "value": "present",
+        "description": "Simbolo energetico e indicazione SR visibili",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.43,
+          "y": 0.87,
+          "width": 0.08,
+          "height": 0.025
+        },
+        "zone": "label"
+      },
+      {
+        "field": "shadow",
+        "value": "unclear",
+        "description": "Bordo grafico e custodia rendono incerta la verifica dell'ombra esterna",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.12,
+          "y": 0.39,
+          "width": 0.76,
+          "height": 0.52
+        },
+        "zone": "border"
+      },
+      {
+        "field": "layout",
+        "value": "carta Pokémon V, orientamento verticale, illustrazione a piena superficie",
+        "description": "Layout della carta visibile",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.11,
+          "y": 0.39,
+          "width": 0.78,
+          "height": 0.51
+        },
+        "zone": "artwork"
+      }
+    ],
+    "hypotheses": [
+      {
+        "field": "family",
+        "value": "Pokémon"
+      }
+    ],
+    "slab_reading": {
+      "grader": "Unknown",
+      "label_text": "2024 Pokemon JPN. 超梦V 135/127 SR CENTERING 9.5 CORNERS 10 EDGES 10 SURFACE 10 10 PRISTINE 8658437093",
+      "card_title": "超梦V",
+      "subject": "超梦V",
+      "family": "Pokémon",
+      "model": "135/127 SR",
+      "year": "2024",
+      "card_number": "135/127",
+      "variant": "SR",
+      "grade": "10",
+      "certificate": "8658437093",
+      "match_details": "Etichetta e carta mostrano 超梦V e 135/127 SR; logo del grader non sufficientemente leggibile.",
+      "present": true,
+      "certainty": "clear",
+      "title_certainty": "clear",
+      "grade_certainty": "clear",
+      "certificate_certainty": "clear",
+      "secondary_text_incomplete": false,
+      "subgrades": [
+        {
+          "name": "centering",
+          "value": "9.5",
+          "certainty": "clear"
+        },
+        {
+          "name": "corners",
+          "value": "10",
+          "certainty": "clear"
+        },
+        {
+          "name": "edges",
+          "value": "10",
+          "certainty": "clear"
+        },
+        {
+          "name": "surface",
+          "value": "10",
+          "certainty": "clear"
+        }
+      ],
+      "image_index": 1,
+      "object_match": "matches"
+    },
+    "engine_version": 193,
+    "brand": "",
+    "family": "Pokémon",
+    "title": "超梦V",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": {
+      "image_index": 1,
+      "x": 0.11,
+      "y": 0.39,
+      "width": 0.78,
+      "height": 0.51,
+      "certain": true
+    },
+    "photo_clues": [
+      {
+        "text": "超梦V",
+        "role": "subject",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.25,
+          "y": 0.415,
+          "width": 0.18,
+          "height": 0.025,
+          "certain": true
+        }
+      },
+      {
+        "text": "220",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.68,
+          "y": 0.415,
+          "width": 0.09,
+          "height": 0.025,
+          "certain": true
+        }
+      },
+      {
+        "text": "135/127",
+        "role": "collector_number",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.32,
+          "y": 0.875,
+          "width": 0.12,
+          "height": 0.018,
+          "certain": true
+        }
+      },
+      {
+        "text": "SR",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.45,
+          "y": 0.875,
+          "width": 0.04,
+          "height": 0.018,
+          "certain": true
+        }
+      },
+      {
+        "text": "50",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.78,
+          "y": 0.742,
+          "width": 0.04,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "160",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.77,
+          "y": 0.781,
+          "width": 0.05,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "©2024 Pokémon/Nintendo/Creatures/GAME FREAK",
+        "role": "copyright",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.34,
+          "y": 0.897,
+          "width": 0.25,
+          "height": 0.012,
+          "certain": true
+        }
+      },
+      {
+        "text": "cinese; testo in caratteri cinesi",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.25,
+          "y": 0.415,
+          "width": 0.45,
+          "height": 0.47,
+          "certain": true
+        }
+      }
+    ],
+    "physical_observations": [
+      {
+        "feature": "finish",
+        "text": "Superficie con riflessi olografici multicolore",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Simbolo energetico e indicazione SR visibili",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Bordo grafico e custodia rendono incerta la verifica dell'ombra esterna",
+        "certainty": "uncertain",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Layout della carta visibile",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      }
+    ],
+    "pokemon_printing": {
+      "is_pokemon": true,
+      "language": "zh",
+      "set_name": "Pokémon",
+      "card_type": "pokemon",
+      "first_edition_stamp": "unclear",
+      "stamp_image": 0,
+      "stamp_location": "",
+      "stamp_text": "",
+      "artwork_shadow": "unclear",
+      "shadow_image": 0,
+      "shadow_location": "",
+      "copyright_text": "",
+      "copyright_image": 1
+    }
+  },
+  "references": [],
+  "batches": [],
+  "crops": [],
+  "expected217": {
+    "status": "identified",
+    "title": "2024 · Pokémon · #135/127 · 超梦V · zh · SR · UNKNOWN 10"
+  }
+}

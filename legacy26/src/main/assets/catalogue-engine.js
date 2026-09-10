@@ -21,7 +21,7 @@ function semanticField(domain,field,value){
  return field;
 }
 // A sports release year abbreviates the START of a printed season, never its end.
-function sportsSeason215(a,b){a=season(a);b=season(b);return !!a&&!!b&&(a===b||/^\d{4}-\d{2}$/.test(a)&&b===a.slice(0,4)||/^\d{4}-\d{2}$/.test(b)&&a===b.slice(0,4));}
+function sportsSeason215(a,b){const rawA=str(a),rawB=str(b);a=season(a);b=season(b);if(!a&&/^\d{2}[-/]\d{2}$/.test(rawA)&&b&&rawA.slice(0,2)===b.slice(2,4))a=b.slice(0,2)+rawA.replace('/','-');if(!b&&/^\d{2}[-/]\d{2}$/.test(rawB)&&a&&rawB.slice(0,2)===a.slice(2,4))b=a.slice(0,2)+rawB.replace('/','-');return !!a&&!!b&&(a===b||/^\d{4}-\d{2}$/.test(a)&&b===a.slice(0,4)||/^\d{4}-\d{2}$/.test(b)&&a===b.slice(0,4));}
 function familyKey(value){return norm(str(value).replace(/^(?:19|20)\d{2}(?:[-/]\d{2,4})?\s+/,'')).replace(/^(?:panini|pokemon) /,'').replace(/ (?:basketball|baseball|football|soccer|hockey)$/,'').replace(/\b(world cup) 20(\d{2})\b/,'$1 $2');}
 function productIdentity217(v){return familyKey(v).replace(/\badrenalin\b/g,'adrenalyn').split(' ').filter(t=>!['panini','pokemon','trading','card','cards','game','basketball','baseball','football','soccer','hockey'].includes(t)).sort().join(' ');}
 function productEquivalent217(a,b){return !!productIdentity217(a)&&productIdentity217(a)===productIdentity217(b);}
@@ -210,16 +210,17 @@ function query(l,mode='identity',entry=null){
  return [pokemonHints,l.domain==='pokemon'?'Pokémon TCG':l.domain==='onepiece'?'One Piece card':product||l.base.brand,name,nums,date,l.domain==='pokemon'?l.pick('rarity_text')?.value:'',l.domain==='sports'?l.pick('subset')?.value:'',sport,variant,extra,config,l.domain==='sealed'?'box configuration':l.domain==='generic'?'model specifications':mode==='variant'?'parallel variants checklist':mode==='recovery'?(l.domain==='sports'?'international European edition checklist':'card catalogue alternate language promo'):'checklist',mode==='variant'&&domains(l).length?'('+domains(l).map(d=>'site:'+d).join(' OR ')+')':''].filter(Boolean).join(' ').replace(/\s+/g,' ').trim();
 }
 function sourceTrusted(url,domain){try{const host=new URL(url).hostname;if(domain==='pokemon'&&/(^|\.)(?:tcgcollector\.com|cardmarket\.com|pricecharting\.com)$/.test(host))return true;if(['onepiece','tcg'].includes(domain)&&/(^|\.)(?:tcgplayer\.com|cardmarket\.com|tcgcollector\.com|scryfall\.com|gatherer\.wizards\.com|db\.yugioh-card\.com)$/.test(host))return true;return /(^|\.)(?:tcgdex\.net|pokemontcg\.io|pokemon\.com|pokemon-card\.com|bulbagarden\.net|pokemoncentral\.it|serebii\.net|psacard\.com|cgccards\.com|beckett\.com|checklistinsider\.com|topps\.com|paniniamerica\.net|upperdeck\.com|leaftradingcards\.com|onepiece-cardgame\.com)$/.test(new URL(url).hostname);}catch(_){return false;}}
+function hasConsensus218(l,e){return l.domain==='sports'&&e.source_tier==='lens_visual_verified'&&list(e.visual_consensus?.references).length>=2&&l.evidence('visual_consensus').some(a=>a.value===coreKey(e)&&a.source==='lens_consensus'&&new Set(a.references).size>=2);}
 function evaluate(l,entry){
  const k=keyValues(l),reasons=[],matches=[],strongNumbers=l.evidence('collector_number');let score=0;
- if(!entry.subject||!entry.family||!entry.number||!entry.source?.url||entry.grounded!==true)return {...entry,eligible:false,reasons:['ungrounded_entry'],score:0};
+ if(!entry.subject||!entry.family||!entry.number&&!hasConsensus218(l,entry)||!entry.source?.url||entry.grounded!==true)return {...entry,eligible:false,reasons:['ungrounded_entry'],score:0};
  if(/^(?:registry|set registry|card list|catalogue|search|home)$/i.test(str(entry.family)))reasons.push('navigation_not_product');
  const printingLang=entry.printing_language||entry.language;if(l.domain==='pokemon'&&printingLang&&k.language&&(!printingLanguageCompatible201(printingLang,k.language))&&(/^(?:ja|zh)/.test(language(printingLang))||/^(?:ja|zh)/.test(k.language)))reasons.push('different_printing_language');
  if(['onepiece','tcg'].includes(l.domain)&&printingLang&&k.language&&!printingLanguageCompatible201(printingLang,k.language))reasons.push('different_printing_language');
  const names=[entry.subject,...list(entry.aliases)],needsSubjectVisual=l.domain==='pokemon'&&/[\u3040-\u9fff]/.test(k.subject)&&!names.some(n=>subjectMatch(k.subject,n));
  if(k.subject&&names.some(n=>subjectMatch(k.subject,n))){score+=35;matches.push('subject');}else if(k.subject&&!needsSubjectVisual)reasons.push('different_subject');else if(needsSubjectVisual&&(k.numbers.concat(k.pokedex).some(n=>numbersMatch(n,entry.number)))){score+=35;matches.push('localized_candidate');}
  if(entry.identifier_type!=='pokedex'&&entry.identifier_type!=='unnumbered'&&k.numbers.some(n=>numbersMatch(n,entry.number))){score+=25;matches.push('number');if(strongNumbers.some(a=>numbersMatch(a.value,entry.number)))score+=15;else {const reads=l.values('collector_number').filter(a=>numbersMatch(a.value,entry.number));if(unique(reads.map(a=>a.source)).length>1)score+=8;}}
- else if(strongNumbers.length)reasons.push('different_number');
+ else if(strongNumbers.length&&entry.number)reasons.push('different_number');
  const dexMatch=l.domain==='pokemon'&&!strongNumbers.length&&!numberParts(entry.number)?.total&&k.pokedex.some(n=>numbersMatch(n,entry.number));
  if(dexMatch){score+=40;matches.push('pokedex_number');}
  // Catalogue language describes the reference, not the photographed copy.
@@ -236,6 +237,7 @@ function evaluate(l,entry){
  const observedSubset=l.domain==='sports'?l.pick('subset')?.value:null;if(observedSubset&&l.catalogueSubsets202?.includes(subsetKey(observedSubset))&&entry.subset_known===true&&subsetKey(observedSubset)!==subsetKey(entry.subset))reasons.push('different_printed_subset');
  const seenProducts=k.products.filter(v=>norm(v)!=='prizm'||l.domain==='sports');
  for(const p of seenProducts)if(!norm([entry.family,entry.subset,entry.brand,entry.variant].join(' ')).includes(norm(p))&&!norm(p).includes(norm(entry.family))&&!productEquivalent217(p,entry.family))reasons.push('different_printed_product');
+ if(hasConsensus218(l,entry)){score+=25;matches.push('independent_visual_consensus');}
  const visual=l.evidence('catalogue_core').some(a=>a.value===coreKey(entry));if(visual){score+=k.pokedex.length?40:25;if(l.domain==='sports'&&entry.source_tier==='lens_visual_verified'&&['reference_text','reference_image'].includes(entry.field_proof?.number?.origin)&&entry.field_proof?.year&&entry.variants?.length)score+=20;matches.push('catalogue_image');if(needsSubjectVisual){if(!matches.includes('localized_candidate'))score+=35;matches.push('subject');}}else if(needsSubjectVisual)score=Math.min(score,70);
  if(l.domain==='pokemon'&&(k.pokedex.length&&!k.numbers.length||['pokedex','unnumbered'].includes(entry.identifier_type))&&!visual){
   const yearAgrees=entry.year&&(k.year===season(entry.year)||l.evidence('copyright').some(a=>str(a.value).match(/\b(?:19|20)\d{2}\b/g)?.includes(season(entry.year))));
@@ -314,6 +316,7 @@ function variantOptions(l,group){
  return uniqueOptions;
 }
 function variantState(l,group){
+ if(hasConsensus218(l,group.entry)&&!l.active('serial').length&&!group.entries.some(e=>e.variants?.length)&&!['autograph','patch'].some(f=>l.pick(f)?.value==='present'))return {status:'confirmed',pending:[],labels:[],proof:[{field:'printing',value:'visually_matched',origin:'independent_visual_consensus',references:group.entry.visual_consensus.references}],variant_origin:'visual_comparison',needs_catalogue:false};
  const e=group.entry,k=keyValues(l),pending=[],labels=[],proof=[],fields={},options=variantOptions(l,group),physicalSerial=l.pick('serial'),sn=physicalSerial&&serial(physicalSerial.value);
  if(l.domain==='pokemon'){
   const scope=printingScope(l,e),observedFinish=l.pick('finish')?.value;
