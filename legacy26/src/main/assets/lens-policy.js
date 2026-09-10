@@ -102,7 +102,7 @@ function filterOcr214(refs,l){
  for(const ref of ranked){const text=[ref.title,ref.snippet,ref.ocr?.text,ref.page_text].filter(Boolean).join(' ').trim(),reasons=[];
   const facts=ref.ocrRank.facts,physical=l.pick('collector_number')?.value;
   // Bare OCR numerals are not identifiers. Only labelled/full codes can eliminate a reference.
-  if(physical&&ref.ocr?.state==='ok'&&ref.ocrRank.reasons.includes('identifier_differs'))reasons.push('incompatible_identifier');
+  if(physical&&ref.ocr?.state==='ok'&&ref.ocrRank.reasons.includes('identifier_differs')){if(ref.ocrRank.nameMatch&&ref.ocrRank.productMatch&&identifierChallenges220(ranked,l).some(x=>x.id===ref.id))ref.identifier_review=true;else reasons.push('incompatible_identifier');}
   const model=l.pick('model_code')?.value||l.pick('sku')?.value;
   if(model&&!norm(text).includes(norm(model))&&/\b(?:model|modello|sku)\s*[:#]/i.test(text))reasons.push('incompatible_model');
   if(!text)reasons.push('no_associated_text');
@@ -110,6 +110,12 @@ function filterOcr214(refs,l){
   else if(ref.ocrRank.score>0)eligible.push(ref);else reserve.push(ref);
  }
  return {eligible,reserve,excluded};
+}
+function identifierChallenges220(refs,l){
+ if(l.domain!=='sports'||!l.pick('collector_number'))return [];
+ const ranked=rankOcr209(refs,l),physical=l.pick('collector_number').value;
+ const matches=ranked.filter(r=>r.ocrRank.nameMatch&&r.ocrRank.productMatch&&r.ocrRank.reasons.includes('identifier_differs'));
+ return matches.filter(r=>r.ocrRank.facts.labelled.some(n=>!E.numbersMatch(n,physical)&&(l.active('collector_number').some(a=>a.source==='local_ocr'&&E.numbersMatch(a.value,n))||new Set(matches.filter(x=>x.ocrRank.facts.labelled.some(m=>E.numbersMatch(n,m))).map(x=>x.url)).size>=2)));
 }
 function rankOcr209(refs,l){
  const keys=E.keyValues(l),physical=E.number(l.pick('collector_number')?.value||''),setCodes=keys.setCodes.map(x=>x.replace(/\s/g,'').toUpperCase());
@@ -138,9 +144,9 @@ function yearReading212(value,season){const a=E.season(value),b=E.season(season)
 // A reference can challenge a reading, but only two original-photo views can replace it.
 function reconcileOriginal208(l,readings,crops){
  const accepted=[],rejected=[];
- const fields=['subject','pokedex_number','collector_number','set_code','rarity_text','copyright','language','model_code','serial'];
+ const fields=['subject','product','brand','team','pokedex_number','collector_number','set_code','rarity_text','copyright','language','model_code','serial'];
  for(const row of list(readings)){
-  const crop=crops.find(c=>c.id===row.crop_id),field=l.domain!=='pokemon'&&row.field==='pokedex_number'?'collector_number':row.field;
+  const crop=crops.find(c=>c.id===row.crop_id),field=E.observationRole220(l,l.domain!=='pokemon'&&row.field==='pokedex_number'?'collector_number':row.field,row.crop_text);
   const full=String(row.full_text||'').trim(),detail=String(row.crop_text||'').trim();
   const sameView=field==='language'?!!E.language(full)&&!!E.language(detail)&&E.printingLanguageCompatible201(E.language(full),E.language(detail)):norm(full)===norm(detail);
   const valid=crop&&crop.image_index===row.image_index&&fields.includes(field)&&row.evidence_found===true&&row.certainty==='clear'&&full&&sameView;
@@ -373,6 +379,6 @@ async function waitForService207(request,{now=()=>Date.now(),wait=ms=>new Promis
  return {status:0,state:'service_startup_timeout',lastState:last?.state||null};
 }
 function metadata215(refs,l){return rankOcr209(refs,l).map(r=>({...r,metadataStrong:r.ocrRank.nameMatch&&(r.ocrRank.reasons.includes('identifier_agrees')||r.ocrRank.productMatch)&&(!E.keyValues(l).year||!r.ocrRank.facts.years.length||r.ocrRank.facts.years.some(y=>E.sportsSeason215(E.keyValues(l).year,y)))}));}
-const api={resolveComparisons217,familyTokens217,metadata215,family214,filterOcr214,frontPlan213,referenceSupport213,appearance212,yearReading212,candidateFacts209,rankOcr209,reconcileOriginal208,retrievalPool208,partialTitle208,waitForService207,visualEntries206,present206,normalize,attributes,evaluate,select,ranked,fallbackReason,url};
+const api={identifierChallenges220,resolveComparisons217,familyTokens217,metadata215,family214,filterOcr214,frontPlan213,referenceSupport213,appearance212,yearReading212,candidateFacts209,rankOcr209,reconcileOriginal208,retrievalPool208,partialTitle208,waitForService207,visualEntries206,present206,normalize,attributes,evaluate,select,ranked,fallbackReason,url};
 if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckLens=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

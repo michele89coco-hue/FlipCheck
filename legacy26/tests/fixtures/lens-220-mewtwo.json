@@ -1,0 +1,300 @@
+{
+  "vision": {
+    "domain": "pokemon",
+    "kind": "card",
+    "category": "graded Pokémon card",
+    "language": "zh-Hant",
+    "object_unit": "single",
+    "image_views": [
+      {
+        "image_index": 1,
+        "view": "front",
+        "certainty": "clear"
+      }
+    ],
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.02,
+        "y": 0.17,
+        "width": 0.96,
+        "height": 0.7,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "超夢V",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.27,
+          "y": 0.39,
+          "width": 0.2,
+          "height": 0.04
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "collector_number",
+        "text": "135/127",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.38,
+          "y": 0.87,
+          "width": 0.11,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "rarity_text",
+        "text": "SR",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.49,
+          "y": 0.87,
+          "width": 0.03,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "set_code",
+        "text": "C5sAC",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.26,
+          "y": 0.87,
+          "width": 0.1,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": [
+          "C5sAC",
+          "C5aC"
+        ]
+      },
+      {
+        "field": "hp",
+        "text": "220",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.66,
+          "y": 0.42,
+          "width": 0.08,
+          "height": 0.03
+        },
+        "zone": "statistics",
+        "alternatives": []
+      },
+      {
+        "field": "copyright",
+        "text": "©2024 Pokémon/Nintendo/Creatures/GAME FREAK.",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.38,
+          "y": 0.9,
+          "width": 0.22,
+          "height": 0.01
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "超念力 50；転移破壊 160",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.35,
+          "y": 0.75,
+          "width": 0.44,
+          "height": 0.07
+        },
+        "zone": "front",
+        "alternatives": []
+      }
+    ],
+    "features": [
+      {
+        "field": "border_color",
+        "value": "black",
+        "description": "Bordo della carta nero",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.12,
+          "y": 0.36,
+          "width": 0.76,
+          "height": 0.57
+        },
+        "zone": "border"
+      },
+      {
+        "field": "finish",
+        "value": "holo",
+        "description": "Superficie olografica/riflettente visibile",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.15,
+          "y": 0.39,
+          "width": 0.7,
+          "height": 0.53
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "pattern",
+        "value": "Raggi e sfumature olografiche multicolori",
+        "description": "Pattern radiale iridescente nell'illustrazione",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.15,
+          "y": 0.39,
+          "width": 0.7,
+          "height": 0.53
+        },
+        "zone": "artwork"
+      },
+      {
+        "field": "layout",
+        "value": "Carta Pokémon V con illustrazione a tutta altezza",
+        "description": "Riquadro principale verticale con barra titolo superiore",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.12,
+          "y": 0.36,
+          "width": 0.76,
+          "height": 0.57
+        },
+        "zone": "other"
+      }
+    ],
+    "hypotheses": [
+      {
+        "field": "family",
+        "value": "Pokémon Trading Card Game"
+      },
+      {
+        "field": "model",
+        "value": "超夢V / Mewtwo V"
+      }
+    ],
+    "slab_reading": {
+      "grader": "ARS",
+      "label_text": "2024 Pokemon JPN. 超夢V. C5sAC 135/127 SR. CENTERING 9.5 CORNERS 10 EDGES 10 SURFACE 10. 8658437093",
+      "card_title": "超夢V",
+      "subject": "超夢V",
+      "family": "Pokémon Trading Card Game",
+      "model": "超夢V",
+      "year": "2024",
+      "card_number": "135/127",
+      "variant": "SR",
+      "grade": "10 PRISTINE",
+      "certificate": "8658437093",
+      "match_details": "Il titolo e il numero sull'etichetta corrispondono alla carta visibile.",
+      "normalized_subject": {
+        "original": "超夢V",
+        "it": "Mewtwo V",
+        "en": "Mewtwo V",
+        "certainty": "clear"
+      },
+      "present": true,
+      "certainty": "clear",
+      "title_certainty": "clear",
+      "grade_certainty": "clear",
+      "certificate_certainty": "clear",
+      "secondary_text_incomplete": false,
+      "subgrades": [
+        {
+          "name": "centering",
+          "value": "9.5",
+          "certainty": "clear"
+        },
+        {
+          "name": "corners",
+          "value": "10",
+          "certainty": "clear"
+        },
+        {
+          "name": "edges",
+          "value": "10",
+          "certainty": "clear"
+        },
+        {
+          "name": "surface",
+          "value": "10",
+          "certainty": "clear"
+        }
+      ],
+      "image_index": 1,
+      "object_match": "matches"
+    },
+    "engine_version": 193,
+    "brand": "",
+    "family": "Pokémon Trading Card Game",
+    "title": "超夢V",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": {
+      "image_index": 1,
+      "x": 0.02,
+      "y": 0.17,
+      "width": 0.96,
+      "height": 0.7,
+      "certain": true
+    },
+    "pokemon_printing": {
+      "is_pokemon": true,
+      "language": "zh-Hant",
+      "set_name": "Pokémon Trading Card Game",
+      "card_type": "pokemon",
+      "first_edition_stamp": "unclear",
+      "stamp_image": 0,
+      "stamp_location": "",
+      "stamp_text": "",
+      "artwork_shadow": "unclear",
+      "shadow_image": 0,
+      "shadow_location": "",
+      "copyright_text": "",
+      "copyright_image": 1
+    }
+  },
+  "references": [],
+  "batches": [],
+  "crops": [],
+  "photoOcr": []
+}

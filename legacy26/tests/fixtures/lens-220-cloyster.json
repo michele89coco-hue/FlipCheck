@@ -1,0 +1,307 @@
+{
+  "vision": {
+    "domain": "pokemon",
+    "kind": "card",
+    "category": "graded trading card",
+    "language": "it",
+    "object_unit": "single",
+    "image_views": [
+      {
+        "image_index": 1,
+        "view": "front",
+        "certainty": "clear"
+      }
+    ],
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.14,
+        "y": 0.24,
+        "width": 0.73,
+        "height": 0.51,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "Cloyster",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.36,
+          "y": 0.27,
+          "width": 0.2,
+          "height": 0.04
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "brand",
+        "text": "Pokémon",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.66,
+          "y": 0.69,
+          "width": 0.1,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "product",
+        "text": "Expedition",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.32,
+          "y": 0.1,
+          "width": 0.2,
+          "height": 0.04
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "collector_number",
+        "text": "#8",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.33,
+          "y": 0.12,
+          "width": 0.04,
+          "height": 0.02
+        },
+        "zone": "label",
+        "alternatives": [
+          "8"
+        ]
+      },
+      {
+        "field": "rarity_text",
+        "text": "HOLO R",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.38,
+          "y": 0.12,
+          "width": 0.2,
+          "height": 0.02
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "language",
+        "text": "Italian",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.33,
+          "y": 0.1,
+          "width": 0.1,
+          "height": 0.04
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "hp",
+        "text": "80 PV",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.67,
+          "y": 0.27,
+          "width": 0.11,
+          "height": 0.03
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "copyright",
+        "text": "© 2002 Pokémon / Nintendo",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.28,
+          "y": 0.7,
+          "width": 0.2,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "FASE 1; Evolve da Shellder; Pokémon di Fase 1; Leccata — 10; Autofuoсo — 20×",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.25,
+          "y": 0.27,
+          "width": 0.55,
+          "height": 0.37
+        },
+        "zone": "front",
+        "alternatives": [
+          "Autofuoco"
+        ]
+      }
+    ],
+    "features": [
+      {
+        "field": "border_color",
+        "value": "yellow",
+        "description": "Bordo giallo della carta",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.14,
+          "y": 0.24,
+          "width": 0.73,
+          "height": 0.51
+        },
+        "zone": "border"
+      },
+      {
+        "field": "finish",
+        "value": "holo",
+        "description": "Illustrazione con effetto olografico",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.25,
+          "y": 0.31,
+          "width": 0.55,
+          "height": 0.19
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "layout",
+        "value": "Carta Pokémon vintage con illustrazione superiore e testo attacchi nella metà inferiore",
+        "description": "",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.14,
+          "y": 0.24,
+          "width": 0.73,
+          "height": 0.51
+        },
+        "zone": "other"
+      }
+    ],
+    "hypotheses": [],
+    "slab_reading": {
+      "grader": "Beckett",
+      "label_text": "2002 EXPEDITION ITALIAN #8 CLOYSTER HOLO R; CENTERING 9.5; CORNERS 9.5; EDGES 9.5; SURFACE 8.5; 9 MINT; 0014436473",
+      "card_title": "Cloyster",
+      "subject": "Cloyster",
+      "family": "Expedition",
+      "model": "#8 Cloyster Holo R",
+      "year": "2002",
+      "card_number": "#8",
+      "variant": "HOLO R",
+      "grade": "9 MINT",
+      "certificate": "0014436473",
+      "match_details": "Etichetta Beckett leggibile e coerente con la carta mostrata",
+      "normalized_subject": {
+        "original": "Cloyster",
+        "it": "Cloyster",
+        "en": "Cloyster",
+        "certainty": "clear"
+      },
+      "present": true,
+      "certainty": "clear",
+      "title_certainty": "clear",
+      "grade_certainty": "clear",
+      "certificate_certainty": "clear",
+      "secondary_text_incomplete": false,
+      "subgrades": [
+        {
+          "name": "centering",
+          "value": "9.5",
+          "certainty": "clear"
+        },
+        {
+          "name": "corners",
+          "value": "9.5",
+          "certainty": "clear"
+        },
+        {
+          "name": "edges",
+          "value": "9.5",
+          "certainty": "clear"
+        },
+        {
+          "name": "surface",
+          "value": "8.5",
+          "certainty": "clear"
+        }
+      ],
+      "image_index": 1,
+      "object_match": "matches"
+    },
+    "engine_version": 193,
+    "brand": "Pokémon",
+    "family": "Expedition",
+    "title": "Cloyster",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": {
+      "image_index": 1,
+      "x": 0.14,
+      "y": 0.24,
+      "width": 0.73,
+      "height": 0.51,
+      "certain": true
+    },
+    "pokemon_printing": {
+      "is_pokemon": true,
+      "language": "it",
+      "set_name": "Expedition",
+      "card_type": "pokemon",
+      "first_edition_stamp": "unclear",
+      "stamp_image": 0,
+      "stamp_location": "",
+      "stamp_text": "",
+      "artwork_shadow": "unclear",
+      "shadow_image": 0,
+      "shadow_location": "",
+      "copyright_text": "© 2002 Pokémon / Nintendo",
+      "copyright_image": 1
+    }
+  },
+  "references": [],
+  "batches": [],
+  "crops": [],
+  "photoOcr": []
+}

@@ -48,12 +48,14 @@ function labelFacts(base){
  if(finish&&!copied(out.variant,finish))out.variant=[out.variant,finish].filter(Boolean).join(' · ');
  out.variant=out.variant.replace(/^[,;|·\s]+|[,;|·\s]+$/g,'');
  out.grade=p.grade_certainty==='uncertain'||!validGrade(p.grade)||!copied(label,p.grade)?'':clean(p.grade); // Never derive a grade from arbitrary label digits.
+ if(!out.grade&&(!clean(p.grade)||validGrade(p.grade))&&p.grade_certainty==='clear'){const rest=label.replace(/(?:CENTERING|CORNERS|EDGES|SURFACE)\s*[:=]?\s*\d+(?:\.\d+)?/gi,' ');const grade=rest.match(/\b(?:GRADE|VOTO)\s*[:=]?\s*(10|[1-9](?:\.5)?)\b/i)||rest.match(/\b(?:PRISTINE|GEM[ -]?MINT|MINT)\s*[:=]?\s*(10|[1-9](?:\.5)?)\b/i)||rest.match(/\b(10|[1-9](?:\.5)?)\s+(?:PRISTINE|GEM[ -]?MINT|MINT)\b/i);if(grade&&(!clean(p.grade)||grade[1]===clean(p.grade).match(/\d+(?:\.\d+)?/)[0]))out.grade=clean(p.grade)||grade[1];}
  out.certificate=p.certificate_certainty==='uncertain'?'':clean(p.certificate||p.cert_number).replace(/\s/g,''); // Preserve leading zeroes; do not guess O/0.
- out.language=clean(base.language)||clean(base.pokemon_printing?.language)||clean(p.language);
+ out.language=clean(base.language)||clean(base.pokemon_printing?.language)||clean(p.language);if(/^[a-z]{2}(?:[-_][a-z]{2,4})?$/i.test(out.language))out.language=out.language.replace(/_/g,'-').toLowerCase();
  out.name_identity=Names.normalize(out.subject||out.model,{domain:base.domain||(/pok[eé]mon/i.test(base.category||out.family)?'pokemon':'other'),translations:p.normalized_subject});
- const code=list(base.observations).find(o=>o.field==='set_code'&&o.certainty==='clear');
+ const codeReadings=list(base.observations).filter(o=>o.field==='set_code'),code=codeReadings.find(o=>o.certainty==='clear');
+ out.set_code_readings=codeReadings.map(o=>({text:clean(o.text),certainty:o.certainty,origin:'original_photo'}));
  out.set_code=code?clean(code.text):'';
- if(!out.set_code){const tokens=label.split(/[\s,;]+/).map(t=>t.replace(/[.]+$/,''));out.set_code=tokens.find(t=>/^[A-Z]{1,4}\d{1,3}[a-z][A-Z]?$/.test(t.normalize('NFD').replace(/[\u0300-\u036f]/g,'')))||'';out.set_code=out.set_code.normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
+ if(!out.set_code&&!codeReadings.some(o=>o.certainty==='uncertain')){const tokens=label.split(/[\s,;]+/).map(t=>t.replace(/[.]+$/,''));out.set_code=tokens.find(t=>/^[A-Z]{1,4}\d{1,3}[a-z][A-Z]{0,2}$/.test(t.normalize('NFD').replace(/[\u0300-\u036f]/g,'')))||'';out.set_code=out.set_code.normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
  if(!out.family&&/\bpok[eé]mon\b/i.test(label))out.family=label.match(/\bpok[eé]mon\b/i)[0];
 
  const literalTitleComplete=!!out.card_title&&p.title_certainty==='clear'&&/\b(?:19|20)\d{2}\b/.test(out.card_title)&&out.card_title.split(/\s+/).length>=3;

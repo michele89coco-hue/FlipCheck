@@ -1,0 +1,1220 @@
+{
+  "vision": {
+    "domain": "sports",
+    "kind": "card",
+    "category": "basketball trading card",
+    "language": "",
+    "object_unit": "single",
+    "image_views": [
+      {
+        "image_index": 1,
+        "view": "front",
+        "certainty": "clear"
+      },
+      {
+        "image_index": 2,
+        "view": "back",
+        "certainty": "clear"
+      }
+    ],
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.02,
+        "y": 0.02,
+        "width": 0.96,
+        "height": 0.95,
+        "certain": true
+      },
+      {
+        "image_index": 2,
+        "x": 0.01,
+        "y": 0.17,
+        "width": 0.98,
+        "height": 0.78,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "Stephen Curry",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.34,
+          "y": 0.07,
+          "width": 0.48,
+          "height": 0.06
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "brand",
+        "text": "Panini",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.35,
+          "y": 0.71,
+          "width": 0.3,
+          "height": 0.05
+        },
+        "zone": "back",
+        "alternatives": []
+      },
+      {
+        "field": "product",
+        "text": "Adrenalyn XL Trading Card Game",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.05,
+          "y": 0.27,
+          "width": 0.84,
+          "height": 0.12
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "team",
+        "text": "Warriors",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.17,
+          "y": 0.75,
+          "width": 0.28,
+          "height": 0.08
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "season",
+        "text": "2009",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.08,
+          "y": 0.77,
+          "width": 0.23,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "copyright",
+        "text": "© 2009 NBA Properties, Inc. © 2009 Panini America, Inc.",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.08,
+          "y": 0.77,
+          "width": 0.58,
+          "height": 0.03
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "GUARD",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.84,
+          "y": 0.08,
+          "width": 0.08,
+          "height": 0.2
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "DEF 72",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.04,
+          "y": 0.61,
+          "width": 0.15,
+          "height": 0.1
+        },
+        "zone": "statistics",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "OFF 90",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.83,
+          "y": 0.59,
+          "width": 0.14,
+          "height": 0.1
+        },
+        "zone": "statistics",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "77",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.77,
+          "y": 0.51,
+          "width": 0.11,
+          "height": 0.08
+        },
+        "zone": "statistics",
+        "alternatives": []
+      }
+    ],
+    "features": [
+      {
+        "field": "border_color",
+        "value": "blue",
+        "description": "Bordo e pannello laterale blu",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.83,
+          "y": 0.04,
+          "width": 0.12,
+          "height": 0.88
+        },
+        "zone": "border"
+      },
+      {
+        "field": "pattern",
+        "value": "linee radiali e bande verticali",
+        "description": "Sfondo con linee e bande grafiche",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.05,
+          "y": 0.03,
+          "width": 0.9,
+          "height": 0.9
+        },
+        "zone": "artwork"
+      },
+      {
+        "field": "finish",
+        "value": "unclear",
+        "description": "La fotografia non consente di determinare con certezza la finitura",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.05,
+          "y": 0.03,
+          "width": 0.9,
+          "height": 0.9
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "stamp",
+        "value": "absent",
+        "description": "Nessun timbro promozionale leggibile",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.02,
+          "y": 0.02,
+          "width": 0.96,
+          "height": 0.95
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "rookie",
+        "value": "unclear",
+        "description": "Nessun badge RC/Rookie chiaramente visibile",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.02,
+          "y": 0.02,
+          "width": 0.96,
+          "height": 0.95
+        },
+        "zone": "other"
+      },
+      {
+        "field": "layout",
+        "value": "ritratto d'azione verticale con pannello laterale GUARD, logo squadra e statistiche DEF/OFF",
+        "description": "Impaginazione sportiva verticale",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.02,
+          "y": 0.02,
+          "width": 0.96,
+          "height": 0.95
+        },
+        "zone": "artwork"
+      }
+    ],
+    "hypotheses": [
+      {
+        "field": "family",
+        "value": "Adrenalyn XL"
+      }
+    ],
+    "slab_reading": null,
+    "engine_version": 193,
+    "brand": "Panini",
+    "family": "Adrenalyn XL",
+    "title": "Stephen Curry",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": {
+      "image_index": 1,
+      "x": 0.02,
+      "y": 0.02,
+      "width": 0.96,
+      "height": 0.95,
+      "certain": true
+    }
+  },
+  "references": [
+    {
+      "id": "lens-1",
+      "position": 1,
+      "title": "Stephen Curry 2009-10 Panini Adrenalyn XL Rookie Card PSA 6 ...",
+      "url": "https://www.ebay.it/itm/144750798830",
+      "image_url": "https://i.ebayimg.com/images/g/BFYAAOSwwXRiO4-t/s-l1200.jpg",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR40dydpGwWwBILeSq7pt7l5CGGkRnd1H2KNfggEuRvA-X5CvL9",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "2009-10"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_year"
+      ],
+      "matches": [
+        "subject",
+        "brand"
+      ],
+      "missing": [],
+      "verification_state": "rejected",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 43,
+        "reasons": [
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [],
+          "years": [
+            "2009"
+          ]
+        },
+        "index": 0
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "RoeRT\n72\nVWARRORS\nStephen CuyP\nOFF",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-2",
+      "position": 2,
+      "title": "2009-10 Panini Adrenalyn XL Stephen Curry rookie card | eBay ...",
+      "url": "https://www.ebay.com.au/itm/133737391744",
+      "image_url": "https://i.ebayimg.com/images/g/jScAAOSwmN9gcSNx/s-l400.jpg",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTYWW8wnU-4rJ9GCxHProAUDrR9ZZpZ9JNQdxMbf2qMBmbQeEKN",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "2009-10"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_year"
+      ],
+      "matches": [
+        "subject",
+        "brand"
+      ],
+      "missing": [],
+      "verification_state": "rejected",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 43,
+        "reasons": [
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [],
+          "years": [
+            "2009"
+          ]
+        },
+        "index": 1
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "ROeKT\nStephen Gr\nDEF\nV",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-5",
+      "position": 5,
+      "title": "2009 ADRENALYN XL STEPHEN CURRY BGS 9.5 | eBay",
+      "url": "https://www.ebay.com/itm/306841637623",
+      "image_url": "https://i.ebayimg.com/images/g/UjQAAOSwZCtnZQXw/s-l400.jpg",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTZ_gDGEEpi_B0MB4qd49GfxREC2EKCPt2KYT_Z3E8B7Qt1bc74",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "2009"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "year",
+        "subject"
+      ],
+      "missing": [],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 43,
+        "reasons": [
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [],
+          "years": [
+            "2009"
+          ]
+        },
+        "index": 4
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "B)\n2001O AHE ALVHXL\nG7 STEPHEN CURRY\nCENTERNG 10\nBECKETT EDGES\n72\nROORT\ncORNE RS 95\nSURFACE 95\n9.5\nGEM MINT\ncocs492375\nstepten GUry\n90\nGUARD\n4\nCENTERNG 10\n10",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-7",
+      "position": 7,
+      "title": "Stephen Curry 2009 Panini Adrenalyn XL Base Price Guide ...",
+      "url": "https://www.sportscardinvestor.com/cards/stephen-curry-basketball/2009-panini-adrenalyn-xl-base/cgc-10",
+      "image_url": "https://i.ebayimg.com/images/g/6EIAAeSwiOxqjx2B/s-l1600.jpg",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTJnF0csCw5bz1WibSUMTtKxuucojGFJU7di5dFmphE7RKf1r30",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "2009"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "year",
+        "subject",
+        "brand"
+      ],
+      "missing": [],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 43,
+        "reasons": [
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [],
+          "years": [
+            "2009"
+          ]
+        },
+        "index": 6
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "ROBK\nVARRORS\nStepen CuryP\nOFF\nO9\nNBA)\n7\nDEF\n72\n90",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-8",
+      "position": 8,
+      "title": "CARTE ROOKIE NBA Adrenalyn Xl Stephen Curry 2009 EUR 250,00 ...",
+      "url": "https://picclick.fr/Carte-Rookie-Nba-Adrenalyn-Xl-Stephen-Curry-2009-124719355842.html",
+      "image_url": "https://www.picclickimg.com/9AkAAOSwVphgmmAU/Carte-Rookie-Nba-Adrenalyn-Xl-Stephen-Curry-2009.webp",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTtu3lhxmaVHk5ub00M0k5y2yZGlATE16WnDkRNvmOgFK7KQH4h",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "2009"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "year",
+        "subject"
+      ],
+      "missing": [],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 43,
+        "reasons": [
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [],
+          "years": [
+            "2009"
+          ]
+        },
+        "index": 7
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "ROoKT\nDEF\n72\nStephen Curry\nDNT\nOFF\n90\n8\n77\nMAPRIORS\nGUF",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-10",
+      "position": 10,
+      "title": "2009 Panini Adrenalyn Xl Stephen Curry #67 PSA 9 | Alt",
+      "url": "https://alt.xyz/itm/366ce3c4-2056-4053-8346-768826c05389",
+      "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2EmxQfwGsy74v8bdv8KD39X4IzkqhcarvPcops1Bq2LV_24DW",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2EmxQfwGsy74v8bdv8KD39X4IzkqhcarvPcops1Bq2LV_24DW",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "67"
+        ],
+        "languages": [],
+        "years": [
+          "2009"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "year",
+        "subject",
+        "brand"
+      ],
+      "missing": [],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 43,
+        "reasons": [
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [
+            "67"
+          ],
+          "years": [
+            "2009"
+          ]
+        },
+        "index": 9
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "2009 PANINI ADAENALYN XL\nSTEPHEN CUAAY\nROBKT\n72\nSteatencaP\nMINT\n4903842i\nDG",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-11",
+      "position": 11,
+      "title": "Stephen Curry #67 Prices [Rookie] | 2009 Panini Adrenalyn XL ...",
+      "url": "https://www.sportscardspro.com/game/basketball-cards-2009-panini-adrenalyn-xl/stephen-curry-67",
+      "image_url": "https://storage.googleapis.com/images.pricecharting.com/corr6ek3s6xvuwam2akh/1600.jpg",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN4olZxMuGsqJqUAAWVmEkxYoZkxQk4RDwuKDR0INzY0OgE1gf",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "67"
+        ],
+        "languages": [],
+        "years": [
+          "2009"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "year",
+        "subject",
+        "brand"
+      ],
+      "missing": [],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 43,
+        "reasons": [
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [
+            "67"
+          ],
+          "years": [
+            "2009"
+          ]
+        },
+        "index": 10
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "ROOKTH\nStephen urryP\nOFF\n77,\nDEF\n77",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-12",
+      "position": 12,
+      "title": "2009 Panini Adrenalyn XL STEPHEN CURRY Rookie Base PSA 10 ...",
+      "url": "https://www.cherrycollectables.com.au/products/2009-panini-adrenalyn-xl-stephen-curry-rookie-base-psa-10-743",
+      "image_url": "https://cdn.shopify.com/s/files/1/0263/9009/files/200226G_280_4f5f19e7-252f-4741-bd81-5bde1d9bd6eb.jpg?width=354&v=1785722551",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTPoic8li7kRsUPk1z4q-Ht2uk0kZMeoH7uIViVBa99yd0h60mQ",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "2009"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "year",
+        "subject",
+        "brand"
+      ],
+      "missing": [],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 43,
+        "reasons": [
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [],
+          "years": [
+            "2009"
+          ]
+        },
+        "index": 11
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "STEPHENCENALYN X\nROeRT\nPA\nGEM MT\n92939743\n90",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-16",
+      "position": 16,
+      "title": "2009 Panini Adrenalyn XL Stephen Curry ROOKIE PSA 10 GEM ...",
+      "url": "https://www.fanaticscollect.com/buy-now/71acea59-7427-4706-ba79-0a0ffa5813ee/2009-panini-adrenalyn-xl-stephen-curry-rookie-psa-10-gem-mint",
+      "image_url": "https://cdn-vault.fanaticscollect.com/2026/6/30/wr/13/small/v5129285_2021062912150381R_85.jpg",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcS8Uf7bHlaUM7ZqdwZd6cJQsny-8HBaaXrMhHym1G7QOpi0ucIR",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "2009"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "year",
+        "subject",
+        "brand"
+      ],
+      "missing": [],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 43,
+        "reasons": [
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [],
+          "years": [
+            "2009"
+          ]
+        },
+        "index": 15
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "2009 PANINI ADRENALYN XL\nSTEPHEN CURRY\nDEF\n72\nGEM MT\n10\n46815739\nStephen CurryP\nOFF\nGUARD\nA\n10",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-19",
+      "position": 19,
+      "title": "Carte NBA 2009 Panini Adrenalyn XL Stephen Curry Rookie PSA ...",
+      "url": "https://www.leboncoin.fr/ad/collection/3139073635",
+      "image_url": "https://img.leboncoin.fr/api/v1/lbcpb1/images/6f/c7/82/6fc7829556385d98f4c07c31307aa32ebabc2693.jpg?rule=ad-small",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1gDvN7N4tZEuJRG0SM7igSYKCOcxLcV1LHbSHmNB98nK8FbdI",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "2009"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "year",
+        "subject",
+        "brand"
+      ],
+      "missing": [],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 43,
+        "reasons": [
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [],
+          "years": [
+            "2009"
+          ]
+        },
+        "index": 18
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "ROOKTC\nstephenCuuP\nOHV9\nGUAR\n90",
+        "origin": "candidate_image_ocr"
+      }
+    }
+  ],
+  "batches": [
+    {
+      "ids": [
+        "lens-1"
+      ],
+      "reply": {
+        "original_readings": [
+          {
+            "field": "subject",
+            "image_index": 1,
+            "crop_id": "original-1-upper",
+            "full_text": "Stephen Curry",
+            "crop_text": "Stephen Curry",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Stephen Curry",
+              "en": "Stephen Curry"
+            }
+          },
+          {
+            "field": "subject",
+            "image_index": 2,
+            "crop_id": "original-2-upper",
+            "full_text": "ADRENALYN XL TRADING CARD GAME",
+            "crop_text": "ADRENALYN XL TRADING CARD GAME",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Adrenalyn XL Trading Card Game",
+              "en": "Adrenalyn XL Trading Card Game"
+            }
+          }
+        ],
+        "comparisons": [
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.04,
+                "y": 0.031
+              },
+              {
+                "x": 0.954,
+                "y": 0.031
+              },
+              {
+                "x": 0.954,
+                "y": 0.944
+              },
+              {
+                "x": 0.04,
+                "y": 0.944
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.045,
+                "y": 0.034
+              },
+              {
+                "x": 0.955,
+                "y": 0.034
+              },
+              {
+                "x": 0.955,
+                "y": 0.985
+              },
+              {
+                "x": 0.045,
+                "y": 0.985
+              }
+            ],
+            "reference_id": "lens-1",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "Stephen Curry",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "Stephen Curry",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Stephen Curry driving in Warriors uniform",
+                "reference": "Stephen Curry driving in Warriors uniform",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Vertical KICKOFF design, GUARD stripe, Warriors logo",
+                "reference": "Vertical KICKOFF design, GUARD stripe, Warriors logo",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "text",
+                "original": "Stephen Curry",
+                "reference": "Stephen Curry",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Stephen Curry",
+              "family": "Adrenalyn XL",
+              "number": "",
+              "year": "2009-10",
+              "brand": "Panini",
+              "subset": "",
+              "proof": {
+                "subject": "Stephen Curry",
+                "family": "2009-10 Panini Adrenalyn XL",
+                "year": "2009-10",
+                "subset": "Rookie Card"
+              },
+              "display_names": {
+                "it": "Stephen Curry",
+                "en": "Stephen Curry"
+              }
+            }
+          }
+        ]
+      },
+      "accepted": [
+        "lens-1"
+      ]
+    },
+    {
+      "ids": [
+        "lens-2"
+      ],
+      "reply": {
+        "original_readings": [
+          {
+            "field": "subject",
+            "image_index": 1,
+            "crop_id": "original-1-upper",
+            "full_text": "Stephen Curry",
+            "crop_text": "Stephen Curry",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Stephen Curry",
+              "en": "Stephen Curry"
+            }
+          },
+          {
+            "field": "copyright",
+            "image_index": 2,
+            "crop_id": "original-2-lower",
+            "full_text": "© 2009 NBA Properties, Inc. © 2009 Panini America, Inc.",
+            "crop_text": "© 2009 NBA Properties, Inc. © 2009 Panini America, Inc.",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "",
+              "en": ""
+            }
+          }
+        ],
+        "comparisons": [
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.043,
+                "y": 0.029
+              },
+              {
+                "x": 0.889,
+                "y": 0.029
+              },
+              {
+                "x": 0.932,
+                "y": 0.963
+              },
+              {
+                "x": 0.043,
+                "y": 0.963
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.293,
+                "y": 0.057
+              },
+              {
+                "x": 0.89,
+                "y": 0
+              },
+              {
+                "x": 0.923,
+                "y": 0.867
+              },
+              {
+                "x": 0.193,
+                "y": 0.99
+              }
+            ],
+            "reference_id": "lens-2",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "Stephen Curry",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "Stephen Curry",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Stephen Curry driving in Warriors uniform",
+                "reference": "Stephen Curry driving in Warriors uniform",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Vertical Panini Adrenalyn XL design with DEF/OFF panels",
+                "reference": "Same vertical design with DEF/OFF panels",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "Warriors logo, NBA logo, number 30, star 77",
+                "reference": "Warriors logo, NBA logo, number 30, star 77",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Stephen Curry",
+              "family": "Panini Adrenalyn XL",
+              "number": "",
+              "year": "2009-10",
+              "brand": "Panini",
+              "subset": "rookie",
+              "proof": {
+                "subject": "Stephen Curry rookie card",
+                "family": "2009-10 Panini Adrenalyn XL Stephen Curry rookie card",
+                "year": "2009-10 Panini",
+                "subset": "rookie"
+              },
+              "display_names": {
+                "it": "Stephen Curry",
+                "en": "Stephen Curry"
+              }
+            }
+          }
+        ]
+      },
+      "accepted": [
+        "lens-2"
+      ]
+    }
+  ],
+  "crops": [
+    {
+      "id": "original-1-upper",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.004629629629629629,
+        "y": 0.004669779853235491,
+        "width": 0.9907407407407407,
+        "height": 0.31554369579719815
+      }
+    },
+    {
+      "id": "original-1-lower",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.004629629629629629,
+        "y": 0.6504336224149433,
+        "width": 0.9907407407407407,
+        "height": 0.33488992661774514
+      }
+    },
+    {
+      "id": "original-2-upper",
+      "image_index": 2,
+      "region": {
+        "image_index": 2,
+        "x": 0,
+        "y": 0.1547008547008547,
+        "width": 1,
+        "height": 0.26452991452991453
+      }
+    },
+    {
+      "id": "original-2-lower",
+      "image_index": 2,
+      "region": {
+        "image_index": 2,
+        "x": 0,
+        "y": 0.685042735042735,
+        "width": 1,
+        "height": 0.28034188034188035
+      }
+    }
+  ],
+  "photoOcr": []
+}

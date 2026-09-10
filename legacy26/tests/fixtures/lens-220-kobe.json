@@ -1,0 +1,1819 @@
+{
+  "vision": {
+    "domain": "sports",
+    "kind": "card",
+    "category": "basketball trading card",
+    "language": "",
+    "object_unit": "single",
+    "image_views": [
+      {
+        "image_index": 1,
+        "view": "front",
+        "certainty": "clear"
+      },
+      {
+        "image_index": 2,
+        "view": "back",
+        "certainty": "clear"
+      }
+    ],
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.14,
+        "y": 0.27,
+        "width": 0.79,
+        "height": 0.55,
+        "certain": true
+      },
+      {
+        "image_index": 2,
+        "x": 0.09,
+        "y": 0.31,
+        "width": 0.75,
+        "height": 0.5,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "KOBE BRYANT",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.25,
+          "y": 0.73,
+          "width": 0.32,
+          "height": 0.04
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "team",
+        "text": "LOS ANGELES LAKERS",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.25,
+          "y": 0.76,
+          "width": 0.33,
+          "height": 0.025
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "product",
+        "text": "METAL UNIVERSE",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.62,
+          "y": 0.76,
+          "width": 0.2,
+          "height": 0.05
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "collector_number",
+        "text": "18",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.18,
+          "y": 0.34,
+          "width": 0.05,
+          "height": 0.04
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "season",
+        "text": "1996-97",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.29,
+          "y": 0.72,
+          "width": 0.08,
+          "height": 0.02
+        },
+        "zone": "statistics",
+        "alternatives": []
+      },
+      {
+        "field": "copyright",
+        "text": "© 1997 NBA PROPERTIES, INC. © 1997 SKYBOX INTERNATIONAL. PRINTED IN U.S.A. METAL ...",
+        "certainty": "uncertain",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.75,
+          "y": 0.34,
+          "width": 0.03,
+          "height": 0.4
+        },
+        "zone": "footer",
+        "alternatives": [
+          "© 1997 NBA PROPERTIES, INC. © 1997 SKYBOX INTERNATIONAL. PRINTED IN U.S.A. METAL"
+        ]
+      },
+      {
+        "field": "text",
+        "text": "G",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.19,
+          "y": 0.4,
+          "width": 0.04,
+          "height": 0.04
+        },
+        "zone": "other",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "1997 SkyBox Metal Universe",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.23,
+          "y": 0.89,
+          "width": 0.18,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "High School Lower Merion (PA); Born 8/23/78; Philadelphia, PA",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.2,
+          "y": 0.45,
+          "width": 0.16,
+          "height": 0.12
+        },
+        "zone": "back",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "Yr Club FG% 3FG% FT% REB AST STL BLK PTS AVG; 96-97 L.A. Lakers .417 .375 .819 132 91 49 23 539 7.6",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.28,
+          "y": 0.7,
+          "width": 0.44,
+          "height": 0.08
+        },
+        "zone": "statistics",
+        "alternatives": []
+      }
+    ],
+    "features": [
+      {
+        "field": "border_color",
+        "value": "silver",
+        "description": "cornice metallica argentata",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.14,
+          "y": 0.27,
+          "width": 0.79,
+          "height": 0.55
+        },
+        "zone": "border"
+      },
+      {
+        "field": "pattern",
+        "value": "motivo metallico/olografico con particelle e forme geometriche",
+        "description": "sfondo riflettente strutturato",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.15,
+          "y": 0.28,
+          "width": 0.77,
+          "height": 0.5
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "finish",
+        "value": "reflective",
+        "description": "superficie fortemente riflettente",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.15,
+          "y": 0.28,
+          "width": 0.77,
+          "height": 0.5
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "stamp",
+        "value": "unclear",
+        "description": "eventuale timbro non chiaramente distinguibile",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.15,
+          "y": 0.28,
+          "width": 0.77,
+          "height": 0.5
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "rookie",
+        "value": "unclear",
+        "description": "nessun badge RC/Rookie chiaramente leggibile",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.15,
+          "y": 0.27,
+          "width": 0.79,
+          "height": 0.55
+        },
+        "zone": "label"
+      },
+      {
+        "field": "layout",
+        "value": "ritratto d'azione verticale con logo Metal Universe nella fascia inferiore",
+        "description": "giocatore in divisa Lakers con pallone",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.15,
+          "y": 0.28,
+          "width": 0.77,
+          "height": 0.5
+        },
+        "zone": "artwork"
+      }
+    ],
+    "hypotheses": [
+      {
+        "field": "brand",
+        "value": "SkyBox"
+      },
+      {
+        "field": "model",
+        "value": "1997 SkyBox Metal Universe"
+      }
+    ],
+    "slab_reading": null,
+    "engine_version": 193,
+    "brand": "SkyBox",
+    "family": "METAL UNIVERSE",
+    "title": "KOBE BRYANT",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": {
+      "image_index": 1,
+      "x": 0.14,
+      "y": 0.27,
+      "width": 0.79,
+      "height": 0.55,
+      "certain": true
+    }
+  },
+  "references": [
+    {
+      "id": "lens-1",
+      "position": 1,
+      "title": "kobe bryant 97-98 Metal Universe | eBay",
+      "url": "https://www.ebay.com/itm/305698413630",
+      "image_url": "https://i.ebayimg.com/images/g/TdUAAOSwi95mpyIr/s-l1200.jpg",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaCEjBHHdFadATRJzn0ptmiYKMM-8ENqw1J6RRSRek4cT0R-Et",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "subject"
+      ],
+      "missing": [
+        "number",
+        "finish"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 35,
+        "reasons": [
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [],
+          "years": []
+        },
+        "index": 0
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "KOBE BRYANT\nRS",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-3",
+      "position": 3,
+      "title": "1997 Metal Universe 81 Kobe Bryant PSA 8 Graded Card | GameStop",
+      "url": "https://www.gamestop.com/graded-trading-cards/graded-cards/products/1997-metal-universe-81-kobe-bryant-psa-8/PSA116968936",
+      "image_url": "https://media.gamestop.com/i/gamestop/prod-1_front_PSA_116968936_20260511162116941",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSRNKwxtMYaoBxai4IAB9x62mytwa5DsaXIIOlnO253-2HsKi_R",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "1997"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "subject"
+      ],
+      "missing": [
+        "number",
+        "finish"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 35,
+        "reasons": [
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [],
+          "years": [
+            "1997"
+          ]
+        },
+        "index": 2
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "1997 METAL UNIVERSE\nKOBE BRYANT\nPA\nKOBE BRYANT\n#81\nNM-MT\n8\n116968936",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-5",
+      "position": 5,
+      "title": "Los Angeles Lakers Kobe Bryant 1997 Skybox Metal Universe ...",
+      "url": "https://store.nba.com/los-angeles-lakers/los-angeles-lakers-kobe-bryant-1997-skybox-metal-universe-number-81-psa-authenticated-9-card/t-25697457+p-1508120361577+z-9-465722361",
+      "image_url": "https://fanatics.frgimages.com/los-angeles-lakers/kobe-bryant-los-angeles-lakers-1997-skybox-metal-universe-number-81-psa-authenticated-9-card_pi4813000_altimages_ff_4813525-80a0de2aaf063dc839cbalt1_full.jpg?_hv=2&w=1018",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcR0OUI6ySz28wSiCkmM45m3XaWEuEIHfExTvUwZMt8hQrVckQoK",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "1997"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "subject"
+      ],
+      "missing": [
+        "number",
+        "finish"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 35,
+        "reasons": [
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [],
+          "years": [
+            "1997"
+          ]
+        },
+        "index": 4
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "1997 METAL UNIVERSE\nKOBE BRYANT\n#81\nMINT\n61428961\nMETAL)",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-24",
+      "position": 24,
+      "title": "1997 Metal Universe 81 Kobe Bryant PSA 9 Graded Card | GameStop",
+      "url": "https://www.gamestop.com/graded-trading-cards/graded-cards/products/1997-metal-universe-81-kobe-bryant-psa-9/PSA148346963",
+      "image_url": "https://media.gamestop.com/i/gamestop/prod-1_front_PSA_148346963_20260424191337434",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRRuR3d5LJfmI0FyA1F6M-NpkAUvydCq7SblzClpp1lwuYHaMpv",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "1997"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "subject"
+      ],
+      "missing": [
+        "number",
+        "finish"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 35,
+        "reasons": [
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [],
+          "years": [
+            "1997"
+          ]
+        },
+        "index": 23
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "1997 METAL UNIVERSE\nKOBE BRYANT\nPSA\n#81\nMINT\n9\n148346963",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-25",
+      "position": 25,
+      "title": "Kobe Bryant 1997-98 Metal Universe card",
+      "url": "https://www.facebook.com/groups/156859589768521/posts/1343463331108135/",
+      "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk5bQW745OYUv_oX88jfyQI_6Y1nkuddHQpbikXuDWp8-Fg1Tm",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk5bQW745OYUv_oX88jfyQI_6Y1nkuddHQpbikXuDWp8-Fg1Tm",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "1997-98"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "subject"
+      ],
+      "missing": [
+        "number",
+        "finish"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 35,
+        "reasons": [
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [],
+          "years": [
+            "1997"
+          ]
+        },
+        "index": 24
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "8\nTAL",
+        "origin": "candidate_image_ocr"
+      },
+      "page_text": "Kobe Bryant Collectors | 1 of the top 5 faves i have when it comes to Kobe Bryant although im more of a Jordan Rookie guy these Kobe are Nice for sure had to grab it",
+      "page_url": "https://www.facebook.com/groups/156859589768521/posts/1343463331108135/"
+    },
+    {
+      "id": "lens-27",
+      "position": 27,
+      "title": "Kobe Bryant 1997 Metal Universe (PSA 10) is up for auction ...",
+      "url": "https://www.instagram.com/p/DZJDNalE95Q/",
+      "image_url": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcT764AJV99eGMARXZfNhoAlErcEGvHfTHpfIER9Ke9l6xzcSxum",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcT764AJV99eGMARXZfNhoAlErcEGvHfTHpfIER9Ke9l6xzcSxum",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "1997"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "subject"
+      ],
+      "missing": [
+        "number",
+        "finish"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 35,
+        "reasons": [
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [],
+          "years": [
+            "1997"
+          ]
+        },
+        "index": 26
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "99r METAL UNIVENsE\nKOBE BRYANT\nPA\n81\nGEM MT\n10",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-31",
+      "position": 31,
+      "title": "Kobe Bryant Metal Universe | Yahoo拍賣",
+      "url": "https://tw.bid.yahoo.com/item/101353525124",
+      "image_url": "https://img.yec.tw/cl/api/res/1.2/1fkE.hmXQgTKmD2R_iENyg--/YXBwaWQ9eXR3YXVjdGlvbnNlcnZpY2U7Zmk9ZmlsbDtoPTE0MDA7cT04NTtyb3RhdGU9YXV0bzt3PTE0MDA-/https://img.yec.tw/ob/image/e7baaacc-9547-44a0-8bd7-cfaf25a93c72.jpg",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTdlh3Bf47g9GIW3h51F3reWesRX4S3vt-KI4ZTH2ITKntbf5qu",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "subject"
+      ],
+      "missing": [
+        "number",
+        "finish"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 35,
+        "reasons": [
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [],
+          "years": []
+        },
+        "index": 30
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "3PAL",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-37",
+      "position": 37,
+      "title": "Kobe Bryant METAL UNIVERSE Basketball Card",
+      "url": "https://noticiasncc.com/?w=154449384816",
+      "image_url": "https://u-mercari-images.mercdn.net/photos/m86875745488_1.jpg?1663562908",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcR0LfRCiRimNJyLvp2WF04oYcEqd7cfIdK_ev2OjpiElPBrFDLe",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "subject"
+      ],
+      "missing": [
+        "number",
+        "finish"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 35,
+        "reasons": [
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [],
+          "years": []
+        },
+        "index": 36
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "KOBE BRYANT\nLOS ANGELLS AkERS\nTNES\n(ETA\nINIVIRSI",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-42",
+      "position": 42,
+      "title": "NBA Graded Card 1997 Metal Universe [81 Kobe Bryant PSA 7 – TGC",
+      "url": "https://collect.thegamecollection.net/products/nba-graded-card-1997-metal-universe-81-kobe-bryant-psa-7",
+      "image_url": "https://collect.thegamecollection.net/cdn/shop/files/BC_Upload_8e732cc1-0563-47ed-9756-5e5444528bb0.jpg?v=1752228014&width=1500",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRToO98HSNmnIMXgtytJU2kIK9Z5qnaxNlxnC0Mod3FVMwdIGnb",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "1997"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "subject"
+      ],
+      "missing": [
+        "number",
+        "finish"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 35,
+        "reasons": [
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [],
+          "years": [
+            "1997"
+          ]
+        },
+        "index": 41
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "1997 METAL UNIVERSE\nKOBE BRYANT\n#81\nNM\n7\n48775868",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-44",
+      "position": 44,
+      "title": "Kobe Bryant 1997-98 Fleer Metal Universe card",
+      "url": "https://www.facebook.com/groups/156859589768521/posts/1317707063683762/",
+      "image_url": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSLDmS9XTTQdCa8WYfRtC08D-LNDf20ObV4XtUadIJPsNybJvwB",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSLDmS9XTTQdCa8WYfRtC08D-LNDf20ObV4XtUadIJPsNybJvwB",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "1997-98"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "subject"
+      ],
+      "missing": [
+        "number",
+        "finish"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 35,
+        "reasons": [
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [],
+          "years": [
+            "1997"
+          ]
+        },
+        "index": 43
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "",
+        "origin": "candidate_image_ocr"
+      }
+    }
+  ],
+  "batches": [
+    {
+      "ids": [
+        "lens-1"
+      ],
+      "reply": {
+        "original_readings": [],
+        "comparisons": [
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.159,
+                "y": 0.26
+              },
+              {
+                "x": 0.946,
+                "y": 0.26
+              },
+              {
+                "x": 0.946,
+                "y": 0.771
+              },
+              {
+                "x": 0.159,
+                "y": 0.771
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.113,
+                "y": 0.101
+              },
+              {
+                "x": 0.9,
+                "y": 0.101
+              },
+              {
+                "x": 0.9,
+                "y": 0.678
+              },
+              {
+                "x": 0.113,
+                "y": 0.678
+              }
+            ],
+            "reference_id": "lens-1",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "KOBE BRYANT",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Kobe Bryant dunking before a pink circle",
+                "reference": "Same Kobe Bryant dunking artwork and pink circle",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Metal Universe emblem at lower right",
+                "reference": "Metal Universe emblem at lower right",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "Front card shown without case",
+                "reference": "Same card front inside case",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "KOBE BRYANT",
+              "family": "Metal Universe",
+              "number": "",
+              "year": "",
+              "brand": "",
+              "subset": "",
+              "proof": {
+                "subject": "kobe bryant",
+                "family": "Metal Universe",
+                "year": "",
+                "subset": ""
+              },
+              "display_names": {
+                "it": "KOBE BRYANT",
+                "en": "KOBE BRYANT"
+              }
+            }
+          }
+        ]
+      },
+      "accepted": []
+    },
+    {
+      "ids": [
+        "lens-25"
+      ],
+      "reply": {
+        "original_readings": [],
+        "comparisons": [
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.157,
+                "y": 0.261
+              },
+              {
+                "x": 0.946,
+                "y": 0.26
+              },
+              {
+                "x": 0.945,
+                "y": 0.772
+              },
+              {
+                "x": 0.144,
+                "y": 0.773
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.247,
+                "y": 0.197
+              },
+              {
+                "x": 0.907,
+                "y": 0.197
+              },
+              {
+                "x": 0.907,
+                "y": 0.776
+              },
+              {
+                "x": 0.247,
+                "y": 0.776
+              }
+            ],
+            "reference_id": "lens-25",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "KOBE BRYANT",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Kobe Bryant dunking before pink moon",
+                "reference": "Same Kobe Bryant dunking artwork",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Vertical Metal Universe front design",
+                "reference": "Vertical Metal Universe front design",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "1997-98 Metal Universe front",
+                "reference": "1997-98 Metal Universe card",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Kobe Bryant",
+              "family": "Metal Universe",
+              "number": "",
+              "year": "1997-98",
+              "brand": "SkyBox",
+              "subset": "",
+              "proof": {
+                "subject": "Kobe Bryant",
+                "family": "Metal Universe",
+                "year": "1997-98",
+                "subset": ""
+              },
+              "display_names": {
+                "it": "Kobe Bryant",
+                "en": "Kobe Bryant"
+              }
+            }
+          }
+        ]
+      },
+      "accepted": []
+    }
+  ],
+  "crops": [
+    {
+      "id": "original-1-upper",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.125,
+        "y": 0.2547008547008547,
+        "width": 0.8203703703703704,
+        "height": 0.19572649572649573
+      }
+    },
+    {
+      "id": "original-1-lower",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.125,
+        "y": 0.6286324786324786,
+        "width": 0.8203703703703704,
+        "height": 0.2064102564102564
+      }
+    },
+    {
+      "id": "original-2-upper",
+      "image_index": 2,
+      "region": {
+        "image_index": 2,
+        "x": 0.075,
+        "y": 0.2948717948717949,
+        "width": 0.7805555555555556,
+        "height": 0.18034188034188034
+      }
+    },
+    {
+      "id": "original-2-lower",
+      "image_index": 2,
+      "region": {
+        "image_index": 2,
+        "x": 0.075,
+        "y": 0.6346153846153846,
+        "width": 0.7805555555555556,
+        "height": 0.1905982905982906
+      }
+    }
+  ],
+  "photoOcr": [
+    {
+      "image_index": 1,
+      "meta": {
+        "originalWidth": 1080,
+        "originalHeight": 2340,
+        "imageIndex": 1,
+        "rect": {
+          "x": 135,
+          "y": 596,
+          "width": 886,
+          "height": 1358
+        },
+        "cropped": true,
+        "searchWindow": false,
+        "sentWidth": 886,
+        "sentHeight": 1358,
+        "mimeType": "image/jpeg",
+        "jpegQuality": 0.94,
+        "source": "original_file",
+        "orientation": "from-image",
+        "unit": "single"
+      },
+      "state": "ok",
+      "origin": "on_device_photo_ocr",
+      "script": "latin",
+      "text": "KOBE BRYANT\nRS",
+      "lines": [
+        {
+          "text": "KOBE BRYANT",
+          "x": 0.16478555,
+          "y": 0.75478643,
+          "width": 0.3216704,
+          "height": 0.030191481,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.7121094,
+          "observation_count": 5
+        },
+        {
+          "text": "RS",
+          "x": 0.510158,
+          "y": 0.23416789,
+          "width": 0.058690727,
+          "height": 0.045655385,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.6816406,
+          "observation_count": 2
+        }
+      ],
+      "width": 886,
+      "height": 1358,
+      "coordinate_space": "original_normalized",
+      "passes": [
+        {
+          "name": "original",
+          "rotation_degrees": 0,
+          "state": "ok",
+          "line_count": 2,
+          "region_count": 1,
+          "width": 886,
+          "height": 1358
+        },
+        {
+          "name": "rotate_90",
+          "rotation_degrees": 90,
+          "state": "ok",
+          "line_count": 2,
+          "region_count": 1,
+          "width": 1358,
+          "height": 886
+        },
+        {
+          "name": "rotate_270",
+          "rotation_degrees": 270,
+          "state": "ok",
+          "line_count": 1,
+          "region_count": 1,
+          "width": 1358,
+          "height": 886
+        },
+        {
+          "name": "rotate_180",
+          "rotation_degrees": 180,
+          "state": "ok",
+          "line_count": 1,
+          "region_count": 1,
+          "width": 886,
+          "height": 1358
+        },
+        {
+          "name": "upper_detail",
+          "rotation_degrees": 0,
+          "state": "ok",
+          "line_count": 0,
+          "region_count": 1,
+          "width": 1772,
+          "height": 1520
+        },
+        {
+          "name": "lower_detail",
+          "rotation_degrees": 0,
+          "state": "ok",
+          "line_count": 3,
+          "region_count": 1,
+          "width": 1772,
+          "height": 1520
+        }
+      ],
+      "pass_count": 6,
+      "ambiguous_line_count": 0,
+      "elapsed_ms": 446,
+      "baseline_elapsed_ms": 148,
+      "recovery_elapsed_ms": 298,
+      "recovery_budget_ms": 8000,
+      "paid_requests": 0
+    },
+    {
+      "image_index": 2,
+      "meta": {
+        "originalWidth": 1080,
+        "originalHeight": 2340,
+        "imageIndex": 2,
+        "rect": {
+          "x": 81,
+          "y": 690,
+          "width": 843,
+          "height": 1241
+        },
+        "cropped": true,
+        "searchWindow": false,
+        "sentWidth": 843,
+        "sentHeight": 1241,
+        "mimeType": "image/jpeg",
+        "jpegQuality": 0.94,
+        "source": "original_file",
+        "orientation": "from-image",
+        "unit": "single"
+      },
+      "state": "ok",
+      "origin": "on_device_photo_ocr",
+      "script": "latin",
+      "text": "HT, 66\nG\nWT: 200\nHGH SCHOOL\n81\nLOWER MERION PA)\nBORN\n8 23/78\nPA\nPHLADELPHA\nYR CLUB\n\"96-97 LA. LAKERS\nNBA TOTALS\nC K Sactct\nKOBE BBSYEINTE\nFG% 3FG% FT% REB AST\n417 375 819 132 91\n417 .375 819 132 91\nsicyiox\nSTL BLK PTS AVG\n49 23\n49 23\n539\n539\n7.6\n7.6\nNBA PROPERTIES, INC. O1997 SKYBOX INTERNATIONAL. PRINTED IN U.S.A. METAL/1/e",
+      "lines": [
+        {
+          "text": "HT, 66",
+          "x": 0.118623964,
+          "y": 0.26188558,
+          "width": 0.046263345,
+          "height": 0.012087017,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.3703125,
+          "observation_count": 2
+        },
+        {
+          "text": "G",
+          "x": 0.14827995,
+          "y": 0.16277196,
+          "width": 0.045077115,
+          "height": 0.044319093,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.69921875,
+          "observation_count": 3
+        },
+        {
+          "text": "WT: 200",
+          "x": 0.118623964,
+          "y": 0.28686544,
+          "width": 0.048635818,
+          "height": 0.0128928125,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.4518229,
+          "observation_count": 3
+        },
+        {
+          "text": "HGH SCHOOL",
+          "x": 0.1198102,
+          "y": 0.3126511,
+          "width": 0.0747331,
+          "height": 0.012087017,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.625,
+          "observation_count": 4
+        },
+        {
+          "text": "81",
+          "x": 0.17200474,
+          "y": 0.05318292,
+          "width": 0.026097268,
+          "height": 0.05882353,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.43945312,
+          "observation_count": 1
+        },
+        {
+          "text": "LOWER MERION PA)",
+          "x": 0.12099644,
+          "y": 0.33763096,
+          "width": 0.112692766,
+          "height": 0.0128928125,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.59877235,
+          "observation_count": 3,
+          "alternatives": [
+            {
+              "text": "LOWER MERONPA)",
+              "x": 0.124406055,
+              "y": 0.3359375,
+              "width": 0.10885529,
+              "height": 0.015527368,
+              "pass": "left_edge_inverted_270",
+              "rotation_degrees": 270,
+              "engine_confidence": 0.58413464,
+              "observation_count": 1
+            }
+          ],
+          "ambiguous": true
+        },
+        {
+          "text": "BORN",
+          "x": 0.12099644,
+          "y": 0.3634166,
+          "width": 0.030842237,
+          "height": 0.012087017,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.36914062,
+          "observation_count": 1
+        },
+        {
+          "text": "8 23/78",
+          "x": 0.12218268,
+          "y": 0.38839644,
+          "width": 0.048635826,
+          "height": 0.012892842,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.70377606,
+          "observation_count": 3,
+          "alternatives": [
+            {
+              "text": "& 23 78",
+              "x": 0.13088553,
+              "y": 0.38632813,
+              "width": 0.041468695,
+              "height": 0.016113281,
+              "pass": "left_edge_inverted_270",
+              "rotation_degrees": 270,
+              "engine_confidence": 0.515625,
+              "observation_count": 1
+            },
+            {
+              "text": "8/23/78",
+              "x": 0.12796208,
+              "y": 0.3852129,
+              "width": 0.04680094,
+              "height": 0.017318785,
+              "pass": "left_edge_270",
+              "rotation_degrees": 270,
+              "engine_confidence": 0.63727677,
+              "observation_count": 1
+            }
+          ],
+          "ambiguous": true
+        },
+        {
+          "text": "PA",
+          "x": 0.12336892,
+          "y": 0.43996778,
+          "width": 0.014234871,
+          "height": 0.009669602,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.58984375,
+          "observation_count": 2
+        },
+        {
+          "text": "PHLADELPHA",
+          "x": 0.12336892,
+          "y": 0.4117647,
+          "width": 0.07354686,
+          "height": 0.0136986375,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.5109375,
+          "observation_count": 2
+        },
+        {
+          "text": "YR CLUB",
+          "x": 0.20877817,
+          "y": 0.6937953,
+          "width": 0.10557532,
+          "height": 0.015310228,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.6061198,
+          "observation_count": 1
+        },
+        {
+          "text": "\"96-97 LA. LAKERS",
+          "x": 0.20877817,
+          "y": 0.7211926,
+          "width": 0.15539739,
+          "height": 0.019339204,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.68880206,
+          "observation_count": 4
+        },
+        {
+          "text": "NBA TOTALS",
+          "x": 0.20877817,
+          "y": 0.75342464,
+          "width": 0.09134045,
+          "height": 0.016921878,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.7994792,
+          "observation_count": 4
+        },
+        {
+          "text": "C K Sactct",
+          "x": 0.20521945,
+          "y": 0.82917005,
+          "width": 0.120996445,
+          "height": 0.022562444,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.3564453,
+          "observation_count": 1
+        },
+        {
+          "text": "KOBE BBSYEINTE",
+          "x": 0.42111507,
+          "y": 0.59629333,
+          "width": 0.41043893,
+          "height": 0.047542274,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.39633414,
+          "observation_count": 1
+        },
+        {
+          "text": "FG% 3FG% FT% REB AST",
+          "x": 0.39145908,
+          "y": 0.6857373,
+          "width": 0.22538552,
+          "height": 0.021756649,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.58251953,
+          "observation_count": 2
+        },
+        {
+          "text": "417 375 819 132 91",
+          "x": 0.39027283,
+          "y": 0.715552,
+          "width": 0.22064057,
+          "height": 0.020950854,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.79408485,
+          "observation_count": 2,
+          "alternatives": [
+            {
+              "text": "417 375",
+              "x": 0.40047392,
+              "y": 0.7162831,
+              "width": 0.08767775,
+              "height": 0.020540833,
+              "pass": "left_edge_270",
+              "rotation_degrees": 270,
+              "engine_confidence": 0.8483073,
+              "observation_count": 1
+            }
+          ],
+          "ambiguous": true
+        },
+        {
+          "text": "417 .375 819 132 91",
+          "x": 0.39264533,
+          "y": 0.7461724,
+          "width": 0.21826807,
+          "height": 0.020950854,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.7476562,
+          "observation_count": 2,
+          "alternatives": [
+            {
+              "text": "417 375",
+              "x": 0.40165877,
+              "y": 0.74769855,
+              "width": 0.08353081,
+              "height": 0.019735336,
+              "pass": "left_edge_270",
+              "rotation_degrees": 270,
+              "engine_confidence": 0.82682294,
+              "observation_count": 1
+            }
+          ],
+          "ambiguous": true
+        },
+        {
+          "text": "sicyiox",
+          "x": 0.41518387,
+          "y": 0.79613215,
+          "width": 0.13879004,
+          "height": 0.06688154,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.3794643,
+          "observation_count": 1
+        },
+        {
+          "text": "STL BLK PTS AVG",
+          "x": 0.6429419,
+          "y": 0.6817083,
+          "width": 0.1897983,
+          "height": 0.020950854,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.7034505,
+          "observation_count": 2
+        },
+        {
+          "text": "49 23",
+          "x": 0.6465006,
+          "y": 0.7147462,
+          "width": 0.060498238,
+          "height": 0.016921818,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.84765625,
+          "observation_count": 1,
+          "alternatives": [
+            {
+              "text": "49 23 539",
+              "x": 0.6465006,
+              "y": 0.71635777,
+              "width": 0.11625147,
+              "height": 0.017727673,
+              "pass": "rotate_90",
+              "rotation_degrees": 90,
+              "engine_confidence": 0.84765625,
+              "observation_count": 1
+            }
+          ],
+          "ambiguous": true
+        },
+        {
+          "text": "49 23",
+          "x": 0.6465006,
+          "y": 0.74375504,
+          "width": 0.060498238,
+          "height": 0.017727613,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.82910156,
+          "observation_count": 1,
+          "alternatives": [
+            {
+              "text": "49 23 539",
+              "x": 0.6465006,
+              "y": 0.74456084,
+              "width": 0.11625147,
+              "height": 0.019339263,
+              "pass": "rotate_90",
+              "rotation_degrees": 90,
+              "engine_confidence": 0.8420759,
+              "observation_count": 1
+            }
+          ],
+          "ambiguous": true
+        },
+        {
+          "text": "539",
+          "x": 0.7342823,
+          "y": 0.7139404,
+          "width": 0.028469741,
+          "height": 0.016116023,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.83984375,
+          "observation_count": 1
+        },
+        {
+          "text": "539",
+          "x": 0.73546857,
+          "y": 0.74294925,
+          "width": 0.02728349,
+          "height": 0.016921818,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.859375,
+          "observation_count": 1
+        },
+        {
+          "text": "7.6",
+          "x": 0.8030842,
+          "y": 0.71152294,
+          "width": 0.028469801,
+          "height": 0.016921878,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.5286458,
+          "observation_count": 1
+        },
+        {
+          "text": "7.6",
+          "x": 0.8030842,
+          "y": 0.74133766,
+          "width": 0.029655993,
+          "height": 0.016921818,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.640625,
+          "observation_count": 2
+        },
+        {
+          "text": "NBA PROPERTIES, INC. O1997 SKYBOX INTERNATIONAL. PRINTED IN U.S.A. METAL/1/e",
+          "x": 0.9086596,
+          "y": 0.053988717,
+          "width": 0.02728349,
+          "height": 0.5294118,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.75932837,
+          "observation_count": 1,
+          "alternatives": [
+            {
+              "text": "1997 NBA PROPERTIES, INC. O 1997 SKYBOX INTERNATIONAL. PRINTE",
+              "x": 0.91187906,
+              "y": 0.20410156,
+              "width": 0.026781857,
+              "height": 0.41250002,
+              "pass": "right_edge_inverted_90",
+              "rotation_degrees": 90,
+              "engine_confidence": 0.7783019,
+              "observation_count": 1
+            },
+            {
+              "text": "1947 NBA PROPERTIES, INC, O 1997 SKYBOX INTERNATIONAL. PRINTED N U.S",
+              "x": 0.91092634,
+              "y": 0.1491945,
+              "width": 0.02494061,
+              "height": 0.46800923,
+              "pass": "right_edge_90",
+              "rotation_degrees": 90,
+              "engine_confidence": 0.74360186,
+              "observation_count": 1
+            },
+            {
+              "text": "1997 NBA PROPERTIES, INC, O1997 SKYBOX INTERNATIONAL. PRINTED IN U.S.A. METAL/1/9",
+              "x": 0.90984577,
+              "y": 0.04834813,
+              "width": 0.024911046,
+              "height": 0.56970185,
+              "pass": "rotate_90",
+              "rotation_degrees": 90,
+              "engine_confidence": 0.7179797,
+              "observation_count": 1
+            }
+          ],
+          "ambiguous": true
+        }
+      ],
+      "width": 843,
+      "height": 1241,
+      "coordinate_space": "original_normalized",
+      "passes": [
+        {
+          "name": "original",
+          "rotation_degrees": 0,
+          "state": "ok",
+          "line_count": 27,
+          "region_count": 1,
+          "width": 843,
+          "height": 1241
+        },
+        {
+          "name": "critical_code_0",
+          "rotation_degrees": 0,
+          "state": "ok",
+          "line_count": 2,
+          "region_count": 1,
+          "width": 249,
+          "height": 234
+        },
+        {
+          "name": "light_text_regions_90",
+          "rotation_degrees": 90,
+          "state": "ok",
+          "line_count": 0,
+          "region_count": 6,
+          "width": 720,
+          "height": 960
+        },
+        {
+          "name": "right_edge_inverted_90",
+          "rotation_degrees": 90,
+          "state": "ok",
+          "line_count": 2,
+          "region_count": 1,
+          "width": 2048,
+          "height": 926
+        },
+        {
+          "name": "left_edge_inverted_270",
+          "rotation_degrees": 270,
+          "state": "ok",
+          "line_count": 10,
+          "region_count": 1,
+          "width": 2048,
+          "height": 926
+        },
+        {
+          "name": "right_edge_90",
+          "rotation_degrees": 90,
+          "state": "ok",
+          "line_count": 2,
+          "region_count": 1,
+          "width": 1738,
+          "height": 842
+        },
+        {
+          "name": "left_edge_270",
+          "rotation_degrees": 270,
+          "state": "ok",
+          "line_count": 18,
+          "region_count": 1,
+          "width": 1738,
+          "height": 844
+        },
+        {
+          "name": "rotate_90",
+          "rotation_degrees": 90,
+          "state": "ok",
+          "line_count": 27,
+          "region_count": 1,
+          "width": 1241,
+          "height": 843
+        }
+      ],
+      "pass_count": 8,
+      "ambiguous_line_count": 7,
+      "elapsed_ms": 683,
+      "baseline_elapsed_ms": 83,
+      "recovery_elapsed_ms": 600,
+      "recovery_budget_ms": 8000,
+      "paid_requests": 0
+    }
+  ]
+}
