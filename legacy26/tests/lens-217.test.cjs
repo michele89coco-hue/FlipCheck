@@ -40,3 +40,10 @@ test('217 Boniface recorded consumption fits the explicit completion tolerance; 
 test('217 tolerance does not discard unknown charges, exceed 10 percent or bypass cancellation',()=>{
  const b=new V.Budget({maxEur:.01});b.enableCompletionTolerance();assert.equal(b.maxUsd,.011);const r=b.reserve('vision',.01);b.settle(r,null);assert.throws(()=>b.reserve('vision',.0011),/budget_exhausted/);b.cancelled=true;assert.throws(()=>b.reserve('vision',0),/scan_cancelled/);
 });
+test('217 merged catalogues retain documented unnumbered Green Ice despite a partial extraction',()=>{
+ const fs=require('fs'),z=require('zlib'),C=require('../src/main/assets/catalogue-sources'),read=n=>JSON.parse(z.gunzipSync(fs.readFileSync(__dirname+'/fixtures/diagnostics-'+n+'.json.gz')));
+ const d=read(200)[0],pages=read(199)[0].pages,l=E.ingestVision(new E.Ledger(d.vision),d.vision);E.ingestOcr(l,d.photoOcr);
+ E.applyDetails(l,[{field:'serial',text:'2/5',certainty:'clear',evidence_found:true,image_index:2}],E.recoveryRequests(l,E.reduce(l,[])));
+ const es=C.records(pages,l).concat(d.phases.filter(p=>p.stage==='flipcheck_catalogue_search').flatMap(p=>C.groundedExtraction(p.result,pages,l).accepted));const r=E.reduce(l,es);
+ assert.equal(r.market_ready,true,JSON.stringify(r.variant_resolution));assert.equal(r.variant,'Green');assert.equal(r.physical_serial.value,'2/5');
+});

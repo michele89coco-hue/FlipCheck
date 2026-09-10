@@ -218,7 +218,7 @@ test('200 Luffy set-code crop runs before retrieval and a newly verified P-110 u
 });
 test('200 newly available variants after a later catalogue phase trigger physical inspection when budget permits',async()=>{
  const url='https://www.beckett.com/test-later',base={url,title:'2018-19 Prizm Basketball Checklist',text:'Base\n280 Luka Doncic'},rich={...base,text:base.text+'\nGreen\nGreen Pulsar /25'};
- await reset('doncic',{packet:D199[1].vision,photoCount:2,noOcr:true,pagesBySearch:[[base],[rich]],surfaceInspection:fullSurface199(),mutate(d){d.pages=[];}});await page.evaluate(()=>{const previous=newContext164;newContext164=function(){const ctx=previous();ctx.budget.maxUsd=.05;return ctx;};});const out=await scan();assert.equal(out.identification.market_ready,true,JSON.stringify(out.visualAssistance.engine.events));assert.deepEqual(stages(),['flipcheck_identification','flipcheck_catalogue_search','flipcheck_catalogue_search','flipcheck_surface_inspection']);
+ await reset('doncic',{packet:D199[1].vision,photoCount:2,noOcr:true,pagesBySearch:[[base],[rich]],surfaceInspection:fullSurface199(),mutate(d){d.pages=[];}});await page.evaluate(()=>{const previous=newContext164;newContext164=function(){const ctx=previous();ctx.budget.targetUsd=.05;ctx.budget.maxUsd=.05;return ctx;};});const out=await scan();assert.equal(out.identification.market_ready,true,JSON.stringify(out.visualAssistance.engine.events));assert.deepEqual(stages(),['flipcheck_identification','flipcheck_catalogue_search','flipcheck_catalogue_search','flipcheck_surface_inspection']);
 });
 
 const D200=JSON.parse(require('zlib').gunzipSync(fs.readFileSync(path.join(__dirname,'fixtures/diagnostics-200.json.gz'))));
@@ -286,7 +286,7 @@ test('206 image-first closes from downloaded images, keeps both originals and ph
 
 test('207 startup retry reaches one Lens search and preserves scan credit budget',async()=>{
  await reset('politoed',{lens:true,tcgdex:true,bandObservations:politoedKeys204,lensConfigReplies:[{status:503},{status:200,body:{enabled:true,protocol:2,provider:'searchapi_google_lens',unitUsd:.004}}]});
- const out=await scan();assert.equal(out.identification.market_ready,true);assert.equal(native.filter(n=>n.action==='lens_config').length,2);assert.equal(native.filter(n=>n.action==='lens').length,1);assert.equal(out.identificationPipeline.warmup.state,'ready');assert.equal(out.identificationPipeline.warmup.attempts,2);assert.ok(out.identificationPipeline.warmup.elapsedMs>=5000);assert.equal(out.visualAssistance.budget.entries.filter(e=>e.kind==='lens').length,1);assert.equal(out.visualAssistance.budget.maxUsd,.03);
+ const out=await scan();assert.equal(out.identification.market_ready,true);assert.equal(native.filter(n=>n.action==='lens_config').length,2);assert.equal(native.filter(n=>n.action==='lens').length,1);assert.equal(out.identificationPipeline.warmup.state,'ready');assert.equal(out.identificationPipeline.warmup.attempts,2);assert.ok(out.identificationPipeline.warmup.elapsedMs>=5000);assert.equal(out.visualAssistance.budget.entries.filter(e=>e.kind==='lens').length,1);assert.equal(out.visualAssistance.budget.targetUsd,.03);assert.equal(out.visualAssistance.budget.maxUsd,.033);
 });
 test('207 invalid app access stops immediately with no image upload or Lens charge',async()=>{
  await reset('politoed',{lens:true,tcgdex:true,bandObservations:politoedKeys204,lensConfigReplies:[{status:401,body:{state:'unauthorized'}}]});const out=await scan();

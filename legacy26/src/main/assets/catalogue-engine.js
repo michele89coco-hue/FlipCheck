@@ -306,7 +306,10 @@ function printingScope(l,e){
 }
 function variantOptions(l,group){
  // A foreign catalogue can identify the core without defining local printings.
- const options=group.entries.filter(e=>!keyValues(l).language||!e.language||printingLanguageCompatible201(e.language,keyValues(l).language)).flatMap(e=>list(e.variants).map(v=>({...v,source:v.source||e.source}))),uniqueOptions=[];
+ let options=group.entries.filter(e=>!keyValues(l).language||!e.language||printingLanguageCompatible201(e.language,keyValues(l).language)).flatMap(e=>list(e.variants).map(v=>({...v,source:v.source||e.source})));const uniqueOptions=[];
+ // A partial extraction of the same resolved card/parallel must retain its explicit
+ // unnumbered status. Missing metadata cannot turn Green Ice into a /5 option.
+ options=options.map(v=>{if(v.print_run||v.unnumbered===true||!v.source?.url)return v;const peers=options.filter(o=>same(o.name,v.name)&&(o.source?.url===v.source.url||sourceTrusted(o.source?.url,l.domain)));return peers.some(o=>o.unnumbered===true)&&!peers.some(o=>o.print_run)?{...v,unnumbered:true}:v;});
  for(const o of options)if(!uniqueOptions.some(x=>same(x.name,o.name)&&x.print_run===o.print_run&&JSON.stringify(x.colors||[])===JSON.stringify(o.colors||[])&&JSON.stringify(x.patterns||[])===JSON.stringify(o.patterns||[])&&(x.image_url||'')===(o.image_url||'')))uniqueOptions.push(o);
  return uniqueOptions;
 }
