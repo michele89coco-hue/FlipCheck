@@ -66,7 +66,7 @@ window.fetch=async function(url,options={}){
  }
  // Plan the market request within the remaining shared budget before reserving it.
  if(ctx.phase==='market'&&web){
-  const remaining=ctx.budget.maxUsd-ctx.budget.spent(),original=estimate164(body);
+  const remaining=ctx.budget.targetUsd-ctx.budget.spent(),original=estimate164(body);
   if(original>remaining&&Number(body.max_tool_calls)>1){body.max_tool_calls=1;body.tools=body.tools.map(t=>({...t,search_context_size:'low'}));if(typeof body.input==='string')body.input=body.input.replace('massimo due ricerche','massimo una ricerca');}
   ctx.marketBudget={remainingUsd:remaining,originalEstimatedUsd:original,estimatedUsd:estimate164(body),maxToolCalls:body.max_tool_calls,state:estimate164(body)<=remaining?'planned':'budget_exhausted'};
   options={...options,body:JSON.stringify(body)};
