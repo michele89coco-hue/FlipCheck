@@ -11,3 +11,5 @@ test('226 partial translated title goes through the same normalized title compos
 
 test('226 plain standalone printing text without trademark retains corroborated identity',()=>{const x=f('hill');x.vision.observations.find(o=>/SUPERFRACTOR/.test(o.text)).text='SuperFractor';x.l=E.ingestVision(new E.Ledger(x.vision),x.vision);assert.equal(run(x).r.market_ready,true);});
 test('226 actual Mewtwo 225 remains a one-read slab identity with set code and subgrades',()=>{const S=require('../src/main/assets/slab-identity'),x=f('mewtwo'),r=S.close(x.vision,S.labelFacts(x.vision));assert.equal(r.market_ready,true);assert.match(r.title,/CS5aC/);assert.equal(r.grading.subgrades.length,4);assert.equal(r.next_photo_request,null);});
+
+test('226 unknown pattern descriptions are preserved without becoming incompatible canonical pattern codes',()=>{const x=f('hill');assert.ok(x.l.evidence('pattern').some(a=>a.value==='reticolo/puntinatura circolare'));assert.ok(!E.keyValues(x.l).patterns.includes('reticolo/puntinatura circolare'));assert.equal(run(x).r.market_ready,true);});
