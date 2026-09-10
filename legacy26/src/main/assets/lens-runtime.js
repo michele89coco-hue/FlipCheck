@@ -171,7 +171,8 @@ Abbina esplicitamente le viste: seleziona original_image_index corrispondente al
     }
    }catch(error){guard164(ctx);ref.page_state='unavailable';}
   }
-  const typedSports=l.domain==='sports'&&!!l.pick('subject')&&!!l.pick('collector_number');
+  const printingDetailNeeded=l.domain==='sports'&&!l.pick('printing_name')&&l.evidence('pattern').length>0;
+  const typedSports=l.domain==='sports'&&!!l.pick('subject')&&!!l.pick('collector_number')&&!printingDetailNeeded;
   let body=makeBody(compared,typedSports);while(compared.length>1&&ctx.budget.spent()+estimate164(body)>ctx.budget.maxUsd){compared.pop();body=makeBody(compared,typedSports);}
   if(ctx.budget.spent()+estimate164(body)>ctx.budget.maxUsd){body=makeBody(compared,true);report.contextReduced=true;}
   if(ctx.budget.spent()+estimate164(body)>ctx.budget.maxUsd||ctx.budget.visionCalls>=comparisonLimit){report.stopReason='budget_or_call_limit';break;}
