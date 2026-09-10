@@ -287,7 +287,7 @@ async function resolveCatalogue193(base,ctx){
  }
  if(typeof startLens205==='function')await startLens205(ctx);
  reading={...reading,uploaded_image_count:validImageCount()};
- const l=new E193.Ledger(reading);ctx.catalogueEngine=l;ctx.route=ctx.slabRecovery?'slab_card_recovery':'catalogue_engine';E193.ingestVision(l,reading);ctx.initialCardProfile216=E193.photoProfile216(l);l.record('initial_card_profile',ctx.initialCardProfile216);l.userDetails=ctx.userDetails??String($('details')?.value||'').slice(0,2000);
+ const l=new E193.Ledger(reading);if(['sports','pokemon','onepiece','tcg'].includes(l.domain))ctx.budget.enableCompletionTolerance();ctx.catalogueEngine=l;ctx.route=ctx.slabRecovery?'slab_card_recovery':'catalogue_engine';E193.ingestVision(l,reading);ctx.initialCardProfile216=E193.photoProfile216(l);l.record('initial_card_profile',ctx.initialCardProfile216);l.userDetails=ctx.userDetails??String($('details')?.value||'').slice(0,2000);
  let entries=[],pages=[],result;
  try{
   await readPhotoOcr174(lastVisionReading||base,ctx);E193.ingestOcr(l,ctx.photoOcr);l.record('readings_collected',{count:l.atoms.length});

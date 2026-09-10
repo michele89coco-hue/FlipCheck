@@ -1,0 +1,1207 @@
+{
+  "vision": {
+    "domain": "pokemon",
+    "kind": "card",
+    "category": "Pokémon-Karte",
+    "language": "de",
+    "object_unit": "single",
+    "image_views": [
+      {
+        "image_index": 1,
+        "view": "front",
+        "certainty": "clear"
+      }
+    ],
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.06,
+        "y": 0.14,
+        "width": 0.86,
+        "height": 0.7,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "Glurak",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.24,
+          "y": 0.18,
+          "width": 0.2,
+          "height": 0.04
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "hp",
+        "text": "110 KP",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.56,
+          "y": 0.18,
+          "width": 0.2,
+          "height": 0.04
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "PHASE 2",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.1,
+          "y": 0.17,
+          "width": 0.12,
+          "height": 0.03
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "Pokémon der PHASE 2",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.7,
+          "y": 0.21,
+          "width": 0.2,
+          "height": 0.03
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "Feuer-Pokémon. Größe: 1,7 m, Gewicht: 90,5 kg ID: F-73",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.29,
+          "y": 0.47,
+          "width": 0.48,
+          "height": 0.03
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "Poké-BODY Kristall-Typ",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.13,
+          "y": 0.5,
+          "width": 0.47,
+          "height": 0.04
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "attack",
+        "text": "Feuerstoß — 40",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.25,
+          "y": 0.58,
+          "width": 0.61,
+          "height": 0.06
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "attack",
+        "text": "Drachenschwanz — 50×",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.24,
+          "y": 0.66,
+          "width": 0.65,
+          "height": 0.07
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "copyright",
+        "text": "© 2003 Pokémon / Nintendo",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.12,
+          "y": 0.76,
+          "width": 0.3,
+          "height": 0.03
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "illustrator",
+        "text": "Illus. Kouki Saitou",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.42,
+          "y": 0.76,
+          "width": 0.2,
+          "height": 0.03
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "collector_number",
+        "text": "92/??",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.75,
+          "y": 0.76,
+          "width": 0.1,
+          "height": 0.03
+        },
+        "zone": "footer",
+        "alternatives": [
+          "92/144",
+          "92/165"
+        ]
+      },
+      {
+        "field": "language",
+        "text": "Deutsch",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.2,
+          "y": 0.62,
+          "width": 0.55,
+          "height": 0.15
+        },
+        "zone": "front",
+        "alternatives": []
+      }
+    ],
+    "features": [
+      {
+        "field": "border_color",
+        "value": "gold",
+        "description": "Bordo/finitura dorata",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.06,
+          "y": 0.15,
+          "width": 0.86,
+          "height": 0.7
+        },
+        "zone": "border"
+      },
+      {
+        "field": "finish",
+        "value": "holo",
+        "description": "Superficie olografica/riflettente visibile",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.2,
+          "y": 0.25,
+          "width": 0.65,
+          "height": 0.5
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "pattern",
+        "value": "riflessi angolari multicolore",
+        "description": "Pattern olografico con forme angolari/riflessi colorati",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.2,
+          "y": 0.25,
+          "width": 0.65,
+          "height": 0.5
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "rarity_symbol",
+        "value": "present",
+        "description": "Simbolo/stampa di rarità o set visibile nell'angolo inferiore destro",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.84,
+          "y": 0.72,
+          "width": 0.05,
+          "height": 0.04
+        },
+        "zone": "footer"
+      },
+      {
+        "field": "shadow",
+        "value": "unclear",
+        "description": "Non determinabile con certezza per riflessi e fotografia",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.2,
+          "y": 0.25,
+          "width": 0.65,
+          "height": 0.25
+        },
+        "zone": "artwork"
+      }
+    ],
+    "uploaded_image_count": 1
+  },
+  "references": [
+    {
+      "id": "lens-8",
+      "title": "Glurak (Charizard) BGS 9.5 - Gradede pokemon kort på Pokemons.dk",
+      "url": "https://www.pokemons.dk/product/glurak-charizard-9-12-box-topper-bgs-9-5/",
+      "image_url": "https://3tq4cz7p.photoncache.com/wp-content/uploads/2024/03/Glurak-Charizard-912-Box-Topper-BGS-9.5.jpg",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "BECKETT\nPHASE 2\n2003 SKYRIDGE\nGERMAN\n#9 CHARIZARD OVERSIZED P\nCENTERING 9\nEDGES\n10\nGlurak\nSchwäche\ncORNERS 9.5\nSURFACE 9.5\nEntsteht aus GlutexoLege Glurik auf die Karte der Phase\nAblagestapel.\nFeuerstoß Lege eine an Glurak\nangelegte Energiekarte auf deinen\n2003 Poknon / Netendo\nKristall-Typ\n4Drachenschwanz Wirf 2 Münzen.\nFever-Pokémon, Grsbe: 1,7m, Grwick: 90,5 kg lD:\nF-73\nImmer wenn du eine tir oder -Basis-Energiekarte aus dein-\ner Hand an Glurak anlegst, andert sich Gluraks Typ (Farbe) bis zum\nEnde des Zuges zu dem gleichen Typ wie diese Energie.\nDieser Angriff fügt 50 Schadenspunkte\n4* mal der Anzahl \"Kopf zu\nResistenz\n110 KP *\n9.5\nGEM MINT\n0012969 193\nRückzugskosten\nhes, Kouki Saitou\némon der PHASE\n9/12\n40\n50x",
+        "origin": "candidate_image_ocr"
+      },
+      "page_text": "Glurak (Charizard) BGS 9.5 - Gradede pokemon kort på Pokemons.dk\nname: Glurak (Charizard) - 9/12 - Box Topper - BGS 9.5\ndescription: Glurak (Charizard) - 9/12 - Box Topper - BGS 9.5Du køber her et BGS 9.5 Glurak (Charizard) pokemon kort fra Skyridge serinen.BGS står for Beckett Grading Service og er yderst anerkendt indenfor samtlige samlermiljøer. BGS tildeler deres kort med en rangering fra 1-10, et unikt serienummer og forseglet i en hård plastikholder. Dette pokemon kort er BGS 9.5 (GEM-MT 9.5), hvilket betyder at kortet fremstår perfekt, dog er der mindre imperfektioner under forstørrelsesglas.\nsku: G015900152201\n\nFortsæt til indhold\n\nTilføj til ønskeliste\n\nGlurak (Charizard) – 9/12 – Box Topper – BGS 9.5\n\nkr. 3.500,00\n\nIkke på lager\n\nTilføj til Ønskeskyen\n\nTilføj til ønskeliste\n\nYou must register to use the waitlist feature. Please login or create an account\n\nVarenummer (SKU): G015900152201\n\nKategori: Enkeltkort\nTags: BGS, Slabs\n\nBeskrivelse\n\nYderligere information\n\nGlurak (Charizard) – 9/12 – Box Topper – BGS 9.5\n\nDu køber her et BGS 9.5 Glurak (Charizard) pokemon kort fra Skyridge serinen.\n\nBGS står for Beckett Grading Service og er yderst anerkendt indenfor samtlige samlermiljøer. BGS tildeler deres kort med en rangering fra 1-10, et unikt serienummer og forseglet i en hård plastikholder. Dette pokemon kort er BGS 9.5 (GEM-MT 9.5), hvilket betyder at kortet fremstår perfekt, dog er der mindre imperfektioner under forstørrelsesglas.\n\nOverserie\ne-series (2002-2003)\n\nSerie\nSkyridge\n\nAlternative Udgaver\nBox Topper\n\nKortstil\nCrystal Type\n\nKorttype\nPokemon\n\nPokemontype\nColorless (Hvid)\n\nSjældenhed\nPromo\n\nSprog\nTysk\n\nUdgave\nUnlimited\n\nGrade\nBGS 9.5\n\nGradingfirma\nBGS\n\nAlleBoostere & BoxeBørnepakkerEnkeltkortGradingTCG OnlineTilbehørUncategorized\n\nSøg efter:\n\nForudbestilling\n\nAlt Pokémon\n\nSe alle vores Pokémon produkter\n\nNyheder\n\nCharizard\n\nPikachu\n\nBulbasaur\n\nCharmander\n\nEevee\n\nTilbud\n\nAlle tilbud\n\nPokemons pakketilbud\n\nEnkeltkort\n\nAlle enkeltkort\n\nEnkeltkort efter serie\n\nMega Evolution Serierne (2025-Nu)\n\nPitch Black\n\nChaos Rising\n\nPerfect Order\n\nAscended Heroes\n\nPhantasmal Flames\n\nMega Evolution\n\nMEP Black Star Promo\n\nScarlet & Violet Serierne (2023-2025)\n\nBlack Bolt\n\nWhite Flare\n\nDestined Rivals\n\nJourney Together\n\nPrismatic Evolutions\n\nSurging Sparks\n\nStellar Crown\n\nShrouded Fable\n\nTwilight Masquerade\n\nTemporal Forces\n\nPaldean Fates\n\nParadox Rift\n\n151\n\nO",
+      "page_url": "https://www.pokemons.dk/product/glurak-charizard-9-12-box-topper-bgs-9-5/"
+    },
+    {
+      "id": "lens-1",
+      "title": "2003 Pokemon Crystal Charizard Skyridge Rare Holo #146 PSA ...",
+      "url": "https://www.ebay.it/itm/205597126007",
+      "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIu3xWOm4JX7MJcTHBGj3klp5veBMdaG1-8b7M68key0_SKAi-",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "2003 POKEMON SKYRDGE\nCHARIZARD-HOLO\nPA\nCharizard\nwuk ie g\n#146\nGEM MI\n10 HP\ne\nFirellast Dscad tre40\nand chit s Charirt\n50x\n10\ntk oe\n10\n#146",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-6",
+      "title": "2003 Pokemon Skyridge Box Topper Crystal Charizard #9 BGS ...",
+      "url": "https://www.fanaticscollect.com/buy-now/50a46d5b-6957-4383-97cc-8f64bfb9ddec/2003-pokemon-skyridge-box-topper-crystal-charizard-9-bgs-85-nm-mt",
+      "image_url": "https://cdn-vault.fanaticscollect.com/2021/2/24/3/medium/v114694_2021022411133200M_337.jpg",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "B)\nBECKETT.\nSTAGE\n2003 SKYRIDGE\n9 CHARIZARD CRYSTAL OVERSIZED P\nFukE5OTY\nofEnrgy unel the nd of the tut\nGbasic Ene card\naecornes\nthe ame\n8.5\nFlome Pokémen, Length: 5 7 Weight: 200 lbs. 1D: E73\nDragon\nTail Fllp2 cons. This\nattack does 50amae times\n4*the nữmber of hesds\n2003 Poko/Netendi\nNM-MT+\n0012791982\nStoge 2 Pokémon\nFieblast. Deatdy an Eper40\ncard attaehed eo Charizrd\n50x\nhan\nChariza",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-13",
+      "title": "2003 POKEMON SKYRIDGE CHARIZARD-HOLO 146/144 PSA 9 MINT ...",
+      "url": "https://www.ebay.com/itm/389747027490",
+      "image_url": "https://i.ebayimg.com/images/g/bHsAAOSwFYBoEsh6/s-l1200.jpg",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "2003 POKEMON SKYRIDGE\nSTAGE 2\nPA\nreakness\nCharizard\nEvolves from Charmeleon Put Charizard on the Stage I ard\n#146\n110204126\nMINT\n110 HP *\nresistance\nCrystal Type\nStage 2 Pokémon\nFlame Pokémon. Length: 5' 7\", Weight: 200 lbs. ID: F-73\nWhenever you attach a , 9.or basic Energy card from your\nhand to Charizard, Charizard's type (color) becomes the same as\nthat type of Energy until the end of the turn.\nDragon Tail Flip 2 coins. This\nattack does 50 damage times\nthe number of heads.\nFireblast Discard an Energy 40\ncard attached to Charizard.\nretreat cost\n50x\n146/144",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-17",
+      "title": "2003 Pokemon Crystal Charizard Skyridge Rare Holo #146",
+      "url": "https://geaugamamadogs.org/?product/category/view_more/2947706881100",
+      "image_url": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQB0gxyKpUweslvKtW7OksqmIndgKz0B3SLDANPsNEXlR15VJUe",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "POKÉ\nELITE T\nap0a roesON SAKYOr\nCHARSZNAED-ENPOR\nCharizird\n40",
+        "origin": "candidate_image_ocr"
+      },
+      "page_text": "Welcome to Geauga Mama Dogs and Pups! - Geauga Mama Dogs & Pups\n\nWelcome to Geauga Mama Dogs and Pups!\n\nGeauga Mama Dogs and Pups is a private, independent, non-profit (501c3) group focused on the care and rescue of pregnant dogs, mom dogs with litters, and puppies under six months old. Our rescues come from all over Ohio and the surrounding states. We provide a comfortable safe environment for pregnant dogs to give birth and for mom dogs to care for their puppies. Our goal is to give each Mama dog and each puppy that comes into our care the nutrition, medical support, and love needed to become a healthy happy family pet.\n\nCheck out our NEW 👉GMDAP Merchandise! 100% of proceeds go directly to support GMDAP! Look stylish and help make a difference!\n\nAdoptable Pups and GMDAP Facebook Posts!\n\nBelow are a few of the adoptable dogs and pups featured on the Geauga Mama Dogs and Pups Facebook page! Scroll down and click “Load more” to see more posts or go to our Facebook page to see all posts.\n\nOur adoptable puppies reside in private foster homes. We do not operate a shelter or central location. To adopt a puppy, please message the Geauga Mama Dogs and Pups page with the puppy’s name, your name, and phone number. Following a ‘meet and greet,’ you may proceed with the adoption application. Adoption fees: $300 for unaltered puppies that includes a $100 refundable spay/neuter deposit, $300 for altered puppies, and $175 for puppies or dogs over seven months. We will verify your current pets’ spay/neuter status and vaccine records with your veterinarian to ensure suitable homes.\n\nSome of our adorable pups find their forever homes through our amazing Adoption Partners. Click here to see more adoptable puppies and discover who’s waiting to meet you!\n\nRescue Numbers\n\nThe graph below tells our powerful story. With the support of our adoption partners and community, Geauga Mama Dogs and Pups helped over 18,500 dogs and puppies find safety, love, and forever families. Every number represents a life changed. Not only for the dogs and puppies, but for the families who welcomed them home!\n\n© Copyright 2024 Geauga Mama Dogs & Pups",
+      "page_url": "https://geaugamamadogs.org/?product%2Fcategory%2Fview_more%2F2947706881100"
+    },
+    {
+      "id": "lens-18",
+      "title": "2003 Pokemon Skyridge Holo Crystal Charizard #146 CGC 10 GEM ...",
+      "url": "https://www.fanaticscollect.com/buy-now/dd887241-cbb0-41b4-bd2c-e345a0775e12/2003-pokemon-skyridge-holo-crystal-charizard-146-cgc-10-gem-mint",
+      "image_url": "https://cdn-vault.fanaticscollect.com/2026/1/12/rc1/small/v2373713_20260112124940151M_1.jpg",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "2003 POKEMON SKYRIDGE\nCHARIZARD\nBOX TỌPPER\nPHASE 2\nhkin\nPA\nGEM MT\n10\n83157077\nanz w2nzen\n40\n50x\nSO Schab\nGurak\nCHARIZARD",
+        "origin": "candidate_image_ocr"
+      },
+      "page_text": "name: 2003 Pokemon Skyridge Holo Crystal Charizard #146 CGC 10 GEM MINT\ndescription: []\nsku: dd887241-cbb0-41b4-bd2c-e345a0775e12",
+      "page_url": "https://www.fanaticscollect.com/buy-now/dd887241-cbb0-41b4-bd2c-e345a0775e12/2003-pokemon-skyridge-holo-crystal-charizard-146-cgc-10-gem-mint"
+    },
+    {
+      "id": "lens-20",
+      "title": "2003 Pokemon CRYSTAL CHARIZARD Skyridge | Mercari",
+      "url": "https://www.mercari.com/us/item/m46389823110/",
+      "image_url": "https://u-mercari-images.mercdn.net/photos/m46389823110_1.jpg?width=2560&quality=75&_=1760207066",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "STAGE 2-\nEvolves from Chdneleon Put Charizard on the Sage card\nCharizard110 HP\nPokk B0DY\nwealkness\nFlame Pokémon, Length: 5' 7\", Weight: 200 lbs. ID: F-73\nWhenever you attacha ,.or 8 basic Energy card from your\nhand to Charizard, Charizard's type (color) becomes the same as\nthat type of Energy until the end of the turn.\nCrystal lype\n4 Dragon Tail Flip 2 coins.This\nattack does 50 damage times\nthe number of heads.\nFireblast Discard an Energy\ncard attached to Charizard.\nresistance\n2003 Pokémon / Nintendo\nStage 2 Pokémon\nretreat cost\nlus. Kouki Saltou\n40\n50x\n9112",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-22",
+      "title": "Charizard 2003 Skyridge #146/144 Reverse Holo (Secret) Price ...",
+      "url": "https://www.sportscardinvestor.com/cards/charizard-pokemon/2003-skyridge-reverse-holo-secret-146-144",
+      "image_url": "https://images.production.sportscardinvestor.com/2280_4419_4864_146/144_Secret-L",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "STAGE 2\nEvolves from Charmeleon Put Charízard on the Stage I card\nCharizard\nFoké BODY\nweakness\n110 HP *\nFlame Pokémon. Length: 5' 7, Weight: 200 lbs, 1D: F-73\nWhenever you attach a , ), or\nhand to Charizard, Charizard's type (color) becomes the same as\nthat type of Energy until the end of the turn.\nCrystal Type\nresistance\n2003 Pokémon /Nintendo\nStage 2 Pokémon\nbasic Energy card from your\nFireblast Discard an Energy 40\ncard attached to Charizard.\nDragon Tail Flip 2 coins. This\nattack does 50 damage times\nthe number of heads.\nretreat cost\nlus. Kouki Saitou\n50x\n146/144",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-43",
+      "title": "2003 Pokemon Skyridge #146 Charizard Holo PSA 8.5 | Hot Corner",
+      "url": "https://www.hotcornerbreaks.com/product-page/psa-85-2003-pokemon-skyridge-146-charizard-holo",
+      "image_url": "https://static.wixstatic.com/media/37c7bb_51ebfae326714fa89642c02740d23026~mv2.jpg/v1/fill/w_722,h_722,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/37c7bb_51ebfae326714fa89642c02740d23026~mv2.jpg",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "2003 POKEMON SKYRIDGE\nCHARIZARD-HOLO\nSTAGE\nreakness\nCharizard\nEvsres from Ckarmeleon At Charas te Sage1 ad\n8.5\n166397909\n#146\nNM-MT+\n110 HP *\nCrystal Type\nWhenever you attach a . .or basic Energy card from your\nhand to Charizard, Charizard's type (coler) becomes the same as\nthat type of Energy unal the end of the turn.\nthe number of heads.\nresistance\naStope 2ok\nFireblast Discard an Energy 40\ncard attached to Charizard\nDragon Tail Flip 2 coins. This\nattack does 50 damage times 50x\nretreat cost\n* **k *\nA\n40\nStoge 2 Pokémon\n4)* the number\nB.5",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-51",
+      "title": "Pokemon Charizard Skyridge 2003 Slabbed Graded Card Proxy ...",
+      "url": "https://www.etsy.com/listing/4475723799/pokemon-charizard-skyridge-2003-slabbed",
+      "image_url": "https://i.etsystatic.com/63807487/r/il/e0e9a7/8381184297/il_fullxfull.8381184297_8jgt.jpg",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "2003 POKEMON SKYRIDGE\nCHARIZARD - HOLO\nSTAGE 2\nEvolves from Chameleon Put Charizard on the Sage I card\nCharizard\nPaké-B0OY\nweakness\nFleme Pokémon. Length: 5 7, Weight: 200 lbs. 1D: F-73\n#146\nGEM MT\n10\n110 HP\nCrystal Type\nWhenever you attach a ,. or basic Energy card from your\nhand to Charizard, Charizard's type (color) becomes the same as\nthat type of Energy until the end of the turn.\nthe number of heads.\nresistance\nStage 2 Pokémon\nFireblast Discard an Energy\ncard attached to Charizard.\n2003 Pokémon /Nintendo\nDragon Tail Flip 2 coins. This\nattack does 50 damage times 50x\nretreat cost\n40\nlus. Kaukl Saltou LA641A4\n50x",
+        "origin": "candidate_image_ocr"
+      }
+    }
+  ],
+  "batches": [
+    {
+      "ids": [
+        "lens-8",
+        "lens-1",
+        "lens-6"
+      ],
+      "reply": {
+        "original_readings": [
+          {
+            "field": "subject",
+            "image_index": 0,
+            "crop_id": "original-1-upper",
+            "full_text": "Glurak",
+            "crop_text": "Glurak",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Charizard",
+              "en": "Charizard"
+            }
+          },
+          {
+            "field": "collector_number",
+            "image_index": 0,
+            "crop_id": "original-1-lower",
+            "full_text": "9/12",
+            "crop_text": "9/12",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "9/12",
+              "en": "9/12"
+            }
+          },
+          {
+            "field": "copyright",
+            "image_index": 0,
+            "crop_id": "original-1-lower",
+            "full_text": "© 2003 Pokémon / Nintendo",
+            "crop_text": "© 2003 Pokémon / Nintendo",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "© 2003 Pokémon / Nintendo",
+              "en": "© 2003 Pokémon / Nintendo"
+            }
+          },
+          {
+            "field": "language",
+            "image_index": 0,
+            "crop_id": "original-1-upper",
+            "full_text": "Glurak; Feuer-Pokémon; Kristall-Typ",
+            "crop_text": "Glurak",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Tedesco",
+              "en": "German"
+            }
+          }
+        ],
+        "comparisons": [
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0,
+                "y": 0.143
+              },
+              {
+                "x": 0.979,
+                "y": 0.143
+              },
+              {
+                "x": 0.979,
+                "y": 0.75
+              },
+              {
+                "x": 0,
+                "y": 0.75
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.171,
+                "y": 0.217
+              },
+              {
+                "x": 0.868,
+                "y": 0.217
+              },
+              {
+                "x": 0.868,
+                "y": 0.913
+              },
+              {
+                "x": 0.171,
+                "y": 0.913
+              }
+            ],
+            "reference_id": "lens-8",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "Glurak",
+              "number": "9/12",
+              "year": "2003",
+              "language": "German"
+            },
+            "reference_reading": {
+              "subject": "Glurak",
+              "number": "9/12",
+              "year": "2003",
+              "language": "German"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Charizard flying toward viewer",
+                "reference": "Same flying Charizard artwork",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "German oversized Crystal Type layout",
+                "reference": "German oversized Crystal Type layout",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "identifier",
+                "original": "9/12",
+                "reference": "9/12",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Glurak",
+              "family": "Skyridge",
+              "number": "9/12",
+              "year": "2003",
+              "brand": "Pokémon",
+              "subset": "Box Topper",
+              "proof": {
+                "subject": "Glurak (Charizard)",
+                "family": "Skyridge",
+                "year": "2003",
+                "subset": "Box Topper"
+              },
+              "display_names": {
+                "it": "Charizard",
+                "en": "Charizard"
+              }
+            }
+          },
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0,
+                "y": 0.143
+              },
+              {
+                "x": 0.979,
+                "y": 0.143
+              },
+              {
+                "x": 0.979,
+                "y": 0.75
+              },
+              {
+                "x": 0,
+                "y": 0.75
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.115,
+                "y": 0.182
+              },
+              {
+                "x": 0.944,
+                "y": 0.182
+              },
+              {
+                "x": 0.944,
+                "y": 0.99
+              },
+              {
+                "x": 0.115,
+                "y": 0.99
+              }
+            ],
+            "reference_id": "lens-1",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [
+              "Numero 146 contro 9/12",
+              "Lingua inglese contro tedesco",
+              "Carta standard contro oversized"
+            ],
+            "original_reading": {
+              "subject": "Glurak",
+              "number": "9/12",
+              "year": "2003",
+              "language": "German"
+            },
+            "reference_reading": {
+              "subject": "Charizard",
+              "number": "146",
+              "year": "2003",
+              "language": "English"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Charizard oversized artwork",
+                "reference": "Same character artwork",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Oversized box-topper layout",
+                "reference": "Standard card layout",
+                "agrees": false,
+                "certainty": "clear"
+              },
+              {
+                "field": "identifier",
+                "original": "9/12",
+                "reference": "146",
+                "agrees": false,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Charizard",
+              "family": "Skyridge",
+              "number": "146",
+              "year": "2003",
+              "brand": "Pokémon",
+              "subset": "",
+              "proof": {
+                "subject": "Charizard",
+                "family": "Skyridge",
+                "year": "2003",
+                "subset": ""
+              },
+              "display_names": {
+                "it": "Charizard",
+                "en": "Charizard"
+              }
+            }
+          },
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0,
+                "y": 0.143
+              },
+              {
+                "x": 0.979,
+                "y": 0.143
+              },
+              {
+                "x": 0.979,
+                "y": 0.75
+              },
+              {
+                "x": 0,
+                "y": 0.75
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.17,
+                "y": 0.224
+              },
+              {
+                "x": 0.873,
+                "y": 0.224
+              },
+              {
+                "x": 0.873,
+                "y": 0.968
+              },
+              {
+                "x": 0.17,
+                "y": 0.968
+              }
+            ],
+            "reference_id": "lens-6",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [
+              "Lingua inglese contro tedesco"
+            ],
+            "original_reading": {
+              "subject": "Glurak",
+              "number": "9/12",
+              "year": "2003",
+              "language": "German"
+            },
+            "reference_reading": {
+              "subject": "Charizard",
+              "number": "9",
+              "year": "2003",
+              "language": "English"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Charizard flying toward viewer",
+                "reference": "Same flying Charizard artwork",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "German oversized Crystal Type layout",
+                "reference": "English oversized Crystal layout",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "German box-topper variant",
+                "reference": "English box-topper variant",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Charizard",
+              "family": "Skyridge",
+              "number": "9/12",
+              "year": "2003",
+              "brand": "Pokémon",
+              "subset": "Box Topper",
+              "proof": {
+                "subject": "Charizard",
+                "family": "Skyridge",
+                "year": "2003",
+                "subset": "Box Topper"
+              },
+              "display_names": {
+                "it": "Charizard",
+                "en": "Charizard"
+              }
+            }
+          }
+        ]
+      },
+      "accepted": []
+    },
+    {
+      "ids": [
+        "lens-13",
+        "lens-17",
+        "lens-18"
+      ],
+      "reply": {
+        "original_readings": [
+          {
+            "field": "subject",
+            "image_index": 1,
+            "crop_id": "original-1-upper",
+            "full_text": "Glurak",
+            "crop_text": "Glurak",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Glurak",
+              "en": "Charizard"
+            }
+          },
+          {
+            "field": "collector_number",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "9/12",
+            "crop_text": "9/12",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "9/12",
+              "en": "9/12"
+            }
+          },
+          {
+            "field": "copyright",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "© 2003 Pokémon / Nintendo",
+            "crop_text": "© 2003 Pokémon / Nintendo",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "© 2003 Pokémon / Nintendo",
+              "en": "© 2003 Pokémon / Nintendo"
+            }
+          },
+          {
+            "field": "language",
+            "image_index": 1,
+            "crop_id": "original-1-upper",
+            "full_text": "Glurak; Kristall-Typ; Feuerstoß; Drachenschwanz",
+            "crop_text": "Glurak",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Tedesco",
+              "en": "German"
+            }
+          }
+        ],
+        "comparisons": [
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0,
+                "y": 0.118
+              },
+              {
+                "x": 0.963,
+                "y": 0.118
+              },
+              {
+                "x": 0.963,
+                "y": 0.765
+              },
+              {
+                "x": 0,
+                "y": 0.765
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.088,
+                "y": 0.239
+              },
+              {
+                "x": 0.782,
+                "y": 0.239
+              },
+              {
+                "x": 0.778,
+                "y": 0.992
+              },
+              {
+                "x": 0.092,
+                "y": 0.992
+              }
+            ],
+            "reference_id": "lens-13",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [
+              "English Charizard card; original is German Glurak 9/12.",
+              "Candidate number is 146/144, not original 9/12."
+            ],
+            "original_reading": {
+              "subject": "Glurak",
+              "number": "9/12",
+              "year": "2003",
+              "language": "German"
+            },
+            "reference_reading": {
+              "subject": "Charizard",
+              "number": "146/144",
+              "year": "",
+              "language": "English"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Charizard flying forward, open mouth, raised claw",
+                "reference": "Same artwork and pose",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "German Skyridge-style Stage 2 layout",
+                "reference": "English Skyridge Stage 2 layout",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "text",
+                "original": "Glurak, 9/12",
+                "reference": "Charizard, 146/144",
+                "agrees": false,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Charizard",
+              "family": "Skyridge",
+              "number": "146",
+              "year": "2003",
+              "brand": "Pokémon",
+              "subset": "Crystal Type",
+              "proof": {
+                "subject": "Charizard",
+                "family": "2003 POKEMON SKYRIDGE",
+                "year": "2003 POKEMON SKYRIDGE",
+                "subset": "Crystal"
+              },
+              "display_names": {
+                "it": "Charizard",
+                "en": "Charizard"
+              }
+            }
+          },
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0,
+                "y": 0.118
+              },
+              {
+                "x": 0.963,
+                "y": 0.118
+              },
+              {
+                "x": 0.963,
+                "y": 0.765
+              },
+              {
+                "x": 0,
+                "y": 0.765
+              }
+            ],
+            "reference_quad": null,
+            "reference_id": "lens-17",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": false,
+            "conflicts": [
+              "Reference image does not clearly expose the card text or complete object.",
+              "Title identifies English Charizard #146, unlike original German Glurak 9/12."
+            ],
+            "original_reading": {
+              "subject": "Glurak",
+              "number": "9/12",
+              "year": "2003",
+              "language": "German"
+            },
+            "reference_reading": {
+              "subject": "",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Charizard artwork",
+                "reference": "Artwork not reliably readable",
+                "agrees": false,
+                "certainty": "uncertain"
+              },
+              {
+                "field": "identifier",
+                "original": "9/12",
+                "reference": "No visible identifier",
+                "agrees": false,
+                "certainty": "uncertain"
+              }
+            ],
+            "identity": {
+              "subject": "Charizard",
+              "family": "Skyridge",
+              "number": "146",
+              "year": "2003",
+              "brand": "Pokémon",
+              "subset": "Crystal",
+              "proof": {
+                "subject": "Charizard",
+                "family": "2003 Pokemon Crystal Charizard Skyridge",
+                "year": "2003 Pokemon Crystal Charizard Skyridge",
+                "subset": "Crystal"
+              },
+              "display_names": {
+                "it": "Charizard",
+                "en": "Charizard"
+              }
+            }
+          },
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0,
+                "y": 0.118
+              },
+              {
+                "x": 0.963,
+                "y": 0.118
+              },
+              {
+                "x": 0.963,
+                "y": 0.765
+              },
+              {
+                "x": 0,
+                "y": 0.765
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.086,
+                "y": 0.252
+              },
+              {
+                "x": 0.928,
+                "y": 0.252
+              },
+              {
+                "x": 0.928,
+                "y": 0.954
+              },
+              {
+                "x": 0.086,
+                "y": 0.954
+              }
+            ],
+            "reference_id": "lens-18",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": false,
+            "conflicts": [
+              "Listing title says Charizard #146, while photographed card visibly says Glurak 9/12."
+            ],
+            "original_reading": {
+              "subject": "Glurak",
+              "number": "9/12",
+              "year": "2003",
+              "language": "German"
+            },
+            "reference_reading": {
+              "subject": "Glurak",
+              "number": "9/12",
+              "year": "2003",
+              "language": "German"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Charizard flying forward with raised claw",
+                "reference": "Same artwork and pose",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "Holo card with matching German Skyridge layout",
+                "reference": "Same holo configuration and layout",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "text",
+                "original": "Glurak, 9/12, © 2003",
+                "reference": "Glurak, 9/12, © 2003",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Charizard",
+              "family": "Skyridge",
+              "number": "146",
+              "year": "2003",
+              "brand": "Pokémon",
+              "subset": "Crystal",
+              "proof": {
+                "subject": "Charizard",
+                "family": "2003 Pokemon Skyridge",
+                "year": "2003 Pokemon Skyridge",
+                "subset": "Crystal"
+              },
+              "display_names": {
+                "it": "Glurak",
+                "en": "Charizard"
+              }
+            }
+          }
+        ]
+      },
+      "accepted": []
+    }
+  ],
+  "crops": [
+    {
+      "id": "original-1-upper",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.044444444444444446,
+        "y": 0.12478632478632479,
+        "width": 0.8907407407407407,
+        "height": 0.2405982905982906
+      }
+    },
+    {
+      "id": "original-1-lower",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.044444444444444446,
+        "y": 0.6008547008547008,
+        "width": 0.8907407407407407,
+        "height": 0.25427350427350426
+      }
+    }
+  ],
+  "expected_216": {
+    "title": "Glurak · 9/12 · 2003 · DEU",
+    "resolved": false
+  },
+  "budget": {
+    "maxUsd": 0.03,
+    "spentOrReservedUsd": 0.015445549999999999,
+    "entries": [
+      {
+        "kind": "vision",
+        "reservedUsd": 0.0084545,
+        "actualUsd": 0.0028225999999999998,
+        "status": "usage_returned"
+      },
+      {
+        "kind": "lens",
+        "reservedUsd": 0.004,
+        "actualUsd": 0.004,
+        "status": "usage_returned"
+      },
+      {
+        "kind": "vision",
+        "reservedUsd": 0.0172525,
+        "actualUsd": 0.0042236999999999995,
+        "status": "usage_returned"
+      },
+      {
+        "kind": "vision",
+        "reservedUsd": 0.01712925,
+        "actualUsd": 0.00439925,
+        "status": "usage_returned"
+      }
+    ],
+    "visionCalls": 3,
+    "maxVisionCalls": 4,
+    "estimated": true,
+    "includesIdentificationAndMarket": true
+  }
+}

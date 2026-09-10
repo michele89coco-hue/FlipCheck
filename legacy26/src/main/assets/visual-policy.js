@@ -1463,9 +1463,10 @@ function configurationMatches184(photo,quote){
 }
 
 class Budget {
- constructor({maxEur=.03,usdPerEur=1,deadlineMs=150000,now=()=>Date.now()}={}){this.maxUsd=Math.min(.03,maxEur)*usdPerEur;this.now=now;this.deadline=now()+deadlineMs;this.entries=[];this.textCalls=0;this.visualCalls=0;this.visionCalls=0;this.cancelled=false;}
+ constructor({maxEur=.03,usdPerEur=1,deadlineMs=150000,now=()=>Date.now()}={}){this.maxUsd=Math.min(.03,maxEur)*usdPerEur;this.targetUsd=this.maxUsd;this.completionToleranceUsd=0;this.now=now;this.deadline=now()+deadlineMs;this.entries=[];this.textCalls=0;this.visualCalls=0;this.visionCalls=0;this.cancelled=false;}
+ enableCompletionTolerance(){this.completionToleranceUsd=Math.min(.003,this.targetUsd*.1);this.maxUsd=this.targetUsd+this.completionToleranceUsd;}
  spent(){return this.entries.reduce((n,e)=>n+(e.actualUsd??e.reservedUsd),0);}
- reserve(kind,amount){if(this.cancelled)throw new Error('scan_cancelled');if(this.now()>=this.deadline)throw new Error('scan_timeout');if(!Number.isFinite(amount)||amount<0||this.spent()+amount>this.maxUsd+1e-9)throw new Error('budget_exhausted');
+ reserve(kind,amount){if(this.cancelled)throw new Error('scan_cancelled');if(this.now()>=this.deadline)throw new Error('scan_timeout');if(!Number.isFinite(amount)||amount<0||this.spent()+amount>(kind==='market'?this.targetUsd:this.maxUsd)+1e-9)throw new Error('budget_exhausted');
   if(kind==='text'&&this.textCalls>=2||kind==='visual'&&this.visualCalls>=1||kind==='vision'&&this.visionCalls>=4)throw new Error('call_limit');
   if(kind==='text')this.textCalls++;if(kind==='visual')this.visualCalls++;if(kind==='vision')this.visionCalls++;
   const e={kind,reservedUsd:amount,actualUsd:null,status:'attempted'};this.entries.push(e);return e;

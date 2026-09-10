@@ -1,0 +1,429 @@
+{
+  "vision": {
+    "domain": "sports",
+    "kind": "card",
+    "category": "soccer trading card",
+    "language": "English",
+    "object_unit": "single",
+    "image_views": [
+      {
+        "image_index": 1,
+        "view": "front",
+        "certainty": "clear"
+      },
+      {
+        "image_index": 2,
+        "view": "back",
+        "certainty": "clear"
+      }
+    ],
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.12,
+        "y": 0.29,
+        "width": 0.77,
+        "height": 0.54,
+        "certain": true
+      },
+      {
+        "image_index": 2,
+        "x": 0.13,
+        "y": 0.31,
+        "width": 0.76,
+        "height": 0.53,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "Victor Boniface",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.25,
+          "y": 0.79,
+          "width": 0.51,
+          "height": 0.04
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "subject",
+        "text": "Victor Boniface",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.31,
+          "y": 0.59,
+          "width": 0.37,
+          "height": 0.03
+        },
+        "zone": "back",
+        "alternatives": []
+      },
+      {
+        "field": "team",
+        "text": "Nigeria",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.43,
+          "y": 0.76,
+          "width": 0.15,
+          "height": 0.02
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "team",
+        "text": "Nigeria",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.43,
+          "y": 0.62,
+          "width": 0.14,
+          "height": 0.02
+        },
+        "zone": "back",
+        "alternatives": []
+      },
+      {
+        "field": "product",
+        "text": "2025-26 Panini - Select Road to FIFA World Cup 2026™ Soccer",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.27,
+          "y": 0.82,
+          "width": 0.48,
+          "height": 0.04
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "collector_number",
+        "text": "No. 21",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.43,
+          "y": 0.35,
+          "width": 0.13,
+          "height": 0.03
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "subset",
+        "text": "Terrace",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.44,
+          "y": 0.38,
+          "width": 0.12,
+          "height": 0.02
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "ROAD TO FIFA WORLD CUP 2026",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.39,
+          "y": 0.68,
+          "width": 0.24,
+          "height": 0.05
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "Prizm",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.43,
+          "y": 0.77,
+          "width": 0.14,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "copyright",
+        "text": "© 2025 Panini America, Inc.",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.28,
+          "y": 0.85,
+          "width": 0.44,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": []
+      }
+    ],
+    "features": [
+      {
+        "field": "border_color",
+        "value": "green",
+        "description": "Green reflective card border and geometric frame",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.12,
+          "y": 0.29,
+          "width": 0.77,
+          "height": 0.54
+        },
+        "zone": "border"
+      },
+      {
+        "field": "finish",
+        "value": "reflective",
+        "description": "Strong reflective/prismatic surface effect",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.18,
+          "y": 0.32,
+          "width": 0.68,
+          "height": 0.48
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "layout",
+        "value": "Portrait player image with Select geometric frame, centered nameplate and Road to FIFA World Cup 2026 badge",
+        "description": "Front layout",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.15,
+          "y": 0.3,
+          "width": 0.72,
+          "height": 0.53
+        },
+        "zone": "artwork"
+      },
+      {
+        "field": "stamp",
+        "value": "unclear",
+        "description": "No distinct promotional stamp confidently readable",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": null,
+        "zone": "other"
+      },
+      {
+        "field": "rookie",
+        "value": "unclear",
+        "description": "No RC/Rookie badge confidently visible",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": null,
+        "zone": "other"
+      }
+    ],
+    "uploaded_image_count": 2
+  },
+  "references": [
+    {
+      "id": "lens-1",
+      "title": "Victor Boniface集换卡| eBay",
+      "url": "https://cn.ebay.com/b/Victor-Boniface-Trading-Cards/212/bn_7123140245",
+      "image_url": "https://i.ebayimg.com/images/g/YAEAAeSwKVxqkPZ4/s-l1200.webp",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "22\nROAD TO\nFIFA\nWORLD CUP\n202G\nNIGERIA\nVICTOR BONIFACE",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-23",
+      "title": "2024-25 Panini Select FIFA Folarin Balogun Green Patch /5 ...",
+      "url": "https://www.dacardworld.com/singles/2024-25-panini-select-fifa-folarin-balogun-green-5",
+      "image_url": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTYY_WQVAQppqMqB74JS50qWpuxOQ4r_vtOc-hIQii5I5oWl-KK",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "02\nNAD0TvI NIHVToa\nSAECT\nFIFA\nFIFA",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-7",
+      "title": "2023-24 PANINI FIFA SELECT BELLINGHAM TIE DYE #/30 PSA 10 ...",
+      "url": "https://footydepot.com/products/bellingham-tie-dye-card-arena-club",
+      "image_url": "https://footydepot.com/cdn/shop/files/52afa307-7c10-431e-98dd-63c2678b0880_slab_1771048259.9262443.avif?v=1772160972&width=1080",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "2023-24 SELECT FIFA\nJUDE BELLINGHAM\nTIE-DYE\nPSA\nSEECT\nFIFA\nENGLAND\nJUDE BELLINGHAM\n#177\nGEM MT\n10\n97395001",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-53",
+      "title": "Sale Cards Luis Chavez Terrace Panini Select Fifa 2022-23",
+      "url": "https://www.euro-soccer-cards.com/gb/select-fifa-2022-23/luis-chavez-terrace-mexico-40-select-fifa-2023-24",
+      "image_url": "https://www.euro-soccer-cards.com/121318-large_default/luis-chavez-terrace-mexico-40-select-fifa-2023-24.jpg",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "24\nFIFA\nL.UIS CHÁVEZ\nMEXICO\nRC",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-45",
+      "title": "2024-25 PANINI SELECT Fifa Soccer Yunus Musah Gold Wave /10 ...",
+      "url": "https://picclick.co.uk/2024-25-Yunus-Musah-Panini-Select-FIFA-Gold-Wave-136931225019.html",
+      "image_url": "https://www.picclickimg.com/05MAAeSwyXRp~fwO/2023-24-Panini-Select-FIFA-United-States-USA-Yunus.webp",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "FIFA\nSIECT\n6\n6\nUNITED STATEs\nYUNUS MUSAH",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-3",
+      "title": "ヴィクター・ボニフェイス サッカーカード Panini - メルカリ",
+      "url": "https://jp.mercari.com/item/m73926335664",
+      "image_url": "https://static.mercdn.net/thumb/item/webp/m73926335664_1.jpg?1787387680",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "22\nVICTOR nONTFACE\n22",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-5",
+      "title": "GABRIEL TORRES 2018 PRIZM FIFA WORLD CUP RUSSIA '18 Panini ...",
+      "url": "https://www.ebay.com/itm/325688820243",
+      "image_url": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTqpyqKPl-27nejmCqcMSYevXIdEW2Hl-XnYhv2sLzp-GCrT5vi",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "20\nREITA BALDE DIAO\n20",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-8",
+      "title": "Hakimi Golden Baller Panini FIFA 365 #panini",
+      "url": "https://www.instagram.com/p/DWnyfPZDAk9/",
+      "image_url": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRTC28JMONFnVHlHFcrP7XIi9jz5Hsx0jx9vyJOjeMgxLkErMkP",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-9",
+      "title": "Adrenalyn Xl FIFA World Cup 2026 - Scegli Card da da 10 a ...",
+      "url": "https://calciatori2016.com/products/adrenalyn-xl-fifa-world-cup-2026-scegli-card-da-da-10-a-213",
+      "image_url": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRGtXEyJ5bd_2X7sQLaMbRhTwVAsk4te_F0JJiyzjCp_lC6HyGP",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "85\n83\nRIVAD MAHREZ\n234\nPAMIKI\n12",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-12",
+      "title": "25/26 DONRUSS FIFA WORLD CUP AVAILABLE AT OUR VANDERBILT ...",
+      "url": "https://www.instagram.com/p/DXe0ZlIjhiM/",
+      "image_url": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQyfO87LTpzXHlX5SoKBwB6FBba1Jk5zDJ-4T84B9GwzaB3T_aE",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "SLECT\n25\nMORLDCuP\nEL HADIT MALICK DIOUI",
+        "origin": "candidate_image_ocr"
+      }
+    }
+  ],
+  "batches": [],
+  "crops": [],
+  "expected_216": {
+    "title": "2025-26 · Panini - Select Road to FIFA World Cup 2026™ Soccer · Terrace · #21 · Victor Boniface · Green · /5",
+    "resolved": true
+  },
+  "budget": {
+    "maxUsd": 0.03,
+    "spentOrReservedUsd": 0.03163085,
+    "entries": [
+      {
+        "kind": "vision",
+        "reservedUsd": 0.01051475,
+        "actualUsd": 0.0031476,
+        "status": "usage_returned"
+      },
+      {
+        "kind": "lens",
+        "reservedUsd": 0.004,
+        "actualUsd": 0.004,
+        "status": "usage_returned"
+      },
+      {
+        "kind": "vision",
+        "reservedUsd": 0.003006,
+        "actualUsd": 0.0009171,
+        "status": "usage_returned"
+      },
+      {
+        "kind": "text",
+        "reservedUsd": 0.021226250000000002,
+        "actualUsd": 0.02356615,
+        "status": "usage_returned"
+      }
+    ],
+    "visionCalls": 2,
+    "maxVisionCalls": 4,
+    "estimated": true,
+    "includesIdentificationAndMarket": true
+  }
+}

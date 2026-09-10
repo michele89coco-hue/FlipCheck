@@ -23,6 +23,8 @@ function semanticField(domain,field,value){
 // A sports release year abbreviates the START of a printed season, never its end.
 function sportsSeason215(a,b){a=season(a);b=season(b);return !!a&&!!b&&(a===b||/^\d{4}-\d{2}$/.test(a)&&b===a.slice(0,4)||/^\d{4}-\d{2}$/.test(b)&&a===b.slice(0,4));}
 function familyKey(value){return norm(str(value).replace(/^(?:19|20)\d{2}(?:[-/]\d{2,4})?\s+/,'')).replace(/^(?:panini|pokemon) /,'').replace(/ (?:basketball|baseball|football|soccer|hockey)$/,'').replace(/\b(world cup) 20(\d{2})\b/,'$1 $2');}
+function productIdentity217(v){return familyKey(v).replace(/\badrenalin\b/g,'adrenalyn').split(' ').filter(t=>!['panini','pokemon','trading','card','cards','game','basketball','baseball','football','soccer','hockey'].includes(t)).sort().join(' ');}
+function productEquivalent217(a,b){return !!productIdentity217(a)&&productIdentity217(a)===productIdentity217(b);}
 function subsetKey(value){const t=norm(value||'Base').replace(/ checklist$/,'').replace(/^base (terrace|mezzanine|field level)$/,'$1');return /^(?:base(?: set)?(?: checklist)?|rc(?: card)?|rookie(?: card)?)$/.test(t)?'base':t;}
 function distinctiveMarks(l){return unique(l.evidence('text').concat(l.evidence('edition_text'),l.evidence('stamp')).map(a=>str(a.raw||a.value).match(/\b(?:\d{1,2}(?:st|nd|rd|th)?\s+anniversary|pre[ -]?release|winner|championship|finalist)\b/i)?.[0])).slice(0,2);}
 function presenceText(field,text){
@@ -233,7 +235,7 @@ function evaluate(l,entry){
  const attackHits=attacks.filter(a=>entryText.includes(norm(a.value))||list(entry.attacks).some(b=>attackKey(a.value)===attackKey(b))); score+=Math.min(12,attackHits.length*4);if(attackHits.length)matches.push('attacks');
  const observedSubset=l.domain==='sports'?l.pick('subset')?.value:null;if(observedSubset&&l.catalogueSubsets202?.includes(subsetKey(observedSubset))&&entry.subset_known===true&&subsetKey(observedSubset)!==subsetKey(entry.subset))reasons.push('different_printed_subset');
  const seenProducts=k.products.filter(v=>norm(v)!=='prizm'||l.domain==='sports');
- for(const p of seenProducts)if(!norm([entry.family,entry.subset,entry.brand,entry.variant].join(' ')).includes(norm(p))&&!norm(p).includes(norm(entry.family)))reasons.push('different_printed_product');
+ for(const p of seenProducts)if(!norm([entry.family,entry.subset,entry.brand,entry.variant].join(' ')).includes(norm(p))&&!norm(p).includes(norm(entry.family))&&!productEquivalent217(p,entry.family))reasons.push('different_printed_product');
  const visual=l.evidence('catalogue_core').some(a=>a.value===coreKey(entry));if(visual){score+=k.pokedex.length?40:25;if(l.domain==='sports'&&entry.source_tier==='lens_visual_verified'&&['reference_text','reference_image'].includes(entry.field_proof?.number?.origin)&&entry.field_proof?.year&&entry.variants?.length)score+=20;matches.push('catalogue_image');if(needsSubjectVisual){if(!matches.includes('localized_candidate'))score+=35;matches.push('subject');}}else if(needsSubjectVisual)score=Math.min(score,70);
  if(l.domain==='pokemon'&&(k.pokedex.length&&!k.numbers.length||['pokedex','unnumbered'].includes(entry.identifier_type))&&!visual){
   const yearAgrees=entry.year&&(k.year===season(entry.year)||l.evidence('copyright').some(a=>str(a.value).match(/\b(?:19|20)\d{2}\b/g)?.includes(season(entry.year))));
@@ -263,10 +265,17 @@ function candidateGroups(l,entries){
  l.candidates=evaluated.map(({image_data,...e})=>e);
  const groups=new Map();
  for(const e of eligible){
-  const np=numberParts(e.number),id=[norm(e.subject),familyKey(e.family),np?np.local+(np.total?'/'+np.total:''):number(e.number),season(e.year),e.subset_known===false?'':subsetKey(e.subset)].join('|');
+  const np=numberParts(e.number),id=[norm(e.subject),productIdentity217(e.family),np?np.local+(np.total?'/'+np.total:''):number(e.number),season(e.year),e.subset_known===false?'':subsetKey(e.subset)].join('|');
   if(!groups.has(id))groups.set(id,{id,entry:e,entries:[],score:e.score});
   const g=groups.get(id);g.entries.push(e);g.score=Math.max(g.score,e.score);
   if(language(e.language)===keyValues(l).language&&language(g.entry.language)!==keyValues(l).language)g.entry=e;
+ }
+ // A short product name can attach to exactly one richer name actually read
+ // on this card. Same subject/number/season/subset are mandatory.
+ if(l.domain==='sports')for(const g of [...groups.values()]){
+  if(!groups.has(g.id))continue;const e=g.entry;
+  const targets=[...groups.values()].filter(h=>h!==g&&familyKey(h.entry.family).startsWith(familyKey(e.family)+' ')&&keyValues(l).products.some(p=>productEquivalent217(p,h.entry.family))&&subjectMatch(e.subject,h.entry.subject)&&numbersMatch(e.number,h.entry.number)&&!!e.year&&sportsSeason215(e.year,h.entry.year)&&h.entry.subset_known!==false&&(e.subset_known===false||subsetKey(e.subset)===subsetKey(h.entry.subset)));
+  if(targets.length===1){const target=targets[0];target.entries.push(...g.entries);target.score=Math.max(target.score,g.score);if(e.subset_known===true&&target.entry.subset_known!==true)target.entry={...target.entry,subset:e.subset,subset_known:true};groups.delete(g.id);}
  }
  if(l.domain==='pokemon'){
   // H23 + year from one source and H23/H32 without year from another are
@@ -420,7 +429,7 @@ function identityPresentation200(l,result,entry){
  const catalogueRc=entry&&/\b(?:RC|Rookie Card)\b/i.test(entry.entry_quote||'')&&str(entry.entry_quote).length<200;
  if(l.domain==='sports'){c.is_rookie=present?present.value==='present'?true:present.value==='absent'?false:null:badge||catalogueRc?true:null;c.rookie_origin=present||badge?'original_photo':catalogueRc?'catalogue':null;}
  let base=result.core_identity.model;
- if(l.domain==='sports'&&entry){const product=l.pick('product')?.value,subset=entry.subset_known===true&&subsetKey(entry.subset)!=='base'?str(entry.subset).replace(/ Checklist$/i,''):null;const family=product&&norm(product).includes(norm(entry.family))?str(product).replace(/^(?:19|20)\d{2}(?:[-/]\d{2,4})?\s+/,''):entry.family;c.product=family;c.subset=subset||null;base=[result.source_confirmed_year,family,subset&&!norm(family).includes(norm(subset))?subset:'',c.number?'#'+number(c.number):'',c.subject].filter(Boolean).join(' · ');}
+ if(l.domain==='sports'&&entry){const product=l.pick('product')?.value,subset=entry.subset_known===true&&subsetKey(entry.subset)!=='base'?str(entry.subset).replace(/ Checklist$/i,''):null;const family=product&&(norm(product).includes(norm(entry.family))||productEquivalent217(product,entry.family))?str(product).replace(/^(?:19|20)\d{2}(?:[-/]\d{2,4})?\s+/,''):entry.family;c.product=family;c.subset=subset||null;base=[result.source_confirmed_year,family,subset&&!norm(family).includes(norm(subset))?subset:'',c.number?'#'+number(c.number):'',c.subject].filter(Boolean).join(' · ');}
  if(['pokemon','onepiece','tcg'].includes(l.domain)&&entry?.subset&&subsetKey(entry.subset)!=='base'){c.subset=entry.subset;c.subset_origin='catalogue';if(!norm(base).includes(norm(entry.subset)))base=[base,entry.subset].filter(Boolean).join(' · ');result.core_identity.model=base;if(result.normalized_query&&!norm(result.normalized_query).includes(norm(entry.subset)))result.normalized_query+=' '+entry.subset;}
  const parts=[base,result.variant];
  if(l.domain==='sports'){if(c.is_rookie===true)parts.push('RC');if(result.physical_serial?.value){const run='/'+result.physical_serial.print_run;parts.push(run);if(result.normalized_query&&!result.normalized_query.split(/\s+/).includes(run))result.normalized_query+=' '+run;}}
@@ -514,6 +523,6 @@ function applySurfaceInspection199(l,reply,imageIndexes){
  if(absent)l.add('serial_presence','absent',{source:'surface_inspection',certainty:'clear',image_index:surfaces[0].image_index,checked_images:imageIndexes,raw:'Entire front and back inspected; no specimen serial visible'});
  l.record('surface_inspection',{reply,accepted_absence:absent,images:imageIndexes});
 }
-const api={photoProfile216,sportsSeason215,mapPokemonBands204,pokemonKeys204,pokemonAliases204,pokemonPresence204,pokemonPolicy204,pokemonNumbers203,pokemonQuery203,pokemonPanels202,applyIdentityBands202,reconcileIdentifiers201,printingLanguageCompatible201,sourceUrl201,productText201,identityPresentation200,unionRegions199,userVariant199,applySurfaceInspection199,semanticField,familyKey,subsetKey,distinctiveMarks,canonicalEntries,coreKey,Ledger,ingestVision,ingestOcr,keyValues,profile,number,numberParts,numbersMatch,serial,language,season,finish,norm,same,subjectMatch,tokens,COLOR_WORDS,PATTERNS,query,domains,sourceTrusted,evaluate,candidateGroups,printingScope,variantState,photoRequest,reduce,recoveryRequests,applyDetails,presenceText,reconcileVisualEvidence,assertConsistent};
+const api={productEquivalent217,photoProfile216,sportsSeason215,mapPokemonBands204,pokemonKeys204,pokemonAliases204,pokemonPresence204,pokemonPolicy204,pokemonNumbers203,pokemonQuery203,pokemonPanels202,applyIdentityBands202,reconcileIdentifiers201,printingLanguageCompatible201,sourceUrl201,productText201,identityPresentation200,unionRegions199,userVariant199,applySurfaceInspection199,semanticField,familyKey,subsetKey,distinctiveMarks,canonicalEntries,coreKey,Ledger,ingestVision,ingestOcr,keyValues,profile,number,numberParts,numbersMatch,serial,language,season,finish,norm,same,subjectMatch,tokens,COLOR_WORDS,PATTERNS,query,domains,sourceTrusted,evaluate,candidateGroups,printingScope,variantState,photoRequest,reduce,recoveryRequests,applyDetails,presenceText,reconcileVisualEvidence,assertConsistent};
 if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckCatalogueEngine=api;
 })(typeof window==='undefined'?globalThis:window);

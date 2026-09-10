@@ -1,0 +1,696 @@
+{
+  "vision": {
+    "domain": "sports",
+    "kind": "card",
+    "category": "basketball trading card",
+    "language": "English",
+    "object_unit": "single",
+    "image_views": [
+      {
+        "image_index": 1,
+        "view": "front",
+        "certainty": "clear"
+      },
+      {
+        "image_index": 2,
+        "view": "back",
+        "certainty": "clear"
+      }
+    ],
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.14,
+        "y": 0.28,
+        "width": 0.8,
+        "height": 0.56,
+        "certain": true
+      },
+      {
+        "image_index": 2,
+        "x": 0.09,
+        "y": 0.31,
+        "width": 0.75,
+        "height": 0.55,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "KOBE BRYANT",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.25,
+          "y": 0.74,
+          "width": 0.31,
+          "height": 0.03
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "team",
+        "text": "LOS ANGELES LAKERS",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.25,
+          "y": 0.77,
+          "width": 0.28,
+          "height": 0.02
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "brand",
+        "text": "SkyBox",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.31,
+          "y": 0.77,
+          "width": 0.1,
+          "height": 0.03
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "product",
+        "text": "Metal Universe",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.64,
+          "y": 0.76,
+          "width": 0.19,
+          "height": 0.06
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "collector_number",
+        "text": "18",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.18,
+          "y": 0.34,
+          "width": 0.04,
+          "height": 0.04
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "season",
+        "text": "1996-97",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.2,
+          "y": 0.63,
+          "width": 0.08,
+          "height": 0.02
+        },
+        "zone": "statistics",
+        "alternatives": [
+          "'96-'97"
+        ]
+      },
+      {
+        "field": "copyright",
+        "text": "© 1997 SkyBox International, printed in U.S.A. Metal Inc. NBA Properties, Inc.",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.78,
+          "y": 0.4,
+          "width": 0.04,
+          "height": 0.39
+        },
+        "zone": "border",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "HS: 5'6\"; WT: 200; HIGH SCHOOL; LOWER MERION (PA); BORN 8/23/78; PHILADELPHIA, PA",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.2,
+          "y": 0.42,
+          "width": 0.09,
+          "height": 0.14
+        },
+        "zone": "back",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "YR CLUB FG% 3FG% FT% REB AST STL BLK PTS AVG; '96-'97 L.A. LAKERS .417 .375 .819 132 91 49 23 539 7.6; NBA TOTALS .417 .375 .819 132 91 49 23 539 7.6",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.29,
+          "y": 0.64,
+          "width": 0.43,
+          "height": 0.08
+        },
+        "zone": "statistics",
+        "alternatives": []
+      }
+    ],
+    "features": [
+      {
+        "field": "border_color",
+        "value": "silver",
+        "description": "Metallic silver/gray framing and accents",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.1,
+          "y": 0.32,
+          "width": 0.73,
+          "height": 0.52
+        },
+        "zone": "border"
+      },
+      {
+        "field": "pattern",
+        "value": "cosmic/starfield and metallic geometric foil pattern",
+        "description": "Holographic cosmic background with angular metallic structures",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.15,
+          "y": 0.29,
+          "width": 0.78,
+          "height": 0.55
+        },
+        "zone": "artwork"
+      },
+      {
+        "field": "finish",
+        "value": "reflective",
+        "description": "Strong reflective metallic foil surface",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.15,
+          "y": 0.29,
+          "width": 0.78,
+          "height": 0.55
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "rarity_symbol",
+        "value": "present",
+        "description": "Red circular symbol beside the player name",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.55,
+          "y": 0.77,
+          "width": 0.02,
+          "height": 0.02
+        },
+        "zone": "label"
+      },
+      {
+        "field": "layout",
+        "value": "portrait action image on front; vertical player portrait and statistics table on back",
+        "description": "Basketball action layout with team logo and back-panel statistics",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.15,
+          "y": 0.29,
+          "width": 0.78,
+          "height": 0.55
+        },
+        "zone": "other"
+      }
+    ],
+    "uploaded_image_count": 2
+  },
+  "references": [
+    {
+      "id": "lens-10",
+      "title": "1997 Metal Universe 81 Kobe Bryant PSA 8 Graded Card | GameStop",
+      "url": "https://www.gamestop.com/graded-trading-cards/graded-cards/products/1997-metal-universe-81-kobe-bryant-psa-8/PSA116968936",
+      "image_url": "https://media.gamestop.com/i/gamestop/prod-1_front_PSA_116968936_20260511162116941",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "1997 METAL UNIVERSE\nKOBE BRYANT\nPA\nKOBE BRYANT\n#81\nNM-MT\n8\n116968936",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-17",
+      "title": "Los Angeles Lakers Kobe Bryant 1997 Skybox Metal Universe ...",
+      "url": "https://store.nba.com/los-angeles-lakers/los-angeles-lakers-kobe-bryant-1997-skybox-metal-universe-number-81-psa-authenticated-9-card/t-25697457+p-1508120361577+z-9-465722361",
+      "image_url": "https://fanatics.frgimages.com/los-angeles-lakers/kobe-bryant-los-angeles-lakers-1997-skybox-metal-universe-number-81-psa-authenticated-9-card_pi4813000_ff_4813525-80a0de2aaf063dc839cb_full.jpg?_hv=2&w=600",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "1997 METAL UNIVERSE\nKOBE BRYANT\nPA\n#81\nMINT\n61428961\nNETAL",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-36",
+      "title": "Kobe Bryant METAL UNIVERSE Basketball Card",
+      "url": "https://noticiasncc.com/?w=154449384816",
+      "image_url": "https://u-mercari-images.mercdn.net/photos/m86875745488_1.jpg?1663562908",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "KOBE BRYANT\nLOS ANGELLS AkERS\nTNES\n(ETA\nINIVIRSI",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-38",
+      "title": "1997-98 Skybox Metal Universe Kobe Bryant Precious Metal ...",
+      "url": "https://greyflannelauctions.com/lot/1997-98-skybox-metal-universe-kobe-bryant-precious-metal-gems-81/",
+      "image_url": "https://greyflannelauctions.com/wp-content/uploads/2024/11/1997-98-skybox-metal-universe-kobe-bryant-precious-metal-gems-81.jpg",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "1997 METAL UNIVERSE\nKOBE BRYANT\nPRECIOUS METAL GEMS\nKOBE ERYANT\n#81\nAUTHENTIC\n52434292\nPRECIOUS\nGEMS\nA\nMETAL\nA\nFSA",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-44",
+      "title": "Sold at Auction: 1997-98 SkyBox Metal Universe Kobe Bryant ...",
+      "url": "https://www.invaluable.com/auction-lot/1997-98-skybox-metal-universe-kobe-bryant-2nd-year-447-c-73842469a0",
+      "image_url": "https://image.invaluable.com/housePhotos/bostonsportscards/40/756240/H21975-L348769962.jpg",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "RS\nKOBE BRYANT\nLOS ANGELES LAKERS\n9798\nMETAL\nUNIYERSLS",
+        "origin": "candidate_image_ocr"
+      },
+      "page_text": "Sold at Auction: 1997-98 SkyBox Metal Universe Kobe Bryant (2nd Year)\nname: 1997-98 SkyBox Metal Universe Kobe Bryant (2nd Year)\ndescription: (Mint) 1997-98 SkyBox Metal Universe Kobe Bryant (2nd Year) #81 Basketball Card\nsku: 73842469a0\n\nDon’t miss out on items like this!Sign up to get notified when similar items are available.\n\nNotify Me\n\nLot 447: 1997-98 SkyBox Metal Universe Kobe Bryant (2nd Year)\n\nEst: $5 USD - $50 USDSold: Log in to viewBoston Sportscard ExchangeWoburn, MA, USOctober 15, 2023\nView lot details\n\nItem Overview\n\nDescription(Mint) 1997-98 SkyBox Metal Universe Kobe Bryant (2nd Year) #81 Basketball Card\n\nRequest more information\n\nPayment & Shipping\n\nPayment\nAccepted forms of payment: American Express, Discover, MasterCard, Other, Paypal, VisaShippingThe winning bidder is responsible for all shipping costs. All items are shipped by either USPS, FedEX or UPS. We do combine shipping for bidders who win multiple lots.\n\nAuction Details\n\nPart 3 of 3 - SundaybyBoston Sportscard ExchangeOctober 15, 2023, 09:00 PM EST110 Winn Street, Suite 210, Woburn, MA, 01810, US\n\nExplore This Auction\n\nTerms\n\nBuyer's Premium21.0%\n\nBidding IncrementsFrom: To: Increment:\n$0 $25 $1\n$26 $50 $2\n$51 $100 $3\n$101 $500 $5\n$501 $1,000 $10\n$1,001+ $25\nTerms of the SaleItems must be returned within 30 days for full refund. Bidder credit cards on file can be charged 4 days after invoice.\n\nPaymentAll invoices need to be paid before items are shipped.\n\nPaymentAll invoices need to be paid before items are shipped.\n\nShipping TermsThe winning bidder is responsible for all shipping costs. All items are shipped by either USPS, FedEX or UPS. We do combine shipping for bidders who win multiple lots.\n\nShipping TermsThe winning bidder is responsible for all shipping costs. All items are shipped by either USPS, FedEX or UPS. We do combine shipping for bidders who win multiple lots.\n\nMassachusetts Residents6.25% Massachusetts Sales Tax is added for any sales by Massachusetts Residents unless a valid re-sale certificate is presented.\n\nMassachusetts Residents6.25% Massachusetts Sales Tax is added for any sales by Massachusetts Residents unless a valid re-sale certificate is presented.\n\nGet Invaluable on Your Phone\nDownload the app via text link to get instantly notified if you’re outbid and receive auction reminders so you never miss out!\n\nAscension Island\nAndorra\nUnited Arab Emirates\nAfgha",
+      "page_url": "https://www.invaluable.com/auction-lot/1997-98-skybox-metal-universe-kobe-bryant-2nd-year-447-c-73842469a0"
+    },
+    {
+      "id": "lens-49",
+      "title": "Kobe Bryant Metal Universe | Yahoo拍賣",
+      "url": "https://tw.bid.yahoo.com/item/101353525124",
+      "image_url": "https://img.yec.tw/cl/api/res/1.2/1fkE.hmXQgTKmD2R_iENyg--/YXBwaWQ9eXR3YXVjdGlvbnNlcnZpY2U7Zmk9ZmlsbDtoPTE0MDA7cT04NTtyb3RhdGU9YXV0bzt3PTE0MDA-/https://img.yec.tw/ob/image/e7baaacc-9547-44a0-8bd7-cfaf25a93c72.jpg",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "3PAL",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-53",
+      "title": "1997 Metal Universe 81 Kobe Bryant PSA 9 Graded Card | GameStop",
+      "url": "https://www.gamestop.com/graded-trading-cards/graded-cards/products/1997-metal-universe-81-kobe-bryant-psa-9/PSA148346963",
+      "image_url": "https://media.gamestop.com/i/gamestop/prod-1_front_PSA_148346963_20260424191337434",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "1997 METAL UNIVERSE\nKOBE BRYANT\nPSA\n#81\nMINT\n9\n148346963",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-55",
+      "title": "1997-98 Kobe Bryant Skybox Metal Universe Precious Metal ...",
+      "url": "https://buynicecards.com/product/1997-98-kobe-bryant-skybox-metal-universe-precious-metal-gems-pmg-50-bgs-8-5",
+      "image_url": "https://cdn.shopify.com/s/files/1/0027/5198/7825/products/IMG_4363-2_800x800.jpg?v=1581952703",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "(B)\nBECKETT.\n997-98 METAL UNIVERSE\nCHAMPIONSHIP\nPRECIOUS METAL GEMS\n#86 KOBE BRYANT\nCENTERING 9.5 CORNERS 8.5\nSURFACE 9\nEDGES\n8\n1AKER\nKOBEBRYANT)\n8.5\nNOS ANGESIAKERS\nGUARD\nNM-MI+\n0011502632\n8",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-5",
+      "title": "Las mejores ofertas en 1997-98 Metal Universe - Kobe Bryant ...",
+      "url": "https://pa.ebay.com/b/1997-98-Metal-Universe-Kobe-Bryant-81/212/bn_7123365490",
+      "image_url": "https://i.ebayimg.com/images/g/VQsAAeSwpyFqhdZ6/s-l1200.webp",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "KOBE BRYANT\nL65ASeLEHLAKERS\nSPALS",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-2",
+      "title": "Kobe Bryant #81 Precios | 1997 Metal Universe | Tarjetas de ...",
+      "url": "https://www.sportscardspro.com/es/game/basketball-cards-1997-metal-universe/kobe-bryant-81",
+      "image_url": "https://i.ebayimg.com/images/g/2OsAAeSw-Mdqegl2/s-l225.jpg",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "KOBe BRYANT",
+        "origin": "candidate_image_ocr"
+      }
+    }
+  ],
+  "batches": [
+    {
+      "ids": [
+        "lens-36"
+      ],
+      "reply": {
+        "original_readings": [],
+        "comparisons": [
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.16,
+                "y": 0.26
+              },
+              {
+                "x": 0.95,
+                "y": 0.26
+              },
+              {
+                "x": 0.95,
+                "y": 0.77
+              },
+              {
+                "x": 0.16,
+                "y": 0.77
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.16,
+                "y": 0.11
+              },
+              {
+                "x": 0.87,
+                "y": 0.11
+              },
+              {
+                "x": 0.87,
+                "y": 0.94
+              },
+              {
+                "x": 0.16,
+                "y": 0.94
+              }
+            ],
+            "reference_id": "lens-36",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "KOBE BRYANT",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Kobe Bryant shooting, Lakers uniform, red basketball backdrop",
+                "reference": "Same Kobe Bryant pose, Lakers uniform, red basketball backdrop",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Metal Universe front layout with lower nameplate",
+                "reference": "Metal Universe front layout with lower nameplate",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "Silver geometric holographic pattern and anniversary emblem",
+                "reference": "Matching geometric holographic pattern and anniversary emblem",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "KOBE BRYANT",
+              "family": "Metal Universe",
+              "number": "",
+              "year": "",
+              "brand": "SkyBox",
+              "subset": "",
+              "proof": {
+                "subject": "Kobe Bryant METAL UNIVERSE Basketball Card",
+                "family": "Kobe Bryant METAL UNIVERSE",
+                "year": "",
+                "subset": ""
+              },
+              "display_names": {
+                "it": "KOBE BRYANT",
+                "en": "KOBE BRYANT"
+              }
+            }
+          }
+        ]
+      },
+      "accepted": []
+    },
+    {
+      "ids": [
+        "lens-44"
+      ],
+      "reply": {
+        "original_readings": [],
+        "comparisons": [
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.159,
+                "y": 0.26
+              },
+              {
+                "x": 0.947,
+                "y": 0.26
+              },
+              {
+                "x": 0.947,
+                "y": 0.771
+              },
+              {
+                "x": 0.159,
+                "y": 0.771
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.087,
+                "y": 0.079
+              },
+              {
+                "x": 0.925,
+                "y": 0.079
+              },
+              {
+                "x": 0.925,
+                "y": 0.934
+              },
+              {
+                "x": 0.087,
+                "y": 0.934
+              }
+            ],
+            "reference_id": "lens-44",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "KOBE BRYANT",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Kobe in Lakers uniform, ball extended",
+                "reference": "Same Kobe pose and basketball composition",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Portrait Metal Universe front with lower nameplate",
+                "reference": "Matching portrait front layout and nameplate",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "symbols",
+                "original": "Metal Universe emblem at lower right",
+                "reference": "Metal Universe emblem at lower right",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "KOBE BRYANT",
+              "family": "Metal Universe",
+              "number": "81",
+              "year": "1997-98",
+              "brand": "SkyBox",
+              "subset": "2nd Year",
+              "proof": {
+                "subject": "Kobe Bryant",
+                "family": "SkyBox Metal Universe",
+                "year": "1997-98 SkyBox Metal Universe",
+                "subset": "(2nd Year)"
+              },
+              "display_names": {
+                "it": "KOBE BRYANT",
+                "en": "KOBE BRYANT"
+              }
+            }
+          }
+        ]
+      },
+      "accepted": []
+    }
+  ],
+  "crops": [
+    {
+      "id": "original-1-upper",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.125,
+        "y": 0.26495726495726496,
+        "width": 0.8305555555555556,
+        "height": 0.19829059829059828
+      }
+    },
+    {
+      "id": "original-1-lower",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.125,
+        "y": 0.6457264957264958,
+        "width": 0.8305555555555556,
+        "height": 0.2094017094017094
+      }
+    },
+    {
+      "id": "original-2-upper",
+      "image_index": 2,
+      "region": {
+        "image_index": 2,
+        "x": 0.075,
+        "y": 0.2948717948717949,
+        "width": 0.7805555555555556,
+        "height": 0.1952991452991453
+      }
+    },
+    {
+      "id": "original-2-lower",
+      "image_index": 2,
+      "region": {
+        "image_index": 2,
+        "x": 0.075,
+        "y": 0.6688034188034188,
+        "width": 0.7805555555555556,
+        "height": 0.2064102564102564
+      }
+    }
+  ],
+  "expected_216": {
+    "title": "#18 · KOBE BRYANT",
+    "resolved": false
+  },
+  "budget": {
+    "maxUsd": 0.03,
+    "spentOrReservedUsd": 0.01346605,
+    "entries": [
+      {
+        "kind": "vision",
+        "reservedUsd": 0.01051475,
+        "actualUsd": 0.0032088000000000004,
+        "status": "usage_returned"
+      },
+      {
+        "kind": "lens",
+        "reservedUsd": 0.004,
+        "actualUsd": 0.004,
+        "status": "usage_returned"
+      },
+      {
+        "kind": "vision",
+        "reservedUsd": 0.009431,
+        "actualUsd": 0.00319225,
+        "status": "usage_returned"
+      },
+      {
+        "kind": "vision",
+        "reservedUsd": 0.009759,
+        "actualUsd": 0.003065,
+        "status": "usage_returned"
+      }
+    ],
+    "visionCalls": 3,
+    "maxVisionCalls": 4,
+    "estimated": true,
+    "includesIdentificationAndMarket": true
+  }
+}

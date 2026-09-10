@@ -1,0 +1,603 @@
+{
+  "vision": {
+    "domain": "sports",
+    "kind": "card",
+    "category": "basketball trading card",
+    "language": "en",
+    "object_unit": "single",
+    "image_views": [
+      {
+        "image_index": 1,
+        "view": "front",
+        "certainty": "clear"
+      },
+      {
+        "image_index": 2,
+        "view": "back",
+        "certainty": "clear"
+      }
+    ],
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.06,
+        "y": 0.23,
+        "width": 0.87,
+        "height": 0.66,
+        "certain": true
+      },
+      {
+        "image_index": 2,
+        "x": 0.05,
+        "y": 0.17,
+        "width": 0.88,
+        "height": 0.68,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "Stephen Curry",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.33,
+          "y": 0.25,
+          "width": 0.46,
+          "height": 0.05
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "brand",
+        "text": "Panini",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.35,
+          "y": 0.61,
+          "width": 0.29,
+          "height": 0.05
+        },
+        "zone": "back",
+        "alternatives": []
+      },
+      {
+        "field": "product",
+        "text": "Adrenalyn XL Trading Card Game",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.18,
+          "y": 0.26,
+          "width": 0.68,
+          "height": 0.11
+        },
+        "zone": "back",
+        "alternatives": []
+      },
+      {
+        "field": "team",
+        "text": "Warriors",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.12,
+          "y": 0.71,
+          "width": 0.22,
+          "height": 0.1
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "collector_number",
+        "text": "77",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.75,
+          "y": 0.56,
+          "width": 0.06,
+          "height": 0.06
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "GUARD",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.82,
+          "y": 0.27,
+          "width": 0.04,
+          "height": 0.15
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "DEF 72",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.08,
+          "y": 0.61,
+          "width": 0.1,
+          "height": 0.1
+        },
+        "zone": "statistics",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "OFF 90",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.79,
+          "y": 0.61,
+          "width": 0.11,
+          "height": 0.1
+        },
+        "zone": "statistics",
+        "alternatives": []
+      },
+      {
+        "field": "copyright",
+        "text": "© 2009 NBA Properties, Inc. © 2009 Panini America, Inc.",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.24,
+          "y": 0.69,
+          "width": 0.55,
+          "height": 0.03
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "Each card features an Activation Code. Enter your codes online to build your virtual collection, play against your friends and win exclusive prizes!!",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.22,
+          "y": 0.71,
+          "width": 0.6,
+          "height": 0.06
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "NBA.COM",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.67,
+          "y": 0.83,
+          "width": 0.12,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": []
+      }
+    ],
+    "features": [
+      {
+        "field": "border_color",
+        "value": "blue",
+        "description": "Dark blue card border with orange/white graphic elements",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.08,
+          "y": 0.25,
+          "width": 0.83,
+          "height": 0.63
+        },
+        "zone": "border"
+      },
+      {
+        "field": "layout",
+        "value": "Portrait basketball action design; vertical player position label; team and NBA logos",
+        "description": "Stephen Curry action image with vertical GUARD label",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.1,
+          "y": 0.24,
+          "width": 0.8,
+          "height": 0.64
+        },
+        "zone": "artwork"
+      },
+      {
+        "field": "finish",
+        "value": "unclear",
+        "description": "Surface appearance cannot be determined reliably from the photos",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.08,
+          "y": 0.24,
+          "width": 0.84,
+          "height": 0.65
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "stamp",
+        "value": "absent",
+        "description": "No promotional or rookie stamp visible in readable card areas",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.08,
+          "y": 0.24,
+          "width": 0.84,
+          "height": 0.65
+        },
+        "zone": "surface"
+      }
+    ],
+    "uploaded_image_count": 2
+  },
+  "references": [
+    {
+      "id": "lens-1",
+      "title": "Stephen Curry 2009-10 Panini Adrenalyn XL Rookie Card PSA 6 ...",
+      "url": "https://www.ebay.it/itm/144750798830",
+      "image_url": "https://i.ebayimg.com/images/g/BFYAAOSwwXRiO4-t/s-l1200.jpg",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "RoeRT\n72\nVWARRORS\nStephen CuyP\nOFF",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-2",
+      "title": "2009-10 Panini Adrenalyn XL Stephen Curry rookie card | eBay ...",
+      "url": "https://www.ebay.com.au/itm/133737391744",
+      "image_url": "https://i.ebayimg.com/images/g/jScAAOSwmN9gcSNx/s-l1200.jpg",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "RUBRT\nStephen GurY\nOFF\n77.\n9\nGUAR\nRRIORS",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-3",
+      "title": "Stephen Curry 2009 Panini Andrenalyn XL Basketball Rookie ...",
+      "url": "https://www.fanaticscollect.com/buy-now/2e338250-8a9d-466d-b95d-f2542d39a987/stephen-curry-2009-panini-andrenalyn-xl-basketball-rookie-card-rc-graded-psa-8",
+      "image_url": "https://cdn-vault.fanaticscollect.com/cdn.shopify.com/s/files/1/1832/7059/files/small/StephenCurry-8-51223-449_5ca1e761-eb50-45d9-9f36-5c2b6352268a.webp",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "2009 PANINI ADRENALYN XL\nSTEPHEN CURRY\nROeKT\n72\nNM-MT\nStetpoU\n67226449\n8\n90\nNMMT",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-4",
+      "title": "Stephen Curry | ARENA CLUB",
+      "url": "https://arenaclub.com/cards/basketball-2009-10-panini-adrenalyn-xl-stephen-curry-8AC002050562",
+      "image_url": "https://storage.googleapis.com/arenaxlab/800_slabs/2050562-front-1711522086218.png",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "STEPHEN CURRY\nROBKT\nBACO02050562\nhen CurO\nDEF\n90\nOFF\nGUARD\nMINT+\nSterp\nSoPRORS",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-8",
+      "title": "CARTE ROOKIE NBA Adrenalyn Xl Stephen Curry 2009 EUR 250,00 ...",
+      "url": "https://picclick.fr/Carte-Rookie-Nba-Adrenalyn-Xl-Stephen-Curry-2009-124719355842.html",
+      "image_url": "https://www.picclickimg.com/9AkAAOSwVphgmmAU/Carte-Rookie-Nba-Adrenalyn-Xl-Stephen-Curry-2009.webp",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "ROoKT\nDEF\n72\nStephen Curry\nDNT\nOFF\n90\n8\n77\nMAPRIORS\nGUF",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-9",
+      "title": "CSG Registry Featured Set: Stephen Curry Player Set | CGC",
+      "url": "https://www.cgccards.com/news/article/10978/",
+      "image_url": "https://s3.amazonaws.com/ccg-corporate-production/news-images/Stephen-Curry-1026238-005_OBV_tb20221129111935899.jpg",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "CSG\n2009-10 Panini Adrenalyn XL\nStephen Curry\nROBRT\nCERTIFIED SPORTS GUARANTY\n62005\nGem Mint\n10\nStephen Cury\nGUARD\nN",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-10",
+      "title": "2009-10 Stephen Curry Adrenalyn XL rookie (B) | eBay",
+      "url": "https://www.ebay.com/itm/225978621227",
+      "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQ3S_3n42bUT8GnV63Onz1rtzXBRPKhP0NKjC22e9-6xrpdsq4",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "RUDKT",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-11",
+      "title": "Stephen Curry 2009 Panini Adrenalyn XL Base Price Guide ...",
+      "url": "https://www.sportscardinvestor.com/cards/stephen-curry-basketball/2009-panini-adrenalyn-xl-base",
+      "image_url": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRoaknFBQd2x6pnmqblzdm_QuLqFkYeIZHLCl75nF1MES7W3uqb",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "RUBRT\n72\nV\nStepten GU\n90",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-12",
+      "title": "Stephen Curry 2009 Panini Andrenalyn XL Basketball Rookie ...",
+      "url": "https://www.sportsmemorabilia.com/nba-memorabilia/golden-state-warriors/stephen-curry-2009-panini-andrenalyn-xl-basketball-rookie-card-rc-graded-psa-8/o-3547+t-03476230+p-7944669007598+z-9-414400535",
+      "image_url": "https://images.footballfanatics.com/golden-state-warriors/stephen-curry-2009-panini-andrenalyn-xl-basketball-rookie-card-rc-graded-psa-8_ss2_p-200173552+u-vroudqxiejevhogrsdgp+v-bxqwugwrvfzfyayouhjl.jpg?_hv=2&w=400",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "2009 PANINI ADRENALYN XL\nSTEPHEN CURRY\nROBRT\nNM-MT\n8\n67226449\nStephen GIY\n90\nGLAR\nPA",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-14",
+      "title": "Stephen Curry 2009 Panini Adrenalyn XL Base Price Guide ...",
+      "url": "https://www.sportscardinvestor.com/cards/stephen-curry-basketball/2009-panini-adrenalyn-xl-base/cgc-10",
+      "image_url": "https://i.ebayimg.com/images/g/6EIAAeSwiOxqjx2B/s-l1600.jpg",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "ROBK\nVARRORS\nStepen CuryP\nOFF\nO9\nNBA)\n7\nDEF\n72\n90",
+        "origin": "candidate_image_ocr"
+      }
+    }
+  ],
+  "batches": [
+    {
+      "ids": [
+        "lens-1"
+      ],
+      "reply": {
+        "original_readings": [],
+        "comparisons": [
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.048,
+                "y": 0.22
+              },
+              {
+                "x": 0.953,
+                "y": 0.22
+              },
+              {
+                "x": 0.953,
+                "y": 0.814
+              },
+              {
+                "x": 0.048,
+                "y": 0.814
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.04,
+                "y": 0.033
+              },
+              {
+                "x": 0.96,
+                "y": 0.033
+              },
+              {
+                "x": 0.96,
+                "y": 0.967
+              },
+              {
+                "x": 0.04,
+                "y": 0.967
+              }
+            ],
+            "reference_id": "lens-1",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "Stephen Curry",
+              "number": "77",
+              "year": "",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Curry dribbling in Warriors uniform",
+                "reference": "Curry dribbling in Warriors uniform",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Vertical ROOKIE design, star 77, DEF/OFF panels",
+                "reference": "Vertical ROOKIE design, star 77, DEF/OFF panels",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "Warriors logo and NBA mark at bottom",
+                "reference": "Warriors logo and NBA mark at bottom",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Stephen Curry",
+              "family": "Adrenalyn XL Trading Card Game",
+              "number": "77",
+              "year": "",
+              "brand": "Panini",
+              "subset": "Rookie Card",
+              "proof": {
+                "subject": "Stephen Curry",
+                "family": "Panini Adrenalyn XL",
+                "year": "2009-10",
+                "subset": "Rookie Card"
+              },
+              "display_names": {
+                "it": "Stephen Curry",
+                "en": "Stephen Curry"
+              }
+            }
+          }
+        ]
+      },
+      "accepted": []
+    }
+  ],
+  "crops": [
+    {
+      "id": "original-1-upper",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.044444444444444446,
+        "y": 0.21495726495726497,
+        "width": 0.9009259259259259,
+        "height": 0.2282051282051282
+      }
+    },
+    {
+      "id": "original-1-lower",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.044444444444444446,
+        "y": 0.6636752136752136,
+        "width": 0.9009259259259259,
+        "height": 0.24145299145299146
+      }
+    },
+    {
+      "id": "original-2-upper",
+      "image_index": 2,
+      "region": {
+        "image_index": 2,
+        "x": 0.03425925925925926,
+        "y": 0.1547008547008547,
+        "width": 0.9111111111111111,
+        "height": 0.23461538461538461
+      }
+    },
+    {
+      "id": "original-2-lower",
+      "image_index": 2,
+      "region": {
+        "image_index": 2,
+        "x": 0.03425925925925926,
+        "y": 0.6170940170940171,
+        "width": 0.9111111111111111,
+        "height": 0.2482905982905983
+      }
+    }
+  ],
+  "expected_216": {
+    "title": "#77 · Stephen Curry",
+    "resolved": false
+  },
+  "budget": {
+    "maxUsd": 0.03,
+    "spentOrReservedUsd": 0.022132279999999997,
+    "entries": [
+      {
+        "kind": "vision",
+        "reservedUsd": 0.01051475,
+        "actualUsd": 0.00188676,
+        "status": "usage_returned"
+      },
+      {
+        "kind": "lens",
+        "reservedUsd": 0.004,
+        "actualUsd": 0.004,
+        "status": "usage_returned"
+      },
+      {
+        "kind": "text",
+        "reservedUsd": 0.0236435,
+        "actualUsd": 0.01269572,
+        "status": "usage_returned"
+      },
+      {
+        "kind": "vision",
+        "reservedUsd": 0.0093905,
+        "actualUsd": 0.00299285,
+        "status": "usage_returned"
+      },
+      {
+        "kind": "recovery",
+        "reservedUsd": 0.00306325,
+        "actualUsd": 0.0005569500000000001,
+        "status": "usage_returned"
+      }
+    ],
+    "visionCalls": 2,
+    "maxVisionCalls": 4,
+    "estimated": true,
+    "includesIdentificationAndMarket": true
+  }
+}

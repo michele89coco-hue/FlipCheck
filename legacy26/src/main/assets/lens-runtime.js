@@ -156,6 +156,7 @@ Abbina esplicitamente le viste: seleziona original_image_index corrispondente al
     const page=await directCall165('page',{url:ref.url,terms:[E193.keyValues(l).subject,...E193.keyValues(l).numbers]},ctx,6500);guard164(ctx);
     if(page.status===200&&C193.usablePage200({...page,url:page.url||ref.url})){
      ref.page_text=C193.pageText(page).slice(0,2400);ref.page_url=page.url||ref.url;
+     Object.assign(refs.find(r=>r.id===ref.id),{page_text:ref.page_text,page_url:ref.page_url});
      report.pages.push({...page,url:ref.page_url,lens_candidate_id:ref.id});
     }
    }catch(error){guard164(ctx);ref.page_state='unavailable';}
@@ -173,6 +174,11 @@ Abbina esplicitamente le viste: seleziona original_image_index corrispondente al
    state.evaluations=L205.select(state,l);const checked=L205.visualEntries206(reply,compared,l);
    report.support.push(...(checked.support||[]));report.entries.push(...checked.accepted);report.rejected.push(...checked.rejected);report.reply=reply;
    report.batches.push({ids:compared.map(r=>r.id),reply,accepted:checked.accepted.map(e=>e.visual_reference_id)});
+   if(reread.accepted.length&&report.batches.length>1){
+    const resolved=L205.resolveComparisons217(l,report.batches,refs);
+    report.entries=resolved.accepted;report.rejected=resolved.rejected;report.support=resolved.support;
+    l.record('comparison_revalidated',{reason:'original_reading_corrected',accepted:resolved.accepted.map(e=>e.visual_reference_id),extra_api_calls:0});
+   }
    if(!reply.comparisons?.length){report.stopReason='empty_comparison';break;}
    diagnosticPhases.push({stage:'flipcheck_lens_image_comparison',result:{...checked,comparisons:reply.comparisons,comparedIds:compared.map(r=>r.id)},webCalls:0,usage:response.usage||null});
   }catch(error){guard164(ctx);report.reason=error.message==='scan_timeout'?'comparison_timeout':responseReason166(error);if(['max_output_tokens','comparison_timeout'].includes(report.reason)&&!compactRetry){compactRetry=true;report.recovery=report.reason==='comparison_timeout'?'retry_compact_after_timeout':'retry_single_candidate';continue;}report.stopReason='comparison_unavailable';break;}
@@ -180,7 +186,20 @@ Abbina esplicitamente le viste: seleziona original_image_index corrispondente al
   if(!report.entries.length&&report.batches.length>=1&&compared.every(r=>r.ocrRank?.reasons?.includes('identifier_differs'))){report.stopReason='incompatible_identifiers_targeted_lookup';break;}
   if(report.entries.length){const result=E193.reduce(l,report.entries);if(result.market_ready){report.stopReason='verified_identity';break;}if(result.core_identity?.status==='confirmed'){report.stopReason='verified_core_variant_pending';break;}}
  }
- report.state=report.entries.length?'compared':'no_verified_match';report.stopReason=report.stopReason||'candidates_exhausted';report.remainingIds=[...pending,...selected.slice(cursor215).map(r=>r.id)];report.deferredDownloadCount=selected.length-cursor215;
+ // Strong matching fronts can expose a bad initial number. Re-read the existing
+ // original region once, then re-evaluate saved comparisons without another Lens call.
+ if(l.domain==='sports'&&!report.entries.length&&report.rejected.some(r=>r.reasons.includes('different_number'))&&ctx.budget.visionCalls<4){
+  const atom=l.pick('collector_number');
+  const supported=report.batches.some(b=>(b.reply.comparisons||[]).some(c=>c.match===true&&c.ambiguous===false&&!c.conflicts?.length&&c.identity?.number&&c.features?.filter(f=>f.agrees&&f.certainty==='clear').length>=2));
+  if(atom&&supported){
+   const req={key:'resolver-number-217:'+atom.image_index,field:'collector_number',reason:'catalogue_number_conflict',region:atom.region,image_index:atom.image_index,rotation:0,readings:[]};
+   await detailRead193(l,ctx,[req],[]);
+   const resolved=L205.resolveComparisons217(l,report.batches,refs);
+   report.entries=resolved.accepted;report.rejected=resolved.rejected;report.support=resolved.support;
+   l.record('comparison_revalidated',{reason:'targeted_original_number',accepted:resolved.accepted.map(e=>e.visual_reference_id),extra_lens_calls:0});
+  }
+ }
+ report.state=report.entries.length?'compared':'no_verified_match';report.stopReason=report.entries.length&&(!report.stopReason||report.stopReason==='budget_or_call_limit')?'verified_evidence':report.stopReason||'candidates_exhausted';report.remainingIds=[...pending,...selected.slice(cursor215).map(r=>r.id)];report.deferredDownloadCount=selected.length-cursor215;
  report.references=refs.map(({image_data,...r})=>r);ctx.lensFinalReserve208=0;
  report.finalVerificationBudget={availableUsd:Math.max(0,ctx.budget.maxUsd-ctx.budget.spent()),protectedUsd:ctx.lensFinalReserve208||0,priority:'before_optional_rereads',maxUsd:ctx.budget.maxUsd};
  if(!report.entries.length)state.fallbacks.push({stage:'catalogue_then_targeted_web',reason:report.state});
