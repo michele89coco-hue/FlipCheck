@@ -357,11 +357,11 @@ test('212 generic product uses two originals and attributed rear comparison for 
 });
 test('212 serial crops run locally before comparison without declaring noisy OCR confirmed',async()=>{const f=require('./fixtures/lens-212-boniface.json');await reset('politoed',{lens:true,photoCount:2,packet:f.vision,lensCandidates:[],noOcr:true,mutate(d){d.pages=[];}});const out=await scan();const event=out.visualAssistance.engine.events.find(e=>e.stage==='serial_border_ocr');assert.ok(event);assert.equal(event.paid_requests,0);assert.equal(event.reports.length,8);assert.equal(out.identification.physical_serial,null);});
 
-test('213 recorded Doncic checks both attributed fronts and keeps disputed pattern open',async()=>{
+test('216 recorded Doncic checks one attributed front at a time and keeps disputed pattern open',async()=>{
  const f=structuredClone(require('./fixtures/lens-213-doncic.json'));
  await reset('politoed',{lens:true,packet:f.vision,lensCandidates:f.references.slice(0,3),lensComparisons:f.batches[0].reply.comparisons,lensOriginalReadings:f.batches[0].reply.original_readings,comparisons:f.variant_comparisons[0].comparisons,noOcr:true,mutate(d){d.pages=[];}});
  const out=await scan();assert.equal(out.identification.core_identity.status,'confirmed');assert.equal(out.identification.market_ready,false);assert.match(out.identification.next_photo_request,/pattern/);assert.equal(out.identificationPipeline.image.source,'sports_front');assert.equal(out.identificationPipeline.image.cropped,true);
- const body=api.find(b=>b.text?.format?.name==='flipcheck_variant_comparison');assert.ok(body);assert.equal(body.input[0].content.filter(c=>c.type==='input_image').length,3);assert.equal(stages().filter(s=>s==='flipcheck_variant_comparison').length,1);
+ const body=api.find(b=>b.text?.format?.name==='flipcheck_variant_comparison');assert.ok(body);assert.equal(body.input[0].content.filter(c=>c.type==='input_image').length,2);assert.equal(stages().filter(s=>s==='flipcheck_variant_comparison').length,1);
 });
 test('213 matching pattern on two references of same variant closes with one targeted check',async()=>{
  const f=structuredClone(require('./fixtures/lens-213-doncic.json')),comparisons=['variant0','variant1'].map(reference_id=>({reference_id,match:true,conflicts:[],features:[{field:'border_color',original:'green',reference:'green',agrees:true,certainty:'clear'},{field:'pattern',original:'matching diagonal pattern',reference:'matching diagonal pattern',agrees:true,certainty:'clear'}]}));

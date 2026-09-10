@@ -272,7 +272,7 @@ async function waitForService207(request,{now=()=>Date.now(),wait=ms=>new Promis
  }
  return {status:0,state:'service_startup_timeout',lastState:last?.state||null};
 }
-function metadata215(refs,l){return rankOcr209(refs,l).map(r=>({...r,metadataStrong:r.ocrRank.nameMatch&&r.ocrRank.reasons.includes('identifier_agrees')&&(!E.keyValues(l).year||!r.ocrRank.facts.years.length||r.ocrRank.facts.years.some(y=>E.sportsSeason215(E.keyValues(l).year,y)))}));}
+function metadata215(refs,l){return rankOcr209(refs,l).map(r=>({...r,metadataStrong:r.ocrRank.nameMatch&&(r.ocrRank.reasons.includes('identifier_agrees')||r.ocrRank.productMatch)&&(!E.keyValues(l).year||!r.ocrRank.facts.years.length||r.ocrRank.facts.years.some(y=>E.sportsSeason215(E.keyValues(l).year,y)))}));}
 const api={metadata215,family214,filterOcr214,frontPlan213,referenceSupport213,appearance212,yearReading212,candidateFacts209,rankOcr209,reconcileOriginal208,retrievalPool208,partialTitle208,waitForService207,visualEntries206,present206,normalize,attributes,evaluate,select,ranked,fallbackReason,url};
 if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckLens=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

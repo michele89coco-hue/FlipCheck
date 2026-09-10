@@ -423,7 +423,7 @@ function identityPresentation200(l,result,entry){
  if(l.domain==='sports'&&entry){const product=l.pick('product')?.value,subset=entry.subset_known===true&&subsetKey(entry.subset)!=='base'?str(entry.subset).replace(/ Checklist$/i,''):null;const family=product&&norm(product).includes(norm(entry.family))?str(product).replace(/^(?:19|20)\d{2}(?:[-/]\d{2,4})?\s+/,''):entry.family;c.product=family;c.subset=subset||null;base=[result.source_confirmed_year,family,subset&&!norm(family).includes(norm(subset))?subset:'',c.number?'#'+number(c.number):'',c.subject].filter(Boolean).join(' · ');}
  if(['pokemon','onepiece','tcg'].includes(l.domain)&&entry?.subset&&subsetKey(entry.subset)!=='base'){c.subset=entry.subset;c.subset_origin='catalogue';if(!norm(base).includes(norm(entry.subset)))base=[base,entry.subset].filter(Boolean).join(' · ');result.core_identity.model=base;if(result.normalized_query&&!norm(result.normalized_query).includes(norm(entry.subset)))result.normalized_query+=' '+entry.subset;}
  const parts=[base,result.variant];
- if(l.domain==='sports'){if(c.is_rookie===true)parts.push('RC');if(result.physical_serial?.value)parts.push('/'+result.physical_serial.print_run);}
+ if(l.domain==='sports'){if(c.is_rookie===true)parts.push('RC');if(result.physical_serial?.value){const run='/'+result.physical_serial.print_run;parts.push(run);if(result.normalized_query&&!result.normalized_query.split(/\s+/).includes(run))result.normalized_query+=' '+run;}}
  if(l.domain==='pokemon'){
   if(c.rarity)parts.push(c.rarity);
   const symbol=l.pick('rarity_symbol');c.has_rarity_symbol=symbol?.value==='present'?true:symbol?.value==='absent'?false:null;
