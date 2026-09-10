@@ -484,3 +484,20 @@ for(const name of ['shaq','hill'])test('224 '+name+' recorded identifier path cl
  const out=await scan(),r=out.identification;assert.equal(r.market_ready,true,JSON.stringify(r));assert.equal(stages().filter(s=>s==='flipcheck_catalogue_search').length,0);assert.equal(stages().filter(s=>s==='flipcheck_evidence_detail').length,0);
  if(name==='hill'){assert.equal(r.physical_card_number,'BCA-AHJ');assert.equal((r.title.match(/Bowman Chrome/g)||[]).length,1);}else{assert.equal(r.physical_card_number,null);assert.equal(r.source_confirmed_catalog_number,'7');assert.match(r.title,/1999-00/);}
 });
+// Build-224 responses with synthetic carriers: exercises production control flow, not fresh Vision accuracy.
+test('225 actual Lens timeout continues into the available rear detail and reports no undefined-state crash',async()=>{
+ const f=require('./fixtures/lens-225-shaq.json');
+ await reset('politoed',{lens:true,packet:f.vision,photoCount:2,noOcr:true,lensReply:{state:'timeout',billingUnknown:true,candidates:[]},details:[{field:'collector_number',text:'',certainty:'uncertain',evidence_found:false,image_index:2}],mutate(d){d.photoOcr=[];d.pages=[];}});
+ const out=await scan(),ev=out.visualAssistance.engine.events;
+ assert.ok(stages().includes('flipcheck_evidence_detail'));assert.ok(!ev.some(e=>e.stage==='pipeline_error'&&/core_identity/.test(e.message)));assert.equal(out.identification.market_ready,false);
+});
+test('225 actual Hill closes core and photographed printing without recovering an unread serial',async()=>{
+ const f=structuredClone(require('./fixtures/lens-225-hill.json')),refs=f.references.filter(r=>f.batches.some(b=>b.ids.includes(r.id)));
+ await reset('politoed',{lens:true,packet:f.vision,photoCount:2,noOcr:true,lensCandidates:refs,lensResponse(body){return {original_readings:[],comparisons:comparedRefs209(body).map(row=>{const ref=refs.find(r=>r.url===row.url),c=f.batches.flatMap(b=>b.reply.comparisons).find(c=>c.reference_id===ref?.id);return {...structuredClone(c),reference_id:row.reference_id};})};},mutate(d){d.photoOcr=[];d.pages=refs.filter(r=>r.page_text).map(r=>({url:r.page_url||r.url,title:r.title,text:r.page_text}));}});
+ const out=await scan();assert.equal(out.identification.market_ready,true,JSON.stringify(out.identification));assert.match(out.identification.title,/Superfractor/);assert.equal(out.identification.physical_serial,null);assert.equal(stages().filter(s=>s==='flipcheck_catalogue_search').length,0);
+});
+test('225 updated physical readings recheck rejected cached comparisons without calling Vision again',async()=>{
+ await reset('politoed');const f=structuredClone(require('./fixtures/lens-225-hill.json'));
+ const result=await page.evaluate(f=>{const v=f.vision;v.observations=v.observations.filter(o=>o.field!=='collector_number');v.photo_clues=[];const l=E193.ingestVision(new E193.Ledger(v),v),entries=[],ctx={lens:{visualComparison:{references:f.references,batches:f.batches}},lensReferenceImages213:new Map(f.references.map(r=>[r.id,'downloaded']))};revalidateCollected225(l,entries,ctx);const before=entries.length;const request=E193.recoveryRequests(l).find(r=>r.field==='collector_number');E193.applyDetails(l,[{field:'collector_number',text:'BCA-AHJ',certainty:'clear',evidence_found:true,image_index:2}],[request]);revalidateCollected225(l,entries,ctx);return {before,ready:E193.reduce(l,entries).market_ready,events:l.events};},f);
+ assert.equal(result.before,0);assert.equal(result.ready,true);assert.equal(api.length,0);
+});

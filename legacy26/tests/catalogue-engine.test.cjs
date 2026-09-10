@@ -45,7 +45,7 @@ test('verified stamp absence resolves Unlimited without claiming a visible stamp
 });
 test('the actual detail handler commits identity and evidence before its promise resolves',async()=>{
  const fs=require('node:fs'),vm=require('node:vm'),path=require('node:path'),source=fs.readFileSync(path.join(__dirname,'../src/main/assets/catalogue-runtime.js'),'utf8');
- const production=source.slice(source.indexOf('function commitCatalogue193('),source.indexOf('async function localShadow193('));
+ const production=source.slice(source.indexOf('function revalidateCollected225('),source.indexOf('async function localShadow193('));
  for(const cancelled of [false,true]){
   const {l,entries}=stampCase(),ctx={budget:{spent:()=>0,maxUsd:1}},before=E.reduce(l,entries),requests=E.recoveryRequests(l,before);let release;
   const response=new Promise(r=>release=r),sandbox={E193:E,Date,JSON,Math,Object,string193:{type:'string'},enum193:values=>({type:'string',enum:values}),object193:properties=>({type:'object',properties}),schemaFormat:()=>({}),estimate164:()=>0,addUsage(){},guard164(c){if(c.cancelled)throw new Error('scan_cancelled');},visualPhoto164:async()=>({data:'offline-carrier',meta:{imageIndex:1}}),originalOpenai26:async()=>response,parseResponseJSON:x=>x,diagnosticPhases:[]};

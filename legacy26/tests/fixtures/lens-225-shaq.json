@@ -1,0 +1,443 @@
+{
+  "provenance": "Build 224 actual model responses; account/session data omitted; certificate redacted. Replay does not test fresh image recognition.",
+  "vision": {
+    "domain": "sports",
+    "kind": "card",
+    "category": "basketball trading card",
+    "language": "en",
+    "object_unit": "single",
+    "image_views": [
+      {
+        "image_index": 1,
+        "view": "front",
+        "certainty": "clear"
+      },
+      {
+        "image_index": 2,
+        "view": "back",
+        "certainty": "clear"
+      }
+    ],
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.08,
+        "y": 0.32,
+        "width": 0.77,
+        "height": 0.52,
+        "certain": true
+      },
+      {
+        "image_index": 2,
+        "x": 0.16,
+        "y": 0.39,
+        "width": 0.68,
+        "height": 0.25,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "Shaquille O'Neal",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.15,
+          "y": 0.76,
+          "width": 0.65,
+          "height": 0.07
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "brand",
+        "text": "Fleer",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.18,
+          "y": 0.6,
+          "width": 0.08,
+          "height": 0.04
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "product",
+        "text": "Showcase",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.62,
+          "y": 0.62,
+          "width": 0.13,
+          "height": 0.05
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "team",
+        "text": "Los Angeles Lakers",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.36,
+          "y": 0.76,
+          "width": 0.3,
+          "height": 0.06
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "season",
+        "text": "1999-00",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.63,
+          "y": 0.62,
+          "width": 0.08,
+          "height": 0.03
+        },
+        "zone": "front",
+        "alternatives": [
+          "99-00"
+        ]
+      },
+      {
+        "field": "copyright",
+        "text": "© 2000 NBA Properties, Inc.; © 2000 Fleer/SkyBox International LP; Printed in U.S.A.",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.27,
+          "y": 0.6,
+          "width": 0.4,
+          "height": 0.04
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "#34",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.41,
+          "y": 0.45,
+          "width": 0.1,
+          "height": 0.1
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "Born: 3/6/72, Newark, NJ; Ht: 7'1\"; Wt: 315; Acquired: Free Agent, July 18, 1996; College: Louisiana State Tigers",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.22,
+          "y": 0.44,
+          "width": 0.37,
+          "height": 0.08
+        },
+        "zone": "back",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "YEAR TEAM GP FG% FGM FGA FG3% FTM FTA FT% RPG APG PPG; NBA TOTALS; POSTSEASON TOTALS",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.22,
+          "y": 0.49,
+          "width": 0.44,
+          "height": 0.11
+        },
+        "zone": "statistics",
+        "alternatives": []
+      }
+    ],
+    "features": [
+      {
+        "field": "finish",
+        "value": "reflective",
+        "description": "Superficie foil/riflettente multicolore",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.08,
+          "y": 0.32,
+          "width": 0.77,
+          "height": 0.52
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "layout",
+        "value": "ritratto d'azione verticale con logo e firma grafica",
+        "description": "Giocatore in azione, numero di maglia e grande scritta decorativa",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.08,
+          "y": 0.32,
+          "width": 0.77,
+          "height": 0.52
+        },
+        "zone": "artwork"
+      },
+      {
+        "field": "stamp",
+        "value": "unclear",
+        "description": "Nessun timbro promozionale chiaramente leggibile",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.08,
+          "y": 0.32,
+          "width": 0.77,
+          "height": 0.52
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "autograph",
+        "value": "absent",
+        "description": "Nessun autografo fisico osservabile; la firma è grafica stampata",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.18,
+          "y": 0.68,
+          "width": 0.55,
+          "height": 0.12
+        },
+        "zone": "surface"
+      }
+    ],
+    "hypotheses": [
+      {
+        "field": "family",
+        "value": "Fleer basketball"
+      },
+      {
+        "field": "model",
+        "value": "Fleer Showcase 1999-00"
+      }
+    ],
+    "slab_reading": null,
+    "engine_version": 193,
+    "brand": "Fleer",
+    "family": "Fleer basketball",
+    "title": "Shaquille O'Neal",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": {
+      "image_index": 1,
+      "x": 0.08,
+      "y": 0.32,
+      "width": 0.77,
+      "height": 0.52,
+      "certain": true
+    },
+    "photo_clues": [
+      {
+        "text": "Shaquille O'Neal",
+        "role": "subject",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.15,
+          "y": 0.76,
+          "width": 0.65,
+          "height": 0.07,
+          "certain": true
+        }
+      },
+      {
+        "text": "Fleer",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.18,
+          "y": 0.6,
+          "width": 0.08,
+          "height": 0.04,
+          "certain": true
+        }
+      },
+      {
+        "text": "Showcase",
+        "role": "model",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.62,
+          "y": 0.62,
+          "width": 0.13,
+          "height": 0.05,
+          "certain": true
+        }
+      },
+      {
+        "text": "Los Angeles Lakers",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.36,
+          "y": 0.76,
+          "width": 0.3,
+          "height": 0.06,
+          "certain": true
+        }
+      },
+      {
+        "text": "1999-00",
+        "role": "season",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.63,
+          "y": 0.62,
+          "width": 0.08,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "© 2000 NBA Properties, Inc.; © 2000 Fleer/SkyBox International LP; Printed in U.S.A.",
+        "role": "copyright",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.27,
+          "y": 0.6,
+          "width": 0.4,
+          "height": 0.04,
+          "certain": true
+        }
+      },
+      {
+        "text": "#34",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.41,
+          "y": 0.45,
+          "width": 0.1,
+          "height": 0.1,
+          "certain": true
+        }
+      },
+      {
+        "text": "Born: 3/6/72, Newark, NJ; Ht: 7'1\"; Wt: 315; Acquired: Free Agent, July 18, 1996; College: Louisiana State Tigers",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.22,
+          "y": 0.44,
+          "width": 0.37,
+          "height": 0.08,
+          "certain": true
+        }
+      },
+      {
+        "text": "YEAR TEAM GP FG% FGM FGA FG3% FTM FTA FT% RPG APG PPG; NBA TOTALS; POSTSEASON TOTALS",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.22,
+          "y": 0.49,
+          "width": 0.44,
+          "height": 0.11,
+          "certain": true
+        }
+      }
+    ],
+    "physical_observations": [
+      {
+        "feature": "finish",
+        "text": "Superficie foil/riflettente multicolore",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Giocatore in azione, numero di maglia e grande scritta decorativa",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Nessun timbro promozionale chiaramente leggibile",
+        "certainty": "uncertain",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Nessun autografo fisico osservabile; la firma è grafica stampata",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      }
+    ]
+  },
+  "batches": [],
+  "references": [],
+  "provider_state": "timeout",
+  "pipeline_errors": [
+    {
+      "stage": "pipeline_error",
+      "state": "service_unavailable",
+      "message": "Cannot read properties of undefined (reading 'core_identity')"
+    }
+  ]
+}

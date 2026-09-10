@@ -117,10 +117,25 @@ async function searchCatalogue193(l,ctx,mode,pages,identityEntry=null){
 async function rotateDetail193(picture,degrees){
  if(![90,180,270].includes(degrees))return picture;const im=await decodeVisual164(await (await fetch(picture.data)).blob()),w=im.width,h=im.height,c=document.createElement('canvas');c.width=degrees===180?w:h;c.height=degrees===180?h:w;const g=c.getContext('2d');g.translate(c.width/2,c.height/2);g.rotate(degrees*Math.PI/180);g.drawImage(im,-w/2,-h/2);im.close?.();return {...picture,data:c.toDataURL('image/png'),meta:{...picture.meta,rotation:degrees,sentWidth:c.width,sentHeight:c.height}};
 }
+// Re-evaluate downloaded comparisons after physical evidence changes; no new API call.
+function revalidateCollected225(l,entries,ctx){
+ const report=ctx.lens?.visualComparison;if(!report?.batches?.length)return;
+ const signature=JSON.stringify(l.atoms.filter(a=>!a.reference_source&&!/^catalogue_|visual_consensus/.test(a.field)).map(a=>[a.id,a.field,a.value]));
+ if(ctx.comparisonEvidence225===signature)return;
+ ctx.comparisonEvidence225=signature;
+ const refs=(report.references||[]).map(r=>({...r,image_data:ctx.lensReferenceImages213?.get(r.id)}));
+ const checked=L205.resolveComparisons217(l,report.batches,refs),ids=new Set(refs.map(r=>r.id));
+ const preserved=entries.filter(e=>!ids.has(e.visual_reference_id));
+ entries.splice(0,entries.length,...preserved,...checked.accepted);
+ Object.assign(report,{entries:checked.accepted,rejected:checked.rejected,support:checked.support});
+ l.record('comparison_revalidated',{reason:'physical_evidence_updated',extra_api_calls:0,accepted:checked.accepted.length,rejected:checked.rejected.length});
+}
 function commitCatalogue193(l,entries,ctx,options={}){
  if(options.userUpdate){if(ctx!==scan164||ctx.budget.cancelled)throw new Error('scan_cancelled');}else guard164(ctx);
+ revalidateCollected225(l,entries,ctx);
  ctx.catalogueEntries=entries;
  const result=E193.assertConsistent(l,E193.reduce(l,entries,options));
+ if(options.error&&['service_unavailable','cancelled','budget_exhausted'].includes(options.error)&&!ctx.detailReread?.attempted)result.next_photo_request=null;
  if(!result.market_ready&&ctx.budgetStop220){result.budget_stop={...ctx.budgetStop220};result.budget_message='Il budget residuo non copre la prossima chiamata di verifica. I dati già letti sono conservati.';}
  if(typeof L205!=='undefined'&&typeof lensConfig205==='function')L205.present206(result,entries,l,lensConfig205().titleLanguage);
  if(!result.market_ready&&ctx.lens?.state==='front_required')result.next_photo_request='Indica o carica una foto nitida del fronte: non riesco a distinguere con certezza i lati.';
@@ -298,7 +313,7 @@ async function resolveCatalogue193(base,ctx){
  if(typeof startLens205==='function')await startLens205(ctx);
  reading={...reading,uploaded_image_count:validImageCount()};
  const l=new E193.Ledger(reading);if(['sports','pokemon','onepiece','tcg'].includes(l.domain))ctx.budget.enableCompletionTolerance();ctx.catalogueEngine=l;ctx.route='catalogue_engine';E193.ingestVision(l,reading);ctx.initialCardProfile216=E193.photoProfile216(l);l.record('initial_card_profile',ctx.initialCardProfile216);l.userDetails=ctx.userDetails??String($('details')?.value||'').slice(0,2000);
- let entries=[],pages=[],result;
+ let entries=[],pages=[],result=E193.reduce(l,[]);
  try{
   await readPhotoOcr174(lastVisionReading||base,ctx);E193.ingestOcr(l,ctx.photoOcr);l.record('readings_collected',{count:l.atoms.length});
   await serialOcr212(l,ctx);
@@ -316,7 +331,7 @@ async function resolveCatalogue193(base,ctx){
   }
   if(l.domain==='sports'&&!l.pick('collector_number')&&result?.core_identity?.status!=='confirmed'&&(l.base.image_views||[]).some(v=>v.view==='back'&&v.certainty==='clear')){
    const requests=E193.recoveryRequests(l,result).filter(r=>r.field==='collector_number');
-   if(requests.length){await detailRead193(l,ctx,requests,entries);const report=ctx.lens?.visualComparison;if(report?.batches?.length){const refs=(report.references||[]).map(r=>({...r,image_data:ctx.lensReferenceImages213?.get(r.id)}));const checked=L205.resolveComparisons217(l,report.batches,refs);report.entries=checked.accepted;report.rejected=checked.rejected;entries=checked.accepted;l.record('comparison_revalidated',{reason:'rear_identifier_detail',extra_api_calls:0});}result=commitCatalogue193(l,entries,ctx);if(result.market_ready)return result;}
+   if(requests.length){await detailRead193(l,ctx,requests,entries);result=commitCatalogue193(l,entries,ctx);if(result.market_ready)return result;}
   }
   const rereadFields=new Set(ctx.lens?.visualComparison?.originalReread?.accepted?.map(r=>r.field)||[]);
   const lensReread=rereadFields.has('subject')&&rereadFields.has('collector_number');
