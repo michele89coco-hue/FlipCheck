@@ -31,6 +31,11 @@ function subgradeFacts(reading,label){
 function labelFacts(base){
  if(!isSlab(base))return null;
  const p=base.slab_reading,label=clean(p.label_text),out={...p,grader:grader(p.grader),label_text:label};
+ out.reported_grader=out.grader;
+ const legacySupported=['PSA','BGS','CGC','TAG'].includes(out.grader)&&p.grader_certainty===undefined;
+ const mark=clean(p.grader_mark||'');
+ out.grader_verified=p.grader_certainty!=='uncertain'&&(legacySupported||copied(label,out.grader)||!!mark&&grader(mark)===out.grader);
+ if(!out.grader_verified)out.grader='UNKNOWN';
  out.card_title=copied(label,p.card_title)?clean(p.card_title):'';
  for(const field of ['subject','family','model','year','variant']){const value=field==='model'?p.model||p.card_title:p[field];out[field]=copied(label,value)?clean(value):'';}
  if(!out.family){const family=clean(p.family).replace(/^(?:Pok[eé]mon|Panini|Topps)\s+/i,'');if(family&&copied(label,family))out.family=family;}
@@ -51,11 +56,14 @@ function labelFacts(base){
  if(!out.grade&&(!clean(p.grade)||validGrade(p.grade))&&p.grade_certainty==='clear'){const rest=label.replace(/(?:CENTERING|CORNERS|EDGES|SURFACE)\s*[:=]?\s*\d+(?:\.\d+)?/gi,' ');const grade=rest.match(/\b(?:GRADE|VOTO)\s*[:=]?\s*(10|[1-9](?:\.5)?)\b/i)||rest.match(/\b(?:PRISTINE|GEM[ -]?MINT|MINT)\s*[:=]?\s*(10|[1-9](?:\.5)?)\b/i)||rest.match(/\b(10|[1-9](?:\.5)?)\s+(?:PRISTINE|GEM[ -]?MINT|MINT)\b/i);if(grade&&(!clean(p.grade)||grade[1]===clean(p.grade).match(/\d+(?:\.\d+)?/)[0]))out.grade=clean(p.grade)||grade[1];}
  out.certificate=p.certificate_certainty==='uncertain'?'':clean(p.certificate||p.cert_number).replace(/\s/g,''); // Preserve leading zeroes; do not guess O/0.
  out.language=clean(base.language)||clean(base.pokemon_printing?.language)||clean(p.language);if(/^[a-z]{2}(?:[-_][a-z]{2,4})?$/i.test(out.language))out.language=out.language.replace(/_/g,'-').toLowerCase();
+ out.label_language=({JPN:'ja',JAPANESE:'ja',CHINESE:'zh',ENGLISH:'en',ITALIAN:'it'})[(label.match(/\b(JPN|JAPANESE|CHINESE|ENGLISH|ITALIAN)\b/i)?.[0]||'').toUpperCase()]||'';
+ out.language_discrepancy=!!out.label_language&&!!out.language&&out.label_language!==out.language.split('-')[0];
  out.name_identity=Names.normalize(out.subject||out.model,{domain:base.domain||(/pok[eé]mon/i.test(base.category||out.family)?'pokemon':'other'),translations:p.normalized_subject});
  const codeReadings=list(base.observations).filter(o=>o.field==='set_code'),code=codeReadings.find(o=>o.certainty==='clear');
  out.set_code_readings=codeReadings.map(o=>({text:clean(o.text),certainty:o.certainty,origin:'original_photo'}));
  out.set_code=code?clean(code.text):'';
- if(!out.set_code&&!codeReadings.some(o=>o.certainty==='uncertain')){const tokens=label.split(/[\s,;]+/).map(t=>t.replace(/[.]+$/,''));out.set_code=tokens.find(t=>/^[A-Z]{1,4}\d{1,3}[a-z][A-Z]{0,2}$/.test(t.normalize('NFD').replace(/[\u0300-\u036f]/g,'')))||'';out.set_code=out.set_code.normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
+ if(!out.set_code){const tokens=label.split(/[\s,;]+/).map(t=>t.replace(/[.]+$/,''));out.set_code=tokens.find(t=>/^[A-Z]{1,4}\d{1,3}[a-z][A-Z]{0,2}$/.test(t.normalize('NFD').replace(/[\u0300-\u036f]/g,'')))||'';out.set_code=out.set_code.normalize('NFD').replace(/[\u0300-\u036f]/g,'');if(codeReadings.some(o=>o.certainty==='uncertain')&&!(p.title_certainty==='clear'&&copied(out.model,out.set_code)))out.set_code='';}
+ out.set_code_origin=code?'original_photo':out.set_code?'photo_slab_label':null;
  if(!out.family&&/\bpok[eé]mon\b/i.test(label))out.family=label.match(/\bpok[eé]mon\b/i)[0];
 
  const literalTitleComplete=!!out.card_title&&p.title_certainty==='clear'&&/\b(?:19|20)\d{2}\b/.test(out.card_title)&&out.card_title.split(/\s+/).length>=3;
@@ -126,8 +134,8 @@ function close(base,facts,record={state:'not_attempted'}){
  const titles=Object.fromEntries(['it','en'].map(lang=>[lang,[data.year,displayFamily,data.set_code,data.card_number?'#'+data.card_number:'',names[lang],objectCode,tag,data.variant,grading].filter(Boolean).join(' · ')]));
  const selected=base.title_language==='en'?'en':'it',title=titles[selected];
 
- const fieldOrigin=k=>verified&&record.official_fields.includes(k)?'official_certificate':'photo_slab_label';
- const fields=['year','family','subject','model','card_number','variant','language','grader','grade'].filter(k=>data[k]).map(k=>({field:k==='card_number'?'catalog_number':k,value:data[k],origin:fieldOrigin(k),quote:fieldOrigin(k)==='official_certificate'?record.raw_fields[k]||record.title:data.label_text,image_index:data.image_index,...(fieldOrigin(k)==='official_certificate'?{source:record.source}:{})}));
+ const fieldOrigin=k=>k==='language'&&base.language?'original_photo':k==='set_code'&&data.set_code_origin?data.set_code_origin:verified&&record.official_fields.includes(k)?'official_certificate':'photo_slab_label';
+ const fields=['year','family','subject','model','set_code','card_number','variant','language','grader','grade'].filter(k=>data[k]&&!(k==='grader'&&!data.grader_verified)).map(k=>({field:k==='card_number'?'catalog_number':k,value:data[k],origin:fieldOrigin(k),quote:fieldOrigin(k)==='original_photo'?(k==='language'?base.language:data.set_code):fieldOrigin(k)==='official_certificate'?record.raw_fields[k]||record.title:data.label_text,image_index:data.image_index,...(fieldOrigin(k)==='official_certificate'?{source:record.source}:{})}));
  const result={...base,title,title_language:selected,localized_titles:titles,name_identity:names,model:title,family:data.family,variant:data.variant||'',condition:grading,language:data.language||'',grader:data.grader,grade:data.grade,slab_reading:{...data,complete:undefined},
   card_identity:{manufacturer:base.brand||null,subject:names[selected],original_subject:data.subject||data.model,display_names:{it:names.it,en:names.en},canonical_subject_id:names.canonical_id,set_code:data.set_code||null,year:data.year,set:data.family,number:data.card_number||null,language:data.language||null,variant:data.variant||null},
   grading:{company:data.grader,grade:data.grade||null,subgrades:data.subgrades||[],certificate:data.certificate||null,certificate_format_valid:facts.certificate_format_valid,certificate_verified:verified,source:verified?record.source:null,origin:fieldOrigin('grade')},

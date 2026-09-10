@@ -1,0 +1,1321 @@
+{
+  "provenance": {
+    "build": 222,
+    "scope": "Recorded model object readings and public reference metadata only. Certificate replaced by a synthetic value. No original pixels, account or diagnostic envelope."
+  },
+  "vision": {
+    "domain": "generic",
+    "kind": "card",
+    "category": "collectible card",
+    "language": "it",
+    "object_unit": "single",
+    "image_views": [
+      {
+        "image_index": 1,
+        "view": "front",
+        "certainty": "clear"
+      },
+      {
+        "image_index": 2,
+        "view": "back",
+        "certainty": "clear"
+      }
+    ],
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.01,
+        "y": 0.21,
+        "width": 0.98,
+        "height": 0.64,
+        "certain": true
+      },
+      {
+        "image_index": 2,
+        "x": 0.01,
+        "y": 0.21,
+        "width": 0.98,
+        "height": 0.64,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "GOKU",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.36,
+          "y": 0.73,
+          "width": 0.18,
+          "height": 0.04
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "brand",
+        "text": "Dragon Ball Z",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.38,
+          "y": 0.68,
+          "width": 0.24,
+          "height": 0.05
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "product",
+        "text": "LAMINCARDS",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.37,
+          "y": 0.75,
+          "width": 0.21,
+          "height": 0.03
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "collector_number",
+        "text": "P7",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.42,
+          "y": 0.4,
+          "width": 0.12,
+          "height": 0.04
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "Supersayan",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.66,
+          "y": 0.74,
+          "width": 0.22,
+          "height": 0.03
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "attack",
+        "text": "Attacco 120",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.16,
+          "y": 0.77,
+          "width": 0.19,
+          "height": 0.03
+        },
+        "zone": "statistics",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "Difesa 120",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.4,
+          "y": 0.77,
+          "width": 0.18,
+          "height": 0.03
+        },
+        "zone": "statistics",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "Goku™ — Scarta il tuo Personaggio Attivo e metti una carta Alleato in Prima Linea",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.27,
+          "y": 0.71,
+          "width": 0.42,
+          "height": 0.09
+        },
+        "zone": "back",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "BENE",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.2,
+          "y": 0.77,
+          "width": 0.09,
+          "height": 0.03
+        },
+        "zone": "back",
+        "alternatives": []
+      },
+      {
+        "field": "copyright",
+        "text": "DRAGON BALL Z © 1989 BIRD STUDIO/SHUEISHA, TOEI ANIMATION",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.13,
+          "y": 0.82,
+          "width": 0.67,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "Licensed by Backstage 2007",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.35,
+          "y": 0.84,
+          "width": 0.31,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "brand",
+        "text": "edibas",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.72,
+          "y": 0.76,
+          "width": 0.14,
+          "height": 0.04
+        },
+        "zone": "footer",
+        "alternatives": []
+      }
+    ],
+    "features": [
+      {
+        "field": "border_color",
+        "value": "silver",
+        "description": "bordo con finitura argentata",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.01,
+          "y": 0.21,
+          "width": 0.98,
+          "height": 0.64
+        },
+        "zone": "border"
+      },
+      {
+        "field": "pattern",
+        "value": "mosaico/confetti multicolore",
+        "description": "frammenti irregolari rosa, azzurri, verdi e grigi",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.01,
+          "y": 0.21,
+          "width": 0.98,
+          "height": 0.64
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "finish",
+        "value": "reflective",
+        "description": "superficie lamincard riflettente",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.01,
+          "y": 0.21,
+          "width": 0.98,
+          "height": 0.64
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "layout",
+        "value": "ritratto, personaggio in azione, pannello statistiche inferiore",
+        "description": "Goku in volo con cornice arrotondata",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.05,
+          "y": 0.25,
+          "width": 0.9,
+          "height": 0.57
+        },
+        "zone": "artwork"
+      },
+      {
+        "field": "stamp",
+        "value": "present",
+        "description": "loghi Dragon Ball Z, LAMINCARDS ed edibas visibili sul retro",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.12,
+          "y": 0.75,
+          "width": 0.76,
+          "height": 0.1
+        },
+        "zone": "footer"
+      }
+    ],
+    "hypotheses": [
+      {
+        "field": "family",
+        "value": "Dragon Ball Z Lamincards"
+      },
+      {
+        "field": "model",
+        "value": "Goku P7"
+      }
+    ],
+    "slab_reading": null,
+    "engine_version": 193,
+    "brand": "Dragon Ball Z",
+    "family": "Dragon Ball Z Lamincards",
+    "title": "GOKU",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": {
+      "image_index": 1,
+      "x": 0.01,
+      "y": 0.21,
+      "width": 0.98,
+      "height": 0.64,
+      "certain": true
+    },
+    "photo_clues": [
+      {
+        "text": "GOKU",
+        "role": "subject",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.36,
+          "y": 0.73,
+          "width": 0.18,
+          "height": 0.04,
+          "certain": true
+        }
+      },
+      {
+        "text": "Dragon Ball Z",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.38,
+          "y": 0.68,
+          "width": 0.24,
+          "height": 0.05,
+          "certain": true
+        }
+      },
+      {
+        "text": "LAMINCARDS",
+        "role": "model",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.37,
+          "y": 0.75,
+          "width": 0.21,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "P7",
+        "role": "collector_number",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.42,
+          "y": 0.4,
+          "width": 0.12,
+          "height": 0.04,
+          "certain": true
+        }
+      },
+      {
+        "text": "Supersayan",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.66,
+          "y": 0.74,
+          "width": 0.22,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "Attacco 120",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.16,
+          "y": 0.77,
+          "width": 0.19,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "Difesa 120",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.4,
+          "y": 0.77,
+          "width": 0.18,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "Goku™ — Scarta il tuo Personaggio Attivo e metti una carta Alleato in Prima Linea",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.27,
+          "y": 0.71,
+          "width": 0.42,
+          "height": 0.09,
+          "certain": true
+        }
+      },
+      {
+        "text": "BENE",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.2,
+          "y": 0.77,
+          "width": 0.09,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "DRAGON BALL Z © 1989 BIRD STUDIO/SHUEISHA, TOEI ANIMATION",
+        "role": "copyright",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.13,
+          "y": 0.82,
+          "width": 0.67,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "Licensed by Backstage 2007",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.35,
+          "y": 0.84,
+          "width": 0.31,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "edibas",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.72,
+          "y": 0.76,
+          "width": 0.14,
+          "height": 0.04,
+          "certain": true
+        }
+      }
+    ],
+    "physical_observations": [
+      {
+        "feature": "color",
+        "text": "silver border",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "pattern",
+        "text": "frammenti irregolari rosa, azzurri, verdi e grigi",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "superficie lamincard riflettente",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Goku in volo con cornice arrotondata",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "loghi Dragon Ball Z, LAMINCARDS ed edibas visibili sul retro",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 2
+      }
+    ],
+    "uploaded_image_count": 2
+  },
+  "references": [
+    {
+      "id": "lens-1",
+      "position": 1,
+      "title": "Lamincards Dragon Ball Z Edibas Serie Platino GOKU N P7 ...",
+      "url": "https://www.ebay.it/itm/404462166724",
+      "image_url": "https://i.ebayimg.com/images/g/PN4AAOSwkhBgpnAL/s-l1200.jpg",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTigGj5hOrWMfRkIpkmTbqMdFqswcUDt_zna5EjaqToD2ziNHw9",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "GOKUTM\nAttacco 120 Difesa 120\nSupersayan",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-2",
+      "position": 2,
+      "title": "GCG] Lamincards DRAGONBALL Z - n. P7 - GOKU - \"argento\" | eBay",
+      "url": "https://www.ebay.it/itm/171280778456",
+      "image_url": "https://i.ebayimg.com/images/g/j9EAAOxyUgtTNAlH/s-l1200.jpg",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQ50VAWkS84dMH1n5ssgO3tgxECKBX3Ijr2uuawKCorbKZo7Xhx",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "GOKUTMSupersayan\nAttacco 120 Difesa 120",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-3",
+      "position": 3,
+      "title": "Lamincards Dragon Ball Z Edibas Serie Platino GOKU N 23 | eBay",
+      "url": "https://www.ebay.it/itm/404417283256",
+      "image_url": "https://i.ebayimg.com/images/g/DBIAAOSwJSpguPdK/s-l400.jpg",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcT8QlqTTEQ5BQm51-F94irmoyX1wODqiy5nvvEEpBNYDx-56-qA",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "GOKUT\nAttacco 110 Difesa 110\nSupersayan",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-5",
+      "position": 5,
+      "title": "Lamincards | Dragon Ball Z Serie Edibas Platino | GOKU - P7 ...",
+      "url": "https://www.ebay.it/itm/335425067775",
+      "image_url": "https://i.ebayimg.com/00/s/MTYwMFgxNjAw/z/7DUAAOSwEIlmXuYL/$_12.JPG?set_id=880000500F",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUAbxWeiPMCAzNhcKG_hCRvc5TruQOD7zT_kYW8DFP6CwEJfoy",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "GOKU TN Supersayan\nAttacco 120 Difesa 120",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-6",
+      "position": 6,
+      "title": "Lamincards | Dragon Ball Z Serie Edibas Platino | GOKU - P7 ...",
+      "url": "https://www.ebay.it/itm/256494683204",
+      "image_url": "https://i.ebayimg.com/images/g/P-0AAOSwRz9mLpt-/s-l400.jpg",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQLpuPv7eDATmbvem6WlOvkFH8W5BfhKBdK3yHZERPBf93V3Le-",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "GOKUW\nAttacco 120 Difesa 120\nSupersayan",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-8",
+      "position": 8,
+      "title": "Lamincards Dragon Ball Z Edibas Serie X Metal Goku 09 Gd39",
+      "url": "https://martinasfumetti.it/Dragon-Ball/161520-Lamincards-Dragon-Ball-Z-Edibas-Serie-X-Metal-Goku-09-Gd39.html",
+      "image_url": "https://martinasfumetti.it/143745-product_main_2x/Lamincards-Dragon-Ball-Z-Edibas-Serie-X-Metal-Goku-09-Gd39.jpg",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTN4zWrZX90AVcrO2qexloEPBhFRqeoNr6XsEd1fD_mJ9taMhDD",
+      "snippet": "",
+      "page_text": "Lamincards Dragon Ball Z Edibas Serie X Metal Goku 09 Gd39\nname: Lamincards Dragon Ball Z Edibas Serie X Metal Goku 09 Gd39\nsku: 161520\nmpn: 161520\n\n-5%\n\nLamincards Dragon Ball Z Edibas Serie X Metal Goku 09 Gd39\n\n3,50 €\n\n3,33 €\n\nTasse escluse\n\n\nUltimi articoli in magazzino\n\n\n\n\n\n\n\n\nAggiungi al carrello\n\nCondividi\n\nDettagli del prodotto\n\nPagamenti Sicuri\n\ntramite paypal o bonifico\n\nSpedizione Gratuita\n\nper ordini da almeno €85\n\nReso Garantito\n\nentro 14gg dal ricevimento\n\nCommenti (0)\n\nAncora nessuna recensione da parte degli utenti.\n\nNon è stato possibile inviare il tuo giudizio sulla recensione\n\nOK\n\nSegnala commento\n\nSei sicuro di voler segnalare questo commento?\n\nNo\n\nSì\n\nSegnalazione inviata\n\nLa tua segnalazione è stata inviata e sarà esaminata da un moderatore.\n\nOK\n\nNon è stato possibile inviare la tua segnalazione\n\nOK\n\nScrivi la tua recensione\n\nLamincards Dragon Ball Z Edibas Serie X Metal Goku 09 Gd39\n\nTitolo*\n\nIl tuo nome*\n\nRecensione*\n\nEnim quis fugiat consequat elit minim nisi eu occaecat occaecat deserunt aliquip nisi ex deserunt.\n\n* Campi richiesti\n\nAnnulla\n\nInvia\n\nRecensione inviata\n\nIl tuo commento è stato acquisito e sarà disponibile dopo l'approvazione da parte di un moderatore.\n\nOK\n\nNon è stato possibile inviare la tua recensione\n\nOK\n\n16 altri prodotti della stessa categoria:\n\n-5%\n\n\n\n\nAnteprima\n\nLamincards Dragon Ball Z Edibas Serie X Metal UB 58 Gd39\n\n2,38 €\n\n2,50 €\n\n\n\n\n\n\n\n\nAggiungi al carrello\n\n-5%\n\n\n\n\nAnteprima\n\nLamincards Dragon Ball Z Edibas Serie Platino Medamocha 115 Gd34\n\n1,90 €\n\n2,00 €\n\n\n\n\n\n\n\n\nAggiungi al carrello\n\n-5%\n\n\n\n\nAnteprima\n\nDragonball n. 6 di Akira Toriyama - con sovraccoperta ed. Star Comics * NUOVO! *\n\n3,80 €\n\n4,00 €\n\n\n\n\n\n\n\n\nAggiungi al carrello\n\n-5%\n\n\n\n\nAnteprima\n\nDragon Ball Evergreen Edition 37 NUOVO ed. Star Comics\n\n5,23 €\n\n5,50 €\n\n\n\n\n\n\n\n\nAggiungi al carrello\n\n-5%\n\n\n\n\nAnteprima\n\nLamincards Dragon Ball GT Edibas Serie Platino Goku R02 Gd38\n\n3,33 €\n\n3,50 €\n\n\n\n\n\n\n\n\nAggiungi al carrello\n\n-5%\n\n\n\n\nAnteprima\n\nLamincards Dragon Ball GT Edibas Serie Platino Suu Shenron P24 Gd52\n\n3,33 €\n\n3,50 €\n\n\n\n\n\n\n\n\nAggiungi al carrello\n\n-5%\n\n\n\n\nAnteprima\n\nLamincards Dragon Ball GT Edibas Serie Smeraldo Vegeta Jr. 166 Gd24\n\n1,90 €\n\n2,00 €\n\n\n\n\n\n\n\n\nAggiungi al carrello\n\n-5%\n\nNon disponibile\n\n\n\n\nAnteprima\n\nDragon Ball Evergreen Edition 19 NUOVO ed. Star Comics\n\n5,23 €\n\n5,50 €\n\nmostra dettag",
+      "page_url": "https://martinasfumetti.it/Dragon-Ball/161520-Lamincards-Dragon-Ball-Z-Edibas-Serie-X-Metal-Goku-09-Gd39.html",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "GOKUTM\nAttacco 120 Difesa 120\nSupersayan",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-9",
+      "position": 9,
+      "title": "Lamincards Dragon Ball Z Edibas Serie Platino Goku P03 Gd18",
+      "url": "https://martinasfumetti.it/Dragon-Ball/150994-Lamincards-Dragon-Ball-Z-Edibas-Serie-Platino-Goku-P03-Gd18.html",
+      "image_url": "https://martinasfumetti.it/135515-default_m/Lamincards-Dragon-Ball-Z-Edibas-Serie-Platino-Goku-P03-Gd18.jpg",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4H59A01ULSHMPcBJEg4IefwzIudm6pU41f2DOrqoyAClvi5Va",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "GORU\nAttacce 100 Difesa110",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-10",
+      "position": 10,
+      "title": "DRAGON BALL Z LAMINCARDS COLLEZIONE GOKU SUPER SAYAN N P7 ...",
+      "url": "https://www.ebay.it/itm/364866737510",
+      "image_url": "https://i.ebayimg.com/00/s/MTI5OVgxMjAw/z/DeoAAOSwFJlkv~Y-/$_57.PNG?set_id=880000500F",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRpC8Jgg1hTGvqiblHXALzPUuZLxb4CbYUs3c-8asWvktzFG080",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "GOKU TM Supersayan\nAttacco 120 Difesa 120",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-11",
+      "position": 11,
+      "title": "EDIBAS DRAGON BALL GT Card Goku Supersayan P7 LaminCards EUR ...",
+      "url": "https://picclick.it/Edibas-Dragon-Ball-GT-Card-Goku-Supersayan-P7-157283799624.html",
+      "image_url": "https://www.picclickimg.com/uvkAAOSw7qRjYOjX/Edibas-Dragon-Ball-Z-Card-Goku-Supersayan-P7.webp",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRB2DA9D8bymuZs_ckPT9Z7DZZ-IyPoV9-T9QigRXZFhheguB7",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "GOKUTM\nAttacco 120 Difesa 120\nSupersayan",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-12",
+      "position": 12,
+      "title": "Lamincards Dragon Ball Z Edibas Serie X Metal Goku G04 Gd04",
+      "url": "https://martinasfumetti.it/Dragon-Ball/161612-Lamincards-Dragon-Ball-Z-Edibas-Serie-X-Metal-Goku-G04-Gd04.html",
+      "image_url": "https://martinasfumetti.it/143837-product_main_2x/Lamincards-Dragon-Ball-Z-Edibas-Serie-X-Metal-Goku-G04-Gd04.jpg",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDwTbcZKQtyv44vmiqxJRKkvNbavn_iwIiHytRZFeJqjEPUSxb",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "TM\nGOKU\nAttacco 80 Difesa T30\nSupersayan",
+        "origin": "candidate_image_ocr"
+      }
+    }
+  ],
+  "batches": [
+    {
+      "ids": [
+        "lens-1",
+        "lens-2",
+        "lens-3"
+      ],
+      "reply": {
+        "original_readings": [
+          {
+            "field": "subject",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "GOKU™ Supersayan",
+            "crop_text": "GOKU™ Supersayan",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Goku",
+              "en": "Goku"
+            }
+          },
+          {
+            "field": "subject",
+            "image_index": 2,
+            "crop_id": "original-2-lower",
+            "full_text": "Goku™",
+            "crop_text": "Goku™",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Goku",
+              "en": "Goku"
+            }
+          },
+          {
+            "field": "product",
+            "image_index": 2,
+            "crop_id": "original-2-lower",
+            "full_text": "DRAGON BALL Z © 1989 BIRD STUDIO/SHUEISHA, TOEI ANIMATION",
+            "crop_text": "DRAGON BALL Z © 1989 BIRD STUDIO/SHUEISHA, TOEI ANIMATION",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Dragon Ball Z",
+              "en": "Dragon Ball Z"
+            }
+          },
+          {
+            "field": "brand",
+            "image_index": 2,
+            "crop_id": "original-2-lower",
+            "full_text": "edibas",
+            "crop_text": "edibas",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Edibas",
+              "en": "Edibas"
+            }
+          },
+          {
+            "field": "collector_number",
+            "image_index": 2,
+            "crop_id": "original-2-upper",
+            "full_text": "P7",
+            "crop_text": "P7",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "P7",
+              "en": "P7"
+            }
+          },
+          {
+            "field": "copyright",
+            "image_index": 2,
+            "crop_id": "original-2-lower",
+            "full_text": "DRAGON BALL Z © 1989 BIRD STUDIO/SHUEISHA, TOEI ANIMATION Licensed by Backstage 2007",
+            "crop_text": "DRAGON BALL Z © 1989 BIRD STUDIO/SHUEISHA, TOEI ANIMATION Licensed by Backstage 2007",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "DRAGON BALL Z © 1989 BIRD STUDIO/SHUEISHA, TOEI ANIMATION Licensed by Backstage 2007",
+              "en": "DRAGON BALL Z © 1989 BIRD STUDIO/SHUEISHA, TOEI ANIMATION Licensed by Backstage 2007"
+            }
+          }
+        ],
+        "comparisons": [
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0,
+                "y": 0.211
+              },
+              {
+                "x": 1,
+                "y": 0.211
+              },
+              {
+                "x": 1,
+                "y": 0.849
+              },
+              {
+                "x": 0,
+                "y": 0.849
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0,
+                "y": 0
+              },
+              {
+                "x": 1,
+                "y": 0
+              },
+              {
+                "x": 1,
+                "y": 1
+              },
+              {
+                "x": 0,
+                "y": 1
+              }
+            ],
+            "reference_id": "lens-1",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "GOKU™",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "GOKU™",
+              "number": "P7",
+              "year": "",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Goku Supersayan flying forward",
+                "reference": "Same Goku Supersayan artwork",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "Pink-blue confetti border; Attacco/Difesa 120",
+                "reference": "Same border and 120/120 statistics",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "identifier",
+                "original": "P7 visible on reverse",
+                "reference": "Title identifies P7",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Goku",
+              "family": "Lamincards Dragon Ball Z",
+              "number": "P7",
+              "year": "",
+              "brand": "Edibas",
+              "subset": "Serie Platino",
+              "proof": {
+                "subject": "GOKU N",
+                "family": "Lamincards Dragon Ball Z",
+                "year": "",
+                "subset": "Serie Platino"
+              },
+              "display_names": {
+                "it": "Goku",
+                "en": "Goku"
+              }
+            }
+          },
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0,
+                "y": 0.211
+              },
+              {
+                "x": 1,
+                "y": 0.211
+              },
+              {
+                "x": 1,
+                "y": 0.849
+              },
+              {
+                "x": 0,
+                "y": 0.849
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.082,
+                "y": 0.056
+              },
+              {
+                "x": 0.931,
+                "y": 0.056
+              },
+              {
+                "x": 0.931,
+                "y": 0.996
+              },
+              {
+                "x": 0.082,
+                "y": 0.996
+              }
+            ],
+            "reference_id": "lens-2",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [
+              "Finitura/pattern del bordo differente"
+            ],
+            "original_reading": {
+              "subject": "GOKU™",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "GOKU™",
+              "number": "P7",
+              "year": "",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Same Goku pose",
+                "reference": "Same Goku pose",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "Pink-blue confetti finish",
+                "reference": "Dark silver holographic finish",
+                "agrees": false,
+                "certainty": "clear"
+              },
+              {
+                "field": "text",
+                "original": "Attacco 120 Difesa 120",
+                "reference": "Attacco 120 Difesa 120",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Goku",
+              "family": "Lamincards Dragon Ball Z",
+              "number": "P7",
+              "year": "",
+              "brand": "",
+              "subset": "",
+              "proof": {
+                "subject": "GOKU",
+                "family": "Lamincards DRAGONBALL Z",
+                "year": "",
+                "subset": ""
+              },
+              "display_names": {
+                "it": "Goku",
+                "en": "Goku"
+              }
+            }
+          },
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0,
+                "y": 0.211
+              },
+              {
+                "x": 1,
+                "y": 0.211
+              },
+              {
+                "x": 1,
+                "y": 0.849
+              },
+              {
+                "x": 0,
+                "y": 0.849
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.047,
+                "y": 0.091
+              },
+              {
+                "x": 0.953,
+                "y": 0.091
+              },
+              {
+                "x": 0.953,
+                "y": 0.936
+              },
+              {
+                "x": 0.047,
+                "y": 0.936
+              }
+            ],
+            "reference_id": "lens-3",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [
+              "Numero e statistiche differenti",
+              "Bordo e configurazione differenti"
+            ],
+            "original_reading": {
+              "subject": "GOKU™",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "GOKU™",
+              "number": "N23",
+              "year": "",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Goku flying forward",
+                "reference": "Similar Goku artwork",
+                "agrees": false,
+                "certainty": "uncertain"
+              },
+              {
+                "field": "configuration",
+                "original": "Attacco 120 Difesa 120; confetti border",
+                "reference": "Attacco 110 Difesa 110; plain white border",
+                "agrees": false,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Goku",
+              "family": "Lamincards Dragon Ball Z",
+              "number": "N23",
+              "year": "",
+              "brand": "",
+              "subset": "Serie Platino",
+              "proof": {
+                "subject": "GOKU N 23",
+                "family": "Lamincards Dragon Ball Z",
+                "year": "",
+                "subset": "Serie Platino"
+              },
+              "display_names": {
+                "it": "Goku",
+                "en": "Goku"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "ids": [
+        "lens-5"
+      ],
+      "reply": {
+        "original_readings": [
+          {
+            "field": "subject",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "GOKU™ Supersayan",
+            "crop_text": "GOKU™ Supersayan",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Goku",
+              "en": "Goku"
+            }
+          },
+          {
+            "field": "product",
+            "image_index": 2,
+            "crop_id": "original-2-lower",
+            "full_text": "DRAGON BALL Z",
+            "crop_text": "DRAGON BALL Z",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Dragon Ball Z",
+              "en": "Dragon Ball Z"
+            }
+          },
+          {
+            "field": "brand",
+            "image_index": 2,
+            "crop_id": "original-2-lower",
+            "full_text": "edibas",
+            "crop_text": "edibas",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Edibas",
+              "en": "Edibas"
+            }
+          },
+          {
+            "field": "model_code",
+            "image_index": 2,
+            "crop_id": "original-2-upper",
+            "full_text": "P7",
+            "crop_text": "P7",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "P7",
+              "en": "P7"
+            }
+          },
+          {
+            "field": "language",
+            "image_index": 2,
+            "crop_id": "original-2-lower",
+            "full_text": "Scarta il tuo Personaggio Attivo e metti una carta Alleato in Prima Linea",
+            "crop_text": "Scarta il tuo Personaggio Attivo e metti una carta Alleato in Prima Linea",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Italiano",
+              "en": "Italian"
+            }
+          },
+          {
+            "field": "copyright",
+            "image_index": 2,
+            "crop_id": "original-2-lower",
+            "full_text": "DRAGON BALL Z © 1989 BIRD STUDIO/SHUEISHA, TOEI ANIMATION Licensed by Backstage 2007",
+            "crop_text": "DRAGON BALL Z © 1989 BIRD STUDIO/SHUEISHA, TOEI ANIMATION Licensed by Backstage 2007",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "DRAGON BALL Z © 1989 BIRD STUDIO/SHUEISHA, TOEI ANIMATION Licensed by Backstage 2007",
+              "en": "DRAGON BALL Z © 1989 BIRD STUDIO/SHUEISHA, TOEI ANIMATION Licensed by Backstage 2007"
+            }
+          }
+        ],
+        "comparisons": [
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.01,
+                "y": 0.224
+              },
+              {
+                "x": 0.97,
+                "y": 0.224
+              },
+              {
+                "x": 0.97,
+                "y": 0.91
+              },
+              {
+                "x": 0.01,
+                "y": 0.91
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.208,
+                "y": 0.076
+              },
+              {
+                "x": 0.812,
+                "y": 0.076
+              },
+              {
+                "x": 0.812,
+                "y": 0.946
+              },
+              {
+                "x": 0.208,
+                "y": 0.946
+              }
+            ],
+            "reference_id": "lens-5",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "GOKU",
+              "number": "",
+              "year": "",
+              "language": "Italian"
+            },
+            "reference_reading": {
+              "subject": "GOKU",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Goku flying forward",
+                "reference": "Goku flying forward",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Logo above name and stats",
+                "reference": "Logo above name and stats",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "text",
+                "original": "GOKU Supersayan",
+                "reference": "GOKU Supersayan",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "GOKU",
+              "family": "Dragon Ball Z Serie Edibas Platino",
+              "number": "P7",
+              "year": "",
+              "brand": "Edibas",
+              "subset": "Platino",
+              "proof": {
+                "subject": "GOKU - P7",
+                "family": "Dragon Ball Z Serie Edibas Platino",
+                "year": "",
+                "subset": "Platino"
+              },
+              "display_names": {
+                "it": "Goku",
+                "en": "Goku"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "crops": [
+    {
+      "id": "original-1-upper",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0,
+        "y": 0.19487179487179487,
+        "width": 1,
+        "height": 0.2222222222222222
+      }
+    },
+    {
+      "id": "original-1-lower",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0,
+        "y": 0.6299145299145299,
+        "width": 1,
+        "height": 0.23547008547008547
+      }
+    },
+    {
+      "id": "original-2-upper",
+      "image_index": 2,
+      "region": {
+        "image_index": 2,
+        "x": 0,
+        "y": 0.19487179487179487,
+        "width": 1,
+        "height": 0.2222222222222222
+      }
+    },
+    {
+      "id": "original-2-lower",
+      "image_index": 2,
+      "region": {
+        "image_index": 2,
+        "x": 0,
+        "y": 0.6299145299145299,
+        "width": 1,
+        "height": 0.23547008547008547
+      }
+    }
+  ],
+  "details": []
+}

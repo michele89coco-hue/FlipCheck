@@ -1,0 +1,409 @@
+{
+  "provenance": {
+    "build": 222,
+    "scope": "Recorded model object readings and public reference metadata only. Certificate replaced by a synthetic value. No original pixels, account or diagnostic envelope."
+  },
+  "vision": {
+    "domain": "pokemon",
+    "kind": "card",
+    "category": "TCG card in slab",
+    "language": "zh",
+    "object_unit": "single",
+    "image_views": [
+      {
+        "image_index": 1,
+        "view": "front",
+        "certainty": "clear"
+      }
+    ],
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.11,
+        "y": 0.16,
+        "width": 0.84,
+        "height": 0.77,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "超梦V",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.28,
+          "y": 0.39,
+          "width": 0.17,
+          "height": 0.03
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "collector_number",
+        "text": "135/127",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.55,
+          "y": 0.86,
+          "width": 0.08,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "rarity_text",
+        "text": "SR",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.63,
+          "y": 0.86,
+          "width": 0.03,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "hp",
+        "text": "220",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.68,
+          "y": 0.4,
+          "width": 0.06,
+          "height": 0.03
+        },
+        "zone": "statistics",
+        "alternatives": []
+      },
+      {
+        "field": "set_code",
+        "text": "CS5aC",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.2,
+          "y": 0.86,
+          "width": 0.07,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": [
+          "sv5aC",
+          "CS5AC"
+        ]
+      },
+      {
+        "field": "copyright",
+        "text": "©2024 Pokémon/Nintendo/Creatures/Game Freak",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.42,
+          "y": 0.88,
+          "width": 0.16,
+          "height": 0.01
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "超念力 50；转移破坏 160",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.34,
+          "y": 0.73,
+          "width": 0.44,
+          "height": 0.06
+        },
+        "zone": "front",
+        "alternatives": []
+      }
+    ],
+    "features": [
+      {
+        "field": "finish",
+        "value": "holo",
+        "description": "Superficie olografica/riflettente multicolore",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.13,
+          "y": 0.4,
+          "width": 0.73,
+          "height": 0.48
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "border_color",
+        "value": "black",
+        "description": "Cornice scura della carta",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.13,
+          "y": 0.39,
+          "width": 0.73,
+          "height": 0.51
+        },
+        "zone": "border"
+      },
+      {
+        "field": "layout",
+        "value": "illustrazione d'azione a piena carta con testo e statistiche inferiori",
+        "description": "Mewtwo in posa dinamica",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.13,
+          "y": 0.39,
+          "width": 0.73,
+          "height": 0.51
+        },
+        "zone": "artwork"
+      }
+    ],
+    "hypotheses": [
+      {
+        "field": "family",
+        "value": "Pokémon TCG"
+      }
+    ],
+    "slab_reading": {
+      "grader": "ARS",
+      "label_text": "2024 Pokemon JPN / 超梦V / CS5aC 135/127 SR / CENTERING 9.5 / CORNERS 10 / EDGES 10 / SURFACE 10 / 10 PRISTINE / 1234567890",
+      "card_title": "超梦V",
+      "subject": "超梦V",
+      "family": "Pokémon TCG",
+      "model": "CS5aC 135/127 SR",
+      "year": "2024",
+      "card_number": "135/127",
+      "variant": "SR",
+      "grade": "10 PRISTINE",
+      "certificate": "1234567890",
+      "match_details": "Etichetta e carta mostrano 超梦V e 135/127 SR",
+      "normalized_subject": {
+        "original": "超梦V",
+        "it": "Mewtwo V",
+        "en": "Mewtwo V",
+        "certainty": "clear"
+      },
+      "present": true,
+      "certainty": "clear",
+      "title_certainty": "clear",
+      "grade_certainty": "clear",
+      "certificate_certainty": "clear",
+      "secondary_text_incomplete": false,
+      "subgrades": [
+        {
+          "name": "centering",
+          "value": "9.5",
+          "certainty": "clear"
+        },
+        {
+          "name": "corners",
+          "value": "10",
+          "certainty": "clear"
+        },
+        {
+          "name": "edges",
+          "value": "10",
+          "certainty": "clear"
+        },
+        {
+          "name": "surface",
+          "value": "10",
+          "certainty": "clear"
+        }
+      ],
+      "image_index": 1,
+      "object_match": "matches"
+    },
+    "engine_version": 193,
+    "brand": "",
+    "family": "Pokémon TCG",
+    "title": "超梦V",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": {
+      "image_index": 1,
+      "x": 0.11,
+      "y": 0.16,
+      "width": 0.84,
+      "height": 0.77,
+      "certain": true
+    },
+    "photo_clues": [
+      {
+        "text": "超梦V",
+        "role": "subject",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.28,
+          "y": 0.39,
+          "width": 0.17,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "135/127",
+        "role": "collector_number",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.55,
+          "y": 0.86,
+          "width": 0.08,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "SR",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.63,
+          "y": 0.86,
+          "width": 0.03,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "220",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.68,
+          "y": 0.4,
+          "width": 0.06,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "CS5aC",
+        "role": "text",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.2,
+          "y": 0.86,
+          "width": 0.07,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "©2024 Pokémon/Nintendo/Creatures/Game Freak",
+        "role": "copyright",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.42,
+          "y": 0.88,
+          "width": 0.16,
+          "height": 0.01,
+          "certain": true
+        }
+      },
+      {
+        "text": "超念力 50；转移破坏 160",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.34,
+          "y": 0.73,
+          "width": 0.44,
+          "height": 0.06,
+          "certain": true
+        }
+      }
+    ],
+    "physical_observations": [
+      {
+        "feature": "finish",
+        "text": "Superficie olografica/riflettente multicolore",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "color",
+        "text": "black border",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Mewtwo in posa dinamica",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      }
+    ],
+    "pokemon_printing": {
+      "is_pokemon": true,
+      "language": "zh",
+      "set_name": "Pokémon TCG",
+      "card_type": "pokemon",
+      "first_edition_stamp": "unclear",
+      "stamp_image": 0,
+      "stamp_location": "",
+      "stamp_text": "",
+      "artwork_shadow": "unclear",
+      "shadow_image": 0,
+      "shadow_location": "",
+      "copyright_text": "©2024 Pokémon/Nintendo/Creatures/Game Freak",
+      "copyright_image": 1
+    },
+    "uploaded_image_count": 1
+  },
+  "references": [],
+  "batches": [],
+  "crops": [],
+  "details": []
+}

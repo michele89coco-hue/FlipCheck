@@ -1,0 +1,1009 @@
+{
+  "provenance": {
+    "build": 222,
+    "scope": "Recorded model object readings and public reference metadata only. Certificate replaced by a synthetic value. No original pixels, account or diagnostic envelope."
+  },
+  "vision": {
+    "domain": "pokemon",
+    "kind": "card",
+    "category": "trading card",
+    "language": "en",
+    "object_unit": "single",
+    "image_views": [
+      {
+        "image_index": 1,
+        "view": "front",
+        "certainty": "clear"
+      }
+    ],
+    "object_regions": [],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "Vileplume",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.314,
+          "y": 0.128,
+          "width": 0.16,
+          "height": 0.034
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "hp",
+        "text": "80 HP",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.633,
+          "y": 0.126,
+          "width": 0.1,
+          "height": 0.035
+        },
+        "zone": "statistics",
+        "alternatives": []
+      },
+      {
+        "field": "collector_number",
+        "text": "15/64",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.882,
+          "y": 0.953,
+          "width": 0.035,
+          "height": 0.018
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "illustrator",
+        "text": "Keiji Kinebuchi",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.219,
+          "y": 0.953,
+          "width": 0.095,
+          "height": 0.018
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "copyright",
+        "text": "©1995, 96, 98 Nintendo, Creatures, GAMEFREAK. ©1999 Wizards",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.323,
+          "y": 0.953,
+          "width": 0.394,
+          "height": 0.018
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "Evolves from Gloom",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.353,
+          "y": 0.102,
+          "width": 0.14,
+          "height": 0.019
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "Stage 2",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.184,
+          "y": 0.119,
+          "width": 0.055,
+          "height": 0.019
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "Pokémon Power: Heal",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.214,
+          "y": 0.598,
+          "width": 0.206,
+          "height": 0.022
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "Petal Dance — 40×",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.333,
+          "y": 0.721,
+          "width": 0.203,
+          "height": 0.034
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "LV. 35",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.789,
+          "y": 0.936,
+          "width": 0.04,
+          "height": 0.018
+        },
+        "zone": "statistics",
+        "alternatives": []
+      },
+      {
+        "field": "set_code",
+        "text": "Jungle symbol",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.822,
+          "y": 0.536,
+          "width": 0.035,
+          "height": 0.034
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "rarity_text",
+        "text": "Holo Rare",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": null,
+        "zone": "other",
+        "alternatives": [
+          "Rare Holo"
+        ]
+      }
+    ],
+    "features": [
+      {
+        "field": "border_color",
+        "value": "yellow",
+        "description": "Bordo giallo",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.103,
+          "y": 0.054,
+          "width": 0.792,
+          "height": 0.897
+        },
+        "zone": "border"
+      },
+      {
+        "field": "finish",
+        "value": "holo",
+        "description": "Sfondo olografico nell'area illustrata",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.19,
+          "y": 0.174,
+          "width": 0.626,
+          "height": 0.369
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "set_symbol",
+        "value": "Jungle symbol",
+        "description": "Simbolo della giungla visibile sul lato destro della riga descrittiva",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.822,
+          "y": 0.536,
+          "width": 0.035,
+          "height": 0.034
+        },
+        "zone": "label"
+      },
+      {
+        "field": "layout",
+        "value": "Ritratto Pokémon con cornice gialla e area illustrazione centrale",
+        "description": "Layout verticale standard della carta",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": null,
+        "zone": "other"
+      }
+    ],
+    "hypotheses": [
+      {
+        "field": "family",
+        "value": "Pokémon Jungle"
+      }
+    ],
+    "slab_reading": null,
+    "engine_version": 193,
+    "brand": "",
+    "family": "Pokémon Jungle",
+    "title": "Vileplume",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": null,
+    "photo_clues": [
+      {
+        "text": "Vileplume",
+        "role": "subject",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.314,
+          "y": 0.128,
+          "width": 0.16,
+          "height": 0.034,
+          "certain": true
+        }
+      },
+      {
+        "text": "80 HP",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.633,
+          "y": 0.126,
+          "width": 0.1,
+          "height": 0.035,
+          "certain": true
+        }
+      },
+      {
+        "text": "15/64",
+        "role": "collector_number",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.882,
+          "y": 0.953,
+          "width": 0.035,
+          "height": 0.018,
+          "certain": true
+        }
+      },
+      {
+        "text": "Keiji Kinebuchi",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.219,
+          "y": 0.953,
+          "width": 0.095,
+          "height": 0.018,
+          "certain": true
+        }
+      },
+      {
+        "text": "©1995, 96, 98 Nintendo, Creatures, GAMEFREAK. ©1999 Wizards",
+        "role": "copyright",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.323,
+          "y": 0.953,
+          "width": 0.394,
+          "height": 0.018,
+          "certain": true
+        }
+      },
+      {
+        "text": "Evolves from Gloom",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.353,
+          "y": 0.102,
+          "width": 0.14,
+          "height": 0.019,
+          "certain": true
+        }
+      },
+      {
+        "text": "Stage 2",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.184,
+          "y": 0.119,
+          "width": 0.055,
+          "height": 0.019,
+          "certain": true
+        }
+      },
+      {
+        "text": "Pokémon Power: Heal",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.214,
+          "y": 0.598,
+          "width": 0.206,
+          "height": 0.022,
+          "certain": true
+        }
+      },
+      {
+        "text": "Petal Dance — 40×",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.333,
+          "y": 0.721,
+          "width": 0.203,
+          "height": 0.034,
+          "certain": true
+        }
+      },
+      {
+        "text": "LV. 35",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.789,
+          "y": 0.936,
+          "width": 0.04,
+          "height": 0.018,
+          "certain": true
+        }
+      },
+      {
+        "text": "Jungle symbol",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.822,
+          "y": 0.536,
+          "width": 0.035,
+          "height": 0.034,
+          "certain": true
+        }
+      },
+      {
+        "text": "Holo Rare",
+        "role": "text",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": null
+      }
+    ],
+    "physical_observations": [
+      {
+        "feature": "color",
+        "text": "yellow border",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Sfondo olografico nell'area illustrata",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Simbolo della giungla visibile sul lato destro della riga descrittiva",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Layout verticale standard della carta",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      }
+    ],
+    "pokemon_printing": {
+      "is_pokemon": true,
+      "language": "en",
+      "set_name": "Pokémon Jungle",
+      "card_type": "pokemon",
+      "first_edition_stamp": "unclear",
+      "stamp_image": 0,
+      "stamp_location": "",
+      "stamp_text": "",
+      "artwork_shadow": "unclear",
+      "shadow_image": 0,
+      "shadow_location": "",
+      "copyright_text": "©1995, 96, 98 Nintendo, Creatures, GAMEFREAK. ©1999 Wizards",
+      "copyright_image": 1
+    },
+    "uploaded_image_count": 1
+  },
+  "references": [
+    {
+      "id": "lens-14",
+      "position": 15,
+      "title": "1999 Vileplume Jungle No Symbol Holo Pokemon Card #15/64 ...",
+      "url": "https://www.etsy.com/listing/1477407467/1999-vileplume-jungle-no-symbol-holo",
+      "image_url": "https://i.etsystatic.com/20556172/r/il/aba519/4885862002/il_570xN.4885862002_732q.jpg",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP7d3P3lr0M61h12F-PGFJ8qWKD25-NUyEe2Hqv6ogwDPRc1WV",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "STAGE 2-\nEvalves frm Gleam\nVileplume\nwealoness\nPut Vleglume on the Sage i ard\n80 HP O\nFlower Pokémon. Length: 3' , Weight 41 lbs.\nPokémon Power: Heal Once during your\nturn (before your attock), you may flip a coin. If heads,\nremove I damage counter froml of your Pokémon.\nThis power cant be used ifVleplume is Asleep.\nConfused, or Paralyzed.\nPetal Dance Fip 3 coins This attad does\n40 damage times the number of heads\nVleplume is now Corhsed (ater daing damae)\nresistance\n40x\nretreat cost\nThe larger its petals, the more toxic pollen it contains. ts big\nhead is heavy and hard to hold up. LV. 35 N4S\nKej Kincbuch Grs, N MNeanda Cruturu, GAEAK CIWrs15I64 *",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-19",
+      "position": 20,
+      "title": "1999 Pokemon Jungle 1st Edition Holo Vileplume #15 PSA 9 ...",
+      "url": "https://www.fanaticscollect.com/buy-now/6811a3f9-797f-4dd3-9f77-7247b4816758",
+      "image_url": "https://cdn-vault.fanaticscollect.com/2026/5/19/wr11/medium/v3964515_2021051812245714R_7.jpg",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQcvY6HzLURcqjsbNrMQVHNESgMe6pMnvH_B4SXoqLlQimAdmLN",
+      "snippet": "",
+      "page_text": "name: 1999 Pokemon Jungle 1st Edition Holo Vileplume #15 PSA 9 MINT\ndescription: []\nsku: 6811a3f9-797f-4dd3-9f77-7247b4816758\n\n1999 Pokemon Jungle 1st Edition Holo Vileplume #15 PSA 9 MINT on Fanatics Collect\n\nPrevious slide\n\nNext slide\n\n1999 Pokemon Jungle 1st Edition Holo Vileplume #15 PSA 9 MINT\n\n$999\n\nGuide Price by Card Ladder™\n\n$299\n\nSales History on Fanatics Collect\n\nSep 10, 2026\n$330\n\nAug 10, 2026\n$312\n\nApr 30, 2026\n$250\n\nApr 12, 2026\n$249\n\nJan 14, 2026\n$340\n\nShowing 5 of 10\nView all\n\nView sales history on Card Ladder™",
+      "page_url": "https://www.fanaticscollect.com/buy-now/6811a3f9-797f-4dd3-9f77-7247b4816758",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "1999 POKEMON JUNGLE\nVILEPLUME-HOLO\n1ST EDITION\nSTAGE 2-\nEvolves from Gloom\nVileplume\nweakness\nPut Vileplume on the Stage I card\nFlower Pokémon. Length: 3' I I\", Weight: 41 lbs.\nPokémon Power: Heal Once during your\nturn (before your attack), you may flip a coin. If heads,\nremove damage counter from I of your Pokémon.\nThis power can't be used ifVileplume is Asleep,\nConfused, or Paralyzed.\nPetal Dance Flip 3 coins. This attack does\n40 damage times the number of heads.\nVileplume is now Confused (after doing damage).\n80 HP\nresistance\n#15\nMINT\n86555911\n40x\nretreat cost\nThe larger its petals, the more toxic pollen it contains. Its big\nhead is heavy and hard to hold up. LV. 35 #45\n9\nHlus. Keiji Kinebuchi o195,96, 98 Nintendo, Creatures, GAMEFREAK. O1999 Wiards. I5/64 k",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-32",
+      "position": 33,
+      "title": "1999 Pokemon Jungle Holo Vileplume #15 PSA 8 NM-MT on ...",
+      "url": "https://www.fanaticscollect.com/buy-now/329ae094-cd17-4261-bf2c-f796fc4aed06",
+      "image_url": "https://cdn-vault.fanaticscollect.com/2026/5/19/wr11/small/v3964515_2021051812245714R_7.jpg",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcThYyPNKwB7B_uzsGGxug2Pw0jLlkedGuCZ-wl8-u_zpRFjSbOM",
+      "snippet": "",
+      "page_text": "name: 1999 Pokemon Jungle Holo Vileplume #15 PSA 8 NM-MT\ndescription: []\nsku: 329ae094-cd17-4261-bf2c-f796fc4aed06\n\n1999 Pokemon Jungle Holo Vileplume #15 PSA 8 NM-MT on Fanatics Collect\n\nPrevious slide\n\nNext slide\n\nSOLD\n1999 Pokemon Jungle Holo Vileplume #15 PSA 8 NM-MT\n\n$77\n\nSales History on Fanatics Collect\n\nAug 17, 2026\n$49.20\n\nJun 09, 2026\n$77\n\nApr 13, 2026\n$43.20\n\nApr 13, 2026\n$26.40\n\nNov 17, 2025\n$37.20\n\nShowing 5 of 10\nView all",
+      "page_url": "https://www.fanaticscollect.com/buy-now/329ae094-cd17-4261-bf2c-f796fc4aed06",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "1999 POKEMON JUNGLE\nVILEPLUME-HOLO\n1ST EDITION\nSTAGE 2-\nEvolves from Gloom\nVileplume\nn Flower Pokémon. Length: 3' I1\", Weight: 41 lbs.\nPokémon Power: Heal Once during your\nturn (before your atock, you\nyln\nThis power can't be used ifVileplume is Asleep.\nConfused, or Paralyzed.\nPetal Dance Flip 3 coins. This attack does\n40 damage times the number of hede\nweakness\nPut Vileplume on the Stage I card\n80 HP\nVileplume is now Confused (after doing damage).\nresistance\n86555911\nmon\nto nol up.\n#15\nMINT\n40x\nretreat cos\nThe larger its petals, the more toxic pollen it contains. Its big\ne Wiprds\n9\n15/64 *\nds.\nwour\nremove I damage\nA\ncounter f\nI5/64\nItlus Keijl Kinebuchi 195, 96, 98 Nintenda, Creatures, GAMEFREAK. C1999 wards",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-2",
+      "position": 2,
+      "title": "Pokemon Jungle VILEPLUME 15/64 1st Edition Rare Holo | eBay",
+      "url": "https://www.ebay.com/itm/404385050217",
+      "image_url": "https://i.ebayimg.com/images/g/lS0AAOSwfUBh5jla/s-l1200.jpg",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTa-YfNLdCWrRR3hCt--iVgiKmZ11xjK5LA91VJM7TTltTsU1YD",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "STAGE 2-\nEvolves from Gloom\nVileplume\nweakness\nPut Vileplume on the Stage I card\nFlower Pokémon. Length: 3' I1\", Weight: 41 lbs.\nPokémon Power: Heal Once during your\nturn (before your attack), you may flip a coin. If heads,\nremove I damage counter from l of your Pokémon.\nThis power can't be used ifVileplume is Asleep,\nConfused, or Paralyzed.\n80 HP\nPetal Dance Flip 3 coins.This attack does\n40 damage times the number of heads.\nVileplume is now Confused (after doing damage ).\nresistance\n40x\n45\nretreat cost\nThe larger its petals, the more toxic pollen it contains. Its big\nhead is heavy and hard to hold up. LV. 35\nMus. Keiji Kinebuchi\nO1995, 96, 98 Nintendo, Creatures, GAMEFREAK. OI999 Wizards.\n15/64 *",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-3",
+      "position": 3,
+      "title": "Vileplume [1st Edition] #15 Prices | Pokemon Jungle ...",
+      "url": "https://www.pricecharting.com/game/pokemon-jungle/vileplume-1st-edition-15",
+      "image_url": "https://storage.googleapis.com/images.pricecharting.com/58485910147bf381622089e39f13dfc6ed98cfd199fd9c65eaff7d2e98bce66f/1600.jpg",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcS3ou1tYaxT5mFNTwHJvpT86dtkCmTPGfjcWjaWVAVpNYY-yLbF",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "STAGE 2\nEvolves from Gloom\nVileplume\nweakness\nPut Vileplume on the Stage I card\nFlower Pokémon. Length: 3' I|\", Weight: 41 Ibs.\nPokémon Power: Heal once during your\nturn (before your attack), you may flip a coin. If heads,\nremove damage counter from I of your Pokémon.\nThis power can't be used ifVileplume is Asleep,\nConfused, or Paralyzed.\n80 HP\nPetal Dance Fip 3 coins. This attack does\n40 damage times the number of heads.\nVileplume is now Confused (after doing damage).\nresistance\n40x\nretreat cost\nThe larger its petals, the more toxic pollen it contains. Its big\nhead is heavy and hard to hold up. LV. 35 #45\nIllus. Keiji Kinebuchi O1995, 96, 98 Nintendo, Creatures, GAMEFREAK OI999 Wizards. 15/64",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-5",
+      "position": 5,
+      "title": "VILEPLUME - 15/64 - Jungle Set - Holo - Pokemon Card - Exc ...",
+      "url": "https://www.etsy.com/it/listing/765810837/vileplume-1564-jungle-set-holo-pokemon",
+      "image_url": "https://i.etsystatic.com/19205763/r/il/dea293/2181620181/il_1080xN.2181620181_l1zc.jpg",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQADl0n_hccdRZ0S7oYwM1RNaDTcQTIhKlNQ2-5_ThPZiNM1RM0",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "STAGE 2\nEvolves from Gloom\nVileplume\nPut Vileplume on the Stage l card\nweakness\nFlower Pokémon. Length: 3' I\", Weight: 4! lbs.\nPolkémon Power: Heal once during your\nturn (before your attack), you may flip a coin. If heads,\nremove damage counter from I of your Pokémon.\nThis power can't be used ifVileplume is Asleep,\nConfused, or Paralyzed.\nA Petal Dance Flip 3 coins. This attack does\n40 damage times the number of heads.\nVileplume is now Confused (after doing damage).\n80 HP\nresistance\nThe larger its petals, the more toxic\nhead is heavy and hard to hold up.\n40x\nretreat cost\npollen it contains. Its big\nLV. 3545\nMlus. Keiji Kinebuchi 1995, 9%, 98 Nintendo, Crextures, GAMEFREAK. OI99 Wizrds. I5/64",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-7",
+      "position": 8,
+      "title": "Pokémon Vileplume Holo ITA Jungle 15/64 - Collezionismo In ...",
+      "url": "https://www.subito.it/hobby-collezionismo/pokemon-vileplume-holo-ita-jungle-15-64-mantova-658489206.htm",
+      "image_url": "https://images.sbito.it/api/v1/sbt-ads-images-pro/images/8d/8d222dc1-1e0e-4d8c-832b-9cb40152ae94?rule=fullscreen-1x-auto",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRwUceiinylzgEz75VdgLJo6xZ0OX7b2dUgp_kcQptBwralyuRB",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "FASE 2\nEvolve da Gloom Metti Viepiune sula carta di fase\nVileplume\n80 PV\nPokémon fiore. Lunghezza: I,18 m, Peso: 18.5 Kg.\nPotere Pokémon: Cura Una sola volta durante il tuo turno\n(prima di attaccore), puoi lanciare una moneta. Se esce testa togli un\nsegnalino danno da uno dei tuoi Pokémon. Questo potere non puờ\nessere usato se Vileplume è Addormentato, Confuso o Paralizzato.\ndeboleZza\nPetalodanza Lancia 3 volte una\nmoneta. Questo attacco infligge 40 danni\nogni volta che esce testa. Vileplume (dopo\navere inflitto il danno) è Confuso.\nresistenza\n40x\ncosto di ritirata\nPiu grandi sono i suoi petali e più polline velenoso contengono. La\ns0a grossa testa è pesante e difficile da sostenere.LV, 35 45\nBus Keljj Kinebudhi o1995, 9%, 98 Nintendo, Creatures, GAMEFREAK OI999-2000 Wird 15/64 *",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-8",
+      "position": 9,
+      "title": "Vileplume Holo Jungle 1st edition pokemon card 15/64 factory ...",
+      "url": "https://www.ebay.it/itm/403953166375",
+      "image_url": "https://i.ebayimg.com/images/g/k6AAAOSwSAljUzmZ/s-l400.jpg",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSnt8XSOwAV8kdkL9Sa3sWGWBBpfSyd-uLCLmRFLmGdqI2D8__f",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "STAGE 2\nEoves from Gieom\nVileplume\nPVleple sbe Suge iad\nwrakness\n80\nFlower Pohéman. Length: 3' Weighti 4I Ibe\nPokémon Power: Heal Once during your\nturn (befere your attock, yo may fip a coin heads\nremove I damace counter from I of your Pokemon\nThis power cant be used ifVileplume ia Aleep\nConfused, or Paralyzed\nA Petal Dance Fip J coins This attack does\n40 darrage tines the number of head\nVieplurme is now Corksed (ofer doing danmege\nresistance\nHP\nThe larger its petal, the moe toxic polten it\nheed n Aeery and hard te kheld up LV 15 H4S\n40x\nretreat cest\ncontains, I ie\npallen it contains. ls big",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-10",
+      "position": 11,
+      "title": "Pokemon Singles - Vileplume 15/64 - Holo - Unlimited ...",
+      "url": "https://www.amazon.ae/Pokemon-Singles-Vileplume-Unlimited-Jungle/dp/B00EQGV9OA",
+      "image_url": "https://m.media-amazon.com/images/I/51-97Kq942L._AC_UF1000,1000_QL80_.jpg",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7QDKoVF3wq4S4XEyS6lrYGDbUMCwrdVQh-GYBaz_ybUoXuz3J",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "STAGE 2\nEvolves from Gleam\nVileplume\nwreakness\nPut Vileplume on the Stage I card\nFlower Pokémon. Length: 3' I\" Weight: 41 lbs.\nPokemon Power: Heal Once during your\nturn (before your attack). you may flip a coin. If heads,\nremove I damage counter from l of your Pokémon.\nThis power can't be used ifVileplume is Asleep.\nConfused, or Paralyzed.\n80 HP\nPetal Dance Fip 3 coins. This attack does\n40 darmage times the number of heads\nVleplume is now Conhused (after doing damage).\nresistance\n40x\n4S\nretreat cost\nThe larger its petals, the more toxic pollen it contains. Its big\nhead is heavy and hard to hold up. LY. 35\nus Kelj Kinebach Gins, s, Nirsenda Creatares GAHEFREAK OIs Wirda 15/64*",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-11",
+      "position": 12,
+      "title": "Carta Pokemon Vileplume Holo - Jungle 15/64 - Prima Edizione ...",
+      "url": "https://www.ebay.it/itm/194167471847",
+      "image_url": "https://i.ebayimg.com/images/g/l2UAAOSwaXNgsifd/s-l1200.jpg",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEalSF41lfoiZz-oUxqNT09kjkrM0dvBI8-sceFHFak_HwOcLi",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "FASE 2\nEvolve da GloomMetti Vileplume sutla cara di fase I\nVileplume\nPokémon fiore. Lunghezza: I,18 m, Peso: I8.5 Kg\nPotere Pokémon: Cura Una sola volta durante il tuo turno\n(prima di attaccare), puoi lanciare una moneta. Se esce testa togli un\nsegnalino danno da uno dei tuoi Pokémon. Questo potere non puo\nessere usato se Vileplume è Addormentato, Confuso o Paralizzato.\ndebolezza\n80 PV\nPetalodanza Lancia 3 volte una\nmoneta. Questo attacco infligge 40 danni\nogni volta che esce testa. Vileplume (dopo\navere inflitto il danno) è Confuso.\nresistenza\nllus. Keiji Kinebuchi\nSaoNYNPAY\n40x\nPiù grandi sono i suoi petali e più polline velenoso contengono. La\nsua grossa testa è pesante e difficile da sostenere. LV. 35 #45\nO1995, 96. 98 Nintendo, Creatures, GAMEFREAKO1999-2000 Wizards.\ncosto di ritirata\n15/64 *",
+        "origin": "candidate_image_ocr"
+      }
+    }
+  ],
+  "batches": [
+    {
+      "ids": [
+        "lens-14",
+        "lens-19",
+        "lens-32"
+      ],
+      "reply": {
+        "original_readings": [
+          {
+            "field": "subject",
+            "image_index": 1,
+            "crop_id": "card-front",
+            "full_text": "Vileplume",
+            "crop_text": "Vileplume",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Vileplume",
+              "en": "Vileplume"
+            }
+          },
+          {
+            "field": "product",
+            "image_index": 1,
+            "crop_id": "card-front",
+            "full_text": "Pokémon",
+            "crop_text": "Pokémon",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Pokémon",
+              "en": "Pokémon"
+            }
+          },
+          {
+            "field": "copyright",
+            "image_index": 1,
+            "crop_id": "card-bottom",
+            "full_text": "©1995, 96, 98 Nintendo, Creatures, GAMEFREAK. ©1999 Wizards.",
+            "crop_text": "©1995, 96, 98 Nintendo, Creatures, GAMEFREAK. ©1999 Wizards.",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "©1995, 96, 98 Nintendo, Creatures, GAMEFREAK. ©1999 Wizards.",
+              "en": "©1995, 96, 98 Nintendo, Creatures, GAMEFREAK. ©1999 Wizards."
+            }
+          },
+          {
+            "field": "collector_number",
+            "image_index": 1,
+            "crop_id": "card-bottom",
+            "full_text": "15/64",
+            "crop_text": "15/64",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "15/64",
+              "en": "15/64"
+            }
+          }
+        ],
+        "comparisons": [
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.103,
+                "y": 0.054
+              },
+              {
+                "x": 0.893,
+                "y": 0.054
+              },
+              {
+                "x": 0.893,
+                "y": 0.937
+              },
+              {
+                "x": 0.103,
+                "y": 0.937
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.244,
+                "y": 0.035
+              },
+              {
+                "x": 0.761,
+                "y": 0.035
+              },
+              {
+                "x": 0.761,
+                "y": 0.963
+              },
+              {
+                "x": 0.244,
+                "y": 0.963
+              }
+            ],
+            "reference_id": "lens-14",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "Vileplume",
+              "number": "15/64",
+              "year": "©1999",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "Vileplume",
+              "number": "15/64",
+              "year": "©1999",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Vileplume artwork with red mushroom cap",
+                "reference": "Same Vileplume artwork",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Jungle card layout, 15/64 bottom right",
+                "reference": "Same layout, 15/64 bottom right",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "identifier",
+                "original": "15/64",
+                "reference": "15/64",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Vileplume",
+              "family": "Pokémon Jungle",
+              "number": "15/64",
+              "year": "1999",
+              "brand": "Pokémon",
+              "subset": "No Symbol Holo",
+              "proof": {
+                "subject": "Vileplume",
+                "family": "1999 Vileplume Jungle",
+                "year": "1999",
+                "subset": "No Symbol Holo"
+              },
+              "display_names": {
+                "it": "Vileplume",
+                "en": "Vileplume"
+              }
+            }
+          },
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.103,
+                "y": 0.054
+              },
+              {
+                "x": 0.893,
+                "y": 0.054
+              },
+              {
+                "x": 0.893,
+                "y": 0.937
+              },
+              {
+                "x": 0.103,
+                "y": 0.937
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.1,
+                "y": 0.215
+              },
+              {
+                "x": 0.917,
+                "y": 0.215
+              },
+              {
+                "x": 0.917,
+                "y": 0.958
+              },
+              {
+                "x": 0.1,
+                "y": 0.958
+              }
+            ],
+            "reference_id": "lens-19",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "Vileplume",
+              "number": "15/64",
+              "year": "©1999",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "Vileplume",
+              "number": "15/64",
+              "year": "©1999",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Same Vileplume artwork",
+                "reference": "Same Vileplume artwork",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "Holo card, 15/64",
+                "reference": "Holo card, 15/64, 1st Edition",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "text",
+                "original": "15/64",
+                "reference": "15/64",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Vileplume",
+              "family": "Pokémon Jungle",
+              "number": "15/64",
+              "year": "1999",
+              "brand": "Pokémon",
+              "subset": "",
+              "proof": {
+                "subject": "Vileplume",
+                "family": "1999 Pokemon Jungle",
+                "year": "1999",
+                "subset": ""
+              },
+              "display_names": {
+                "it": "Vileplume",
+                "en": "Vileplume"
+              }
+            }
+          },
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.103,
+                "y": 0.054
+              },
+              {
+                "x": 0.893,
+                "y": 0.054
+              },
+              {
+                "x": 0.893,
+                "y": 0.937
+              },
+              {
+                "x": 0.103,
+                "y": 0.937
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.07,
+                "y": 0.266
+              },
+              {
+                "x": 0.93,
+                "y": 0.266
+              },
+              {
+                "x": 0.93,
+                "y": 0.89
+              },
+              {
+                "x": 0.07,
+                "y": 0.89
+              }
+            ],
+            "reference_id": "lens-32",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "Vileplume",
+              "number": "15/64",
+              "year": "©1999",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "Vileplume",
+              "number": "15/64",
+              "year": "©1999",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Same Vileplume artwork",
+                "reference": "Same Vileplume artwork",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Jungle layout, 15/64 bottom right",
+                "reference": "Same layout, 15/64 bottom right",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "symbols",
+                "original": "Holo pattern and Jungle markings",
+                "reference": "Holo pattern and Jungle markings",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Vileplume",
+              "family": "Pokémon Jungle",
+              "number": "15/64",
+              "year": "1999",
+              "brand": "Pokémon",
+              "subset": "",
+              "proof": {
+                "subject": "Vileplume",
+                "family": "1999 Pokemon Jungle",
+                "year": "1999",
+                "subset": ""
+              },
+              "display_names": {
+                "it": "Vileplume",
+                "en": "Vileplume"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "crops": [],
+  "details": []
+}

@@ -310,7 +310,9 @@ function visualEntries206(reply,refs,l){
    language:E.language(reference.language),aliases:unique([reference.subject,physical.subject]),identifier_type:l.domain==='pokemon'&&physical.number_role==='pokedex_number'?'pokedex':'collector',variants:[],
    grounded:true,entry_quote:ref.title+' '+ref.snippet,reference_page:ref.page_text?{url:ref.page_url||ref.url,text:ref.page_text}:null,source,source_tier:'lens_visual_verified',image_url:ref.image_url||ref.thumbnail,
    requires_image_confirmation:true,visual_reference_id:ref.id,display_names:e.display_names||{},visual_proof:features,reference_reading:reference};
-  if(['sports','onepiece','tcg'].includes(l.domain)&&e.subset){
+  const series223=l.domain==='tcg'&&/^(?:serie|series)\s+\S/i.test(e.subset||'')&&kinds.has('configuration')&&features.length>=3;
+  if(series223)entry.printing_description='unspecified';
+  if(['sports','onepiece','tcg'].includes(l.domain)&&e.subset&&!series223){
    const tokens=appearance212(e.subset).split(' ').filter(t=>!['leader','character','event','stage','p'].includes(t));
    const significant=tokens.filter(t=>!['prizm','prizms','parallel','promo'].includes(t));
    const variantFeatures=features.filter(f=>['configuration','layout','text','symbols'].includes(f.field));
@@ -417,6 +419,7 @@ function present206(result,entries,l,titleLanguage='it'){
  const displayName=suffix(physical)&&suffix(name)!==suffix(physical)?physical:name;
  const language=result.language,tag=l.domain==='sports'?'':({it:'ITA',en:'ENG',ja:'JPN',de:'DEU',fr:'FRA',es:'SPA',ko:'KOR',zh:'CHN','zh-hans':'CHN-S','zh-hant':'CHN-T'})[language]||language?.toUpperCase()||'Lingua da verificare';
  const rawSet=l.pick('set_code')?.value||'',setCode=rawSet.length===1&&String(result.card_identity.number).startsWith(rawSet+'-')?'':rawSet,parts=[displayName,setCode,result.card_identity.number,result.card_identity.date,result.family,result.card_identity.subset,result.variant];
+ if(l.domain==='tcg'&&result.brand&&!norm(result.family).includes(norm(result.brand)))parts.push(result.brand);
  if(result.card_identity.is_rookie)parts.push('RC');if(result.physical_serial?.value)parts.push('/'+result.physical_serial.print_run);parts.push(tag);
  result.title=flattenedTitle221(parts);result.identity_display=result.title;if(result.model)result.model=result.title;
  result.display_language=titleLanguage;result.localized_subject=displayName;result.physical_language=language;result.language_suffix=tag;
