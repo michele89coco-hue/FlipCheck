@@ -68,7 +68,7 @@ function frontPlan213(reading,count){
 }
 function referenceSupport213(c,ref){
  if(!ref?.image_data)return null;
- const features=list(c.features).filter(f=>f.agrees===true&&f.certainty==='clear'&&f.original&&f.reference);
+ const features=list(c.features).filter(f=>f.agrees===true&&f.certainty==='clear'&&f.original&&f.reference&&!(f.field==='identifier'&&/not visible|not readable|unreadable|non visibile|non leggibile/i.test(f.original+' '+f.reference)));
  if(!features.some(f=>['artwork','layout','shape'].includes(f.field)))return null;
  return {reference_id:ref.id,source:ref.url,original_image_index:c.original_image_index||null,scope:'partial_visual_support',identity_proof:false,features,reference_reading:c.reference_reading||{},conflicts:list(c.conflicts)};
 }
@@ -76,6 +76,8 @@ function family214(value,brand,year,title){
  let v=String(value||'').trim();const original=v,source=norm(title),date=v.match(/^(?:19|20)\d{2}(?:[-/]\d{2,4})?\s+/)?.[0];
  if(date&&E.season(date)===E.season(year)&&source.includes(norm(year)))v=v.slice(date.length).trim();
  if(v&&(' '+source+' ').includes(' '+norm(v)+' '))return {value:v,grounded:true,raw:original};
+ const withoutSport=v.replace(/\s+(?:basketball|baseball|football|soccer|hockey)$/i,'');
+ if(withoutSport!==v&&(' '+source+' ').includes(' '+norm(withoutSport)+' '))return {value:withoutSport,grounded:true,raw:original};
  const b=norm(brand),n=norm(v);if(b&&n.startsWith(b+' ')&&source.split(' ').includes(b))v=v.split(/\s+/).slice(String(brand).trim().split(/\s+/).length).join(' ');
  if(!v||!(' '+source+' ').includes(' '+norm(v)+' '))return {value:original,grounded:false};
  return {value:v,grounded:true,raw:original};
@@ -101,7 +103,10 @@ function rankOcr209(refs,l){
   let score=0;const reasons=[];
   if(physical&&ids.length){if(ids.some(x=>E.numbersMatch(x,physical))){score+=100;reasons.push('identifier_agrees');}else{score-=80;reasons.push('identifier_differs');}}
   if(setCodes.length&&facts.codes.some(x=>setCodes.includes(x))){score+=60;reasons.push('set_agrees');}
-  if(keys.year&&facts.years.includes(keys.year))score+=8;
+  if(keys.year&&facts.years.some(y=>y===keys.year||l.domain==='sports'&&E.sportsSeason215(keys.year,y)))score+=8;
+  if(l.domain==='sports'){const t=appearance212(ref.title);for(const color of keys.colors){if(t.split(' ').includes(color))score+=30;else if(/\b(green|purple|silver|red|blue|gold|orange)\b/.test(t))score-=45;}
+   if(/\b(?:box|boxes|case|pack|packs|break|digital|nft)\b/.test(t))score-=150;}
+  if(/\/(?:b|keywords|discover)\//.test(ref.url||''))score-=60;
   if(keys.subject&&norm([ref.title,ref.ocr?.text].join(' ')).includes(norm(keys.subject)))score+=35;
   const model=l.pick('model_code')?.value||l.pick('sku')?.value;if(model&&norm([ref.title,ref.ocr?.text,ref.page_text].join(' ')).includes(norm(model))){score+=100;reasons.push('model_agrees');}
   // Unknown/unreadable remains eligible; language never filters discovery.
@@ -114,7 +119,7 @@ function yearReading212(value,season){const a=E.season(value),b=E.season(season)
 // A reference can challenge a reading, but only two original-photo views can replace it.
 function reconcileOriginal208(l,readings,crops){
  const accepted=[],rejected=[];
- const fields=['subject','collector_number','set_code','rarity_text','copyright','language','model_code','serial'];
+ const fields=['subject','pokedex_number','collector_number','set_code','rarity_text','copyright','language','model_code','serial'];
  for(const row of list(readings)){
   const crop=crops.find(c=>c.id===row.crop_id),field=row.field;
   const full=String(row.full_text||'').trim(),detail=String(row.crop_text||'').trim();
@@ -122,7 +127,7 @@ function reconcileOriginal208(l,readings,crops){
   const valid=crop&&crop.image_index===row.image_index&&fields.includes(field)&&row.evidence_found===true&&row.certainty==='clear'&&full&&sameView;
   if(field==='subject'&&(/^(?:CHARACTER|LEADER|EVENT|STAGE)\b/i.test(full)||full.includes('\n')||l.domain==='onepiece'&&full.includes('/'))){rejected.push({field,reason:'subject_contains_other_fields'});continue;}
   if(!valid){rejected.push({field,reason:'original_views_not_confirmed'});continue;}
-  let value=field==='collector_number'?E.number(detail):field==='language'?E.language(full):detail;
+  let value=['collector_number','pokedex_number'].includes(field)?E.number(detail):field==='language'?E.language(full):detail;
   if(!value||field==='collector_number'&&!E.numberParts(value)||field==='serial'&&!E.serial(value)){rejected.push({field,reason:'invalid_value'});continue;}
   // Conflicting replies for the same field/image never win by array order.
   if(list(readings).some(o=>o!==row&&o.field===field&&o.image_index===row.image_index&&o.evidence_found===true&&o.certainty==='clear'&&norm(o.full_text)===norm(o.crop_text)&&norm(o.crop_text)!==norm(detail))){rejected.push({field,reason:'conflicting_original_views'});continue;}
@@ -135,6 +140,7 @@ function reconcileOriginal208(l,readings,crops){
    for(const lang of ['it','en']){const name=String(row.display_names?.[lang]||'').trim();if(name&&/[A-Za-z]/.test(name)&&suffix(name)===suffix(value))l.add('subject_alias',name,{source:'original_translation',level:'inferred',certainty:'uncertain',image_index:row.image_index,translated_from:atom.id,display_language:lang});}
   }
  }
+ E.reconcileIdentifiers201(l);
  l.record('original_views_reconciled',{accepted,rejected});return {accepted,rejected};
 }
 function retrievalPool208(evaluations){
@@ -161,9 +167,10 @@ function visualEntries206(reply,refs,l){
   if(c.match!==true||c.ambiguous!==false||c.title_matches_image!==true||list(c.conflicts).length)reasons.push('unverified_image');
   if(c.original_image_index!==undefined&&(!Number.isInteger(c.original_image_index)||c.original_image_index<1||c.original_image_index>(l.base.uploaded_image_count||3)))reasons.push('invalid_original_image');
   if(c.original_view&&c.reference_view&&c.original_view!=='unknown'&&c.reference_view!=='unknown'&&c.original_view!==c.reference_view)reasons.push('different_views');
-  const features=list(c.features).filter(f=>f.agrees===true&&f.certainty==='clear'&&f.original&&f.reference);
+  const features=list(c.features).filter(f=>f.agrees===true&&f.certainty==='clear'&&f.original&&f.reference&&!(f.field==='identifier'&&/not visible|not readable|unreadable|non visibile|non leggibile/i.test(f.original+' '+f.reference)));
   const kinds=new Set(features.map(f=>f.field));
-  if(kinds.size<2||!['artwork','layout','shape'].some(f=>kinds.has(f))||!['text','identifier','symbols','configuration'].some(f=>kinds.has(f)))reasons.push('insufficient_independent_details');
+  const sportsLayout=sports&&kinds.has('artwork')&&kinds.has('layout')&&c.original_reading?.subject&&c.reference_reading?.subject&&E.subjectMatch(c.original_reading.subject,c.reference_reading.subject);
+  if(kinds.size<2||!['artwork','layout','shape'].some(f=>kinds.has(f))||!['text','identifier','symbols','configuration'].some(f=>kinds.has(f))&&!sportsLayout)reasons.push('insufficient_independent_details');
   const title=(ref.title||'')+' '+(ref.snippet||'')+' '+(ref.page_text||'');
   // Validate each value against actual supplied text, never an ellipsis invented in a quote.
   const groundedField=field=>{const value=norm(e[field]);return !!value&&(' '+norm(title)+' ').includes(' '+value+' ');};
@@ -173,13 +180,16 @@ function visualEntries206(reply,refs,l){
   for(const field of ['subject','family']){if(!groundedField(field))reasons.push('ungrounded_'+field);else fieldProof[field]={value:e[field],origin:'reference_text',url:ref.page_url||ref.url};}
   const releaseYear=groundedField('year')?E.season(e.year):'';
   if(releaseYear)fieldProof.year={value:releaseYear,origin:'reference_text',url:ref.page_url||ref.url};
-  const original=c.original_reading||{},reference=c.reference_reading||{};
+  const original=c.original_reading||{},reference={...(c.reference_reading||{})};
+  // A typed jersey observation must never become a conflicting card identifier.
+  if(sports&&/^\d+$/.test(reference.number)&&list(c.features).some(f=>{const t=[f.original,f.reference].join(' ');return /jersey|maglia|kit/i.test(t)&&new RegExp('(?:number[- ]*|No[. ]*)?'+reference.number+'(?:\\D|$)').test(t);})){reference.jersey_number=reference.number;reference.number='';if(E.numbersMatch(e.number,reference.jersey_number)&&!groundedField('number'))e.number='';}
+  const releaseCompatible=sports&&E.sportsSeason215(physical.year,e.year);
   const suffix208=v=>String(v||'').match(/(?:VMAX|VSTAR|GX|EX|ex|V)\s*$/)?.[0]?.trim()||'';
   if(suffix208(original.subject)&&suffix208(reference.subject)&&suffix208(original.subject)!==suffix208(reference.subject))reasons.push('different_reference_subject_suffix');
   if(physical.subject&&(!original.subject||!E.subjectMatch(original.subject,physical.subject)))reasons.push('different_original_subject');
   if(physical.number&&((!original.number&&!(sports&&c.original_view==='front'))||original.number&&!E.numbersMatch(original.number,physical.number)))reasons.push('different_original_number');
   if(physical.year&&original.year&&!(sports?yearReading212(original.year,physical.year):E.season(original.year)===physical.year))reasons.push('different_original_year');
-  if(physical.year&&e.year&&physical.year!==E.season(e.year)&&!(l.domain==='pokemon'&&releaseYear))reasons.push('different_year');
+  if(physical.year&&e.year&&physical.year!==E.season(e.year)&&!releaseCompatible&&!(l.domain==='pokemon'&&releaseYear))reasons.push('different_year');
   if(!sports&&physical.language&&reference.language&&!E.printingLanguageCompatible201(physical.language,reference.language))reasons.push('different_reference_language');
   if(!sports&&physical.language&&original.language&&!E.printingLanguageCompatible201(physical.language,original.language))reasons.push('different_original_language');
   const card=!['generic','sealed'].includes(l.domain);
@@ -187,9 +197,9 @@ function visualEntries206(reply,refs,l){
    if(!sports&&!physical.language)reasons.push('original_language_unresolved');
    if(physical.year&&reference.year&&!(sports?yearReading212(reference.year,physical.year):E.season(reference.year)===physical.year))reasons.push('different_reference_year');
    if(l.domain!=='pokemon'&&reference.year&&e.year&&!(sports?yearReading212(reference.year,e.year):E.season(reference.year)===E.season(e.year)))reasons.push('different_reference_year');
-   const sourceNumber=sports&&groundedField('number')&&!!releaseYear&&kinds.has('artwork')&&kinds.has('configuration');
+   const sourceNumber=sports&&groundedField('number')&&!!releaseYear&&kinds.has('artwork')&&(kinds.has('configuration')||sportsLayout&&physical.number&&E.numbersMatch(e.number,physical.number));
    if(!e.number||reference.number&&!E.numbersMatch(e.number,reference.number)||!reference.number&&!sourceNumber)reasons.push('unreadable_reference_identifier');
-   if(physical.number&&!E.numbersMatch(e.number,physical.number))reasons.push('different_number');
+   if(physical.number&&e.number&&!E.numbersMatch(e.number,physical.number))reasons.push('different_number');
    if(!physical.number&&!(sports&&sourceNumber))reasons.push('original_identifier_unresolved');
    if(!reference.subject)reasons.push('unreadable_reference_subject');
   }
@@ -208,10 +218,10 @@ function visualEntries206(reply,refs,l){
   // Keep reference readings and original observations separate. No candidate title enters the photo ledger.
   const source={url:ref.url,title:ref.title,provider:'searchapi_visual_comparison'};
   const copyrightYear=E.season(original.year)&&E.season(original.year)===E.season(reference.year)?E.season(reference.year):'';
-  fieldProof.number={value:e.number,origin:reference.number?'reference_image':'reference_text',reference_id:ref.id,url:ref.url};
+  fieldProof.number={value:e.number,identifier_type:l.domain==='pokemon'?physical.number_role:'collector_number',origin:reference.number?'reference_image':'reference_text',reference_id:ref.id,url:ref.url};
   if(copyrightYear)fieldProof.copyright_year={value:copyrightYear,origin:'compared_images',reference_id:ref.id};
   const entry={object_identity_verified:objectVerified,local_appearance:c.local_appearance||null,view_evidence:{original_image_index:c.original_image_index||null,original_view:c.original_view||'unknown',reference_view:c.reference_view||'unknown'},subject:e.subject,family:e.family,number:e.number,year:releaseYear,copyright_year:copyrightYear,field_proof:fieldProof,brand:e.brand||'',subset:e.subset||'',subset_known:!!e.subset,
-   language:E.language(reference.language),aliases:unique([reference.subject,physical.subject]),identifier_type:'collector',variants:[],
+   language:E.language(reference.language),aliases:unique([reference.subject,physical.subject]),identifier_type:l.domain==='pokemon'&&physical.number_role==='pokedex_number'?'pokedex':'collector',variants:[],
    grounded:true,entry_quote:ref.title+' '+ref.snippet,reference_page:ref.page_text?{url:ref.page_url||ref.url,text:ref.page_text}:null,source,source_tier:'lens_visual_verified',image_url:ref.image_url||ref.thumbnail,
    requires_image_confirmation:true,visual_reference_id:ref.id,display_names:e.display_names||{},visual_proof:features,reference_reading:reference};
   if(['sports','onepiece','tcg'].includes(l.domain)&&e.subset){
@@ -258,6 +268,7 @@ async function waitForService207(request,{now=()=>Date.now(),wait=ms=>new Promis
  }
  return {status:0,state:'service_startup_timeout',lastState:last?.state||null};
 }
-const api={family214,filterOcr214,frontPlan213,referenceSupport213,appearance212,yearReading212,candidateFacts209,rankOcr209,reconcileOriginal208,retrievalPool208,partialTitle208,waitForService207,visualEntries206,present206,normalize,attributes,evaluate,select,ranked,fallbackReason,url};
+function metadata215(refs,l){return rankOcr209(refs,l).map(r=>({...r,metadataStrong:r.ocrRank.reasons.includes('identifier_agrees')&&!!E.keyValues(l).subject&&norm(r.title).includes(norm(E.keyValues(l).subject))}));}
+const api={metadata215,family214,filterOcr214,frontPlan213,referenceSupport213,appearance212,yearReading212,candidateFacts209,rankOcr209,reconcileOriginal208,retrievalPool208,partialTitle208,waitForService207,visualEntries206,present206,normalize,attributes,evaluate,select,ranked,fallbackReason,url};
 if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckLens=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

@@ -316,9 +316,9 @@ test('209 every downloaded image gets OCR before progressive comparison reaches 
  const out=await scan(),v=out.identificationPipeline.visualComparison;assert.equal(v.downloadedCount,8);assert.equal(v.ocrCount,8);assert.equal(v.batches.length,2);assert.ok(v.remainingIds.includes('lens-7'));assert.equal(out.identification.market_ready,false);assert.ok(out.visualAssistance.budget.visionCalls<=4);
  const first=events.findIndex(e=>e.stage==='flipcheck_lens_image_comparison');assert.ok(events.slice(0,first).filter(e=>e.action==='ocr').length>=8);assert.ok(out.visualAssistance.budget.spentOrReservedUsd<=.03);
 });
-test('209 all 20 candidate images are OCRed even when visual budget stops before exhaustion',async()=>{
+test('215 leaves later candidate downloads deferred when comparison budget stops',async()=>{
  await reset('politoed',{lens:true,packet:candidatePacket209(),lensCandidates:Array.from({length:20},(_,i)=>({title:'Politoed Skyridge',url:'https://example.com/p'+i,image_url:'https://example.com/p'+i+'.jpg'})),mutate(d){d.pages=[];d.photoOcr=[];},lensResponse(body){return {original_readings:[],comparisons:comparedRefs209(body).map(r=>({reference_id:r.reference_id,match:false,ambiguous:true,conflicts:['unreadable'],identity:{}}))};}});
- const out=await scan(),v=out.identificationPipeline.visualComparison;assert.equal(v.downloadedCount,20);assert.equal(v.ocrCount,20);assert.equal(out.identification.market_ready,false);assert.equal(v.stopReason,'budget_or_call_limit');assert.ok(v.remainingIds.length>0);assert.ok(out.visualAssistance.budget.spentOrReservedUsd<=.03);
+ const out=await scan(),v=out.identificationPipeline.visualComparison;assert.equal(v.downloadedCount,10);assert.equal(v.ocrCount,10);assert.equal(v.deferredDownloadCount,10);assert.equal(out.identification.market_ready,false);assert.equal(v.stopReason,'budget_or_call_limit');assert.ok(v.remainingIds.length>0);assert.ok(out.visualAssistance.budget.spentOrReservedUsd<=.03);
 });
 
 test('210 recorded first Lens match closes without extra comparison or paid web',async()=>{
@@ -380,4 +380,16 @@ test('214 sixty downloaded images receive OCR before selecting matching referenc
 });
 test('214 incompatible OCR reserves web before repeated Vision comparisons',async()=>{
  await reset('politoed',{lens:true,packet:candidatePacket209(),lensCandidates:[{title:'Politoed #H24/H32',url:'https://example.com/wrong',image_url:'https://example.com/wrong.jpg'}],mutate(d){d.pages=[];d.photoOcr=[];}});const out=await scan();assert.ok(stages().includes('flipcheck_catalogue_search'));assert.equal(stages().filter(s=>s==='flipcheck_lens_image_comparison').length,0);assert.ok(out.visualAssistance.budget.spentOrReservedUsd<=.03);
+});
+
+for(const name of ['charizard','doncic'])test('215 recorded '+name+' closes in UI with no redundant detail or web call',async()=>{
+ const f=structuredClone(require('./fixtures/lens-215-'+name+'.json'));
+ await reset('politoed',{lens:true,packet:f.vision,photoCount:name==='doncic'?2:1,lensCandidates:f.references,lensComparisons:f.batches[0].reply.comparisons,lensOriginalReadings:f.batches[0].reply.original_readings,noOcr:true,mutate(d){d.pages=f.references.filter(r=>r.page_text).map(r=>({url:r.url,text:r.page_text}));}});
+ const out=await scan();assert.equal(out.identification.market_ready,true,JSON.stringify(out.identification));assert.equal(stages().filter(s=>s==='flipcheck_catalogue_search').length,0);assert.equal(stages().filter(s=>s==='flipcheck_evidence_detail').length,0);assert.equal(stages().filter(s=>s==='flipcheck_variant_comparison').length,0);assert.equal(out.identificationPipeline.visualComparison.downloadedCount,10);assert.ok(out.identificationPipeline.visualComparison.deferredDownloadCount>=48);assert.ok(out.visualAssistance.budget.spentOrReservedUsd<=.03);
+ if(name==='charizard'){assert.equal(out.identification.physical_card_number,null);assert.equal(out.identification.printed_year,null);}
+});
+test('215 sports references without exact metadata trigger targeted web before paid comparison',async()=>{
+ const f=structuredClone(require('./fixtures/lens-215-boniface.json'));
+ await reset('politoed',{lens:true,packet:f.vision,photoCount:2,lensCandidates:f.references,noOcr:true,mutate(d){d.pages=[];}});
+ const out=await scan();const web=stages().indexOf('flipcheck_catalogue_search'),comparison=stages().indexOf('flipcheck_lens_image_comparison');assert.ok(web>=0);assert.ok(comparison===-1||web<comparison);assert.ok(out.visualAssistance.budget.spentOrReservedUsd<=.03);
 });

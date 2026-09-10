@@ -1,0 +1,3546 @@
+{
+  "vision": {
+    "domain": "sports",
+    "kind": "card",
+    "category": "soccer trading card",
+    "language": "English",
+    "object_unit": "single",
+    "image_views": [
+      {
+        "image_index": 1,
+        "view": "front",
+        "certainty": "clear"
+      },
+      {
+        "image_index": 2,
+        "view": "back",
+        "certainty": "clear"
+      }
+    ],
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.12,
+        "y": 0.29,
+        "width": 0.77,
+        "height": 0.51,
+        "certain": true
+      },
+      {
+        "image_index": 2,
+        "x": 0.13,
+        "y": 0.34,
+        "width": 0.76,
+        "height": 0.49,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "Victor Boniface",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.29,
+          "y": 0.74,
+          "width": 0.42,
+          "height": 0.04
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "brand",
+        "text": "PANINI",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.16,
+          "y": 0.78,
+          "width": 0.12,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "product",
+        "text": "2025-26 PANINI - SELECT ROAD TO FIFA WORLD CUP 2026™ SOCCER",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.18,
+          "y": 0.8,
+          "width": 0.56,
+          "height": 0.025
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "subset",
+        "text": "TERRACE",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.43,
+          "y": 0.4,
+          "width": 0.12,
+          "height": 0.02
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "collector_number",
+        "text": "No. 21",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.43,
+          "y": 0.36,
+          "width": 0.12,
+          "height": 0.025
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "team",
+        "text": "NIGERIA",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.42,
+          "y": 0.7,
+          "width": 0.16,
+          "height": 0.018
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "season",
+        "text": "2025-26",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.18,
+          "y": 0.8,
+          "width": 0.12,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "copyright",
+        "text": "© 2025 Panini America, Inc.",
+        "certainty": "uncertain",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.18,
+          "y": 0.82,
+          "width": 0.4,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "ROAD TO FIFA WORLD CUP 2026",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.4,
+          "y": 0.62,
+          "width": 0.2,
+          "height": 0.07
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "PRIZM",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.43,
+          "y": 0.76,
+          "width": 0.12,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "NIGERIA FOOTBALL FEDERATION • 1945 •",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.34,
+          "y": 0.49,
+          "width": 0.3,
+          "height": 0.08
+        },
+        "zone": "back",
+        "alternatives": []
+      }
+    ],
+    "features": [
+      {
+        "field": "border_color",
+        "value": "green",
+        "description": "Cornice e fondo principali verdi",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.12,
+          "y": 0.29,
+          "width": 0.77,
+          "height": 0.51
+        },
+        "zone": "border"
+      },
+      {
+        "field": "finish",
+        "value": "reflective",
+        "description": "Superficie fortemente riflettente con effetto arcobaleno",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.12,
+          "y": 0.29,
+          "width": 0.77,
+          "height": 0.51
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "pattern",
+        "value": "archi e linee concentriche geometriche",
+        "description": "Motivo grafico ripetuto a fasce curve",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.12,
+          "y": 0.29,
+          "width": 0.77,
+          "height": 0.51
+        },
+        "zone": "artwork"
+      },
+      {
+        "field": "layout",
+        "value": "ritratto verticale con cornici curve e pannelli testuali",
+        "description": "Giocatore in posa frontale; nome in targa inferiore",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.12,
+          "y": 0.29,
+          "width": 0.77,
+          "height": 0.51
+        },
+        "zone": "artwork"
+      },
+      {
+        "field": "stamp",
+        "value": "absent",
+        "description": "Nessun timbro promozionale chiaramente visibile",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.12,
+          "y": 0.29,
+          "width": 0.77,
+          "height": 0.51
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "rookie",
+        "value": "unclear",
+        "description": "Nessun badge RC/Rookie chiaramente visibile",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.12,
+          "y": 0.29,
+          "width": 0.77,
+          "height": 0.51
+        },
+        "zone": "surface"
+      }
+    ],
+    "hypotheses": [],
+    "slab_reading": null,
+    "engine_version": 193,
+    "brand": "PANINI",
+    "family": "2025-26 PANINI - SELECT ROAD TO FIFA WORLD CUP 2026™ SOCCER",
+    "title": "Victor Boniface",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": {
+      "image_index": 1,
+      "x": 0.12,
+      "y": 0.29,
+      "width": 0.77,
+      "height": 0.51,
+      "certain": true
+    },
+    "photo_clues": [
+      {
+        "text": "Victor Boniface",
+        "role": "subject",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.29,
+          "y": 0.74,
+          "width": 0.42,
+          "height": 0.04,
+          "certain": true
+        }
+      },
+      {
+        "text": "PANINI",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.16,
+          "y": 0.78,
+          "width": 0.12,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "2025-26 PANINI - SELECT ROAD TO FIFA WORLD CUP 2026™ SOCCER",
+        "role": "model",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.18,
+          "y": 0.8,
+          "width": 0.56,
+          "height": 0.025,
+          "certain": true
+        }
+      },
+      {
+        "text": "TERRACE",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.43,
+          "y": 0.4,
+          "width": 0.12,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "No. 21",
+        "role": "collector_number",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.43,
+          "y": 0.36,
+          "width": 0.12,
+          "height": 0.025,
+          "certain": true
+        }
+      },
+      {
+        "text": "NIGERIA",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.42,
+          "y": 0.7,
+          "width": 0.16,
+          "height": 0.018,
+          "certain": true
+        }
+      },
+      {
+        "text": "2025-26",
+        "role": "season",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.18,
+          "y": 0.8,
+          "width": 0.12,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "© 2025 Panini America, Inc.",
+        "role": "copyright",
+        "certainty": "uncertain",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.18,
+          "y": 0.82,
+          "width": 0.4,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "ROAD TO FIFA WORLD CUP 2026",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.4,
+          "y": 0.62,
+          "width": 0.2,
+          "height": 0.07,
+          "certain": true
+        }
+      },
+      {
+        "text": "PRIZM",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.43,
+          "y": 0.76,
+          "width": 0.12,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "NIGERIA FOOTBALL FEDERATION • 1945 •",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.34,
+          "y": 0.49,
+          "width": 0.3,
+          "height": 0.08,
+          "certain": true
+        }
+      }
+    ],
+    "physical_observations": [
+      {
+        "feature": "color",
+        "text": "green border",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Superficie fortemente riflettente con effetto arcobaleno",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "pattern",
+        "text": "Motivo grafico ripetuto a fasce curve",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Giocatore in posa frontale; nome in targa inferiore",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Nessun timbro promozionale chiaramente visibile",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Nessun badge RC/Rookie chiaramente visibile",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      }
+    ]
+  },
+  "references": [
+    {
+      "id": "lens-1",
+      "position": 1,
+      "title": "Victor Boniface集换卡| eBay",
+      "url": "https://cn.ebay.com/b/Victor-Boniface-Trading-Cards/212/bn_7123140245",
+      "image_url": "https://i.ebayimg.com/images/g/YAEAAeSwKVxqkPZ4/s-l1200.webp",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcT4P4jfhkm0PKMXAm6VSXVVQibSAZDEreOFq-MMi0hSuBURdBXs",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "subject"
+      ],
+      "missing": [
+        "number",
+        "year",
+        "finish"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "22\nROAD TO\nFIFA\nWORLD CUP\n202G\nNIGERIA\nVICTOR BONIFACE",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-2",
+      "position": 2,
+      "title": "ヴィクター・ボニフェイス サッカーカード Panini - メルカリ",
+      "url": "https://jp.mercari.com/item/m73926335664",
+      "image_url": "https://static.mercdn.net/thumb/item/webp/m73926335664_1.jpg?1787387680",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRjrZ2hF0PheH_3zROv3ji0uoBJ4jN8Ypg5asXKyIAxEOCbNy5B",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "brand"
+      ],
+      "missing": [
+        "number",
+        "year",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "22\nVICTOR nONTFACE\n22",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-3",
+      "position": 3,
+      "title": "2026월드컵 | 번개장터 중고거래",
+      "url": "https://m.bunjang.co.kr/keywords/2026%EC%9B%94%EB%93%9C%EC%BB%B5",
+      "image_url": "https://media.bunjang.co.kr/product/429270447_1_1788655018_w180.jpg?crop=0",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTTRhji2ckM_yUeDTox9YpoQfVw1l5_QzFkQ87M__gTlmKZLRHe",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "2026"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_year"
+      ],
+      "matches": [],
+      "missing": [
+        "number",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "SECT\n22\nVICTOR BONIFACE\nDCUP",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-4",
+      "position": 4,
+      "title": "Soccer Nigeria Sports Trading Cards & Accessories ungraded ...",
+      "url": "https://www.ebay.com/b/Soccer-Nigeria-Sports-Trading-Cards-Accessories-ungraded/212/bn_7113083754",
+      "image_url": "https://i.ebayimg.com/images/g/zlwAAeSwhthqigZT/s-l1200.webp",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTYh51ymeslg7lm2PF7mYKPzlKC-rgSeO9U9qH-_MySvPONg2TV",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "year",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "SAECT\nROAD TO\nFIFA\nWORLD CUP\n2026\nNIGERIA\nVICTOR OSIMHEN\n9",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-5",
+      "position": 5,
+      "title": "Victor Osimhen [Orange Optic] #190 Prices | 2025 Panini ...",
+      "url": "https://www.sportscardspro.com/game/soccer-cards-2025-panini-donruss-road-to-fifa/victor-osimhen-orange-optic-190",
+      "image_url": "https://storage.googleapis.com/images.pricecharting.com/corrbvsxedhudrgpb2uh/1600.jpg",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTST8M8HxvqERqCA4XEDMzxrXRABT9MZQ8vz4kgz0gj4lW4Lvb3",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "190"
+        ],
+        "languages": [],
+        "years": [
+          "2025"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_number",
+        "different_year"
+      ],
+      "matches": [
+        "brand"
+      ],
+      "missing": [
+        "finish",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "ROADTO\nFIFA\nWORLD CUP\nVICTOR OSIMHEN\nNIGERIA\nOPTIC",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-6",
+      "position": 6,
+      "title": "2025-26 Donruss FIFA World Cup SILVER #190 Victor Osimhen ...",
+      "url": "https://www.ebay.com/itm/318203951416",
+      "image_url": "https://i.ebayimg.com/images/g/adgAAeSwDeVp7Qvl/s-l400.jpg",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcS4kBXQopu8mqAUq-1ffIVExe1XaapZ_az6bJA9ORR-N-wmdCfR",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "190"
+        ],
+        "languages": [],
+        "years": [
+          "2025-26"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_number"
+      ],
+      "matches": [
+        "year"
+      ],
+      "missing": [
+        "finish",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "FIFA\nWORLD CUP\nVICTOR OSIMHEN\nNIOERIA\nVICTOR os",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-7",
+      "position": 7,
+      "title": "2026월드컵 셀렉트 톨루 아로코다레 나이지리아 루키 카드 ...",
+      "url": "https://m.bunjang.co.kr/products/429271143",
+      "image_url": "https://media.bunjang.co.kr/product/429271143_1_1788655026_w320.jpg",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRbqAEngxDHtcoUqMz2S-EqEHrDxlVpLZrPBPaYVc1hcCG4CDTH",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "2026"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_year"
+      ],
+      "matches": [],
+      "missing": [
+        "number",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "SaECT\n10\nROAD TO\nFIFA\nWORLD cUP\n2026\nRC\nTO\nWORLD cUP\nROAD TO",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-8",
+      "position": 8,
+      "title": "Hakimi Golden Baller Panini FIFA 365 #panini",
+      "url": "https://www.instagram.com/p/DWnyfPZDAk9/",
+      "image_url": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRTC28JMONFnVHlHFcrP7XIi9jz5Hsx0jx9vyJOjeMgxLkErMkP",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRTC28JMONFnVHlHFcrP7XIi9jz5Hsx0jx9vyJOjeMgxLkErMkP",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "brand"
+      ],
+      "missing": [
+        "number",
+        "year",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-9",
+      "position": 9,
+      "title": "Yan Diomande [Silver] #18 Prices | 2026 Panini Prizm FIFA ...",
+      "url": "https://www.sportscardspro.com/game/soccer-cards-2026-panini-prizm-fifa-new-era/yan-diomande-silver-18",
+      "image_url": "https://i.ebayimg.com/images/g/rUAAAeSwt-ZqSGxA/s-l225.jpg",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQZGYTebnHra1SBRRtjwTrZGLEOY9er-UieLjkIRvrPfnWJh4lr",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "18"
+        ],
+        "languages": [],
+        "years": [
+          "2026"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_number",
+        "different_year"
+      ],
+      "matches": [
+        "brand"
+      ],
+      "missing": [
+        "finish",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "VAN BOMANDE\n26\nRC",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-10",
+      "position": 10,
+      "title": "トル・アロコダレ RC ナイジェリア代表 Panini Select - メルカリ",
+      "url": "https://jp.mercari.com/item/m53100383700",
+      "image_url": "https://static.mercdn.net/thumb/item/jpeg/m53100383700_1.jpg?1786682135",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrqaty71xXEvk-f9BfElxk8OlXfFn8Y6eLgvzNZ3Sl9A64CN3I",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "brand"
+      ],
+      "missing": [
+        "number",
+        "year",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "SELECE\n10\nOMTO\nwORLDCuP\nTOLU A ROKODARE",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-11",
+      "position": 11,
+      "title": "2023-24 PANINI FIFA SELECT BELLINGHAM TIE DYE #/30 PSA 10 ...",
+      "url": "https://footydepot.com/products/bellingham-tie-dye-card-arena-club",
+      "image_url": "https://footydepot.com/cdn/shop/files/52afa307-7c10-431e-98dd-63c2678b0880_slab_1771048259.9262443.avif?v=1772160972&width=1080",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRJocisCxn5Wfj0P5HTJp6nLag8SsoWUGeUScWoVfJ66t6cWjUl",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "2023-24"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_year"
+      ],
+      "matches": [
+        "brand"
+      ],
+      "missing": [
+        "number",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "2023-24 SELECT FIFA\nJUDE BELLINGHAM\nTIE-DYE\nPSA\nSEECT\nFIFA\nENGLAND\nJUDE BELLINGHAM\n#177\nGEM MT\n10\n97395001",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-12",
+      "position": 12,
+      "title": "Goldin | The Global Go-To For High-End Collectibles",
+      "url": "https://goldin.co/item/2022-23-panini-select-fifa-green-210-bukayo-saka-4-5-psa-gem-mt-10emle1?queryId=eyJjYXJkSW5kZXgiOjEwfQ==",
+      "image_url": "https://d2tt46f3mh26nl.cloudfront.net/public/Lots/202607-1712-2037-e7638b2e-7456-4979-928d-957a789c4beb/d9eb5f1b-fb7d-455b-a76d-846bb20bfedf@1x",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRGwi6ae3KCLgARQyTBWRBVsb1SlA--isKUQqKK3LOn-r75uzLQ",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "year",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "FIFA'\nBUKAYO SAKA\nGREEN\n82560147\n10\nBUKAYO SAKA\n2022-23 SELECT FIFA\nGEM MT\n#210\nFEA\nEN\nECT",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-13",
+      "position": 13,
+      "title": "Sadio Mane Soccer Cards Price Guide - Sports Card Investor",
+      "url": "https://www.sportscardinvestor.com/subjects/sadio-mane-soccer",
+      "image_url": "https://images.production.sportscardinvestor.com/303_666_525-L",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQ0nHVO-td1NTdFCMe9g3hPOWTjeIijTMxWzEeHUTlvJeasDA3X",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "year",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "10\nSADIO MANÉ\nUasEN EG A\nroA CLD\nRUSSIA\n2018",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-14",
+      "position": 14,
+      "title": "2024-25 PANINI SELECT Fifa Soccer Yunus Musah Gold Wave /10 ...",
+      "url": "https://picclick.co.uk/2024-25-Yunus-Musah-Panini-Select-FIFA-Gold-Wave-136931225019.html",
+      "image_url": "https://www.picclickimg.com/05MAAeSwyXRp~fwO/2023-24-Panini-Select-FIFA-United-States-USA-Yunus.webp",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSPrCKGykqsM7vtbu8AYi_8FTBg1pSawC7aS6l68adqGlO1ydCC",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "2024-25"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_year"
+      ],
+      "matches": [
+        "brand"
+      ],
+      "missing": [
+        "number",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "FIFA\nSIECT\n6\n6\nUNITED STATEs\nYUNUS MUSAH",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-15",
+      "position": 15,
+      "title": "📉 SAKA MARKET STALES: Bukayo Saka's 2023-24 Panini Select ...",
+      "url": "https://www.instagram.com/p/DXmPIgpmebi/",
+      "image_url": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQBTblmF490hgjnMQoABwoCMF7mYQTG21Nj63J-NT0t2M_hPuE4",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQBTblmF490hgjnMQoABwoCMF7mYQTG21Nj63J-NT0t2M_hPuE4",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "2023-24"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_year"
+      ],
+      "matches": [
+        "brand"
+      ],
+      "missing": [
+        "number",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "$346\nSold on sa/a/6\n$250\nSold cn a/an/6\nST",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-16",
+      "position": 16,
+      "title": "Victor Osimhen 2026 Panini Donruss #190",
+      "url": "https://www.bycollectors.store/en/victor-osimhen-card-2026-panini-donruss-road-to-fifa-world-cup-190-silver-33628",
+      "image_url": "https://www.bycollectors.store/image/cache/catalog/demo_files/F010720260262PANINI-DONRUSS-SILVER-resized-1000x1377.webp",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTbb_cScxoOPQg3wZ3V9HFBSM7yK1rWvKN52yc1HSn86OHikla0",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "190"
+        ],
+        "languages": [],
+        "years": [
+          "2026"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_number",
+        "different_year"
+      ],
+      "matches": [
+        "brand"
+      ],
+      "missing": [
+        "finish",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "ROAD TO\nFIFA\nWORLD CUP\nVICTOROSIMHEN\nNIGERIA\n|1||\\|11111111I|1\nDONRUSs\n9",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-17",
+      "position": 17,
+      "title": "Fifa 22 Card - Etsy UK",
+      "url": "https://www.etsy.com/uk/market/fifa_22_card",
+      "image_url": "https://i.etsystatic.com/62916312/r/il/8b32e9/7522707927/il_fullxfull.7522707927_75bx.jpg",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgb2YFcPNtDoy6RFTmLnYu5y4z3LH3KMIfE7wTkdAB23TbH9ho",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "year",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "2021/22 DONRUSS RD/QATAR\nKYLIAN MBAPPE\nOPTIC-GREEN VELOCITY\nOPTIc\nDONRUBS\nRosd to\nFIFAWoRLD CU\nQatar2022\n#60\nGEM MT\nPSA\n10\n71337613\nKYLIAN MBAPPE",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-18",
+      "position": 18,
+      "title": "Panini Soccer Galatasaray Sports Trading Cards for sale | eBay",
+      "url": "https://www.ebay.com/b/Panini-Soccer-Galatasaray-Sports-Trading-Cards/261328/bn_7113368419",
+      "image_url": "https://i.ebayimg.com/images/g/AKYAAeSwa2dqdjJS/s-l1200.webp",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRyj7WhA9BLxD56LpFH4n6QpzIvSUKXnyuVWhMlJMnlTBlMFP9a",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "brand"
+      ],
+      "missing": [
+        "number",
+        "year",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "ROAD TO\nFIFA\nWORLD CUP\nVICTOR OSIMHEN\nNIGERIA\nDPTIC\nDONRUSs",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-19",
+      "position": 19,
+      "title": "Carte panini lamine yamal | Vinted",
+      "url": "https://www.vinted.ie/items/8406753032-carte-panini-lamine-yamal",
+      "image_url": "https://images1.vinted.net/t/02_00e75_CX5Qa9vvVurZU5wMChWW3Qw9/310x430/1788549008.webp?s=a2b8e3f5cfe0838c2b13161eca9ae03977a4d297",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQwRX2Mdxb1XIUhC6bJKYD0JJNCHLe2muiCyOSbwOrWXZCjqgA",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "brand"
+      ],
+      "missing": [
+        "number",
+        "year",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "SELECT\nWORLD CUP\nMIEICO\nRAÚL JIMÉNEZ",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-20",
+      "position": 20,
+      "title": "Adrenalyn Xl FIFA World Cup 2026 - Scegli Card da da 10 a ...",
+      "url": "https://calciatori2016.com/products/adrenalyn-xl-fifa-world-cup-2026-scegli-card-da-da-10-a-213",
+      "image_url": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRGtXEyJ5bd_2X7sQLaMbRhTwVAsk4te_F0JJiyzjCp_lC6HyGP",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRGtXEyJ5bd_2X7sQLaMbRhTwVAsk4te_F0JJiyzjCp_lC6HyGP",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "2026"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_year"
+      ],
+      "matches": [],
+      "missing": [
+        "number",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "85\n83\nRIVAD MAHREZ\n234\nPAMIKI\n12",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-21",
+      "position": 21,
+      "title": "Bukayo Saka #84 Prices | 2022 Panini Prizm World Cup ...",
+      "url": "https://www.sportscardspro.com/game/soccer-cards-2022-panini-prizm-world-cup/bukayo-saka-84",
+      "image_url": "https://i.ebayimg.com/images/g/o2EAAOSwWctjmkit/s-l225.jpg",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLW2lOLhrs12pQ6XjY_I6dTZ8hKx2NSLlMLDex3PPbOqEnzJkl",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "84"
+        ],
+        "languages": [],
+        "years": [
+          "2022"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_number",
+        "different_year"
+      ],
+      "matches": [
+        "brand"
+      ],
+      "missing": [
+        "finish",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "BUKAYO SAMA",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-22",
+      "position": 22,
+      "title": "Shop Jude Bellingham 2024-25 FIFA Select NFT Digital",
+      "url": "https://nft.paniniamerica.net/packcard-2159_420334_11583772_67__265_342.html",
+      "image_url": "https://assets.paniniamerica.net/catalog/product/pack/996/thumbnail/pack/Soccer/24_25_Select_FIFA/cards/067A_109829_0102F1_BaseSetTer_BC_1-1_265_342.png",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSyhtdlC5DLOvZPw_neZw-JNntOJ8yws9qDJI44mWEFm3AuS_0q",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "2024-25"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_year"
+      ],
+      "matches": [],
+      "missing": [
+        "number",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "265342\nSAEST\n8\nFIFA\nENGLAND\nJUDE BELLINGHAM\nP\nJUDE\nBELLINGHAM",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-23",
+      "position": 23,
+      "title": "Panini Select Road to FIFA World Cup 2026 - Hobby Box ...",
+      "url": "https://thecollectiblesshop.fr/products/hobby-box-select-road-to-fifa-world-cup-2026-soccer-panini",
+      "image_url": "https://thecollectiblesshop.fr/cdn/shop/files/2025-26-panini-select-road-to-fifa-world-cup-2026-soccer-cards-select-pairings-dual-autograph-boniface-lookman.avif?v=1786616045&width=1946",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTzhxMHSPH-oHyJuYJok-D48I3LskOKrj7t2GPV94df3X9VWWU1",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "2026"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_year"
+      ],
+      "matches": [
+        "brand"
+      ],
+      "missing": [
+        "number",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "VICTOR BONIFACE NIGERIA\nBt\nSELECT\n22\nSELECT PAIRINGS\nADEMOLA L0OKMAN NIGERIA\nROAD TO\nFIFA\nWORLDgUP\n25\n202\n26\n22\nCUP",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-24",
+      "position": 25,
+      "title": "Declan Rice Lamina Panini | TikTok",
+      "url": "https://www.tiktok.com/discover/declan-rice-lamina-panini",
+      "image_url": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTj-k8lx_CHtPMKnIBrrjHf2fFFBlF5aAglXhFy89LI8Md6ezza",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTj-k8lx_CHtPMKnIBrrjHf2fFFBlF5aAglXhFy89LI8Md6ezza",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "brand"
+      ],
+      "missing": [
+        "number",
+        "year",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "Card of the day #49",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-25",
+      "position": 26,
+      "title": "Football Trading Card - Riyad Mahrez - Icon - Algeria ...",
+      "url": "https://www.worldtradingcards.com/en/products/riyad-mahrez-icon-12-argelia-panini-adrenalyn-xl-fifa-world-cup-basico",
+      "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTY0EebS7gPlCMNXdX_E-bx0R6g3W49irDmI9Q9RpD_upaFFP_o",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTY0EebS7gPlCMNXdX_E-bx0R6g3W49irDmI9Q9RpD_upaFFP_o",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "year",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "12\n60B583 234\nRIVAD IMAHREZ\nICON\nPANI",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-26",
+      "position": 27,
+      "title": "2025-26 Donruss Road to FIFA World Cup #193 Alex Iwobi ...",
+      "url": "https://www.walmart.com/ip/2025-26-Donruss-Road-to-FIFA-World-Cup-193-Alex-Iwobi-Nigeria-Soccer-Futbol-Base-Trading-Card/20264506289?conditionGroupCode=4",
+      "image_url": "https://i5.walmartimages.com/asr/45641cb8-e09d-42c9-8a7a-9c74e4bdda9b.d435fd84a9a89d646e98ff5a54c039b3.jpeg?odnHeight=768&odnWidth=768&odnBg=FFFFFF",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQYLOMKK_kJunLMRbuZhOfY-jyiLUZ4HGlcBrpRMUoNg85zctPm",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "193"
+        ],
+        "languages": [],
+        "years": [
+          "2025-26"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_number"
+      ],
+      "matches": [
+        "year"
+      ],
+      "missing": [
+        "finish",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "ROAD TO\nFIFA\nWORLD CUP\n21\nALEX IWOBI\nNIGERIA\n1111I111\n17\nDONRUss\n1111I11\n21",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-27",
+      "position": 28,
+      "title": "Vini Jr Black gold card #matchattax #topps",
+      "url": "https://www.instagram.com/p/DWnxK6MDANO/",
+      "image_url": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRUgqhU4jbP6vRg1Wlu_b-3FjyiwIuOqRydBnL_M1p3Y13doyW_",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRUgqhU4jbP6vRg1Wlu_b-3FjyiwIuOqRydBnL_M1p3Y13doyW_",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "year",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "22\nVICTOR BONTFACE",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-28",
+      "position": 29,
+      "title": "⚽️ FIFA World Cup 2026 ⚽️ Vozinha | Cape Verde Base Card ...",
+      "url": "https://www.threads.com/@rare.cards.world/post/DaeNwqhj81y/fifa-world-cup-vozinha-cape-verde-base-card-an-absolute-stunner-from-the-latest/",
+      "image_url": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcS6xw5TNRBzqxscSdCx1JgKEY4J4h8M5qGpL13DZkABgOZqt3Qd",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcS6xw5TNRBzqxscSdCx1JgKEY4J4h8M5qGpL13DZkABgOZqt3Qd",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "2026"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_year"
+      ],
+      "matches": [],
+      "missing": [
+        "number",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "SaECT\n10\nFiA\nwoRLDP\nEBEECHỊ EZE",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-29",
+      "position": 30,
+      "title": "Hit for a yan diomande gold wave /10 and can't find any ...",
+      "url": "https://www.reddit.com/r/sportscards/comments/1v8eneg/hit_for_a_yan_diomande_gold_wave_10_and_cant_find/",
+      "image_url": "https://preview.redd.it/hit-for-a-yan-diomande-gold-wave-10-and-cant-find-any-comps-v0-wdlkdyhxgufh1.jpg?width=640&crop=smart&auto=webp&s=529bab20f9c4218cb059335b3d58fa749cee19aa",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRpL2FRB8bIW1hYBkOoXAnANhXfNwjnmktaIZZjpZXsdtA-s_Qh",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "year",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "KPRZN\nVAN DIOMANDE\nIVORV COAST\nRC",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-30",
+      "position": 31,
+      "title": "Buy Cards Haji Wright Mezzanine 2022 23 Panini Select Fifa",
+      "url": "https://www.euro-soccer-cards.com/gb/select-fifa-2022-23/haji-wright-mezzanine-united-states-180-select-fifa-2023-24",
+      "image_url": "https://www.euro-soccer-cards.com/121370-large_default/haji-wright-mezzanine-united-states-180-select-fifa-2023-24.jpg",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRSSKs3lHmOkHQeZnsuy2OZ1yT509KZLvISi_ZVCFG8gj2nJS0O",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "2022"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_year"
+      ],
+      "matches": [
+        "brand"
+      ],
+      "missing": [
+        "number",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "FIFA\nSECT\n19\nUNITED STATES\nHAJI WRIGHT\nRC",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-31",
+      "position": 32,
+      "title": "2025-26 PANINI DONRUSS ROAD TO FIFA WORLD CUP PINK LAZER ...",
+      "url": "https://www.ebay.com/itm/318267921329",
+      "image_url": "https://i.ebayimg.com/images/g/A6EAAeSwLGBp~TFH/s-l1200.jpg",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6fXcUHMfPiTAxbT0aaRiPK4is5oBpRsnn8PtFsnLGF8fqMlTp",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "2025-26"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "year",
+        "brand"
+      ],
+      "missing": [
+        "number",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "SIG N ATURES E RE S\nDONRUSS\nNIGERIA\nROAD TO\nFIFA\nWORLD CUP\nMOSES SIMON",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-32",
+      "position": 33,
+      "title": "2026 PANINI PRIZM FIFA World Cup EMMANUEL EMEGHA 163/299 ...",
+      "url": "https://picclick.co.uk/2026-Panini-Prizm-FIFA-World-Cup-EMMANUEL-EMEGHA-307162033294.html",
+      "image_url": "https://www.picclickimg.com/UpQAAeSwWihqlYLP/Panini-Prizm-FIFA-World-Cup-2026-Sadio-Man%C3%A9.webp",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSckWGuyVfYrNeRwTArmardRQyiGvv4z3_MGr_MiuZhWe8ov54Q",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "163/299"
+        ],
+        "languages": [],
+        "years": [
+          "2026"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_number",
+        "different_year"
+      ],
+      "matches": [
+        "brand"
+      ],
+      "missing": [
+        "finish",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "SENEGAL\nSADIO MANÉ\n2026",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-33",
+      "position": 34,
+      "title": "PANINI DONRUSS OPTIC 2026 FIFA RATED ROOKIES OSAME SAHRAOUI ...",
+      "url": "https://dibditcards.com/product/panini-donruss-optic-2026-fifa-r-635bb",
+      "image_url": "https://prodmanual-imageoptimizat-districtoriginalimagebuc-crt18bxfdhes.s3.amazonaws.com/image/ce6bf73d-87cb-43ef-bd50-7852555dd42a.jpg",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTnq6RT_SWVjw99WQIqa29XymJdUu0HYLSrjB85HXEs9FL1_HmI",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "2026"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_year"
+      ],
+      "matches": [
+        "brand"
+      ],
+      "missing": [
+        "number",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "OSAME SAHRAOUI\nMOROCCO\nSRATED\n200HIE\n26\nOPTIC\nDONRUss\nROADTO\nFIFA\nWORLD CUP",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-34",
+      "position": 35,
+      "title": "Shop Riyad Mahrez 2026 Prizm World Cup Soccer NFT Digital",
+      "url": "https://nft.paniniamerica.net/packcard-2332_486953_12679198_135__47_49.html",
+      "image_url": "https://assets.paniniamerica.net/catalog/product/pack/1038/thumbnail/pack/Soccer/2026/2026_PrizmWorldCup/cards/035A_113249_0141F2_Base_BC_2-11_47_49.png",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcShB2Cd8F5MGzFLzY_q-fCQLPmQLd_vbhFyaFQteKdPEhvwl9Pn",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "2026"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_year"
+      ],
+      "matches": [],
+      "missing": [
+        "number",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "PKZN\nALGERIA\nRIVAD MAHREZ\n47/49.\n2026",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-35",
+      "position": 36,
+      "title": "Sadio Mane Soccer Cards",
+      "url": "https://www.comc.com/Players/Soccer/Sadio_Mane/c298904/Cards/Soccer",
+      "image_url": "https://img.comc.com/i/Soccer/2018/Panini-Prizm-World-Cup---Base---Silver-Prizm/282/Sadio-Mane.jpg?id=c7572b2c-735d-4689-9da7-7ae1ee2e0392&size=biggerthumb",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQsTC4vS-HAmaqlig6cspMAowYCYe8Rrtup80H1EpMn82t-fmAZ",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "year",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-36",
+      "position": 37,
+      "title": "Panini 2025/2026 Donruss Road To FIFA World Cup 2026 Soccer ...",
+      "url": "https://www.gamesmen.com.au/panini-2025-2026-donruss-road-to-fifa-world-cup-2026-soccer-blaster-box",
+      "image_url": "https://static.gamesmen.com.au/media/catalog/product/cache/57ddbad6affa8d28869fa47188b75842/p/a/panini_20252026_donruss_road_to_fifa_world_cup_2026_soccer_blaster_box_2_.jpg",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRTmhThSxRmte8FDnDKD979UD5dLAe9vvP14k6dimgzl-bZ3aK2",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "2025/2026"
+        ],
+        "languages": [],
+        "years": [
+          "2025-2026",
+          "2026"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_number",
+        "different_year"
+      ],
+      "matches": [
+        "brand"
+      ],
+      "missing": [
+        "finish",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "ROAD TO\nFIFA\nWORLD CUP\nVICTOR BONIFACE\nNIGERIA\nOPTIC\nO",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-37",
+      "position": 38,
+      "title": "2025-26 Donruss FIFA World Cup OPTIC CHROME Rated Rookie ...",
+      "url": "https://myslabs.com/slab/view/1605345/",
+      "image_url": "https://cdn.myslabs.com/myslabs-prod/media/6b75d758-1450-4c09-98f4-345debf5c090/2026/05/13/RHKIWGS_1778696952_1.png?width=800&quality=90",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQUUuTmzFVYOFW9mikKVX9aCGxH57_14vVAeVKopNsl5hsaHZlk",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "2025-26"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "year"
+      ],
+      "missing": [
+        "number",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "ILAY CAMARA\nSENEGAL\nSRATED\nROOHIE\nOPTIC\nNRUSS\nROAD TO\nFIFA\nWORLD CUP",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-38",
+      "position": 39,
+      "title": "Goldin | The Global Go-To For High-End Collectibles",
+      "url": "https://goldin.co/item/2020-panini-select-uefa-signatures-sijf-joao-felix-signed-card-psa-gem9x7bq?queryId=eyJjYXJkSW5kZXgiOjF9",
+      "image_url": "https://d2tt46f3mh26nl.cloudfront.net/public/Lots/202408-2914-1207-e41e6701-7d8f-4da5-b20e-d0b96e2b6111/cf100248-ae73-4f5a-9379-3e520446f3cb@1x",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQfG562fENrulaObXf644tf9QSvWNt9s4YdO-tSVNA6qqSRgOJv",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "year",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "2020 SELECT UEFA EURO\nJOAO FELIX\nSIGNATURES\nEURO2020\nST\nJOÃO FÉLIX\nPORTUGAL\n#SIJF\nGEM MT\n10\n51238133",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-39",
+      "position": 40,
+      "title": "2025/26 Panini Donruss Road To FIFA World Cup Soccer Hobby ...",
+      "url": "https://legendsfanshop.com/products/202526-panini-donruss-road-to-fifa-world-cup-26-soccer-hobby-box",
+      "image_url": "https://legendsfanshop.com/cdn/shop/files/202526-panini-donruss-road-to-fifa-world-cup-26-soccer-hobby-box__20064.jpg?v=1776956316&width=1052",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaptr9jWmUQjAig9xqWIzGwfiX4IUkGO9epUkQNUiGVDckJnnF",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "2025/26"
+        ],
+        "languages": [],
+        "years": [
+          "2025-26"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_number"
+      ],
+      "matches": [
+        "year",
+        "brand"
+      ],
+      "missing": [
+        "finish",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "2025-26 DONRUSS ROAD TO FIFA WORLD CUP 26TM SOCCER\nCard lnages ae solely for the purpose of design\nPANINI\nBASE SET\nwORLD CuP\nVICTOR BONIFACE\nCand images av solely for the purpos ot desiga display.\nHOBBY\nBASE SET OPTIC GREEN\n2025-26 socCER TRADING CARDS HOBBY\nNORTHERN IRE\nFEA\nwORLD CUP\nCand lnags av solely for the purpoe od desn display\nRATED ROOKIES\nThe 250-card Base Set is comprised of 200 Base and 50 Rated Rookies. Unwrap a plethora of Parallels in each box.\nAll infamation is accuate at the time at posting-comtent is subject to change. Card images are solely for the parpase of deskgn display.\nActual images used on cands ta be deternined. E225 Panini Aimerica, Ine o FIFA, FIFAS Offcial Licensed Product Logs, and the Enblems, Mascots, Pastees and Trophies af the F1FA World Cupr\ntoumaments are copytights and'or trademarks of FIEA\nNORTHERN IREAN\nFIFA\nwORLD CUP\nMEXICO\nPTIC GREEN\nFIFA\nHO\nG\noRLD CUP",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-40",
+      "position": 41,
+      "title": "Football Trading Card-Youssef En-Nesyri-Morocco-Panini ...",
+      "url": "https://www.worldtradingcards.com/en/products/youssef-en-nesyri-599-marruecos-panini-adrenalyn-xl-fifa-world-cup-goal-machine",
+      "image_url": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSi8Hl1aSiue31P5CFmVBnDXk7EoL3UWtUZcAzjTlNpjGbPu1nj",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSi8Hl1aSiue31P5CFmVBnDXk7EoL3UWtUZcAzjTlNpjGbPu1nj",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "brand"
+      ],
+      "missing": [
+        "number",
+        "year",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "(G5 B2 96 242\nVOUSSEF EN-NESVRI\nGOAL MACHINE\nPA",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-41",
+      "position": 42,
+      "title": "25/26 DONRUSS FIFA WORLD CUP AVAILABLE AT OUR VANDERBILT ...",
+      "url": "https://www.instagram.com/p/DXe0ZlIjhiM/",
+      "image_url": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQyfO87LTpzXHlX5SoKBwB6FBba1Jk5zDJ-4T84B9GwzaB3T_aE",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQyfO87LTpzXHlX5SoKBwB6FBba1Jk5zDJ-4T84B9GwzaB3T_aE",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "25/26"
+        ],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_number"
+      ],
+      "matches": [],
+      "missing": [
+        "year",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "SLECT\n25\nMORLDCuP\nEL HADIT MALICK DIOUI",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-42",
+      "position": 43,
+      "title": "Victor Osimhen [Blue] #14 Prices | 2025 Panini Donruss Road ...",
+      "url": "https://www.sportscardspro.com/game/soccer-cards-2025-panini-donruss-road-to-fifa-magicians/victor-osimhen-blue-14",
+      "image_url": "https://i.ebayimg.com/images/g/YCUAAeSwFU1qEaK3/s-l225.jpg",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIIvMUfsdfwvdtvDSEarfrPTryejl249Tsp1yXEb_-nD60oA8g",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "14"
+        ],
+        "languages": [],
+        "years": [
+          "2025"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_number",
+        "different_year"
+      ],
+      "matches": [
+        "brand"
+      ],
+      "missing": [
+        "finish",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "VICTOR oSIMHEN",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-43",
+      "position": 44,
+      "title": "Victor Osimhen Trading Cards for sale | eBay",
+      "url": "https://www.ebay.com/b/Victor-Osimhen-Trading-Cards/212/bn_7123136200",
+      "image_url": "https://i.ebayimg.com/images/g/jj8AAeSwNk5qM1N9/s-l1200.webp",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQac71i_XLaTWys72QHT7RBnLwuQSeQCRi2AEFW7SDHx0QU8cl9",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "year",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "ROAD TO\nFIFA\nWORLD cUP\nVICTOR OSIMHEN\nNIGERIA\nOPTIC\nDONRUSS",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-44",
+      "position": 45,
+      "title": "Shop Christ Inao Oulai 2026 Prizm World Cup Soccer NFT",
+      "url": "https://nft.paniniamerica.net/packcard-2332_486967_12675529_254__44_259.html",
+      "image_url": "https://assets.paniniamerica.net/catalog/product/pack/1039/thumbnail/pack/Soccer/2026/2026_PrizmWorldCup/cards/054A_113250_0141F3_Base_BC_3-1_44_259.png",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSnr2YJKQo8G-Vudv4mSmZ3I6TC50roferNtsgN1F1IgGL3ZjS4",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "2026"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_year"
+      ],
+      "matches": [],
+      "missing": [
+        "number",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "EA\nPRZN\nIvORV COAST\nCHRIST INAO OULAİ\n/259\nOOKIE,\nRC\n2026\nP\nCARD",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-45",
+      "position": 46,
+      "title": "Hanger Pull : r/soccercards",
+      "url": "https://www.reddit.com/r/soccercards/comments/1w6nety/hanger_pull/",
+      "image_url": "https://preview.redd.it/hanger-pull-v0-12kykef11enh1.jpg?width=640&crop=smart&auto=webp&s=bff600c033c512747a6a0178f7be1092669fb97c",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQAm2h-mwR_ea-f7w7ozhCRWdzzaZHD7tHj6T9IG_rHVPc_2ppi",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "year",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "FIFA\nwORLD CUP\n2026\nPRZN\nMOROcco\nBRAHIM DÍAZ\ne\nFA",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-46",
+      "position": 47,
+      "title": "Bukayo Saka 2022 Prizm World Cup #84 Green Wave Price Guide ...",
+      "url": "https://www.sportscardinvestor.com/cards/bukayo-saka-soccer/2022-prizm-world-cup-green-wave-84",
+      "image_url": "https://i.ebayimg.com/images/g/pygAAeSwh5lp3R3m/s-l1600.jpg",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSut3H4BFXOFI--GyeKtmUfIe7Ixs-xz9Y-UytKFy05m2W-Jgr",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "84"
+        ],
+        "languages": [],
+        "years": [
+          "2022"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_number",
+        "different_year"
+      ],
+      "matches": [],
+      "missing": [
+        "finish",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "PRN\nENGLAND\nBUKAYO SAKA\nFIFA WORLD CUP\nQat ar2022",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-47",
+      "position": 48,
+      "title": "Card LE-DD: Desiré Doué - Panini FIFA World Cup 2026 ...",
+      "url": "https://www.laststicker.com/cards/panini_world_cup_2026_adrenalyn_xl/le-dd/",
+      "image_url": "https://www.laststicker.com/i/cards/12029/le-dd.jpg",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQ71RG9YtCoYE0bBGACuFcBpDjF8HuLLiziUVnfiYRfhn_kDFQX",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "2026"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_year"
+      ],
+      "matches": [
+        "brand"
+      ],
+      "missing": [
+        "number",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "aB NOIOTMTEDGN\n95 93\nDÉSIRÉ DOUE\n268\nLastSticker.com",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-48",
+      "position": 49,
+      "title": "Super Eagles winger Moses Simon was in action as Paris FC ...",
+      "url": "https://www.facebook.com/completesportsnigeria/posts/super-eagles-winger-moses-simon-was-in-action-as-paris-fc-defeated-marseille-3-2/1482102233951999/",
+      "image_url": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcR1uctA7cylEFFbM5DCntO_esCazfu1BP9HBGP46_-L4btxFbUE",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcR1uctA7cylEFFbM5DCntO_esCazfu1BP9HBGP46_-L4btxFbUE",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "year",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-49",
+      "position": 50,
+      "title": "2026 Topps Finest UCC Julian Alvarez… - € 3,00 - Vendora.gr",
+      "url": "https://vendora.gr/items/ey3qpoo/2026-topps-finest-ucc-julian-alvarez-prized-footballers-atletico-karta.html",
+      "image_url": "https://bcdn.vendora.gr/0/30/49/3049e47c75c651afc4b8651dc3642ba1c7bb792a.jpg?class=mrec",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTjCH4jISmXvm6_nIIyqo7TN6t5gVMSXfCr0fzbQmMVmAK51xpo",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "2026"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_year"
+      ],
+      "matches": [],
+      "missing": [
+        "number",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "ALOERIA\nAMINE GOUIRI",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-50",
+      "position": 51,
+      "title": "2025-26 Select Road to World Cup Mexico Raul Jimenez 1/5 - ecay",
+      "url": "https://ecaytrade.com/advert/553615",
+      "image_url": "https://im.ecaytrade.com/t/GST02/ABLa205Z87Xhg9zLRZUBT14Fp2xXIv76.jpg",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSYopuIdFk512OS5gTZ2wFBYjpM66ho1kPh6XdJgFbZDYyhEcdR",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "1/5"
+        ],
+        "languages": [],
+        "years": [
+          "2025-26"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_number"
+      ],
+      "matches": [
+        "year"
+      ],
+      "missing": [
+        "finish",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "SELECT\noAD TO\nFIFA\nwORLD CUP\n2020\n8\nWORLD CUP",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-51",
+      "position": 52,
+      "title": "Jackson Irvine Soccer Player Card",
+      "url": "https://www.pinterest.com/ideas/jackson-irvine-soccer-player-card/938273499999/",
+      "image_url": "https://i.pinimg.com/236x/d0/fe/89/d0fe89c41b5f597922482d7c574356cb.jpg",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQvgWmLoaUuayblm0TAo27akutD17DF_gP9tsth-U35rSRZhaBy",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "year",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "KEVIN OE BRUNE\n7",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-52",
+      "position": 53,
+      "title": "panini fifa 365 2018 #347 kalidou koulibaly (ss - Acquista ...",
+      "url": "https://it.todocoleccion.net/figurine-calcio/panini-fifa-365-2018-347-kalidou-koulibaly-ssc-napoli~x121433732",
+      "image_url": "https://cloud10.todocoleccion.online/cromos-futbol/tc/2023/11/04/19/442945997.jpg?size=292x292&crop=true",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSL_6qSFz3hnwxeZ6_HDSEjvxHp-bjyYcsWjPCWWebtV6t76E4y",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "347"
+        ],
+        "languages": [],
+        "years": [
+          "2018"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_number",
+        "different_year"
+      ],
+      "matches": [
+        "brand"
+      ],
+      "missing": [
+        "finish",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "SEN\nKaLDOU KOULTBALY\n94 A897\n84PowER 26\nTITAN\nE",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-53",
+      "position": 54,
+      "title": "Soccer Future Watch: Sadio Mané Soccer Cards, Al Nassr",
+      "url": "https://gogts.net/soccer-future-watch-sadio-mane-soccer-cards-al-nassr/",
+      "image_url": "https://gogts.net/wp-content/uploads/2024/04/Mane-Prizm-World-Cup.png",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcS-zg1nz2E1fdCtkS61naASQlNcmaJFb4ewbmKkg6lB1Q6LqRW8",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "year",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "SADIO MANÉ\nSENEGAI\nFIFA WORLD CUP\nROSSIA\n2018",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-54",
+      "position": 55,
+      "title": "2018 Panini Prizm World Cup Prizms Silver #139 Alex Iwobi on ...",
+      "url": "https://www.fanaticscollect.com/buy-now/eed26db9-ec2d-4f4c-920e-4531085f1aa9/2018-panini-prizm-world-cup-prizms-silver-139-alex-iwobi",
+      "image_url": "https://img.beckett.com/images/items/15394169/marketplace/97255280/front.jpg",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRVlUzGC0mHSuq1_HgXZ2l4a-6CQeo0fsw1UNkFFsaNN9NoM4hb",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "139"
+        ],
+        "languages": [],
+        "years": [
+          "2018"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_number",
+        "different_year"
+      ],
+      "matches": [
+        "brand"
+      ],
+      "missing": [
+        "finish",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "ALEX IWOBI\nNIGERIA\nFIFA WORLD CUP\nRUSSIA\n2018\nA WORLDa",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-55",
+      "position": 56,
+      "title": "La Liga - Shop All",
+      "url": "https://www.londonsportscards.co.uk/shopall/cat_1827129-La-Liga.html",
+      "image_url": "https://sites.create-cdn.net/siteimages/65/3/2/653254/21/0/4/21047520/717x1000.jpg?1716204237",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRCzOhk47PXSb2ZToxMZLs-8I03uqd3U3_EvnwY-sVrv9_AVNMg",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "year",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "ST\nLalLiga\nSantander\nELCHE CE\nRAÚL GUTI\nE",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-56",
+      "position": 57,
+      "title": "Did Victor Boniface Truly Announce Retirement Here's What We ...",
+      "url": "https://www.youtube.com/watch?v=LR9XJvutfTY",
+      "image_url": "https://i.ytimg.com/vi/LR9XJvutfTY/sddefault.jpg",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRRXuCUG9PfR7pL2G_CvDOwfNn0CSSCmA4ehSqNIRbcARl1aAKT",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "subject"
+      ],
+      "missing": [
+        "number",
+        "year",
+        "finish"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "DID VICTOR\nBONIFACE TRULY\nANNOUNCE\nRETIREMENT\nHERE'S WHAT WE\nKNOW\nSUBSCRIBE\n22\n2",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-57",
+      "position": 58,
+      "title": "Ola Aina — 81 OVR | eFHUB",
+      "url": "https://efhub.com/players/105822977894783",
+      "image_url": "https://efimg.com/efootballhub22/images/player_cards/105822977894783_l.png",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQf0jf1Mcb7VUWqobByK2Z03cGgGij_b646R1UM7hoT3rL01Eu1",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "year",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "2",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-58",
+      "position": 59,
+      "title": "Topps Finest Road to UEFA Euro 2024 - Fabio Miretti /250 ...",
+      "url": "https://www.manuelkant.it/prodotto/topps-finest-road-to-uefa-euro-2024-fabio-miretti-250-italy-national-debut-ll/",
+      "image_url": "https://www.manuelkant.it/wp-content/uploads/2024/12/1722876417132.jpg",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR2uCZMn8TiS_aHJT3YtmUJAx5r1yjUfrCEES_YW-Ll-rSRL98B",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "2024"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_year"
+      ],
+      "matches": [],
+      "missing": [
+        "number",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "M\n18\nFABIO MIRETTI\nITALY\n18\nNATIONAL\nDEBUT\n100250\nfnest",
+        "origin": "candidate_image_ocr"
+      }
+    }
+  ],
+  "crops": [
+    {
+      "id": "original-1-upper",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.10462962962962963,
+        "y": 0.2747863247863248,
+        "width": 0.8009259259259259,
+        "height": 0.18333333333333332
+      }
+    },
+    {
+      "id": "original-1-lower",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.10462962962962963,
+        "y": 0.6217948717948718,
+        "width": 0.8009259259259259,
+        "height": 0.1935897435897436
+      }
+    },
+    {
+      "id": "original-2-upper",
+      "image_index": 2,
+      "region": {
+        "image_index": 2,
+        "x": 0.11481481481481481,
+        "y": 0.3247863247863248,
+        "width": 0.7907407407407407,
+        "height": 0.17735042735042736
+      }
+    },
+    {
+      "id": "original-2-lower",
+      "image_index": 2,
+      "region": {
+        "image_index": 2,
+        "x": 0.11481481481481481,
+        "y": 0.6581196581196581,
+        "width": 0.7907407407407407,
+        "height": 0.18717948717948718
+      }
+    }
+  ],
+  "batches": [
+    {
+      "ids": [
+        "lens-1",
+        "lens-3"
+      ],
+      "reply": {
+        "original_readings": [
+          {
+            "field": "subject",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "VICTOR BONIFACE",
+            "crop_text": "VICTOR BONIFACE",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Victor Boniface",
+              "en": "Victor Boniface"
+            }
+          },
+          {
+            "field": "subject",
+            "image_index": 2,
+            "crop_id": "original-2-lower",
+            "full_text": "VICTOR BONIFACE",
+            "crop_text": "PRIZM",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Victor Boniface",
+              "en": "Victor Boniface"
+            }
+          },
+          {
+            "field": "language",
+            "image_index": 2,
+            "crop_id": "original-2-lower",
+            "full_text": "English text",
+            "crop_text": "English text",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Inglese",
+              "en": "English"
+            }
+          }
+        ],
+        "comparisons": [
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.113,
+                "y": 0.284
+              },
+              {
+                "x": 0.888,
+                "y": 0.284
+              },
+              {
+                "x": 0.888,
+                "y": 0.786
+              },
+              {
+                "x": 0.113,
+                "y": 0.786
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.198,
+                "y": 0.012
+              },
+              {
+                "x": 0.873,
+                "y": 0.981
+              },
+              {
+                "x": 0.198,
+                "y": 0.981
+              },
+              {
+                "x": 0.198,
+                "y": 0.012
+              }
+            ],
+            "reference_id": "lens-1",
+            "match": false,
+            "ambiguous": true,
+            "title_matches_image": true,
+            "conflicts": [
+              "Candidate finish and border pattern differ from original."
+            ],
+            "original_reading": {
+              "subject": "Victor Boniface",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "Victor Boniface",
+              "number": "22",
+              "year": "",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Victor Boniface facing left, white number-22 kit",
+                "reference": "Victor Boniface facing left, white number-22 kit",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Select header, central player, Road to FIFA World Cup plaque",
+                "reference": "Select header, central player, Road to FIFA World Cup plaque",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "Green holographic pattern with gold framing",
+                "reference": "Silver-gray pattern with different framing",
+                "agrees": false,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Victor Boniface",
+              "family": "Select",
+              "number": "",
+              "year": "",
+              "brand": "Panini",
+              "subset": "Road to FIFA World Cup 2026",
+              "proof": {
+                "subject": "Victor Boniface",
+                "family": "Victor Boniface trading cards",
+                "year": "",
+                "subset": ""
+              },
+              "display_names": {
+                "it": "Victor Boniface",
+                "en": "Victor Boniface"
+              }
+            },
+            "local_appearance": {
+              "original": {
+                "state": "measured",
+                "method": "quad_normalized_hsv_texture",
+                "regions": {
+                  "frame": {
+                    "hist": [
+                      0.07140129820542192,
+                      0.11072928598701795,
+                      0.11722031309660176,
+                      0.12409316533027873,
+                      0.17945780832378772,
+                      0.1718213058419244,
+                      0.002672775868652157,
+                      0.00038182512409316535,
+                      0.004200076365024819,
+                      0,
+                      0.00038182512409316535,
+                      0.0030546009927453228
+                    ],
+                    "n": 2619,
+                    "texture": 0.10212163261957477,
+                    "glare_fraction": 0.0015273004963726614,
+                    "neutral_fraction": 0.15769377625047729
+                  },
+                  "background": {
+                    "hist": [
+                      0.1523390643742503,
+                      0.17353058776489405,
+                      0.04798080767692923,
+                      0.06957217113154739,
+                      0.01719312275089964,
+                      0.03958416633346661,
+                      0.00039984006397441024,
+                      0.021591363454618154,
+                      0.013194722111155539,
+                      0.003598560575769692,
+                      0.0027988804478208716,
+                      0.006797281087564974
+                    ],
+                    "n": 2501,
+                    "texture": 0.10558367698742076,
+                    "glare_fraction": 0.0011995201919232307,
+                    "neutral_fraction": 0.4374250299880048
+                  }
+                },
+                "frame_color": "green",
+                "foil": "undetermined",
+                "paid_requests": 0,
+                "identity_proof": false
+              },
+              "reference": {
+                "state": "unclear",
+                "reason": "invalid_object_quad",
+                "paid_requests": 0,
+                "identity_proof": false,
+                "foil": "undetermined"
+              },
+              "comparison": {
+                "state": "unclear",
+                "identity_proof": false
+              }
+            }
+          },
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.113,
+                "y": 0.284
+              },
+              {
+                "x": 0.888,
+                "y": 0.284
+              },
+              {
+                "x": 0.888,
+                "y": 0.786
+              },
+              {
+                "x": 0.113,
+                "y": 0.786
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.044,
+                "y": 0.159
+              },
+              {
+                "x": 0.933,
+                "y": 0.159
+              },
+              {
+                "x": 0.933,
+                "y": 0.869
+              },
+              {
+                "x": 0.044,
+                "y": 0.869
+              }
+            ],
+            "reference_id": "lens-3",
+            "match": true,
+            "ambiguous": true,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "Victor Boniface",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "Victor Boniface",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Victor Boniface facing left, white number-22 kit",
+                "reference": "Victor Boniface facing left, white number-22 kit",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Select header and lower nameplate",
+                "reference": "Select header and lower nameplate",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "Green holographic frame and anniversary-style pattern",
+                "reference": "Green holographic frame and matching pattern",
+                "agrees": true,
+                "certainty": "uncertain"
+              }
+            ],
+            "identity": {
+              "subject": "Victor Boniface",
+              "family": "Select",
+              "number": "",
+              "year": "",
+              "brand": "Panini",
+              "subset": "Road to FIFA World Cup 2026",
+              "proof": {
+                "subject": "Victor Boniface",
+                "family": "2026 World Cup",
+                "year": "",
+                "subset": ""
+              },
+              "display_names": {
+                "it": "Victor Boniface",
+                "en": "Victor Boniface"
+              }
+            },
+            "local_appearance": {
+              "original": {
+                "state": "measured",
+                "method": "quad_normalized_hsv_texture",
+                "regions": {
+                  "frame": {
+                    "hist": [
+                      0.07140129820542192,
+                      0.11072928598701795,
+                      0.11722031309660176,
+                      0.12409316533027873,
+                      0.17945780832378772,
+                      0.1718213058419244,
+                      0.002672775868652157,
+                      0.00038182512409316535,
+                      0.004200076365024819,
+                      0,
+                      0.00038182512409316535,
+                      0.0030546009927453228
+                    ],
+                    "n": 2619,
+                    "texture": 0.10212163261957477,
+                    "glare_fraction": 0.0015273004963726614,
+                    "neutral_fraction": 0.15769377625047729
+                  },
+                  "background": {
+                    "hist": [
+                      0.1523390643742503,
+                      0.17353058776489405,
+                      0.04798080767692923,
+                      0.06957217113154739,
+                      0.01719312275089964,
+                      0.03958416633346661,
+                      0.00039984006397441024,
+                      0.021591363454618154,
+                      0.013194722111155539,
+                      0.003598560575769692,
+                      0.0027988804478208716,
+                      0.006797281087564974
+                    ],
+                    "n": 2501,
+                    "texture": 0.10558367698742076,
+                    "glare_fraction": 0.0011995201919232307,
+                    "neutral_fraction": 0.4374250299880048
+                  }
+                },
+                "frame_color": "green",
+                "foil": "undetermined",
+                "paid_requests": 0,
+                "identity_proof": false
+              },
+              "reference": {
+                "state": "measured",
+                "method": "quad_normalized_hsv_texture",
+                "regions": {
+                  "frame": {
+                    "hist": [
+                      0.042382588774341354,
+                      0.145475372279496,
+                      0.09316533027873235,
+                      0.15769377625047729,
+                      0.007636502481863307,
+                      0.004200076365024819,
+                      0.006872852233676976,
+                      0.0015273004963726614,
+                      0.00038182512409316535,
+                      0.00038182512409316535,
+                      0.00038182512409316535,
+                      0.0007636502481863307
+                    ],
+                    "n": 2619,
+                    "texture": 0.09588026132404193,
+                    "glare_fraction": 0.0038182512409316535,
+                    "neutral_fraction": 0.4463535700649103
+                  },
+                  "background": {
+                    "hist": [
+                      0.10275889644142343,
+                      0.0743702518992403,
+                      0.059576169532187126,
+                      0.07237105157936825,
+                      0.040383846461415435,
+                      0.03198720511795282,
+                      0.01799280287884846,
+                      0.030387844862055178,
+                      0,
+                      0,
+                      0.0007996801279488205,
+                      0.005597760895641743
+                    ],
+                    "n": 2501,
+                    "texture": 0.10271318559511158,
+                    "glare_fraction": 0.007197121151539384,
+                    "neutral_fraction": 0.5157936825269892
+                  }
+                },
+                "frame_color": "mixed",
+                "foil": "undetermined",
+                "paid_requests": 0,
+                "identity_proof": false
+              },
+              "comparison": {
+                "state": "measured",
+                "frame_histogram_distance": 0.23634975181366935,
+                "frame_color_agrees": false,
+                "frame_color": "green",
+                "texture_difference": 0.006241371295532844,
+                "foil": "undetermined",
+                "identity_proof": false
+              }
+            }
+          },
+          {
+            "original_image_index": 2,
+            "original_view": "back",
+            "reference_view": "unknown",
+            "original_quad": [
+              {
+                "x": 0.133,
+                "y": 0.309
+              },
+              {
+                "x": 0.88,
+                "y": 0.309
+              },
+              {
+                "x": 0.88,
+                "y": 0.805
+              },
+              {
+                "x": 0.133,
+                "y": 0.805
+              }
+            ],
+            "reference_quad": null,
+            "reference_id": "lens-1",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": false,
+            "conflicts": [
+              "No candidate back view supplied."
+            ],
+            "original_reading": {
+              "subject": "Victor Boniface",
+              "number": "No. 21",
+              "year": "",
+              "language": "English"
+            },
+            "reference_reading": {
+              "subject": "",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "features": [],
+            "identity": {
+              "subject": "",
+              "family": "",
+              "number": "",
+              "year": "",
+              "brand": "",
+              "subset": "",
+              "proof": {
+                "subject": "",
+                "family": "",
+                "year": "",
+                "subset": ""
+              },
+              "display_names": {
+                "it": "",
+                "en": ""
+              }
+            }
+          },
+          {
+            "original_image_index": 2,
+            "original_view": "back",
+            "reference_view": "unknown",
+            "original_quad": [
+              {
+                "x": 0.133,
+                "y": 0.309
+              },
+              {
+                "x": 0.88,
+                "y": 0.309
+              },
+              {
+                "x": 0.88,
+                "y": 0.805
+              },
+              {
+                "x": 0.133,
+                "y": 0.805
+              }
+            ],
+            "reference_quad": null,
+            "reference_id": "lens-3",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": false,
+            "conflicts": [
+              "No candidate back view supplied."
+            ],
+            "original_reading": {
+              "subject": "Victor Boniface",
+              "number": "No. 21",
+              "year": "",
+              "language": "English"
+            },
+            "reference_reading": {
+              "subject": "",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "features": [],
+            "identity": {
+              "subject": "",
+              "family": "",
+              "number": "",
+              "year": "",
+              "brand": "",
+              "subset": "",
+              "proof": {
+                "subject": "",
+                "family": "",
+                "year": "",
+                "subset": ""
+              },
+              "display_names": {
+                "it": "",
+                "en": ""
+              }
+            }
+          }
+        ]
+      },
+      "accepted": []
+    }
+  ],
+  "details": {
+    "attempted": true,
+    "requested": [
+      {
+        "key": "detail:serial:{\"image_index\":2,\"x\":0.7886301771851851,\"y\":0.5337606876581197,\"width\":0.05349263849999997,\"height\":0.033083643923076944}",
+        "field": "serial",
+        "region": {
+          "image_index": 2,
+          "x": 0.7886301771851851,
+          "y": 0.5337606876581197,
+          "width": 0.05349263849999997,
+          "height": 0.033083643923076944
+        },
+        "image_index": 2,
+        "rotation": 90,
+        "readings": [
+          {
+            "id": "e67",
+            "text": "2/5",
+            "value": "2/5",
+            "source": "local_ocr",
+            "rotation": 90
+          }
+        ]
+      }
+    ],
+    "images": [
+      {
+        "originalWidth": 1080,
+        "originalHeight": 2340,
+        "imageIndex": 2,
+        "rect": {
+          "x": 835,
+          "y": 1213,
+          "width": 91,
+          "height": 149
+        },
+        "cropped": true,
+        "searchWindow": true,
+        "sentWidth": 149,
+        "sentHeight": 91,
+        "mimeType": "image/png",
+        "jpegQuality": null,
+        "source": "original_file",
+        "orientation": "from-image",
+        "unit": "unknown",
+        "rotation": 90
+      }
+    ],
+    "updates": [
+      {
+        "field": "serial",
+        "text": "2/5",
+        "certainty": "clear",
+        "evidence_found": true,
+        "image_index": 2
+      }
+    ],
+    "evidence_found": true,
+    "committed_revision": 1
+  },
+  "budget": {
+    "maxUsd": 0.03,
+    "spentOrReservedUsd": 0.0129494,
+    "entries": [
+      {
+        "kind": "vision",
+        "reservedUsd": 0.01051475,
+        "actualUsd": 0.0035028000000000004,
+        "status": "usage_returned"
+      },
+      {
+        "kind": "lens",
+        "reservedUsd": 0.004,
+        "actualUsd": 0.004,
+        "status": "usage_returned"
+      },
+      {
+        "kind": "vision",
+        "reservedUsd": 0.003006,
+        "actualUsd": 0.0008523000000000001,
+        "status": "usage_returned"
+      },
+      {
+        "kind": "vision",
+        "reservedUsd": 0.02074825,
+        "actualUsd": 0.004594299999999999,
+        "status": "usage_returned"
+      }
+    ],
+    "visionCalls": 3,
+    "maxVisionCalls": 4,
+    "estimated": true,
+    "includesIdentificationAndMarket": true
+  }
+}

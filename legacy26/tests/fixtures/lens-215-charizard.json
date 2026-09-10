@@ -1,0 +1,3309 @@
+{
+  "vision": {
+    "domain": "pokemon",
+    "kind": "card",
+    "category": "Pokémon card",
+    "language": "ja",
+    "object_unit": "single",
+    "image_views": [
+      {
+        "image_index": 1,
+        "view": "front",
+        "certainty": "clear"
+      }
+    ],
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.03,
+        "y": 0.21,
+        "width": 0.94,
+        "height": 0.62,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "リザードン",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.24,
+          "y": 0.25,
+          "width": 0.4,
+          "height": 0.04
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "hp",
+        "text": "HP120",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.65,
+          "y": 0.25,
+          "width": 0.13,
+          "height": 0.04
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "pokedex_number",
+        "text": "No.006",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.77,
+          "y": 0.81,
+          "width": 0.1,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "illustrator",
+        "text": "Illus. Ken Sugimori",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.09,
+          "y": 0.81,
+          "width": 0.18,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "2進化　リザードから進化　モンスターカードに重ねて使います。",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.08,
+          "y": 0.23,
+          "width": 0.76,
+          "height": 0.04
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "LV.76",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.55,
+          "y": 0.25,
+          "width": 0.08,
+          "height": 0.04
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "【特殊能力】エナジーバーン",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.1,
+          "y": 0.58,
+          "width": 0.47,
+          "height": 0.04
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "attack",
+        "text": "ほのおのうず 100",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.36,
+          "y": 0.66,
+          "width": 0.43,
+          "height": 0.04
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "かえんポケモン：身長1.7m、体重90.5kg",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.21,
+          "y": 0.55,
+          "width": 0.48,
+          "height": 0.03
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "copyright",
+        "text": "©1995 Nintendo/Creatures inc./GAME FREAK inc.",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.3,
+          "y": 0.81,
+          "width": 0.42,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": [
+          "©1995 Nintendo/Creatures inc./GAME FREAK inc."
+        ]
+      }
+    ],
+    "features": [
+      {
+        "field": "border_color",
+        "value": "gold",
+        "description": "Bordo giallo dorato",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.03,
+          "y": 0.21,
+          "width": 0.94,
+          "height": 0.62
+        },
+        "zone": "border"
+      },
+      {
+        "field": "finish",
+        "value": "holo",
+        "description": "Riflessi olografici visibili nell'illustrazione",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.1,
+          "y": 0.3,
+          "width": 0.75,
+          "height": 0.25
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "layout",
+        "value": "Carta Pokémon giapponese vintage: ritratto del Pokémon, riquadro illustrazione centrale e pannelli statistiche/attacchi inferiori",
+        "description": "",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.04,
+          "y": 0.22,
+          "width": 0.91,
+          "height": 0.6
+        },
+        "zone": "other"
+      },
+      {
+        "field": "stamp",
+        "value": "unclear",
+        "description": "Nessun timbro promozionale chiaramente osservabile",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": null,
+        "zone": "other"
+      },
+      {
+        "field": "shadow",
+        "value": "unclear",
+        "description": "Ombra grafica esterna non determinabile con certezza dalla foto",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": null,
+        "zone": "other"
+      },
+      {
+        "field": "rarity_symbol",
+        "value": "unclear",
+        "description": "Simbolo di rarità non chiaramente osservabile",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": null,
+        "zone": "other"
+      }
+    ],
+    "hypotheses": [
+      {
+        "field": "family",
+        "value": "Pokémon vintage giapponese"
+      }
+    ],
+    "slab_reading": null,
+    "engine_version": 193,
+    "brand": "",
+    "family": "Pokémon vintage giapponese",
+    "title": "リザードン",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": {
+      "image_index": 1,
+      "x": 0.03,
+      "y": 0.21,
+      "width": 0.94,
+      "height": 0.62,
+      "certain": true
+    },
+    "photo_clues": [
+      {
+        "text": "リザードン",
+        "role": "subject",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.24,
+          "y": 0.25,
+          "width": 0.4,
+          "height": 0.04,
+          "certain": true
+        }
+      },
+      {
+        "text": "HP120",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.65,
+          "y": 0.25,
+          "width": 0.13,
+          "height": 0.04,
+          "certain": true
+        }
+      },
+      {
+        "text": "No.006",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.77,
+          "y": 0.81,
+          "width": 0.1,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "Illus. Ken Sugimori",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.09,
+          "y": 0.81,
+          "width": 0.18,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "2進化　リザードから進化　モンスターカードに重ねて使います。",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.08,
+          "y": 0.23,
+          "width": 0.76,
+          "height": 0.04,
+          "certain": true
+        }
+      },
+      {
+        "text": "LV.76",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.55,
+          "y": 0.25,
+          "width": 0.08,
+          "height": 0.04,
+          "certain": true
+        }
+      },
+      {
+        "text": "【特殊能力】エナジーバーン",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.1,
+          "y": 0.58,
+          "width": 0.47,
+          "height": 0.04,
+          "certain": true
+        }
+      },
+      {
+        "text": "ほのおのうず 100",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.36,
+          "y": 0.66,
+          "width": 0.43,
+          "height": 0.04,
+          "certain": true
+        }
+      },
+      {
+        "text": "かえんポケモン：身長1.7m、体重90.5kg",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.21,
+          "y": 0.55,
+          "width": 0.48,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "©1995 Nintendo/Creatures inc./GAME FREAK inc.",
+        "role": "copyright",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.3,
+          "y": 0.81,
+          "width": 0.42,
+          "height": 0.02,
+          "certain": true
+        }
+      }
+    ],
+    "physical_observations": [
+      {
+        "feature": "color",
+        "text": "gold border",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Riflessi olografici visibili nell'illustrazione",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Carta Pokémon giapponese vintage: ritratto del Pokémon, riquadro illustrazione centrale e pannelli statistiche/attacchi inferiori",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Nessun timbro promozionale chiaramente osservabile",
+        "certainty": "uncertain",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Ombra grafica esterna non determinabile con certezza dalla foto",
+        "certainty": "uncertain",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Simbolo di rarità non chiaramente osservabile",
+        "certainty": "uncertain",
+        "entity": "target",
+        "image_index": 1
+      }
+    ],
+    "pokemon_printing": {
+      "is_pokemon": true,
+      "language": "ja",
+      "set_name": "Pokémon vintage giapponese",
+      "card_type": "pokemon",
+      "first_edition_stamp": "unclear",
+      "stamp_image": 0,
+      "stamp_location": "",
+      "stamp_text": "",
+      "artwork_shadow": "unclear",
+      "shadow_image": 0,
+      "shadow_location": "",
+      "copyright_text": "",
+      "copyright_image": 1
+    }
+  },
+  "references": [
+    {
+      "id": "lens-1",
+      "position": 1,
+      "title": "Charizard Trade Please No.006 CD Promo 1999 Holo ...",
+      "url": "https://www.ebay.com/itm/188256917908",
+      "image_url": "https://i.ebayimg.com/images/g/-60AAeSwQI1p1mTQ/s-l400.jpg",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTe595KOMO7CgLGravlC7vSjmuby-9qNCmvqOLzJtd5FGj6u_Rd",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "006"
+        ],
+        "languages": [],
+        "years": [
+          "1999"
+        ],
+        "finish": "holo",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "number",
+        "finish"
+      ],
+      "missing": [
+        "language",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "Jy-F w HPI20\nAAAERR1.7m, #90.5kg\n(9)1I\nR 100\n9-930\nE1400OxE\n-30",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-2",
+      "position": 2,
+      "title": "Pokemon Card Charizard No.006 CD Promo Trade Please 1998 ...",
+      "url": "https://www.ebay.com/itm/355861727638",
+      "image_url": "https://i.ebayimg.com/images/g/CiEAAOSwzIxnu1X1/s-l400.jpg",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4hmgCuRQtD3JCXvsM7k5ygj5SmebzZkNywZpECkl8mrOwAWzM",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "006"
+        ],
+        "languages": [],
+        "years": [
+          "1998"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "number"
+      ],
+      "missing": [
+        "language",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "21E y-Fse\nJ-F v HP120\n+ANRE2:RR1.7m, $ 90.5kg\n(1I;-\nESAE100\n-9 -30\nLE 140OE\nCR2D9Adic",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-3",
+      "position": 3,
+      "title": "1999 Pokemon Japanese CD Promo Charizard-Holo CD Promo #6 ...",
+      "url": "https://kantoshark.com/product/1999-pokemon-japanese-cd-promo-charizard-holo-cd-promo-6-psa-10/",
+      "image_url": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQJwByP3DYS2yrdi9R9VatGfoYIrpE8iuQh5PX6GHuefH2bmR8B",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQJwByP3DYS2yrdi9R9VatGfoYIrpE8iuQh5PX6GHuefH2bmR8B",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "6"
+        ],
+        "languages": [
+          "ja"
+        ],
+        "years": [
+          "1999"
+        ],
+        "finish": "holo",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "number",
+        "language",
+        "finish"
+      ],
+      "missing": [
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "japanese",
+        "text": "1898 PM. JAPANESE\nCHARZARD HOLO\nCD PROMO\nGEN MT10\n10240286\nリザードンHP20\nエナ ーン\n3のおのうず\nHE100",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-4",
+      "position": 4,
+      "title": "Charizard XY Promos | Pokémon | CardTrader",
+      "url": "https://www.cardtrader.com/it/cards/272779-charizard-280-xy-p-xy-promos",
+      "image_url": "https://www.cardtrader.com/uploads/blueprints/image/272779/show_charizard-280-xy-p-xy-promos.jpg",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaygdv_1iePxG5rXCFNEbgCNIR5b74a6zEKiDesnq29vOVABEW",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "language",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "2iE1t\nJ-FY v6 HP150\nMEENO.006 ahHSE) R:1.7m *:90.5kg\n#A) x2 Etn h 20 1400X- *\nIllus.Ken Sugimori\n280/XY-P\no2016 Pokémon/Nintendo/CreaturesGAME FREAK.\n200",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-5",
+      "position": 5,
+      "title": "Pokemon Charizard CGC 9.5 CD Promo Lets Trade Please 20th ...",
+      "url": "https://www.ebay.it/itm/265431580083",
+      "image_url": "https://i.ebayimg.com/images/g/F~4AAOSwcoNg4b0E/s-l1200.jpg",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRZ9yuLqznrCzco3lU_FAa181KxmrlV68xjdKn8Lpl66yox7pCd",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "language",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "CGC UNIVERSAL GRADE\nGem Mint\n9.5\n2E\nCharizard\nPokémon (2016) Japanese\nXY & XY BREAK Promos - 280XY-P\nTrade Please Campaign 20th\nLVZ6 HP150\n$8RENO.006 AAIYE :1.7m $:90.5ks\nCD#YEAT3IALA-& 3 MMU, at5.\n200\nA6x2 th-20 400-b Et e\nats PokemonittndoiCrestunANE RAK\n280/XYp\n2",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-6",
+      "position": 6,
+      "title": "1999 Pokemon Japanese CD Promo 6 Charizard-Holo CD Promo ...",
+      "url": "https://stockx.com/it-it/1999-pokemon-japanese-cd-promo-6-charizard-holo-cd-promo-psa-or-bgs-graded",
+      "image_url": "https://images.stockx.com/images/1999-Pokemon-Japanese-CD-Promo-6-Charizard-Holo-CD-Promo-PSA-or-BGS-Graded.jpg?fit=fill&bg=FFFFFF&w=480&h=320&q=60&dpr=1&trim=color&updated_at=1740697600",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRT-qLP9cEH-R5_zYeCzK1U-X2sz8PNZU0bFgK_29iu_espfJeB",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [
+          "ja"
+        ],
+        "years": [
+          "1999"
+        ],
+        "finish": "holo",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "language",
+        "finish"
+      ],
+      "missing": [
+        "number",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "japanese",
+        "text": "PSA\nリザードンFP20\n特エナジーパーン\nほのおのうす\nカー30\n100",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-7",
+      "position": 7,
+      "title": "Pokemon Card Game Classic Box (JP) » Federicstore",
+      "url": "https://federicstore.it/prodotto/pokemon-card-game-classic-box-jp/",
+      "image_url": "https://federicstore.it/wp-content/uploads/2024/01/PKBOX-CLASSIC-JP-3.png",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSPulD5YYnCcBUqtslBAa5NC-Mw6vot4apJcj9IgvdlY6e2bs9m",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "language",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "Y-V HPI20\nL 003/032\nAh4E:1.7m. 90EKg\n21MUNt3.\n30\n100\n1400%\nIthas. itsubiro Arita",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-8",
+      "position": 8,
+      "title": "Prix de Charizard #6 | Pokemon Japanese CD Promo | Cartes de ...",
+      "url": "https://www.pricecharting.com/fr/game/pokemon-japanese-cd-promo/charizard-6",
+      "image_url": "https://i.ebayimg.com/images/g/-CsAAeSw-ABqcQre/s-l225.jpg",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTskdSwIGJXvyo8e-E8KvCT-t2vkJlzEFsclITicYwIeOR_WwYB",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "6"
+        ],
+        "languages": [
+          "ja"
+        ],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "number",
+        "language"
+      ],
+      "missing": [
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "japanese",
+        "text": "CHARCAR-HOO\nリザードン20\n19 PM JAPANES",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-9",
+      "position": 9,
+      "title": "Collezione di Carte Charizard: PSA, BGS e RAW | TikTok",
+      "url": "https://www.tiktok.com/@retroselluc/video/7556676398333660438",
+      "image_url": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcR-0J13Ta3tpPlurgzhI4KldP0C0w9ge_sFxidcPaKVsYKWsmSx",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcR-0J13Ta3tpPlurgzhI4KldP0C0w9ge_sFxidcPaKVsYKWsmSx",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "language",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "LA MIA\nCOLLEZIONE\nt99P P M APANESE\nCHARZARD-HOLO\nn\nMNT\n733486\nU-Fn 20\nCO PROMO",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-10",
+      "position": 10,
+      "title": "1998 Pokémon Japanese CD Promo Holo Charizard #6 PSA 10 GEM ...",
+      "url": "https://cardtreasure.ch/products/1998-pokemon-japanese-cd-promo-holo-charizard-6-psa-10-gem-mint",
+      "image_url": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQbwuF0zXPiboBgSvuPRnSUb7rGkYqObgYQVyQgD9JoL7Ygolu9",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQbwuF0zXPiboBgSvuPRnSUb7rGkYqObgYQVyQgD9JoL7Ygolu9",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "6"
+        ],
+        "languages": [
+          "ja"
+        ],
+        "years": [
+          "1998"
+        ],
+        "finish": "holo",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "number",
+        "language",
+        "finish"
+      ],
+      "missing": [
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "japanese",
+        "text": "リザードン2\n103",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-11",
+      "position": 11,
+      "title": "BGS 10 Pristine Charizard CD Promo 1998 Holo - Market ...",
+      "url": "https://www.elitefourum.com/t/bgs-10-pristine-charizard-cd-promo-1998-holo/27097",
+      "image_url": "https://i.ebayimg.com/images/g/lqgAAOSw-wVej01y/s-l1600.jpg",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcS5NX-E987KWen9omAAhsVYKhjpStTe8xqsFjDBol7y1jbEP29j",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "1998"
+        ],
+        "finish": "holo",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "finish"
+      ],
+      "missing": [
+        "number",
+        "language",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "1998 P.M. JAPANESE\nCHARIZARD -HOLO\nCD PROMO\ns Ken Sugimo\nGEM MT\nJ-F2 HP120\nbAk E2:E1.7m. #90,5kg\n9CE 100\n9-9 -30\n27987078\n#6\nAt8E 1400X-E\nNo006\n10",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-12",
+      "position": 12,
+      "title": "1999 Charizard Japanese CD Promo : r/PokemonTCG",
+      "url": "https://www.reddit.com/r/PokemonTCG/comments/1dbfqhu/1999_charizard_japanese_cd_promo/",
+      "image_url": "https://i.redd.it/1999-charizard-japanese-cd-promo-v0-jru6git6mf5d1.jpg?width=1242&format=pjpg&auto=webp&s=f47851c2f38dc5c7151750afd77b9f7801c91ba3",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRJVw4hCu7IuTSrrmhbv_kU3oGCkxYi4gSPIGxLCG_WWv8dngYR",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [
+          "ja"
+        ],
+        "years": [
+          "1999"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "language"
+      ],
+      "missing": [
+        "number",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "japanese",
+        "text": "2進化 リザートから進化\nリザードン\nかえんボケモン: 身長1.7m、 体重90.5kg\n弱点\nモンスターカードにねて使います。\n【特殊能カ】 エナジーパーン\nこのカは自分の番の中で何度でも使える。このカードについているすべてのエネル\nギーは「英了エネルギーになり、自分の番の終わりに完にもどる。このカードが\n「ねむりマヒ·こんらん」 状態の時、このカは滴える。\nRlos.Ker Sugimor\nLVI6 HPI20\nほのおのうず\nにげる\n朝)抵抗力 ダメージ -30\nこのカードについているエネルギーカー\nドを2枚トラッンュすなるこ\nなる)\n100\n地上1400メートルま\nで翼をつかって飛ぶこ、\nとができる。 高熱の炎\nをはく。\nNa 006",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-13",
+      "position": 13,
+      "title": "Pokémon - Charizard Holo 20° Anniversario CP6 Japanese ...",
+      "url": "https://www.finarte.it/asta/carte-pokmon-e-da-collezione-milano-2026-04-09/pokmon-charizard-holo-20-anniversario-cp6-japanese-bgs-9-188848",
+      "image_url": "https://api.finarte.it/api/lotto/immagine/188848/0/800.jpg",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcT-saTmYT807jDioH_Q8U3acYEsEgKGA6guXPKEzk_EhoS9IBTY",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [
+          "ja"
+        ],
+        "years": [],
+        "finish": "holo",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": "20"
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "language",
+        "finish"
+      ],
+      "missing": [
+        "number",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "japanese",
+        "text": "BECKETTO\n2進化\n2016 EXPANSION PACK\n20TH ANNIVERSARY\nJAPANESE\n#11 CHARIZARD HOLO R\nCENTERING 9\nEDGES\nリザードから進化\n9.5\nCORNERS 8.5\nリザードン\nSURFACE 9.5\n特性1エナジーバーン\n全国図鑑NO.006 かえんボケモン 身長:1.7m 体重:90.5kg\nにげる水*\nこのポケモンについているエネルギーは、すべでひタイブになる。\n1 Hlus.Mitsuhiro Arita\nるるほのおのうず\n弱点×2 抵航カ-20\nLV.J6 HP150\nモンスターカードにねて徳います。\nこのボケモンについているエネルギーを3個選び、トラッシュする。\n0013041219\n9\nMINT\n2016 Pokéann/Nintendo/Creatures/GAME FREAK\n200\n施主1400メートルまで第を\nつ飛ぶことができる。\n高続の炎をはく。\nO11/087 R CP&\n9.5",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-14",
+      "position": 14,
+      "title": "Charizard Unnumbered Promos | Pokémon | CardTrader",
+      "url": "https://www.cardtrader.com/it/cards/203123-charizard-lv-76-holo-promo-no-006-unnumbered-promos",
+      "image_url": "https://www.cardtrader.com/uploads/blueprints/image/203123/show_charizard-jp-unnumbered-promos.jpg",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLcNV-1-QhrLemzlcIXoDQTO3bnNzNFbQJZ9tvQSAVQAE70NOw",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "language",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "lus.Ken Sugimon\nE-)-CIaTLVE.\nàhtYE):9R1.7m, *90.5kg\nLV.I6 HPI20\n9-) -30\n12 100\nNo 006",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-15",
+      "position": 15,
+      "title": "2PC Japanese Pokemon BREAK Promo Charizard CGC 9.5 sold at ...",
+      "url": "https://www.bidsquare.com/online-auctions/bruneau/2pc-japanese-pokemon-break-promo-charizard-cgc-9-5-2140897",
+      "image_url": "https://s1.img.bidsquare.com/item/xl/8031/8031549.jpeg",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSC91y_UD5lqoaWE9GonFAArNK5Euq10gG3piQlD4q479VjEd_t",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [
+          "ja"
+        ],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "language"
+      ],
+      "missing": [
+        "number",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "japanese",
+        "text": "CGCUNIVERSAL GRADE\nGem Mint\n9.5\nつ進化\nCharizard\nPokémon (2016) Japanese\nXY & XY BREAK Promos - 280IXY-P\nリザードから進化\nTrade Please Campaign 20th\nリザードン vz HP150\nモンスターカードにねて使いす。\n全国図NO.006 かえんポケモン 身長:1.7m 体重:90.5kE\nにげる木あも\nus.Ken Sugimori\n【特性】エナジーバーン\nこのボケモンについているエネルギーは、すべででタイブになる。\nほのおのうず\nこのポケモンについているエネルギーを3個選び、トラッシュする。\n点)×2 抵抗カ 曲20 地1400メートル までを\no016 Pokémgn/NntendolCreatures/GAME FRLAK\n200\nごとかできる。\n280/XY-P\nCGC UNIVERSAL GRADE\nGem Mint\n9.5\nPokémon (2016) Japanese\nつ進化 リザードから進化\nCharizard\nXY & XY BREAK Promos - 280/XY-P\nTrade Please Campaign 20th\nリザードン\nモンスターカードに豊ねて笑います。\n全国NO.006 かえんポケモン 身長:1.7m 体重:90.5kE\n[特性」エナジーバーン\nllus.Ken Sugimori\nLVJ6 HP150\nこのポケモンについているエネルギーは、すべてひタイブになる。\n4ゆほのおのうず\n点×2 抵抗カ脚-20\nにげる***\n200\nこのポケモンについているエネルギーを3個選び、トラッシュする。\n正1400メートル まで朝を\nそtとができる。\ne2016 PokdmonNintendo/CreatureGAME FREAK\n280/XY-P",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-16",
+      "position": 16,
+      "title": "Charizard",
+      "url": "https://www.pianetahobby.it/pokemon/carte-singole-giapponese/25th-anniversary-collection-s8a/25th-anniversary-promo-pack/charizard/",
+      "image_url": "https://www.pianetahobby.it/img/product/121577/Charizard.S8A-P.1.40629_big.jpg",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBKUaRh8do3zqvZr4A6ASKZ5N8cBv2EG3biFdeki4U--SJ0sEj",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "language",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "JI2 wJ6 HPI20\nDAhtER1.7m. 90.5Kg\n8a-P001025\nX- -30\n25\n100\ntbEi 400XND\nRus.Miisuhiro Arite",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-17",
+      "position": 17,
+      "title": "Carta Pokémon】CHARIZARD【-】(003/032) (CL) Giapponese PSA10 ...",
+      "url": "https://fandom.tokyo/it/products/pokemon-card-charizard-cl-japanese-psa10",
+      "image_url": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQd6Emw_JXdnfRopLWMwR1V-e7LzE-dCGtUseva7lSfOok_yz3g",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQd6Emw_JXdnfRopLWMwR1V-e7LzE-dCGtUseva7lSfOok_yz3g",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "003/032"
+        ],
+        "languages": [
+          "ja"
+        ],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_number"
+      ],
+      "matches": [
+        "language"
+      ],
+      "missing": [
+        "finish",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "japanese",
+        "text": "リザードン\nエナジーバーン\n100",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-18",
+      "position": 18,
+      "title": "Card Pokémon - Charizard Cd Promo 280 Japanese - Holo Proxy ...",
+      "url": "https://www.mercadolivre.com.br/card-pokemon--charizard-cd-promo-280-japanese--holo-proxy/up/MLBU1456600962",
+      "image_url": "https://http2.mlstatic.com/D_NQ_NP_854994-MLB75909078448_042024-O-card-pokemon--charizard-cd-promo-280-japanese--holo-proxy.webp",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcScBkhUwW_Qclf-6yl6d36z9UnXx7ZiMVPvZ6Swz8RuSyt7Bx1W",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [
+          "ja"
+        ],
+        "years": [],
+        "finish": "holo",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "language",
+        "finish"
+      ],
+      "missing": [
+        "number",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "japanese",
+        "text": "つ進化 リザードから\nリザードン wz6 HP150\n全国NO006 かえんポケモン 身員:1.7m 体:90.5kg\n[特性】エナジーバーン\nモンスタ\nこのボケモンについているェネルギーは、すべてなタイプになる。\n200\nこのポケモンについているエネルギーを3個演び、トラッシュする。\n鶴点6×2 紙抗カ@-20\nにげる ***)\nBus Ken Sueimori\nほのおのうず\n140oメートル までき\n2かって飛ぶことができる。\n280/XY-P\nリザードン",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-19",
+      "position": 19,
+      "title": "Charizard #6 Prices | Pokemon Japanese CD Promo | Pokemon Cards",
+      "url": "https://www.pricecharting.com/game/pokemon-japanese-cd-promo/charizard-6",
+      "image_url": "https://i.ebayimg.com/images/g/17gAAeSwIvJqfbfu/s-l225.jpg",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTg7spn02V7VhWbClWVKT161H8NPtqJCHN3olZGjk02e4M1tmaQ",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "6"
+        ],
+        "languages": [
+          "ja"
+        ],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "number",
+        "language"
+      ],
+      "missing": [
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "japanese",
+        "text": "PM APAMESE\nCO PROAO\nリザードン20\n100\nAPANESE\nCHARZARO HOLO",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-20",
+      "position": 20,
+      "title": "Charizard CLL 003/032 Classic Collection Japanese – PSA 10 ...",
+      "url": "https://japoncollectibles.it/it/prodotti/charizard-cll-003-032-classic-collection-japanese-psa-10",
+      "image_url": "https://japoncollectibles.it/_next/image?url=https://api.japoncollectibles.it/wp-content/uploads/2024/04/charizard-collector-japanese-10-front.webp&w=3840&q=75",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQlOY--4Eh8BGku8uY7QBgTHRVq_UHMtH2Axkg3xEcezAUAfXv7",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "003/032"
+        ],
+        "languages": [
+          "ja"
+        ],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_number"
+      ],
+      "matches": [
+        "language"
+      ],
+      "missing": [
+        "finish",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "japanese",
+        "text": "2023 POKEMON CLL JP\nCHARIZARD\nつ進化リザードから進化\nリザードン\n弱点\nかえんボケモン: 身長1.7m、 体重90.5Kg\n【特殊能カ1 エナジーバーン\n抵抗力\no03(032\nほの\nモンスターカードに重ねて使います。\nこのポケモンについているエネルギーは、すベてきタイプ\nになる。このポケモンがねむり·マヒ·こんらんなら、この\n特殊能力ははたらかない。\nおのうず\nLV.J6 HP120\nにげる\nダメージ ×2\n#003\nGEM MT\n85293464\nを2個選び、トラッショオズ\nダメージ -30\nこのポケモンについているエネルギーOO\n地上1400メートル\nまで羽をわかって飛ぶ\nとができる。海熱の\n炎をはく。\n10\nus Mitsuhiro Arita\nゴ、トラッシュする。\n100",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-21",
+      "position": 21,
+      "title": "Charizard - Japanese CD Promo - Pokémon Card Prices & Listings",
+      "url": "https://www.misprint.com/card/544479",
+      "image_url": "https://www.misprint.com/_next/image?url=https://dlnxybxfzkpeatkjcztb.supabase.co/storage/v1/object/public/listings/product-images/1773874685846-1-5zyri.jpg&w=1920&q=75",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQ5aUZDVWU6ClLM1FsZqG9QH5FIZzJlaC7gVVwTWHNXy5xLAQtn",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [
+          "ja"
+        ],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "language"
+      ],
+      "missing": [
+        "number",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "japanese",
+        "text": "1998 P.M. JAPANESE\nCHARIZARD - HOLO\nCD PROMO\n2進化リザードから進化\nPSA\nリザードン\n弱点\n[特殊能カ1 エナジーバーン\nかえんポケモン:身長1.7m、体重90.5kg\nのカは奥分の最の中で何度でも使えカ\n)抵力\nlfus. Ken Suglmord\nモンスターカードに重ねて使います。\nGEM MT10\nLV.I6 HPI20\nにげる\n10016779\nほのおのうず\nダメージ -30\nこのカードについているエネルギーカー\nドを2枚トラッシトマでるた\n#6\n100\n地上1400メートルま\nで翼をつかって飛ぶこ\nとができる。高熱の炎\nをはく。\nNo, 006\n「ねむり\nニ元にもとる。このカードが\nこついているすべてのエネル\n、このカは消える。\nリザー",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-22",
+      "position": 22,
+      "title": "Big Charizard fan 🔥 #charizard #pokemon #pokemoncollector ...",
+      "url": "https://www.instagram.com/p/DTf4W1iFN_P/",
+      "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXIn36r7ujJ4MhgsWmZuQ94GZDtDV8nZ24IqmjAnnWn0d1kLCw",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXIn36r7ujJ4MhgsWmZuQ94GZDtDV8nZ24IqmjAnnWn0d1kLCw",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "language",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "U HP120\nT 100\n100",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-23",
+      "position": 23,
+      "title": "Pokemon Charizard Base Set Giapponese 006 di seconda mano ...",
+      "url": "https://it.wallapop.com/item/pokemon-charizard-base-set-giapponese-006-1267421900",
+      "image_url": "https://cdn.wallapop.com/images/10420/ky/l8/__/c10420p1267421900/i6528317173.jpg?pictureSize=W640",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5cBhYLK7k3gdqwoMCrnkwVvA79dRW9lbmtl1akVQR2YmZXUcL",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [
+          "ja"
+        ],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "language"
+      ],
+      "missing": [
+        "number",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "japanese",
+        "text": "フ進化リザードから進化\n警リザードン\nかいりきポケモン:身長1.5m、体重70.5kg\n弱点\n[特種能カ】エナジーパーン\n明抵抗力\nモンスターカドにねて使います。\nIllus.Mitsuhro Arita\nLV:76 HPI20\nリザードンは、 「炎」以外の自分のエネルギーを「炎」エネ\nルギーとして扱うごとができる。「こんらん」 状態のときに\nは使えない。\nほのおのうず\nにげる\n自分のエネルギーカードを2枚はがし\nてすてる 。\nダメージ -30\n100\n地上1400メートル\nまで羽をつかって飛ぶ\nことができる。 高熱の\n炎をはく。\nNo. 006",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-24",
+      "position": 24,
+      "title": "1999 POKEMON JAPANESE CD PROMO #6 CHARIZARD-HOLO CD PROMO ...",
+      "url": "https://derpycards.ca/products/1999-pokemon-japanese-cd-promo-6-charizard-holo-cd-promo-psa-9",
+      "image_url": "https://derpycards.ca/cdn/shop/files/681C8A8B-A786-490A-A7F7-68D0973619A3.jpg?v=1787760000&width=1920",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRk3PxCE-fYixKXZFQ5CiIn-YoMCHbRWj8yuLhuxbh3lO1sp-5n",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "6"
+        ],
+        "languages": [
+          "ja"
+        ],
+        "years": [
+          "1999"
+        ],
+        "finish": "holo",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "number",
+        "language",
+        "finish"
+      ],
+      "missing": [
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "japanese",
+        "text": "1998 P.M. JAPANESE\nCHARIZARD - HOLO\nCD PROMO\n2進化リザードから進化\nPSA\n弱点\nリザードン\n【特殊能カ】 エナジーーン\n抵抗力\nllus.Ken Sugimori\nかえんボケモン:身長1.7m、 体重90.5kg\nこの力は自分の番の中で何度でも使える。このカードについているすべてのエネル\n年二下後イエネルキごなり、自分の番の終わりに\nりに元にもどる。こにのカードが\n「ねむり·マヒ·こんらん」状態の時、このカは消える。\nほのおのうず\nできない時、\nなる)\nモンスターカードに重ねて使います。\nMINT 9\nLV.76 HP120\nにげる\n10016970\nFを2枚ドランラッシュ00\nダメージ -30\n#6\n、地上1400メートルま\nで翼をつかって飛ぶこ\nとができる。高熱の\nをはく。\n-ドについているエネルギーカー\nこのカー",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-25",
+      "position": 25,
+      "title": "Carte Pokemon giapponesi promozionali CD Charizard ...",
+      "url": "https://www.etsy.com/it/listing/4460371409/carte-pokemon-giapponesi-promozionali-cd",
+      "image_url": "https://i.etsystatic.com/27886890/r/il/fd4879/7728206000/il_340x270.7728206000_bmha.jpg",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWO-L-fAzEXlApDnU2iFs_PkPcDgJK-KvUdLuE9WS4CPo_xr2x",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "language",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "40\n21 ve-a\n100\nP120",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-26",
+      "position": 26,
+      "title": "Charizard 003/032 CLL Holo Pokemon Card Game Classic ...",
+      "url": "https://www.ebay.it/itm/225880715845",
+      "image_url": "https://i.ebayimg.com/images/g/pFwAAeSwYrtqaXEC/s-l1200.png",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8NC75w02ABq7fCbndawgNLx065x9XYVnlGM2rKoHojtk2LgHE",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "003/032"
+        ],
+        "languages": [],
+        "years": [],
+        "finish": "holo",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_number"
+      ],
+      "matches": [
+        "finish"
+      ],
+      "missing": [
+        "language",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "Category\nGrowth Award\nfor\nCollectible\nCard Games\n2024\neBay Japan\nAwards 2024\n003/032\niht5EY: 1.7m. 90.5Kg\n- x2\nLV.76 HPI20\nSX-% -30\ntb E 1 4 00X-JL\nETNEDHDTRSS\n8A2okearyentoonlGAMEFREAR\nllus. Mitsuhiro\nChai TCG Japan\n100",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-27",
+      "position": 27,
+      "title": "1999 Pokemon Japanese CD Promo Charizard-Holo CD Promo #6 ...",
+      "url": "https://kantoshark.com/product/1999-pokemon-japanese-cd-promo-charizard-holo-cd-promo-6-psa-10-2/",
+      "image_url": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQRG1iIGAQgYzsBO94QjS8DVwDPxxbzKT2zFjPhyaPJfyqMypTY",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQRG1iIGAQgYzsBO94QjS8DVwDPxxbzKT2zFjPhyaPJfyqMypTY",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "6"
+        ],
+        "languages": [
+          "ja"
+        ],
+        "years": [
+          "1999"
+        ],
+        "finish": "holo",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "number",
+        "language",
+        "finish"
+      ],
+      "missing": [
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "japanese",
+        "text": "、1999 PM JAPANESE\nCHARIZARD HCLO\nCD PAOMO\nGEM ME\nエナジ\n10\n01420834\nリザードン HP20\nY\n100",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-28",
+      "position": 28,
+      "title": "1998 CD promo Charizard : r/IsMyPokemonCardFake",
+      "url": "https://www.reddit.com/r/IsMyPokemonCardFake/comments/1te2pf7/1998_cd_promo_charizard/",
+      "image_url": "https://preview.redd.it/1998-cd-promo-charizard-v0-wrxp7zzi3c1h1.jpg?width=1080&crop=smart&auto=webp&s=b1e85df13b3e67e41e679d9ed04567feecd4cadc",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSH8ydbCx--guoiaGp2gSxG4j-ELTHI_mGUz934sqjjosiLL8f_",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "1998"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "language",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "AATEIRR1.7m. 890.5kg\nHHERAD 100\n9- -30\nE1400E\ns HPI20",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-29",
+      "position": 29,
+      "title": "Charizard CD Promo Pokémon Card: Japanese CD Promo Guide ...",
+      "url": "https://www.tiktok.com/@diggionair/video/7654559239012158753",
+      "image_url": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcS146Jvf_P6IQT8sI5XaCy8f0r2n99uNS0rOR05MYsHjlLNsGMv",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcS146Jvf_P6IQT8sI5XaCy8f0r2n99uNS0rOR05MYsHjlLNsGMv",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [
+          "ja"
+        ],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "language"
+      ],
+      "missing": [
+        "number",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "japanese",
+        "text": "特リザードンw HP20\nエナジーバーン\nのおのうず\nt 100\nCHARIZARD CD PROMO",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-30",
+      "position": 30,
+      "title": "Charizard: PROMO[XY-P 280/XY-P](XY-P Promotional cards ...",
+      "url": "https://snkrdunk.com/en/trading-cards/91408",
+      "image_url": "https://cdn.snkrdunk.com/upload_bg_removed/7314819.webp?size=l",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTz5P3669-3lfX6k2jkjIKDQFlNazL4RdeIsXucIdUKCczx1aoa",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "language",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "V$-F wz6 HP150\nRENO.006 kN4E> #R:1.7m 4:905kg\ns Ken Sugimorl\n200\n280/2XY-P\n1400X-b\n-2",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-31",
+      "position": 31,
+      "title": "First Print Charizard Fire Punches Heritage's Trading Card ...",
+      "url": "https://antiquesandthearts.com/first-print-charizard-fire-punches-heritages-trading-card-auction/",
+      "image_url": "https://www.antiquesandthearts.com/wp-content/uploads/2022/09/Heritage-Trading-Card-image.jpg",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSRXs0JNxKN1ckXbozCf_S8DmAsmLbJojL2GPXNrIJlYPh_1xjs",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "language",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "1996 P.M. JAPANESE BASIC\nCHARIZARD -HOLO\nNO RARITY SYMBOL\n#6\nGEM MT\nJ-Fy ws HP120\nTuS Mitsuhiro Artto\nL1) &*EV: R1.5m. 470.5kg\n41076199\nS--30\nE20r*-h-FE 2 *4,O0\ntE1400XJL\n10\nNo 006",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-32",
+      "position": 32,
+      "title": "AiGrading",
+      "url": "https://aigrading.com/grading_certificate/A000012389",
+      "image_url": "https://aigrading.com/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBMUpwRVE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--527ea437e4df3e78e1f70d18b062cbcb0b6f3f1f/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lKYW5CbFp3WTZCa1ZVT2hSeVpYTnBlbVZmZEc5ZmJHbHRhWFJiQ0drQ3ZBSnBBczREZXdZNkRITm9ZWEp3Wlc1N0Jqb01kVzV6YUdGeWNHWUlNQzQxIiwiZXhwIjpudWxsLCJwdXIiOiJ2YXJpYXRpb24ifX0=--c51c8a6a0d91ba5a8dca8c286d4e4f014a79eac7/15182_f.jpeg",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRY-jGbIH1ZwcjrnJG0nSea1xIspaICx0xs6E21UdyxN8WyPIt5",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "language",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "A000012389\nPOKÉMON 2021 JP\nRAIGrading®\n25TH ANNIVERSARY COLLECTION\nCHAR1ZARD 001/025\nFOIL\n2iE1t yy-*SE\ns80-P\n001V025\nAhtSEV:1.7m. $I90.5Kg\nA50TŽL--K& 2t\nX-) -30\nGEM MINT\nLV.76 HPI20\n10\n100\nHt 1 4 00%-N\nilts Ateubiro Arito\n25",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-33",
+      "position": 33,
+      "title": "Pokemon Charizard eCard Lottery Japanese Holo Promo 014/P ...",
+      "url": "https://www.instagram.com/p/DZRvtpFDQEA/",
+      "image_url": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTNiIsWIJRt9IzWvsjLPMKOffbZ0rVmhwhGbXGfBq51IYRx8YlQ",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTNiIsWIJRt9IzWvsjLPMKOffbZ0rVmhwhGbXGfBq51IYRx8YlQ",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [
+          "ja"
+        ],
+        "years": [],
+        "finish": "holo",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "language",
+        "finish"
+      ],
+      "missing": [
+        "number",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "japanese",
+        "text": "DuncAnp-0\nリザードンeん\n100",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-34",
+      "position": 34,
+      "title": "Charizard No. 006 Holo (Trade Please Promo) – OnlyJody",
+      "url": "https://www.onlyjody.com/it/products/charizard-no-006-holo-trade-please-promo",
+      "image_url": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR0DolLI0vXkAZxHRgRPh8shzqZx-UxktqVvf6JkrNjrNXQSGfn",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR0DolLI0vXkAZxHRgRPh8shzqZx-UxktqVvf6JkrNjrNXQSGfn",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "006"
+        ],
+        "languages": [],
+        "years": [],
+        "finish": "holo",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "number",
+        "finish"
+      ],
+      "missing": [
+        "language",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "21 va\nUt-F HPI20\nt1 I\nS30\n00\nCHE3bate",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-35",
+      "position": 35,
+      "title": "Episode 1: Charizard CD Promo - YouTube",
+      "url": "https://www.youtube.com/watch?v=wgblLH5Xs18",
+      "image_url": "https://i.ytimg.com/vi/wgblLH5Xs18/sddefault.jpg",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQYfFd-f0obv1KT4n83Lp9MfjGTBjPS3Zw8F4AX_EvpMLwExvPO",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "language",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "(99D1I}-\nb2htTE:R1.7m. $90.5kg\nJlha Ken Sugmo\n-CtacL.\nLWJ HP20\n9-9 -30\nP5r100\ntE1400-NE\nNo 006",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-36",
+      "position": 36,
+      "title": "Found this mint condition charizard cd promo while traveling ...",
+      "url": "https://www.reddit.com/r/PokemonTCG/comments/1ldk0nu/found_this_mint_condition_charizard_cd_promo/",
+      "image_url": "https://preview.redd.it/found-this-mint-condition-charizard-cd-promo-while-v0-db8cv04ywg7f1.jpeg?auto=webp&s=62f1294a571da1b25b53f37eada4ca46f4b80bee",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSi8I5uXaB5uc5t0Evs5KKVOltoBv38BfqNThhoC1WOeMU_9Px0",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "language",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "2i1E y-FhGi1E\nfat)EOO}E\nHlus, Ken Sugimon\nEN-1-FZaTELET.\nDARtE):1.7m, *90.5kg\n9X -30\nLV.76 HP120\nB23RL\n(hya00\n1E1400XN\nNo 006",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-37",
+      "position": 37,
+      "title": "1998 P.M. Japanese Charizard Holo CD Promo #6 PSA 10 | eBay",
+      "url": "https://www.ebay.com/itm/318019412582",
+      "image_url": "https://i.ebayimg.com/images/g/pfsAAeSwZCxo9nku/s-l400.jpg",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeGYVkR7s7omMfoFVBc3xktVfAy4X4NwABjeZs5Tt27OlOr9jo",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "6"
+        ],
+        "languages": [
+          "ja"
+        ],
+        "years": [
+          "1998"
+        ],
+        "finish": "holo",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "number",
+        "language",
+        "finish"
+      ],
+      "missing": [
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "japanese",
+        "text": "PSA\n1998 P.M. JAPANESE\nCHARIZARD - HOLO\nCD PROMO\nt特カエナジー\nリザードン高剛20ッ\nebay\nGEM MT10\n力ージ30\n#6\n03380402\nほのおのう\nも砂砂100\nAuthentiity",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-38",
+      "position": 38,
+      "title": "PSA-10 Charizard-Holo [CN] (25TH Annv.C/C-TCB-CHRZRD ...",
+      "url": "https://www.gradedstore.com/products/psa-10-charizard-holo-chi-25th-annv-c-c-tcb-chrzrd",
+      "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-lkpAA3WltTV4n2wOe2W2rRa-r03RAiXFzHh5voBjg9HcOM-2",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-lkpAA3WltTV4n2wOe2W2rRa-r03RAiXFzHh5voBjg9HcOM-2",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "PSA-10"
+        ],
+        "languages": [],
+        "years": [],
+        "finish": "holo",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_number"
+      ],
+      "matches": [
+        "finish"
+      ],
+      "missing": [
+        "language",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "anaseIMONCH\n25\n100",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-39",
+      "position": 39,
+      "title": "1st edition charizard japanese - Etsy Italia",
+      "url": "https://www.etsy.com/it/market/1st_edition_charizard_japanese",
+      "image_url": "https://i.etsystatic.com/36946987/r/il/bf6bc7/7991530279/il_fullxfull.7991530279_cioa.jpg",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRBNic5c8DmYCKtLnvLFax-q290JMhbC6KPFM4U4572oamaO_JY",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [
+          "ja"
+        ],
+        "years": [],
+        "finish": "",
+        "stamp": "present",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "language"
+      ],
+      "missing": [
+        "number",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "japanese",
+        "text": "フ進化リザードから進化\nリザードンw HPI20\nモンスターカードに最わて使いす。\n※かいりきポケモン身長1.5m、体重70.5kg\n【特種能カ】 エナジーパーン\n弱点\n、田us.MItsUhio Aric\nリガードンは、「美」以外の自分のエネルギーを「後」エネ\nとして扱うことができる。「こんらん」妖態のと書に\nえない。\nほのおのうず\n自分のエネルギーカードを2枚はがし00\nてすてる。\nにげる\n円抵カ ダメージ-30\n地上1400メートル。\n炎をはく。!\nNoO0る\nことができる。高の\nまで羽をつかって 飛ぶ\nは便えない。",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-40",
+      "position": 40,
+      "title": "1998 Pokemon Japanese CD Promo Holo Charizard #6 SGC 10 GEM ...",
+      "url": "https://www.fanaticscollect.com/buy-now/46447c38-98b7-44d6-b4ab-a6c8d90fb13f/1998-pokemon-japanese-cd-promo-holo-charizard-6-sgc-10-gem-mint",
+      "image_url": "https://cdn-vault.fanaticscollect.com/2020/11/13/2/medium/v83137_2020111311322600M_1.jpg",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTXhUBoHF4wT9CgrdUrEoJk1eUZ_MHvnjoMJxFwpBmCD1Y2AsKk",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "6"
+        ],
+        "languages": [
+          "ja"
+        ],
+        "years": [
+          "1998"
+        ],
+        "finish": "holo",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "number",
+        "language",
+        "finish"
+      ],
+      "missing": [
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "japanese",
+        "text": "SGC\n1996 POCKET MONSTERS\n006 CHARIZARD\nHo ographic\n2進化リザードから進化\nWWw.SGCCARD.COM\n修リザードン\nかえんボケモン: 身長1.7m、体重90.5kg\n弱点\n【特殊能カ】エナジーパーン\n明抵抗力\nlilus Ken Sugimori\nSG.LLC 1083907-01\n「ねむり·マヒ·こんらん」状態の時、この力は消える。\nモンスターカードに重ねて使います。\nLV.76 HP120\nこの力は自分のの中で毎度でも使える。このカードについているすべてのエネル\nーは「炎」エネルギになり、自分の番の終わりに元にもとる。このカードが\nにげる\n98\nほのおのうず\nダメージ -30\nGEN\nこのカードについているエネルギーカー00\n地上1400メートルま\nで翼をつかって飛ぶこ\nとができる。高熱の炎\nをはく。\nNo. 006\n100\nドを2枚\nMONSTERS\nできない、",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-41",
+      "position": 41,
+      "title": "POP 6 RED DOT ERROR Pokemon Neo Genesis 1st Edition #17 ...",
+      "url": "https://www.instagram.com/p/DYvCEtQFse4/",
+      "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSK9bnCr8kdMvow5m0iSxM9s2agXENP8-ayVT9uMqgK_4axCvH",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSK9bnCr8kdMvow5m0iSxM9s2agXENP8-ayVT9uMqgK_4axCvH",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "17"
+        ],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "present",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_number"
+      ],
+      "matches": [],
+      "missing": [
+        "language",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "199 PM JAPANESE\nCHARIZARD-HOLO\nCD PAONO\nPA\nPR\nBea02204\n100\n20\n1",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-42",
+      "position": 42,
+      "title": "103-128 Charizard Holo Prima Edizione (JP) – MINT » Federicstore",
+      "url": "https://federicstore.it/prodotto/103-128-charizard-holo-prima-edizione-jp-mint/",
+      "image_url": "https://federicstore.it/wp-content/uploads/2024/01/103-128h-baseexpansionpack1ed.png",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3PWpxNr3LuiWO9BSXN_eIj-4Lxk6RUl_uWkj4fqj7dD3RNk6_",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "103/128"
+        ],
+        "languages": [],
+        "years": [],
+        "finish": "holo",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_number"
+      ],
+      "matches": [
+        "finish"
+      ],
+      "missing": [
+        "language",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "HP 120\n28047\nww.EDE\nrORE:\n0A 0p0 120\n2",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-43",
+      "position": 43,
+      "title": "Charizard (Kairiki Charizard) :1ED : Old Back [PMCG1-1 ...",
+      "url": "https://snkrdunk.com/en/trading-cards/93335",
+      "image_url": "https://cdn.snkrdunk.com/upload_bg_removed/20241120083455-0.webp?size=l",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR-TSfN4vFXjFX63gW4W2IHij6qfJYf2TnUKBlbpQqhMXUx8zii",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "language",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "EA9--CRDRLIRT\nJS-F vs HPI20\ntPJKERR15m. $7o.5kg\n913--2nusy T00\n9X- -30\nE1400%-J\nNo 006",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-44",
+      "position": 44,
+      "title": "Blaine's Charizard Gym Booster 2: Challenge from the ...",
+      "url": "https://www.cardtrader.com/it/cards/139320-blaine-s-charizard-lv-50-holo-rare-no-006-gym-booster-2-challenge-from-the-darkness",
+      "image_url": "https://www.cardtrader.com/uploads/blueprints/image/139320/blaine-s-charizard-lv-50-holo-rare-no-006-gym-booster-2-challenge-from-the-darkness.jpg",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcR79OelyGaIowAtlPcuP6t8Lrue_-jIy4boYtFFr5YaoNhsHQgS",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "language",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "tARKE:8K1.7m, t*90.5Kg\nIn Ken Suglnos\nLV.50 HP100\n771t-7VZ\nS-) -30\n20+\nNa D06",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-45",
+      "position": 45,
+      "title": "1998 Japanese Pokemon CD Promo Charizard PSA 9 sold at ...",
+      "url": "https://www.bidsquare.com/online-auctions/bruneau/1998-japanese-pokemon-cd-promo-charizard-psa-9-1950221",
+      "image_url": "https://s1.img.bidsquare.com/item/l/7123/7123189.jpeg?t=1KlQYn",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfiAqOTLirF0Mk6jFrAWW4l_ZdBPKas14nMIR9CTUQA2JPIwHT",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [
+          "ja"
+        ],
+        "years": [
+          "1998"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "language"
+      ],
+      "missing": [
+        "number",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "japanese",
+        "text": "1998 P.M. JAPANESE\nCHARIZARD - HOLO\nCD PROMO\n2進化リザードからe.\nPSA\nリザードンw HPI20\n[特殊能カ】 エナジーパーン\n弱点\nかえんポケモン:身長1.7m、体90.5kg\n#6\nMINT 9\nモンスタカーて\nほのおのうず\n05297761\nにげる\nもも100\n無抗力 グメージ-30\n地上1400メートル\nでをつかって飛ぶこ\nとができる高熱の英\nをはく。\nNo 006\n#6",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-46",
+      "position": 46,
+      "title": "Set Base Giapponese Charizard-Holo 1996 Pokemon TCG #006 ...",
+      "url": "https://stockx.com/it-it/japanese-charizard-holo-1996-pokemon-base-set-006",
+      "image_url": "https://images.stockx.com/images/Japanese-Charizard-Holo-1996-Pokemon-Base-Set-006-PSA.jpg?fit=fill&bg=FFFFFF&w=1200&h=857&q=60&dpr=1&trim=color&updated_at=1620916299",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2mGzEhdB4MbWebqIiNI3ZFPdSwAsjwimXyMir-iCt-aULQ3Od",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "006"
+        ],
+        "languages": [
+          "ja"
+        ],
+        "years": [
+          "1996"
+        ],
+        "finish": "holo",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "number",
+        "language",
+        "finish"
+      ],
+      "missing": [
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "japanese",
+        "text": "PSA\nフ進化りザードから進化\nリザードン\nかえんボケモン: 身長1.7m. 体重90.5Kg\n弱点\n[特流能カ1エナジーバーン\nは使えない。\nモンスターカードにねて使います。\nLVJ6 HPI20\nほのおのうず\n分の1ルギーカ-ドを2枚はがしI00\nにげる\n喫抵抗力 ダメージ -30\n地上1400メートル\nまで羽をつかって 絶\nことができる。 高能の\n炎をはく、\nNo. 006*",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-47",
+      "position": 47,
+      "title": "Charizard 280/XY-P | Promo | ChitoroShop",
+      "url": "https://it.chitoroshop.com/prodotti/promo-charizard-280-xy-p",
+      "image_url": "https://chitoroshop.com/cdn/shop/files/Charizard-280-XY-P-Promo-ChitoroShop-8656.png?v=1772429044&width=1920",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRaz9ITiwRvSA8V5iDBBgAfYdUhzjRKkXxV6TlHJay7qSPTHkp8",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "language",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "U-F) w6 HP150\nENO.006 E %:1.7m $:90.5kg\nus.Ken Sugimori\ncOSET3IÀLA-E 38U,at3.\nx2 h-20\n280/XY-P\n200\nc2016 Pokémon/Nintendo/Creatures/GAME FREAK\n#P132\n-F w6 HP150\n2iE1t vy-MSme\n200\nx2 h -20Oo*\n280/XY-P\nlus.Ken Sugimor\n2016 Pokémon/NintedorCreatures/GAME FREAK.",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-48",
+      "position": 48,
+      "title": "Buy Charizard - 4/102 - Holo Rare Online Italy | Ubuy",
+      "url": "https://www.ubuy.co.it/en/product/4YRD6TL3A-pokemon-charizard-4-102-rare-celebrations-english",
+      "image_url": "https://m.media-amazon.com/images/I/81FAcEQOLxL.jpg",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTmdMht6UF02omvKiyDaz0IOwILYOYVIjsDm_1s-Y2FdSnXz_7j",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "4/102"
+        ],
+        "languages": [],
+        "years": [],
+        "finish": "holo",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_number"
+      ],
+      "matches": [
+        "finish"
+      ],
+      "missing": [
+        "language",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "STAGE 2\nEvolves from Charmeleon Put Charizard on the Stage l card\nCharizard\nFlame Pokémon. Length: 5' 7\", Weight: 200 Ibs.\nPokémon Power: Energy Burn As often as you\nlike during your turn (before your attack), you may turn\nall Energy attached to Charizard into Energy for the\nrest of the turn. This power can't be used if Charizard\nis Asleep, Confused, or Paralyzed.\nweakness\n120 HP\nFire Spin Discard 2 Energy cards\nattached to Charizard in order to use\nthis attack.\nresistance\ne-30\nI00\nretreat cost\nSpits fire that is hot enough to melt boulders. Known to\nunintentionally cause forest fires. LV. 76 #6\nllus. Mitsuhiro Arita\nCi995.96, 98 Nintendo, Creatures, GAMEFREAK\n4/102 k",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-49",
+      "position": 49,
+      "title": "Carta Pokémon】POKEMON CARD GAME CLASSIC JAPANESE CHARIZARD ...",
+      "url": "https://fandom.tokyo/it/products/pokemon-card-pokemon-card-game-classic-japanese-charizard-003-032-cll-japanese-single-card",
+      "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSv-0YBLqiSNwr-W95rTK0lqFYMRYxG8RD5r-sZ4cDMunz5xHQI",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSv-0YBLqiSNwr-W95rTK0lqFYMRYxG8RD5r-sZ4cDMunz5xHQI",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [
+          "ja"
+        ],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "language"
+      ],
+      "missing": [
+        "number",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "japanese",
+        "text": "POKEMON CARD GAME CLASSIC\nチードン\nJapanese Charizard",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-50",
+      "position": 50,
+      "title": "Charizard - 280/XY-P 280/XY-P XY-P: Xy Promos Holo (Japanese ...",
+      "url": "https://www.ebay.com/p/4084243439",
+      "image_url": "https://i.ebayimg.com/images/g/S7MAAeSwUB9ofTGR/s-l225.jpg",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQI6THKg0BiDPDpdnqkficpx0X_khoRzLqpyJOW8cXFsatQnUq8",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [
+          "ja"
+        ],
+        "years": [],
+        "finish": "holo",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "language",
+        "finish"
+      ],
+      "missing": [
+        "number",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "japanese",
+        "text": "TRADE PLEASE 2gTH\nリザードンHP150ん\n200",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-51",
+      "position": 51,
+      "title": "Carta Pokémon Charizard set base unlimited stampa gigante ...",
+      "url": "https://cardsplus.it/product-category/carta-pokemon-charizard-set-base/",
+      "image_url": "https://cardsplus.it/wp-content/uploads/2024/04/carta-charizard-set-base-rigida.jpg",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRNbyajT41tMwz4tfHMjy-66ocW8goFR73ljh6FsYO8s-GsZymJ",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "absent",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "language",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "SAGE 2\nwealkness\nHesubi\nEvolves from Charnele on Put Charizard on the Stage l card\nCharizard\n120 HP\nFlame Pokémon. Length: 5' 7\", Weight: 200 lbs.\nPokémon Power: Energy Burn As often as you\nall Energy attached to Charizard into Energy for the\nis Asleep, Confused, or Paralyzed.\nFire Spin Discard 2 Energy cards\nattached to Charizard in order to use\nresistance\n-30\nI00\nretreat cost\n1995,%90 Nintenda, Creatures, GAMEFREAK CI9Waards\n4F102\ndifCharizard\nSpits fire that is ha",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-52",
+      "position": 52,
+      "title": "Charizard #280/XY-P Pokemon Japanese Promo : r ...",
+      "url": "https://www.reddit.com/r/IsMyPokemonCardFake/comments/1rizl2k/charizard_280xyp_pokemon_japanese_promo/",
+      "image_url": "https://preview.redd.it/charizard-pokemon-japanese-promo-v0-qejgq96f5omg1.jpg?width=640&crop=smart&auto=webp&s=968c3af1fbc963f3ccd4c29278ab68dbf5e9badb",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcR_PpOfsTQ1FwHIRVt_0md-qvBplaAbmvIxqOwhj6yYnEvNwjHn",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "280"
+        ],
+        "languages": [
+          "ja"
+        ],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_number"
+      ],
+      "matches": [
+        "language"
+      ],
+      "missing": [
+        "finish",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "japanese",
+        "text": "2進化\nリザードから進化\nリザードン\n【特性】エナジーバーン\nモンスダーカーてす\n全園図鑑NO.006 かえんボケモン身長:1.7m 体重: 90.5kg\nLVI6 HP150\nこのポケモンについているエネルギーは、すべてもタイブになる。\nももももほのおのうず\nD2016 P\n200\nこのポケモンについているエネルギーを3個び、トラッシュする。\n×2 無抗カ -20 1400x-トル\nコかってぶことがき\n2",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-53",
+      "position": 53,
+      "title": "Pokémon TCG Charizard 2000 Neo 2 Promos BGS 9,5 - Magicians ...",
+      "url": "https://www.magicianscircle.it/product/charizard-promos-bgs95/",
+      "image_url": "https://www.magicianscircle.it/wp-content/uploads/2023/09/Charizard-BGS-A.png",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQqE45WpPvGfrWvxLF2JZybVgeuqOXMHcZ-4mNcfq0mYN-WXJ_3",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "2000"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "language",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "RECKETI\n2000 NEO 2 PROMOS\nJAPANESE\n#6 CHARIZARD HOLO\nCENTERING 9,5\nEDGES\nQ\nCORNERS 9.5\nSURFACE 9.5\n9.5\nb2KE:RE1.7m. #so.Skg\nGEM MINT\n0012682079\nn HP120\n9.5",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-54",
+      "position": 54,
+      "title": "2016 Charizard PSA 10 Holo - Cardova Japan",
+      "url": "https://www.cardova.co.jp/en/auction/card/01J81XMM4APS5MGZ013BJ2M3EB",
+      "image_url": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSMWp7S7yiaEsXNukti8IlCmNbQY_tUp3QcDwfTW360Si0zF6EX",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSMWp7S7yiaEsXNukti8IlCmNbQY_tUp3QcDwfTW360Si0zF6EX",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "2016"
+        ],
+        "finish": "holo",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "finish"
+      ],
+      "missing": [
+        "number",
+        "language",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "2016 PM N XY PRONO\nCHARIZARD HOLO\nTRADE PEASE\n20TH\nFA\nx200\nGEM MT\nU-FHP150\ncefeiniL\n200\n10\nTRADE PLEASE 20TH\n200\nRA",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-55",
+      "position": 55,
+      "title": "Pokémon Charizard 4/102 - Celebrazioni rare - Inglese ...",
+      "url": "https://www.amazon.it/Pokemon-Charizard-102-Feste-Inglese/dp/B09NCD852R",
+      "image_url": "https://m.media-amazon.com/images/I/71RovBaEHOL.jpg",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSOmiHmARie7hQEqC1oVw3U7zOwR3BJcRV-Ml6AxpKR9FOaiaJS",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "4/102"
+        ],
+        "languages": [
+          "en"
+        ],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_number",
+        "different_language"
+      ],
+      "matches": [],
+      "missing": [
+        "finish",
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "STAGE 2\nEvolves from Charmeleon Put Charizard on the Stage I card\nweakness\nCharizard\nFlame Pokémon. Length: 5' 7\", Weight: 200 lbs.\nPokémon Power: Energy Burn As often as you\nlike during your turn (before your attack), you may turn\nall Energy attached to Charizard into Energy for the\nrest of the turn. This power can't be used if Charizard\nis Asleep, Confused, or Paralyzed.\nFire Spin Discard 2 Energy cards\nattached to Charizard in order to use\nthis attack.\nJlus. Mitsuhiro Arita\n120 HP\nresistance\n-30\nI00\nretreat cost\nSpits fire that is hot enough to melt boulders. Known to\nunintentionally cause forest fires. LV. 76 #6\nO1995,96,98 Nintendo, Creatures, GAMEFREAK\n4/102 *",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-56",
+      "position": 56,
+      "title": "2002 1st Edition Mysterious Mountains Crystal Charizard BGS ...",
+      "url": "https://www.instagram.com/p/C2xrCe_r-vE/",
+      "image_url": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQFzUo_WPdIvGxXt9QSPP--VKSz3vw3NyClNE0W7ZPNVGO6YvLN",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQFzUo_WPdIvGxXt9QSPP--VKSz3vw3NyClNE0W7ZPNVGO6YvLN",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "2002"
+        ],
+        "finish": "",
+        "stamp": "present",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "language",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "7\nDUBSY\n10",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-57",
+      "position": 57,
+      "title": "Exploring the Charizard CD Promo from 1998 | TikTok",
+      "url": "https://www.tiktok.com/@slabacad.sg/video/7546578727644318983",
+      "image_url": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSh8WecN1OxJ-BpljCUTnj3kjRpTQV_m-hZPEjkmto_YfptnkJn",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSh8WecN1OxJ-BpljCUTnj3kjRpTQV_m-hZPEjkmto_YfptnkJn",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "1998"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "language",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "So, this card was part of\nthe Pokemon Song",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-58",
+      "position": 58,
+      "title": "Goldin | The Global Go-To For High-End Collectibles",
+      "url": "https://goldin.co/item/1998-pokemon-japanese-cd-promo-holo-6-charizard-psa-gem-mt-109f9dp?queryId=eyJjYXJkSW5kZXgiOjE0fQ==",
+      "image_url": "https://d2tt46f3mh26nl.cloudfront.net/public/Lots/202606-2515-4058-48f4e080-c43a-4563-a3f5-a3d4cef842b2/b1e3889b-89d9-41d0-9f1c-b3050b1b6e7b@1x",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQcBaEIbFz4B90lvlcaJiuL4BV8plTW77_nJg2HoN6XUUOA0V14",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "language",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "1998 P.M. JAPANESE\nCHARIZARD- HOLO\nCD PROMO\nlus.Ken Sugimor\nSX-9 -30\nGEM MT\n46843158\nLV.76 HPI20\nàhtTE:1.7 m. *t 90.5kg\n#6\nEX--FICMaTUSET.\n. E 1400 X-N\n10\nNo. 006\n5\n100",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-59",
+      "position": 59,
+      "title": "Charizard: il Re di Pokémon TCG - StockX News",
+      "url": "https://stockx.com/news/it-it/charizard-re-di-pokemon-tcg/",
+      "image_url": "https://stockx-sneaker-analysis.s3.amazonaws.com/wp-content/uploads/2021/02/XY.-Evolutions.png",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTJQ25KxzxYqfTPZMpR9pdy0AXr7yU0u13XGuf3DjomANoIHTXM",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [],
+      "missing": [
+        "number",
+        "language",
+        "finish",
+        "subject"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "2016 POKEMON XY\nCHARIZARD - HOLO\nEVOLUTIONS\nSTAGE 2 Evolves from Charmeleon Put Charizard on the Scage I Pokénon\nCharizard\nAbility: Energy Burn\nLV.76\nNO. 006 Flame Pokémon HT: 5'07\" WT: 199.5 lbs.\nretreat\ncost\n#11\nGEM MT\nFire Spin\nIlus. Mitsuhlro Arita\nAll Energy attached to this Pokémon are & Energy\ninstead of their usual type.\n48849922\nI50 HP\nDiscard 3 Energy attached to this Pokémon.\nc2016 Pokémon\nlbs wingscan carry thie Pokémon\nweaknessx2 resistance-20elose to an altitude of4,600 feet.\nt blows out fire at very hih\ntemperatures.\n200\n10\n11108*\nA",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-60",
+      "position": 60,
+      "title": "004-102 Charizard Holo Prima Edizione (IT) – MINT » Federicstore",
+      "url": "https://federicstore.it/prodotto/004-102-charizard-holo-1ed-it-mint/",
+      "image_url": "https://federicstore.it/wp-content/uploads/2021/06/004-102h-setbase-1edizione.png",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcS7lIYEQL-stuOj7CjdG_CnEGJGfprlfcMTILfM5QzHS0LQLBFS",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "004/102"
+        ],
+        "languages": [
+          "it"
+        ],
+        "years": [],
+        "finish": "holo",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_number",
+        "different_language"
+      ],
+      "matches": [
+        "finish"
+      ],
+      "missing": [
+        "subject"
+      ],
+      "verification_state": "rejected",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "FASE\nEvolve de Charmeleon\nCharizard\ndeboleza\nMetti Charizard sula cara d Fase l\nnPokémon flamma. Lunghezza: I,7 m Res\nPotere Pokémon: Brucia enerea Qree\nvuoi durance il tuo turno (primo di otoror), tras formare\ntutte le carte Energia asge sChariznrd aa Ene\nper i resto del turno.Qpotore not pu esserejao se\nCharizard è Addormenta Cousoo Parnao.\n120 PV\nTurbofuoce Sara 2 care\nEnergia n9egpate a Charizard\npoter usare qhesto attadco.\nrestenz\nSputo fiame co intite do sioglien\nvolte couss igcenk boschiv. LIV\nN.6\nI00\nrocce. Senza volerlo,\ncosto di ritirata\nMichire Aita\nindo, Cn,EREK,\nO00 Wr I02\ncoSto",
+        "origin": "candidate_image_ocr"
+      }
+    }
+  ],
+  "crops": [
+    {
+      "id": "original-1-upper",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.014814814814814815,
+        "y": 0.19487179487179487,
+        "width": 0.9703703703703703,
+        "height": 0.21623931623931625
+      }
+    },
+    {
+      "id": "original-1-lower",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.014814814814814815,
+        "y": 0.6162393162393163,
+        "width": 0.9703703703703703,
+        "height": 0.22905982905982905
+      }
+    }
+  ],
+  "batches": [
+    {
+      "ids": [
+        "lens-3",
+        "lens-6",
+        "lens-8"
+      ],
+      "reply": {
+        "original_readings": [
+          {
+            "field": "subject",
+            "image_index": 1,
+            "crop_id": "original-1-upper",
+            "full_text": "リザードン",
+            "crop_text": "リザードン",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Charizard",
+              "en": "Charizard"
+            }
+          },
+          {
+            "field": "language",
+            "image_index": 1,
+            "crop_id": "original-1-upper",
+            "full_text": "Testo giapponese",
+            "crop_text": "Testo giapponese",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Giapponese",
+              "en": "Japanese"
+            }
+          },
+          {
+            "field": "collector_number",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "No. 006",
+            "crop_text": "No. 006",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "006",
+              "en": "006"
+            }
+          }
+        ],
+        "comparisons": [
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.004,
+                "y": 0.208
+              },
+              {
+                "x": 0.963,
+                "y": 0.21
+              },
+              {
+                "x": 0.967,
+                "y": 0.82
+              },
+              {
+                "x": 0.004,
+                "y": 0.818
+              }
+            ],
+            "reference_quad": null,
+            "reference_id": "lens-3",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "リザードン",
+              "number": "006",
+              "year": "",
+              "language": "Japanese"
+            },
+            "reference_reading": {
+              "subject": "リザードン",
+              "number": "006",
+              "year": "",
+              "language": "Japanese"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Charizard artwork with blue wings and fire",
+                "reference": "Same Charizard artwork and pose",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Japanese CD Promo card layout",
+                "reference": "Japanese CD Promo card layout",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "identifier",
+                "original": "No. 006",
+                "reference": "CD Promo #6",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Charizard",
+              "family": "Pokémon",
+              "number": "006",
+              "year": "1999",
+              "brand": "Pokémon",
+              "subset": "CD Promo",
+              "proof": {
+                "subject": "1999 Pokemon Japanese CD Promo Charizard-Holo",
+                "family": "Pokemon",
+                "year": "1999",
+                "subset": "CD Promo"
+              },
+              "display_names": {
+                "it": "Charizard",
+                "en": "Charizard"
+              }
+            }
+          },
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.004,
+                "y": 0.208
+              },
+              {
+                "x": 0.963,
+                "y": 0.21
+              },
+              {
+                "x": 0.967,
+                "y": 0.82
+              },
+              {
+                "x": 0.004,
+                "y": 0.818
+              }
+            ],
+            "reference_quad": null,
+            "reference_id": "lens-6",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "リザードン",
+              "number": "006",
+              "year": "",
+              "language": "Japanese"
+            },
+            "reference_reading": {
+              "subject": "リザードン",
+              "number": "006",
+              "year": "",
+              "language": "Japanese"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Charizard artwork with blue wings and fire",
+                "reference": "Same Charizard artwork and pose",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Japanese CD Promo card layout",
+                "reference": "Japanese CD Promo card layout",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "identifier",
+                "original": "No. 006",
+                "reference": "CD Promo 6",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Charizard",
+              "family": "Pokémon",
+              "number": "006",
+              "year": "1999",
+              "brand": "Pokémon",
+              "subset": "CD Promo",
+              "proof": {
+                "subject": "1999 Pokemon Japanese CD Promo 6 Charizard-Holo",
+                "family": "Pokemon",
+                "year": "1999",
+                "subset": "CD Promo"
+              },
+              "display_names": {
+                "it": "Charizard",
+                "en": "Charizard"
+              }
+            }
+          },
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.004,
+                "y": 0.208
+              },
+              {
+                "x": 0.963,
+                "y": 0.21
+              },
+              {
+                "x": 0.967,
+                "y": 0.82
+              },
+              {
+                "x": 0.004,
+                "y": 0.818
+              }
+            ],
+            "reference_quad": null,
+            "reference_id": "lens-8",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "リザードン",
+              "number": "006",
+              "year": "",
+              "language": "Japanese"
+            },
+            "reference_reading": {
+              "subject": "リザードン",
+              "number": "006",
+              "year": "",
+              "language": "Japanese"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Charizard artwork with blue wings and fire",
+                "reference": "Same Charizard artwork and pose",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "Holo CD Promo card",
+                "reference": "Charizard #6 CD Promo card",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Charizard",
+              "family": "Pokémon",
+              "number": "006",
+              "year": "1999",
+              "brand": "Pokémon",
+              "subset": "CD Promo",
+              "proof": {
+                "subject": "Prix de Charizard #6",
+                "family": "Pokemon Japanese CD Promo",
+                "year": "",
+                "subset": "CD Promo"
+              },
+              "display_names": {
+                "it": "Charizard",
+                "en": "Charizard"
+              }
+            }
+          }
+        ]
+      },
+      "accepted": [
+        "lens-3",
+        "lens-6",
+        "lens-8"
+      ]
+    }
+  ],
+  "details": {
+    "attempted": true,
+    "requested": [
+      {
+        "key": "detail:copyright:{\"image_index\":1,\"x\":0.3,\"y\":0.81,\"width\":0.42,\"height\":0.02}",
+        "field": "copyright",
+        "region": {
+          "image_index": 1,
+          "x": 0.3,
+          "y": 0.81,
+          "width": 0.42,
+          "height": 0.02
+        },
+        "image_index": 1,
+        "rotation": 0,
+        "readings": [
+          {
+            "id": "e10",
+            "text": "©1995 Nintendo/Creatures inc./GAME FREAK inc.",
+            "value": "©1995 Nintendo/Creatures inc./GAME FREAK inc.",
+            "source": "vision",
+            "rotation": 0
+          },
+          {
+            "id": "e11",
+            "text": "©1995 Nintendo/Creatures inc./GAME FREAK inc.",
+            "value": "©1995 Nintendo/Creatures inc./GAME FREAK inc.",
+            "source": "vision",
+            "rotation": 0
+          }
+        ]
+      }
+    ],
+    "images": [
+      {
+        "originalWidth": 1080,
+        "originalHeight": 2340,
+        "imageIndex": 1,
+        "rect": {
+          "x": 307,
+          "y": 1860,
+          "width": 487,
+          "height": 118
+        },
+        "cropped": true,
+        "searchWindow": true,
+        "sentWidth": 487,
+        "sentHeight": 118,
+        "mimeType": "image/png",
+        "jpegQuality": null,
+        "source": "original_file",
+        "orientation": "from-image",
+        "unit": "unknown"
+      }
+    ],
+    "updates": [
+      {
+        "field": "copyright",
+        "text": "",
+        "certainty": "uncertain",
+        "evidence_found": false,
+        "image_index": 1
+      }
+    ],
+    "evidence_found": false,
+    "committed_revision": 6
+  },
+  "budget": {
+    "maxUsd": 0.03,
+    "spentOrReservedUsd": 0.0111094,
+    "entries": [
+      {
+        "kind": "vision",
+        "reservedUsd": 0.0084545,
+        "actualUsd": 0.002615,
+        "status": "usage_returned"
+      },
+      {
+        "kind": "lens",
+        "reservedUsd": 0.004,
+        "actualUsd": 0.004,
+        "status": "usage_returned"
+      },
+      {
+        "kind": "vision",
+        "reservedUsd": 0.01710575,
+        "actualUsd": 0.00352235,
+        "status": "usage_returned"
+      },
+      {
+        "kind": "vision",
+        "reservedUsd": 0.00302375,
+        "actualUsd": 0.0009720499999999999,
+        "status": "usage_returned"
+      }
+    ],
+    "visionCalls": 3,
+    "maxVisionCalls": 4,
+    "estimated": true,
+    "includesIdentificationAndMarket": true
+  }
+}
