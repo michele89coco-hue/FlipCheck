@@ -1,0 +1,497 @@
+{
+  "provenance": "Actual build 225 replies. Session/account data omitted; certificate redacted. Replay only.",
+  "vision": {
+    "domain": "pokemon",
+    "kind": "card",
+    "category": "Pokémon TCG",
+    "language": "zh",
+    "object_unit": "single",
+    "image_views": [
+      {
+        "image_index": 1,
+        "view": "front",
+        "certainty": "clear"
+      }
+    ],
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.12,
+        "y": 0.17,
+        "width": 0.8,
+        "height": 0.7,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "超梦V",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.35,
+          "y": 0.39,
+          "width": 0.2,
+          "height": 0.04
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "collector_number",
+        "text": "135/127",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.36,
+          "y": 0.86,
+          "width": 0.13,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "rarity_text",
+        "text": "SR",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.49,
+          "y": 0.86,
+          "width": 0.03,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "set_code",
+        "text": "CS5aC",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.25,
+          "y": 0.86,
+          "width": 0.08,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": [
+          "CS5aC",
+          "CS5AC"
+        ]
+      },
+      {
+        "field": "hp",
+        "text": "220",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.66,
+          "y": 0.4,
+          "width": 0.08,
+          "height": 0.03
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "attack",
+        "text": "超念力 50；转移破坏 160",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.36,
+          "y": 0.71,
+          "width": 0.42,
+          "height": 0.08
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "copyright",
+        "text": "©2024 Pokémon",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.41,
+          "y": 0.87,
+          "width": 0.12,
+          "height": 0.015
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "language",
+        "text": "中文",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.2,
+          "y": 0.4,
+          "width": 0.65,
+          "height": 0.48
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "2024 Pokémon JPN",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.25,
+          "y": 0.21,
+          "width": 0.2,
+          "height": 0.02
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "serial",
+        "text": "1234567890",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.69,
+          "y": 0.3,
+          "width": 0.15,
+          "height": 0.02
+        },
+        "zone": "label",
+        "alternatives": []
+      }
+    ],
+    "features": [
+      {
+        "field": "finish",
+        "value": "holo",
+        "description": "Superficie fortemente riflettente/olografica",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.2,
+          "y": 0.4,
+          "width": 0.65,
+          "height": 0.48
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "rarity_symbol",
+        "value": "present",
+        "description": "Simbolo di rarità visibile",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.48,
+          "y": 0.86,
+          "width": 0.04,
+          "height": 0.02
+        },
+        "zone": "footer"
+      },
+      {
+        "field": "layout",
+        "value": "carta Pokémon full-art con illustrazione a tutta superficie",
+        "description": "Nome, HP e attacchi in layout Pokémon standard",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.2,
+          "y": 0.39,
+          "width": 0.65,
+          "height": 0.49
+        },
+        "zone": "other"
+      }
+    ],
+    "hypotheses": [
+      {
+        "field": "family",
+        "value": "Pokémon TCG"
+      },
+      {
+        "field": "brand",
+        "value": "Pokémon"
+      }
+    ],
+    "slab_reading": {
+      "grader": "Unknown",
+      "label_text": "2024 Pokémon JPN; 超梦V; CS5aC 135/127 SR; CENTERING 9.5; CORNERS 10; EDGES 10; SURFACE 10; PRISTINE; 10; 1234567890",
+      "card_title": "超梦V",
+      "subject": "超梦V",
+      "family": "Pokémon TCG",
+      "model": "CS5aC 135/127 SR",
+      "year": "2024",
+      "card_number": "135/127",
+      "variant": "SR",
+      "grade": "10",
+      "certificate": "1234567890",
+      "match_details": "Etichetta e carta mostrano 超梦V e 135/127 SR; l'etichetta dichiara JPN, mentre il testo della carta appare cinese.",
+      "grader_mark": "",
+      "grader_certainty": "uncertain",
+      "normalized_subject": {
+        "original": "超梦V",
+        "it": "Mewtwo V",
+        "en": "Mewtwo V",
+        "certainty": "clear"
+      },
+      "present": true,
+      "certainty": "clear",
+      "title_certainty": "clear",
+      "grade_certainty": "clear",
+      "certificate_certainty": "clear",
+      "secondary_text_incomplete": false,
+      "subgrades": [
+        {
+          "name": "centering",
+          "value": "9.5",
+          "certainty": "clear"
+        },
+        {
+          "name": "corners",
+          "value": "10",
+          "certainty": "clear"
+        },
+        {
+          "name": "edges",
+          "value": "10",
+          "certainty": "clear"
+        },
+        {
+          "name": "surface",
+          "value": "10",
+          "certainty": "clear"
+        }
+      ],
+      "image_index": 1,
+      "object_match": "matches"
+    },
+    "engine_version": 193,
+    "brand": "Pokémon",
+    "family": "Pokémon TCG",
+    "title": "超梦V",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": {
+      "image_index": 1,
+      "x": 0.12,
+      "y": 0.17,
+      "width": 0.8,
+      "height": 0.7,
+      "certain": true
+    },
+    "photo_clues": [
+      {
+        "text": "超梦V",
+        "role": "subject",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.35,
+          "y": 0.39,
+          "width": 0.2,
+          "height": 0.04,
+          "certain": true
+        }
+      },
+      {
+        "text": "135/127",
+        "role": "collector_number",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.36,
+          "y": 0.86,
+          "width": 0.13,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "SR",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.49,
+          "y": 0.86,
+          "width": 0.03,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "CS5aC",
+        "role": "text",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.25,
+          "y": 0.86,
+          "width": 0.08,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "220",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.66,
+          "y": 0.4,
+          "width": 0.08,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "超念力 50；转移破坏 160",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.36,
+          "y": 0.71,
+          "width": 0.42,
+          "height": 0.08,
+          "certain": true
+        }
+      },
+      {
+        "text": "©2024 Pokémon",
+        "role": "copyright",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.41,
+          "y": 0.87,
+          "width": 0.12,
+          "height": 0.015,
+          "certain": true
+        }
+      },
+      {
+        "text": "中文",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.2,
+          "y": 0.4,
+          "width": 0.65,
+          "height": 0.48,
+          "certain": true
+        }
+      },
+      {
+        "text": "2024 Pokémon JPN",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.25,
+          "y": 0.21,
+          "width": 0.2,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "1234567890",
+        "role": "serial",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.69,
+          "y": 0.3,
+          "width": 0.15,
+          "height": 0.02,
+          "certain": true
+        }
+      }
+    ],
+    "physical_observations": [
+      {
+        "feature": "finish",
+        "text": "Superficie fortemente riflettente/olografica",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Simbolo di rarità visibile",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Nome, HP e attacchi in layout Pokémon standard",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      }
+    ],
+    "pokemon_printing": {
+      "is_pokemon": true,
+      "language": "zh",
+      "set_name": "Pokémon TCG",
+      "card_type": "pokemon",
+      "first_edition_stamp": "unclear",
+      "stamp_image": 0,
+      "stamp_location": "",
+      "stamp_text": "",
+      "artwork_shadow": "unclear",
+      "shadow_image": 0,
+      "shadow_location": "",
+      "copyright_text": "©2024 Pokémon",
+      "copyright_image": 1
+    }
+  },
+  "batches": [],
+  "references": [],
+  "crops": []
+}

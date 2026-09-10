@@ -1,0 +1,1377 @@
+{
+  "provenance": "Actual build 225 replies. Session/account data omitted; certificate redacted. Replay only.",
+  "vision": {
+    "domain": "sports",
+    "kind": "card",
+    "category": "basketball card",
+    "language": "en",
+    "object_unit": "single",
+    "image_views": [
+      {
+        "image_index": 1,
+        "view": "front",
+        "certainty": "clear"
+      },
+      {
+        "image_index": 2,
+        "view": "back",
+        "certainty": "clear"
+      }
+    ],
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.08,
+        "y": 0.31,
+        "width": 0.76,
+        "height": 0.55,
+        "certain": true
+      },
+      {
+        "image_index": 2,
+        "x": 0.16,
+        "y": 0.38,
+        "width": 0.69,
+        "height": 0.26,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "Shaquille O'Neal",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.27,
+          "y": 0.75,
+          "width": 0.42,
+          "height": 0.04
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "team",
+        "text": "Los Angeles Lakers",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.27,
+          "y": 0.75,
+          "width": 0.42,
+          "height": 0.04
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "brand",
+        "text": "Fleer",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.19,
+          "y": 0.61,
+          "width": 0.07,
+          "height": 0.03
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "product",
+        "text": "Showcase",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.65,
+          "y": 0.65,
+          "width": 0.13,
+          "height": 0.04
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "season",
+        "text": "99-00",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.65,
+          "y": 0.65,
+          "width": 0.13,
+          "height": 0.04
+        },
+        "zone": "label",
+        "alternatives": [
+          "1999-00"
+        ]
+      },
+      {
+        "field": "copyright",
+        "text": "© 2000 NBA PROPERTIES, INC. © 2000 FLEER/SKYBOX INTERNATIONAL LP. PRINTED IN U.S.A. SHOWCASE/99-00/SH",
+        "certainty": "uncertain",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.28,
+          "y": 0.6,
+          "width": 0.34,
+          "height": 0.05
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "7",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.19,
+          "y": 0.41,
+          "width": 0.05,
+          "height": 0.05
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "BORN: 3/6/72, NEWARK, NJ; HT: 7'1\"; WT: 315",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.25,
+          "y": 0.46,
+          "width": 0.32,
+          "height": 0.04
+        },
+        "zone": "back",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "ACQUIRED: FREE AGENT, JULY 18, 1996; COLLEGE: LOUISIANA STATE TIGERS",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.25,
+          "y": 0.5,
+          "width": 0.39,
+          "height": 0.04
+        },
+        "zone": "back",
+        "alternatives": []
+      }
+    ],
+    "features": [
+      {
+        "field": "finish",
+        "value": "reflective",
+        "description": "Superficie olografica/riflettente multicolore",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.08,
+          "y": 0.31,
+          "width": 0.76,
+          "height": 0.55
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "layout",
+        "value": "Ritratto d'azione verticale con firma grafica e logo della serie",
+        "description": "Giocatore in azione, numerosi elementi cromatici sullo sfondo",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.08,
+          "y": 0.31,
+          "width": 0.76,
+          "height": 0.55
+        },
+        "zone": "artwork"
+      },
+      {
+        "field": "stamp",
+        "value": "unclear",
+        "description": "Possibile firma stampata sul fronte; non verificabile come autografo",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.14,
+          "y": 0.68,
+          "width": 0.64,
+          "height": 0.13
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "autograph",
+        "value": "unclear",
+        "description": "Firma visibile, autenticità non determinabile dalla foto",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.14,
+          "y": 0.68,
+          "width": 0.64,
+          "height": 0.13
+        },
+        "zone": "surface"
+      }
+    ],
+    "hypotheses": [
+      {
+        "field": "family",
+        "value": "NBA trading card"
+      },
+      {
+        "field": "brand",
+        "value": "Fleer/SkyBox"
+      },
+      {
+        "field": "model",
+        "value": "Fleer Showcase 1999-00"
+      }
+    ],
+    "slab_reading": null,
+    "engine_version": 193,
+    "brand": "Fleer",
+    "family": "NBA trading card",
+    "title": "Shaquille O'Neal",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": {
+      "image_index": 1,
+      "x": 0.08,
+      "y": 0.31,
+      "width": 0.76,
+      "height": 0.55,
+      "certain": true
+    },
+    "photo_clues": [
+      {
+        "text": "Shaquille O'Neal",
+        "role": "subject",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.27,
+          "y": 0.75,
+          "width": 0.42,
+          "height": 0.04,
+          "certain": true
+        }
+      },
+      {
+        "text": "Los Angeles Lakers",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.27,
+          "y": 0.75,
+          "width": 0.42,
+          "height": 0.04,
+          "certain": true
+        }
+      },
+      {
+        "text": "Fleer",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.19,
+          "y": 0.61,
+          "width": 0.07,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "Showcase",
+        "role": "model",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.65,
+          "y": 0.65,
+          "width": 0.13,
+          "height": 0.04,
+          "certain": true
+        }
+      },
+      {
+        "text": "99-00",
+        "role": "season",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.65,
+          "y": 0.65,
+          "width": 0.13,
+          "height": 0.04,
+          "certain": true
+        }
+      },
+      {
+        "text": "© 2000 NBA PROPERTIES, INC. © 2000 FLEER/SKYBOX INTERNATIONAL LP. PRINTED IN U.S.A. SHOWCASE/99-00/SH",
+        "role": "copyright",
+        "certainty": "uncertain",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.28,
+          "y": 0.6,
+          "width": 0.34,
+          "height": 0.05,
+          "certain": true
+        }
+      },
+      {
+        "text": "7",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.19,
+          "y": 0.41,
+          "width": 0.05,
+          "height": 0.05,
+          "certain": true
+        }
+      },
+      {
+        "text": "BORN: 3/6/72, NEWARK, NJ; HT: 7'1\"; WT: 315",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.25,
+          "y": 0.46,
+          "width": 0.32,
+          "height": 0.04,
+          "certain": true
+        }
+      },
+      {
+        "text": "ACQUIRED: FREE AGENT, JULY 18, 1996; COLLEGE: LOUISIANA STATE TIGERS",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.25,
+          "y": 0.5,
+          "width": 0.39,
+          "height": 0.04,
+          "certain": true
+        }
+      }
+    ],
+    "physical_observations": [
+      {
+        "feature": "finish",
+        "text": "Superficie olografica/riflettente multicolore",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Giocatore in azione, numerosi elementi cromatici sullo sfondo",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Possibile firma stampata sul fronte; non verificabile come autografo",
+        "certainty": "uncertain",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Firma visibile, autenticità non determinabile dalla foto",
+        "certainty": "uncertain",
+        "entity": "target",
+        "image_index": 1
+      }
+    ]
+  },
+  "batches": [
+    {
+      "ids": [
+        "lens-1"
+      ],
+      "reply": {
+        "original_readings": [
+          {
+            "field": "subject",
+            "image_index": 1,
+            "crop_id": "original-1-upper",
+            "full_text": "Shaquille O'Neal",
+            "crop_text": "Shaquille O'Neal",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Shaquille O'Neal",
+              "en": "Shaquille O'Neal"
+            }
+          },
+          {
+            "field": "product",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "1999-00 Flair Showcase",
+            "crop_text": "1999-00 Flair Showcase",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Flair Showcase",
+              "en": "Flair Showcase"
+            }
+          },
+          {
+            "field": "team",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "LOS ANGELES LAKERS",
+            "crop_text": "LOS ANGELES LAKERS",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Los Angeles Lakers",
+              "en": "Los Angeles Lakers"
+            }
+          },
+          {
+            "field": "collector_number",
+            "image_index": 2,
+            "crop_id": "original-2-upper",
+            "full_text": "7",
+            "crop_text": "7",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "7",
+              "en": "7"
+            }
+          },
+          {
+            "field": "brand",
+            "image_index": 2,
+            "crop_id": "original-2-lower",
+            "full_text": "© 2000 NBA PROPERTIES, INC.\n© 2000 FLEER/SKYBOX INTERNATIONAL LP.\nPRINTED IN U.S.A. SHOWCASE/99-00 NFL",
+            "crop_text": "© 2000 NBA PROPERTIES, INC.\n© 2000 FLEER/SKYBOX INTERNATIONAL LP.\nPRINTED IN U.S.A. SHOWCASE/99-00 NFL",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Fleer/SkyBox",
+              "en": "Fleer/SkyBox"
+            }
+          },
+          {
+            "field": "copyright",
+            "image_index": 2,
+            "crop_id": "original-2-lower",
+            "full_text": "© 2000 NBA PROPERTIES, INC.\n© 2000 FLEER/SKYBOX INTERNATIONAL LP.\nPRINTED IN U.S.A. SHOWCASE/99-00 NFL",
+            "crop_text": "© 2000 NBA PROPERTIES, INC.\n© 2000 FLEER/SKYBOX INTERNATIONAL LP.\nPRINTED IN U.S.A. SHOWCASE/99-00 NFL",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "",
+              "en": ""
+            }
+          }
+        ],
+        "comparisons": [
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.151,
+                "y": 0.323
+              },
+              {
+                "x": 0.839,
+                "y": 0.315
+              },
+              {
+                "x": 0.927,
+                "y": 0.852
+              },
+              {
+                "x": 0.089,
+                "y": 0.849
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.05,
+                "y": 0.035
+              },
+              {
+                "x": 0.982,
+                "y": 0.037
+              },
+              {
+                "x": 0.971,
+                "y": 0.988
+              },
+              {
+                "x": 0.028,
+                "y": 0.984
+              }
+            ],
+            "reference_id": "lens-1",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [
+              "La finitura/pattern foil del candidato differisce dall’originale."
+            ],
+            "original_reading": {
+              "subject": "Shaquille O'Neal",
+              "number": "7",
+              "year": "2000",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "Shaquille O'Neal",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Shaquille O'Neal in uniforme Lakers, tiro in sospensione",
+                "reference": "Shaquille O'Neal in uniforme Lakers, tiro in sospensione",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Flair Showcase, nome e Lakers in basso",
+                "reference": "Flair Showcase, nome e Lakers in basso",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "Pattern foil arcobaleno",
+                "reference": "Pattern foil bronzo/arancio",
+                "agrees": false,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Shaquille O'Neal",
+              "family": "Flair Showcase Basketball Card",
+              "number": "7",
+              "year": "1999-00",
+              "brand": "Fleer/SkyBox",
+              "subset": "",
+              "proof": {
+                "subject": "Shaquille O'Neal",
+                "family": "1999-00 Shaquille O'Neal Flair Showcase Basketball Card",
+                "year": "1999-00",
+                "subset": "#7"
+              },
+              "display_names": {
+                "it": "Shaquille O'Neal",
+                "en": "Shaquille O'Neal"
+              }
+            },
+            "local_appearance": {
+              "original": {
+                "state": "measured",
+                "method": "quad_normalized_hsv_texture",
+                "regions": {
+                  "frame": {
+                    "hist": [
+                      0.1267659411989309,
+                      0.11760213822069492,
+                      0.043528064146620846,
+                      0.026727758686521573,
+                      0.09087437953417335,
+                      0.07483772432226041,
+                      0.037418862161130204,
+                      0.008781977854142803,
+                      0.0057273768613974796,
+                      0.010309278350515464,
+                      0.014891179839633447,
+                      0.07903780068728522
+                    ],
+                    "n": 2619,
+                    "texture": 0.048135070314853125,
+                    "glare_fraction": 0.0007636502481863307,
+                    "neutral_fraction": 0.3627338678885071
+                  },
+                  "background": {
+                    "hist": [
+                      0.3394642143142743,
+                      0.2343062774890044,
+                      0.013994402239104359,
+                      0.008796481407437025,
+                      0.004798080767692923,
+                      0.059976009596161534,
+                      0.04198320671731307,
+                      0.01879248300679728,
+                      0.019992003198720514,
+                      0.01879248300679728,
+                      0.024390243902439025,
+                      0.10915633746501399
+                    ],
+                    "n": 2501,
+                    "texture": 0.08610041583783277,
+                    "glare_fraction": 0,
+                    "neutral_fraction": 0.09876049580167932
+                  }
+                },
+                "frame_color": "mixed",
+                "foil": "undetermined",
+                "paid_requests": 0,
+                "identity_proof": false
+              },
+              "reference": {
+                "state": "measured",
+                "method": "quad_normalized_hsv_texture",
+                "regions": {
+                  "frame": {
+                    "hist": [
+                      0.5517373043146239,
+                      0.3757159221076747,
+                      0.004963726613211149,
+                      0.001145475372279496,
+                      0.0015273004963726614,
+                      0.004200076365024819,
+                      0.0007636502481863307,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0
+                    ],
+                    "n": 2619,
+                    "texture": 0.07971945182026685,
+                    "glare_fraction": 0,
+                    "neutral_fraction": 0.016800305460099276
+                  },
+                  "background": {
+                    "hist": [
+                      0.5533786485405837,
+                      0.3798480607756897,
+                      0.023190723710515795,
+                      0.001999200319872051,
+                      0.0007996801279488205,
+                      0,
+                      0,
+                      0.00039984006397441024,
+                      0.004798080767692923,
+                      0.003598560575769692,
+                      0.0011995201919232307,
+                      0.001999200319872051
+                    ],
+                    "n": 2501,
+                    "texture": 0.10567247857603329,
+                    "glare_fraction": 0,
+                    "neutral_fraction": 0.025989604158336666
+                  }
+                },
+                "frame_color": "red",
+                "foil": "undetermined",
+                "paid_requests": 0,
+                "identity_proof": false
+              },
+              "comparison": {
+                "state": "measured",
+                "frame_histogram_distance": 0.5313096601756394,
+                "frame_color_agrees": false,
+                "frame_color": "mixed",
+                "texture_difference": 0.031584381505413726,
+                "foil": "undetermined",
+                "identity_proof": false
+              }
+            }
+          }
+        ]
+      },
+      "accepted": []
+    }
+  ],
+  "references": [
+    {
+      "id": "lens-1",
+      "position": 1,
+      "title": "1999-00 Shaquille O'Neal Flair Showcase Basketball Card #7 ...",
+      "url": "https://www.ebay.com/itm/254873319083",
+      "image_url": "https://i.ebayimg.com/00/s/MTUxMFgxMDcx/z/~-wAAOSwcvFgL-VQ/$_57.JPG?set_id=8800005007",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTXTHdfmjeDFC-zLae4mXalTKVzjhTG2ubLblQyJ5zuYlR8ULe_",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "7"
+        ],
+        "languages": [],
+        "years": [
+          "1999-00"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "subject"
+      ],
+      "missing": [
+        "finish"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 35,
+        "reasons": [
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [
+            "7"
+          ],
+          "years": [
+            "1999"
+          ]
+        },
+        "index": 0
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "AK:RS\nSHAQUIIE Los\nS LAKERS",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-3",
+      "position": 3,
+      "title": "Shaquille O'Neal #7 Prices | 1999 Flair Showcase ...",
+      "url": "https://www.sportscardspro.com/game/basketball-cards-1999-flair-showcase/shaquille-o'neal-7",
+      "image_url": "https://storage.googleapis.com/images.pricecharting.com/4gmoubie567722wy/1600.jpg",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTb3L6kMhM0GhbRyduXKKmxpqoQRfcljCjcuFAlYX8jmv6rWddx",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "7"
+        ],
+        "languages": [],
+        "years": [
+          "1999"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "subject"
+      ],
+      "missing": [
+        "finish"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 35,
+        "reasons": [
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [
+            "7"
+          ],
+          "years": [
+            "1999"
+          ]
+        },
+        "index": 2
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "SHAOUTLhs b\nAKKS\n84\nLoS\nOWCA5E\nLAIR",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-6",
+      "position": 6,
+      "title": "2000-01 Flair Showcase Basketball Shaquille O'Neal Card #7 ...",
+      "url": "https://www.ebay.com/itm/266499113361",
+      "image_url": "https://i.ebayimg.com/images/g/Jr0AAOSwechlTTVn/s-l1200.jpg",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSmaTsxopaKik37zVwWgHrsVByNX5lV_9obJLl-2JIpngQF1o2c",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "7"
+        ],
+        "languages": [],
+        "years": [
+          "2000-01"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "subject"
+      ],
+      "missing": [
+        "finish"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 35,
+        "reasons": [
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [
+            "7"
+          ],
+          "years": [
+            "2000"
+          ]
+        },
+        "index": 5
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "SHAOVI\n34\nL0$ ANGELES LfK TRS",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-7",
+      "position": 7,
+      "title": "1999 Flair Showcase Shaquille O'Neal 7 PSA MINT 9 · Whatnot ...",
+      "url": "https://www.whatnot.com/listing/TGlzdGluZ05vZGU6MzcyMTAzOTgx",
+      "image_url": "https://images.whatnot.com/fit-in/600x0/filters:format(webp)/listings/0-db91223d-9341-4a13-adf2-d6c701ce0b56-a0b71ab7-09f0-4d96-8be5-975c1fd7932a.jpeg",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTZjdot42AfM9TdUfsrI4KaU-nTxWHVC4jdfd9E-cTL-W4Pcvl7",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "1999"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "subject"
+      ],
+      "missing": [
+        "finish"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 35,
+        "reasons": [
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [],
+          "years": [
+            "1999"
+          ]
+        },
+        "index": 6
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "FA\nAKES\n34\n9\n72800606\n/IDPAARERS",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-13",
+      "position": 13,
+      "title": "Shaquille O'Neal 1997 Flair Showcase #7 Row 1 Price Guide ...",
+      "url": "https://www.sportscardinvestor.com/cards/shaquille-o-neal-basketball/1997-flair-showcase-row-1-7",
+      "image_url": "https://images.production.sportscardinvestor.com/images/m_card/1157306-L?ts=1750139750277",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTe0rTebRrM-tj3Nxz_KPblttTSM2R7-qvlpdDMadt9bA8SA-Ma",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "7"
+        ],
+        "languages": [],
+        "years": [
+          "1997"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "subject"
+      ],
+      "missing": [
+        "finish"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 35,
+        "reasons": [
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [
+            "7"
+          ],
+          "years": [
+            "1997"
+          ]
+        },
+        "index": 12
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "34\nKNeal Los A\nLAIR\nOwCASE",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-34",
+      "position": 34,
+      "title": "1997-98 Flair Showcase Row 2 #7 Shaquille O'Neal - NM-MT",
+      "url": "https://marketplace.beckett.com/item/1274/1997-98-flair-showcase-row-2-7-shaquille-oneal_82531920",
+      "image_url": "https://img.beckett.com/images/items_stock/185226/3145885/3145902/front.jpg",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRXZ25n5rEiT4UAgl0pYbtoF8HRLkeSi-30YDSfb8dQ3WFdiZ9o",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "7"
+        ],
+        "languages": [],
+        "years": [
+          "1997-98"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "subject"
+      ],
+      "missing": [
+        "finish"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 35,
+        "reasons": [
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [
+            "7"
+          ],
+          "years": [
+            "1997"
+          ]
+        },
+        "index": 33
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "AIR\n(POWCASE\n34\nLOS ANGELEAKERS CENTER",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-40",
+      "position": 40,
+      "title": "PSA Set Registry Showcase: Bert's Top 10 Shaquille O'neal Cards",
+      "url": "https://www.psacard.com/psasetregistry/showcase/2022-my-top-10-basketball-cards/berts-top-10-shaquille-oneal-cards/17284",
+      "image_url": "https://d1htnxwo4o0jhw.cloudfront.net/cert/126870497/medium/356903742.jpg",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTMBxQGSPKBztytq5TBJM7GXmHTU8jj70vXIOE4mACmJ7rlkZi",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "subject"
+      ],
+      "missing": [
+        "finish"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 35,
+        "reasons": [
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [],
+          "years": []
+        },
+        "index": 39
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "1998 T.S.C. TRIUMVIRATE\nSHAQUILLE O'NEAL\nILLUMINATOR\nANERS\nAKERS\n34\n#T2b\nMINT\n64385897\nShaguille OMeal",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-2",
+      "position": 2,
+      "title": "1999-00 Skybox NBA Hoops Decade - Shaquille O'Neal #147 for ...",
+      "url": "https://www.ebay.com/p/13056531861",
+      "image_url": "https://i.ebayimg.com/images/g/QnoAAOSwLr9lYRWM/s-l1200.jpg",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMjIlBH6-VsQVV6pUKAXhzaTHLCqOs6fzVB_YS-Nuecu3EeXkM",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "147"
+        ],
+        "languages": [],
+        "years": [
+          "1999-00"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "subject"
+      ],
+      "missing": [
+        "finish"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": false,
+        "score": 35,
+        "reasons": [
+          "subject_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [
+            "147"
+          ],
+          "years": [
+            "1999"
+          ]
+        },
+        "index": 1
+      },
+      "metadataStrong": false,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "ARRS\n4\nSHAQUILLE 6NEAL LOS ANGELES LAKES",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-4",
+      "position": 4,
+      "title": "Shaquille O'Neal 99-2000 HOLO Fleer #7 Shaq NM-MINT | eBay",
+      "url": "https://www.ebay.ca/itm/154391508069",
+      "image_url": "https://i.ebayimg.com/00/s/MTA1NFg4MTc=/z/T-8AAOSwVTFgXtSJ/$_12.JPG?set_id=880000500F",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQ6V1m4cI7oQJmOEXfTNQw7ie1z4UBSHmorg7k42uChunhEDXxy",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "7"
+        ],
+        "languages": [],
+        "years": [
+          "2000"
+        ],
+        "finish": "holo",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_finish"
+      ],
+      "matches": [
+        "subject",
+        "brand"
+      ],
+      "missing": [],
+      "verification_state": "rejected",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": false,
+        "score": 35,
+        "reasons": [
+          "subject_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [
+            "7"
+          ],
+          "years": [
+            "2000"
+          ]
+        },
+        "index": 3
+      },
+      "metadataStrong": false,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "AK:KS\nA LO AGEES CAKERS",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-11",
+      "position": 11,
+      "title": "Shaquille O'Neal Card Lot ! (11) Electrified, Rookies ...",
+      "url": "https://www.ebay.com/itm/375856095849",
+      "image_url": "https://i.ebayimg.com/images/g/38gAAOSwAsNnV5kg/s-l1200.jpg",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRhCwFfHuXuNhTyr4xt29rkHtiFX70v9Bl6T76Qk_9Fwv8BfGS3",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "subject"
+      ],
+      "missing": [
+        "finish"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": false,
+        "score": 35,
+        "reasons": [
+          "subject_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [],
+          "years": []
+        },
+        "index": 10
+      },
+      "metadataStrong": false,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "AKKS\nOVeal\nSHAQUILLE UNEAL L0S ANGELES LAKERS",
+        "origin": "candidate_image_ocr"
+      }
+    }
+  ],
+  "crops": [
+    {
+      "id": "original-1-upper",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.06481481481481481,
+        "y": 0.2948717948717949,
+        "width": 0.7907407407407407,
+        "height": 0.1952991452991453
+      }
+    },
+    {
+      "id": "original-1-lower",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.06481481481481481,
+        "y": 0.6688034188034188,
+        "width": 0.7907407407407407,
+        "height": 0.2064102564102564
+      }
+    },
+    {
+      "id": "original-2-upper",
+      "image_index": 2,
+      "region": {
+        "image_index": 2,
+        "x": 0.14444444444444443,
+        "y": 0.36495726495726494,
+        "width": 0.7212962962962963,
+        "height": 0.10811965811965812
+      }
+    },
+    {
+      "id": "original-2-lower",
+      "image_index": 2,
+      "region": {
+        "image_index": 2,
+        "x": 0.14444444444444443,
+        "y": 0.5414529914529914,
+        "width": 0.7212962962962963,
+        "height": 0.11367521367521367
+      }
+    }
+  ]
+}

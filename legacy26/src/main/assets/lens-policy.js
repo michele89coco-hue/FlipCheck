@@ -140,7 +140,7 @@ function rankOcr209(refs,l){
 }
 // Normalize descriptions, not identifiers. Physical and catalogue values remain separate.
 function appearance212(v){return norm(v).replace(/\b(?:verde|verdi|grun|vert)\b/g,'green').replace(/\b(?:argento|argentato|silver)\b/g,'silver').replace(/\b(?:rosso|rossi|rouge)\b/g,'red').replace(/\b(?:blu|azzurro|bleu)\b/g,'blue').replace(/\b(?:oro|dorato)\b/g,'gold').replace(/\b(?:anniversario)\b/g,'anniversary').replace(/\bprizms\b/g,'prizm');}
-function yearReading212(value,season){const a=E.season(value),b=E.season(season);if(!a||!b)return true;if(a===b)return true;if(/^\d{4}$/.test(a)&&/^\d{4}-\d{2}$/.test(b)){const end=b.slice(0,2)+b.slice(-2);return a===b.slice(0,4)||a===end;}return false;}
+function yearReading212(value,season){const a=E.season(value),b=E.season(season);if(!a||!b)return true;if(a===b)return true;if(/^\d{4}$/.test(a)&&/^\d{4}-\d{2}$/.test(b)){const start=+b.slice(0,4),end=String(start+(+b.slice(-2)-start%100+100)%100);return a===b.slice(0,4)||a===end;}return false;}
 // A reference can challenge a reading, but only two original-photo views can replace it.
 function reconcileOriginal208(l,readings,crops){
  const accepted=[],rejected=[];
@@ -170,7 +170,7 @@ function reconcileOriginal208(l,readings,crops){
    for(const lang of ['it','en']){const name=String(row.display_names?.[lang]||'').trim();if(name&&/[A-Za-z]/.test(name)&&suffix(name)===suffix(value))l.add('subject_alias',name,{source:'original_translation',level:'inferred',certainty:'uncertain',image_index:row.image_index,translated_from:atom.id,display_language:lang});}
   }
  }
- E.reconcileIdentifiers201(l);
+ E.normalizePrinting226(l);E.reconcileIdentifiers201(l);
  l.record('original_views_reconciled',{accepted,rejected});return {accepted,rejected};
 }
 function retrievalPool208(evaluations){
@@ -182,7 +182,7 @@ function partialTitle208(result,l,titleLanguage){
  const alias=l.values('subject_alias').find(a=>a.source==='original_translation'&&a.translated_from===subject.id&&a.display_language===titleLanguage);
  if(!alias)return result;
  const tag=l.domain==='sports'?'':({it:'ITA',en:'ENG',ja:'JPN',zh:'CHN','zh-hans':'CHN-S','zh-hant':'CHN-T',de:'DEU',fr:'FRA',es:'SPA',ko:'KOR'})[result.language]||result.language?.toUpperCase();
- result.title=unique([alias.value,l.pick('set_code')?.value,result.card_identity?.number,result.card_identity?.date,result.family,result.card_identity?.subset,result.variant,tag]).join(' · ');
+ result.title=flattenedTitle221([alias.value,l.pick('set_code')?.value,result.card_identity?.number,result.card_identity?.date,result.family,result.card_identity?.subset,result.variant,tag]);
  result.identity_display=result.title;result.localized_subject=alias.value;result.display_language=titleLanguage;result.language_suffix=tag;return result;
 }
 // 221: distinguish the depicted people from the identity of a package or a multi-subject panel.
@@ -210,6 +210,13 @@ function brandEvidence222(value,features,l,title){
  return (photo||paired)&&(wordsGround222(key,title)||paired);
 }
 // Build 206: only actually downloaded, compared references can become evidence.
+function sourceFamily226(e,l,text){
+ const quoted=String(e.proof?.family||'').trim(),number=l.pick('collector_number')?.value;
+ if(l.domain!=='sports'||!number||!E.numbersMatch(number,e.number)||!E.subjectMatch(E.keyValues(l).subject,e.subject)||!quoted||!(' '+norm(text)+' ').includes(' '+norm(quoted)+' '))return e.family;
+ const tokens=familyTokens217(e.family,e.brand).filter(t=>t!=='variation'),sourceTokens=familyTokens217(quoted,e.brand);
+ if(tokens.length>=2&&tokens.every(t=>sourceTokens.includes(t)))return quoted.replace(/^(?:19|20)\d{2}(?:[-/]\d{2,4})?\s+/,'').replace(new RegExp(String(e.subject).replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'i'),'').replace(/\s+(?:basketball|baseball|football|soccer|hockey)(?: cards?)?$/i,'').trim();
+ return e.family;
+}
 function visualEntries206(reply,refs,l){
  const accepted=[],rejected=[],support=[],keys=E.keyValues(l),physical=l.domain==='pokemon'?E.pokemonKeys204(l):{subject:keys.subject,number:l.pick('collector_number')?.value,year:keys.year,language:keys.language};
  const seen=new Set();
@@ -234,6 +241,7 @@ function visualEntries206(reply,refs,l){
   if(kinds.size<2||!['artwork','layout','shape'].some(f=>kinds.has(f))||!['text','identifier','symbols','configuration'].some(f=>kinds.has(f))&&!sportsLayout)reasons.push('insufficient_independent_details');
   const title=(ref.title||'')+' '+(ref.snippet||'')+' '+(ref.page_text||'');
   // Validate each value against actual supplied text, never an ellipsis invented in a quote.
+  e.family=sourceFamily226(e,l,title);
   e.family=objectFamily222(e.family,l);
   if(!e.brand&&(l.domain==='sealed'||E.publication222(l)))e.brand=l.pick('publisher')?.value||l.pick('brand')?.value||'';
   if(l.domain==='sealed')e.subject=e.family; // Depicted players stay in image readings.
@@ -414,9 +422,9 @@ function scopedSportsCore225(l,reply,refs){
  if(l.domain!=='sports'||!l.pick('subject')||!l.pick('collector_number'))return [];
  const k=E.keyValues(l),out=[];
  for(const c of list(reply?.comparisons)){
-  const ref=refs.find(r=>r.id===c.reference_id),e=c.identity||{},text=[ref?.title,ref?.snippet,ref?.page_text?.split('\n')[0]].join(' ');
+  const ref=refs.find(r=>r.id===c.reference_id),e={...(c.identity||{})},text=[ref?.title,ref?.snippet,ref?.page_text?.split('\n')[0]].join(' ');e.family=sourceFamily226(e,l,text);
   if(!ref?.image_data||c.ambiguous!==false||c.title_matches_image!==true||c.original_view!=='front'||c.reference_view!=='front')continue;
-  if(!E.subjectMatch(k.subject,e.subject)||!E.subjectMatch(k.subject,c.reference_reading?.subject)||!E.numbersMatch(l.pick('collector_number').value,e.number)||!E.numbersMatch(e.number,c.reference_reading?.number)||!k.year||!E.sportsSeason215(k.year,e.year))continue;
+  if(!E.subjectMatch(k.subject,e.subject)||!E.subjectMatch(k.subject,c.reference_reading?.subject)||!E.numbersMatch(l.pick('collector_number').value,e.number)||(c.reference_reading?.number?!E.numbersMatch(e.number,c.reference_reading.number):!new RegExp('(?:#|card\\s*#?|no\\.?\\s*)'+String(e.number).replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?:\\b|$)','i').test(text))||!k.year||!E.sportsSeason215(k.year,e.year))continue;
   if(!norm(text).includes(norm(e.subject))||!norm(text).includes(norm(e.number))||!norm(text).includes(norm(e.year)))continue;
   const features=list(c.features).filter(f=>f.agrees===true&&f.certainty==='clear'&&f.original&&f.reference);
   if(!['artwork','layout'].every(field=>features.some(f=>f.field===field)))continue;
