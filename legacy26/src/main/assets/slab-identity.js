@@ -57,7 +57,8 @@ function labelFacts(base){
  if(!out.family&&/\bpok[eé]mon\b/i.test(label))out.family=label.match(/\bpok[eé]mon\b/i)[0];
 
  const literalTitleComplete=!!out.card_title&&p.title_certainty==='clear'&&/\b(?:19|20)\d{2}\b/.test(out.card_title)&&out.card_title.split(/\s+/).length>=3;
- const titleComplete=!!label&&(!!(out.subject||out.model)&&(!!out.family||!!out.set_code||!!out.card_number)&&(/^(?:19|20)\d{2}(?:[-/]\d{2,4})?$/.test(out.year)||!!out.card_number)||literalTitleComplete),subgrades=subgradeFacts(p,label);
+ const objectModelComplete=(base.kind==='object'||['generic','sealed'].includes(base.domain))&&copied(label,p.model)&&/[A-Za-z]/.test(p.model||'')&&/\d/.test(p.model||'')&&!!(out.subject||out.family||out.card_title);
+ const titleComplete=!!label&&(!!(out.subject||out.model)&&(!!out.family||!!out.set_code||!!out.card_number)&&(/^(?:19|20)\d{2}(?:[-/]\d{2,4})?$/.test(out.year)||!!out.card_number)||literalTitleComplete||objectModelComplete),subgrades=subgradeFacts(p,label);
  out.subgrades=subgrades.values;
  out.certificate_format_valid=certificatePlan(out).state==='ready';
  // Secondary label text has no veto when the identifying title, grade and
@@ -119,11 +120,12 @@ function close(base,facts,record={state:'not_attempted'}){
  if(!data.variant){const finish=clean(data.subject).match(/(?:-|\b)(HOLO(?:FOIL)?)(?:$|\b)/i);if(finish)data.variant=finish[1];}
  const grading=[/^(?:unknown|sconosciuto)$/i.test(data.grader)?'':data.grader,data.grade].filter(Boolean).join(' ');
  const names=data.name_identity||Names.normalize(data.subject||data.model,{domain:base.domain||'other'}),tag=({it:'ITA',en:'ENG',de:'DEU',fr:'FRA',es:'SPA',ja:'JPN',ko:'KOR',zh:'CHN','zh-hans':'CHN-S','zh-hant':'CHN-T'})[data.language]||data.language;
- const titles=Object.fromEntries(['it','en'].map(lang=>[lang,[data.year,displayFamily,data.set_code,data.card_number?'#'+data.card_number:'',names[lang],tag,data.variant,grading].filter(Boolean).join(' · ')]));
+ const objectCode=(base.kind==='object'||['generic','sealed'].includes(base.domain))&&data.model&&!copied(data.subject,data.model)&&!copied(displayFamily,data.model)?data.model:'';
+ const titles=Object.fromEntries(['it','en'].map(lang=>[lang,[data.year,displayFamily,data.set_code,data.card_number?'#'+data.card_number:'',names[lang],objectCode,tag,data.variant,grading].filter(Boolean).join(' · ')]));
  const selected=base.title_language==='en'?'en':'it',title=titles[selected];
 
  const fieldOrigin=k=>verified&&record.official_fields.includes(k)?'official_certificate':'photo_slab_label';
- const fields=['year','family','subject','card_number','variant','language','grader','grade'].filter(k=>data[k]).map(k=>({field:k==='card_number'?'catalog_number':k,value:data[k],origin:fieldOrigin(k),quote:fieldOrigin(k)==='official_certificate'?record.raw_fields[k]||record.title:data.label_text,image_index:data.image_index,...(fieldOrigin(k)==='official_certificate'?{source:record.source}:{})}));
+ const fields=['year','family','subject','model','card_number','variant','language','grader','grade'].filter(k=>data[k]).map(k=>({field:k==='card_number'?'catalog_number':k,value:data[k],origin:fieldOrigin(k),quote:fieldOrigin(k)==='official_certificate'?record.raw_fields[k]||record.title:data.label_text,image_index:data.image_index,...(fieldOrigin(k)==='official_certificate'?{source:record.source}:{})}));
  const result={...base,title,title_language:selected,localized_titles:titles,name_identity:names,model:title,family:data.family,variant:data.variant||'',condition:grading,language:data.language||'',grader:data.grader,grade:data.grade,slab_reading:{...data,complete:undefined},
   card_identity:{manufacturer:base.brand||null,subject:names[selected],original_subject:data.subject||data.model,display_names:{it:names.it,en:names.en},canonical_subject_id:names.canonical_id,set_code:data.set_code||null,year:data.year,set:data.family,number:data.card_number||null,language:data.language||null,variant:data.variant||null},
   grading:{company:data.grader,grade:data.grade||null,subgrades:data.subgrades||[],certificate:data.certificate||null,certificate_format_valid:facts.certificate_format_valid,certificate_verified:verified,source:verified?record.source:null,origin:fieldOrigin('grade')},

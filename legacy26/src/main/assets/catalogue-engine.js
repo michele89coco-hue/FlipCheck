@@ -228,7 +228,7 @@ function evaluate(l,entry){
  const k=keyValues(l),reasons=[],matches=[],strongNumbers=l.evidence('collector_number');let score=0;
  if(!entry.subject||!entry.family||!entry.number&&!hasConsensus218(l,entry)&&!(entry.number_optional&&entry.source_tier==='lens_visual_verified'&&l.evidence('catalogue_core').some(a=>a.value===coreKey(entry)))||!entry.source?.url||entry.grounded!==true)return {...entry,eligible:false,reasons:['ungrounded_entry'],score:0};
  if(l.domain==='sports'&&entry.year&&l.evidence('season').some(a=>!sportsSeason215(a.value,entry.year)))reasons.push('different_product_season');
- if(entry.brand&&l.evidence('brand').some(a=>!norm(a.value).includes(norm(entry.brand))&&!norm(entry.brand).includes(norm(a.value))))reasons.push('different_manufacturer');
+ if(l.domain==='sports'&&entry.brand&&l.evidence('brand').some(a=>!norm(a.value).includes(norm(entry.brand))&&!norm(entry.brand).includes(norm(a.value))))reasons.push('different_manufacturer');
  if(/^(?:registry|set registry|card list|catalogue|search|home)$/i.test(str(entry.family)))reasons.push('navigation_not_product');
  const printingLang=entry.printing_language||entry.language;if(l.domain==='pokemon'&&printingLang&&k.language&&(!printingLanguageCompatible201(printingLang,k.language))&&(/^(?:ja|zh)/.test(language(printingLang))||/^(?:ja|zh)/.test(k.language)))reasons.push('different_printing_language');
  if(['onepiece','tcg'].includes(l.domain)&&printingLang&&k.language&&!printingLanguageCompatible201(printingLang,k.language))reasons.push('different_printing_language');
