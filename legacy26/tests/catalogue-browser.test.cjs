@@ -508,3 +508,9 @@ for(const name of ['hill','shaq'])test('226 actual '+name+' semantic evidence an
  assert.equal(r.core_identity.status,'confirmed',JSON.stringify(r));
  if(name==='hill'){assert.equal(r.market_ready,true);assert.match(r.variant,/superfractor/i);assert.equal(stages().filter(s=>s==='flipcheck_catalogue_search').length,0);}else {assert.equal(r.physical_card_number,'7');assert.equal((r.title.match(/1999-00/g)||[]).length,1);assert.equal(r.variant,'');assert.ok(stages().filter(s=>s==='flipcheck_catalogue_search').length<=1);}
 });
+// Recorded 227 response, synthetic image carriers. No live model calls.
+for(const delayed of [false,true])test('228 collected original label closes '+(delayed?'after continuing past core-only candidate':'without another paid call'),async()=>{
+ const f=structuredClone(require('./fixtures/lens-228-hill.json')),first=f.references.find(r=>r.id===f.batches[0].ids[0]),refs=delayed?[first,{...first,id:'lens-228-second',image_url:first.image_url+'?replay=second',url:first.url+'?replay=second',page_url:first.url+'?replay=second'}]:[first];let calls=0;
+ await reset('politoed',{lens:true,packet:f.vision,photoCount:2,noOcr:true,lensCandidates:refs,lensResponse(body){calls++;return {original_readings:[],comparisons:comparedRefs209(body).map(row=>{const c=structuredClone(f.batches[0].reply.comparisons[0]);c.reference_id=row.reference_id;if(delayed&&calls===1)c.conflicts=c.conflicts.slice(0,1);return c;})};},mutate(d){d.photoOcr=[];d.pages=[];}});
+ const out=await scan();assert.equal(out.identification.market_ready,true,JSON.stringify(out.identification));assert.match(out.identification.variant,/superfractor/i);assert.equal(out.identification.physical_serial,null);assert.equal(stages().filter(s=>s==='flipcheck_catalogue_search').length,0);assert.equal(stages().filter(s=>s==='flipcheck_evidence_detail').length,0);assert.equal(calls,delayed?2:1);
+});

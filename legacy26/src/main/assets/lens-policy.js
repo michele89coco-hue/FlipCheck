@@ -146,10 +146,10 @@ function reconcileOriginal208(l,readings,crops){
  const accepted=[],rejected=[];
  const fields=['subject','product','brand','team','pokedex_number','collector_number','set_code','rarity_text','copyright','language','model_code','serial'];
  for(const row of list(readings)){
-  const crop=crops.find(c=>c.id===row.crop_id),field=E.observationRole220(l,l.domain!=='pokemon'&&row.field==='pokedex_number'?'collector_number':row.field,row.crop_text);
+  const crop=crops.find(c=>c.id===row.crop_id),field=E.observationRole220(l,row.field==='printed_variant'?'text':l.domain!=='pokemon'&&row.field==='pokedex_number'?'collector_number':row.field,row.crop_text);
   const full=String(row.full_text||'').trim(),detail=String(row.crop_text||'').trim();
   const sameView=field==='language'?!!E.language(full)&&!!E.language(detail)&&E.printingLanguageCompatible201(E.language(full),E.language(detail)):norm(full)===norm(detail);
-  const valid=crop&&crop.image_index===row.image_index&&fields.includes(field)&&row.evidence_found===true&&row.certainty==='clear'&&full&&sameView;
+  const valid=crop&&crop.image_index===row.image_index&&(fields.includes(field)||row.field==='printed_variant')&&row.evidence_found===true&&row.certainty==='clear'&&full&&sameView;
   if(field==='subject'&&(/^(?:CHARACTER|LEADER|EVENT|STAGE)\b/i.test(full)||full.includes('\n')||l.domain==='onepiece'&&full.includes('/'))){rejected.push({field,reason:'subject_contains_other_fields'});continue;}
   if(!valid){rejected.push({field,reason:'original_views_not_confirmed'});continue;}
   let value=['collector_number','pokedex_number'].includes(field)?E.number(detail.replace(/^(\d+)\s*;.*$/,'$1')):field==='language'?E.language(full):detail;
@@ -446,7 +446,28 @@ function scopedSportsCore225(l,reply,refs){
  }
  return out;
 }
+// Recover only explicit readings attributed to an uploaded original view.
+// Appearance guesses and words in candidate titles never become photo readings.
+function comparisonEvidence228(l,batches,refs){
+ for(const batch of batches)for(const c of list(batch.reply?.comparisons)){
+  if(!batch.ids.includes(c.reference_id)||!refs.some(r=>r.id===c.reference_id&&r.image_data)||c.ambiguous!==false)continue;
+  for(const raw of list(c.conflicts)){
+   const clause=String(raw).split(';')[0].trim();
+   const m=clause.match(/^Original (back|front) (?:identifies|reads|says|is marked|shows the (?:text|word|label))\s+["“']?([\p{L}][\p{L}\p{N}-]{3,})[™®"”']?\.?$/u);
+   if(!m)continue;
+   const view=list(l.base.image_views).filter(v=>v.view===m[1]&&v.certainty==='clear');
+   if(view.length!==1)continue;
+   const value=m[2];if(/^(?:unknown|unclear|unreadable|possibly|probably|gold|silver|blue|black|autograph)$/i.test(value))continue;
+   const key='comparison-label:'+c.reference_id+':'+view[0].image_index+':'+norm(value);
+   if(!l.attempt(key))continue;
+   l.add('text',value,{source:'comparison_original_reading',certainty:'clear',image_index:view[0].image_index,raw,reference_id:c.reference_id,extraction_rule:'explicit_original_view_label'});
+   l.record('comparison_original_evidence_recovered',{field:'text',value,image_index:view[0].image_index,reference_id:c.reference_id,extra_api_calls:0});
+  }
+ }
+ E.normalizePrinting226(l);
+}
 function resolveComparisons217(l,batches,refs){
+ comparisonEvidence228(l,batches,refs);
  const accepted=[],rejected=[],support=[];
  for(const batch of batches){const checked=visualEntries206(batch.reply,refs.filter(r=>batch.ids.includes(r.id)),l);accepted.push(...checked.accepted,...scopedSportsCore225(l,batch.reply,refs.filter(r=>batch.ids.includes(r.id))));rejected.push(...checked.rejected);support.push(...checked.support);}
  accepted.push(...sportsConsensus218(l,batches,refs,{accepted,rejected}));
@@ -482,6 +503,6 @@ async function waitForService207(request,{now=()=>Date.now(),wait=ms=>new Promis
  return {status:0,state:'service_startup_timeout',lastState:last?.state||null};
 }
 function metadata215(refs,l){return rankOcr209(refs,l).map(r=>({...r,metadataStrong:r.ocrRank.nameMatch&&(r.ocrRank.reasons.includes('identifier_agrees')||r.ocrRank.productMatch)&&(!E.keyValues(l).year||!r.ocrRank.facts.years.length||r.ocrRank.facts.years.some(y=>E.sportsSeason215(E.keyValues(l).year,y)))}));}
-const api={identifierChallenges220,resolveComparisons217,familyTokens217,metadata215,family214,filterOcr214,frontPlan213,referenceSupport213,appearance212,yearReading212,candidateFacts209,rankOcr209,reconcileOriginal208,retrievalPool208,partialTitle208,waitForService207,visualEntries206,present206,normalize,attributes,evaluate,select,ranked,fallbackReason,url};
+const api={comparisonEvidence228,identifierChallenges220,resolveComparisons217,familyTokens217,metadata215,family214,filterOcr214,frontPlan213,referenceSupport213,appearance212,yearReading212,candidateFacts209,rankOcr209,reconcileOriginal208,retrievalPool208,partialTitle208,waitForService207,visualEntries206,present206,normalize,attributes,evaluate,select,ranked,fallbackReason,url};
 if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckLens=api;
 })(typeof globalThis!=='undefined'?globalThis:this);
