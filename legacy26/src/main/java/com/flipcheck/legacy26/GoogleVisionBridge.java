@@ -99,6 +99,22 @@ public final class GoogleVisionBridge {
         return new Request.Builder().url(ENDPOINT).header("x-goog-api-key",key)
             .post(RequestBody.create(MediaType.parse("application/json; charset=utf-8"),body.toString())).build();
     }
+    static Request ximilarRequest(JSONObject p) throws Exception {
+        String token=p.optString("token").trim(), endpoint=p.optString("endpoint"), image=p.optString("image_base64");
+        if(!token.matches("[A-Za-z0-9_.-]{16,256}"))throw new IOException("invalid_api_key");
+        if(!endpoint.equals("tcg_id")&&!endpoint.equals("sport_id"))throw new IOException("invalid_endpoint");
+        if(image.isEmpty()||image.length()>10*1024*1024||!image.matches("[A-Za-z0-9+/=]+"))throw new IOException("invalid_image");
+        JSONObject body=new JSONObject().put("records",new JSONArray().put(new JSONObject().put("_base64",image)))
+            .put("price_stats",false).put("slab_id",false).put("slab_grade",false).put("analyze_all",false);
+        if(endpoint.equals("tcg_id"))body.put("lang",true).put("rotate",true);else body.put("magic_ai",false);
+        return new Request.Builder().url("https://api.ximilar.com/collectibles/v2/"+endpoint).header("Authorization","Token "+token)
+            .post(RequestBody.create(MediaType.parse("application/json; charset=utf-8"),body.toString())).build();
+    }
+    static JSONObject ximilarResponse(int status, byte[] data) {
+        JSONObject result=lensResponse(status,data),body=result.optJSONObject("body");
+        if(body!=null){JSONArray records=body.optJSONArray("records");if(records!=null)for(int i=0;i<records.length();i++){JSONObject r=records.optJSONObject(i);if(r!=null){r.remove("_base64");r.remove("_url");}}}
+        return result;
+    }
     static Request lensRequest(JSONObject p, boolean config) throws Exception {
         HttpUrl origin=publicUrl(p.optString("server"));
         if(!origin.encodedPath().equals("/") || origin.query()!=null || origin.fragment()!=null) throw new IOException("invalid_server");
@@ -126,6 +142,7 @@ public final class GoogleVisionBridge {
                 JSONObject p=new JSONObject(payload);
                 Request r;
                 if ("detect".equals(action)) r=googleRequest(p);
+                else if ("ximilar".equals(action)) r=ximilarRequest(p);
                 else if ("lens".equals(action) || "lens_config".equals(action)) r=lensRequest(p,"lens_config".equals(action));
                 else if ("page".equals(action) || "image".equals(action) || "catalogue".equals(action)) r=referenceRequest(p.optString("url"));
                 else throw new IOException("invalid_action");
@@ -134,7 +151,7 @@ public final class GoogleVisionBridge {
                 final String cacheKey=action+":"+request.url()+":"+p.optJSONArray("terms");
                 queueEvidence(()->{
                     if(closed||cancelled.contains(id))return;
-                    JSONObject cached=session!=null&&!"detect".equals(action)&&!action.startsWith("lens")?session.get(cacheKey):null;
+                    JSONObject cached=session!=null&&!"detect".equals(action)&&!action.startsWith("lens")&&!"ximilar".equals(action)?session.get(cacheKey):null;
                     if(cached!=null){deliver(id,cached);return;}
                     execute(id,action,request,0,session,cacheKey);
                 });
@@ -181,7 +198,7 @@ public final class GoogleVisionBridge {
         return base.newBuilder().callTimeout(38,TimeUnit.SECONDS).readTimeout(35,TimeUnit.SECONDS).build();
     }
     private OkHttpClient transportFor(String action, JSONObject payload) {
-        return action.startsWith("lens")?lensTransport(client,action,payload):"detect".equals(action)?googleClient:client;
+        return "ximilar".equals(action)?lensTransport(client,"lens",payload):action.startsWith("lens")?lensTransport(client,action,payload):"detect".equals(action)?googleClient:client;
     }
     private void execute(String id, String action, Request request, int redirects, ScanEvidenceCache.Session session, String cacheKey) {
         if(closed||cancelled.contains(id))return;
@@ -196,7 +213,7 @@ public final class GoogleVisionBridge {
                 try (Response r=response) {
                     if (calls.get(id)!=c || closed) return;
                     int code=r.code();
-                    if (!"detect".equals(action) && !action.startsWith("lens") && code>=300 && code<400 && redirects<2) {
+                    if (!"detect".equals(action) && !action.startsWith("lens")&&!"ximilar".equals(action) && code>=300 && code<400 && redirects<2) {
                         HttpUrl next=r.request().url().resolve(r.header("Location",""));
                         if(next==null) throw new IOException("invalid_redirect");
                         Request redirected=referenceRequest(next.toString()).newBuilder().tag(JSONObject.class,request.tag(JSONObject.class)).build();
@@ -204,7 +221,9 @@ public final class GoogleVisionBridge {
                         return;
                     }
                     JSONObject result;
-                    if (action.startsWith("lens")) {
+                    if ("ximilar".equals(action)) {
+                        result=ximilarResponse(code,read(r,12000000));
+                    } else if (action.startsWith("lens")) {
                         result=lensResponse(code,read(r,1500000));
                     } else if ("detect".equals(action)) {
                         result=json("status",code,"attempted",true,"body",new JSONObject(new String(read(r,1500000),StandardCharsets.UTF_8)));
@@ -224,7 +243,7 @@ public final class GoogleVisionBridge {
                         result=json("status",code,"image_data","data:"+mime+";base64,"+Base64.encodeToString(data,Base64.NO_WRAP));
                     }
                     if(calls.remove(id,c)) {
-                        if(session!=null&&!"detect".equals(action)&&!action.startsWith("lens")&&result.optInt("status")==200)queueEvidence(()->{session.put(cacheKey,result);if("image".equals(action))session.media("reference",result.optString("image_data"),json("url",request.url().toString()));});
+                        if(session!=null&&!"detect".equals(action)&&!action.startsWith("lens")&&!"ximilar".equals(action)&&result.optInt("status")==200)queueEvidence(()->{session.put(cacheKey,result);if("image".equals(action))session.media("reference",result.optString("image_data"),json("url",request.url().toString()));});
                         deliver(id,result);
                     }
                 } catch (Exception e) {

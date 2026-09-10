@@ -11,6 +11,7 @@ for(const id of ['lensEnabled205','lensServer205','lensAccess205','titleLanguage
 async function startLens205(ctx){
  if(ctx.lens)return ctx.lens;
  const config=lensConfig205(),state=ctx.lens={provider:'searchapi_google_lens',engine:'google_lens',state:'not_requested',providerCalls:0,accountCalls:0,backendCalls:0,candidates:[],evaluations:[],fallbacks:[],mode:'image_only_no_text_hint'};
+ if(typeof ximilarSelected233==='function'&&ximilarSelected233()&&FlipCheckXimilar.endpoint((lastVisionReading||{}).domain)){state.state='replaced_by_ximilar';return state;}
  if(!config.enabled||!config.server||!config.access){state.state=config.enabled?'not_configured':'disabled';state.fallbacks.push({stage:'original_ocr',reason:state.state});return state;}
  let reservation=null;const started=Date.now(),event={provider:'searchapi_google_lens',kind:'lens',purpose:'initial_image_only',state:'configuration',startedAt:started};ctx.calls.push(event);
  try{

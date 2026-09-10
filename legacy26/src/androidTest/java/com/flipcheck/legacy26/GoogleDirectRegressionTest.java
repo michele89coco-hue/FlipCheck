@@ -10,6 +10,26 @@ import static org.junit.Assert.*;
 
 /** Actual production request construction and network guards, with zero HTTP calls. */
 public final class GoogleDirectRegressionTest {
+    @Test public void ximilarTokenOnlyInHeaderAndExtrasDisabled() throws Exception {
+        for(String endpoint:new String[]{"tcg_id","sport_id"}){
+            Request request=GoogleVisionBridge.ximilarRequest(new JSONObject().put("token","test-token-1234567890").put("endpoint",endpoint).put("image_base64","aGVsbG8="));
+            assertEquals("https://api.ximilar.com/collectibles/v2/"+endpoint,request.url().toString());
+            assertEquals("Token test-token-1234567890",request.header("Authorization"));
+            Buffer buffer=new Buffer();request.body().writeTo(buffer);String raw=buffer.readUtf8();JSONObject body=new JSONObject(raw);
+            assertFalse(raw.contains("test-token"));assertFalse(body.getBoolean("price_stats"));assertFalse(body.getBoolean("slab_id"));assertFalse(body.getBoolean("slab_grade"));assertFalse(body.getBoolean("analyze_all"));
+            assertEquals(1,body.getJSONArray("records").length());
+            if(endpoint.equals("sport_id"))assertFalse(body.getBoolean("magic_ai"));else assertTrue(body.getBoolean("lang"));
+        }
+        JSONObject out=GoogleVisionBridge.ximilarResponse(200,"{\"records\":[{\"_base64\":\"sensitive-photo\",\"_url\":\"private-url\",\"_objects\":[]}]}".getBytes());
+        assertFalse(out.toString().contains("sensitive-photo"));assertFalse(out.toString().contains("private-url"));
+    }
+    @Test public void ximilarRejectsArbitraryEndpointAndHeaderInjection() throws Exception {
+        for(String endpoint:new String[]{"slab_id","https://evil.test","../sport_id"}){
+            try{GoogleVisionBridge.ximilarRequest(new JSONObject().put("token","test-token-1234567890").put("endpoint",endpoint).put("image_base64","aGVsbG8="));fail(endpoint);}catch(IOException expected){}
+        }
+        try{GoogleVisionBridge.ximilarRequest(new JSONObject().put("token","test-token-1234567890\nInjected: x").put("endpoint","tcg_id").put("image_base64","aGVsbG8="));fail();}catch(IOException expected){}
+    }
+
     @Test public void lensStartupWaitIsBoundedAndDoesNotExtendPaidSearchTimeout() throws Exception {
         for(int status:new int[]{502,503,504,401,403})assertEquals(status,GoogleVisionBridge.lensResponse(status,"<html>Starting service</html>".getBytes(java.nio.charset.StandardCharsets.UTF_8)).getInt("status"));
         assertEquals("response_unavailable",GoogleVisionBridge.lensResponse(200,"not json".getBytes()).getString("state"));
