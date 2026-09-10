@@ -14,7 +14,7 @@ async function startLens205(ctx){
  if(!config.enabled||!config.server||!config.access){state.state=config.enabled?'not_configured':'disabled';state.fallbacks.push({stage:'original_ocr',reason:state.state});return state;}
  let reservation=null;const started=Date.now(),event={provider:'searchapi_google_lens',kind:'lens',purpose:'initial_image_only',state:'configuration',startedAt:started};ctx.calls.push(event);
  try{
-  const cap=await warmupLens207(ctx,config,state),c=cap.body;
+  const cap=await warmupLens207(ctx,config,state),c=cap.body;state.accessCheck={httpStatus:cap.status||null,state:c?.state||cap.state||null,stage:'backend_configuration'};
   if(cap.status!==200||!c?.enabled||c.provider!=='searchapi_google_lens'||c.protocol!==2)throw new Error(c?.state||cap.state||'service_not_configured');
   if(!Number.isFinite(c.unitUsd)||c.unitUsd<0)throw new Error('cost_not_configured');
   // Charge the same scan budget. Reserve before uploading and retain unknown billing on timeout.
