@@ -182,9 +182,18 @@ function partialTitle208(result,l,titleLanguage){
  const alias=l.values('subject_alias').find(a=>a.source==='original_translation'&&a.translated_from===subject.id&&a.display_language===titleLanguage);
  if(!alias)return result;
  const tag=l.domain==='sports'?'':({it:'ITA',en:'ENG',ja:'JPN',zh:'CHN','zh-hans':'CHN-S','zh-hant':'CHN-T',de:'DEU',fr:'FRA',es:'SPA',ko:'KOR'})[result.language]||result.language?.toUpperCase();
- result.title=unique([alias.value,l.pick('set_code')?.value,result.card_identity?.number,result.card_identity?.date,result.variant,tag]).join(' · ');
+ result.title=unique([alias.value,l.pick('set_code')?.value,result.card_identity?.number,result.card_identity?.date,result.family,result.card_identity?.subset,result.variant,tag]).join(' · ');
  result.identity_display=result.title;result.localized_subject=alias.value;result.display_language=titleLanguage;result.language_suffix=tag;return result;
 }
+// 221: distinguish the depicted people from the identity of a package or a multi-subject panel.
+function panel221(l){return l.base.object_unit==='panel';}
+function subjectGround221(value,text,l){
+ const full=' '+norm(text)+' ',parts=String(value||'').split(/\s*[;&]\s*/).filter(Boolean);
+ if(!panel221(l)&&l.domain!=='sealed')return full.includes(' '+norm(value)+' ');
+ return parts.length>0&&parts.every(p=>full.includes(' '+norm(p)+' ')||panel221(l)&&[...p.matchAll(/["“]([^"”]+)["”]/g)].some(m=>full.includes(' '+norm(m[1])+' ')));
+}
+function originalSubject221(value,physical,l){return E.subjectMatch(value,physical)||panel221(l)&&String(value).split(/\s*[;&]\s*/).some(v=>E.subjectMatch(v,physical));}
+function flattenedTitle221(parts){const seen=new Set();return parts.flatMap(p=>String(p||'').split(/\s*·\s*/)).filter(p=>{const k=norm(p);if(!k||seen.has(k))return false;seen.add(k);return true;}).join(' · ');}
 // Build 206: only actually downloaded, compared references can become evidence.
 function visualEntries206(reply,refs,l){
  const accepted=[],rejected=[],support=[],keys=E.keyValues(l),physical=l.domain==='pokemon'?E.pokemonKeys204(l):{subject:keys.subject,number:l.pick('collector_number')?.value,year:keys.year,language:keys.language};
@@ -196,7 +205,7 @@ function visualEntries206(reply,refs,l){
   if(!ref||!ref.image_data||seen.has(c.reference_id)){rejected.push({id:c.reference_id,reasons:['unknown_or_duplicate_reference']});continue;}seen.add(c.reference_id);
   if(c.match!==true||c.ambiguous!==false||c.title_matches_image!==true||list(c.conflicts).length)reasons.push('unverified_image');
   if(c.original_image_index!==undefined&&(!Number.isInteger(c.original_image_index)||c.original_image_index<1||c.original_image_index>(l.base.uploaded_image_count||3)))reasons.push('invalid_original_image');
-  if(c.original_view&&c.reference_view&&c.original_view!=='unknown'&&c.reference_view!=='unknown'&&c.original_view!==c.reference_view)reasons.push('different_views');
+  if(c.original_view&&c.reference_view&&c.original_view!=='unknown'&&c.reference_view!=='unknown'&&c.original_view!==c.reference_view&&!(['sealed','generic'].includes(l.domain)&&['front','whole'].includes(c.original_view)&&['front','whole'].includes(c.reference_view)))reasons.push('different_views');
   const features=list(c.features).filter(f=>f.agrees===true&&f.certainty==='clear'&&f.original&&f.reference&&!(f.field==='identifier'&&/not visible|not readable|unreadable|non visibile|non leggibile/i.test(f.original+' '+f.reference)));
   const kinds=new Set(features.map(f=>f.field));
   const original={...(c.original_reading||{})},reference={...(c.reference_reading||{})};
@@ -210,7 +219,8 @@ function visualEntries206(reply,refs,l){
   if(kinds.size<2||!['artwork','layout','shape'].some(f=>kinds.has(f))||!['text','identifier','symbols','configuration'].some(f=>kinds.has(f))&&!sportsLayout)reasons.push('insufficient_independent_details');
   const title=(ref.title||'')+' '+(ref.snippet||'')+' '+(ref.page_text||'');
   // Validate each value against actual supplied text, never an ellipsis invented in a quote.
-  const groundedField=field=>{const value=norm(e[field]);return !!value&&(' '+norm(title)+' ').includes(' '+value+' ');};
+  const groundedField=field=>{const value=norm(e[field]);return !!value&&(field==='subject'?subjectGround221(e[field],title,l):(' '+norm(title)+' ').includes(' '+value+' '));};
+  if(panel221(l))e.family=String(e.family||'').replace(/^(?:19|20)\d{2}\s+/,'').replace(/^(?:Swedish|Italian|English|German|French|Spanish)\s+/i,'');
   if(l.domain==='onepiece'&&!groundedField('family')&&/\bone piece\b/.test(norm(title))&&/^one piece(?: card game| promo)?$/.test(norm(e.family)))e.family='One Piece';
   if(!e.year&&/^\d{4}(?:[-–]\d{2,4})?$/.test(String(e.proof?.year||''))&&(' '+norm(title)+' ').includes(' '+norm(e.proof.year)+' '))e.year=e.proof.year;
   const normalizedFamily=family214(e.family,e.brand,e.year,title);if(normalizedFamily.grounded)e.family=normalizedFamily.value;
@@ -228,14 +238,16 @@ function visualEntries206(reply,refs,l){
   const releaseCompatible=sports&&E.sportsSeason215(physical.year,e.year);
   const suffix208=v=>String(v||'').match(/(?:VMAX|VSTAR|GX|EX|ex|V)\s*$/)?.[0]?.trim()||'';
   if(suffix208(original.subject)&&suffix208(reference.subject)&&suffix208(original.subject)!==suffix208(reference.subject))reasons.push('different_reference_subject_suffix');
-  if(physical.subject&&original.subject&&!E.subjectMatch(original.subject,physical.subject))reasons.push('different_original_subject');
+  if(physical.subject&&original.subject&&!originalSubject221(original.subject,physical.subject,l))reasons.push('different_original_subject');
   if(physical.subject&&!original.subject)reasons.push('unreadable_original_subject');
   if(physical.number&&((!original.number&&!(sports&&c.original_view==='front'))||original.number&&!E.numbersMatch(original.number,physical.number)))reasons.push('different_original_number');
   if(physical.year&&original.year&&!(sports?yearReading212(original.year,physical.year):E.season(original.year)===physical.year))reasons.push('different_original_year');
   if(physical.year&&e.year&&physical.year!==E.season(e.year)&&!releaseCompatible&&!(l.domain==='pokemon'&&releaseYear))reasons.push('different_year');
   if(!sports&&physical.language&&reference.language&&!E.printingLanguageCompatible201(physical.language,reference.language))reasons.push('different_reference_language');
   if(!sports&&physical.language&&original.language&&!E.printingLanguageCompatible201(physical.language,original.language))reasons.push('different_original_language');
-  const optionalNumber=sports&&!physical.number&&!e.number&&sportsLayout&&features.length>=3&&!!releaseYear&&keys.products.some(p=>E.productEquivalent217(p,e.family))&&(!physical.year||E.sportsSeason215(physical.year,releaseYear));
+  const panelNumber=panel221(l)&&!physical.number&&!e.number&&features.length>=3&&kinds.has('artwork')&&kinds.has('layout')&&kinds.has('text')&&!!releaseYear;
+  const optionalNumber=panelNumber||sports&&!physical.number&&!e.number&&sportsLayout&&features.length>=3&&!!releaseYear&&keys.products.some(p=>E.productEquivalent217(p,e.family))&&(!physical.year||E.sportsSeason215(physical.year,releaseYear));
+  const inferredNumber=l.domain==='pokemon'&&!physical.number&&!!e.number&&E.numbersMatch(e.number,reference.number)&&kinds.has('artwork')&&kinds.has('configuration')&&kinds.has('text')&&!!physical.language&&E.language(reference.language)===E.language(physical.language)&&!!l.pick('finish')&&features.some(f=>f.field==='configuration'&&E.finish(f.original)===l.pick('finish').value&&E.finish(f.reference)===l.pick('finish').value);
   const card=!['generic','sealed'].includes(l.domain);
   if(card){
    if(!sports&&!physical.language)reasons.push('original_language_unresolved');
@@ -244,7 +256,7 @@ function visualEntries206(reply,refs,l){
    const sourceNumber=sports&&groundedField('number')&&(!!releaseYear||sportsLayout&&!!physical.year&&keys.products.some(p=>E.familyKey(p).includes(E.familyKey(e.family))))&&kinds.has('artwork')&&(kinds.has('configuration')||sportsLayout&&physical.number&&E.numbersMatch(e.number,physical.number));
    if(!optionalNumber&&(!e.number||reference.number&&!E.numbersMatch(e.number,reference.number)||!reference.number&&!sourceNumber))reasons.push('unreadable_reference_identifier');
    if(physical.number&&e.number&&!E.numbersMatch(e.number,physical.number))reasons.push('different_number');
-   if(!physical.number&&!optionalNumber&&!(sports&&sourceNumber))reasons.push('original_identifier_unresolved');
+   if(!physical.number&&!optionalNumber&&!inferredNumber&&!(sports&&sourceNumber))reasons.push('original_identifier_unresolved');
    if(!reference.subject)reasons.push('unreadable_reference_subject');
   }
   if(sports&&/^(?:rc|rookie(?: card)?|rated rookie)$/i.test(e.subset||''))e.subset='';
@@ -256,7 +268,8 @@ function visualEntries206(reply,refs,l){
    const literalModel=model&&norm(title).includes(norm(model))&&features.some(f=>['text','identifier'].includes(f.field)&&norm(f.original).includes(norm(model))&&norm(f.reference).includes(norm(model)));
    const visualModel=features.length>=3&&kinds.has('configuration')&&(kinds.has('text')||kinds.has('identifier'))&&(kinds.has('shape')||kinds.has('layout'))&&!!e.number&&groundedField('number');
    if(model&&!norm(title).includes(norm(model)))reasons.push('different_model_code');
-   objectVerified=!!(literalModel||visualModel);
+   const describedObject=(l.domain==='sealed'||/fumetto|comic|book|libro|volume/i.test(l.base.category||''))&&features.length>=3&&kinds.has('configuration')&&(kinds.has('artwork')||kinds.has('shape')||kinds.has('layout'))&&(kinds.has('text')||kinds.has('layout'))&&groundedField('family')&&groundedField('subject')&&!!e.brand&&norm(title).includes(norm(e.brand).replace(/^(?:edizioni|editions|publisher) /,''))&&l.evidence('brand').some(a=>norm(a.value)===norm(e.brand))&&(!model||!!literalModel);
+   objectVerified=!!(literalModel||visualModel||describedObject);
    if(!objectVerified)reasons.push('object_model_not_distinguished');
   }
   if(reasons.length){rejected.push({id:ref.id,reasons:unique(reasons)});continue;}
@@ -265,7 +278,7 @@ function visualEntries206(reply,refs,l){
   const copyrightYear=E.season(original.year)&&E.season(original.year)===E.season(reference.year)?E.season(reference.year):'';
   fieldProof.number={value:e.number,identifier_type:l.domain==='pokemon'?physical.number_role:'collector_number',origin:reference.number?'reference_image':'reference_text',reference_id:ref.id,url:ref.url};
   if(copyrightYear)fieldProof.copyright_year={value:copyrightYear,origin:'compared_images',reference_id:ref.id};
-  const entry={number_optional:optionalNumber,object_identity_verified:objectVerified,local_appearance:c.local_appearance||null,view_evidence:{original_image_index:c.original_image_index||null,original_view:c.original_view||'unknown',reference_view:c.reference_view||'unknown'},subject:e.subject,family:e.family,number:e.number,year:releaseYear,copyright_year:copyrightYear,field_proof:fieldProof,brand:e.brand||'',subset:e.subset||'',subset_known:!!e.subset,
+  const entry={catalogue_number_inferred:inferredNumber,number_optional:optionalNumber,object_identity_verified:objectVerified,local_appearance:c.local_appearance||null,view_evidence:{original_image_index:c.original_image_index||null,original_view:c.original_view||'unknown',reference_view:c.reference_view||'unknown'},subject:e.subject,family:e.family,number:e.number,year:releaseYear,copyright_year:copyrightYear,field_proof:fieldProof,brand:e.brand||'',subset:e.subset||'',subset_known:!!e.subset,
    language:E.language(reference.language),aliases:unique([reference.subject,physical.subject]),identifier_type:l.domain==='pokemon'&&physical.number_role==='pokedex_number'?'pokedex':'collector',variants:[],
    grounded:true,entry_quote:ref.title+' '+ref.snippet,reference_page:ref.page_text?{url:ref.page_url||ref.url,text:ref.page_text}:null,source,source_tier:'lens_visual_verified',image_url:ref.image_url||ref.thumbnail,
    requires_image_confirmation:true,visual_reference_id:ref.id,display_names:e.display_names||{},visual_proof:features,reference_reading:reference};
@@ -290,6 +303,7 @@ function visualEntries206(reply,refs,l){
   l.add('catalogue_core',E.coreKey(entry),{source:'lens_image_comparison',certainty:'clear',image_index:1,reference_source:ref.url,reference_id:ref.id});
   accepted.push(entry);
  }
+ for(const e of serialCore221(l,reply,refs))if(!accepted.some(a=>a.visual_reference_id===e.visual_reference_id)){accepted.push(e);const i=rejected.findIndex(r=>r.id===e.visual_reference_id);if(i>=0)rejected.splice(i,1);}
  return {accepted,rejected,support};
 }
 // Reuse actual replies and attributed images after original OCR changes.
@@ -344,6 +358,22 @@ function sportsConsensus218(l,batches,refs,checked){
  }
  return out;
 }
+function serialCore221(l,reply,refs){
+ if(l.domain!=='sports'||!l.pick('serial')||!l.pick('collector_number')||!l.pick('subset')||!l.pick('subject'))return [];
+ if(['autograph','patch'].some(f=>l.pick(f)?.value==='present'))return [];
+ const k=E.keyValues(l),insert=l.pick('subset').value,out=[];
+ for(const c of list(reply?.comparisons)){
+  const ref=refs.find(r=>r.id===c.reference_id),e=c.identity||{},title=[ref?.title,ref?.snippet,ref?.page_text].join(' ');
+  if(!ref?.image_data||c.original_view!=='front'||c.reference_view!=='front'||c.title_matches_image!==true||!E.subjectMatch(e.subject,k.subject)||!E.numbersMatch(e.number,l.pick('collector_number').value)||!E.sportsSeason215(k.year,e.year))continue;
+  if(!k.products.some(p=>E.productEquivalent217(p,e.family))||!norm(title).includes(norm(insert))||!norm(title).includes(norm(e.subject))||!norm(title).includes(norm(e.number)))continue;
+  if(!list(c.features).some(f=>f.field==='artwork'&&f.agrees===true&&f.certainty==='clear'))continue;
+  // Never reinterpret a different player, set, number, autograph or patch as a parallel difference.
+  if(list(c.conflicts).some(t=>!/parallel|variant|color|purple|orange|silver|serial|\/\d|configurazione|cromatica/i.test(t)||/different (?:player|subject|set|number)|autograph|patch|firma|giocatore/i.test(t)))continue;
+  const source={url:ref.url,title:ref.title,provider:'searchapi_core_comparison'},entry={subject:k.subject,family:e.family,number:e.number,year:E.season(e.year),brand:e.brand,subset:insert,subset_known:true,grounded:true,source,source_tier:'lens_core_verified',entry_quote:title,variants:[],core_only:true,visual_reference_id:ref.id,display_names:e.display_names||{},aliases:[],language:'',image_url:ref.image_url};
+  l.add('catalogue_core',E.coreKey(entry),{source:'lens_core_comparison',certainty:'clear',image_index:c.original_image_index||1,reference_source:ref.url,reference_id:ref.id});out.push(entry);
+ }
+ return out;
+}
 function resolveComparisons217(l,batches,refs){
  const accepted=[],rejected=[],support=[];
  for(const batch of batches){const checked=visualEntries206(batch.reply,refs.filter(r=>batch.ids.includes(r.id)),l);accepted.push(...checked.accepted);rejected.push(...checked.rejected);support.push(...checked.support);}
@@ -360,7 +390,7 @@ function present206(result,entries,l,titleLanguage='it'){
  const language=result.language,tag=l.domain==='sports'?'':({it:'ITA',en:'ENG',ja:'JPN',de:'DEU',fr:'FRA',es:'SPA',ko:'KOR',zh:'CHN','zh-hans':'CHN-S','zh-hant':'CHN-T'})[language]||language?.toUpperCase()||'Lingua da verificare';
  const rawSet=l.pick('set_code')?.value||'',setCode=rawSet.length===1&&String(result.card_identity.number).startsWith(rawSet+'-')?'':rawSet,parts=[displayName,setCode,result.card_identity.number,result.card_identity.date,result.family,result.card_identity.subset,result.variant];
  if(result.card_identity.is_rookie)parts.push('RC');if(result.physical_serial?.value)parts.push('/'+result.physical_serial.print_run);parts.push(tag);
- result.title=unique(parts).join(' · ');result.identity_display=result.title;if(result.model)result.model=result.title;
+ result.title=flattenedTitle221(parts);result.identity_display=result.title;if(result.model)result.model=result.title;
  result.display_language=titleLanguage;result.localized_subject=displayName;result.physical_language=language;result.language_suffix=tag;
  if(result.market_ready)result.normalized_query=result.title;
  return result;
