@@ -189,17 +189,31 @@ function partialTitle208(result,l,titleLanguage){
 function panel221(l){return l.base.object_unit==='panel';}
 function subjectGround221(value,text,l){
  const full=' '+norm(text)+' ',parts=String(value||'').split(/\s*[;&]\s*/).filter(Boolean);
- if(!panel221(l)&&l.domain!=='sealed')return full.includes(' '+norm(value)+' ');
+ if(!panel221(l)&&l.domain!=='sealed')return full.includes(' '+norm(value)+' ')||wordsGround222(value,text);
  return parts.length>0&&parts.every(p=>full.includes(' '+norm(p)+' ')||panel221(l)&&[...p.matchAll(/["“]([^"”]+)["”]/g)].some(m=>full.includes(' '+norm(m[1])+' ')));
 }
 function originalSubject221(value,physical,l){return E.subjectMatch(value,physical)||panel221(l)&&String(value).split(/\s*[;&]\s*/).some(v=>E.subjectMatch(v,physical));}
 function flattenedTitle221(parts){const seen=new Set();return parts.flatMap(p=>String(p||'').split(/\s*·\s*/)).filter(p=>{const k=norm(p);if(!k||seen.has(k))return false;seen.add(k);return true;}).join(' · ');}
+// Field-aware normalization: source prose remains attached to each candidate.
+function wordsGround222(value,text){const words=norm(value).split(' ').filter(Boolean),hay=new Set(norm(text).split(' '));return words.length>0&&words.every(w=>hay.has(w));}
+function objectFamily222(value,l){let v=String(value||'').replace(/^(?:19|20)\d{2}(?:[-/]\d{2,4})?\s+/,'');
+ if(l.domain==='sealed')v=v.replace(/\b(?:basketball|baseball|football|soccer|hockey|hobby|jumbo|blaster|mega|value|box|boxes)\b/ig,' ').replace(/\s+/g,' ').trim();
+ if(E.publication222(l))v=v.replace(/\b(?:fumetto|comic|book|libro|volume)\b/ig,' ').replace(/\s+/g,' ').trim();
+ return E.canonicalSet222(v,l.domain);
+}
+function brandEvidence222(value,features,l,title){
+ const key=norm(E.publisher222(value));if(!key)return false;
+ const physical=l.evidence('publisher').concat(l.evidence('brand'));
+ const photo=physical.some(a=>norm(E.publisher222(a.value))===key);
+ const paired=features.some(f=>['text','layout','configuration'].includes(f.field)&&wordsGround222(key,f.original)&&wordsGround222(key,f.reference));
+ return (photo||paired)&&(wordsGround222(key,title)||paired);
+}
 // Build 206: only actually downloaded, compared references can become evidence.
 function visualEntries206(reply,refs,l){
  const accepted=[],rejected=[],support=[],keys=E.keyValues(l),physical=l.domain==='pokemon'?E.pokemonKeys204(l):{subject:keys.subject,number:l.pick('collector_number')?.value,year:keys.year,language:keys.language};
  const seen=new Set();
  for(const c of list(reply?.comparisons)){
-  const ref=refs.find(r=>r.id===c.reference_id),e={...(c.identity||{})},reasons=[];
+  const ref=refs.find(r=>r.id===c.reference_id),e={...(c.identity||{})},rawIdentity={...e},reasons=[];
   const sports=l.domain==='sports';
   const partial=referenceSupport213(c,ref);if(partial)support.push(partial);
   if(!ref||!ref.image_data||seen.has(c.reference_id)){rejected.push({id:c.reference_id,reasons:['unknown_or_duplicate_reference']});continue;}seen.add(c.reference_id);
@@ -219,7 +233,10 @@ function visualEntries206(reply,refs,l){
   if(kinds.size<2||!['artwork','layout','shape'].some(f=>kinds.has(f))||!['text','identifier','symbols','configuration'].some(f=>kinds.has(f))&&!sportsLayout)reasons.push('insufficient_independent_details');
   const title=(ref.title||'')+' '+(ref.snippet||'')+' '+(ref.page_text||'');
   // Validate each value against actual supplied text, never an ellipsis invented in a quote.
-  const groundedField=field=>{const value=norm(e[field]);return !!value&&(field==='subject'?subjectGround221(e[field],title,l):(' '+norm(title)+' ').includes(' '+value+' '));};
+  e.family=objectFamily222(e.family,l);
+  if(!e.brand&&(l.domain==='sealed'||E.publication222(l)))e.brand=l.pick('publisher')?.value||l.pick('brand')?.value||'';
+  if(l.domain==='sealed')e.subject=e.family; // Depicted players stay in image readings.
+  const groundedField=field=>{const value=norm(e[field]);return !!value&&(field==='subject'&&l.domain!=='sealed'?subjectGround221(e[field],title,l):field==='year'?!!E.comparisonYear222(e.year)&&[...title.matchAll(/\b(?:19|20)\d{2}(?:\s*[-/]\s*(?:\d{4}|\d{2}))?\b/g)].some(m=>E.season(m[0])===E.season(e.year)):field==='family'||field==='subject'&&l.domain==='sealed'?wordsGround222(e[field],E.canonicalSet222(title,l.domain))||l.domain==='pokemon'&&E.canonicalSet222(rawIdentity.family,l.domain)===e.family&&wordsGround222(rawIdentity.family,title):(' '+norm(title)+' ').includes(' '+value+' '));};
   if(panel221(l))e.family=String(e.family||'').replace(/^(?:19|20)\d{2}\s+/,'').replace(/^(?:Swedish|Italian|English|German|French|Spanish)\s+/i,'');
   if(l.domain==='onepiece'&&!groundedField('family')&&/\bone piece\b/.test(norm(title))&&/^one piece(?: card game| promo)?$/.test(norm(e.family)))e.family='One Piece';
   if(!e.year&&/^\d{4}(?:[-–]\d{2,4})?$/.test(String(e.proof?.year||''))&&(' '+norm(title)+' ').includes(' '+norm(e.proof.year)+' '))e.year=e.proof.year;
@@ -238,10 +255,10 @@ function visualEntries206(reply,refs,l){
   const releaseCompatible=sports&&E.sportsSeason215(physical.year,e.year);
   const suffix208=v=>String(v||'').match(/(?:VMAX|VSTAR|GX|EX|ex|V)\s*$/)?.[0]?.trim()||'';
   if(suffix208(original.subject)&&suffix208(reference.subject)&&suffix208(original.subject)!==suffix208(reference.subject))reasons.push('different_reference_subject_suffix');
-  if(physical.subject&&original.subject&&!originalSubject221(original.subject,physical.subject,l))reasons.push('different_original_subject');
-  if(physical.subject&&!original.subject)reasons.push('unreadable_original_subject');
-  if(physical.number&&((!original.number&&!(sports&&c.original_view==='front'))||original.number&&!E.numbersMatch(original.number,physical.number)))reasons.push('different_original_number');
-  if(physical.year&&original.year&&!(sports?yearReading212(original.year,physical.year):E.season(original.year)===physical.year))reasons.push('different_original_year');
+  if(l.domain!=='sealed'&&physical.subject&&original.subject&&!originalSubject221(original.subject,physical.subject,l))reasons.push('different_original_subject');
+  if(l.domain!=='sealed'&&physical.subject&&!original.subject)reasons.push('unreadable_original_subject');
+  if(physical.number&&original.number&&!E.numbersMatch(original.number,physical.number))reasons.push('different_original_number');
+  if(physical.year&&E.comparisonYear222(original.year)&&!(sports?yearReading212(original.year,physical.year):E.comparisonYear222(original.year)===physical.year))reasons.push('different_original_year');
   if(physical.year&&e.year&&physical.year!==E.season(e.year)&&!releaseCompatible&&!(l.domain==='pokemon'&&releaseYear))reasons.push('different_year');
   if(!sports&&physical.language&&reference.language&&!E.printingLanguageCompatible201(physical.language,reference.language))reasons.push('different_reference_language');
   if(!sports&&physical.language&&original.language&&!E.printingLanguageCompatible201(physical.language,original.language))reasons.push('different_original_language');
@@ -251,7 +268,7 @@ function visualEntries206(reply,refs,l){
   const card=!['generic','sealed'].includes(l.domain);
   if(card){
    if(!sports&&!physical.language)reasons.push('original_language_unresolved');
-   if(physical.year&&reference.year&&!(sports?yearReading212(reference.year,physical.year):E.season(reference.year)===physical.year))reasons.push('different_reference_year');
+   if(physical.year&&E.comparisonYear222(reference.year)&&!(sports?yearReading212(reference.year,physical.year):E.comparisonYear222(reference.year)===physical.year))reasons.push('different_reference_year');
    if(l.domain!=='pokemon'&&reference.year&&e.year&&!(sports?yearReading212(reference.year,e.year):E.season(reference.year)===E.season(e.year)))reasons.push('different_reference_year');
    const sourceNumber=sports&&groundedField('number')&&(!!releaseYear||sportsLayout&&!!physical.year&&keys.products.some(p=>E.familyKey(p).includes(E.familyKey(e.family))))&&kinds.has('artwork')&&(kinds.has('configuration')||sportsLayout&&physical.number&&E.numbersMatch(e.number,physical.number));
    if(!optionalNumber&&(!e.number||reference.number&&!E.numbersMatch(e.number,reference.number)||!reference.number&&!sourceNumber))reasons.push('unreadable_reference_identifier');
@@ -259,6 +276,7 @@ function visualEntries206(reply,refs,l){
    if(!physical.number&&!optionalNumber&&!inferredNumber&&!(sports&&sourceNumber))reasons.push('original_identifier_unresolved');
    if(!reference.subject)reasons.push('unreadable_reference_subject');
   }
+  if(l.domain==='pokemon'&&E.printingSubset222(e.subset)){e.claimed_printing=e.subset;e.subset='';}
   if(sports&&/^(?:rc|rookie(?: card)?|rated rookie)$/i.test(e.subset||''))e.subset='';
   if(e.subset&&!groundedField('subset')&&!(sports&&norm(e.proof?.subset)===norm(e.subset)+'s'&&(' '+norm(title)+' ').includes(' '+norm(e.proof.subset)+' '))){e.subset='';}
   if(e.subset&&groundedField('subset'))fieldProof.subset={value:e.subset,origin:'reference_text',url:ref.page_url||ref.url};
@@ -268,17 +286,25 @@ function visualEntries206(reply,refs,l){
    const literalModel=model&&norm(title).includes(norm(model))&&features.some(f=>['text','identifier'].includes(f.field)&&norm(f.original).includes(norm(model))&&norm(f.reference).includes(norm(model)));
    const visualModel=features.length>=3&&kinds.has('configuration')&&(kinds.has('text')||kinds.has('identifier'))&&(kinds.has('shape')||kinds.has('layout'))&&!!e.number&&groundedField('number');
    if(model&&!norm(title).includes(norm(model)))reasons.push('different_model_code');
-   const describedObject=(l.domain==='sealed'||/fumetto|comic|book|libro|volume/i.test(l.base.category||''))&&features.length>=3&&kinds.has('configuration')&&(kinds.has('artwork')||kinds.has('shape')||kinds.has('layout'))&&(kinds.has('text')||kinds.has('layout'))&&groundedField('family')&&groundedField('subject')&&!!e.brand&&norm(title).includes(norm(e.brand).replace(/^(?:edizioni|editions|publisher) /,''))&&l.evidence('brand').some(a=>norm(a.value)===norm(e.brand))&&(!model||!!literalModel);
+   const productAnchored=l.domain==='sealed'&&keys.products.some(p=>E.productEquivalent217(objectFamily222(p,l),e.family))&&!!releaseYear&&!!physical.year&&E.sportsSeason215(physical.year,releaseYear);
+   const configFeatures=features.filter(f=>f.field==='configuration');
+   const observedConfig=E.configuration(l.evidence('configuration').map(a=>a.value).join(' '));
+   const sourceConfig=E.configuration(title+' '+features.map(f=>f.reference).join(' '));
+   if(Object.keys(observedConfig).some(k=>observedConfig[k]!==null&&sourceConfig[k]!==null&&observedConfig[k]!==sourceConfig[k]))reasons.push('different_configuration');
+   const format=title.match(/\b(?:Hobby|Jumbo|Blaster|Mega|Value)\s+Box\b/i)?.[0]||'';
+   const describedObject=(l.domain==='sealed'||E.publication222(l))&&features.length>=(productAnchored?2:3)&&kinds.has('configuration')&&(kinds.has('artwork')||kinds.has('shape')||kinds.has('layout'))&&(productAnchored&&format||kinds.has('text')||kinds.has('layout'))&&groundedField('family')&&groundedField('subject')&&brandEvidence222(e.brand,features,l,title)&&(!model||!!literalModel);
+   if(describedObject){e.object_format=format;e.configuration_quote=configFeatures.map(f=>f.reference).join(' ');fieldProof.configuration={origin:'compared_images',reference_id:ref.id,features:configFeatures};}
+
    objectVerified=!!(literalModel||visualModel||describedObject);
    if(!objectVerified)reasons.push('object_model_not_distinguished');
   }
   if(reasons.length){rejected.push({id:ref.id,reasons:unique(reasons)});continue;}
   // Keep reference readings and original observations separate. No candidate title enters the photo ledger.
   const source={url:ref.url,title:ref.title,provider:'searchapi_visual_comparison'};
-  const copyrightYear=E.season(original.year)&&E.season(original.year)===E.season(reference.year)?E.season(reference.year):'';
+  const copyrightYear=E.copyrightYear222(original.year)&&E.copyrightYear222(original.year)===E.copyrightYear222(reference.year)?E.copyrightYear222(reference.year):'';
   fieldProof.number={value:e.number,identifier_type:l.domain==='pokemon'?physical.number_role:'collector_number',origin:reference.number?'reference_image':'reference_text',reference_id:ref.id,url:ref.url};
   if(copyrightYear)fieldProof.copyright_year={value:copyrightYear,origin:'compared_images',reference_id:ref.id};
-  const entry={catalogue_number_inferred:inferredNumber,number_optional:optionalNumber,object_identity_verified:objectVerified,local_appearance:c.local_appearance||null,view_evidence:{original_image_index:c.original_image_index||null,original_view:c.original_view||'unknown',reference_view:c.reference_view||'unknown'},subject:e.subject,family:e.family,number:e.number,year:releaseYear,copyright_year:copyrightYear,field_proof:fieldProof,brand:e.brand||'',subset:e.subset||'',subset_known:!!e.subset,
+  const entry={normalization:{original:rawIdentity,normalized:{...e},origin:'lens_image_comparison',reference_id:ref.id},claimed_printing:e.claimed_printing||'',object_format:e.object_format||'',configuration_quote:e.configuration_quote||'',catalogue_number_inferred:inferredNumber,number_optional:optionalNumber,object_identity_verified:objectVerified,local_appearance:c.local_appearance||null,view_evidence:{original_image_index:c.original_image_index||null,original_view:c.original_view||'unknown',reference_view:c.reference_view||'unknown'},subject:e.subject,family:e.family,number:e.number,year:releaseYear,copyright_year:copyrightYear,field_proof:fieldProof,brand:e.brand||'',subset:e.subset||'',subset_known:!!e.subset,
    language:E.language(reference.language),aliases:unique([reference.subject,physical.subject]),identifier_type:l.domain==='pokemon'&&physical.number_role==='pokedex_number'?'pokedex':'collector',variants:[],
    grounded:true,entry_quote:ref.title+' '+ref.snippet,reference_page:ref.page_text?{url:ref.page_url||ref.url,text:ref.page_text}:null,source,source_tier:'lens_visual_verified',image_url:ref.image_url||ref.thumbnail,
    requires_image_confirmation:true,visual_reference_id:ref.id,display_names:e.display_names||{},visual_proof:features,reference_reading:reference};

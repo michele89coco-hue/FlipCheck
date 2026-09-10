@@ -1,0 +1,1185 @@
+{
+  "provenance": {
+    "kind": "recorded_build_221",
+    "source_commit": "4b1d804f7ca806c01b078e216e43e57e354cfa40",
+    "source_sha256": "38c53a01b746e349f053f383206829d7c1d13945ec9c42792fe5391275fe0d3c",
+    "scope": "Model object-identification responses and public reference metadata only; no account, usage, image bytes, device/session or diagnostic envelope."
+  },
+  "vision": {
+    "domain": "sealed",
+    "kind": "object",
+    "category": "basketball trading card box",
+    "language": "en",
+    "object_unit": "box",
+    "image_views": [
+      {
+        "image_index": 1,
+        "view": "front",
+        "certainty": "clear"
+      }
+    ],
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "brand",
+        "text": "Topps",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.03,
+          "y": 0.4,
+          "width": 0.18,
+          "height": 0.3
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "product",
+        "text": "Topps Chrome Update Series",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.23,
+          "y": 0.6,
+          "width": 0.55,
+          "height": 0.2
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "season",
+        "text": "2025/26",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.03,
+          "y": 0.03,
+          "width": 0.18,
+          "height": 0.1
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "configuration",
+        "text": "1 AUTOGRAPH IN EVERY BOX*",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.25,
+          "y": 0.85,
+          "width": 0.5,
+          "height": 0.1
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "UPDATE SERIES",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.3,
+          "y": 0.69,
+          "width": 0.4,
+          "height": 0.1
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "Victor Wembanyama; Cooper Flagg",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.23,
+          "y": 0.2,
+          "width": 0.6,
+          "height": 0.3
+        },
+        "zone": "front",
+        "alternatives": []
+      }
+    ],
+    "features": [
+      {
+        "field": "border_color",
+        "value": "blue",
+        "description": "blue metallic-style border elements",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.05,
+          "y": 0.03,
+          "width": 0.9,
+          "height": 0.9
+        },
+        "zone": "border"
+      },
+      {
+        "field": "pattern",
+        "value": "curved layered lines and dotted accents",
+        "description": "layered rounded frames with dotted side accents",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.03,
+          "y": 0.03,
+          "width": 0.94,
+          "height": 0.9
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "layout",
+        "value": "front-facing basketball product box with two player images, logos and promotional text",
+        "description": "portrait-oriented retail packaging",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0,
+          "y": 0,
+          "width": 1,
+          "height": 1
+        },
+        "zone": "other"
+      }
+    ],
+    "hypotheses": [
+      {
+        "field": "family",
+        "value": "Topps Chrome basketball"
+      }
+    ],
+    "slab_reading": null,
+    "engine_version": 193,
+    "brand": "Topps",
+    "family": "Topps Chrome basketball",
+    "title": "Topps Chrome Update Series",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": {
+      "image_index": 1,
+      "x": 0,
+      "y": 0,
+      "width": 1,
+      "height": 1,
+      "certain": true
+    },
+    "photo_clues": [
+      {
+        "text": "Topps",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.03,
+          "y": 0.4,
+          "width": 0.18,
+          "height": 0.3,
+          "certain": true
+        }
+      },
+      {
+        "text": "Topps Chrome Update Series",
+        "role": "model",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.23,
+          "y": 0.6,
+          "width": 0.55,
+          "height": 0.2,
+          "certain": true
+        }
+      },
+      {
+        "text": "2025/26",
+        "role": "season",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.03,
+          "y": 0.03,
+          "width": 0.18,
+          "height": 0.1,
+          "certain": true
+        }
+      },
+      {
+        "text": "1 AUTOGRAPH IN EVERY BOX*",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.25,
+          "y": 0.85,
+          "width": 0.5,
+          "height": 0.1,
+          "certain": true
+        }
+      },
+      {
+        "text": "UPDATE SERIES",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.3,
+          "y": 0.69,
+          "width": 0.4,
+          "height": 0.1,
+          "certain": true
+        }
+      },
+      {
+        "text": "Victor Wembanyama; Cooper Flagg",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.23,
+          "y": 0.2,
+          "width": 0.6,
+          "height": 0.3,
+          "certain": true
+        }
+      }
+    ],
+    "physical_observations": [
+      {
+        "feature": "color",
+        "text": "blue border",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "pattern",
+        "text": "layered rounded frames with dotted side accents",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "portrait-oriented retail packaging",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      }
+    ]
+  },
+  "references": [
+    {
+      "id": "lens-7",
+      "position": 7,
+      "title": "2025-26 Topps Chrome Update Series Basketball Jumbo, Box",
+      "url": "https://rbicru7.com/products/2025-26-topps-chrome-update-series-basketball-jumbo-box",
+      "image_url": "https://rbicru7.com/cdn/shop/files/Scan_2_bba3223c-96c5-4915-ac5b-1f82c2bf1f25.jpg?v=1785947695",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRM7SDBnqAjS5hvUfp6z0G4ptPlpqrat0knXnwM5V1vSayqM1Z-",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "NBA\nBASKETELL\n26\nVICTOR WEMBANYAMA\nSan Autonio\nDAL: LS\n2\nChromes\nirne\nUPDATE\nSERIES\nCAUTOGRAPHS*\nIN EVERY BOXK!\n\"May contain redemption cards with expiration dates. (NO PURCHASE NECESSARY. VISIT TOPPS.COM/NPN FOR DETAILS AND ENTRY.)",
+        "origin": "candidate_image_ocr"
+      },
+      "page_text": "2025-26 Topps Chrome Update Series Basketball Jumbo, Box\nname: 2025-26 Topps Chrome Update Series Basketball Jumbo, Box\ndescription: Configuration: 12 packs per box. 11 cards per pack.PRODUCT HIGHLIGHTS- 2025/26 Topps Chrome Updates Basketball is headlined by one of the most coveted cards in the hobby: NBA Debut Patch Autographs, making their Topps Basketball debut!- Considered a pinnacle chase across The Hobby, these 1-of-1 g...\nmpn: 887521161331\ngtin12: 887521161331\n\nTopps\n\n2025-26 Topps Chrome Update Series Basketball Jumbo, Box\n\nSale\n\nRegular price\n\n$2,195.00\n\n1 available\n\nShipping calculated at checkout.\n\nDefault Title - $2,195.00 USD\n\nQuantity\n\nAdd to Cart\n\nThanks for signing up for a restock alert!\n\nThere was an error signing up for restock alerts. Please try again.\n\nConfiguration: 12 packs per box. 11 cards per pack.\n\nPRODUCT HIGHLIGHTS\n\n- 2025/26 Topps Chrome Updates Basketball is headlined by one of the most coveted cards in the hobby: NBA Debut Patch Autographs, making their Topps Basketball debut!\n\n- Considered a pinnacle chase across The Hobby, these 1-of-1 grails, featuring game-worn NBA Debut patches, arrive for the first time in basketball with standout rookies like Cooper Flagg, Kon Knueppel, and Dylan Harper leading the charge!\n\n- The chase is rounded out by superstars such as Stephen Curry, LeBron James, Victor Wembanyama, Anthony Edwards, Nikola Jokić and Shai Gilgeous-Alexander and more across major SSPs and Autographs!\n\n- The 200-card base set features refreshed imagery for the rookies, vets and legends, all showcased in updated, in-season photography featuring Statement, City and Classic Edition uniforms and of course, a deep rainbow of Chrome parallels!\n\n- Minions NBA are SSPs that reimagine NBA stars as Minions in collaboration with Illumination for a fun, highly collectible crossover insert. In addition, look out for the Denim Tears SSP parallel, and newly added Captains, Celebración case hit inserts!\n\n- Autograph collectors can chase a robust lineup of Topps Chrome Autographs, including special appearances from Druski and Spike Lee!\n\n- The 1980–81 Topps Basketball Autographs deliver another loaded checklist, while the ultra-cool Lava Lamp Rookie Autographs add a groovy twist!\n\nBox Brk:\n\n- 3 Autographs\n\nShare\n\nShare on Facebook\n\nTweet on Twitter\n\nPin on Pinterest",
+      "page_url": "https://rbicru7.com/products/2025-26-topps-chrome-update-series-basketball-jumbo-box"
+    },
+    {
+      "id": "lens-8",
+      "position": 8,
+      "title": "2025-26 Topps Chrome Update Series Basketball Jumbo Box – LA ...",
+      "url": "https://lasportscards.com/products/2025-26-topps-chrome-update-series-basketball-jumbo-box",
+      "image_url": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQM0OgnYmM8Q6cW-MmvuDwZSu8TmM5ToYax7awysXfqqWqxcku7",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQM0OgnYmM8Q6cW-MmvuDwZSu8TmM5ToYax7awysXfqqWqxcku7",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "BASEB\nDALLAS\n32\nChromes\nUPDATE",
+        "origin": "candidate_image_ocr"
+      },
+      "page_text": "2025-26 Topps Chrome Update Series Basketball Jumbo Box – LA Sports Cards\nname: 2025-26 Topps Chrome Update Series Basketball Jumbo Box\ndescription: 2025-26 Topps Chrome Update Series Basketball Jumbo Box — the HTA signature-heavy format of the first-ever Update Series extension of Topps Chrome Basketball, covering the season's rookie debuts and midseason storylines in chromium finish. Street date August 6, 2026. 12 jumbo packs of 11 cards (132 cards) — the biggest rip in the line 3 autographs guaranteed per box, triple the hobby box All hobby-exclusive content: Wave/Prism/Negative parallels, 1980-81 Topps Basketball Autographs, Radiating Rookies and Shadow Etch case hits 1/1 Rookie Debut Patch Autographs live here — the preferred format for group breakers\n\nSkip to product information\n\nOpen media 1 in modal\n\n1\n/\nof\n1\n\nTopps\n\n2025-26 Topps Chrome Update Series Basketball Jumbo Box\n\n2025-26 Topps Chrome Update Series Basketball Jumbo Box\n\nRegular price\n\n$2,350.00 USD\n\nRegular price\n\nSale price\n\n$2,350.00 USD\n\nSale\n\nSold out\n\nShipping calculated at checkout.\n\nQuantity\n\nQuantity\n\n(0 in cart)\n\nDecrease quantity for 2025-26 Topps Chrome Update Series Basketball Jumbo Box\n\nIncrease quantity for 2025-26 Topps Chrome Update Series Basketball Jumbo Box\n\nSold out\n\n \n\n \n\nCouldn't load pickup availability\n\nRefresh\n\n2025-26 Topps Chrome Update Series Basketball Jumbo Box\n\nSold out\n\nShare\n\nShare\n\nLink\n\nClose share\n\nCopy link\n\n2025-26 Topps Chrome Update Series Basketball Jumbo Box — the HTA signature-heavy format of the first-ever Update Series extension of Topps Chrome Basketball, covering the season's rookie debuts and midseason storylines in chromium finish. Street date August 6, 2026.\n\n12 jumbo packs of 11 cards (132 cards) — the biggest rip in the line\n\n3 autographs guaranteed per box, triple the hobby box\n\nAll hobby-exclusive content: Wave/Prism/Negative parallels, 1980-81 Topps Basketball Autographs, Radiating Rookies and Shadow Etch case hits\n\n1/1 Rookie Debut Patch Autographs live here — the preferred format for group breakers\n\nShipping & Handling\n\nEvery order is packed with care and protection, then shipped with tracking. Shipping rates and delivery estimates are calculated at checkout.\n\nAuthenticity & Condition\n\nAll of our products are handled carefully and reviewed by professionals before listing. Sealed product is sold factory sealed; singles are described and",
+      "page_url": "https://lasportscards.com/products/2025-26-topps-chrome-update-series-basketball-jumbo-box"
+    },
+    {
+      "id": "lens-9",
+      "position": 9,
+      "title": "2025-26 Topps Chrome Update Series Basketball Hobby Box ...",
+      "url": "https://cashcardsunlimited.com/products/2025-26-topps-chrome-update-series-basketball-hobby-box",
+      "image_url": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcS-VwnxZxuaqvrl7ZsT5WbT5qa8v-MJRhgBfJmeaQtHVEuGtt9p",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcS-VwnxZxuaqvrl7ZsT5WbT5qa8v-MJRhgBfJmeaQtHVEuGtt9p",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "DALLAS\n32\nChrome\nLPOATE",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-10",
+      "position": 10,
+      "title": "2025/26 Topps Chrome Update Series Basketball Hobby Box ...",
+      "url": "https://www.worldchampionsportscards.org/products/2025-26-topps-chrome-update-series-basketball-hobby-box-presell",
+      "image_url": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTzEmGxJKrdafA1lI6KGHcr7P66bs3Yj2xP6ykUS8994epQrVU2",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTzEmGxJKrdafA1lI6KGHcr7P66bs3Yj2xP6ykUS8994epQrVU2",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "CPA\nDALLAS\n32\nchrome\nUPDTE\nAP",
+        "origin": "candidate_image_ocr"
+      },
+      "page_text": "2025/26 Topps Chrome Update Series Basketball Hobby Box (Presell)\nname: 2025/26 Topps Chrome Update Series Basketball Hobby Box (Presell)\ndescription: 2025/26 Topps Chrome Updates Basketball is headlined by one of the most coveted cards in the hobby: NBA Debut Patch Autographs, making their Topps Basketball debut. Considered a pinnacle chase across The Hobby, these 1-of-1 grails, featuring game-worn NBA Debut patches, arrive for the first time in basketball with standout rookies like Cooper Flagg, Kon Knueppel, and Dylan Harper leading the charge. The chase is rounded out by superstars such as Stephen Curry, LeBron James, Victor Wembanyama, Anthony Edwards, Nikola Jokic and Shai Gilgeous-Alexander and more across major SSPs and Autographs. The 200-card base set features refreshed imagery for the rookies, vets and legends, all showcased in updated, in-season photography featuring Statement, City and Classic Edition uniforms and of course, a deep rainbow of Chrome parallels. Collectors can also hunt a wide range of new inserts including New Edition, Stratospheric Stars, No Limit, and Moment in Time, highlighting iconic NBA moments like Curry's \"Ring Me\" celebration in the NBA Finals. Beyond the NBA Debut Patch Autographs, chase elements run deep with exciting case hits like the NBA's first Alter Egos SSPs, an epic 10-card set that transforms each player into a dynamic, illustrated, super-powered persona. Minions NBA are SSPs that reimagine NBA stars as Minions in collaboration with Illumination for a fun, highly collectible crossover insert. In addition, look out for the Denim Tears SSP parallel, and newly added Captains, Celebracion case hit inserts. Autograph collectors can chase a robust lineup of Topps Chrome Autographs, including special appearances from Druski and Spike Lee. The 1980-81 Topps Basketball Autographs deliver another loaded checklist, while the ultra-cool Lava Lamp Rookie Autographs add a groovy twist. Chrome Updates Basketball is a must-have release, bursting with star power, innovation, and true hobby heat. Product Highlights 1 Autograph Per Box! Search For NBA Debut Patch Autographs! Look For Minions NBA Case Hit Inserts! Find Helix Case Hit Inserts! Look For Rookie Autographs Lava Lamp! Key Rookies Cooper Flagg Dylan Harper VJ Edgecombe Kon Knueppel Ace Bailey Jeremiah Fears Egor Dëmin Derik Queen Tre Johnson III Cedric Coward Khaman Mal",
+      "page_url": "https://www.worldchampionsportscards.org/products/2025-26-topps-chrome-update-series-basketball-hobby-box-presell"
+    },
+    {
+      "id": "lens-15",
+      "position": 15,
+      "title": "2025/26 Topps Chrome Update Series Basketball mega Box ...",
+      "url": "https://paypayfleamarket.yahoo.co.jp/item/z659359026",
+      "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgqlmtBDt5zrEW7V-FaF7of3emXzAefsaSVnMny2RyYIdMNd1W",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgqlmtBDt5zrEW7V-FaF7of3emXzAefsaSVnMny2RyYIdMNd1W",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "DALLAS\n32\nchrome\nUPDATE\nLOOK Pon\nbERUT\nACH",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-19",
+      "position": 19,
+      "title": "2025-26 Topps Chrome Update Series Basketball Hobby Box ...",
+      "url": "https://www.vsmsportscardoutlet.com/products/2025-26-topps-chrome-update-series-basketball-hobby-box",
+      "image_url": "https://www.vsmsportscardoutlet.com/cdn/shop/files/Screenshot_2026-08-08_091756.png?v=1786194964&width=716",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRce-tjrgVWWx7aw7ckbvapGAN9H02R-2s9f4BcWzlhMhXmbIEA",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "BASENB\nP2025/26\nViCTOR WEMBANYAMA\nSan Aronio\nchime\nDALLAS\n32\n79FPS\nchrome\nUPDATE\nSERIES\nAPH\nIN EVEHYBOX!\ncoOPER FLAGG",
+        "origin": "candidate_image_ocr"
+      },
+      "page_text": "2025-26 Topps Chrome Update Series Basketball Hobby Box – VSM Sports Card Outlet\nname: 2025-26 Topps Chrome Update Series Basketball Hobby Box\ndescription: Configuration: 20 packs per box. 4 cards per pack. PRODUCT HIGHLIGHTS: 2025/26 Topps Chrome Updates Basketball is headlined by one of the most coveted cards in the hobby: NBA Debut Patch Autographs, making their Topps Basketball debut! Considered a pinnacle chase across The Hobby, these 1-of-1 grails, featuring game-worn NBA Debut patches, arrive for the first time in basketball with standout rookies like Cooper Flagg, Kon Knueppel, and Dylan Harper leading the charge! The chase is rounded out by superstars such as Stephen Curry, LeBron James, Victor Wembanyama, Anthony Edwards, Nikola Jokić and Shai Gilgeous-Alexander and more across major SSPs and Autographs! The 200-card base set features refreshed imagery for the rookies, vets and legends, all showcased in updated, in-season photography featuring Statement, City and Classic Edition uniforms and of course, a deep rainbow of Chrome parallels! Minions NBA are SSPs that reimagine NBA stars as Minions in collaboration with Illumination for a fun, highly collectible crossover insert. In addition, look out for the Denim Tears SSP parallel, and newly added Captains, Celebración case hit inserts! Autograph collectors can chase a robust lineup of Topps Chrome Autographs, including special appearances from Druski and Spike Lee! The 1980–81 Topps Basketball Autographs deliver another loaded checklist, while the ultra-cool Lava Lamp Rookie Autographs add a groovy twist! Box Break: 1 Autograph\nsku: 887521161300\n\nSkip to content\n\nConsign\n\nContact\n\nFree standard shipping on all orders over $199!\n\nFacebook\n\nInstagram\n\nTikTok\n\nOpen media 0 in modal\n\nOpen media 1 in modal\n\nOpen media 2 in modal\n\nOpen media 3 in modal\n\nOpen media 4 in modal\n\nOpen media 5 in modal\n\nOpen media 6 in modal\n\nOpen media 7 in modal\n\nOpen media 8 in modal\n\nOpen media 9 in modal\n\nOpen media 10 in modal\n\nOpen media 11 in modal\n\nOpen media 12 in modal\n\nOpen media 13 in modal\n\nOpen media 14 in modal\n\nOpen media 15 in modal\n\nOpen media 16 in modal\n\nOpen media 17 in modal\n\nOpen media 18 in modal\n\nOpen media 19 in modal\n\nSave 0%\n2025-26 Topps Chrome Update Series Basketball Hobby Box\n\nVendor:\nTopps\n\nType:\nHobby Box\n\nSKU:\n887521161300\n\nRegular price\n\nSale price\n$1,159.00\nRegular price\n\n$1,169.00\n\nUnit p",
+      "page_url": "https://www.vsmsportscardoutlet.com/products/2025-26-topps-chrome-update-series-basketball-hobby-box"
+    },
+    {
+      "id": "lens-21",
+      "position": 21,
+      "title": "2025/26 Topps Chrome Update Series basketball blasters restock",
+      "url": "https://www.facebook.com/thebullpenscc/posts/very-limited-restock-of-202526-topps-chrome-update-series-basketball-blastersthe/1115755954308330/",
+      "image_url": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSsZE2nlBaQ5_Yz4_6M-H4eKsEPFjKjFHwryEcPbgLTHfKQpL4j",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSsZE2nlBaQ5_Yz4_6M-H4eKsEPFjKjFHwryEcPbgLTHfKQpL4j",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "DALLAS\n32\nChrome\nUPDATE\nuBDEutRATCH\nALTOGRAPHSI",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-28",
+      "position": 28,
+      "title": "2025-26 Topps Chrome Update Series Basketball Hobby Box ...",
+      "url": "https://www.baseballdreamsandmemories.com/products/2025-26-topps-chrome-update-series-basketball-hobby-box",
+      "image_url": "https://www.baseballdreamsandmemories.com/cdn/shop/files/IMG_5294_2_2048x.jpg?v=1786030515",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRLxPHpkvwpSZrf81U94aKCyNqAG7uDFi9yNJugvJP1zYDpqqDy",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "2025/26\nVICTOR WEMBANYAMA\nDALLAS\n32\nChrome\nUPDATE\nSE RIES\nAUTOGRAPH®\nIN EVERY BOX!\nCOOPER FLAGG\nchi\nBAS",
+        "origin": "candidate_image_ocr"
+      },
+      "page_text": "2025-26 Topps Chrome Update Series Basketball Hobby Box – Baseball Dreams & Memories\n\n2025-26 Topps Chrome Update Series Basketball Hobby Box\n\nRegular price\n\n$0.00\n\nDefault Title - Sold Out\n\nQuantity\n\nAdd to Cart\n\n \n\n \n\n2025/26 Topps Chrome Updates Basketball is headlined by one of the most coveted cards in the hobby: NBA Debut Patch Autographs, making their Topps Basketball debut!\n\nConsidered a pinnacle chase across The Hobby, these 1-of-1 grails, featuring game-worn NBA Debut patches, arrive for the first time in basketball with standout rookies like Cooper Flagg, Kon Knueppel, and Dylan Harper leading the charge!\n\nThe chase is rounded out by superstars such as Stephen Curry, LeBron James, Victor Wembanyama, Anthony Edwards, Nikola Jokić and Shai Gilgeous-Alexander and more across major SSPs and Autographs!\n\nThe 200-card base set features refreshed imagery for the rookies, vets and legends, all showcased in updated, in-season photography featuring Statement, City and Classic Edition uniforms and of course, a deep rainbow of Chrome parallels!\n\nMinions NBA are SSPs that reimagine NBA stars as Minions in collaboration with Illumination for a fun, highly collectible crossover insert. In addition, look out for the Denim Tears SSP parallel, and newly added Captains, Celebración case hit inserts!\n\nAutograph collectors can chase a robust lineup of Topps Chrome Autographs, including special appearances from Druski and Spike Lee!\n\nThe 1980–81 Topps Basketball Autographs deliver another loaded checklist, while the ultra-cool Lava Lamp Rookie Autographs add a groovy twist!\n\n \n\nBox Configuration:\n\n20 Packs Per Box\n\n4 Cards Per Pack\n\n \n\nBox Break:\n\n1 Autograph Per Box\n\n \n\nPRODUCT DESCRIPTION\n\n2025/26 Topps Chrome Updates Basketball is headlined by one of the most coveted cards in the hobby: NBA Debut Patch Autographs, making their Topps Basketball debut. Considered a pinnacle chase across The Hobby, these 1-of-1 grails, featuring game-worn NBA Debut patches, arrive for the first time in basketball with standout rookies like Cooper Flagg, Kon Knueppel, and Dylan Harper leading the charge.\n\nThe chase is rounded out by superstars such as Stephen Curry, LeBron James, Victor Wembanyama, Anthony Edwards, Nikola Jokić and Shai Gilgeous-Alexander and more across major SSPs and Autographs.\n\nThe 200-card base set features refreshed imagery for the rookies, vets and legends, all s",
+      "page_url": "https://www.baseballdreamsandmemories.com/products/2025-26-topps-chrome-update-series-basketball-hobby-box"
+    },
+    {
+      "id": "lens-38",
+      "position": 38,
+      "title": "2025/26 Topps Chrome Update Series Basketball Blaster Box ...",
+      "url": "https://www.thecoffeebreakers.com/products/2025-26-topps-chrome-update-series-basketball-hobby-box-copy",
+      "image_url": "https://www.thecoffeebreakers.com/cdn/shop/files/update_1080x.jpg?v=1786751771",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRQ6rrtZrf9Xa7-bgvtB1KfxLAT0HKaC408hLVCzh0S9Gq23OWf",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "9e/seo2\nSan Antnic\nDALLAS\n32\nchrae'\nUPOSTE\nLOOKFOR\nNA DEBUT PATCH\nAUTO\noGAPHBI\nNO PURCHASL NISA VST OPS COM/APNFOR UELAISANO ENTRY)\nuR FLAGG\nchime\nVICTOR WEMBRANVAMA\nNE\nMay contain redemtion cards with expiration dates",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-42",
+      "position": 42,
+      "title": "2025/26 Topps Chrome Update Series Basketball Blaster Box ...",
+      "url": "https://www.primocards.com.au/products/2025-26-topps-chrome-update-series-basketball-blaster-box-private-nba-break",
+      "image_url": "https://www.primocards.com.au/cdn/shop/files/BACKGROUND_46_1080x.png?v=1787037964",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTqm37jqKaBzFRy6RQkKEEifGSBa0XxFykJhhNu-2Q1VSW-3JFv",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "m\nL\nSan Aulonio\nchime\nDALLAS\n32\nchrome'\nUPDATE\nSE RIES,\nLOOKFOR\nNÊA DEBUTPATCH\nAUTOGRAPHSI\n\"May contain redemption cards with expiration dates.\n(NO PURCHASE NECESSARY. VISIT TOPPS.COM/NPN FOR DETAILS AND ENTRY)\ncOOPER FLAGG\n202526\nJCTOR\nW\nNBAT",
+        "origin": "candidate_image_ocr"
+      }
+    }
+  ],
+  "batches": [
+    {
+      "ids": [
+        "lens-7",
+        "lens-8",
+        "lens-9"
+      ],
+      "reply": {
+        "original_readings": [
+          {
+            "field": "subject",
+            "image_index": 1,
+            "crop_id": "original-1-upper",
+            "full_text": "Victor Wembanyama; Cooper Flagg",
+            "crop_text": "Victor Wembanyama; Cooper Flagg",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Victor Wembanyama; Cooper Flagg",
+              "en": "Victor Wembanyama; Cooper Flagg"
+            }
+          },
+          {
+            "field": "product",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "Topps Chrome Update Series",
+            "crop_text": "Topps Chrome Update Series",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Topps Chrome Update Series",
+              "en": "Topps Chrome Update Series"
+            }
+          },
+          {
+            "field": "brand",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "Topps",
+            "crop_text": "Topps",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Topps",
+              "en": "Topps"
+            }
+          },
+          {
+            "field": "team",
+            "image_index": 1,
+            "crop_id": "original-1-upper",
+            "full_text": "San Antonio; Dallas",
+            "crop_text": "San Antonio; Dallas",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "San Antonio; Dallas",
+              "en": "San Antonio; Dallas"
+            }
+          }
+        ],
+        "comparisons": [
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0,
+                "y": 0.03
+              },
+              {
+                "x": 0.98,
+                "y": 0.03
+              },
+              {
+                "x": 0.98,
+                "y": 0.98
+              },
+              {
+                "x": 0,
+                "y": 0.98
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0,
+                "y": 0
+              },
+              {
+                "x": 1,
+                "y": 0
+              },
+              {
+                "x": 1,
+                "y": 1
+              },
+              {
+                "x": 0,
+                "y": 1
+              }
+            ],
+            "reference_id": "lens-7",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [
+              "Original shows 1 autograph; candidate image shows 3 autographs."
+            ],
+            "original_reading": {
+              "subject": "Victor Wembanyama; Cooper Flagg",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "Victor Wembanyama; Cooper Flagg",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Wembanyama and Flagg front artwork",
+                "reference": "Wembanyama and Flagg front artwork",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "1 autograph in every box",
+                "reference": "3 autographs in every box",
+                "agrees": false,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Victor Wembanyama; Cooper Flagg",
+              "family": "Topps Chrome Update Series Basketball Box",
+              "number": "",
+              "year": "2025-26",
+              "brand": "Topps",
+              "subset": "Jumbo",
+              "proof": {
+                "subject": "2025-26 Topps Chrome Update Series Basketball Jumbo, Box",
+                "family": "2025-26 Topps Chrome Update Series Basketball Jumbo, Box",
+                "year": "2025-26 Topps Chrome Update Series Basketball Jumbo, Box",
+                "subset": "Jumbo"
+              },
+              "display_names": {
+                "it": "Victor Wembanyama; Cooper Flagg",
+                "en": "Victor Wembanyama; Cooper Flagg"
+              }
+            }
+          },
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0,
+                "y": 0.03
+              },
+              {
+                "x": 0.98,
+                "y": 0.03
+              },
+              {
+                "x": 0.98,
+                "y": 0.98
+              },
+              {
+                "x": 0,
+                "y": 0.98
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0,
+                "y": 0
+              },
+              {
+                "x": 1,
+                "y": 0
+              },
+              {
+                "x": 1,
+                "y": 1
+              },
+              {
+                "x": 0,
+                "y": 1
+              }
+            ],
+            "reference_id": "lens-8",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [
+              "Original shows 1 autograph; candidate image shows 3 autographs."
+            ],
+            "original_reading": {
+              "subject": "Victor Wembanyama; Cooper Flagg",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "Victor Wembanyama; Cooper Flagg",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Wembanyama and Flagg front artwork",
+                "reference": "Wembanyama and Flagg front artwork",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "1 autograph in every box",
+                "reference": "3 autographs in every box",
+                "agrees": false,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Victor Wembanyama; Cooper Flagg",
+              "family": "Topps Chrome Update Series Basketball Box",
+              "number": "",
+              "year": "2025-26",
+              "brand": "Topps",
+              "subset": "Jumbo",
+              "proof": {
+                "subject": "2025-26 Topps Chrome Update Series Basketball Jumbo Box",
+                "family": "2025-26 Topps Chrome Update Series Basketball Jumbo Box",
+                "year": "2025-26 Topps Chrome Update Series Basketball Jumbo Box",
+                "subset": "Jumbo"
+              },
+              "display_names": {
+                "it": "Victor Wembanyama; Cooper Flagg",
+                "en": "Victor Wembanyama; Cooper Flagg"
+              }
+            }
+          },
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "whole",
+            "original_quad": [
+              {
+                "x": 0,
+                "y": 0.03
+              },
+              {
+                "x": 0.98,
+                "y": 0.03
+              },
+              {
+                "x": 0.98,
+                "y": 0.98
+              },
+              {
+                "x": 0,
+                "y": 0.98
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.075,
+                "y": 0.117
+              },
+              {
+                "x": 0.858,
+                "y": 0.117
+              },
+              {
+                "x": 0.858,
+                "y": 0.938
+              },
+              {
+                "x": 0.075,
+                "y": 0.938
+              }
+            ],
+            "reference_id": "lens-9",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "Victor Wembanyama; Cooper Flagg",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "Victor Wembanyama; Cooper Flagg",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Wembanyama and Flagg front artwork",
+                "reference": "Same Wembanyama and Flagg artwork",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "1 autograph in every box",
+                "reference": "1-autograph box configuration",
+                "agrees": true,
+                "certainty": "uncertain"
+              }
+            ],
+            "identity": {
+              "subject": "Victor Wembanyama; Cooper Flagg",
+              "family": "Topps Chrome Update Series Basketball Box",
+              "number": "",
+              "year": "2025-26",
+              "brand": "Topps",
+              "subset": "Hobby",
+              "proof": {
+                "subject": "2025-26 Topps Chrome Update Series Basketball Hobby Box",
+                "family": "2025-26 Topps Chrome Update Series Basketball Hobby Box",
+                "year": "2025-26 Topps Chrome Update Series Basketball Hobby Box",
+                "subset": "Hobby"
+              },
+              "display_names": {
+                "it": "Victor Wembanyama; Cooper Flagg",
+                "en": "Victor Wembanyama; Cooper Flagg"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "ids": [
+        "lens-19",
+        "lens-28",
+        "lens-10"
+      ],
+      "reply": {
+        "original_readings": [
+          {
+            "field": "subject",
+            "image_index": 1,
+            "crop_id": "original-1-upper",
+            "full_text": "VICTOR WEMBANYAMA; COOPER FLAGG",
+            "crop_text": "VICTOR WEMBANYAMA; COOPER FLAGG",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Victor Wembanyama; Cooper Flagg",
+              "en": "Victor Wembanyama; Cooper Flagg"
+            }
+          },
+          {
+            "field": "product",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "Topps Chrome UPDATE SERIES Basketball",
+            "crop_text": "Topps Chrome UPDATE SERIES",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Topps Chrome Update Series Basketball",
+              "en": "Topps Chrome Update Series Basketball"
+            }
+          },
+          {
+            "field": "brand",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "Topps",
+            "crop_text": "Topps",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Topps",
+              "en": "Topps"
+            }
+          },
+          {
+            "field": "team",
+            "image_index": 1,
+            "crop_id": "original-1-upper",
+            "full_text": "San Antonio; DALLAS",
+            "crop_text": "San Antonio; DALLAS",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "San Antonio; Dallas",
+              "en": "San Antonio; Dallas"
+            }
+          }
+        ],
+        "comparisons": [
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0,
+                "y": 0.026
+              },
+              {
+                "x": 0.978,
+                "y": 0.026
+              },
+              {
+                "x": 0.978,
+                "y": 0.976
+              },
+              {
+                "x": 0,
+                "y": 0.976
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.061,
+                "y": 0.035
+              },
+              {
+                "x": 0.957,
+                "y": 0.035
+              },
+              {
+                "x": 0.957,
+                "y": 0.963
+              },
+              {
+                "x": 0.063,
+                "y": 0.963
+              }
+            ],
+            "reference_id": "lens-19",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "Victor Wembanyama; Cooper Flagg",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "VICTOR WEMBANYAMA; COOPER FLAGG",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Wembanyama and Flagg together",
+                "reference": "Wembanyama and Flagg together",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "Hobby box, autograph every box",
+                "reference": "Hobby Box",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "",
+              "family": "2025-26 Topps Chrome Update Series Basketball Hobby Box",
+              "number": "887521161300",
+              "year": "2025-26",
+              "brand": "Topps",
+              "subset": "Hobby",
+              "proof": {
+                "subject": "",
+                "family": "2025-26 Topps Chrome Update Series Basketball Hobby Box",
+                "year": "2025-26",
+                "subset": "Hobby"
+              },
+              "display_names": {
+                "it": "2025-26 Topps Chrome Update Series Basketball Hobby Box",
+                "en": "2025-26 Topps Chrome Update Series Basketball Hobby Box"
+              }
+            }
+          },
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0,
+                "y": 0.026
+              },
+              {
+                "x": 0.978,
+                "y": 0.026
+              },
+              {
+                "x": 0.978,
+                "y": 0.976
+              },
+              {
+                "x": 0,
+                "y": 0.976
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0,
+                "y": 0
+              },
+              {
+                "x": 0.997,
+                "y": 0
+              },
+              {
+                "x": 0.997,
+                "y": 0.963
+              },
+              {
+                "x": 0,
+                "y": 0.963
+              }
+            ],
+            "reference_id": "lens-28",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "Victor Wembanyama; Cooper Flagg",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "VICTOR WEMBANYAMA; COOPER FLAGG",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Wembanyama and Flagg together",
+                "reference": "Wembanyama and Flagg together",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Topps Chrome Update Series front",
+                "reference": "Topps Chrome Update Series front",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "",
+              "family": "2025-26 Topps Chrome Update Series Basketball Hobby Box",
+              "number": "",
+              "year": "2025-26",
+              "brand": "Topps",
+              "subset": "Hobby",
+              "proof": {
+                "subject": "",
+                "family": "2025-26 Topps Chrome Update Series Basketball Hobby Box",
+                "year": "2025-26",
+                "subset": "Hobby"
+              },
+              "display_names": {
+                "it": "2025-26 Topps Chrome Update Series Basketball Hobby Box",
+                "en": "2025-26 Topps Chrome Update Series Basketball Hobby Box"
+              }
+            }
+          },
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0,
+                "y": 0.026
+              },
+              {
+                "x": 0.978,
+                "y": 0.026
+              },
+              {
+                "x": 0.978,
+                "y": 0.976
+              },
+              {
+                "x": 0,
+                "y": 0.976
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.085,
+                "y": 0.015
+              },
+              {
+                "x": 0.909,
+                "y": 0.015
+              },
+              {
+                "x": 0.909,
+                "y": 0.97
+              },
+              {
+                "x": 0.085,
+                "y": 0.97
+              }
+            ],
+            "reference_id": "lens-10",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "Victor Wembanyama; Cooper Flagg",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "COOPER FLAGG",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Wembanyama and Flagg together",
+                "reference": "Wembanyama and Flagg together",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "Autograph every box",
+                "reference": "Hobby box front",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "",
+              "family": "2025-26 Topps Chrome Update Series Basketball Hobby Box",
+              "number": "",
+              "year": "2025-26",
+              "brand": "Topps",
+              "subset": "Hobby",
+              "proof": {
+                "subject": "",
+                "family": "2025/26 Topps Chrome Update Series Basketball Hobby Box",
+                "year": "2025/26",
+                "subset": "Hobby"
+              },
+              "display_names": {
+                "it": "2025-26 Topps Chrome Update Series Basketball Hobby Box",
+                "en": "2025-26 Topps Chrome Update Series Basketball Hobby Box"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "crops": [
+    {
+      "id": "original-1-upper",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 0.3155688622754491
+      }
+    },
+    {
+      "id": "original-1-lower",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0,
+        "y": 0.6646706586826348,
+        "width": 1,
+        "height": 0.33532934131736525
+      }
+    }
+  ],
+  "details": []
+}

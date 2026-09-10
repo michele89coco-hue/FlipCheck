@@ -1,0 +1,1295 @@
+{
+  "provenance": {
+    "kind": "recorded_build_221",
+    "source_commit": "4b1d804f7ca806c01b078e216e43e57e354cfa40",
+    "source_sha256": "dd758df672ac70c9b193b7ffcea22e429cc1e46f40c8e779d58c9b23e702a2c5",
+    "scope": "Model object-identification responses and public reference metadata only; no account, usage, image bytes, device/session or diagnostic envelope."
+  },
+  "vision": {
+    "domain": "pokemon",
+    "kind": "card",
+    "category": "trading card",
+    "language": "en",
+    "object_unit": "single",
+    "image_views": [
+      {
+        "image_index": 1,
+        "view": "front",
+        "certainty": "clear"
+      }
+    ],
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "Machamp",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.26,
+          "y": 0.08,
+          "width": 0.3,
+          "height": 0.05
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "hp",
+        "text": "100 HP",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.65,
+          "y": 0.08,
+          "width": 0.14,
+          "height": 0.05
+        },
+        "zone": "statistics",
+        "alternatives": []
+      },
+      {
+        "field": "collector_number",
+        "text": "8/102",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.92,
+          "y": 0.96,
+          "width": 0.05,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "pokedex_number",
+        "text": "#068",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.85,
+          "y": 0.91,
+          "width": 0.04,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "illustrator",
+        "text": "Ken Sugimori",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.05,
+          "y": 0.96,
+          "width": 0.13,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "copyright",
+        "text": "© 1995,96,98,99 Nintendo, Creatures, GAMEFREAK © 1999 Wizards",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.17,
+          "y": 0.96,
+          "width": 0.63,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "language",
+        "text": "English",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.1,
+          "y": 0.08,
+          "width": 0.8,
+          "height": 0.87
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "STAGE 2; Evolves from Machoke; Put Machamp on the Stage 1 card; Pokémon Power: Strikes Back; Seismic Toss; 60; LV. 67; Length: 5' 3\"; Weight: 287 lbs.",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.08,
+          "y": 0.05,
+          "width": 0.84,
+          "height": 0.84
+        },
+        "zone": "front",
+        "alternatives": []
+      }
+    ],
+    "features": [
+      {
+        "field": "border_color",
+        "value": "yellow",
+        "description": "Yellow card border",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0,
+          "y": 0,
+          "width": 1,
+          "height": 1
+        },
+        "zone": "border"
+      },
+      {
+        "field": "finish",
+        "value": "holo",
+        "description": "Holographic foil artwork",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.12,
+          "y": 0.15,
+          "width": 0.78,
+          "height": 0.4
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "stamp",
+        "value": "present",
+        "description": "First Edition stamp visible",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.05,
+          "y": 0.54,
+          "width": 0.07,
+          "height": 0.04
+        },
+        "zone": "label"
+      },
+      {
+        "field": "layout",
+        "value": "Portrait Pokémon card with yellow border, holographic central artwork, text box, attack/statistics section and footer",
+        "description": "Standard vintage Pokémon layout",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0,
+          "y": 0,
+          "width": 1,
+          "height": 1
+        },
+        "zone": "other"
+      }
+    ],
+    "hypotheses": [
+      {
+        "field": "family",
+        "value": "Pokémon Base Set"
+      },
+      {
+        "field": "brand",
+        "value": "Pokémon"
+      },
+      {
+        "field": "model",
+        "value": "Base Set Machamp"
+      }
+    ],
+    "slab_reading": null,
+    "engine_version": 193,
+    "brand": "Pokémon",
+    "family": "Pokémon Base Set",
+    "title": "Machamp",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": {
+      "image_index": 1,
+      "x": 0,
+      "y": 0,
+      "width": 1,
+      "height": 1,
+      "certain": true
+    },
+    "photo_clues": [
+      {
+        "text": "Machamp",
+        "role": "subject",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.26,
+          "y": 0.08,
+          "width": 0.3,
+          "height": 0.05,
+          "certain": true
+        }
+      },
+      {
+        "text": "100 HP",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.65,
+          "y": 0.08,
+          "width": 0.14,
+          "height": 0.05,
+          "certain": true
+        }
+      },
+      {
+        "text": "8/102",
+        "role": "collector_number",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.92,
+          "y": 0.96,
+          "width": 0.05,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "#068",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.85,
+          "y": 0.91,
+          "width": 0.04,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "Ken Sugimori",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.05,
+          "y": 0.96,
+          "width": 0.13,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "© 1995,96,98,99 Nintendo, Creatures, GAMEFREAK © 1999 Wizards",
+        "role": "copyright",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.17,
+          "y": 0.96,
+          "width": 0.63,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "English",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.1,
+          "y": 0.08,
+          "width": 0.8,
+          "height": 0.87,
+          "certain": true
+        }
+      },
+      {
+        "text": "STAGE 2; Evolves from Machoke; Put Machamp on the Stage 1 card; Pokémon Power: Strikes Back; Seismic Toss; 60; LV. 67; Length: 5' 3\"; Weight: 287 lbs.",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.08,
+          "y": 0.05,
+          "width": 0.84,
+          "height": 0.84,
+          "certain": true
+        }
+      }
+    ],
+    "physical_observations": [
+      {
+        "feature": "color",
+        "text": "yellow border",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Holographic foil artwork",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "First Edition stamp visible",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Standard vintage Pokémon layout",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      }
+    ],
+    "pokemon_printing": {
+      "is_pokemon": true,
+      "language": "en",
+      "set_name": "Pokémon Base Set",
+      "card_type": "pokemon",
+      "first_edition_stamp": "present",
+      "stamp_image": 1,
+      "stamp_location": "First Edition stamp visible",
+      "stamp_text": "",
+      "artwork_shadow": "unclear",
+      "shadow_image": 0,
+      "shadow_location": "",
+      "copyright_text": "© 1995,96,98,99 Nintendo, Creatures, GAMEFREAK © 1999 Wizards",
+      "copyright_image": 1
+    }
+  },
+  "references": [
+    {
+      "id": "lens-2",
+      "position": 2,
+      "title": "Pokemon English 1st Edition Machamp Base set 8/102 | eBay",
+      "url": "https://www.ebay.com/itm/115095862775",
+      "image_url": "https://i.ebayimg.com/00/s/MTYwMFgxMjAw/z/YekAAOSwX2dhkcdR/$_57.JPG?set_id=8800005007",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfk0NlQsW6mQ4tJRr7ETcFyl1d0AtRqK1TATfob-GGyiYxo88U",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "STAGE 2\nEvolves from Machoke\nweakness\nMachamp\nH Superpower Pokémon. Length: 5\"3\", Weight: 287 Ibs\nPokémon Power: Strikes BackWhenever your\nopponent's attack damages Machamp (even if Machamp\nis Knocked Out), this power does 10 damage to the\nattacking Pokémon.(Don't apply Weakness and Resistance.)\nThis power can't be used if Machamp is already Asleep,\nConfused, or Paralyzed when your opponent attacks.\nllus. Ken Sugimori\nSeismic Toss\nPut Machamp on the Stage I card\nresistance\n100 HP\n60\nretreat cost\nUsing its amazing muscles, it throws powerful punches that\ncan knock its victim clear over the horizon. LV. 67 #68\n1995,96,98,99 Nintendo, Creatures, GAMEFREAK. @ I999Wizards. 8/102 *",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-6",
+      "position": 6,
+      "title": "Machamp - 8/102 - Holo - Base Set - 1st Edition | Köp online ...",
+      "url": "https://www.swepoke.se/pokemon/singles-and-graded-cards/sold-cards/pokemon-machamp-8-holo-base-set-1st-edition-2",
+      "image_url": "https://cdn.quickbutik.com/images/41228G/products/66fb9c3ca2e2c.jpeg?format=webp",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRjF2GuZj1gjwmcjQqWEtq1WioH3IvJlA21FyEOTd-WRcKtqMyA",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "STAGE 2\nEvolves from Machoke\nMachamp\nweakness\nPut Machamp on the Stage I card\nn Superpower Pokémon. Length: 5' 3\", Weight: 287 lbs.\nPokémon Power: Strikes BackWhenever your\nopponent's attack damages Machamp (even if Machamp\nis Knocked Out), this power does l0 damage to the\nattacking Pokémon. (Don't apply Weakness and Resistance)\nThis power can't be used if Machamp is already Asleep.\nConfused, or Paralyzed when your opponent attacks.\nSeismic Toss\n100 HP\nresistance\n60\nretreat cost\nUsing its amazing muscles, it throws powerful punches that\ncan knock its victim clear over the horizon. LV. 67 #68\nIllus. Ken Sugimori O1995,96,98,99 Nintendo, Creatures, GAMEFREAK O 1999Wizards. 8/102 *",
+        "origin": "candidate_image_ocr"
+      },
+      "page_text": "Machamp - 8/102 - Holo - Base Set - 1st Edition | Köp online - Swepoke AB | Allt inom Pokémon TCG och samlarkort |\n\nPokémon TCG\n\nMachamp - 8/102 - Holo - Base Set - 1st Edition\n\n \n\n \n\n \n\nRelaterade produkter\n\nStarmie V - TG13/TG30 - Sword & Shield: Astral Radiance (ASR)\n\n1 100 kr\n\nHisuian Samurott V Crown Zenith GG55 Psa 10\n\n1 125 kr\n\nInfernape Full art TWM 173 PSA MINT 9\n\n375 kr\n\nGengar Dark Phantasma 074 Full art PSA 10 GEM MINT\n\n1 375 kr",
+      "page_url": "https://www.swepoke.se/pokemon/singles-and-graded-cards/sold-cards/pokemon-machamp-8-holo-base-set-1st-edition-2"
+    },
+    {
+      "id": "lens-10",
+      "position": 10,
+      "title": "Machamp 8/102 - Base Set (1st Edition Holo) | DBA",
+      "url": "https://www.dba.dk/recommerce/forsale/item/24747084",
+      "image_url": "https://images.dbastatic.dk/dynamic/1600w/item/24747084/23311a87-94c5-459f-93fa-b587b3023dfd",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQcpVke0ZiVwb5xAhDqeRjAK_gRfrlJ_N-FAc_M2EnLiHdd4qJ8",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "ess\namazing muscl\nSeismic Toss\nSTAGE 2\nSuperpower Pokémon. Length: 5' 3\", Weight: 287 Ibs.\nresistance\nEvolves from Machoke\nMachamp\nPut Machamp\n100",
+        "origin": "candidate_image_ocr"
+      },
+      "page_text": "Machamp 8/102 - Base Set (1st Edition Holo) | DBA\nname: Machamp 8/102 - Base Set (1st Edition Holo)\ndescription: Machamp 8/102 - Base Set (1st Edition Holo) Sælger dette ægte stykke Pokémon-historie! Der er tale om det klassiske Machamp-kort fra det allerførste Base Set fr\nsku: 24747084\n\nMarkedspladsenUnderholdning og hobbySamlerobjekterSamlekort\n\nBilledgalleri\n(1/8)\n\nFøj til favoritter.\n\nMachamp 8/102 - Base Set (1st Edition Holo)\nTil salg\nFiks færdig\n300 kr.\nFragt fra 29,99 kr. + Tryg betaling 19 kr.\n\nKøb nuGiv et bud\n\nTryg handel med Fiks færdig\nEfter leveringen har du 24 timer til at kontrollere produktet. Hvis der er noget galt med produktet, får du dine penge tilbage\nLæs mere\n\nOpret en pakke\nKøb mere fra sælgeren og betal kun én fragtomkostning.\n\nVarebeskrivelse\nStand: Brugt - men i god stand\n\nMachamp 8/102 - Base Set (1st Edition Holo)\nSælger dette ægte stykke Pokémon-historie! Der er tale om det klassiske Machamp-kort fra det allerførste Base Set fra 1999. Kortet er kendt for stort set altid at have det ikoniske \"1st Edition\"-stempel, da det i sin tid blev udgivet som en del af det originale \"2-Player Starter Set\". Det er naturligvis den flotte holografiske (glimmer) udgave illustreret af Ken Sugimori. Et utroligt nostalgisk kort til vintage-samlingen!\nKortets specifikationer:\nPokémon: Machamp\nKortnummer: 8/102\nSerie: Base Set\nÅrstal: 1999\nIllustrator: Ken Sugimori\nGlimmer/Foil: Holo\nSjældenhed: Holo Rare (1st Edition)\nHashtags:\n#Pokemon #Pokemonkort #Machamp #BaseSet #1stEdition #FirstEdition #VintagePokemon #WotC #WizardsOfTheCoast #HoloRare #1999 #RetroSamling\n\n Vis fuld beskrivelseBemærk: Knappen til at vise den fulde beskrivelse har kun en visuel effekt.\n\n2400 København NV\nBrugerprofil\nDu skal være logget ind for at se brugerprofiler og sende beskeder.\nLog ind\n\nAnnoncens metadata\nDel annonce\n\nSidst redigeret: 9.9.2026 kl. 08:21 ・ Annonce-ID: 24747084\n\nAnmeld annonce",
+      "page_url": "https://www.dba.dk/recommerce/forsale/item/24747084"
+    },
+    {
+      "id": "lens-13",
+      "position": 13,
+      "title": "Carta Pokemon MACHAMP 8/102 prima edizione ITA NB - manuelkant",
+      "url": "https://www.manuelkant.it/prodotto/pokemon-machamp-8-102-prima-edizione-ita-nb/",
+      "image_url": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcS1FXm1T1HXXmPn0YX7zQfcI2pGeeXmKrCmknUzr0JgicEvIr6X",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcS1FXm1T1HXXmPn0YX7zQfcI2pGeeXmKrCmknUzr0JgicEvIr6X",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "Machamp\nhla\n100 PV\nPetee Pen Ceaae o\nTioenge\nin Co\nMovimento sismico 60\n60",
+        "origin": "candidate_image_ocr"
+      },
+      "page_text": "Carta Pokemon MACHAMP 8/102 prima edizione ITA NB - manuelkant\nname: Carta Pokemon MACHAMP 8/102 prima edizione ITA NB\ndescription: Carta pokemon Machamp 8/102 prima edizione ita set base. Rara holografica in ottime condizioni. Da collezione. La carta in vendita è esattamente quella in foto ma sono sempre disponibile per ulteriori informazioni o foto aggiuntive qualora ce ne fosse bisogno quindi non esitate a chiedere. La carta verrà spedita all'interno della sua bustina protettiva.\nsku: 51912\n\nAggiungi alla lista dei desideri\n\nCarta Pokemon MACHAMP 8/102 prima edizione ITA NB\n\n7,99€\n\nEsaurito\n\nAggiungi alla lista dei desideri\n\nCOD: 51912\nCategoria: POKEMON\n\nDescrizione\n\nInformazioni aggiuntive\n\nRecensioni (0)\n\nCarta pokemon Machamp 8/102 prima edizione ita set base. Rara holografica in ottime condizioni. Da collezione.\n\nLa carta in vendita è esattamente quella in foto ma sono sempre disponibile per ulteriori informazioni o foto aggiuntive qualora ce ne fosse bisogno quindi non esitate a chiedere.\n\nLa carta verrà spedita all’interno della sua bustina protettiva.\n\nPeso\n0,01 kg\n\nRecensioni\n\nAncora non ci sono recensioni.\n\nRecensisci per primo “Carta Pokemon MACHAMP 8/102 prima edizione ITA NB” Annulla risposta\nLa tua valutazione *\nValuta…\nPerfetto\nBuono\nSufficiente\nNon male\nScarso\n\nLa tua recensione *\nNome *\n\nEmail *\n\nProdotti correlati\n\nAggiungi alla lista dei desideri\n\n+\n\nPOKEMON\n\nCarta Pokemon CHARJABUG LUCENTE (IT) | 051-159 Zenit Regale\n\n2,49€\n\nAggiungi alla lista dei desideri\n\n+\n\nPOKEMON\n\nCarta Pokemon SNORLAX DI HOP Holo (IT) | Avventure Insieme 117/159\n\n1,99€\n\nAggiungi alla lista dei desideri\n\n+\n\nPOKEMON\n\nCarta Pokemon ALCREMIE TRAINER GALLERY (IT) | TG08-TG30 Astri Lucenti\n\n2,99€\n\nAggiungi alla lista dei desideri\n\n+\n\nPOKEMON\n\nCarta Pokemon MAMOSWINE EX (IT) | Avventure Insieme 079/159\n\n3,99€\n\nAggiungi alla lista dei desideri\n\n+\n\nPOKEMON\n\nCarta Pokemon QWILFISH Comune Reverse Foil (IT) | Colpo Fusione 060/264\n\n1,00€\n\nAggiungi alla lista dei desideri\n\n+\n\nPOKEMON\n\nCarta Pokemon SKELEDIRGE Reverse Holo (IT) | Scintille Folgoranti 031/191\n\n1,99€\n\nAggiungi alla lista dei desideri\n\n+\n\nPOKEMON\n\nCarta Pokemon JYNX NON COMUNE (IT) | 31-102 Set Base FV\n\n5,99€\n\nAggiungi alla lista dei desideri\n\n+\n\nPOKEMON\n\nCarta Pokemon GLACEON Holo (IT) | Evoluzioni Prismatiche 025/131\n\n1,49€",
+      "page_url": "https://www.manuelkant.it/prodotto/pokemon-machamp-8-102-prima-edizione-ita-nb/"
+    },
+    {
+      "id": "lens-43",
+      "position": 44,
+      "title": "Machamp - 8/102 - Holo - 1st Edition Shadowless - Rare Holo ...",
+      "url": "https://pokecardvalues.co.uk/cards/machamp-8-102-holo-1st-edition-shadowless-base-set-1/base1-8-1-4/",
+      "image_url": "https://doujkbm8mih0s.cloudfront.net/static/images/alt/large/base1/8-Machamp-Holo-1st-Edition-Shadowless.jpg",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQKsqUj3ByWJE9wKOSUgFeSApKVtZbMjxn2ZM0NX0xdHd-1bFen",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "STAGE 2 Evoves from Mechoke\nweakness\nMachamp\nSuperpower Pokémon. Length: $\" 3\", Weight: 287 Jbe\nPokémon Power: Strikes Back Whenever your\nopponent's attack damages Machamp (even if Machamp\nis Knocked Out), this power does 10 damage to the\nattacking Pokémon. (Don't apply Weakness and Resistance)\nThis power can't be used if Machamp is already Asleep.\nConfused, or Paralyzed when your opponent attacks.\nBus Ken Sgnar\nPut Machanp on the Stae card\nSeismic Toss\nresistance\n100 HP\n60\nretreat coSt\nUsing its amozing muscles, it throws powerful punchés that\ncan knock its victim clear over the horizon. LV. 67 #68\n1, Nond Crahres GAeRSAK Gwar SI02\n60",
+        "origin": "candidate_image_ocr"
+      },
+      "page_text": "Machamp - 8/102 - Holo - 1st Edition Shadowless - Rare Holo - Base Pokémon Card Value & Price History | Track & Add to Collection\nname: Machamp - 8/102 - Holo - 1st Edition Shadowless - Rare Holo - Base Pokémon Card\ndescription: View Machamp's current market value, price history and graded/ungraded prices. Log in to track this card in your free personal Pokémon collection.\n\nNEED IT\n\nGOT IT\n\nMachamp - 8/102\n\nHolo\n\nRare Holo - 1st Edition Shadowless\n\nHistory\n\nAverage\n\nUpdated\n\nSept. 10, 2026\n\nSold (NM/M)\n\nBuy Now\n\nFor Sale\nSold\n\n£27.95\n\nBrowse on eBay\n\nFor Sale\n\n£65.04\n\nLow-Mid-High:\n\n£46.49 /\n£148 /\n£589\n\nN/A\n\nNo data yet\n\n*eBay Sold card data is no longer updated and we now use TCG Player as the basis for our card pricing data. This change ensures more accurate and up-to-date prices directly from a trusted source in the trading card community. For more information, see our announcements.\n\nWe participate in the eBay partner network, which is eBay's own affiliate program, and the TCG Player and Magic Madhouse affiliate schemes. We may get paid commissions on any purchases made through these links. The prices are the same if you go through an affiliate link as if you went direct.\n\n# 6\n\nGyarados\n\nHolo\n\nUnlimited\n\n# 7\n\nHitmonchan\n\nHolo\n\n1st Edition Shadowless\n\n# 7\n\nHitmonchan\n\nHolo\n\n1999-2000 Print\n\n# 7\n\nHitmonchan\n\nHolo\n\nShadowless\n\n# 7\n\nHitmonchan\n\nHolo\n\nUnlimited\n\n# 8\n\nMachamp\n\nHolo\n\n1st Edition Shadowless\n\n# 8\n\nMachamp\n\nHolo\n\n1999-2000 Print\n\n# 8\n\nMachamp\n\nHolo\n\nCosmos Holo\n\n# 8\n\nMachamp\n\nHolo\n\nUnlimited\n\n# 9\n\nMagneton\n\nHolo\n\n1st Edition Shadowless\n\n# 9\n\nMagneton\n\nHolo\n\n1999-2000 Print",
+      "page_url": "https://pokecardvalues.co.uk/cards/machamp-8-102-holo-1st-edition-shadowless-base-set-1/base1-8-1-4/"
+    },
+    {
+      "id": "lens-46",
+      "position": 47,
+      "title": "Pokemon - Base Set - Machamp - 8/102",
+      "url": "https://totalcards.net/products/pokemon-base-set-machamp-8-102",
+      "image_url": "https://totalcards.net/cdn/shop/files/pkm-bs-8_grande.jpg?v=1711469571",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSPIyN1k7ShSkOf4eTQbWFeffWpsAEY9zfgxb8PFJvzBmmU7VHO",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "STAGE 2\nEvolves from Machoke\nweakness\nMachamp\nPut Machamp on the Stage I card\nnSuperpower Pokémon. Length: 5' 3\", Weight: 287 lbs.\nPokémon Power: Strikes BackWhenever your\nopponent's attack damages Machamp (even if Machamp\nis Knocked Out). this power does 10 damage to the\nattacking Pokémon. (Don' ap ply Weakness and Resistance.)\nThis power cant be used it Machamp is already Asleep,\nConfused, or Paralyzed when your opponent attacks.\nSeismic Toss\n100 HP\nresistance\n60\nretreat cost\nUsing its amazing muscles, it throws powerful punches that\ncan knock its victim clear over the horizon. LÝ. 67 #68\nllus. Ken Sugimori I995,96, 96, 99 Nntansda, Creatures GAMEFREAK1999Wird 8/102",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-51",
+      "position": 52,
+      "title": "Machamp - 8/102 (Base Set Shadowless) (Deck Exclusives ...",
+      "url": "https://tcgindex.io/pokemon/card/pokemon-deck-exclusives-machamp-8-102-base-set-shadowless-holo-rare",
+      "image_url": "https://tcgplayer-cdn.tcgplayer.com/product/107004_in_400x400.jpg",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRaXUM3vefFT63t14KXNtZplkDQcw70WgXKVnGSekoN9Xo4bOde",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "STAGE 2\nEvores from Mechoke\nMachamp\nweakness\nSuperpower Pokémon, Length:5 3\", Weighe 287 lbr\nPokémon Power: Strikes Back Whenever your\nNh Machamp\nopponene's sttack damages Machamp (even if i\nis Knocked Out). chis power does 10 damage to the\nattacking Pokémon. (Don't oppy Weakness ond Resistance)\nThis power can't be used if Machamp is already Asleep.\nConfused, or Paralyzed when your opponent attacks.\nPut Machamp on the Sape I card\n100 HP\nSeismic Toss\nresistance\n60\nretreat cost\nUsing its amazing muscles, it throws powerful punches that\ncan knock its victim clear over the honzon. L. 87 68\nKen Sogioel\nO1%nka Cr GAREAK C IiB02\np (even if Machamp\nretreat cost",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-56",
+      "position": 57,
+      "title": "Machamp #8 - 1st Edition Shadowless Holo, Base Set | TCGBerg",
+      "url": "https://www.tcgberg.com/cards/machamp-8-base-set-1st-edition-shadowless-holo?grade=psa-9",
+      "image_url": "https://images.tcgberg.com/images/pokemon/base-set/spec/34/front_w768.webp",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTCvX4hlRobzU6Kz0bZdTHdv7phW1OTMGXgqdmvedb6xH-nS4ws",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "STAGE 2\nEvolves from Machoke\nweakness\nMachamp\nPut Machamp on the Stage I card\nT Superpower Pokémon. Length: 5' 3\", Weight: 287 lbs.\nPokémon Power: Strikes Back Whenever your\nopponent's attack damages Machamp (even if Machamp is\nKnocked Out), this power does 10 damage to the attacking\nPokémon. (Don't apply Weakness and Resistance.) This\npower can't be used if Machamp is already Asleep,\nConfused, or Paralyzed when your opponent attacks.\nSeismic Toss\n100 HP\nresistance\n60\nretreat cost\nUsing its amazing muscles, it throws powerful punches that\ncan knock its victim clear over the horizon. LV. 67 #68\nIMus, Ken Sugimort\nO1995,96, 98 Nintendo, Creatures, GAMEFREAK. GI999 Wizards.8102",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-1",
+      "position": 1,
+      "title": "Rare Machamp 1st Edition Holographic Pokemon Card | eBay",
+      "url": "https://www.ebay.com/itm/383764072224",
+      "image_url": "https://i.ebayimg.com/images/g/svUAAOSwag1fhjGf/s-l1200.jpg",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSZCK7S0S5zSOZH7c2PrCnZB8zArgw94bbEzcjynPi3R1oWzTS8",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "STAGE 2\nEvolves from Machoke\nMachamp\nweakness\nn Superpower Pokémon. Length: 5\" 3\", Weight: 287 lbs.\nPokémon Power: Strikes Back Whenever your\nopponent's attack damages Machamp (even if Machamp\nis Knocked Out), this power does 10 damage to the\nattacking Pokémon. (Don't apply Weakness and Resistance.)\nThis power can't be used if Machamp is already Asleep,\nConfused, or Paralyzed when your opponent attacks.\nSeismic Toss\nPut Machamp on the Stage I card\nresistance\n100 HP\n60\nretreat cost\nUsing its amazing muscles, it throws powerful punches that\ncan knock its victim clear over the horizon. LV. 67 #68\nllus. Ken Sugimori995,96,98,99 Nintenda, Creatures; GAMEFREAK O 1999Wizards 8/102",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-4",
+      "position": 4,
+      "title": "Machamp Base Set | Pokémon | CardTrader",
+      "url": "https://www.cardtrader.com/it/cards/111155-machamp-holo-rare-8-102-base-set",
+      "image_url": "https://www.cardtrader.com/uploads/blueprints/image/111155/show_machamp-holo-rare-8-102-base-set.webp",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQ4GPDjuH_OKN7wCsumFaTkjJy4BZCx8ATJ0dvJFZ8PkBUqWoq9",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "STAGE 2\nEvolves from Machoke\nMachamp\nweakness\nPut Machamp on the Stagel card\nSuperpower Pokémon. Length: 5' 3\", Weight: 287 lbs.\nPokémon Power: Strikes Back Whenever your\nopponents attack damages Machamp (even if Mochamp is\nKnocked Out), this power does l0 damage to the attacking\nPokémon. (Dont apPPY Weakness and\namp is\ns alread\n) This\nConfused, or Paralyzed when your opDonent attack\n100 HP\nSeismic Toss\nresistance\n60\nretreat cost\nUsing its amazing muscles, it throws powerful punches that\ncan knock its victim clear over the horizon, LV. 67\n#68\nus. Ken Sugimorl Oi995, 9%, 98 Nintendo, Creatures, GAMEFREAK OI99) VWiards8/102\nattacks.\nready Asleep.\npower can't be\nused",
+        "origin": "candidate_image_ocr"
+      }
+    }
+  ],
+  "batches": [
+    {
+      "ids": [
+        "lens-2",
+        "lens-6",
+        "lens-10"
+      ],
+      "reply": {
+        "original_readings": [
+          {
+            "field": "subject",
+            "image_index": 1,
+            "crop_id": "original-1-upper",
+            "full_text": "Machamp",
+            "crop_text": "Machamp",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Machamp",
+              "en": "Machamp"
+            }
+          },
+          {
+            "field": "product",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "8/102",
+            "crop_text": "8/102",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Base Set",
+              "en": "Base Set"
+            }
+          },
+          {
+            "field": "collector_number",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "8/102",
+            "crop_text": "8/102",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "8/102",
+              "en": "8/102"
+            }
+          },
+          {
+            "field": "copyright",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "© 1995,96,98,99 Nintendo, Creatures, GAMEFREAK © 1999 Wizards",
+            "crop_text": "© 1995,96,98,99 Nintendo, Creatures, GAMEFREAK © 1999 Wizards",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "© 1995,96,98,99 Nintendo, Creatures, GAMEFREAK © 1999 Wizards",
+              "en": "© 1995,96,98,99 Nintendo, Creatures, GAMEFREAK © 1999 Wizards"
+            }
+          }
+        ],
+        "comparisons": [
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.01,
+                "y": 0.02
+              },
+              {
+                "x": 0.97,
+                "y": 0.04
+              },
+              {
+                "x": 0.99,
+                "y": 0.98
+              },
+              {
+                "x": 0.02,
+                "y": 0.99
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.13,
+                "y": 0.09
+              },
+              {
+                "x": 0.94,
+                "y": 0.11
+              },
+              {
+                "x": 0.99,
+                "y": 0.96
+              },
+              {
+                "x": 0.12,
+                "y": 0.99
+              }
+            ],
+            "reference_id": "lens-2",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "Machamp",
+              "number": "8/102",
+              "year": "1995, 1996, 1998, 1999; 1999 Wizards",
+              "language": "English"
+            },
+            "reference_reading": {
+              "subject": "Machamp",
+              "number": "8/102",
+              "year": "1995, 1996, 1998, 1999; 1999 Wizards",
+              "language": "English"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Machamp artwork with raised arms",
+                "reference": "Same Machamp artwork and pose",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "1st Edition stamp, Holo Base Set layout",
+                "reference": "1st Edition stamp, Holo Base Set layout",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "identifier",
+                "original": "8/102",
+                "reference": "8/102",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Machamp",
+              "family": "Base Set",
+              "number": "8/102",
+              "year": "",
+              "brand": "Pokémon",
+              "subset": "1st Edition Holo",
+              "proof": {
+                "subject": "Pokemon English 1st Edition Machamp Base set 8/102",
+                "family": "Pokemon English 1st Edition Machamp Base set 8/102",
+                "year": "",
+                "subset": "Pokemon English 1st Edition Machamp Base set 8/102"
+              },
+              "display_names": {
+                "it": "Machamp",
+                "en": "Machamp"
+              }
+            }
+          },
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.01,
+                "y": 0.02
+              },
+              {
+                "x": 0.97,
+                "y": 0.04
+              },
+              {
+                "x": 0.99,
+                "y": 0.98
+              },
+              {
+                "x": 0.02,
+                "y": 0.99
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.17,
+                "y": 0.05
+              },
+              {
+                "x": 0.83,
+                "y": 0.06
+              },
+              {
+                "x": 0.83,
+                "y": 0.96
+              },
+              {
+                "x": 0.17,
+                "y": 0.96
+              }
+            ],
+            "reference_id": "lens-6",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "Machamp",
+              "number": "8/102",
+              "year": "1995, 1996, 1998, 1999; 1999 Wizards",
+              "language": "English"
+            },
+            "reference_reading": {
+              "subject": "Machamp",
+              "number": "8/102",
+              "year": "1995, 1996, 1998, 1999; 1999 Wizards",
+              "language": "English"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Machamp artwork with raised arms",
+                "reference": "Same Machamp artwork and pose",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Base Set front layout",
+                "reference": "Base Set front layout",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "identifier",
+                "original": "8/102",
+                "reference": "8/102",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Machamp",
+              "family": "Base Set",
+              "number": "8/102",
+              "year": "",
+              "brand": "Pokémon",
+              "subset": "1st Edition Holo",
+              "proof": {
+                "subject": "Machamp - 8/102 - Holo - Base Set - 1st Edition",
+                "family": "Machamp - 8/102 - Holo - Base Set - 1st Edition",
+                "year": "",
+                "subset": "Machamp - 8/102 - Holo - Base Set - 1st Edition"
+              },
+              "display_names": {
+                "it": "Machamp",
+                "en": "Machamp"
+              }
+            }
+          },
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.01,
+                "y": 0.02
+              },
+              {
+                "x": 0.97,
+                "y": 0.04
+              },
+              {
+                "x": 0.99,
+                "y": 0.98
+              },
+              {
+                "x": 0.02,
+                "y": 0.99
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.17,
+                "y": 0.045
+              },
+              {
+                "x": 0.83,
+                "y": 0.045
+              },
+              {
+                "x": 0.83,
+                "y": 0.955
+              },
+              {
+                "x": 0.17,
+                "y": 0.955
+              }
+            ],
+            "reference_id": "lens-10",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "Machamp",
+              "number": "8/102",
+              "year": "1995, 1996, 1998, 1999; 1999 Wizards",
+              "language": "English"
+            },
+            "reference_reading": {
+              "subject": "Machamp",
+              "number": "8/102",
+              "year": "1995, 1996, 1998, 1999; 1999 Wizards",
+              "language": "English"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Machamp artwork with raised arms",
+                "reference": "Same Machamp artwork and pose",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "1st Edition stamp and Holo finish",
+                "reference": "1st Edition Holo configuration",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "identifier",
+                "original": "8/102",
+                "reference": "8/102",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Machamp",
+              "family": "Base Set",
+              "number": "8/102",
+              "year": "1999",
+              "brand": "Pokémon",
+              "subset": "1st Edition Holo",
+              "proof": {
+                "subject": "Machamp 8/102 - Base Set (1st Edition Holo)",
+                "family": "Machamp 8/102 - Base Set (1st Edition Holo)",
+                "year": "Base Set from 1999",
+                "subset": "Machamp 8/102 - Base Set (1st Edition Holo)"
+              },
+              "display_names": {
+                "it": "Machamp",
+                "en": "Machamp"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "ids": [
+        "lens-13",
+        "lens-43",
+        "lens-46"
+      ],
+      "reply": {
+        "original_readings": [
+          {
+            "field": "subject",
+            "image_index": 1,
+            "crop_id": "original-1-upper",
+            "full_text": "Machamp",
+            "crop_text": "Machamp",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Machamp",
+              "en": "Machamp"
+            }
+          },
+          {
+            "field": "collector_number",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "8/102",
+            "crop_text": "8/102",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "8/102",
+              "en": "8/102"
+            }
+          },
+          {
+            "field": "copyright",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "© 1995,96,98,99 Nintendo, Creatures, GAMEFREAK © 1999 Wizards",
+            "crop_text": "© 1995,96,98,99 Nintendo, Creatures, GAMEFREAK © 1999 Wizards",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "© 1995,96,98,99 Nintendo, Creatures, GAMEFREAK © 1999 Wizards",
+              "en": "© 1995,96,98,99 Nintendo, Creatures, GAMEFREAK © 1999 Wizards"
+            }
+          }
+        ],
+        "comparisons": [
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.01,
+                "y": 0
+              },
+              {
+                "x": 0.99,
+                "y": 0
+              },
+              {
+                "x": 0.99,
+                "y": 1
+              },
+              {
+                "x": 0.01,
+                "y": 1
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.13,
+                "y": 0.16
+              },
+              {
+                "x": 0.86,
+                "y": 0.16
+              },
+              {
+                "x": 0.86,
+                "y": 0.84
+              },
+              {
+                "x": 0.13,
+                "y": 0.84
+              }
+            ],
+            "reference_id": "lens-13",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": false,
+            "conflicts": [
+              "Candidate title states Italian; original visibly English.",
+              "Candidate image does not clearly prove identical printing."
+            ],
+            "original_reading": {
+              "subject": "Machamp",
+              "number": "8/102",
+              "year": "1999",
+              "language": "English"
+            },
+            "reference_reading": {
+              "subject": "Machamp",
+              "number": "8/102",
+              "year": "",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Machamp frontal, arms raised",
+                "reference": "Machamp frontal, arms raised",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "text",
+                "original": "English card text",
+                "reference": "Text not legible",
+                "agrees": false,
+                "certainty": "uncertain"
+              }
+            ],
+            "identity": {
+              "subject": "Machamp",
+              "family": "Base Set",
+              "number": "8/102",
+              "year": "",
+              "brand": "Pokémon",
+              "subset": "",
+              "proof": {
+                "subject": "Carta Pokemon MACHAMP 8/102 prima edizione ITA NB",
+                "family": "Carta pokemon Machamp 8/102 prima edizione ita set base.",
+                "year": "",
+                "subset": "Carta pokemon Machamp 8/102 prima edizione ita set base."
+              },
+              "display_names": {
+                "it": "Machamp",
+                "en": "Machamp"
+              }
+            }
+          },
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.01,
+                "y": 0
+              },
+              {
+                "x": 0.99,
+                "y": 0
+              },
+              {
+                "x": 0.99,
+                "y": 1
+              },
+              {
+                "x": 0.01,
+                "y": 1
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.09,
+                "y": 0.03
+              },
+              {
+                "x": 0.91,
+                "y": 0.03
+              },
+              {
+                "x": 0.91,
+                "y": 0.97
+              },
+              {
+                "x": 0.09,
+                "y": 0.97
+              }
+            ],
+            "reference_id": "lens-43",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "Machamp",
+              "number": "8/102",
+              "year": "1999",
+              "language": "English"
+            },
+            "reference_reading": {
+              "subject": "Machamp",
+              "number": "8/102",
+              "year": "1999",
+              "language": "English"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Machamp frontal, arms raised",
+                "reference": "Machamp frontal, arms raised",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "Holo, first-edition stamp, shadowless layout",
+                "reference": "Holo, first-edition shadowless listing",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Machamp",
+              "family": "Base Pokémon Card",
+              "number": "8/102",
+              "year": "",
+              "brand": "Pokémon",
+              "subset": "1st Edition Shadowless",
+              "proof": {
+                "subject": "Machamp",
+                "family": "Machamp - 8/102 - Holo - 1st Edition Shadowless - Rare Holo - Base Pokémon Card",
+                "year": "",
+                "subset": "1st Edition Shadowless"
+              },
+              "display_names": {
+                "it": "Machamp",
+                "en": "Machamp"
+              }
+            }
+          },
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.01,
+                "y": 0
+              },
+              {
+                "x": 0.99,
+                "y": 0
+              },
+              {
+                "x": 0.99,
+                "y": 1
+              },
+              {
+                "x": 0.01,
+                "y": 1
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.16,
+                "y": 0.03
+              },
+              {
+                "x": 0.84,
+                "y": 0.03
+              },
+              {
+                "x": 0.84,
+                "y": 0.97
+              },
+              {
+                "x": 0.16,
+                "y": 0.97
+              }
+            ],
+            "reference_id": "lens-46",
+            "match": true,
+            "ambiguous": true,
+            "title_matches_image": true,
+            "conflicts": [
+              "Title omits the first-edition variant."
+            ],
+            "original_reading": {
+              "subject": "Machamp",
+              "number": "8/102",
+              "year": "1999",
+              "language": "English"
+            },
+            "reference_reading": {
+              "subject": "Machamp",
+              "number": "8/102",
+              "year": "1999",
+              "language": "English"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Machamp frontal, arms raised",
+                "reference": "Machamp frontal, arms raised",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Shadowless first-edition Base layout",
+                "reference": "Base layout; variant not stated",
+                "agrees": true,
+                "certainty": "uncertain"
+              }
+            ],
+            "identity": {
+              "subject": "Machamp",
+              "family": "Base Set",
+              "number": "8/102",
+              "year": "",
+              "brand": "Pokémon",
+              "subset": "",
+              "proof": {
+                "subject": "Machamp",
+                "family": "Pokemon - Base Set - Machamp - 8/102",
+                "year": "",
+                "subset": ""
+              },
+              "display_names": {
+                "it": "Machamp",
+                "en": "Machamp"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "crops": [
+    {
+      "id": "original-1-upper",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 0.31583629893238435
+      }
+    },
+    {
+      "id": "original-1-lower",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0,
+        "y": 0.6645907473309609,
+        "width": 1,
+        "height": 0.33540925266903915
+      }
+    }
+  ],
+  "details": []
+}

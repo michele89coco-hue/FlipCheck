@@ -460,3 +460,12 @@ for(const name of ['topps','zagor','panel','yamal','doncic','dragonite-blur','ma
  if(name==='dragonite-blur'){assert.equal(out.identification.physical_card_number,null);assert.ok(E.numbersMatch(out.identification.source_confirmed_catalog_number,'9/165'));}
  if(name==='machamp'){assert.match(out.identification.title,/Shadowless/);assert.equal((out.identification.title.match(/1st Edition/g)||[]).length,1);const req=api.find(b=>b.text.format.name==='flipcheck_evidence_detail');assert.ok(req.text.format.schema.properties.details.items.properties.right_border);assert.match(JSON.stringify(req.input),/ESTERNA/);}
 });
+
+// NEW 221 exports, replayed unchanged except for mapping reference ids to the shortlist.
+for(const name of ['topps','zagor','machamp'])test('222 '+name+' new recorded replies preserve closure and avoid redundant web calls',async()=>{
+ const f=structuredClone(require('./fixtures/lens-222-'+name+'.json')),refs=f.references.filter(r=>f.batches.some(b=>b.ids.includes(r.id)));
+ await reset('politoed',{lens:true,packet:f.vision,photoCount:1,noOcr:true,lensCandidates:refs,details:[],lensResponse(body){return {original_readings:f.batches.flatMap(b=>b.reply.original_readings||[]),comparisons:comparedRefs209(body).map(row=>{const ref=refs.find(r=>r.url===row.url),c=f.batches.flatMap(b=>b.reply.comparisons).find(c=>c.reference_id===ref?.id);return {...structuredClone(c),reference_id:row.reference_id};})};},mutate(d){d.photoOcr=[];d.pages=refs.filter(r=>r.page_text).map(r=>({url:r.page_url||r.url,title:r.title,text:r.page_text}));}});
+ const out=await scan(),r=out.identification;assert.equal(stages().filter(s=>s==='flipcheck_catalogue_search').length,0);
+ if(name==='machamp'){assert.equal(r.market_ready,false);assert.equal(r.family,'Base Set');assert.ok(r.variant_resolution.pending.includes('shadow'));assert.doesNotMatch(r.title,/Shadowless/);assert.equal(stages().filter(s=>s==='flipcheck_evidence_detail').length,1);assert.equal(stages().filter(s=>s==='flipcheck_lens_image_comparison').length,1);}
+ else {assert.equal(r.market_ready,true,JSON.stringify(out.identificationPipeline.visualComparison?.rejected));assert.equal(stages().filter(s=>s==='flipcheck_evidence_detail').length,0);assert.equal(r.next_photo_request,null);if(name==='topps')assert.match(r.title,/Hobby Box/);else{assert.match(r.title,/Zagor.*CEPIM/i);assert.doesNotMatch(r.title,/1977/);}}
+});

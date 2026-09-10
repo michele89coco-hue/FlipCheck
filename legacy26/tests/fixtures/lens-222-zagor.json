@@ -1,0 +1,1097 @@
+{
+  "provenance": {
+    "kind": "recorded_build_221",
+    "source_commit": "4b1d804f7ca806c01b078e216e43e57e354cfa40",
+    "source_sha256": "168cfa2f1dbe95207833f0a8147e98f3379625ccd60453a3714a0adb12244886",
+    "scope": "Model object-identification responses and public reference metadata only; no account, usage, image bytes, device/session or diagnostic envelope."
+  },
+  "vision": {
+    "domain": "generic",
+    "kind": "object",
+    "category": "fumetto",
+    "language": "it",
+    "object_unit": "single",
+    "image_views": [
+      {
+        "image_index": 1,
+        "view": "front",
+        "certainty": "clear"
+      }
+    ],
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.07,
+        "y": 0.32,
+        "width": 0.84,
+        "height": 0.45,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "Zagor",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.2,
+          "y": 0.34,
+          "width": 0.58,
+          "height": 0.1
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "brand",
+        "text": "Zagor",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.2,
+          "y": 0.34,
+          "width": 0.58,
+          "height": 0.1
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "copyright",
+        "text": "edizioni CEPIM",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.4,
+          "y": 0.73,
+          "width": 0.22,
+          "height": 0.03
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "language",
+        "text": "Italiano",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.4,
+          "y": 0.73,
+          "width": 0.22,
+          "height": 0.03
+        },
+        "zone": "footer",
+        "alternatives": []
+      }
+    ],
+    "features": [
+      {
+        "field": "border_color",
+        "value": "green",
+        "description": "Rilegatura e bordo laterale verdi",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.07,
+          "y": 0.32,
+          "width": 0.84,
+          "height": 0.45
+        },
+        "zone": "border"
+      },
+      {
+        "field": "layout",
+        "value": "Copertina illustrata con titolo grande in alto e personaggio in azione",
+        "description": "Illustrazione a colori, orientamento verticale",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.07,
+          "y": 0.32,
+          "width": 0.84,
+          "height": 0.45
+        },
+        "zone": "artwork"
+      },
+      {
+        "field": "finish",
+        "value": "normal",
+        "description": "Finitura non riflettente visibile",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.07,
+          "y": 0.32,
+          "width": 0.84,
+          "height": 0.84
+        },
+        "zone": "surface"
+      }
+    ],
+    "hypotheses": [
+      {
+        "field": "family",
+        "value": "fumetto italiano"
+      }
+    ],
+    "slab_reading": null,
+    "engine_version": 193,
+    "brand": "Zagor",
+    "family": "fumetto italiano",
+    "title": "Zagor",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": {
+      "image_index": 1,
+      "x": 0.07,
+      "y": 0.32,
+      "width": 0.84,
+      "height": 0.45,
+      "certain": true
+    },
+    "photo_clues": [
+      {
+        "text": "Zagor",
+        "role": "subject",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.2,
+          "y": 0.34,
+          "width": 0.58,
+          "height": 0.1,
+          "certain": true
+        }
+      },
+      {
+        "text": "Zagor",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.2,
+          "y": 0.34,
+          "width": 0.58,
+          "height": 0.1,
+          "certain": true
+        }
+      },
+      {
+        "text": "edizioni CEPIM",
+        "role": "copyright",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.4,
+          "y": 0.73,
+          "width": 0.22,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "Italiano",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.4,
+          "y": 0.73,
+          "width": 0.22,
+          "height": 0.03,
+          "certain": true
+        }
+      }
+    ],
+    "physical_observations": [
+      {
+        "feature": "color",
+        "text": "green border",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Illustrazione a colori, orientamento verticale",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Finitura non riflettente visibile",
+        "certainty": "uncertain",
+        "entity": "target",
+        "image_index": 1
+      }
+    ]
+  },
+  "references": [
+    {
+      "id": "lens-1",
+      "position": 1,
+      "title": "Zagor lo spirito con la scure Cartonato Cepim 1977 Ottimo+ ...",
+      "url": "https://www.ebay.it/itm/185256611463",
+      "image_url": "https://i.ebayimg.com/images/g/cHIAAOSweqVh4aGS/s-l1200.jpg",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQ_O98PCX-5q1Tp9WTzIUitQaBxjCLS3DwdjGmmDpf4y57yBDIl",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "edizioni CEPIM",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-2",
+      "position": 2,
+      "title": "Zagor Lo Spirito Con La Scure Cartonato Verde 1977 Molto ...",
+      "url": "https://www.ebay.it/itm/234320013036",
+      "image_url": "https://i.ebayimg.com/images/g/4YoAAOSwNGRhrRaJ/s-l1200.jpg",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMtS2_mhFhY8qrM9hQB3nFf0uot9xzMKko5SBjCWPqX80tS_QJ",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "SOR\nedizioni CEPIM",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-3",
+      "position": 3,
+      "title": "Zagor. Guerra! : Nolitta, Guido, Ferri, Gallieno: Amazon.it ...",
+      "url": "https://www.amazon.it/Zagor-Guerra-Guido-Nolitta/dp/8869617378",
+      "image_url": "https://m.media-amazon.com/images/I/81gRIZv71IL._AC_UF1000,1000_QL80_.jpg",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcT3JRLR8ktIiAvEbV8wLIn7GuEw6KQQeVlfTgrroW_gr40z0uBK",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "NOLITTA\nFERRI\nGUERRA!",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-5",
+      "position": 5,
+      "title": "Fumetto Zagor n. 2 cartonato Gazzetta dello sport con ...",
+      "url": "https://www.ebay.it/itm/124057947610",
+      "image_url": "https://i.ebayimg.com/images/g/A-wAAOSwSkpeKVjI/s-l400.jpg",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTfxwLp9QxoYBuzCH7KwEEyEpBF0f4qquopzpv1bzn9QR9Mlxzl",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "LE LEGGELDAE COPE\nAS ZAGOR\nZ6OR\nLO SPIRTO CON LA SCURE\nLe Splie con la Seure raoatato ata\noperiae del maetre Galliae Fer, in\nGIOCO MORTALE\n4fif2et",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-6",
+      "position": 6,
+      "title": "Fumetto Zagor lo spirito con la scure - Collezionismo In ...",
+      "url": "https://www.subito.it/hobby-collezionismo/fumetto-zagor-lo-spirito-con-la-scure-roma-639722246.htm",
+      "image_url": "https://images.sbito.it/api/v1/sbt-ads-images-pro/images/c8/c8ca3e67-90e1-4b99-9218-4777533bcf12?rule=fullscreen-1x-auto",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvBghPWcWKpPmQZptA36JLx4GS_w8w83Tn3FXa9Rc1Jj0L86xZ",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "edizioni CEPIM",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-7",
+      "position": 7,
+      "title": "▷ Zagor: La condanna di Trampy - Acquista Online | Bonelli",
+      "url": "https://www.sergiobonelli.it/en/product/la-condanna-di-trampy/",
+      "image_url": "https://www.sergiobonelli.it/wp-content/uploads/2026/01/17_Zagor-20_cover-776x1024.jpg",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQE7vqN1omPHSt3iNL-rI1jn8yiJeW4k6QvyBEWwGsl9B-VraL",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "1 STORIA COMPLETA\n128 PAGINE!\nLA CONDANNA DI TRAMPY\nFEBBRAIO 2026\nTRIMESTRALE\neSBE- www.sergiotboneli.it",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-8",
+      "position": 8,
+      "title": "ALBUM DI FIGURINE N.4 - ZAGOR : Amazon.it: Libri",
+      "url": "https://www.amazon.it/ALBUM-FIGURINE-N-4-ZAGOR-n-d/dp/B00HFXOJ84",
+      "image_url": "https://m.media-amazon.com/images/I/61VAR4bqCNL._AC_UF1000,1000_QL80_.jpg",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcS3qVu5m4luB0X9wOP2gmtlh20bVkmh3W3S3o5JMcs7n2lvPw01",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "FEA\nFLE FIGURINE DI",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-9",
+      "position": 9,
+      "title": "CARTONATO ZAGOR VERDE LO SPIRITO CON LA SCURE EDIZIONI CEPIM ...",
+      "url": "https://www.ebay.it/itm/375289457034",
+      "image_url": "https://i.ebayimg.com/00/s/MTIwMFgxNjAw/z/B9kAAOSwgq9l5FX5/$_57.JPG?set_id=880000500F",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTf-ulgtqFaN__n2gu_cJRAlCjahwgQyw3pkFMtJtUgpHKa4GGZ",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "OR\nedizioni CEPIM",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-10",
+      "position": 10,
+      "title": "LA GAZZETTA DELLO SPORT - ZAGOR LO SPIRITO CON LA SCURE 42 ...",
+      "url": "https://www.fumetto-online.it/it/la-gazzetta-dello-sport-zagor-lo-spirito-con-la-scure-42-zagor-lo-spirito-con-la-42-c86548000420.php",
+      "image_url": "https://www.fumetto-online.it/images/fumetti/LA%20GAZZETTA%20DELLO%20SPORT/la-gazzetta-dello-sport-zagor-lo-spirito-con-la-scure-42-zagor-lo-spirito-con-la-42-86548000420.jpg",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROu920Biubc6j-n0Lcs_0BpUCLatfd_D9ProcKJhJnfigVclq9",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "LO SPIRITO cON LA SCURE\nZAGOR\nDAL LONTANO ORIENTE",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-11",
+      "position": 11,
+      "title": "Gigant Zagor : Duh sa sjekirom - Antikvariatantiqua.si",
+      "url": "https://www.antikvariatantiqua.si/stripi/gigant-zagor-duh-sa-sjekirom/",
+      "image_url": "https://www.antikvariatantiqua.si/wp-content/uploads/2023/05/9800.jpg",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcThkg3r7XXzpSdncHHvXG-bTi55SqulgFg9odL4Ch6jVJBaB0Ug",
+      "snippet": "",
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "GIGANT\nDuh sasjekisom",
+        "origin": "candidate_image_ocr"
+      }
+    }
+  ],
+  "batches": [
+    {
+      "ids": [
+        "lens-1",
+        "lens-2",
+        "lens-3"
+      ],
+      "reply": {
+        "original_readings": [
+          {
+            "field": "subject",
+            "image_index": 1,
+            "crop_id": "original-1-upper",
+            "full_text": "ZAGOR",
+            "crop_text": "ZAGOR",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Zagor",
+              "en": "Zagor"
+            }
+          },
+          {
+            "field": "brand",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "edizioni CEPIM",
+            "crop_text": "edizioni CEPIM",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "edizioni CEPIM",
+              "en": "edizioni CEPIM"
+            }
+          }
+        ],
+        "comparisons": [
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.083,
+                "y": 0.317
+              },
+              {
+                "x": 0.92,
+                "y": 0.317
+              },
+              {
+                "x": 0.92,
+                "y": 0.761
+              },
+              {
+                "x": 0.083,
+                "y": 0.761
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.04,
+                "y": 0.03
+              },
+              {
+                "x": 0.962,
+                "y": 0.03
+              },
+              {
+                "x": 0.962,
+                "y": 0.97
+              },
+              {
+                "x": 0.04,
+                "y": 0.97
+              }
+            ],
+            "reference_id": "lens-1",
+            "match": true,
+            "ambiguous": true,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "ZAGOR",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "ZAGOR",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Zagor in rosso e blu, ascia sollevata",
+                "reference": "Zagor in rosso e blu, ascia sollevata",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Titolo verde in alto, edizioni CEPIM in basso",
+                "reference": "Titolo verde in alto, edizioni CEPIM in basso",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "Cartonato con dorso verde",
+                "reference": "Cartonato con dorso verde",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Zagor",
+              "family": "Zagor lo spirito con la scure",
+              "number": "",
+              "year": "1977",
+              "brand": "CEPIM",
+              "subset": "Cartonato",
+              "proof": {
+                "subject": "Zagor lo spirito con la scure",
+                "family": "Zagor lo spirito con la scure",
+                "year": "1977",
+                "subset": "Cartonato"
+              },
+              "display_names": {
+                "it": "Zagor",
+                "en": "Zagor"
+              }
+            }
+          },
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.083,
+                "y": 0.317
+              },
+              {
+                "x": 0.92,
+                "y": 0.317
+              },
+              {
+                "x": 0.92,
+                "y": 0.761
+              },
+              {
+                "x": 0.083,
+                "y": 0.761
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.008,
+                "y": 0.015
+              },
+              {
+                "x": 0.983,
+                "y": 0.015
+              },
+              {
+                "x": 0.983,
+                "y": 0.96
+              },
+              {
+                "x": 0.008,
+                "y": 0.96
+              }
+            ],
+            "reference_id": "lens-2",
+            "match": true,
+            "ambiguous": true,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "ZAGOR",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "ZAGOR",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Zagor in rosso e blu, ascia sollevata",
+                "reference": "Zagor in rosso e blu, ascia sollevata",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Titolo verde in alto, edizioni CEPIM in basso",
+                "reference": "Titolo verde in alto, edizioni CEPIM in basso",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "Cartonato con dorso verde",
+                "reference": "Cartonato verde",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Zagor",
+              "family": "Zagor lo spirito con la scure",
+              "number": "",
+              "year": "1977",
+              "brand": "CEPIM",
+              "subset": "Cartonato verde",
+              "proof": {
+                "subject": "Zagor Lo Spirito Con La Scure Cartonato Verde 1977",
+                "family": "Zagor Lo Spirito Con La Scure",
+                "year": "1977",
+                "subset": "Cartonato Verde"
+              },
+              "display_names": {
+                "it": "Zagor",
+                "en": "Zagor"
+              }
+            }
+          },
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.083,
+                "y": 0.317
+              },
+              {
+                "x": 0.92,
+                "y": 0.317
+              },
+              {
+                "x": 0.92,
+                "y": 0.761
+              },
+              {
+                "x": 0.083,
+                "y": 0.761
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.046,
+                "y": 0.038
+              },
+              {
+                "x": 0.995,
+                "y": 0.038
+              },
+              {
+                "x": 0.995,
+                "y": 0.953
+              },
+              {
+                "x": 0.046,
+                "y": 0.953
+              }
+            ],
+            "reference_id": "lens-3",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [
+              "Titolo rosso anziché verde",
+              "Copertina moderna diversa",
+              "Testo aggiuntivo GUERRA!"
+            ],
+            "original_reading": {
+              "subject": "ZAGOR",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "ZAGOR",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Zagor solo, sfondo boschivo",
+                "reference": "Zagor con altri personaggi e cabina",
+                "agrees": false,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Titolo verde senza sottotitolo",
+                "reference": "Titolo rosso con sottotitolo GUERRA!",
+                "agrees": false,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "Edizioni CEPIM",
+                "reference": "Sergio Bonelli Editore",
+                "agrees": false,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Zagor",
+              "family": "Zagor. Guerra!",
+              "number": "",
+              "year": "",
+              "brand": "Sergio Bonelli Editore",
+              "subset": "",
+              "proof": {
+                "subject": "Zagor. Guerra!",
+                "family": "Zagor. Guerra!",
+                "year": "",
+                "subset": ""
+              },
+              "display_names": {
+                "it": "Zagor",
+                "en": "Zagor"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "ids": [
+        "lens-5",
+        "lens-6",
+        "lens-7"
+      ],
+      "reply": {
+        "original_readings": [
+          {
+            "field": "subject",
+            "image_index": 1,
+            "crop_id": "original-1-upper",
+            "full_text": "ZAGOR",
+            "crop_text": "ZAGOR",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Zagor",
+              "en": "Zagor"
+            }
+          },
+          {
+            "field": "brand",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "edizioni CEPIM",
+            "crop_text": "edizioni CEPIM",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "CEPIM",
+              "en": "CEPIM"
+            }
+          }
+        ],
+        "comparisons": [
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.192,
+                "y": 0.32
+              },
+              {
+                "x": 0.815,
+                "y": 0.318
+              },
+              {
+                "x": 0.918,
+                "y": 0.758
+              },
+              {
+                "x": 0.07,
+                "y": 0.752
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.25,
+                "y": 0.256
+              },
+              {
+                "x": 0.773,
+                "y": 0.227
+              },
+              {
+                "x": 0.872,
+                "y": 0.856
+              },
+              {
+                "x": 0.169,
+                "y": 0.886
+              }
+            ],
+            "reference_id": "lens-5",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": false,
+            "conflicts": [
+              "Candidate shows different cover artwork and title."
+            ],
+            "original_reading": {
+              "subject": "Zagor",
+              "number": "",
+              "year": "",
+              "language": "Italian"
+            },
+            "reference_reading": {
+              "subject": "Zagor",
+              "number": "",
+              "year": "",
+              "language": "Italian"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Zagor jumping with raised weapon over forest",
+                "reference": "Different Zagor covers shown; right cover standing figure",
+                "agrees": false,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "Single green hardcover",
+                "reference": "Two differently configured books",
+                "agrees": false,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Zagor",
+              "family": "Zagor fumetto",
+              "number": "",
+              "year": "",
+              "brand": "CEPIM",
+              "subset": "",
+              "proof": {
+                "subject": "Fumetto Zagor lo spirito con la scure",
+                "family": "Fumetto Zagor lo spirito con la scure",
+                "year": "",
+                "subset": ""
+              },
+              "display_names": {
+                "it": "Zagor",
+                "en": "Zagor"
+              }
+            }
+          },
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.192,
+                "y": 0.32
+              },
+              {
+                "x": 0.815,
+                "y": 0.318
+              },
+              {
+                "x": 0.918,
+                "y": 0.758
+              },
+              {
+                "x": 0.07,
+                "y": 0.752
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.25,
+                "y": 0.256
+              },
+              {
+                "x": 0.773,
+                "y": 0.227
+              },
+              {
+                "x": 0.872,
+                "y": 0.856
+              },
+              {
+                "x": 0.169,
+                "y": 0.886
+              }
+            ],
+            "reference_id": "lens-6",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "Zagor",
+              "number": "",
+              "year": "",
+              "language": "Italian"
+            },
+            "reference_reading": {
+              "subject": "Zagor",
+              "number": "",
+              "year": "",
+              "language": "Italian"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Zagor jumping with raised weapon over forest",
+                "reference": "Same jumping Zagor artwork over forest",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "text",
+                "original": "ZAGOR; edizioni CEPIM",
+                "reference": "edizioni CEPIM; Zagor",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "Single green hardcover",
+                "reference": "Single green hardcover",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Zagor",
+              "family": "Zagor fumetto",
+              "number": "",
+              "year": "",
+              "brand": "CEPIM",
+              "subset": "",
+              "proof": {
+                "subject": "Fumetto Zagor lo spirito con la scure",
+                "family": "Fumetto Zagor lo spirito con la scure",
+                "year": "",
+                "subset": ""
+              },
+              "display_names": {
+                "it": "Zagor",
+                "en": "Zagor"
+              }
+            }
+          },
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.192,
+                "y": 0.32
+              },
+              {
+                "x": 0.815,
+                "y": 0.318
+              },
+              {
+                "x": 0.918,
+                "y": 0.758
+              },
+              {
+                "x": 0.07,
+                "y": 0.752
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.006,
+                "y": 0.001
+              },
+              {
+                "x": 0.994,
+                "y": 0.001
+              },
+              {
+                "x": 0.994,
+                "y": 0.999
+              },
+              {
+                "x": 0.006,
+                "y": 0.999
+              }
+            ],
+            "reference_id": "lens-7",
+            "match": false,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [
+              "Different artwork, publisher branding, layout, and documented 2026 issue."
+            ],
+            "original_reading": {
+              "subject": "Zagor",
+              "number": "",
+              "year": "",
+              "language": "Italian"
+            },
+            "reference_reading": {
+              "subject": "Zagor",
+              "number": "",
+              "year": "2026",
+              "language": "Italian"
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Zagor jumping over forest",
+                "reference": "Zagor standing beside mountain landscape",
+                "agrees": false,
+                "certainty": "clear"
+              },
+              {
+                "field": "text",
+                "original": "ZAGOR",
+                "reference": "ZAGOR+; LA CONDANNA DI TRAMPY",
+                "agrees": false,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Zagor",
+              "family": "Zagor fumetto",
+              "number": "",
+              "year": "2026",
+              "brand": "Sergio Bonelli Editore",
+              "subset": "",
+              "proof": {
+                "subject": "Zagor",
+                "family": "Zagor: La condanna di Trampy",
+                "year": "Febbraio 2026",
+                "subset": ""
+              },
+              "display_names": {
+                "it": "Zagor",
+                "en": "Zagor"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "crops": [
+    {
+      "id": "original-1-upper",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.05462962962962963,
+        "y": 0.30470085470085473,
+        "width": 0.8703703703703703,
+        "height": 0.16538461538461538
+      }
+    },
+    {
+      "id": "original-1-lower",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.05462962962962963,
+        "y": 0.6106837606837607,
+        "width": 0.8703703703703703,
+        "height": 0.17435897435897435
+      }
+    }
+  ],
+  "details": []
+}
