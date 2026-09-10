@@ -192,6 +192,7 @@ function pokemonQuery203(l,mode,entry){
  const hints=mode==='reference'?[entry?.family,languageName,'card image','(site:psacard.com OR site:pricecharting.com)']: [languageName,...k.setCodes,...(k.pokedex.length?[k.illustrator,...(mode==='recovery'?k.attacks:[])]:[]),mode==='variant'?'set card printing variants':mode==='recovery'?'card catalogue alternate printing':'card set checklist'];
  return ['Pokémon TCG',name,numberQuery,date||entry?.year,l.pick('rarity_text')?.value,...hints].filter(Boolean).join(' ').replace(/\s+/g,' ').trim();
 }
+function photoProfile216(l){const k=keyValues(l);return {origin:'original_photos',subject:k.subject,products:k.products,number:l.pick('collector_number')?.value||'',season:k.year,colors:k.colors,patterns:k.patterns,serial:l.pick('serial')?.value||'',print_run:serial(l.pick('serial')?.value)?.print_run||null,evidence:l.atoms.filter(a=>a.level==='observed'&&['subject','brand','product','subset','collector_number','pokedex_number','season','serial','border_color','pattern','set_code','language'].includes(a.field)).map(a=>({field:a.field,value:a.value,certainty:a.certainty,image_index:a.image_index,source:a.source}))};}
 function query(l,mode='identity',entry=null){
  if(l.domain==='pokemon')return pokemonQuery203(l,mode,entry);
  const k=keyValues(l);
@@ -422,7 +423,7 @@ function identityPresentation200(l,result,entry){
  if(l.domain==='sports'&&entry){const product=l.pick('product')?.value,subset=entry.subset_known===true&&subsetKey(entry.subset)!=='base'?str(entry.subset).replace(/ Checklist$/i,''):null;const family=product&&norm(product).includes(norm(entry.family))?str(product).replace(/^(?:19|20)\d{2}(?:[-/]\d{2,4})?\s+/,''):entry.family;c.product=family;c.subset=subset||null;base=[result.source_confirmed_year,family,subset&&!norm(family).includes(norm(subset))?subset:'',c.number?'#'+number(c.number):'',c.subject].filter(Boolean).join(' · ');}
  if(['pokemon','onepiece','tcg'].includes(l.domain)&&entry?.subset&&subsetKey(entry.subset)!=='base'){c.subset=entry.subset;c.subset_origin='catalogue';if(!norm(base).includes(norm(entry.subset)))base=[base,entry.subset].filter(Boolean).join(' · ');result.core_identity.model=base;if(result.normalized_query&&!norm(result.normalized_query).includes(norm(entry.subset)))result.normalized_query+=' '+entry.subset;}
  const parts=[base,result.variant];
- if(l.domain==='sports'){if(c.is_rookie===true)parts.push('RC');if(result.physical_serial?.value)parts.push('Seriale '+result.physical_serial.value);}
+ if(l.domain==='sports'){if(c.is_rookie===true)parts.push('RC');if(result.physical_serial?.value)parts.push('/'+result.physical_serial.print_run);}
  if(l.domain==='pokemon'){
   if(c.rarity)parts.push(c.rarity);
   const symbol=l.pick('rarity_symbol');c.has_rarity_symbol=symbol?.value==='present'?true:symbol?.value==='absent'?false:null;
@@ -513,6 +514,6 @@ function applySurfaceInspection199(l,reply,imageIndexes){
  if(absent)l.add('serial_presence','absent',{source:'surface_inspection',certainty:'clear',image_index:surfaces[0].image_index,checked_images:imageIndexes,raw:'Entire front and back inspected; no specimen serial visible'});
  l.record('surface_inspection',{reply,accepted_absence:absent,images:imageIndexes});
 }
-const api={sportsSeason215,mapPokemonBands204,pokemonKeys204,pokemonAliases204,pokemonPresence204,pokemonPolicy204,pokemonNumbers203,pokemonQuery203,pokemonPanels202,applyIdentityBands202,reconcileIdentifiers201,printingLanguageCompatible201,sourceUrl201,productText201,identityPresentation200,unionRegions199,userVariant199,applySurfaceInspection199,semanticField,familyKey,subsetKey,distinctiveMarks,canonicalEntries,coreKey,Ledger,ingestVision,ingestOcr,keyValues,profile,number,numberParts,numbersMatch,serial,language,season,finish,norm,same,subjectMatch,tokens,COLOR_WORDS,PATTERNS,query,domains,sourceTrusted,evaluate,candidateGroups,printingScope,variantState,photoRequest,reduce,recoveryRequests,applyDetails,presenceText,reconcileVisualEvidence,assertConsistent};
+const api={photoProfile216,sportsSeason215,mapPokemonBands204,pokemonKeys204,pokemonAliases204,pokemonPresence204,pokemonPolicy204,pokemonNumbers203,pokemonQuery203,pokemonPanels202,applyIdentityBands202,reconcileIdentifiers201,printingLanguageCompatible201,sourceUrl201,productText201,identityPresentation200,unionRegions199,userVariant199,applySurfaceInspection199,semanticField,familyKey,subsetKey,distinctiveMarks,canonicalEntries,coreKey,Ledger,ingestVision,ingestOcr,keyValues,profile,number,numberParts,numbersMatch,serial,language,season,finish,norm,same,subjectMatch,tokens,COLOR_WORDS,PATTERNS,query,domains,sourceTrusted,evaluate,candidateGroups,printingScope,variantState,photoRequest,reduce,recoveryRequests,applyDetails,presenceText,reconcileVisualEvidence,assertConsistent};
 if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckCatalogueEngine=api;
 })(typeof window==='undefined'?globalThis:window);

@@ -71,7 +71,7 @@ window.fetch=async function(url,options={}){
  const started=Date.now();
  const event={provider:'openai',kind,purpose:body.text?.format?.name||kind,startedAt:started,state:'attempted'};ctx.calls.push(event);
  try{
-  const response=await boundedFetch164(url,options,ctx,45000),j=await response.clone().json();guard164(ctx);
+  const response=await boundedFetch164(url,options,ctx,body.text?.format?.name==='flipcheck_lens_image_comparison'?75000:45000),j=await response.clone().json();guard164(ctx);
   if(response.ok&&j.usage)ctx.budget.settle(reservation,usageMetrics(j,body.model,countWeb(j)).cost);else ctx.budget.settle(reservation,null);
   event.responseStatus=j.status||null;event.incompleteReason=j.status==='incomplete'?j.incomplete_details?.reason||'output_incomplete':null;event.state=response.ok?(j.status==='incomplete'?'incomplete':'completed'):'service_error';event.httpStatus=response.status;event.elapsedMs=Date.now()-started;
   if(!response.ok){ctx.provider.lastApiError=response.status;ctx.state='service_unavailable';}
