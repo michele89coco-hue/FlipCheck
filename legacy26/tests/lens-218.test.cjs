@@ -29,3 +29,8 @@ test('218 translations preserve official names and card suffixes across scripts'
 test('218 recorded unknown grader slab closes with localized name and original card language',()=>{
  const f=fixture('mewtwo'),facts=S.labelFacts(f.vision),r=S.close({...f.vision,title_language:'en'},facts);assert.equal(r.market_ready,true);assert.match(r.title,/Mewtwo V/);assert.match(r.title,/CHN/);assert.doesNotMatch(r.title,/UNKNOWN/);assert.equal(r.language,'zh');assert.equal(r.card_identity.original_subject,'超梦V');assert.equal(r.grading.company,'UNKNOWN');assert.equal(r.grading.certificate_verified,false);assert.equal(r.name_identity.origin,'local_name_dictionary');assert.equal(r.card_identity.number,'135/127');assert.ok(r.localized_titles.it&&r.localized_titles.en);
 });
+
+test('218 a readable title closes even when unknown grading details make the overall reading uncertain',()=>{
+ const f=fixture('mewtwo');Object.assign(f.vision.slab_reading,{certainty:'uncertain',title_certainty:'clear',grade_certainty:'uncertain',certificate_certainty:'uncertain'});const r=S.close(f.vision,S.labelFacts(f.vision));assert.equal(r.market_ready,true);assert.equal(r.grading.grade,null);assert.equal(r.grading.certificate,null);assert.match(r.title,/Mewtwo V/);
+ f.vision.slab_reading.title_certainty='uncertain';assert.equal(S.close(f.vision,S.labelFacts(f.vision)).market_ready,false);
+});

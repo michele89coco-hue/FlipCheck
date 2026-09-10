@@ -47,7 +47,7 @@ function labelFacts(base){
  if(key(out.variant)===key(out.family))out.variant='';
  if(finish&&!copied(out.variant,finish))out.variant=[out.variant,finish].filter(Boolean).join(' · ');
  out.variant=out.variant.replace(/^[,;|·\s]+|[,;|·\s]+$/g,'');
- out.grade=p.grade_certainty==='uncertain'?'':clean(p.grade); // Never derive a grade from arbitrary label digits.
+ out.grade=p.grade_certainty==='uncertain'||!validGrade(p.grade)||!copied(label,p.grade)?'':clean(p.grade); // Never derive a grade from arbitrary label digits.
  out.certificate=p.certificate_certainty==='uncertain'?'':clean(p.certificate||p.cert_number).replace(/\s/g,''); // Preserve leading zeroes; do not guess O/0.
  out.language=clean(base.language)||clean(base.pokemon_printing?.language)||clean(p.language);
  out.name_identity=Names.normalize(out.subject||out.model,{domain:base.domain||(/pok[eé]mon/i.test(base.category||out.family)?'pokemon':'other'),translations:p.normalized_subject});
@@ -61,7 +61,7 @@ function labelFacts(base){
  // Secondary label text has no veto when the identifying title, grade and
  // certificate were transcribed. A formatted certificate is not authentication.
  out.primary_fields_complete=['BGS','PSA'].includes(out.grader)&&titleComplete&&p.title_certainty!=='uncertain'&&p.grade_certainty!=='uncertain'&&p.certificate_certainty!=='uncertain'&&validGrade(out.grade)&&copied(label,out.grade)&&out.certificate_format_valid&&copied(label,out.certificate)&&subgrades.complete;
- out.complete=p.object_match!=='conflict'&&p.title_certainty!=='uncertain'&&titleComplete&&(p.certainty==='clear'||out.primary_fields_complete);
+ out.complete=p.object_match!=='conflict'&&p.title_certainty!=='uncertain'&&titleComplete&&(p.title_certainty==='clear'||p.certainty==='clear'||out.primary_fields_complete);
  return out;
 }
 function certificatePlan(facts){
