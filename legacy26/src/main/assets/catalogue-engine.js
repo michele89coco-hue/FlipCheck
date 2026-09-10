@@ -521,6 +521,7 @@ function identityPresentation200(l,result,entry){
  return result;
 }
 function recoveryRequests(l,result=reduce(l,[])){
+ if(result.market_ready)return [];
  const pending=new Set(result?.variant_resolution?.pending||[]),requests=[];
  if(['sealed','generic'].includes(l.domain))return [];
  const conflict=l.domain!=='pokemon'&&result.core_identity?.status!=='confirmed'&&l.pick('collector_number')&&!l.candidates.some(e=>e.eligible&&l.pick('collector_number')&&numbersMatch(e.number,l.pick('collector_number').value))&&l.candidates.some(e=>e.grounded&&subjectMatch(keyValues(l).subject,e.subject)&&e.reasons?.includes('different_number')&&!e.reasons.includes('different_printed_product'));
