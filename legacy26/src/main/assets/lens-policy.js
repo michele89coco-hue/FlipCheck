@@ -14,7 +14,7 @@ function normalize(packet){
 function attributes(c,domain=''){
  const t=c.title+' '+(c.snippet||''),s=norm(t),numbers=unique((t.match(/\b(?:[A-Z]{1,5}-)?\d{1,4}\s*\/\s*(?:[A-Z]{1,5})?\d{1,4}\b/gi)||[]).concat(t.match(/\b[A-Z]{1,5}-\d{2,4}\b/g)||[]).map(E.number));
  if(['pokemon','tcg'].includes(domain))for(const m of t.matchAll(/\b(\d{1,3})-(\d{2,3})\b/g))numbers.push(E.number(m[1]+'/'+m[2]));
- if(!numbers.length){const n=t.match(/(?:#|\bNo\.?\s*)([A-Z]*\d{1,4})\b/i);if(n)numbers.push(E.number(n[1]));}
+ if(!numbers.length){const n=t.match(/(?:#|\bNo\.?\s*)([A-Z]{2,8}(?:-[A-Z]{2,8}){1,2}|[A-Z]*\d{1,4})\b/i);if(n)numbers.push(E.number(n[1]));}
  const languages=[];for(const [code,re] of Object.entries({de:/\b(?:german|deutsch|tedesc[oa]|ger)\b/,it:/\b(?:italian[oa]?|italien)\b/,en:/\b(?:english|inglese|englisch)\b/,ja:/\b(?:japanese|giapponese|japanisch|jpn)\b/,zh:/\b(?:chinese|cinese|chinois)\b/,fr:/\b(?:french|francais|francese)\b/,es:/\b(?:spanish|espanol|spagnol[oa])\b/}))if(re.test(s))languages.push(code);
  if(/\bITA\b|\(IT\)/.test(t)&&!languages.includes('it'))languages.push('it');
  return {numbers:unique(numbers),languages,years:unique((t.match(/\b(?:19|20)\d{2}(?:[-/]\d{2,4})?\b/g)||[]).map(E.season)),
@@ -53,7 +53,7 @@ function fallbackReason(result){return result?.state==='ok'?'identity_not_verifi
 function candidateFacts209(text){
  const t=String(text||''),codes=unique((t.match(/\b(?:SWSH\s*\d{1,4}|SM\s*\d{1,4}|XY\s*\d{1,4}|SVP\s*\d{1,4}|(?:OP|ST|EB|PRB)\d{2}-\d{3}|P-\d{3}|CS\d+[a-z]?C?)\b/gi)||[]).map(x=>x.replace(/\s/g,'').toUpperCase()));
  const fractions=unique((t.match(/\b[A-Z]*\d{1,4}\s*\/\s*[A-Z]*\d{1,4}\b/gi)||[]).map(E.number));
- const labelled=unique([...t.matchAll(/(?:#|\bNo\.?\s*)([A-Z]*\d{1,4})\b/gi)].map(m=>E.number(m[1])));
+ const labelled=unique([...t.matchAll(/(?:#|\bNo\.?\s*)([A-Z]{2,8}(?:-[A-Z]{2,8}){1,2}|[A-Z]*\d{1,4})\b/gi)].map(m=>E.number(m[1])));
  return {codes,fractions,labelled,years:unique(t.match(/\b(?:19|20)\d{2}\b/g)||[])};
 }
 // Choose a front from physical observations only; never from marketplace metadata.
