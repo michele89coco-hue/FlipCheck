@@ -42,7 +42,7 @@ def candidates(data):
                 'image_url': safe_url(im.get('link') if isinstance(im, dict) else im),
                 'thumbnail': safe_url(item.get('thumbnail')), 'origin': 'searchapi_google_lens',
                 'match_group': group, 'identity_verified': False})
-            if len(result) == 20: return result
+            if len(result) == 60: return result
     return result
 
 class Images:
@@ -104,7 +104,7 @@ class LensService:
     def config(self):
         return {'protocol':2,'provider':'searchapi_google_lens','enabled':self.available,
             'state':'available' if self.available else 'not_configured','unitUsd':self.unit_usd,
-            'costBasis':'configured_per_search_reservation','maxImages':1,'maxCandidates':20,
+            'costBasis':'configured_per_search_reservation','maxImages':1,'maxCandidates':60,
             'timeoutMs':int(self.timeout*1000),'imageTtlSeconds':self.images.ttl}
     def credits(self):
         with self.account_lock:

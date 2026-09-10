@@ -6,7 +6,7 @@ from http.server import ThreadingHTTPServer
 import lens
 
 PNG=b'\x89PNG\r\n\x1a\n'+b'x'*20
-DATA={'visual_matches':[{'position':i,'title':'Card '+str(i),'link':'https://catalogue.example/'+str(i),'image':{'link':'https://images.example/'+str(i)+'.jpg'}} for i in range(1,31)]}
+DATA={'visual_matches':[{'position':i,'title':'Card '+str(i),'link':'https://catalogue.example/'+str(i),'image':{'link':'https://images.example/'+str(i)+'.jpg'}} for i in range(1,71)]}
 class Tests(unittest.TestCase):
  def service(self, answer=DATA):
   self.calls=[]
@@ -19,8 +19,8 @@ class Tests(unittest.TestCase):
   self.svc=lens.LensService(lens.SearchApi('server-secret',transport),'https://lens.example','access-testing-123456',.004)
   return self.svc
  def request(self,scan='scan_test_1234'): return {'scan_id':scan,'image_base64':base64.b64encode(PNG).decode(),'remaining_usd':.03}
- def test_verified_contract_one_image_no_hint_and_twenty(self):
-  s=self.service();r=s.run(self.request());self.assertEqual(r['providerCalls'],1);self.assertEqual(len(r['candidates']),20)
+ def test_verified_contract_one_image_no_hint_and_sixty(self):
+  s=self.service();r=s.run(self.request());self.assertEqual(r['providerCalls'],1);self.assertEqual(len(r['candidates']),60)
   self.assertEqual(set(self.calls[1][1]),{'engine','url','search_type','country','hl'})
   self.assertEqual(self.calls[1][1]['engine'],'google_lens');self.assertEqual(r['account']['remaining_credits'],10)
   self.assertTrue(r['imageDeleted']);self.assertFalse(s.images.items)
