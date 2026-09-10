@@ -153,6 +153,16 @@ function reconcileOriginal208(l,readings,crops){
   if(field==='subject'&&(/^(?:CHARACTER|LEADER|EVENT|STAGE)\b/i.test(full)||full.includes('\n')||l.domain==='onepiece'&&full.includes('/'))){rejected.push({field,reason:'subject_contains_other_fields'});continue;}
   if(!valid){rejected.push({field,reason:'original_views_not_confirmed'});continue;}
   let value=['collector_number','pokedex_number'].includes(field)?E.number(detail.replace(/^(\d+)\s*;.*$/,'$1')):field==='language'?E.language(full):detail;
+  if(field==='collector_number'&&!E.numberParts(value)){
+   for(const subject of l.evidence('subject')){
+    const match=detail.match(/^([A-Za-z0-9]+(?:[-/][A-Za-z0-9]+)*)\s+(.+)$/);
+    if(match&&norm(match[2])===norm(subject.value)&&E.numberParts(match[1])){value=E.number(match[1]);break;}
+   }
+  }
+  if(field==='product'){
+   const fuller=l.evidence('product').find(a=>!/©|copyright|licensed|printed in/i.test(a.value)&&norm(a.value)!==norm(value)&&(' '+norm(a.value)+' ').includes(' '+norm(value)+' '));
+   if(fuller)value=fuller.value;
+  }
   if(field==='subject'&&l.domain==='sports'){
    const head=value.split(';')[0].trim();if(value.includes(';')&&list(l.base.observations).some(o=>o.field==='subject'&&o.certainty==='clear'&&E.subjectMatch(o.text,head)))value=head;
    // Remove only independently observed team text. Retain the literal OCR in raw/original_views.
@@ -227,7 +237,7 @@ function visualEntries206(reply,refs,l){
   if(!ref||!ref.image_data||seen.has(c.reference_id)){rejected.push({id:c.reference_id,reasons:['unknown_or_duplicate_reference']});continue;}seen.add(c.reference_id);
   if(c.match!==true||c.ambiguous!==false||c.title_matches_image!==true||list(c.conflicts).length)reasons.push('unverified_image');
   if(c.original_image_index!==undefined&&(!Number.isInteger(c.original_image_index)||c.original_image_index<1||c.original_image_index>(l.base.uploaded_image_count||3)))reasons.push('invalid_original_image');
-  if(c.original_view&&c.reference_view&&c.original_view!=='unknown'&&c.reference_view!=='unknown'&&c.original_view!==c.reference_view&&!(['sealed','generic'].includes(l.domain)&&['front','whole'].includes(c.original_view)&&['front','whole'].includes(c.reference_view)))reasons.push('different_views');
+  if(c.original_view&&c.reference_view&&c.original_view!=='unknown'&&c.reference_view!=='unknown'&&c.original_view!==c.reference_view&&!((['sealed','generic'].includes(l.domain)||l.base.object_unit==='single'&&c.match===true&&c.ambiguous===false&&['artwork','layout'].every(field=>list(c.features).some(f=>f.field===field&&f.agrees===true&&f.certainty==='clear'&&f.original&&f.reference)))&&['front','whole'].includes(c.original_view)&&['front','whole'].includes(c.reference_view)))reasons.push('different_views');
   const features=list(c.features).filter(f=>f.agrees===true&&f.certainty==='clear'&&f.original&&f.reference&&!(f.field==='identifier'&&/not visible|not readable|unreadable|non visibile|non leggibile/i.test(f.original+' '+f.reference)));
   const kinds=new Set(features.map(f=>f.field));
   const original={...(c.original_reading||{})},reference={...(c.reference_reading||{})};
