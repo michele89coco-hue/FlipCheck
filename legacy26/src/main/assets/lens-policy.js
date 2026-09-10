@@ -263,6 +263,7 @@ function visualEntries206(reply,refs,l){
   if(l.domain==='sealed'){const product=keys.products.find(p=>E.productEquivalent217(objectFamily222(p,l),objectFamily222(rawIdentity.family,l))||E.productEquivalent217(objectFamily222(p,l),e.brand+' '+objectFamily222(rawIdentity.family,l)));if(product){e.family=objectFamily222(product,l);e.subject=e.family;}}
   const fieldProof={};
   for(const field of ['subject','family']){if(!groundedField(field))reasons.push('ungrounded_'+field);else fieldProof[field]={value:e[field],origin:'reference_text',url:ref.page_url||ref.url};}
+  if(sports&&!e.year){const release=title.match(/^\s*((?:19|20)\d{2}[-/](?:\d{4}|\d{2}))\b/);if(release&&groundedField('subject')&&groundedField('family'))e.year=E.season(release[1]);}
   const releaseYear=groundedField('year')?E.season(e.year):'';
   if(releaseYear)fieldProof.year={value:releaseYear,origin:'reference_text',url:ref.page_url||ref.url};
   // A typed jersey observation must never become a conflicting card identifier.
@@ -483,7 +484,7 @@ function present206(result,entries,l,titleLanguage='it'){
  const language=result.language,tag=l.domain==='sports'?'':({it:'ITA',en:'ENG',ja:'JPN',de:'DEU',fr:'FRA',es:'SPA',ko:'KOR',zh:'CHN','zh-hans':'CHN-S','zh-hant':'CHN-T'})[language]||language?.toUpperCase()||'Lingua da verificare';
  const rawSet=l.pick('set_code')?.value||'',setCode=rawSet.length===1&&String(result.card_identity.number).startsWith(rawSet+'-')?'':rawSet,parts=[displayName,setCode,result.card_identity.number,result.card_identity.date,result.family,result.card_identity.subset,result.variant];
  if(l.domain==='tcg'&&result.brand&&!norm(result.family).includes(norm(result.brand)))parts.push(result.brand);
- if(result.card_identity.is_rookie)parts.push('RC');if(result.physical_serial?.value)parts.push('/'+result.physical_serial.print_run);parts.push(tag);
+ if(result.card_identity.autograph==='present'&&!/autograph|\bauto\b/i.test(parts.join(' ')))parts.push('Auto');if(result.card_identity.is_rookie)parts.push('RC');if(result.physical_serial?.value)parts.push(result.physical_serial.value);parts.push(tag);
  result.title=flattenedTitle221(parts);result.identity_display=result.title;if(result.model)result.model=result.title;
  result.display_language=titleLanguage;result.localized_subject=displayName;result.physical_language=language;result.language_suffix=tag;
  if(result.market_ready)result.normalized_query=result.title;

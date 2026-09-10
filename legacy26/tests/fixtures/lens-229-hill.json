@@ -1,0 +1,1464 @@
+{
+  "provenance": {
+    "build": 228,
+    "kind": "recorded model replies; no live calls"
+  },
+  "vision": {
+    "domain": "sports",
+    "kind": "card",
+    "category": "football trading card",
+    "language": "en",
+    "object_unit": "single",
+    "image_views": [
+      {
+        "image_index": 1,
+        "view": "front",
+        "certainty": "clear"
+      },
+      {
+        "image_index": 2,
+        "view": "back",
+        "certainty": "clear"
+      }
+    ],
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.04,
+        "y": 0.24,
+        "width": 0.92,
+        "height": 0.64,
+        "certain": true
+      },
+      {
+        "image_index": 2,
+        "x": 0.03,
+        "y": 0.36,
+        "width": 0.94,
+        "height": 0.33,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "Anthony Hill Jr.",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.31,
+          "y": 0.77,
+          "width": 0.27,
+          "height": 0.04
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "subject",
+        "text": "ANTHONY HILL JR.",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.25,
+          "y": 0.4,
+          "width": 0.3,
+          "height": 0.03
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "brand",
+        "text": "Topps",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.13,
+          "y": 0.63,
+          "width": 0.07,
+          "height": 0.03
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "product",
+        "text": "Bowman Chrome",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.24,
+          "y": 0.46,
+          "width": 0.28,
+          "height": 0.03
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "subset",
+        "text": "Bowman Chrome Prospect Autograph Variation",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.23,
+          "y": 0.46,
+          "width": 0.52,
+          "height": 0.06
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "collector_number",
+        "text": "BCA-AHJ",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.8,
+          "y": 0.4,
+          "width": 0.1,
+          "height": 0.02
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "team",
+        "text": "Texas",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.34,
+          "y": 0.81,
+          "width": 0.13,
+          "height": 0.02
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "season",
+        "text": "2025",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.43,
+          "y": 0.51,
+          "width": 0.05,
+          "height": 0.02
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "copyright",
+        "text": "© & © 2025 THE TOPPS COMPANY, INC. ALL RIGHTS RESERVED. TOPPS AND BOWMAN CHROME ARE TRADEMARKS OF THE TOPPS COMPANY, INC. The collegiate indicia used herein are trademarks owned by the respective collegiate institutions. WWW.TOPPS.COM. CODE#CMP111814.",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.12,
+          "y": 0.64,
+          "width": 0.78,
+          "height": 0.04
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "SUPERFRACTOR™",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.8,
+          "y": 0.42,
+          "width": 0.1,
+          "height": 0.02
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "TOPPS CERTIFIED AUTOGRAPH ISSUE",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.3,
+          "y": 0.75,
+          "width": 0.36,
+          "height": 0.02
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "TEXAS / LB",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.34,
+          "y": 0.81,
+          "width": 0.15,
+          "height": 0.02
+        },
+        "zone": "label",
+        "alternatives": []
+      }
+    ],
+    "features": [
+      {
+        "field": "border_color",
+        "value": "gold",
+        "description": "cornice e superficie con finitura dorata",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.04,
+          "y": 0.24,
+          "width": 0.92,
+          "height": 0.64
+        },
+        "zone": "border"
+      },
+      {
+        "field": "pattern",
+        "value": "motivo puntinato e geometrico dorato",
+        "description": "reticolo/puntinatura visibile sul bordo e sullo sfondo",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.04,
+          "y": 0.24,
+          "width": 0.92,
+          "height": 0.64
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "finish",
+        "value": "reflective",
+        "description": "finitura SuperFractor riflettente",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.04,
+          "y": 0.24,
+          "width": 0.92,
+          "height": 0.64
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "autograph",
+        "value": "present",
+        "description": "firma blu sul fronte",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.21,
+          "y": 0.57,
+          "width": 0.43,
+          "height": 0.12
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "stamp",
+        "value": "present",
+        "description": "testo TOPPS CERTIFIED AUTOGRAPH ISSUE",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.3,
+          "y": 0.75,
+          "width": 0.36,
+          "height": 0.02
+        },
+        "zone": "label"
+      },
+      {
+        "field": "layout",
+        "value": "ritratto d'azione di football con logo Texas e pannello firma",
+        "description": "carta verticale con atleta in uniforme e cornice geometrica",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.04,
+          "y": 0.24,
+          "width": 0.92,
+          "height": 0.64
+        },
+        "zone": "artwork"
+      }
+    ],
+    "hypotheses": [],
+    "slab_reading": null,
+    "engine_version": 193,
+    "brand": "Topps",
+    "family": "Bowman Chrome",
+    "title": "Anthony Hill Jr.",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": {
+      "image_index": 1,
+      "x": 0.04,
+      "y": 0.24,
+      "width": 0.92,
+      "height": 0.64,
+      "certain": true
+    },
+    "photo_clues": [
+      {
+        "text": "Anthony Hill Jr.",
+        "role": "subject",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.31,
+          "y": 0.77,
+          "width": 0.27,
+          "height": 0.04,
+          "certain": true
+        }
+      },
+      {
+        "text": "ANTHONY HILL JR.",
+        "role": "subject",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.25,
+          "y": 0.4,
+          "width": 0.3,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "Topps",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.13,
+          "y": 0.63,
+          "width": 0.07,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "Bowman Chrome",
+        "role": "model",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.24,
+          "y": 0.46,
+          "width": 0.28,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "Bowman Chrome Prospect Autograph Variation",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.23,
+          "y": 0.46,
+          "width": 0.52,
+          "height": 0.06,
+          "certain": true
+        }
+      },
+      {
+        "text": "BCA-AHJ",
+        "role": "collector_number",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.8,
+          "y": 0.4,
+          "width": 0.1,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "Texas",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.34,
+          "y": 0.81,
+          "width": 0.13,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "2025",
+        "role": "season",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.43,
+          "y": 0.51,
+          "width": 0.05,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "© & © 2025 THE TOPPS COMPANY, INC. ALL RIGHTS RESERVED. TOPPS AND BOWMAN CHROME ARE TRADEMARKS OF THE TOPPS COMPANY, INC. The collegiate indicia used herein are trademarks owned by the respective collegiate institutions. WWW.TOPPS.COM. CODE#CMP111814.",
+        "role": "copyright",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.12,
+          "y": 0.64,
+          "width": 0.78,
+          "height": 0.04,
+          "certain": true
+        }
+      },
+      {
+        "text": "SUPERFRACTOR™",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.8,
+          "y": 0.42,
+          "width": 0.1,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "TOPPS CERTIFIED AUTOGRAPH ISSUE",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.3,
+          "y": 0.75,
+          "width": 0.36,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "TEXAS / LB",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.34,
+          "y": 0.81,
+          "width": 0.15,
+          "height": 0.02,
+          "certain": true
+        }
+      }
+    ],
+    "physical_observations": [
+      {
+        "feature": "color",
+        "text": "gold border",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "pattern",
+        "text": "reticolo/puntinatura visibile sul bordo e sullo sfondo",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "finitura SuperFractor riflettente",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "firma blu sul fronte",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "testo TOPPS CERTIFIED AUTOGRAPH ISSUE",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "carta verticale con atleta in uniforme e cornice geometrica",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      }
+    ]
+  },
+  "batches": [
+    {
+      "ids": [
+        "lens-3"
+      ],
+      "reply": {
+        "original_readings": [],
+        "comparisons": [
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.037,
+                "y": 0.233
+              },
+              {
+                "x": 0.963,
+                "y": 0.233
+              },
+              {
+                "x": 0.963,
+                "y": 0.829
+              },
+              {
+                "x": 0.037,
+                "y": 0.829
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0,
+                "y": 0
+              },
+              {
+                "x": 1,
+                "y": 0
+              },
+              {
+                "x": 1,
+                "y": 1
+              },
+              {
+                "x": 0,
+                "y": 1
+              }
+            ],
+            "reference_id": "lens-3",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "ANTHONY HILL JR.",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Anthony Hill Jr. in Texas uniform, autograph",
+                "reference": "Anthony Hill Jr. in Texas uniform, autograph",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "1st Bowman design with lower autograph panel",
+                "reference": "1st Bowman design with lower autograph panel",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "identifier",
+                "original": "",
+                "reference": "BCA-AHJ not visible on front",
+                "agrees": true,
+                "certainty": "uncertain"
+              }
+            ],
+            "identity": {
+              "subject": "Anthony Hill Jr.",
+              "family": "Bowman Chrome University",
+              "number": "BCA-AHJ",
+              "year": "2025",
+              "brand": "Topps",
+              "subset": "",
+              "proof": {
+                "subject": "Anthony Hill Jr.",
+                "family": "2025 Bowman Chrome University",
+                "year": "2025",
+                "subset": ""
+              },
+              "display_names": {
+                "it": "Anthony Hill Jr.",
+                "en": "Anthony Hill Jr."
+              }
+            },
+            "local_appearance": {
+              "original": {
+                "state": "measured",
+                "method": "quad_normalized_hsv_texture",
+                "regions": {
+                  "frame": {
+                    "hist": [
+                      0.1660939289805269,
+                      0.45208094692630774,
+                      0.07025582283314243,
+                      0,
+                      0,
+                      0.0007636502481863307,
+                      0.012600229095074456,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0.00038182512409316535
+                    ],
+                    "n": 2619,
+                    "texture": 0.12250714756451662,
+                    "glare_fraction": 0.031309660175639555,
+                    "neutral_fraction": 0.24513172966781213
+                  },
+                  "background": {
+                    "hist": [
+                      0.31187524990004,
+                      0.13394642143142743,
+                      0.0075969612155137945,
+                      0,
+                      0,
+                      0,
+                      0.00039984006397441024,
+                      0.029988004798080767,
+                      0,
+                      0,
+                      0,
+                      0.0011995201919232307
+                    ],
+                    "n": 2501,
+                    "texture": 0.12005586008823105,
+                    "glare_fraction": 0.01919232307077169,
+                    "neutral_fraction": 0.4622151139544182
+                  }
+                },
+                "frame_color": "mixed",
+                "foil": "undetermined",
+                "paid_requests": 0,
+                "identity_proof": false
+              },
+              "reference": {
+                "state": "measured",
+                "method": "quad_normalized_hsv_texture",
+                "regions": {
+                  "frame": {
+                    "hist": [
+                      0.2730049637266132,
+                      0.2565864833906071,
+                      0.01794578083237877,
+                      0.005345551737304314,
+                      0.0015273004963726614,
+                      0,
+                      0.03589156166475754,
+                      0.021764032073310423,
+                      0.0019091256204658267,
+                      0.002290950744558992,
+                      0.001145475372279496,
+                      0.012600229095074456
+                    ],
+                    "n": 2619,
+                    "texture": 0.12668979069536762,
+                    "glare_fraction": 0.016800305460099276,
+                    "neutral_fraction": 0.30584192439862545
+                  },
+                  "background": {
+                    "hist": [
+                      0.3710515793682527,
+                      0.024790083966413436,
+                      0.008796481407437025,
+                      0.003598560575769692,
+                      0.001599360255897641,
+                      0.0007996801279488205,
+                      0.01719312275089964,
+                      0.03278688524590164,
+                      0.001599360255897641,
+                      0,
+                      0.00039984006397441024,
+                      0.01879248300679728
+                    ],
+                    "n": 2501,
+                    "texture": 0.12489273509993937,
+                    "glare_fraction": 0.006797281087564974,
+                    "neutral_fraction": 0.4674130347860856
+                  }
+                },
+                "frame_color": "mixed",
+                "foil": "undetermined",
+                "paid_requests": 0,
+                "identity_proof": false
+              },
+              "comparison": {
+                "state": "measured",
+                "frame_histogram_distance": 0.2124856815578465,
+                "frame_color_agrees": false,
+                "frame_color": "mixed",
+                "texture_difference": 0.0041826431308509965,
+                "foil": "undetermined",
+                "identity_proof": false
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "references": [
+    {
+      "id": "lens-3",
+      "position": 3,
+      "title": "Anthony Hill Jr. 2025 Bowman Chrome University #BCA-AHJ ...",
+      "url": "https://www.sportscardinvestor.com/cards/anthony-hill-jr-football/2025-bowman-chrome-university-prospect-auto-gold-refractor-1st-bca-ahj",
+      "image_url": "https://images.production.sportscardinvestor.com/images/m_card/3792829-L?ts=1763854036738",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBPph3LPkJPSGjlP0eS_udMhrAFkTdx9LVONUA-Ng3542AyFjs",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "BCA-AHJ"
+        ],
+        "languages": [],
+        "years": [
+          "2025"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "number",
+        "year",
+        "subject"
+      ],
+      "missing": [
+        "finish",
+        "stamp"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 143,
+        "reasons": [
+          "identifier_agrees",
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [
+            "BCA-AHJ"
+          ],
+          "years": [
+            "2025"
+          ]
+        },
+        "index": 2
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "ST\nBOW MAN\nTOPPS CERTIFIED AUTOGRAPH\nI5SUE\nANTHONY HILL JR.\nTEXAS/ LB\nahrome\nA",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-7",
+      "position": 7,
+      "title": "Anthony Hill Jr. 2025 Bowman Chrome University #BCA-AHJ ...",
+      "url": "https://www.sportscardinvestor.com/cards/anthony-hill-jr-football/2025-bowman-chrome-university-prospect-auto-purple-refractor-1st-bca-ahj",
+      "image_url": "https://i.ebayimg.com/images/g/PhIAAeSw7Z9pKwPr/s-l1600.jpg",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQjHuFdMD1Xff-GA-7M5G2I1j60WASzm_elD5VoJLB5nbp-OZPw",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "BCA-AHJ"
+        ],
+        "languages": [],
+        "years": [
+          "2025"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "number",
+        "year",
+        "subject"
+      ],
+      "missing": [
+        "finish",
+        "stamp"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 143,
+        "reasons": [
+          "identifier_agrees",
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [
+            "BCA-AHJ"
+          ],
+          "years": [
+            "2025"
+          ]
+        },
+        "index": 6
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "ST\nBO MAN\nFIRS\nD\n4S\nTEXAS/ LB\nUTOG\nRARH\nTOPPS CERTIFIED AUTOGRAPH 1SSUE\nANTHONY HILL JR.\n2/15\nChrome\nT",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-8",
+      "position": 8,
+      "title": "Anthony Hill Jr. #BCA-AHJ Prices | 2025 Bowman Chrome ...",
+      "url": "https://www.sportscardspro.com/game/football-cards-2025-bowman-chrome-university-prospect-autograph/anthony-hill-jr-bca-ahj",
+      "image_url": "https://storage.googleapis.com/images.pricecharting.com/corrjleiwfssgtcjcgpg/240.jpg",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZXywG1sJ7ppOJ92gocBqDP877zX_mHBx3T838uKUClFC5MdK7",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "BCA-AHJ"
+        ],
+        "languages": [],
+        "years": [
+          "2025"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "number",
+        "year",
+        "subject"
+      ],
+      "missing": [
+        "finish",
+        "stamp"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 143,
+        "reasons": [
+          "identifier_agrees",
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [
+            "BCA-AHJ"
+          ],
+          "years": [
+            "2025"
+          ]
+        },
+        "index": 7
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "St\nANNONY HILL JR.",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-23",
+      "position": 23,
+      "title": "Anthony Hill Jr. 2025 Bowman Chrome University #BCA-AHJ ...",
+      "url": "https://www.sportscardinvestor.com/cards/anthony-hill-jr-football/2025-bowman-chrome-university-prospect-auto-1st-bca-ahj",
+      "image_url": "https://images.production.sportscardinvestor.com/images/m_card/3792823-S?ts=1762386442363",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQka896IQ2gNmL2Zfl7otAy0JX17dWOwGss53oAVug00uvUytXo",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "BCA-AHJ"
+        ],
+        "languages": [],
+        "years": [
+          "2025"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "number",
+        "year",
+        "subject"
+      ],
+      "missing": [
+        "finish",
+        "stamp"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 143,
+        "reasons": [
+          "identifier_agrees",
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [
+            "BCA-AHJ"
+          ],
+          "years": [
+            "2025"
+          ]
+        },
+        "index": 22
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "A5",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-4",
+      "position": 4,
+      "title": "2025 Bowman University Anthony Hill Jr. Chrome Prospect ...",
+      "url": "https://www.whatnot.com/listing/TGlzdGluZ05vZGU6MTE4MzI1NTEzMA==",
+      "image_url": "https://images.whatnot.com/fit-in/600x0/filters:format(webp)/listings/1183255130-0-564fc6ec-50e3-47e9-b455-7822e2f5ade1",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSS_XIBSGldcxumkdfiVAs2Cgzkj7GdSpeKoMB5Jr0kStMctvzB",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "2025"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "year",
+        "subject"
+      ],
+      "missing": [
+        "number",
+        "finish",
+        "stamp"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 43,
+        "reasons": [
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [],
+          "years": [
+            "2025"
+          ]
+        },
+        "index": 3
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "BOy MAN\nTOPPS CERiEILD AUTOERA 55Ur\nTEKASA LE\nChrome\nST",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-10",
+      "position": 10,
+      "title": "Anthony Hill Jr 1st Bowman Chrome Green | Mercari",
+      "url": "https://www.mercari.com/us/item/m40544656668/",
+      "image_url": "https://u-mercari-images.mercdn.net/photos/m40544656668_1.jpg?1771473343",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR6-BpI43fx7VWHsANVi6VzQouLpI-t1hD4AXZyNsWxM2oBFkmg",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "subject"
+      ],
+      "missing": [
+        "number",
+        "year",
+        "finish",
+        "stamp"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": -10,
+        "reasons": [
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [],
+          "years": []
+        },
+        "index": 9
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "4S\nANYHNY HILL JR\nTEKAS IL8",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-2",
+      "position": 2,
+      "title": "2025 Bowman University Chrome #84 Anthony Hill Jr. | eBay",
+      "url": "https://www.ebay.com/itm/157628442953",
+      "image_url": "https://i.ebayimg.com/images/g/8JUAAeSw2edpcUeG/s-l400.jpg",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTBEMMb2N6DTZawr_21oBef_h5MgOeWNF9Um6ZmHfNfOBfnqm57",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "84"
+        ],
+        "languages": [],
+        "years": [
+          "2025"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_number"
+      ],
+      "matches": [
+        "year",
+        "subject"
+      ],
+      "missing": [
+        "finish",
+        "stamp"
+      ],
+      "verification_state": "rejected",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": -37,
+        "reasons": [
+          "identifier_differs",
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [
+            "84"
+          ],
+          "years": [
+            "2025"
+          ]
+        },
+        "index": 1
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "ZEXASALE\n4S\nChrore\nST\nOWAN",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-15",
+      "position": 15,
+      "title": "2025 Bowman Chrome University #84 Anthony Hill Jr. · Whatnot ...",
+      "url": "https://www.whatnot.com/listing/TGlzdGluZ05vZGU6MTExMTYwNzI2MQ==",
+      "image_url": "https://images.whatnot.com/fit-in/300x0/filters:format(webp)/listings/1111607261-0-d587c8bd-5163-4e10-951a-6fdf54f4a5b8",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJx1MdGrm2pMOlJRmYmI0nVyUr-7KBJTaepfx0AoSxT2rI0MVb",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "84"
+        ],
+        "languages": [],
+        "years": [
+          "2025"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_number"
+      ],
+      "matches": [
+        "year",
+        "subject"
+      ],
+      "missing": [
+        "finish",
+        "stamp"
+      ],
+      "verification_state": "rejected",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": -37,
+        "reasons": [
+          "identifier_differs",
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [
+            "84"
+          ],
+          "years": [
+            "2025"
+          ]
+        },
+        "index": 14
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "sT\nBWAAN\nAS\nATHAOOY HILL JR",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-55",
+      "position": 55,
+      "title": "2025 Topps Bowman Chrome University Anthony Hill Jr. #84 1st ...",
+      "url": "https://www.whatnot.com/listing/TGlzdGluZ05vZGU6MTU4ODM1NDEyOQ==",
+      "image_url": "https://images.whatnot.com/fit-in/1200x0/filters:format(webp)/listings/1588354129-0-053909b5-5421-43cd-ab8a-e6cf55cf7e19",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRV4WJO2iYjOzCb9yqKYQ5nmVLknt_OdmgEHPCVEANrHYedmokI",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "84"
+        ],
+        "languages": [],
+        "years": [
+          "2025"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_number"
+      ],
+      "matches": [
+        "year",
+        "subject",
+        "brand"
+      ],
+      "missing": [
+        "finish",
+        "stamp"
+      ],
+      "verification_state": "rejected",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": -37,
+        "reasons": [
+          "identifier_differs",
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [
+            "84"
+          ],
+          "years": [
+            "2025"
+          ]
+        },
+        "index": 54
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "ST\nBOMAN\nmRIS\nSED\nANTHONY ILL JR\nTEXASU LB",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-17",
+      "position": 17,
+      "title": "Anthony Hill Jr #84; 1st Bowman; Topps Chrome Bowman U ...",
+      "url": "https://www.etsy.com/listing/4451421200/anthony-hill-jr-84-1st-bowman-topps",
+      "image_url": "https://i.etsystatic.com/17565453/r/il/622b7c/7716947491/il_340x270.7716947491_pqsh.jpg",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQkfwFmLKJy8KYfA3eBPKyAKdZdtC_P1HAI1cD7VTbE8IJ5Pezr",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "84"
+        ],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_number"
+      ],
+      "matches": [
+        "subject",
+        "brand"
+      ],
+      "missing": [
+        "year",
+        "finish",
+        "stamp"
+      ],
+      "verification_state": "rejected",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": -45,
+        "reasons": [
+          "identifier_differs",
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [
+            "84"
+          ],
+          "years": []
+        },
+        "index": 16
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "st",
+        "origin": "candidate_image_ocr"
+      }
+    }
+  ],
+  "crops": [
+    {
+      "id": "original-1-upper",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.025,
+        "y": 0.2247863247863248,
+        "width": 0.95,
+        "height": 0.2222222222222222
+      }
+    },
+    {
+      "id": "original-1-lower",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.025,
+        "y": 0.6598290598290598,
+        "width": 0.95,
+        "height": 0.23547008547008547
+      }
+    },
+    {
+      "id": "original-2-upper",
+      "image_index": 2,
+      "region": {
+        "image_index": 2,
+        "x": 0.014814814814814815,
+        "y": 0.34487179487179487,
+        "width": 0.9703703703703703,
+        "height": 0.1294871794871795
+      }
+    },
+    {
+      "id": "original-2-lower",
+      "image_index": 2,
+      "region": {
+        "image_index": 2,
+        "x": 0.014814814814814815,
+        "y": 0.5692307692307692,
+        "width": 0.9703703703703703,
+        "height": 0.1358974358974359
+      }
+    }
+  ]
+}

@@ -1,0 +1,1421 @@
+{
+  "provenance": {
+    "build": 228,
+    "kind": "recorded model replies; no live calls"
+  },
+  "vision": {
+    "domain": "sports",
+    "kind": "card",
+    "category": "basketball",
+    "language": "en",
+    "object_unit": "single",
+    "image_views": [
+      {
+        "image_index": 1,
+        "view": "front",
+        "certainty": "clear"
+      },
+      {
+        "image_index": 2,
+        "view": "back",
+        "certainty": "clear"
+      }
+    ],
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.16,
+        "y": 0.31,
+        "width": 0.69,
+        "height": 0.44,
+        "certain": true
+      },
+      {
+        "image_index": 2,
+        "x": 0.16,
+        "y": 0.31,
+        "width": 0.69,
+        "height": 0.44,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "Kobe Bryant",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.43,
+          "y": 0.69,
+          "width": 0.22,
+          "height": 0.03
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "brand",
+        "text": "Upper Deck",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.22,
+          "y": 0.72,
+          "width": 0.07,
+          "height": 0.03
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "product",
+        "text": "SP Authentic",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.68,
+          "y": 0.36,
+          "width": 0.13,
+          "height": 0.08
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "subset",
+        "text": "First Class",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.18,
+          "y": 0.72,
+          "width": 0.58,
+          "height": 0.06
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "team",
+        "text": "Los Angeles Lakers",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.29,
+          "y": 0.45,
+          "width": 0.17,
+          "height": 0.05
+        },
+        "zone": "back",
+        "alternatives": []
+      },
+      {
+        "field": "season",
+        "text": "1999-2000 NBA Championship",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.34,
+          "y": 0.56,
+          "width": 0.36,
+          "height": 0.05
+        },
+        "zone": "back",
+        "alternatives": []
+      },
+      {
+        "field": "copyright",
+        "text": "©2001 NBA Properties, Inc.",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.36,
+          "y": 0.75,
+          "width": 0.18,
+          "height": 0.03
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "copyright",
+        "text": "©2001 The Upper Deck Company, LLC. All Rights Reserved. Printed in the USA",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.36,
+          "y": 0.73,
+          "width": 0.29,
+          "height": 0.04
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "KOBE BRYANT / GUARD",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.43,
+          "y": 0.69,
+          "width": 0.22,
+          "height": 0.03
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "KOBE BRYANT / GUARD",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.34,
+          "y": 0.37,
+          "width": 0.25,
+          "height": 0.03
+        },
+        "zone": "back",
+        "alternatives": []
+      }
+    ],
+    "features": [
+      {
+        "field": "border_color",
+        "value": "gold",
+        "description": "Cornici e dettagli grafici dorati",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.16,
+          "y": 0.31,
+          "width": 0.69,
+          "height": 0.44
+        },
+        "zone": "border"
+      },
+      {
+        "field": "finish",
+        "value": "reflective",
+        "description": "Sfondo anteriore fortemente riflettente/olografico",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.36,
+          "y": 0.34,
+          "width": 0.48,
+          "height": 0.4
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "layout",
+        "value": "Azione cestistica, ritratto verticale, logo SP Authentic in alto a destra",
+        "description": "Carta sportiva con giocatore in movimento e pannelli geometrici",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.16,
+          "y": 0.31,
+          "width": 0.69,
+          "height": 0.44
+        },
+        "zone": "artwork"
+      },
+      {
+        "field": "stamp",
+        "value": "absent",
+        "description": "Nessun timbro promozionale chiaramente visibile",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.16,
+          "y": 0.31,
+          "width": 0.69,
+          "height": 0.44
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "rookie",
+        "value": "absent",
+        "description": "Nessun badge RC/Rookie visibile",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.16,
+          "y": 0.31,
+          "width": 0.69,
+          "height": 0.44
+        },
+        "zone": "surface"
+      }
+    ],
+    "hypotheses": [
+      {
+        "field": "family",
+        "value": "basketball trading card"
+      }
+    ],
+    "slab_reading": null,
+    "engine_version": 193,
+    "brand": "Upper Deck",
+    "family": "basketball trading card",
+    "title": "Kobe Bryant",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": {
+      "image_index": 1,
+      "x": 0.16,
+      "y": 0.31,
+      "width": 0.69,
+      "height": 0.44,
+      "certain": true
+    },
+    "photo_clues": [
+      {
+        "text": "Kobe Bryant",
+        "role": "subject",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.43,
+          "y": 0.69,
+          "width": 0.22,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "Upper Deck",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.22,
+          "y": 0.72,
+          "width": 0.07,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "SP Authentic",
+        "role": "model",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.68,
+          "y": 0.36,
+          "width": 0.13,
+          "height": 0.08,
+          "certain": true
+        }
+      },
+      {
+        "text": "First Class",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.18,
+          "y": 0.72,
+          "width": 0.58,
+          "height": 0.06,
+          "certain": true
+        }
+      },
+      {
+        "text": "Los Angeles Lakers",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.29,
+          "y": 0.45,
+          "width": 0.17,
+          "height": 0.05,
+          "certain": true
+        }
+      },
+      {
+        "text": "1999-2000 NBA Championship",
+        "role": "season",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.34,
+          "y": 0.56,
+          "width": 0.36,
+          "height": 0.05,
+          "certain": true
+        }
+      },
+      {
+        "text": "©2001 NBA Properties, Inc.",
+        "role": "copyright",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.36,
+          "y": 0.75,
+          "width": 0.18,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "©2001 The Upper Deck Company, LLC. All Rights Reserved. Printed in the USA",
+        "role": "copyright",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.36,
+          "y": 0.73,
+          "width": 0.29,
+          "height": 0.04,
+          "certain": true
+        }
+      },
+      {
+        "text": "KOBE BRYANT / GUARD",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.43,
+          "y": 0.69,
+          "width": 0.22,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "KOBE BRYANT / GUARD",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.34,
+          "y": 0.37,
+          "width": 0.25,
+          "height": 0.03,
+          "certain": true
+        }
+      }
+    ],
+    "physical_observations": [
+      {
+        "feature": "color",
+        "text": "gold border",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Sfondo anteriore fortemente riflettente/olografico",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Carta sportiva con giocatore in movimento e pannelli geometrici",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Nessun timbro promozionale chiaramente visibile",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Nessun badge RC/Rookie visibile",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      }
+    ]
+  },
+  "batches": [
+    {
+      "ids": [
+        "lens-4"
+      ],
+      "reply": {
+        "original_readings": [
+          {
+            "field": "subject",
+            "image_index": 1,
+            "crop_id": "original-1-upper",
+            "full_text": "KOBE BRYANT / GUARD",
+            "crop_text": "KOBE BRYANT / GUARD",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Kobe Bryant",
+              "en": "Kobe Bryant"
+            }
+          },
+          {
+            "field": "team",
+            "image_index": 1,
+            "crop_id": "original-1-upper",
+            "full_text": "LAKERS",
+            "crop_text": "LAKERS",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Los Angeles Lakers",
+              "en": "Los Angeles Lakers"
+            }
+          },
+          {
+            "field": "brand",
+            "image_index": 1,
+            "crop_id": "original-1-upper",
+            "full_text": "SP AUTHENTIC",
+            "crop_text": "SP AUTHENTIC",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "SP Authentic",
+              "en": "SP Authentic"
+            }
+          },
+          {
+            "field": "product",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "FIRST CLASS",
+            "crop_text": "FIRST CLASS",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "First Class",
+              "en": "First Class"
+            }
+          },
+          {
+            "field": "collector_number",
+            "image_index": 2,
+            "crop_id": "original-2-upper",
+            "full_text": "FC7",
+            "crop_text": "FC7",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "FC7",
+              "en": "FC7"
+            }
+          },
+          {
+            "field": "printed_variant",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "FIRST CLASS",
+            "crop_text": "FIRST CLASS",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "First Class",
+              "en": "First Class"
+            }
+          },
+          {
+            "field": "copyright",
+            "image_index": 2,
+            "crop_id": "original-2-lower",
+            "full_text": "Upper Deck, SP Authentic and the Card/Hologram combination are trademarks of the Upper Deck Company, LLC. All Rights Reserved. Printed in the U.S.A. ©2001 NBA Properties, Inc.",
+            "crop_text": "Upper Deck, SP Authentic and the Card/Hologram combination are trademarks of the Upper Deck Company, LLC. All Rights Reserved. Printed in the U.S.A. ©2001 NBA Properties, Inc.",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "",
+              "en": ""
+            }
+          }
+        ],
+        "comparisons": [
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.151,
+                "y": 0.29
+              },
+              {
+                "x": 0.847,
+                "y": 0.29
+              },
+              {
+                "x": 0.847,
+                "y": 0.689
+              },
+              {
+                "x": 0.151,
+                "y": 0.689
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.2,
+                "y": 0.107
+              },
+              {
+                "x": 0.804,
+                "y": 0.107
+              },
+              {
+                "x": 0.804,
+                "y": 0.947
+              },
+              {
+                "x": 0.2,
+                "y": 0.947
+              }
+            ],
+            "reference_id": "lens-4",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "KOBE BRYANT",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "Kobe Bryant",
+              "number": "FC7",
+              "year": "",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Kobe Bryant performing a Lakers dunk in yellow uniform number 8",
+                "reference": "Kobe Bryant performing the same Lakers dunk in yellow uniform number 8",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "SP Authentic logo upper-right; First Class title at bottom",
+                "reference": "Same logo placement and First Class title layout",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "identifier",
+                "original": "FC7 visible on original back",
+                "reference": "Title explicitly states #FC7",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Kobe Bryant",
+              "family": "SP Authentic First Class",
+              "number": "FC7",
+              "year": "",
+              "brand": "Upper Deck",
+              "subset": "",
+              "proof": {
+                "subject": "KOBE BRYANT",
+                "family": "2000-01 SP AUTHENTIC FIRST CLASS",
+                "year": "",
+                "subset": "#FC7"
+              },
+              "display_names": {
+                "it": "Kobe Bryant",
+                "en": "Kobe Bryant"
+              }
+            },
+            "local_appearance": {
+              "original": {
+                "state": "measured",
+                "method": "quad_normalized_hsv_texture",
+                "regions": {
+                  "frame": {
+                    "hist": [
+                      0.09392898052691867,
+                      0.20198549064528445,
+                      0.10614738449789997,
+                      0.015273004963726614,
+                      0.012600229095074456,
+                      0.011836578846888126,
+                      0.03665521191294387,
+                      0.06987399770904926,
+                      0.004200076365024819,
+                      0.0057273768613974796,
+                      0.004581901489117984,
+                      0.0015273004963726614
+                    ],
+                    "n": 2619,
+                    "texture": 0.10030150235197119,
+                    "glare_fraction": 0.037418862161130204,
+                    "neutral_fraction": 0.3921344024436808
+                  },
+                  "background": {
+                    "hist": [
+                      0.1287485005997601,
+                      0.2734906037584966,
+                      0.20191923230707717,
+                      0.058376649340263896,
+                      0.019592163134746102,
+                      0.01599360255897641,
+                      0.0351859256297481,
+                      0.05557776889244302,
+                      0.025989604158336666,
+                      0.026389444222311077,
+                      0.019992003198720514,
+                      0.008396641343462616
+                    ],
+                    "n": 2501,
+                    "texture": 0.1025594119242491,
+                    "glare_fraction": 0.015193922431027589,
+                    "neutral_fraction": 0.1131547381047581
+                  }
+                },
+                "frame_color": "mixed",
+                "foil": "undetermined",
+                "paid_requests": 0,
+                "identity_proof": false
+              },
+              "reference": {
+                "state": "measured",
+                "method": "quad_normalized_hsv_texture",
+                "regions": {
+                  "frame": {
+                    "hist": [
+                      0.1256204658266514,
+                      0.21000381825124093,
+                      0.047346315387552504,
+                      0.019854906452844597,
+                      0.021382206949217258,
+                      0.011454753722794959,
+                      0.021764032073310423,
+                      0.019473081328751432,
+                      0.019091256204658267,
+                      0.012982054219167621,
+                      0.023673157693776252,
+                      0.040473463153875525
+                    ],
+                    "n": 2619,
+                    "texture": 0.07605758159077594,
+                    "glare_fraction": 0.06338297059946545,
+                    "neutral_fraction": 0.3623520427644139
+                  },
+                  "background": {
+                    "hist": [
+                      0.22031187524990004,
+                      0.2698920431827269,
+                      0.04198320671731307,
+                      0.027988804478208718,
+                      0.029988004798080767,
+                      0.023190723710515795,
+                      0.007197121151539384,
+                      0.02958816473410636,
+                      0.07596961215513795,
+                      0.018392642942822873,
+                      0.04078368652538984,
+                      0.05357856857257097
+                    ],
+                    "n": 2501,
+                    "texture": 0.10029270992918056,
+                    "glare_fraction": 0.020791683326669332,
+                    "neutral_fraction": 0.13754498200719711
+                  }
+                },
+                "frame_color": "mixed",
+                "foil": "undetermined",
+                "paid_requests": 0,
+                "identity_proof": false
+              },
+              "comparison": {
+                "state": "measured",
+                "frame_histogram_distance": 0.12886597938144329,
+                "frame_color_agrees": false,
+                "frame_color": "mixed",
+                "texture_difference": 0.024243920761195248,
+                "foil": "undetermined",
+                "identity_proof": false
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "references": [
+    {
+      "id": "lens-4",
+      "position": 4,
+      "title": "2000-01 SP AUTHENTIC FIRST CLASS #FC7 KOBE BRYANT | Köp på ...",
+      "url": "https://www.tradera.com/item/1001059/748070920/2000-01-sp-authentic-first-class-fc7-kobe-bryant",
+      "image_url": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcS68eHtQhfSebm3CHHnI0l0pccKsOGDnOQQaSqMLQjhhmba5p45",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcS68eHtQhfSebm3CHHnI0l0pccKsOGDnOQQaSqMLQjhhmba5p45",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "FC7"
+        ],
+        "languages": [],
+        "years": [
+          "2000-01"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_year"
+      ],
+      "matches": [
+        "subject"
+      ],
+      "missing": [
+        "finish"
+      ],
+      "verification_state": "rejected",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 35,
+        "reasons": [
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [
+            "FC7"
+          ],
+          "years": [
+            "2000"
+          ]
+        },
+        "index": 3
+      },
+      "metadataStrong": false,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "FtRST CEASS",
+        "origin": "candidate_image_ocr"
+      },
+      "page_text": "Se produkter som liknar 2000-01 SP AUTHENTIC FIRST CL.. på Tradera (748070920)\nname: 2000-01 SP AUTHENTIC FIRST CLASS #FC7 KOBE BRYANT\ndescription: Kobe Bryant SP Authentic First Class basketkort. Kortet visar Kobe Bryant i en Lakers-tröja med nummer 8. Baksidan av kortet innehåller information om Kobe Bryant, inklusive hans födelsedatum, längd, vikt och en kort text om hans karriär.\nsku: 748070920\n\nCardKingz\n5.0\n\n2000-01 SP AUTHENTIC FIRST CLASS #FC7 KOBE BRYANT\nAvslutad 6 sep 20:24\n\nSlutpris\n∙Visa bud\n\n950 kr\n\n1 000 kr med köparskydd. Läs mer\n\nKorthubben vann auktionen\n \n\nSpara\n\nFraktFrån 49 krFraktpris inom Sverige\n49 kr DHLKlimatfinansierad\n49 kr InstaboxKlimatfinansierad\n55 kr PostNord BrevlådaKlimatfinansierad\n56 kr PostNord OmbudKlimatfinansierad\nSamfrakt\n3 dagar\n\nBetalningVia TraderaAlla betalningar granskas av Tradera för din säkerhet.\n\nDirektbetalning | Delbetalning | Faktura\nKöparskyddet gäller alla betalsättLäs mer\n\nTraderas köparskydd\nErsättning om varan inte är som beskriven\nErsättning om du inte får din vara\n\nCardKingz\nStockholm, Sverige\n\n5.0\n\nVerifierad\n\nToppsäljare\n\n1 774 omdömen\n\nLäs omdömenFölj\n\nHoppa över karusell\n\n1/0\n\n+3\n\nBeskrivningMycket gott skick\n\nInga eller minimala tecken på användning\nKobe Bryant SP Authentic First Class basketkort. Kortet visar Kobe Bryant i en Lakers-tröja med nummer 8. Baksidan av kortet innehåller information om Kobe Bryant, inklusive hans födelsedatum, längd, vikt och en kort text om hans karriär.\n\nObjektnr 748 070 920\nVisningar 304\nPublicerad 1 sep 05:24\nAnmälSälj liknande",
+      "page_url": "https://www.tradera.com/item/1001059/748070920/2000-01-sp-authentic-first-class-fc7-kobe-bryant"
+    },
+    {
+      "id": "lens-9",
+      "position": 9,
+      "title": "Las mejores ofertas en 2000-01 SP Authentic - Kobe Bryant ...",
+      "url": "https://cl.ebay.com/b/2000-01-SP-Authentic-Kobe-Bryant-FC7/212/bn_103992590358",
+      "image_url": "https://i.ebayimg.com/images/g/08AAAOSwNGBmBMZg/s-l1200.webp",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGfGbdpc7b9i9FeSoj46pX0GhyCcl-3vOSHCFp6FKPGkq9VDSr",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "2000-01"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_year"
+      ],
+      "matches": [
+        "subject"
+      ],
+      "missing": [
+        "finish"
+      ],
+      "verification_state": "rejected",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": -25,
+        "reasons": [
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [],
+          "years": [
+            "2000"
+          ]
+        },
+        "index": 8
+      },
+      "metadataStrong": false,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "LAKERS\nAKTRS\nKOBE BRYANT/GUARD\nFIRS T CLASS",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-17",
+      "position": 17,
+      "title": "Las mejores ofertas en 2000-01 SP Authentic - Kobe Bryant ...",
+      "url": "https://cr.ebay.com/b/2000-01-SP-Authentic-Kobe-Bryant-FC7/212/bn_103992590358",
+      "image_url": "https://i.ebayimg.com/images/g/~ZsAAeSw3bJqgbcG/s-l1200.webp",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRxn_P-5en-452_9VvAtC4IXpVU-f0G3oiQMJAzaXaZPJB7ep4W",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "2000-01"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_year"
+      ],
+      "matches": [
+        "subject"
+      ],
+      "missing": [
+        "finish"
+      ],
+      "verification_state": "rejected",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": -25,
+        "reasons": [
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [],
+          "years": [
+            "2000"
+          ]
+        },
+        "index": 16
+      },
+      "metadataStrong": false,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "LAKERS\nTAKERS\nKOBE BRYANT / GUARD\nAUTHENTIC\nASSS",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-32",
+      "position": 32,
+      "title": "Kobe Bryant 1996 Topps Finest #269 Gold - Refractor (No ...",
+      "url": "https://www.sportscardinvestor.com/cards/kobe-bryant-basketball/1996-topps-finest-gold-refractor-no-coating-269",
+      "image_url": "https://images.production.sportscardinvestor.com/250_75_3634_269",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRxEjDnC-8m3lhSUz69NnpLeB7ieBrlowIWRD3GfAWdIHzE54eQ",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "269"
+        ],
+        "languages": [],
+        "years": [
+          "1996"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_year"
+      ],
+      "matches": [
+        "subject"
+      ],
+      "missing": [
+        "finish"
+      ],
+      "verification_state": "rejected",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": false,
+        "score": 65,
+        "reasons": [
+          "subject_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [
+            "269"
+          ],
+          "years": [
+            "1996"
+          ]
+        },
+        "index": 31
+      },
+      "metadataStrong": false,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "RINEST\nKOBE BRYANT",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-35",
+      "position": 35,
+      "title": "Kobe Bryant 1999 Topps Chrome #125 Refractor Price Guide ...",
+      "url": "https://www.sportscardinvestor.com/cards/kobe-bryant-basketball/1999-topps-chrome-refractor-125",
+      "image_url": "https://i.ebayimg.com/thumbs/images/g/PZUAAOSwoORj4Qn3/s-l1600.jpg",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTf4sTnPgS4-7reuzr7bbfV5K51zPgtzqfyPitJxVQYX2kOD2cM",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "125"
+        ],
+        "languages": [],
+        "years": [
+          "1999"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_year"
+      ],
+      "matches": [
+        "subject"
+      ],
+      "missing": [
+        "finish"
+      ],
+      "verification_state": "rejected",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": false,
+        "score": 43,
+        "reasons": [
+          "subject_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [
+            "125"
+          ],
+          "years": [
+            "1999"
+          ]
+        },
+        "index": 34
+      },
+      "metadataStrong": false,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "8\nKobe Bryant\nLOS AN GELES LAKERS",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-1",
+      "position": 1,
+      "title": "KOBE BRYANT RARE RAINBOW HOLO FOIL REFRACTOR ...",
+      "url": "https://www.ebay.com/itm/355935823130",
+      "image_url": "https://i.ebayimg.com/images/g/dBMAAOSwJdlmBMZi/s-l1200.jpg",
+      "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTv9ieMCjMvR2TTJfAHkRYF9Sa5e6F40SzXx8BW3lX0FCs_83hM",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "holo",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_finish"
+      ],
+      "matches": [
+        "subject"
+      ],
+      "missing": [
+        "year"
+      ],
+      "verification_state": "rejected",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": false,
+        "score": 35,
+        "reasons": [
+          "subject_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [],
+          "years": []
+        },
+        "index": 0
+      },
+      "metadataStrong": false,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "LAKERS\nJAKIRS\nKOBE BRYANT / GUARD\nIRST CLAS\nERS",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-6",
+      "position": 6,
+      "title": "Kobe Bryant 7 Card Prices | Kobe Bryant 7 Card List",
+      "url": "https://www.sportscardspro.com/game/basketball-cards-2015-panini-hv-kb20-channel-the-villain/kobe-bryant-7",
+      "image_url": "https://i.ebayimg.com/images/g/ZNUAAeSw1WFqdjNt/s-l225.jpg",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0u6TmUX4Cr8TOXtPOGc-52zl368PEjYoyrukK9UZGv5BFJiqA",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "subject"
+      ],
+      "missing": [
+        "year",
+        "finish"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": false,
+        "score": 35,
+        "reasons": [
+          "subject_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [],
+          "years": []
+        },
+        "index": 5
+      },
+      "metadataStrong": false,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "a000 SP AuTHENTIC\nKOSE YANT\nCLASS\nFIRST ĈLASS\nMMT\nMMMT",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-11",
+      "position": 11,
+      "title": "Kobe Bryant sports cards for sale",
+      "url": "https://www.facebook.com/groups/156859589768521/posts/1309630194491449/",
+      "image_url": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSp-wnaQ7av-2irifD-1bBd43m-NYj95VAbIV4YTfMx7Zl3gkyD",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSp-wnaQ7av-2irifD-1bBd43m-NYj95VAbIV4YTfMx7Zl3gkyD",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "subject"
+      ],
+      "missing": [
+        "year",
+        "finish"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": false,
+        "score": 35,
+        "reasons": [
+          "subject_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [],
+          "years": []
+        },
+        "index": 10
+      },
+      "metadataStrong": false,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "FiST GLASS",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-14",
+      "position": 14,
+      "title": "1996 Topps Kobe Bryant Rookie Card PSA 9 #collector ...",
+      "url": "https://www.instagram.com/reel/Dct78uRB1C4/",
+      "image_url": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRWHUWWx4ZdiSD3VkZMbEq8YTTU88hkhEK4HThEhmCQ175gHM54",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRWHUWWx4ZdiSD3VkZMbEq8YTTU88hkhEK4HThEhmCQ175gHM54",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [
+          "1996"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_year"
+      ],
+      "matches": [
+        "subject"
+      ],
+      "missing": [
+        "finish"
+      ],
+      "verification_state": "rejected",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": false,
+        "score": 35,
+        "reasons": [
+          "subject_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [],
+          "years": [
+            "1996"
+          ]
+        },
+        "index": 13
+      },
+      "metadataStrong": false,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "FIST CLASS",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-16",
+      "position": 16,
+      "title": "ク*ュ様 Kobe Bryant SPAuthentic Spectacular - メルカリ",
+      "url": "https://jp.mercari.com/item/m85230472714",
+      "image_url": "https://static.mercdn.net/item/detail/orig/photos/m85230472714_1.jpg?1780928665",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQFiGMs9fklPnQVUIHulh2EcCYHNotWwZdugWsoxlMGui8L0phW",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [],
+        "languages": [],
+        "years": [],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "subject"
+      ],
+      "missing": [
+        "year",
+        "finish"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": false,
+        "score": 35,
+        "reasons": [
+          "subject_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [],
+          "years": []
+        },
+        "index": 15
+      },
+      "metadataStrong": false,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "Pect a cula I\nKOBE BRYANT\nLAKERS\nAITHENT",
+        "origin": "candidate_image_ocr"
+      }
+    }
+  ],
+  "crops": [
+    {
+      "id": "original-1-upper",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.14444444444444443,
+        "y": 0.2948717948717949,
+        "width": 0.7212962962962963,
+        "height": 0.1623931623931624
+      }
+    },
+    {
+      "id": "original-1-lower",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.14444444444444443,
+        "y": 0.594017094017094,
+        "width": 0.7212962962962963,
+        "height": 0.17136752136752137
+      }
+    },
+    {
+      "id": "original-2-upper",
+      "image_index": 2,
+      "region": {
+        "image_index": 2,
+        "x": 0.14444444444444443,
+        "y": 0.2948717948717949,
+        "width": 0.7212962962962963,
+        "height": 0.1623931623931624
+      }
+    },
+    {
+      "id": "original-2-lower",
+      "image_index": 2,
+      "region": {
+        "image_index": 2,
+        "x": 0.14444444444444443,
+        "y": 0.594017094017094,
+        "width": 0.7212962962962963,
+        "height": 0.17136752136752137
+      }
+    }
+  ]
+}
