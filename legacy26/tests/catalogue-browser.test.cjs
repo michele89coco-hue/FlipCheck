@@ -477,3 +477,10 @@ for(const name of ['goku','vileplume'])test('223 '+name+' completes from recorde
  const out=await scan();assert.equal(out.identification.market_ready,true,JSON.stringify(out.identification));assert.equal(stages().filter(s=>s==='flipcheck_catalogue_search').length,0);assert.equal(stages().filter(s=>s==='flipcheck_lens_image_comparison').length,1);assert.equal(stages().filter(s=>s==='flipcheck_evidence_detail').length,name==='vileplume'?1:0);
  if(name==='goku')assert.match(out.identification.title,/P7.*Lamincards.*Edibas/);else assert.doesNotMatch(out.identification.title,/Jungle symbol|No Symbol/);
 });
+// Actual build-223 responses replayed on synthetic images; no live model claim.
+for(const name of ['shaq','hill'])test('224 '+name+' recorded identifier path closes without repeated catalogue searches',async()=>{
+ const f=structuredClone(require('./fixtures/lens-224-'+name+'.json')),refs=f.references.filter(r=>f.batches.some(b=>b.ids.includes(r.id)));
+ await reset('politoed',{lens:true,packet:f.vision,photoCount:2,noOcr:true,lensCandidates:refs,lensResponse(body){return {original_readings:f.batches.flatMap(b=>b.reply.original_readings||[]),comparisons:comparedRefs209(body).map(row=>{const ref=refs.find(r=>r.url===row.url),c=f.batches.flatMap(b=>b.reply.comparisons).find(c=>c.reference_id===ref?.id);return {...structuredClone(c),reference_id:row.reference_id};})};},mutate(d){d.photoOcr=[];d.pages=refs.filter(r=>r.page_text).map(r=>({url:r.page_url||r.url,title:r.title,text:r.page_text}));}});
+ const out=await scan(),r=out.identification;assert.equal(r.market_ready,true,JSON.stringify(r));assert.equal(stages().filter(s=>s==='flipcheck_catalogue_search').length,0);assert.equal(stages().filter(s=>s==='flipcheck_evidence_detail').length,0);
+ if(name==='hill'){assert.equal(r.physical_card_number,'BCA-AHJ');assert.equal((r.title.match(/Bowman Chrome/g)||[]).length,1);}else{assert.equal(r.physical_card_number,null);assert.equal(r.source_confirmed_catalog_number,'7');assert.match(r.title,/1999-00/);}
+});

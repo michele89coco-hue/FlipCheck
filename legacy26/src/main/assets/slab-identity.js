@@ -132,6 +132,7 @@ function close(base,facts,record={state:'not_attempted'}){
  const names=data.name_identity||Names.normalize(data.subject||data.model,{domain:base.domain||'other'}),tag=({it:'ITA',en:'ENG',de:'DEU',fr:'FRA',es:'SPA',ja:'JPN',ko:'KOR',zh:'CHN','zh-hans':'CHN-S','zh-hant':'CHN-T'})[data.language]||data.language;
  const objectCode=(base.kind==='object'||['generic','sealed'].includes(base.domain))&&data.model&&!copied(data.subject,data.model)&&!copied(displayFamily,data.model)?data.model:'';
  const titles=Object.fromEntries(['it','en'].map(lang=>[lang,[data.year,displayFamily,data.set_code,data.card_number?'#'+data.card_number:'',names[lang],objectCode,tag,data.variant,grading].filter(Boolean).join(' · ')]));
+ const titleEngine=typeof module!=='undefined'&&module.exports?require('./catalogue-engine'):root.FlipCheckCatalogueEngine;for(const lang of ['it','en'])titles[lang]=titleEngine.title224([titles[lang]]);
  const selected=base.title_language==='en'?'en':'it',title=titles[selected];
 
  const fieldOrigin=k=>k==='language'&&base.language?'original_photo':k==='set_code'&&data.set_code_origin?data.set_code_origin:verified&&record.official_fields.includes(k)?'official_certificate':'photo_slab_label';

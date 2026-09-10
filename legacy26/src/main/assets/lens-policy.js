@@ -193,7 +193,7 @@ function subjectGround221(value,text,l){
  return parts.length>0&&parts.every(p=>full.includes(' '+norm(p)+' ')||panel221(l)&&[...p.matchAll(/["“]([^"”]+)["”]/g)].some(m=>full.includes(' '+norm(m[1])+' ')));
 }
 function originalSubject221(value,physical,l){return E.subjectMatch(value,physical)||panel221(l)&&String(value).split(/\s*[;&]\s*/).some(v=>E.subjectMatch(v,physical));}
-function flattenedTitle221(parts){const seen=new Set();return parts.flatMap(p=>String(p||'').split(/\s*·\s*/)).filter(p=>{const k=norm(p);if(!k||seen.has(k))return false;seen.add(k);return true;}).join(' · ');}
+function flattenedTitle221(parts){return E.title224(parts);}
 // Field-aware normalization: source prose remains attached to each candidate.
 function wordsGround222(value,text){const words=norm(value).split(' ').filter(Boolean),hay=new Set(norm(text).split(' '));return words.length>0&&words.every(w=>hay.has(w));}
 function sourceText222(value,l){return l.domain==='pokemon'?String(value||'').replace(/\bbase pok[eé]mon cards?\b/ig,'Base Set').replace(/\bset base\b/ig,'Base Set'):String(value||'');}
@@ -325,9 +325,12 @@ function visualEntries206(reply,refs,l){
    }
   }
   if(sports){
-   const description=norm(title).replace(norm(e.family),'').replace(norm(e.subject),'');
+   const description=norm([ref.title,ref.snippet].join(' ')).replace(norm(e.family),'').replace(norm(e.subject),'');
    const named=/\b(?:refractor|pulsar|parallel|gold|green|blue|red|silver|black|ice|wave|auto|autograph|patch|reprint|foil|holo|holographic)\b/.test(description);
-   entry.printing_description=e.subset||named?'named':'unspecified';
+   const descriptiveAuto=/^(?:prospect )?(?:autograph|signature)(?: variation)?$/i.test(e.subset||'')&&features.some(f=>f.field==='configuration'&&/autograph|signature/i.test(f.original)&&/autograph|signature/i.test(f.reference));
+   if(descriptiveAuto&&norm(entry.family).includes(norm(entry.subset))){entry.reported_subset=entry.subset;entry.subset='';entry.subset_known=false;}
+   const remaining=description.replace(/\b(?:prospect autograph|autograph|signature)\b/g,'');
+   entry.printing_description=descriptiveAuto&&!/\b(?:refractor|pulsar|parallel|gold|green|blue|red|silver|black|ice|wave|patch|reprint)\b/.test(remaining)?'unspecified':e.subset||named?'named':'unspecified';
   }
   // This explicitly denotes a comparison, never a new photographed identifier.
   l.add('catalogue_core',E.coreKey(entry),{source:'lens_image_comparison',certainty:'clear',image_index:1,reference_source:ref.url,reference_id:ref.id});
