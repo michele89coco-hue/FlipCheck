@@ -1,0 +1,265 @@
+{
+  "vision": {
+    "domain": "pokemon",
+    "kind": "card",
+    "category": "graded card",
+    "language": "zh",
+    "object_unit": "single",
+    "image_views": [
+      {
+        "image_index": 1,
+        "view": "front",
+        "certainty": "clear"
+      }
+    ],
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.12,
+        "y": 0.37,
+        "width": 0.77,
+        "height": 0.53,
+        "certain": true
+      },
+      {
+        "image_index": 1,
+        "x": 0.05,
+        "y": 0.16,
+        "width": 0.9,
+        "height": 0.18,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "超梦V",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.2,
+          "y": 0.4,
+          "width": 0.3,
+          "height": 0.05
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "product",
+        "text": "2024 Pokemon JPN",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.24,
+          "y": 0.18,
+          "width": 0.3,
+          "height": 0.03
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "collector_number",
+        "text": "135/127 SR",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.26,
+          "y": 0.87,
+          "width": 0.23,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "hp",
+        "text": "220",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.68,
+          "y": 0.43,
+          "width": 0.1,
+          "height": 0.03
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "attack",
+        "text": "超念力 50；转移破坏 160",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.2,
+          "y": 0.75,
+          "width": 0.62,
+          "height": 0.07
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "copyright",
+        "text": "©2024 Pokémon",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.4,
+          "y": 0.88,
+          "width": 0.2,
+          "height": 0.015
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "language",
+        "text": "中文",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.2,
+          "y": 0.4,
+          "width": 0.6,
+          "height": 0.46
+        },
+        "zone": "front",
+        "alternatives": []
+      }
+    ],
+    "features": [
+      {
+        "field": "finish",
+        "value": "holo",
+        "description": "Superficie chiaramente riflettente/olografica",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.12,
+          "y": 0.37,
+          "width": 0.77,
+          "height": 0.53
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "layout",
+        "value": "ritratto verticale con illustrazione a pieno riquadro",
+        "description": "Carta Pokémon con cornice e illustrazione verticale",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.12,
+          "y": 0.37,
+          "width": 0.77,
+          "height": 0.53
+        },
+        "zone": "other"
+      }
+    ],
+    "hypotheses": [],
+    "slab_reading": {
+      "grader": "Unknown",
+      "label_text": "2024 Pokemon JPN. 超梦V. CŚ5aC 135/127 SR. CENTERING 9.5 CORNERS 10. EDGES 10 SURFACE 10. PRISTINE. 10. 8658437093",
+      "card_title": "超梦V",
+      "subject": "超梦V",
+      "family": "",
+      "model": "135/127 SR",
+      "year": "2024",
+      "card_number": "135/127",
+      "variant": "SR",
+      "grade": "10",
+      "certificate": "8658437093",
+      "match_details": "Titolo e numero leggibili sull'etichetta e sulla carta",
+      "normalized_subject": {
+        "original": "超梦V",
+        "it": "Mewtwo V",
+        "en": "Mewtwo V",
+        "certainty": "clear"
+      },
+      "present": true,
+      "certainty": "clear",
+      "title_certainty": "clear",
+      "grade_certainty": "clear",
+      "certificate_certainty": "clear",
+      "secondary_text_incomplete": false,
+      "subgrades": [
+        {
+          "name": "centering",
+          "value": "9.5",
+          "certainty": "clear"
+        },
+        {
+          "name": "corners",
+          "value": "10",
+          "certainty": "clear"
+        },
+        {
+          "name": "edges",
+          "value": "10",
+          "certainty": "clear"
+        },
+        {
+          "name": "surface",
+          "value": "10",
+          "certainty": "clear"
+        }
+      ],
+      "image_index": 1,
+      "object_match": "matches"
+    },
+    "engine_version": 193,
+    "brand": "",
+    "family": "2024 Pokemon JPN",
+    "title": "超梦V",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": {
+      "image_index": 1,
+      "x": 0.12,
+      "y": 0.37,
+      "width": 0.77,
+      "height": 0.53,
+      "certain": true
+    },
+    "pokemon_printing": {
+      "is_pokemon": true,
+      "language": "zh",
+      "set_name": "2024 Pokemon JPN",
+      "card_type": "pokemon",
+      "first_edition_stamp": "unclear",
+      "stamp_image": 0,
+      "stamp_location": "",
+      "stamp_text": "",
+      "artwork_shadow": "unclear",
+      "shadow_image": 0,
+      "shadow_location": "",
+      "copyright_text": "©2024 Pokémon",
+      "copyright_image": 1
+    }
+  },
+  "references": [],
+  "batches": [],
+  "crops": []
+}

@@ -7,8 +7,8 @@ for(const name of ['curry','kobe'])test('218 recorded '+name+' closes from two m
  assert.equal(r.source_confirmed_catalog_number,name==='kobe'?'81':null);assert.equal(r.source_confirmed_year,name==='kobe'?'1997-98':'2009-10');assert.equal(checked.accepted.length,2);assert.equal(r.variant_resolution.variant_origin,'visual_comparison');
  if(name==='kobe'){assert.equal(f.l.pick('subject').value,'KOBE BRYANT');assert.ok(f.l.values('subject').some(a=>a.original_views?.full==='KOBE BRYANT LOS ANGELES LAKERS'));}
 });
-test('218 missing-number consensus requires distinct sources, images and two comparisons',()=>{
- for(const change of [f=>f.batches.pop(),f=>f.references[1].url=f.references[0].url,f=>f.references[1].image_url=f.references[0].image_url,f=>f.batches[1].reply.comparisons[0].ambiguous=true]){const f=fixture('curry');change(f);assert.equal(resolve(f).result.market_ready,false);}
+test('219 without a printed product, missing-number consensus still requires two distinct matching references',()=>{
+ for(const change of [f=>f.batches.pop(),f=>f.references[1].url=f.references[0].url,f=>f.references[1].image_url=f.references[0].image_url,f=>f.batches[1].reply.comparisons[0].ambiguous=true]){const f=fixture('curry');f.l.add('text','unreadable product',{source:'focused_vision',certainty:'clear',image_index:2,supersedes:f.l.active('product').map(a=>a.id)});change(f);assert.equal(resolve(f).result.market_ready,false);}
 });
 test('218 strong matches cannot erase an actual number, subject, season or manufacturer conflict',()=>{
  for(const [field,text] of [['collector_number','18'],['subject','Seth Curry'],['season','2018'],['brand','Topps']]){

@@ -53,9 +53,11 @@ function labelFacts(base){
  out.name_identity=Names.normalize(out.subject||out.model,{domain:base.domain||(/pok[eé]mon/i.test(base.category||out.family)?'pokemon':'other'),translations:p.normalized_subject});
  const code=list(base.observations).find(o=>o.field==='set_code'&&o.certainty==='clear');
  out.set_code=code?clean(code.text):'';
+ if(!out.set_code){const tokens=label.split(/[\s,;]+/).map(t=>t.replace(/[.]+$/,''));out.set_code=tokens.find(t=>/^[A-Z]{1,4}\d{1,3}[a-z][A-Z]?$/.test(t.normalize('NFD').replace(/[\u0300-\u036f]/g,'')))||'';out.set_code=out.set_code.normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
+ if(!out.family&&/\bpok[eé]mon\b/i.test(label))out.family=label.match(/\bpok[eé]mon\b/i)[0];
 
  const literalTitleComplete=!!out.card_title&&p.title_certainty==='clear'&&/\b(?:19|20)\d{2}\b/.test(out.card_title)&&out.card_title.split(/\s+/).length>=3;
- const titleComplete=!!label&&(!!(out.subject||out.model)&&!!out.family&&/^(?:19|20)\d{2}(?:[-/]\d{2,4})?$/.test(out.year)||literalTitleComplete),subgrades=subgradeFacts(p,label);
+ const titleComplete=!!label&&(!!(out.subject||out.model)&&(!!out.family||!!out.set_code||!!out.card_number)&&(/^(?:19|20)\d{2}(?:[-/]\d{2,4})?$/.test(out.year)||!!out.card_number)||literalTitleComplete),subgrades=subgradeFacts(p,label);
  out.subgrades=subgrades.values;
  out.certificate_format_valid=certificatePlan(out).state==='ready';
  // Secondary label text has no veto when the identifying title, grade and

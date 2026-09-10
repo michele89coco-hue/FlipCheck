@@ -1,0 +1,778 @@
+{
+  "vision": {
+    "domain": "sports",
+    "kind": "card",
+    "category": "basketball trading card",
+    "language": "en",
+    "object_unit": "single",
+    "image_views": [
+      {
+        "image_index": 1,
+        "view": "front",
+        "certainty": "clear"
+      },
+      {
+        "image_index": 2,
+        "view": "back",
+        "certainty": "clear"
+      }
+    ],
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.14,
+        "y": 0.27,
+        "width": 0.79,
+        "height": 0.56,
+        "certain": true
+      },
+      {
+        "image_index": 2,
+        "x": 0.09,
+        "y": 0.28,
+        "width": 0.75,
+        "height": 0.56,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "KOBE BRYANT",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.25,
+          "y": 0.72,
+          "width": 0.29,
+          "height": 0.03
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "team",
+        "text": "LOS ANGELES LAKERS",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.25,
+          "y": 0.75,
+          "width": 0.29,
+          "height": 0.02
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "brand",
+        "text": "SkyBox",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.57,
+          "y": 0.77,
+          "width": 0.13,
+          "height": 0.03
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "product",
+        "text": "METAL UNIVERSE",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.61,
+          "y": 0.71,
+          "width": 0.22,
+          "height": 0.05
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "season",
+        "text": "1997-98",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.7,
+          "y": 0.68,
+          "width": 0.07,
+          "height": 0.02
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "copyright",
+        "text": "© 1997 NBA PROPERTIES, INC. © 1997 SKYBOX INTERNATIONAL. PRINTED IN U.S.A. METAL/VI",
+        "certainty": "uncertain",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.78,
+          "y": 0.34,
+          "width": 0.04,
+          "height": 0.39
+        },
+        "zone": "footer",
+        "alternatives": [
+          "© 1997 NBA PROPERTIES, INC. © 1997 SKYBOX INTERNATIONAL. PRINTED IN U.S.A. METAL"
+        ]
+      },
+      {
+        "field": "text",
+        "text": "NO. 8; HT. 6'6\"; WT. 200; HIGH SCHOOL; LOWER MERION (PA); BORN 8/23/78; PHILADELPHIA, PA",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.16,
+          "y": 0.44,
+          "width": 0.12,
+          "height": 0.17
+        },
+        "zone": "other",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "1996-97 L.A. LAKERS .417 .375 .819 132 91 49 23 539 7.6",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.22,
+          "y": 0.69,
+          "width": 0.48,
+          "height": 0.08
+        },
+        "zone": "statistics",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "NBA TOTALS .417 .375 .819 132 91 49 23 539 7.6",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.22,
+          "y": 0.76,
+          "width": 0.48,
+          "height": 0.04
+        },
+        "zone": "statistics",
+        "alternatives": []
+      }
+    ],
+    "features": [
+      {
+        "field": "border_color",
+        "value": "silver",
+        "description": "Cornice e pannelli metallici argentati",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.14,
+          "y": 0.27,
+          "width": 0.79,
+          "height": 0.56
+        },
+        "zone": "border"
+      },
+      {
+        "field": "finish",
+        "value": "reflective",
+        "description": "Superficie fortemente riflettente/metallica",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.14,
+          "y": 0.27,
+          "width": 0.79,
+          "height": 0.56
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "pattern",
+        "value": "sfondo metallico con texture a linee e forme geometriche",
+        "description": "Pattern strutturale argentato e colorato",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.14,
+          "y": 0.27,
+          "width": 0.79,
+          "height": 0.56
+        },
+        "zone": "artwork"
+      },
+      {
+        "field": "layout",
+        "value": "ritratto d'azione verticale con logo e targhetta inferiore",
+        "description": "Giocatore in movimento, pallone e grande elemento circolare sullo sfondo",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.14,
+          "y": 0.27,
+          "width": 0.79,
+          "height": 0.56
+        },
+        "zone": "artwork"
+      },
+      {
+        "field": "rookie",
+        "value": "unclear",
+        "description": "Nessun badge RC/Rookie chiaramente osservabile",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.14,
+          "y": 0.27,
+          "width": 0.79,
+          "height": 0.56
+        },
+        "zone": "label"
+      }
+    ],
+    "hypotheses": [
+      {
+        "field": "family",
+        "value": "basketball trading card"
+      },
+      {
+        "field": "model",
+        "value": "Metal Universe Kobe Bryant"
+      }
+    ],
+    "slab_reading": null,
+    "engine_version": 193,
+    "brand": "SkyBox",
+    "family": "basketball trading card",
+    "title": "KOBE BRYANT",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": {
+      "image_index": 1,
+      "x": 0.14,
+      "y": 0.27,
+      "width": 0.79,
+      "height": 0.56,
+      "certain": true
+    }
+  },
+  "references": [
+    {
+      "id": "lens-2",
+      "position": 2,
+      "title": "Kobe Bryant 1997-98 Skybox Metal Universe #81 Foil 2nd year ...",
+      "url": "https://www.ebay.com/itm/393292233481",
+      "image_url": "https://i.ebayimg.com/images/g/YKsAAOSw0d1gkG0y/s-l1200.jpg",
+      "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQ2y7ExnvCRYYJ6-f6NJjNcYvxq7cXGkqaPPHg-1kdOV3AYFODk",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "81"
+        ],
+        "languages": [],
+        "years": [
+          "1997-98"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": true,
+      "reasons": [],
+      "matches": [
+        "year",
+        "subject",
+        "brand"
+      ],
+      "missing": [
+        "finish"
+      ],
+      "verification_state": "needs_catalogue_or_image_verification",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 43,
+        "reasons": [
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [
+            "81"
+          ],
+          "years": [
+            "1997"
+          ]
+        },
+        "index": 1
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "KOBE BPYANT",
+        "origin": "candidate_image_ocr"
+      }
+    },
+    {
+      "id": "lens-3",
+      "position": 3,
+      "title": "Kobe Bryant #81 Precios | 1997 Metal Universe | Tarjetas de ...",
+      "url": "https://www.sportscardspro.com/es/game/basketball-cards-1997-metal-universe/kobe-bryant-81",
+      "image_url": "https://i.ebayimg.com/images/g/2OsAAeSw-Mdqegl2/s-l225.jpg",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcToEV79-0ZPl2gySriAEDXdlU0zdYtGLk3SnbSidambr1Az3Ir9",
+      "snippet": "",
+      "origin": "searchapi_google_lens",
+      "identity_verified": false,
+      "attributes": {
+        "numbers": [
+          "81"
+        ],
+        "languages": [],
+        "years": [
+          "1997"
+        ],
+        "finish": "",
+        "stamp": "",
+        "shadow": "",
+        "format": "",
+        "anniversary": ""
+      },
+      "eligible": false,
+      "reasons": [
+        "different_year"
+      ],
+      "matches": [
+        "subject"
+      ],
+      "missing": [
+        "finish"
+      ],
+      "verification_state": "rejected",
+      "ocrRank": {
+        "nameMatch": true,
+        "productMatch": true,
+        "score": 43,
+        "reasons": [
+          "subject_agrees",
+          "product_agrees"
+        ],
+        "facts": {
+          "codes": [],
+          "fractions": [],
+          "labelled": [
+            "81"
+          ],
+          "years": [
+            "1997"
+          ]
+        },
+        "index": 2
+      },
+      "metadataStrong": true,
+      "ocr": {
+        "state": "ok",
+        "script": "latin",
+        "text": "KOBe BRYANT",
+        "origin": "candidate_image_ocr"
+      }
+    }
+  ],
+  "batches": [
+    {
+      "ids": [
+        "lens-2"
+      ],
+      "reply": {
+        "original_readings": [
+          {
+            "field": "subject",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "KOBE BRYANT LOS ANGELES LAKERS",
+            "crop_text": "KOBE BRYANT LOS ANGELES LAKERS",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Kobe Bryant",
+              "en": "Kobe Bryant"
+            }
+          },
+          {
+            "field": "subject",
+            "image_index": 2,
+            "crop_id": "original-2-lower",
+            "full_text": "KOBE BRYANT; '96-'97 L.A. LAKERS; NBA TOTALS",
+            "crop_text": "KOBE BRYANT; '96-'97 L.A. LAKERS; NBA TOTALS",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Kobe Bryant",
+              "en": "Kobe Bryant"
+            }
+          },
+          {
+            "field": "collector_number",
+            "image_index": 2,
+            "crop_id": "original-2-upper",
+            "full_text": "81; G; HT: 6'6\"; WT: 200; HIGH SCHOOL; LOWER MERION (PA)",
+            "crop_text": "81; G; HT: 6'6\"; WT: 200; HIGH SCHOOL; LOWER MERION (PA)",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "",
+              "en": ""
+            }
+          }
+        ],
+        "comparisons": [
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.153,
+                "y": 0.259
+              },
+              {
+                "x": 0.949,
+                "y": 0.259
+              },
+              {
+                "x": 0.949,
+                "y": 0.772
+              },
+              {
+                "x": 0.153,
+                "y": 0.772
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.181,
+                "y": 0.171
+              },
+              {
+                "x": 0.932,
+                "y": 0.171
+              },
+              {
+                "x": 0.932,
+                "y": 0.971
+              },
+              {
+                "x": 0.181,
+                "y": 0.971
+              }
+            ],
+            "reference_id": "lens-2",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "Kobe Bryant",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "Kobe Bryant",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Bryant driving with ball before pink circular background",
+                "reference": "Same driving pose, ball placement, pink circular background",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Vertical card with lower Kobe Bryant nameplate",
+                "reference": "Vertical card with matching lower nameplate",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "configuration",
+                "original": "Visible holographic Metal Universe emblem at lower right",
+                "reference": "Matching holographic Metal Universe emblem at lower right",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Kobe Bryant",
+              "family": "Skybox Metal Universe",
+              "number": "81",
+              "year": "1997-98",
+              "brand": "Skybox",
+              "subset": "Foil",
+              "proof": {
+                "subject": "Kobe Bryant 1997-98 Skybox Metal Universe",
+                "family": "Skybox Metal Universe",
+                "year": "1997-98",
+                "subset": "Foil"
+              },
+              "display_names": {
+                "it": "Kobe Bryant",
+                "en": "Kobe Bryant"
+              }
+            }
+          }
+        ]
+      },
+      "accepted": []
+    },
+    {
+      "ids": [
+        "lens-3"
+      ],
+      "reply": {
+        "original_readings": [
+          {
+            "field": "subject",
+            "image_index": 1,
+            "crop_id": "original-1-lower",
+            "full_text": "KOBE BRYANT",
+            "crop_text": "KOBE BRYANT",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Kobe Bryant",
+              "en": "Kobe Bryant"
+            }
+          },
+          {
+            "field": "subject",
+            "image_index": 2,
+            "crop_id": "original-2-upper",
+            "full_text": "KOBE BRYANT",
+            "crop_text": "KOBE BRYANT",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "Kobe Bryant",
+              "en": "Kobe Bryant"
+            }
+          },
+          {
+            "field": "pokedex_number",
+            "image_index": 2,
+            "crop_id": "original-2-upper",
+            "full_text": "81",
+            "crop_text": "81",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "",
+              "en": ""
+            }
+          },
+          {
+            "field": "copyright",
+            "image_index": 2,
+            "crop_id": "original-2-upper",
+            "full_text": "© 1997 Skybox International",
+            "crop_text": "© 1997 Skybox International",
+            "evidence_found": true,
+            "certainty": "clear",
+            "display_names": {
+              "it": "",
+              "en": ""
+            }
+          }
+        ],
+        "comparisons": [
+          {
+            "original_image_index": 1,
+            "original_view": "front",
+            "reference_view": "front",
+            "original_quad": [
+              {
+                "x": 0.159,
+                "y": 0.26
+              },
+              {
+                "x": 0.946,
+                "y": 0.26
+              },
+              {
+                "x": 0.946,
+                "y": 0.773
+              },
+              {
+                "x": 0.159,
+                "y": 0.773
+              }
+            ],
+            "reference_quad": [
+              {
+                "x": 0.006,
+                "y": 0.006
+              },
+              {
+                "x": 0.994,
+                "y": 0.006
+              },
+              {
+                "x": 0.994,
+                "y": 0.994
+              },
+              {
+                "x": 0.006,
+                "y": 0.994
+              }
+            ],
+            "reference_id": "lens-3",
+            "match": true,
+            "ambiguous": false,
+            "title_matches_image": true,
+            "conflicts": [],
+            "original_reading": {
+              "subject": "KOBE BRYANT",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "reference_reading": {
+              "subject": "KOBe BRYANT",
+              "number": "",
+              "year": "",
+              "language": ""
+            },
+            "features": [
+              {
+                "field": "artwork",
+                "original": "Bryant extending toward basketball, pink moon background",
+                "reference": "Same pose, basketball, and pink moon background",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "layout",
+                "original": "Metal Universe front with bottom nameplate",
+                "reference": "Metal Universe front with bottom nameplate",
+                "agrees": true,
+                "certainty": "clear"
+              },
+              {
+                "field": "identifier",
+                "original": "Back shows 81 and 1997 copyright",
+                "reference": "Title identifies #81 and 1997 Metal Universe",
+                "agrees": true,
+                "certainty": "clear"
+              }
+            ],
+            "identity": {
+              "subject": "Kobe Bryant",
+              "family": "Metal Universe",
+              "number": "81",
+              "year": "1997",
+              "brand": "SkyBox",
+              "subset": "",
+              "proof": {
+                "subject": "Kobe Bryant",
+                "family": "1997 Metal Universe",
+                "year": "1997",
+                "subset": "Kobe Bryant #81"
+              },
+              "display_names": {
+                "it": "Kobe Bryant",
+                "en": "Kobe Bryant"
+              }
+            }
+          }
+        ]
+      },
+      "accepted": []
+    }
+  ],
+  "crops": [
+    {
+      "id": "original-1-upper",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.125,
+        "y": 0.2547008547008547,
+        "width": 0.8203703703703704,
+        "height": 0.1987179487179487
+      }
+    },
+    {
+      "id": "original-1-lower",
+      "image_index": 1,
+      "region": {
+        "image_index": 1,
+        "x": 0.125,
+        "y": 0.6354700854700854,
+        "width": 0.8203703703703704,
+        "height": 0.20982905982905983
+      }
+    },
+    {
+      "id": "original-2-upper",
+      "image_index": 2,
+      "region": {
+        "image_index": 2,
+        "x": 0.075,
+        "y": 0.26495726495726496,
+        "width": 0.7805555555555556,
+        "height": 0.19829059829059828
+      }
+    },
+    {
+      "id": "original-2-lower",
+      "image_index": 2,
+      "region": {
+        "image_index": 2,
+        "x": 0.075,
+        "y": 0.6457264957264958,
+        "width": 0.7805555555555556,
+        "height": 0.2094017094017094
+      }
+    }
+  ]
+}

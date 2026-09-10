@@ -29,7 +29,7 @@ test('217 actual Kobe conflict requires original reread, then saved front compar
  const f=replay('kobe');const initial=L.resolveComparisons217(f.l,f.batches,f.references);assert.equal(initial.accepted.length,0);assert.ok(initial.rejected.find(r=>r.id==='lens-44').reasons.includes('different_number'));
  const atom=f.l.pick('collector_number'),req={field:'collector_number',image_index:atom.image_index,region:atom.region,reason:'catalogue_number_conflict',key:'test-original'};
  E.applyDetails(f.l,[{field:'collector_number',text:'81',certainty:'clear',evidence_found:true,image_index:atom.image_index}],[req]);
- const r=L.resolveComparisons217(f.l,f.batches,f.references);assert.deepEqual(r.accepted.map(e=>e.visual_reference_id),['lens-44']);assert.equal(E.reduce(f.l,r.accepted).core_identity.status,'confirmed');assert.equal(f.l.pick('collector_number').value,'81');assert.ok(f.l.values('collector_number').some(a=>a.value==='18'));
+ const r=L.resolveComparisons217(f.l,f.batches,f.references);assert.deepEqual(r.accepted.map(e=>e.visual_reference_id),['lens-44','lens-36']);assert.equal(E.reduce(f.l,r.accepted).core_identity.status,'confirmed');assert.equal(f.l.pick('collector_number').value,'81');assert.ok(f.l.values('collector_number').some(a=>a.value==='18'));
 });
 for(const name of ['doncic','mewtwo'])test('217 recorded '+name+' keeps its existing exact closure',()=>{const f=replay(name);for(const b of f.batches)L.reconcileOriginal208(f.l,b.reply.original_readings,f.crops);const r=L.resolveComparisons217(f.l,f.batches,f.references);assert.equal(E.reduce(f.l,r.accepted).market_ready,true);});
 test('217 Boniface recorded consumption fits the explicit completion tolerance; target stays 0.030',()=>{
