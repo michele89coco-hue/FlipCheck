@@ -512,7 +512,8 @@ function physicalClosure236(l,result,entries){
  if(!entries.some(e=>e.grounded&&subjectMatch(e.subject,subject.value)&&numbersMatch(e.number,num.value)&&sportsSeason215(k.year,e.year)&&(!e.brand||same(e.brand,brand.value))&&(productEquivalent217(e.family,product)||norm(product).replace(/ university/g,'').includes(norm(e.family)))))return result;
  const superfractor=norm(label.value)==='superfractor'&&/\b(?:topps|bowman)\b/i.test(brand.value+' '+product);
  const sn=l.pick('serial'),parsed=sn&&serial(sn.value);if(superfractor&&parsed&&parsed.print_run!==1)return result;
- if(result.market_ready){if(superfractor&&!parsed){result.derived_serial={value:'1/1',print_run:1,origin:'parallel_definition',rule:'topps_bowman_superfractor',observation:label.id};if(result.card_identity)result.card_identity.derived_serial=result.derived_serial;}return result;}
+ const providerConflict=entries.some(e=>e.provider_rank===0&&e.source?.provider==='ximilar'&&subjectMatch(subject.value,e.subject)&&numbersMatch(num.value,e.number)&&e.subset_known&&e.subset&&!same(e.subset,subset?.value)&&!same(e.subset,label.value));
+ if(result.market_ready&&!providerConflict){if(superfractor&&!parsed){result.derived_serial={value:'1/1',print_run:1,origin:'parallel_definition',rule:'topps_bowman_superfractor',observation:label.id};if(result.card_identity)result.card_identity.derived_serial=result.derived_serial;}return result;}
  const labels=[superfractor?'Superfractor':label.value],physical=parsed?{...parsed,origin:'original_photo',observation:sn.id}:null;
  const derived=superfractor&&!physical?{value:'1/1',print_run:1,origin:'parallel_definition',rule:'topps_bowman_superfractor',observation:label.id}:null;
  const model=[k.year,product,subset?.value,'#'+num.value,subject.value].filter(Boolean).join(' · ');
