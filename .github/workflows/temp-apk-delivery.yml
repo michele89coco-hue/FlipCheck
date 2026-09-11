@@ -1,0 +1,34 @@
+name: Temporary APK Delivery
+
+on:
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: write
+
+jobs:
+  deliver:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch verified isolated APK and commit to delivery branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin apk-delivery-temp
+          git switch apk-delivery-temp
+          OUT="delivery/OpenAI-Card-Test-v1.0-debug.apk"
+          if [ -s "$OUT" ]; then
+            echo "APK already present"
+            exit 0
+          fi
+          mkdir -p delivery
+          curl -fL --retry 3 "https://tmpfiles.org/dl/w8wxmnDXlVkD/openai-card-test-v1.0-debug.apk" -o "$OUT"
+          echo "863a1874268aa4b61279da566255c4a34551fb2c6f88c2b577a00c1fa92c652a  $OUT" | sha256sum -c -
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$OUT"
+          git commit -m "Add temporary isolated OpenAI Card Test APK"
+          git push origin apk-delivery-temp
