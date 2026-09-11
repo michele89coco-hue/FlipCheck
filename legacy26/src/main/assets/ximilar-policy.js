@@ -1,5 +1,5 @@
 (function(root){'use strict';
-const UNIT_USD=.0069;
+const UNIT_USD=.0138; // Estimated recognition + pricing reservation (Business 100K).
 const str=v=>typeof v==='string'||typeof v==='number'?String(v).trim().slice(0,500):'';
 function endpoint(domain){return domain==='sports'?'sport_id':['pokemon','onepiece','tcg'].includes(domain)?'tcg_id':null;}
 function state(status){return status===401?'authentication_failed':status===403?'access_denied':status===402||status===429?'quota_or_rate_limit':status===200?'ok':'service_unavailable';}
@@ -22,7 +22,7 @@ function normalize(body,domain){
     if(!subject||!family||!number||domain==='pokemon'&&category&&!/pok[eé]mon/i.test(category)||domain==='onepiece'&&category&&!/one.?piece/i.test(category))continue;
     const total=str(m.out_of),source={url:'https://api.ximilar.com/collectibles/v2/'+endpoint(domain),provider:'ximilar',title:'Ximilar · '+str(m.full_name||subject),origin:'recognition_api'};
     // These are provider candidates, never photo observations or exact-edition proof.
-    entries.push({subject,family,number:total&&!number.includes('/')?number+'/'+total:number,year:str(m.year),brand:str(m.company||m.brand),language:'',subset:str(m.sub_set),rarity:str(m.rarity),variants:[],source,grounded:true,source_tier:'recognition_api',entry_quote:JSON.stringify({name:subject,set:family,number,year:str(m.year)}),provider_rank:rank,provider_distance:Number.isFinite(id.distances?.[rank])?id.distances[rank]:null});
+    entries.push({subject,family,number:total&&!number.includes('/')?number+'/'+total:number,year:str(m.year),brand:str(m.company||m.brand),language:'',subset:str(m.sub_set),subset_known:!!str(m.sub_set),price_statistics:rank===0?(typeof module!=='undefined'&&module.exports?require('./price-summary'):root.FlipCheckPriceSummary).extract(m):[],rarity:str(m.rarity),variants:[],source,grounded:true,source_tier:'recognition_api',entry_quote:JSON.stringify({name:subject,set:family,number,year:str(m.year)}),provider_rank:rank,provider_distance:Number.isFinite(id.distances?.[rank])?id.distances[rank]:null});
    }
   }
  }

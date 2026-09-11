@@ -323,6 +323,10 @@ async function resolveCatalogue193(base,ctx){
  let reading=lastVisionReading||base;
  if(S191.isSlab(reading)){
   const result=await resolveSlab191(base,ctx);
+  if(result.market_ready&&typeof recognizeXimilar233==='function'&&ximilarSelected233()){
+   const priceLedger=E193.ingestVision(new E193.Ledger(reading),reading);
+   await recognizeXimilar233(priceLedger,ctx);
+  }
   return {...result,engine_version:193,engine_final:true};
  }
  if(typeof startLens205==='function')await startLens205(ctx);
@@ -415,7 +419,7 @@ const priorLock199=lockPhotoControls;lockPhotoControls=function(){priorLock199()
   const c=value.card_identity||{},subject=value.localized_subject||c.subject||value.name_identity?.[value.title_language||'it']||value.core_identity?.fields?.find(f=>f.field==='subject')?.value||value.title||'Oggetto',family=c.set||value.family||'',date=c.date||value.source_confirmed_year||value.core_identity?.fields?.find(f=>f.field==='year')?.value||'';
   const variant=value.variant||c.observed_variant||'',variantBadge=variant.split(/\s+/).filter(w=>!E193.norm(family).split(' ').includes(E193.norm(w))).join(' ')||variant;
   const badges=[variantBadge,value.market_identity?.edition==='standard'?'Standard (non WINNER)':value.market_identity?.edition==='winner'?'WINNER':'',c.autograph==='present'?'Auto':'',c.is_rookie?'RC':'',value.physical_serial?.value,({en:'ENG',it:'ITA',ja:'JPN',zh:'CHN','zh-hans':'CHN-S','zh-hant':'CHN-T',de:'DEU',fr:'FRA'})[value.language],value.grading?.grade?`${value.grading.company||''} ${value.grading.grade}`.trim():''].filter(Boolean);
-  return {subject,subtitle:[date&&!String(family).includes(date)?date:'',family,c.number?'#'+c.number:''].filter(Boolean).join(' · '),badges:[...new Set(badges)]};
+  return {subject,subtitle:[date&&!String(family).includes(date)?date:'',family,c.subset&&!E193.norm(family).includes(E193.norm(c.subset))?c.subset:'',c.number?'#'+c.number:''].filter(Boolean).join(' · '),badges:[...new Set(badges)]};
  }
  async function thumbnail(value,token){
   const ctx=scan164,base=ctx?.catalogueEngine?.base||lastVisionReading||value;let data='',origin='Foto caricata';
