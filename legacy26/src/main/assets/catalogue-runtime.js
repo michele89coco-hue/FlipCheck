@@ -335,7 +335,7 @@ async function resolveCatalogue193(base,ctx){
  let entries=[],pages=[],result=E193.reduce(l,[]);
  try{
   await readPhotoOcr174(lastVisionReading||base,ctx);E193.ingestOcr(l,ctx.photoOcr);l.record('readings_collected',{count:l.atoms.length});
-  if(typeof recognizeXimilar233==='function'){entries=await recognizeXimilar233(l,ctx);result=commitCatalogue193(l,entries,ctx);l.deferYearRecovery237=!!ctx.ximilar;const decisive=E193.decisiveRequests237(l);if(decisive.length)result=await detailRead193(l,ctx,decisive,entries)||result;if(result.market_ready)return result;}
+  if(typeof recognizeXimilar233==='function'){entries=await recognizeXimilar233(l,ctx);result=commitCatalogue193(l,entries,ctx);l.deferYearRecovery237=!!ctx.ximilar;const decisive=E193.decisiveRequests237(l).filter(r=>l.domain!=='pokemon'||!!ctx.ximilar);if(decisive.length)result=await detailRead193(l,ctx,decisive,entries)||result;if(result.market_ready)return result;}
   await serialOcr212(l,ctx);
   if(l.domain==='sports'&&!l.pick('serial')){const req=E193.recoveryRequests(l,E193.reduce(l,[])).filter(r=>r.field==='serial').slice(0,1);if(req.length)await detailRead193(l,ctx,req,[]);}
   // Exact code lookup takes priority over spending Vision on other promo printings.
