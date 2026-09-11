@@ -417,7 +417,7 @@ function variantState(l,group){
   const comparedCore=l.evidence('catalogue_core').some(a=>a.value===coreKey(e));
   if(!pokemonKeys204(l).number&&!comparedCore)pending.push('collector_number');
   if(!pokemonKeys204(l).year&&l.active('copyright').length&&!comparedCore)pending.push('copyright');
-  if(!e.language&&!comparedCore)pending.push('language');
+  if(!e.language&&!comparedCore&&!(e.source_tier==='recognition_api'&&k.language))pending.push('language');
   fields.printingScope=scope;
   if((e.requires_image_confirmation||e.identifier_type==='pokedex'||e.identifier_type==='unnumbered'||!l.pick('collector_number')&&k.pokedex.length)&&!l.evidence('catalogue_core').some(a=>a.value===coreKey(e))){pending.push('catalogue_image');fields.needs_catalogue=true;}
   const incompatibleStamp=!scope.firstEdition&&l.evidence('stamp').some(a=>a.value==='present'&&/1st|first edition|edition\s*1|prima edizione/i.test(a.raw));if(incompatibleStamp){pending.push('stamp');fields.printing_conflict=true;}
