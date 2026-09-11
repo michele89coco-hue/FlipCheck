@@ -5,7 +5,7 @@ on:
     branches: [ main ]
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   deliver:
@@ -13,22 +13,24 @@ jobs:
     if: github.event.pull_request.head.repo.full_name == github.repository
     steps:
       - uses: actions/checkout@v4
-      - name: Fetch verified isolated APK and commit to delivery branch
+
+      - name: Fetch and verify isolated OpenAI tester APK
         shell: bash
         run: |
           set -euo pipefail
-          git fetch origin apk-delivery-temp
-          git switch apk-delivery-temp
-          OUT="delivery/OpenAI-Card-Test-v1.0-debug.apk"
-          if [ -s "$OUT" ]; then
-            echo "APK already present"
-            exit 0
-          fi
           mkdir -p delivery
-          curl -fL --retry 3 "https://tmpfiles.org/dl/w8wxmnDXlVkD/openai-card-test-v1.0-debug.apk" -o "$OUT"
-          echo "863a1874268aa4b61279da566255c4a34551fb2c6f88c2b577a00c1fa92c652a  $OUT" | sha256sum -c -
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add "$OUT"
-          git commit -m "Add temporary isolated OpenAI Card Test APK"
-          git push origin apk-delivery-temp
+          URL='https://release-assets.githubusercontent.com/github-production-release-asset/1341791314/57292fe6-eeda-4aa2-936f-be683746a62a?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-09-11T11%3A50%3A57Z&rscd=attachment%3B+filename%3DOpenAI-Card-Test-v1.0-debug.apk&rsct=application%2Fvnd.android.package-archive&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-09-11T10%3A50%3A24Z&ske=2026-09-11T11%3A50%3A57Z&sks=b&skv=2018-11-09&sig=%2Fih87VPUFdVaiv80wSm5bT%2FIJ29kxHOd5U1oUHWu8gw%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc4OTEyNDc3MiwibmJmIjoxNzg5MTI0NDcyLCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.jxNaryQVVkmGFaX-PoLzf2AndXQxa5_uw4Iw5DSfzJA&response-content-disposition=attachment%3B%20filename%3DOpenAI-Card-Test-v1.0-debug.apk&response-content-type=application%2Fvnd.android.package-archive'
+          OUT='delivery/OpenAI-Card-Test-v1.0-debug.apk'
+          curl -fLsS --retry 3 "$URL" -o "$OUT"
+          test "$(stat -c%s "$OUT")" = '865753'
+          echo '863a1874268aa4b61279da566255c4a34551fb2c6f88c2b577a00c1fa92c652a  delivery/OpenAI-Card-Test-v1.0-debug.apk' | sha256sum -c -
+          unzip -t "$OUT" >/dev/null
+
+      - name: Upload verified APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: OpenAI-Card-Test-v1.0-debug
+          path: delivery/OpenAI-Card-Test-v1.0-debug.apk
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 1
