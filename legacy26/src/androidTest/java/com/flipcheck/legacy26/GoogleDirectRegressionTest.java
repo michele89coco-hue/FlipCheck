@@ -3,6 +3,7 @@ package com.flipcheck.legacy26;
 import java.net.InetAddress;
 import java.io.IOException;
 import org.json.JSONObject;
+import org.json.JSONArray;
 import org.junit.Test;
 import okhttp3.Request;
 import okio.Buffer;
