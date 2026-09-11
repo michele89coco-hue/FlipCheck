@@ -330,6 +330,18 @@ public final class GoogleVisionBridge {
             }
         }
         rankedImages.entrySet().stream().sorted((a,b)->Integer.compare(b.getValue(),a.getValue())).limit(6).forEach(e->images.add(e.getKey()));
+        JSONArray marketRows=new JSONArray();
+        if(pageUrl.matches("https://(?:www\\.)?(?:pricecharting\\.com|sportscardspro\\.com)/game/.*")) {
+            for(Element row:doc.select("tr")) {
+                String literal=row.text();
+                if(!literal.matches("(?s).*\\b20\\d{2}-\\d{2}-\\d{2}\\b.*")||!literal.matches("(?s).*[\\$€£¥].*"))continue;
+                JSONArray links=new JSONArray();
+                for(Element link:row.select("a[href]"))try{links.put(json("title",link.text(),"url",publicUrl(link.absUrl("href")).toString()));}catch(IOException ignored){}
+                Element table=row.closest("table");
+                marketRows.put(json("quote",literal,"table",table==null?"":table.id(),"links",links));
+                if(marketRows.length()>=60)break;
+            }
+        }
         doc.select("script,style,noscript,svg,nav,header,footer").remove();
         // A comment can be the first <article> while the actual checklist lives
         // in a div. Choose the relevant content root rather than the first tag.
@@ -348,7 +360,7 @@ public final class GoogleVisionBridge {
         for(Element row:content.select("tr"))row.appendText("\n");
         for(Element block:content.select("p,li,h1,h2,h3,section,div,br"))block.appendText("\n");
         String text=(doc.title()+"\n"+productText+"\n"+content.wholeText()).replaceAll("[\\t\\x0B\\f\\r ]+"," ").replaceAll(" *\n *","\n").replaceAll("\n{3,}","\n\n").trim();
-        return json("status",200,"url",pageUrl,"title",doc.title(),"structured_fields",structuredFields,"catalogue_links",catalogueLinks,"catalogue_rows",catalogueRows,"catalogue_text",text.substring(0,Math.min(120000,text.length())),"catalogue_text_truncated",text.length()>120000,"text",selectPageText(text,terms),"text_selection","observed_terms","images",new JSONArray(images),"image_details",new JSONArray(images.stream().map(imageDetails::get).collect(java.util.stream.Collectors.toList())),"image_links",imageLinks,"is_collection",productText.length()==0&&linkedPages.size()>1&&(doc.title().matches("(?i).*(?:all products|search results|gallery|catalogue list).*")||pageUrl.matches("(?i).*/(?:shop|search|collection|category|gallery)[^/]*[/?].*")));
+        return json("status",200,"url",pageUrl,"title",doc.title(),"structured_fields",structuredFields,"catalogue_links",catalogueLinks,"catalogue_rows",catalogueRows,"market_rows",marketRows,"catalogue_text",text.substring(0,Math.min(120000,text.length())),"catalogue_text_truncated",text.length()>120000,"text",selectPageText(text,terms),"text_selection","observed_terms","images",new JSONArray(images),"image_details",new JSONArray(images.stream().map(imageDetails::get).collect(java.util.stream.Collectors.toList())),"image_links",imageLinks,"is_collection",productText.length()==0&&linkedPages.size()>1&&(doc.title().matches("(?i).*(?:all products|search results|gallery|catalogue list).*")||pageUrl.matches("(?i).*/(?:shop|search|collection|category|gallery)[^/]*[/?].*")));
     }
     // Select literal passages before imposing the transfer limit. A checklist row
     // near the end of a page must not disappear behind its introductory article.

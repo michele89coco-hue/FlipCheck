@@ -1,0 +1,19 @@
+const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
+const E=require('../src/main/assets/catalogue-engine'),C=require('../src/main/assets/catalogue-sources'),M=require('../src/main/assets/card-market');
+const fixture=name=>require('./fixtures/recovery-237-'+name+'.json');
+function ledger(name){const f=fixture(name),l=E.ingestVision(new E.Ledger(f.vision),f.vision);E.ingestOcr(l,f.photoOcr);return l;}
+test('237 Hill OCR is only a lead; focused original label and product close Superfractor',()=>{
+ const l=ledger('hill'),f=fixture('hill'),q=E.decisiveRequests237(l);assert.equal(E.reduce(l,f.entries).market_ready,false);assert.deepEqual(q.map(r=>r.field),['text','product']);
+ E.applyDetails(l,q.map(r=>({...r,text:r.field==='text'?'SUPERFRACTOR™':'Bowman University Chrome Football',certainty:'clear',evidence_found:true})),q);
+ const r=E.reduce(l,f.entries);assert.equal(r.market_ready,true);assert.match(r.identity_display,/Anthony Hill Jr.*Superfractor.*Auto.*1\/1/);assert.equal(r.card_identity.date,'2025');assert.equal(r.derived_serial.origin,'parallel_definition');assert.equal(r.physical_serial,null);
+});
+test('237 unreadable OCR parallel cannot produce a confirmed Superfractor',()=>{const l=ledger('hill'),q=E.decisiveRequests237(l);E.applyDetails(l,q.map(r=>({...r,text:'SUPERFRACTOR',certainty:'uncertain',evidence_found:false})),q);assert.equal(E.reduce(l,fixture('hill').entries).market_ready,false);assert.equal(l.pick('printing_name'),null);});
+test('237 Japanese Pokédex number cannot reject catalogue index or prove exact print',()=>{
+ const l=ledger('charizard');l.deferYearRecovery237=true;const q=E.query(l,'reference');assert.doesNotMatch(q,/1995/);assert.match(q,/Japanese/);assert.match(q,/Sugimori/);assert.ok(!E.recoveryRequests(l).some(r=>r.field==='copyright'));
+ const entry={subject:'Charizard',number:'021/102',year:'1998',language:'ja',illustrator:'Ken Sugimori',family:'Promo'};
+ const p=E.pokemonPolicy204(l,entry,{score:100,matches:[],reasons:['different_number','different_illustrator']});assert.ok(!p.reasons.includes('different_number'));assert.ok(p.reasons.includes('different_illustrator'));assert.ok(p.score<=70);
+});
+test('237 Chinese unknown catalogue remains searchable by physical fraction and language',()=>{const l=ledger('mewtwo');l.deferYearRecovery237=true;assert.match(E.query(l,'reference'),/135\/127/);assert.match(E.query(l,'reference'),/Chinese/);assert.ok(!E.recoveryRequests(l).some(r=>r.field==='copyright'));});
+test('237 observed vintage identifier prioritizes vintage catalogue briefs without discarding others',()=>{const l=ledger('charizard'),rows=[{id:'S8b-017',localId:'017'},{id:'PMCG1-021',localId:'021'}];assert.equal(C.rankBriefs237(rows,l)[0].id,'PMCG1-021');assert.equal(C.rankBriefs237(rows,l).length,2);});
+test('237 discovery separates Italian raw filtering from finding Dragonite product page',()=>{const p=M.plan({category:'Pokemon',card_identity:{subject:'Dragonite',set:'Expedition',number:'9/165',date:'2002',variant:'Holo',language:'it'}});assert.match(p.query,/Dragonite.*Expedition.*9\/165/);assert.doesNotMatch(p.query,/Italian|Ungraded/);assert.match(p.filter_query,/Italian Ungraded/);assert.equal(p.search_url,undefined);assert.match(M.prompt(p),/URL \/game\//);});
+test('237 web search accounting excludes page opens/finds and conservatively counts missing action',()=>{const s=fs.readFileSync(require.resolve('../src/main/assets/index.html'),'utf8'),fn=s.match(/function countWeb\(j\)\{[^\n]+/)[0],count=vm.runInNewContext('('+fn+')');assert.equal(count({output:[{type:'web_search_call',action:{type:'search'}},{type:'web_search_call',action:{type:'open_page'}},{type:'web_search_call',action:{type:'find_in_page'}}]}),1);assert.equal(count({output:[{type:'web_search_call'}]}),1);});

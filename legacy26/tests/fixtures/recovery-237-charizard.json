@@ -1,0 +1,945 @@
+{
+  "vision": {
+    "domain": "pokemon",
+    "kind": "card",
+    "category": "trading card",
+    "language": "ja",
+    "object_unit": "single",
+    "image_views": [
+      {
+        "image_index": 1,
+        "view": "front",
+        "certainty": "clear"
+      }
+    ],
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.004,
+        "y": 0.208,
+        "width": 0.991,
+        "height": 0.619,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "リザードン",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.25,
+          "y": 0.247,
+          "width": 0.35,
+          "height": 0.04
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "pokedex_number",
+        "text": "No.006",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.72,
+          "y": 0.802,
+          "width": 0.09,
+          "height": 0.02
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "illustrator",
+        "text": "Illus. Ken Sugimori",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.09,
+          "y": 0.797,
+          "width": 0.2,
+          "height": 0.018
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "hp",
+        "text": "HP120",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.64,
+          "y": 0.25,
+          "width": 0.1,
+          "height": 0.03
+        },
+        "zone": "statistics",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "LV.76",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.55,
+          "y": 0.25,
+          "width": 0.07,
+          "height": 0.03
+        },
+        "zone": "statistics",
+        "alternatives": []
+      },
+      {
+        "field": "attack",
+        "text": "ほのおのうず 100",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.37,
+          "y": 0.653,
+          "width": 0.4,
+          "height": 0.045
+        },
+        "zone": "statistics",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "かえんポケモン：身長1.7m、体重90.5kg",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.23,
+          "y": 0.575,
+          "width": 0.46,
+          "height": 0.035
+        },
+        "zone": "statistics",
+        "alternatives": []
+      },
+      {
+        "field": "copyright",
+        "text": "©1995, 96, 98 Nintendo Creatures GAMEFREAK",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.1,
+          "y": 0.8,
+          "width": 0.65,
+          "height": 0.018
+        },
+        "zone": "footer",
+        "alternatives": [
+          "©1995, 96, 98 Nintendo Creatures GAMEFREAK"
+        ]
+      }
+    ],
+    "features": [
+      {
+        "field": "border_color",
+        "value": "gold",
+        "description": "Bordo esterno dorato/giallo",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.004,
+          "y": 0.208,
+          "width": 0.991,
+          "height": 0.619
+        },
+        "zone": "border"
+      },
+      {
+        "field": "finish",
+        "value": "holo",
+        "description": "Superficie con effetto olografico visibile nell'illustrazione",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.1,
+          "y": 0.29,
+          "width": 0.76,
+          "height": 0.25
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "layout",
+        "value": "Carta Pokémon vintage giapponese, ritratto del Pokémon e statistiche nella metà inferiore",
+        "description": "Layout osservabile",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.04,
+          "y": 0.23,
+          "width": 0.91,
+          "height": 0.59
+        },
+        "zone": "other"
+      }
+    ],
+    "hypotheses": [
+      {
+        "field": "family",
+        "value": "Pokémon vintage giapponese"
+      }
+    ],
+    "slab_reading": null,
+    "engine_version": 193,
+    "brand": "",
+    "family": "Pokémon vintage giapponese",
+    "title": "リザードン",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": {
+      "image_index": 1,
+      "x": 0.004,
+      "y": 0.208,
+      "width": 0.991,
+      "height": 0.619,
+      "certain": true
+    },
+    "photo_clues": [
+      {
+        "text": "リザードン",
+        "role": "subject",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.25,
+          "y": 0.247,
+          "width": 0.35,
+          "height": 0.04,
+          "certain": true
+        }
+      },
+      {
+        "text": "No.006",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.72,
+          "y": 0.802,
+          "width": 0.09,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "Illus. Ken Sugimori",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.09,
+          "y": 0.797,
+          "width": 0.2,
+          "height": 0.018,
+          "certain": true
+        }
+      },
+      {
+        "text": "HP120",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.64,
+          "y": 0.25,
+          "width": 0.1,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "LV.76",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.55,
+          "y": 0.25,
+          "width": 0.07,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "ほのおのうず 100",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.37,
+          "y": 0.653,
+          "width": 0.4,
+          "height": 0.045,
+          "certain": true
+        }
+      },
+      {
+        "text": "かえんポケモン：身長1.7m、体重90.5kg",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.23,
+          "y": 0.575,
+          "width": 0.46,
+          "height": 0.035,
+          "certain": true
+        }
+      },
+      {
+        "text": "©1995, 96, 98 Nintendo Creatures GAMEFREAK",
+        "role": "copyright",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.1,
+          "y": 0.8,
+          "width": 0.65,
+          "height": 0.018,
+          "certain": true
+        }
+      }
+    ],
+    "physical_observations": [
+      {
+        "feature": "color",
+        "text": "gold border",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Superficie con effetto olografico visibile nell'illustrazione",
+        "certainty": "uncertain",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Layout osservabile",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      }
+    ],
+    "pokemon_printing": {
+      "is_pokemon": true,
+      "language": "ja",
+      "set_name": "Pokémon vintage giapponese",
+      "card_type": "pokemon",
+      "first_edition_stamp": "unclear",
+      "stamp_image": 0,
+      "stamp_location": "",
+      "stamp_text": "",
+      "artwork_shadow": "unclear",
+      "shadow_image": 0,
+      "shadow_location": "",
+      "copyright_text": "",
+      "copyright_image": 1
+    }
+  },
+  "photoOcr": [
+    {
+      "image_index": 1,
+      "meta": {
+        "originalWidth": 1080,
+        "originalHeight": 2340,
+        "imageIndex": 1,
+        "rect": {
+          "x": 0,
+          "y": 451,
+          "width": 1080,
+          "height": 1520
+        },
+        "cropped": true,
+        "searchWindow": false,
+        "sentWidth": 1080,
+        "sentHeight": 1520,
+        "mimeType": "image/jpeg",
+        "jpegQuality": 0.94,
+        "source": "original_file",
+        "orientation": "from-image",
+        "unit": "single"
+      },
+      "state": "ok",
+      "origin": "on_device_photo_ocr",
+      "script": "japanese",
+      "text": "2進化リザードから進化\nリザードン\nかえんポケモン:身長1.7m、体重90.5kg\n弱点\n【特殊能カ】エナジーバーン\nモンスターカードに重ねて使います。\nこのカは自分の番の中で何度でも使える。このカードについているすべてのエネル\nギーは、炎」エネルギーになり、自分の番の終わりに元にもどる。このカードが\n「ねむりマヒ·こんらん」状態の時、この力は消える。\nllus.Ken Sugimori\nLV.T6 HP20\nほのおのうず\nこのカードについていいるエネルキーカー0\nなる)\nできない時、このワザのダメージは0に\nにげる\n明)抵抗カ ダメージ -30\n地上1400メートルま\nで翼をつかって飛ぶご\nとができる。高熱の炎\nをはく。\nNo 006",
+      "lines": [
+        {
+          "text": "2進化リザードから進化",
+          "x": 0.072222225,
+          "y": 0.05,
+          "width": 0.35277778,
+          "height": 0.025657896,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.6917614,
+          "observation_count": 2
+        },
+        {
+          "text": "リザードン",
+          "x": 0.26296297,
+          "y": 0.08355263,
+          "width": 0.2851852,
+          "height": 0.04276316,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.75,
+          "observation_count": 2
+        },
+        {
+          "text": "かえんポケモン:身長1.7m、体重90.5kg",
+          "x": 0.2212963,
+          "y": 0.5453947,
+          "width": 0.52037036,
+          "height": 0.022368431,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.72961956,
+          "observation_count": 1,
+          "alternatives": [
+            {
+              "text": "体重90.5kg",
+              "x": 0.5991753,
+              "y": 0.5480469,
+              "width": 0.14226806,
+              "height": 0.02080077,
+              "pass": "right_edge_inverted_90",
+              "rotation_degrees": 90,
+              "engine_confidence": 0.85595703,
+              "observation_count": 1
+            },
+            {
+              "text": "かえんポケモン",
+              "x": 0.21649484,
+              "y": 0.5451172,
+              "width": 0.19134022,
+              "height": 0.019628882,
+              "pass": "left_edge_inverted_270",
+              "rotation_degrees": 270,
+              "engine_confidence": 0.6791295,
+              "observation_count": 1
+            },
+            {
+              "text": "1.7m、",
+              "x": 0.50096244,
+              "y": 0.5475098,
+              "width": 0.07699716,
+              "height": 0.02153325,
+              "pass": "right_edge_90",
+              "rotation_degrees": 90,
+              "engine_confidence": 0.6921875,
+              "observation_count": 1
+            },
+            {
+              "text": "体重90.5kg",
+              "x": 0.59720886,
+              "y": 0.54785156,
+              "width": 0.1434071,
+              "height": 0.021875024,
+              "pass": "right_edge_90",
+              "rotation_degrees": 90,
+              "engine_confidence": 0.8457031,
+              "observation_count": 1
+            }
+          ],
+          "ambiguous": true
+        },
+        {
+          "text": "弱点",
+          "x": 0.18796296,
+          "y": 0.82631576,
+          "width": 0.06574075,
+          "height": 0.022368431,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.73828125,
+          "observation_count": 3
+        },
+        {
+          "text": "【特殊能カ】エナジーバーン",
+          "x": 0.10925926,
+          "y": 0.57894737,
+          "width": 0.49814814,
+          "height": 0.03618419,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.5402644,
+          "observation_count": 2
+        },
+        {
+          "text": "モンスターカードに重ねて使います。",
+          "x": 0.5425926,
+          "y": 0.059210528,
+          "width": 0.33055556,
+          "height": 0.016447369,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.76769304,
+          "observation_count": 2
+        },
+        {
+          "text": "このカは自分の番の中で何度でも使える。このカードについているすべてのエネル",
+          "x": 0.09907407,
+          "y": 0.61513156,
+          "width": 0.75092596,
+          "height": 0.014473677,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.76150763,
+          "observation_count": 1,
+          "alternatives": [
+            {
+              "text": "この力は自分の番の中で何度でも使える。こ",
+              "x": 0.10346487,
+              "y": 0.6138184,
+              "width": 0.40086624,
+              "height": 0.015039086,
+              "pass": "left_edge_270",
+              "rotation_degrees": 270,
+              "engine_confidence": 0.7248047,
+              "observation_count": 1
+            },
+            {
+              "text": "この力は自分の番の中で何度でも使える。このカードについているすべてのエネル",
+              "x": 0.09907407,
+              "y": 0.6157895,
+              "width": 0.75,
+              "height": 0.015131593,
+              "pass": "rotate_90",
+              "rotation_degrees": 90,
+              "engine_confidence": 0.77396536,
+              "observation_count": 1
+            }
+          ],
+          "ambiguous": true
+        },
+        {
+          "text": "ギーは、炎」エネルギーになり、自分の番の終わりに元にもどる。このカードが",
+          "x": 0.1,
+          "y": 0.62828946,
+          "width": 0.7453703,
+          "height": 0.015131593,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.6860894,
+          "observation_count": 2
+        },
+        {
+          "text": "「ねむりマヒ·こんらん」状態の時、この力は消える。",
+          "x": 0.098148145,
+          "y": 0.6375,
+          "width": 0.49629632,
+          "height": 0.017105281,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.6759375,
+          "observation_count": 2,
+          "alternatives": [
+            {
+              "text": "「ねむりマヒ·こんらん」状態の時、このカ",
+              "x": 0.100096256,
+              "y": 0.63671875,
+              "width": 0.40664098,
+              "height": 0.018798828,
+              "pass": "left_edge_270",
+              "rotation_degrees": 270,
+              "engine_confidence": 0.59160155,
+              "observation_count": 1
+            }
+          ],
+          "ambiguous": true
+        },
+        {
+          "text": "llus.Ken Sugimori",
+          "x": 0.087037034,
+          "y": 0.92368424,
+          "width": 0.16759261,
+          "height": 0.015131533,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.72387695,
+          "observation_count": 2
+        },
+        {
+          "text": "LV.T6 HP20",
+          "x": 0.5712963,
+          "y": 0.09605263,
+          "width": 0.2166667,
+          "height": 0.03486842,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.7065972,
+          "observation_count": 2
+        },
+        {
+          "text": "ほのおのうず",
+          "x": 0.3935185,
+          "y": 0.66710526,
+          "width": 0.27037036,
+          "height": 0.040789485,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.765625,
+          "observation_count": 2,
+          "alternatives": [
+            {
+              "text": "ラず",
+              "x": 0.60041237,
+              "y": 0.66845703,
+              "width": 0.061030924,
+              "height": 0.04130858,
+              "pass": "right_edge_inverted_90",
+              "rotation_degrees": 90,
+              "engine_confidence": 0.5078125,
+              "observation_count": 1
+            },
+            {
+              "text": "ほの道",
+              "x": 0.37969202,
+              "y": 0.6671387,
+              "width": 0.1337825,
+              "height": 0.03691411,
+              "pass": "left_edge_270",
+              "rotation_degrees": 270,
+              "engine_confidence": 0.50390625,
+              "observation_count": 1
+            }
+          ],
+          "ambiguous": true
+        },
+        {
+          "text": "このカードについていいるエネルキーカー0",
+          "x": 0.3962963,
+          "y": 0.7046053,
+          "width": 0.44814816,
+          "height": 0.023684204,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.40898436,
+          "observation_count": 1,
+          "alternatives": [
+            {
+              "text": "ドを2枚ト.",
+              "x": 0.39166668,
+              "y": 0.7177632,
+              "width": 0.10833332,
+              "height": 0.013815761,
+              "pass": "original",
+              "rotation_degrees": 0,
+              "engine_confidence": 0.64453125,
+              "observation_count": 1
+            },
+            {
+              "text": "るエネルギーカー",
+              "x": 0.5995877,
+              "y": 0.70712894,
+              "width": 0.14927828,
+              "height": 0.012011707,
+              "pass": "right_edge_inverted_90",
+              "rotation_degrees": 90,
+              "engine_confidence": 0.7104492,
+              "observation_count": 1
+            },
+            {
+              "text": "についているエネルギーカー",
+              "x": 0.49903753,
+              "y": 0.7074708,
+              "width": 0.25024065,
+              "height": 0.015039086,
+              "pass": "right_edge_90",
+              "rotation_degrees": 90,
+              "engine_confidence": 0.7515024,
+              "observation_count": 1
+            },
+            {
+              "text": "100",
+              "x": 0.76275265,
+              "y": 0.7026856,
+              "width": 0.08373439,
+              "height": 0.032470703,
+              "pass": "right_edge_90",
+              "rotation_degrees": 90,
+              "engine_confidence": 0.79557294,
+              "observation_count": 1
+            }
+          ],
+          "ambiguous": true
+        },
+        {
+          "text": "なる)",
+          "x": 0.39722222,
+          "y": 0.74407893,
+          "width": 0.043518513,
+          "height": 0.011842132,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.69661456,
+          "observation_count": 3
+        },
+        {
+          "text": "できない時、このワザのダメージは0に",
+          "x": 0.39722222,
+          "y": 0.7263158,
+          "width": 0.35185188,
+          "height": 0.017763138,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.6890191,
+          "observation_count": 2,
+          "alternatives": [
+            {
+              "text": "のウザのダメー",
+              "x": 0.5178056,
+              "y": 0.72387695,
+              "width": 0.13955724,
+              "height": 0.024267673,
+              "pass": "right_edge_90",
+              "rotation_degrees": 90,
+              "engine_confidence": 0.5714286,
+              "observation_count": 1
+            },
+            {
+              "text": "できない時、",
+              "x": 0.38787296,
+              "y": 0.7303711,
+              "width": 0.1159769,
+              "height": 0.01435554,
+              "pass": "left_edge_270",
+              "rotation_degrees": 270,
+              "engine_confidence": 0.76627606,
+              "observation_count": 1
+            }
+          ],
+          "ambiguous": true
+        },
+        {
+          "text": "にげる",
+          "x": 0.39814815,
+          "y": 0.78157896,
+          "width": 0.08703703,
+          "height": 0.021052599,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.8541667,
+          "observation_count": 3
+        },
+        {
+          "text": "明)抵抗カ ダメージ -30",
+          "x": 0.10462963,
+          "y": 0.8730263,
+          "width": 0.40925926,
+          "height": 0.039473712,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.54036456,
+          "observation_count": 1
+        },
+        {
+          "text": "地上1400メートルま",
+          "x": 0.5925926,
+          "y": 0.79605263,
+          "width": 0.24629629,
+          "height": 0.019736826,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.72727275,
+          "observation_count": 3
+        },
+        {
+          "text": "で翼をつかって飛ぶご",
+          "x": 0.5935185,
+          "y": 0.82039475,
+          "width": 0.24722224,
+          "height": 0.019736826,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.7511719,
+          "observation_count": 1,
+          "alternatives": [
+            {
+              "text": "で翼をつかって飛ぶこ",
+              "x": 0.5943215,
+              "y": 0.82163095,
+              "width": 0.24494708,
+              "height": 0.01777339,
+              "pass": "right_edge_90",
+              "rotation_degrees": 90,
+              "engine_confidence": 0.69375,
+              "observation_count": 1
+            },
+            {
+              "text": "で翼をつかって 飛ぶこ",
+              "x": 0.5861111,
+              "y": 0.8190789,
+              "width": 0.26018518,
+              "height": 0.022368431,
+              "pass": "rotate_90",
+              "rotation_degrees": 90,
+              "engine_confidence": 0.72382814,
+              "observation_count": 1
+            }
+          ],
+          "ambiguous": true
+        },
+        {
+          "text": "とができる。高熱の炎",
+          "x": 0.59537035,
+          "y": 0.84342104,
+          "width": 0.2490741,
+          "height": 0.019736826,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.7554687,
+          "observation_count": 2
+        },
+        {
+          "text": "をはく。",
+          "x": 0.5824074,
+          "y": 0.86710525,
+          "width": 0.10277778,
+          "height": 0.019736886,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.6748047,
+          "observation_count": 2
+        },
+        {
+          "text": "No 006",
+          "x": 0.77685183,
+          "y": 0.9223684,
+          "width": 0.08888888,
+          "height": 0.01907897,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.7945312,
+          "observation_count": 3
+        }
+      ],
+      "width": 1080,
+      "height": 1520,
+      "coordinate_space": "original_normalized",
+      "passes": [
+        {
+          "name": "original",
+          "rotation_degrees": 0,
+          "state": "ok",
+          "line_count": 23,
+          "region_count": 1,
+          "width": 1080,
+          "height": 1520
+        },
+        {
+          "name": "critical_code_0",
+          "rotation_degrees": 0,
+          "state": "ok",
+          "line_count": 1,
+          "region_count": 1,
+          "width": 462,
+          "height": 315
+        },
+        {
+          "name": "light_text_regions_90",
+          "rotation_degrees": 90,
+          "state": "ok",
+          "line_count": 0,
+          "region_count": 1,
+          "width": 720,
+          "height": 160
+        },
+        {
+          "name": "right_edge_inverted_90",
+          "rotation_degrees": 90,
+          "state": "ok",
+          "line_count": 7,
+          "region_count": 1,
+          "width": 2048,
+          "height": 970
+        },
+        {
+          "name": "left_edge_inverted_270",
+          "rotation_degrees": 270,
+          "state": "ok",
+          "line_count": 5,
+          "region_count": 1,
+          "width": 2048,
+          "height": 970
+        },
+        {
+          "name": "right_edge_90",
+          "rotation_degrees": 90,
+          "state": "ok",
+          "line_count": 13,
+          "region_count": 1,
+          "width": 2048,
+          "height": 1039
+        },
+        {
+          "name": "left_edge_270",
+          "rotation_degrees": 270,
+          "state": "ok",
+          "line_count": 12,
+          "region_count": 1,
+          "width": 2048,
+          "height": 1039
+        },
+        {
+          "name": "rotate_90",
+          "rotation_degrees": 90,
+          "state": "ok",
+          "line_count": 24,
+          "region_count": 1,
+          "width": 1520,
+          "height": 1080
+        }
+      ],
+      "pass_count": 8,
+      "ambiguous_line_count": 7,
+      "elapsed_ms": 3899,
+      "baseline_elapsed_ms": 877,
+      "recovery_elapsed_ms": 3022,
+      "recovery_budget_ms": 8000,
+      "paid_requests": 0
+    }
+  ],
+  "entries": []
+}

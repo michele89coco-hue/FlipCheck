@@ -416,4 +416,11 @@ public final class GoogleDirectRegressionTest {
             assertEquals(384,session.info().getInt("entries"));assertEquals(6,session.info().getInt("skipped"));assertNull(session.get("entry-389"));
         } finally {ScanEvidenceCache.remove(root);}
     }
+    @Test public void soldRowsKeepLiteralPricesDatesAndOutboundLinks() throws Exception {
+        String html="<html><head><title>Machamp Shadowless #8</title></head><body><table id='completed-auctions'><tr><td>2026-07-22</td><td><a href='https://www.ebay.com/itm/123456789012'>Machamp Shadowless 8/102 English LP</a></td><td>$99.99</td></tr></table><table><tr><td>Ungraded</td><td>$200.00</td></tr></table></body></html>";
+        JSONObject page=GoogleVisionBridge.pageData(html,"https://www.pricecharting.com/game/pokemon-base-set/machamp-shadowless-8",new JSONArray().put("Machamp"));
+        JSONArray rows=page.getJSONArray("market_rows");assertEquals(1,rows.length());
+        JSONObject row=rows.getJSONObject(0);assertTrue(row.getString("quote").contains("2026-07-22"));assertTrue(row.getString("quote").contains("$99.99"));
+        assertEquals("completed-auctions",row.getString("table"));assertEquals("https://www.ebay.com/itm/123456789012",row.getJSONArray("links").getJSONObject(0).getString("url"));
+    }
 }

@@ -41,8 +41,8 @@ function estimate164(body){
  const price=modelPrice(body.model);if(!price.input||!price.output)throw new Error('pricing_not_configured');
  const input=Math.ceil(new TextEncoder().encode(text).length/2)+imageCount*8192+(body.tools?.length?12000:0);
  // Reserve retrieved web context too: recorded Boniface returned 8,415 extra input tokens.
- // Recorded catalogue responses can contain two billed searches despite max_tool_calls=1.
- const tools=body.tools?.length?Math.max(body.text?.format?.name==='flipcheck_catalogue_search'?2:1,Number(body.max_tool_calls)||1):0;
+ // Reserve the requested searches. Page opens/finds are recorded separately.
+ const tools=body.tools?.length?Math.max(1,Number(body.max_tool_calls)||1):0;
  return (input*Math.max(price.input,price.write)+Number(body.max_output_tokens||3000)*price.output)/1e6+tools*.01;
 }
 async function boundedFetch164(url,options,ctx,ms){
@@ -81,6 +81,7 @@ window.fetch=async function(url,options={}){
  try{
   const response=await boundedFetch164(url,options,ctx,body.text?.format?.name==='flipcheck_lens_image_comparison'?75000:45000),j=await response.clone().json();guard164(ctx);
   if(response.ok&&j.usage)ctx.budget.settle(reservation,usageMetrics(j,body.model,countWeb(j)).cost);else ctx.budget.settle(reservation,null);
+  event.webActions=(j.output||[]).filter(o=>o.type==='web_search_call').map(o=>({id:o.id,status:o.status,action:o.action||null}));event.billedSearches=countWeb(j);event.requestedMaxToolCalls=body.max_tool_calls||0;event.toolLimitExceeded=event.webActions.length>event.requestedMaxToolCalls;
   event.responseStatus=j.status||null;event.incompleteReason=j.status==='incomplete'?j.incomplete_details?.reason||'output_incomplete':null;event.state=response.ok?(j.status==='incomplete'?'incomplete':'completed'):'service_error';event.httpStatus=response.status;event.elapsedMs=Date.now()-started;
   if(!response.ok){ctx.provider.lastApiError=response.status;ctx.state='service_unavailable';}
   return response;

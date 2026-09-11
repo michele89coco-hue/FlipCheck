@@ -1,0 +1,1337 @@
+{
+  "vision": {
+    "domain": "sports",
+    "kind": "card",
+    "category": "football trading card",
+    "language": "en",
+    "object_unit": "single",
+    "image_views": [
+      {
+        "image_index": 1,
+        "view": "front",
+        "certainty": "clear"
+      },
+      {
+        "image_index": 2,
+        "view": "back",
+        "certainty": "clear"
+      }
+    ],
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.037,
+        "y": 0.235,
+        "width": 0.926,
+        "height": 0.633,
+        "certain": true
+      },
+      {
+        "image_index": 2,
+        "x": 0.026,
+        "y": 0.372,
+        "width": 0.948,
+        "height": 0.337,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "Anthony Hill Jr.",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.31,
+          "y": 0.704,
+          "width": 0.32,
+          "height": 0.045
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "subject",
+        "text": "Anthony Hill Jr.",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.238,
+          "y": 0.402,
+          "width": 0.32,
+          "height": 0.028
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "brand",
+        "text": "Topps",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.14,
+          "y": 0.652,
+          "width": 0.09,
+          "height": 0.027
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "product",
+        "text": "Bowman Chrome",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.82,
+          "y": 0.818,
+          "width": 0.12,
+          "height": 0.035
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "subset",
+        "text": "Bowman Chrome Prospect Autograph Variation",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.231,
+          "y": 0.494,
+          "width": 0.55,
+          "height": 0.045
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "team",
+        "text": "Texas",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.335,
+          "y": 0.759,
+          "width": 0.105,
+          "height": 0.025
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "season",
+        "text": "2025",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.37,
+          "y": 0.526,
+          "width": 0.06,
+          "height": 0.02
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "model_code",
+        "text": "BCA-AHJ",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.807,
+          "y": 0.402,
+          "width": 0.09,
+          "height": 0.02
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "LB",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.341,
+          "y": 0.762,
+          "width": 0.04,
+          "height": 0.018
+        },
+        "zone": "statistics",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "Topps Certified Autograph Issue",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.326,
+          "y": 0.668,
+          "width": 0.36,
+          "height": 0.023
+        },
+        "zone": "label",
+        "alternatives": []
+      },
+      {
+        "field": "copyright",
+        "text": "© & © 2025 THE TOPPS COMPANY, INC. ALL RIGHTS RESERVED. TOPPS AND BOWMAN CHROME ARE TRADEMARKS OF THE TOPPS COMPANY, INC. The collegiate indicia used herein are trademarks owned by the respective collegiate institutions. WWW.TOPPS.COM. CODE #CMP111814.",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.14,
+          "y": 0.678,
+          "width": 0.72,
+          "height": 0.03
+        },
+        "zone": "footer",
+        "alternatives": []
+      }
+    ],
+    "features": [
+      {
+        "field": "border_color",
+        "value": "gold",
+        "description": "Cornice e finitura dorata",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.04,
+          "y": 0.239,
+          "width": 0.92,
+          "height": 0.62
+        },
+        "zone": "border"
+      },
+      {
+        "field": "finish",
+        "value": "reflective",
+        "description": "Superficie riflettente con motivo circolare",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.04,
+          "y": 0.239,
+          "width": 0.92,
+          "height": 0.62
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "autograph",
+        "value": "present",
+        "description": "Autografo blu sul fronte",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.22,
+          "y": 0.598,
+          "width": 0.45,
+          "height": 0.105
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "layout",
+        "value": "football action portrait with Texas logo and autograph panel",
+        "description": "Ritratto d'azione verticale con loghi e pannello autografo",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.04,
+          "y": 0.239,
+          "width": 0.92,
+          "height": 0.62
+        },
+        "zone": "other"
+      }
+    ],
+    "hypotheses": [],
+    "slab_reading": null,
+    "engine_version": 193,
+    "brand": "Topps",
+    "family": "Bowman Chrome",
+    "title": "Anthony Hill Jr.",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": {
+      "image_index": 1,
+      "x": 0.037,
+      "y": 0.235,
+      "width": 0.926,
+      "height": 0.633,
+      "certain": true
+    },
+    "photo_clues": [
+      {
+        "text": "Anthony Hill Jr.",
+        "role": "subject",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.31,
+          "y": 0.704,
+          "width": 0.32,
+          "height": 0.045,
+          "certain": true
+        }
+      },
+      {
+        "text": "Anthony Hill Jr.",
+        "role": "subject",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.238,
+          "y": 0.402,
+          "width": 0.32,
+          "height": 0.028,
+          "certain": true
+        }
+      },
+      {
+        "text": "Topps",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.14,
+          "y": 0.652,
+          "width": 0.09,
+          "height": 0.027,
+          "certain": true
+        }
+      },
+      {
+        "text": "Bowman Chrome",
+        "role": "model",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.82,
+          "y": 0.818,
+          "width": 0.12,
+          "height": 0.035,
+          "certain": true
+        }
+      },
+      {
+        "text": "Bowman Chrome Prospect Autograph Variation",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.231,
+          "y": 0.494,
+          "width": 0.55,
+          "height": 0.045,
+          "certain": true
+        }
+      },
+      {
+        "text": "Texas",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.335,
+          "y": 0.759,
+          "width": 0.105,
+          "height": 0.025,
+          "certain": true
+        }
+      },
+      {
+        "text": "2025",
+        "role": "season",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.37,
+          "y": 0.526,
+          "width": 0.06,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "BCA-AHJ",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.807,
+          "y": 0.402,
+          "width": 0.09,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "LB",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.341,
+          "y": 0.762,
+          "width": 0.04,
+          "height": 0.018,
+          "certain": true
+        }
+      },
+      {
+        "text": "Topps Certified Autograph Issue",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.326,
+          "y": 0.668,
+          "width": 0.36,
+          "height": 0.023,
+          "certain": true
+        }
+      },
+      {
+        "text": "© & © 2025 THE TOPPS COMPANY, INC. ALL RIGHTS RESERVED. TOPPS AND BOWMAN CHROME ARE TRADEMARKS OF THE TOPPS COMPANY, INC. The collegiate indicia used herein are trademarks owned by the respective collegiate institutions. WWW.TOPPS.COM. CODE #CMP111814.",
+        "role": "copyright",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.14,
+          "y": 0.678,
+          "width": 0.72,
+          "height": 0.03,
+          "certain": true
+        }
+      }
+    ],
+    "physical_observations": [
+      {
+        "feature": "color",
+        "text": "gold border",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Superficie riflettente con motivo circolare",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Autografo blu sul fronte",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      },
+      {
+        "feature": "finish",
+        "text": "Ritratto d'azione verticale con loghi e pannello autografo",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 1
+      }
+    ]
+  },
+  "photoOcr": [
+    {
+      "image_index": 1,
+      "meta": {
+        "originalWidth": 1080,
+        "originalHeight": 2340,
+        "imageIndex": 1,
+        "rect": {
+          "x": 23,
+          "y": 514,
+          "width": 1034,
+          "height": 1553
+        },
+        "cropped": true,
+        "searchWindow": false,
+        "sentWidth": 1034,
+        "sentHeight": 1553,
+        "mimeType": "image/jpeg",
+        "jpegQuality": 0.94,
+        "source": "original_file",
+        "orientation": "from-image",
+        "unit": "single"
+      },
+      "state": "ok",
+      "origin": "on_device_photo_ocr",
+      "script": "latin",
+      "text": "ST\nBOWMAN\nS\nCERTIFE\nAS\nTOPPS CERTIFIED AUTOGRAPH ISSUE\nAMIHONE HL JR\nTEXAS/ LB\nenrore\nR.\nAN\nAS",
+      "lines": [
+        {
+          "text": "ST",
+          "x": 0.1992263,
+          "y": 0.07533806,
+          "width": 0.017408118,
+          "height": 0.018673532,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.7109375,
+          "observation_count": 3
+        },
+        {
+          "text": "BOWMAN",
+          "x": 0.095744684,
+          "y": 0.099162914,
+          "width": 0.16827853,
+          "height": 0.014810041,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.6048177,
+          "observation_count": 3
+        },
+        {
+          "text": "S",
+          "x": 0.44294003,
+          "y": 0.25370252,
+          "width": 0.009671181,
+          "height": 0.023180932,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.4375,
+          "observation_count": 1
+        },
+        {
+          "text": "CERTIFE",
+          "x": 0.25048357,
+          "y": 0.6748229,
+          "width": 0.21760154,
+          "height": 0.014166117,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.4921875,
+          "observation_count": 1
+        },
+        {
+          "text": "AS",
+          "x": 0.56769824,
+          "y": 0.29362524,
+          "width": 0.08994198,
+          "height": 0.045717984,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.48242188,
+          "observation_count": 1
+        },
+        {
+          "text": "TOPPS CERTIFIED AUTOGRAPH ISSUE",
+          "x": 0.311412,
+          "y": 0.71860915,
+          "width": 0.39071563,
+          "height": 0.017385721,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.6764788,
+          "observation_count": 2,
+          "alternatives": [
+            {
+              "text": "TOPPS CA",
+              "x": 0.31648353,
+              "y": 0.7176758,
+              "width": 0.089230746,
+              "height": 0.017871082,
+              "pass": "left_edge_inverted_270",
+              "rotation_degrees": 270,
+              "engine_confidence": 0.65345985,
+              "observation_count": 1
+            },
+            {
+              "text": "TOPPS CERTIEIED",
+              "x": 0.3141684,
+              "y": 0.7190919,
+              "width": 0.18223819,
+              "height": 0.015380859,
+              "pass": "left_edge_270",
+              "rotation_degrees": 270,
+              "engine_confidence": 0.719587,
+              "observation_count": 1
+            },
+            {
+              "text": "TOPPS CERTIEIED AUTOGRAPH ISSUE",
+              "x": 0.3172147,
+              "y": 0.71925306,
+              "width": 0.38104448,
+              "height": 0.017385721,
+              "pass": "rotate_90",
+              "rotation_degrees": 90,
+              "engine_confidence": 0.69810265,
+              "observation_count": 1
+            }
+          ],
+          "ambiguous": true
+        },
+        {
+          "text": "AMIHONE HL JR",
+          "x": 0.32011604,
+          "y": 0.7514488,
+          "width": 0.3056093,
+          "height": 0.04314232,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.43217328,
+          "observation_count": 1
+        },
+        {
+          "text": "TEXAS/ LB",
+          "x": 0.32108316,
+          "y": 0.8139086,
+          "width": 0.14506772,
+          "height": 0.021249175,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.6401367,
+          "observation_count": 2,
+          "alternatives": [
+            {
+              "text": "TEXAS LB",
+              "x": 0.34650922,
+              "y": 0.8137696,
+              "width": 0.11960989,
+              "height": 0.021191359,
+              "pass": "left_edge_270",
+              "rotation_degrees": 270,
+              "engine_confidence": 0.672433,
+              "observation_count": 1
+            },
+            {
+              "text": "TEXASI LB",
+              "x": 0.34332687,
+              "y": 0.8139086,
+              "width": 0.12959385,
+              "height": 0.021893084,
+              "pass": "rotate_270",
+              "rotation_degrees": 270,
+              "engine_confidence": 0.61279297,
+              "observation_count": 1
+            }
+          ],
+          "ambiguous": true
+        },
+        {
+          "text": "enrore",
+          "x": 0.74854934,
+          "y": 0.8164842,
+          "width": 0.1847195,
+          "height": 0.0418545,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.31054688,
+          "observation_count": 1,
+          "alternatives": [
+            {
+              "text": "Chrone",
+              "x": 0.8033881,
+              "y": 0.8353028,
+              "width": 0.11858314,
+              "height": 0.015722632,
+              "pass": "right_edge_90",
+              "rotation_degrees": 90,
+              "engine_confidence": 0.6015625,
+              "observation_count": 1
+            }
+          ],
+          "ambiguous": true
+        },
+        {
+          "text": "R.",
+          "x": 0.59956044,
+          "y": 0.75517577,
+          "width": 0.04571432,
+          "height": 0.036328137,
+          "pass": "right_edge_inverted_90",
+          "rotation_degrees": 90,
+          "engine_confidence": 0.5449219,
+          "observation_count": 1
+        },
+        {
+          "text": "AN",
+          "x": 0.22533852,
+          "y": 0.09272376,
+          "width": 0.04352027,
+          "height": 0.026400521,
+          "pass": "rotate_270",
+          "rotation_degrees": 270,
+          "engine_confidence": 0.5859375,
+          "observation_count": 1
+        },
+        {
+          "text": "AS",
+          "x": 0.6005803,
+          "y": 0.28783,
+          "width": 0.07736939,
+          "height": 0.045717984,
+          "pass": "rotate_270",
+          "rotation_degrees": 270,
+          "engine_confidence": 0.5410156,
+          "observation_count": 1
+        }
+      ],
+      "width": 1034,
+      "height": 1553,
+      "coordinate_space": "original_normalized",
+      "passes": [
+        {
+          "name": "original",
+          "rotation_degrees": 0,
+          "state": "ok",
+          "line_count": 9,
+          "region_count": 1,
+          "width": 1034,
+          "height": 1553
+        },
+        {
+          "name": "light_text_regions_90",
+          "rotation_degrees": 90,
+          "state": "ok",
+          "line_count": 0,
+          "region_count": 6,
+          "width": 720,
+          "height": 960
+        },
+        {
+          "name": "right_edge_inverted_90",
+          "rotation_degrees": 90,
+          "state": "ok",
+          "line_count": 2,
+          "region_count": 1,
+          "width": 2048,
+          "height": 910
+        },
+        {
+          "name": "left_edge_inverted_270",
+          "rotation_degrees": 270,
+          "state": "ok",
+          "line_count": 3,
+          "region_count": 1,
+          "width": 2048,
+          "height": 910
+        },
+        {
+          "name": "right_edge_90",
+          "rotation_degrees": 90,
+          "state": "ok",
+          "line_count": 4,
+          "region_count": 1,
+          "width": 2048,
+          "height": 974
+        },
+        {
+          "name": "left_edge_270",
+          "rotation_degrees": 270,
+          "state": "ok",
+          "line_count": 4,
+          "region_count": 1,
+          "width": 2048,
+          "height": 974
+        },
+        {
+          "name": "rotate_90",
+          "rotation_degrees": 90,
+          "state": "ok",
+          "line_count": 7,
+          "region_count": 1,
+          "width": 1553,
+          "height": 1034
+        },
+        {
+          "name": "rotate_270",
+          "rotation_degrees": 270,
+          "state": "ok",
+          "line_count": 9,
+          "region_count": 1,
+          "width": 1553,
+          "height": 1034
+        }
+      ],
+      "pass_count": 8,
+      "ambiguous_line_count": 3,
+      "elapsed_ms": 767,
+      "baseline_elapsed_ms": 138,
+      "recovery_elapsed_ms": 629,
+      "recovery_budget_ms": 8000,
+      "paid_requests": 0
+    },
+    {
+      "image_index": 2,
+      "meta": {
+        "originalWidth": 1080,
+        "originalHeight": 2340,
+        "imageIndex": 2,
+        "rect": {
+          "x": 11,
+          "y": 835,
+          "width": 1058,
+          "height": 860
+        },
+        "cropped": true,
+        "searchWindow": false,
+        "sentWidth": 1058,
+        "sentHeight": 860,
+        "mimeType": "image/jpeg",
+        "jpegQuality": 0.94,
+        "source": "original_file",
+        "orientation": "from-image",
+        "unit": "single"
+      },
+      "state": "ok",
+      "origin": "on_device_photo_ocr",
+      "script": "latin",
+      "text": "ANTHONY HILL JR.\nTEXAS - LB\nBOWMAN CHROME PROSPECT\nAUTOGRAPH VARIATION\nBCA-AHJ\nThe signing of all Topps autograph cards is witnessed by a Topps representative\nto guarantee authenticity.\nSUPERFRACTOR™\nfrom 2025 Bowman University Chrome Football.\nO 2025 THE TOPPS COMPANY, INC. ALL RIGHTS RESERVED. TOPPS AND BOWMAN CHROME ARE TRADEMARKS OF THE TOPPS COMPANY, INC\nThe collegiate indicia used herein are trademarks owned by the respective collegiate institutions. WWW.TOPPS.cOM. CODE#CMP111814.\nis witnessed by a Topps representative",
+      "lines": [
+        {
+          "text": "ANTHONY HILL JR.",
+          "x": 0.23724008,
+          "y": 0.15,
+          "width": 0.31663513,
+          "height": 0.036046505,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.8468192,
+          "observation_count": 3
+        },
+        {
+          "text": "TEXAS - LB",
+          "x": 0.24007562,
+          "y": 0.19302325,
+          "width": 0.092627585,
+          "height": 0.022093028,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.78515625,
+          "observation_count": 4
+        },
+        {
+          "text": "BOWMAN CHROME PROSPECT",
+          "x": 0.23251417,
+          "y": 0.36744186,
+          "width": 0.52741027,
+          "height": 0.036046505,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.8871094,
+          "observation_count": 3,
+          "alternatives": [
+            {
+              "text": "BOWMAN CHRC",
+              "x": 0.24480152,
+              "y": 0.3552326,
+              "width": 0.26228732,
+              "height": 0.052325547,
+              "pass": "left_edge_270",
+              "rotation_degrees": 270,
+              "engine_confidence": 0.8761719,
+              "observation_count": 1
+            }
+          ],
+          "ambiguous": true
+        },
+        {
+          "text": "AUTOGRAPH VARIATION",
+          "x": 0.2863894,
+          "y": 0.4232558,
+          "width": 0.41682422,
+          "height": 0.036046535,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.84418404,
+          "observation_count": 3
+        },
+        {
+          "text": "BCA-AHJ",
+          "x": 0.81663513,
+          "y": 0.15232559,
+          "width": 0.11814749,
+          "height": 0.030232549,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.72209823,
+          "observation_count": 4
+        },
+        {
+          "text": "The signing of all Topps autograph cards is witnessed by a Topps representative",
+          "x": 0.22306238,
+          "y": 0.5813953,
+          "width": 0.5415879,
+          "height": 0.018604696,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.88724345,
+          "observation_count": 3,
+          "alternatives": [
+            {
+              "text": "The signing of al Topps autograph cards-",
+              "x": 0.22967863,
+              "y": 0.57325584,
+              "width": 0.27599245,
+              "height": 0.028488398,
+              "pass": "left_edge_270",
+              "rotation_degrees": 270,
+              "engine_confidence": 0.81330425,
+              "observation_count": 1
+            }
+          ],
+          "ambiguous": true
+        },
+        {
+          "text": "to guarantee authenticity.",
+          "x": 0.40831757,
+          "y": 0.6,
+          "width": 0.16824198,
+          "height": 0.022092998,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.88948566,
+          "observation_count": 2
+        },
+        {
+          "text": "SUPERFRACTOR™",
+          "x": 0.8137996,
+          "y": 0.1988372,
+          "width": 0.122873366,
+          "height": 0.015116289,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.7833534,
+          "observation_count": 5
+        },
+        {
+          "text": "from 2025 Bowman University Chrome Football.",
+          "x": 0.16824196,
+          "y": 0.4755814,
+          "width": 0.64839315,
+          "height": 0.034883738,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.8844151,
+          "observation_count": 2,
+          "alternatives": [
+            {
+              "text": "Chrome Football.",
+              "x": 0.60094565,
+              "y": 0.47868216,
+              "width": 0.214342,
+              "height": 0.027907014,
+              "pass": "right_edge_inverted_90",
+              "rotation_degrees": 90,
+              "engine_confidence": 0.7867187,
+              "observation_count": 1
+            },
+            {
+              "text": "Bowm",
+              "x": 0.33412135,
+              "y": 0.47131783,
+              "width": 0.07281324,
+              "height": 0.036434114,
+              "pass": "left_edge_inverted_270",
+              "rotation_degrees": 270,
+              "engine_confidence": 0.7597656,
+              "observation_count": 1
+            },
+            {
+              "text": "wersity",
+              "x": 0.5,
+              "y": 0.47790703,
+              "width": 0.08128548,
+              "height": 0.03488365,
+              "pass": "right_edge_90",
+              "rotation_degrees": 90,
+              "engine_confidence": 0.83872765,
+              "observation_count": 1
+            },
+            {
+              "text": "Chrome Football.",
+              "x": 0.592155,
+              "y": 0.4767442,
+              "width": 0.22542536,
+              "height": 0.03662792,
+              "pass": "right_edge_90",
+              "rotation_degrees": 90,
+              "engine_confidence": 0.8171875,
+              "observation_count": 1
+            }
+          ],
+          "ambiguous": true
+        },
+        {
+          "text": "O 2025 THE TOPPS COMPANY, INC. ALL RIGHTS RESERVED. TOPPS AND BOWMAN CHROME ARE TRADEMARKS OF THE TOPPS COMPANY, INC",
+          "x": 0.13610587,
+          "y": 0.7732558,
+          "width": 0.73345935,
+          "height": 0.02093023,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.80227125,
+          "observation_count": 2,
+          "alternatives": [
+            {
+              "text": "ME ARE TRADEMARKS OF THE TOPPS COMPANY, INC",
+              "x": 0.6003152,
+              "y": 0.7767442,
+              "width": 0.2695036,
+              "height": 0.018604636,
+              "pass": "right_edge_inverted_90",
+              "rotation_degrees": 90,
+              "engine_confidence": 0.76464844,
+              "observation_count": 1
+            },
+            {
+              "text": "&O2025 THE TOPPS COMPANY, INC ALL RIGHTSF",
+              "x": 0.12639873,
+              "y": 0.7744186,
+              "width": 0.27832943,
+              "height": 0.019379854,
+              "pass": "left_edge_inverted_270",
+              "rotation_degrees": 270,
+              "engine_confidence": 0.7530134,
+              "observation_count": 1
+            },
+            {
+              "text": "ND BOWMAN CHROME ARE TRADEMARKS OF THE TOPPS COMPANY, INC.",
+              "x": 0.49952742,
+              "y": 0.77616286,
+              "width": 0.37381855,
+              "height": 0.020930171,
+              "pass": "right_edge_90",
+              "rotation_degrees": 90,
+              "engine_confidence": 0.8078763,
+              "observation_count": 1
+            },
+            {
+              "text": "&02025 THE TOPPS COMPANY, INC. ALL RIGHTS RESERVED. TOPPS AND BOWMAN CHROME ARE TRADEMARKS OF THE TOPPS COMPANY, INC.",
+              "x": 0.1294896,
+              "y": 0.76976746,
+              "width": 0.74858224,
+              "height": 0.024418592,
+              "pass": "rotate_270",
+              "rotation_degrees": 270,
+              "engine_confidence": 0.8132497,
+              "observation_count": 1
+            }
+          ],
+          "ambiguous": true
+        },
+        {
+          "text": "The collegiate indicia used herein are trademarks owned by the respective collegiate institutions. WWW.TOPPS.cOM. CODE#CMP111814.",
+          "x": 0.1294896,
+          "y": 0.7976744,
+          "width": 0.72400755,
+          "height": 0.019767463,
+          "pass": "original",
+          "rotation_degrees": 0,
+          "engine_confidence": 0.79945654,
+          "observation_count": 1,
+          "alternatives": [
+            {
+              "text": "tive collegiate institutions. wWw.TOPPS.CcOM. CODE#CMP111814.",
+              "x": 0.49952742,
+              "y": 0.7982559,
+              "width": 0.35349718,
+              "height": 0.01918602,
+              "pass": "right_edge_90",
+              "rotation_degrees": 90,
+              "engine_confidence": 0.7234786,
+              "observation_count": 1
+            },
+            {
+              "text": "The collegiate indicia used herein are trademarks owned by the respea",
+              "x": 0.13468808,
+              "y": 0.7941861,
+              "width": 0.36956525,
+              "height": 0.023837209,
+              "pass": "left_edge_270",
+              "rotation_degrees": 270,
+              "engine_confidence": 0.83805615,
+              "observation_count": 1
+            },
+            {
+              "text": "The coliegiate indicia used herein are trademarks owned by the respective collegiate institutions. WwW.TOPPS.COM. CODE#CMP111814.",
+              "x": 0.1294896,
+              "y": 0.79651165,
+              "width": 0.7192817,
+              "height": 0.023255825,
+              "pass": "rotate_90",
+              "rotation_degrees": 90,
+              "engine_confidence": 0.81443614,
+              "observation_count": 1
+            },
+            {
+              "text": "The coliegiate indicia used herein are trademarks oWned by the respective collegiate institutions WwW.TOPPS.COM. CODE#CMP111814.",
+              "x": 0.13516068,
+              "y": 0.79186046,
+              "width": 0.7202268,
+              "height": 0.024418592,
+              "pass": "rotate_270",
+              "rotation_degrees": 270,
+              "engine_confidence": 0.81746846,
+              "observation_count": 1
+            }
+          ],
+          "ambiguous": true
+        },
+        {
+          "text": "is witnessed by a Topps representative",
+          "x": 0.5051985,
+          "y": 0.5767442,
+          "width": 0.2589792,
+          "height": 0.029069781,
+          "pass": "right_edge_90",
+          "rotation_degrees": 90,
+          "engine_confidence": 0.8760653,
+          "observation_count": 1
+        }
+      ],
+      "width": 1058,
+      "height": 860,
+      "coordinate_space": "original_normalized",
+      "passes": [
+        {
+          "name": "original",
+          "rotation_degrees": 0,
+          "state": "ok",
+          "line_count": 11,
+          "region_count": 1,
+          "width": 1058,
+          "height": 860
+        },
+        {
+          "name": "light_text_regions_90",
+          "rotation_degrees": 90,
+          "state": "ok",
+          "line_count": 2,
+          "region_count": 1,
+          "width": 720,
+          "height": 160
+        },
+        {
+          "name": "right_edge_inverted_90",
+          "rotation_degrees": 90,
+          "state": "ok",
+          "line_count": 7,
+          "region_count": 1,
+          "width": 1548,
+          "height": 1269
+        },
+        {
+          "name": "left_edge_inverted_270",
+          "rotation_degrees": 270,
+          "state": "ok",
+          "line_count": 7,
+          "region_count": 1,
+          "width": 1548,
+          "height": 1269
+        },
+        {
+          "name": "right_edge_90",
+          "rotation_degrees": 90,
+          "state": "ok",
+          "line_count": 11,
+          "region_count": 1,
+          "width": 1204,
+          "height": 1058
+        },
+        {
+          "name": "left_edge_270",
+          "rotation_degrees": 270,
+          "state": "ok",
+          "line_count": 9,
+          "region_count": 1,
+          "width": 1204,
+          "height": 1058
+        },
+        {
+          "name": "rotate_90",
+          "rotation_degrees": 90,
+          "state": "ok",
+          "line_count": 13,
+          "region_count": 1,
+          "width": 860,
+          "height": 1058
+        },
+        {
+          "name": "rotate_270",
+          "rotation_degrees": 270,
+          "state": "ok",
+          "line_count": 11,
+          "region_count": 1,
+          "width": 860,
+          "height": 1058
+        }
+      ],
+      "pass_count": 8,
+      "ambiguous_line_count": 5,
+      "elapsed_ms": 704,
+      "baseline_elapsed_ms": 90,
+      "recovery_elapsed_ms": 614,
+      "recovery_budget_ms": 8000,
+      "paid_requests": 0
+    }
+  ],
+  "entries": [
+    {
+      "subject": "Anthony Hill Jr.",
+      "family": "Bowman University Chrome",
+      "number": "BCA-AHJ",
+      "year": "2025",
+      "brand": "Topps",
+      "language": "",
+      "subset": "Autograph Variation",
+      "subset_known": true,
+      "price_statistics": [],
+      "rarity": "",
+      "variants": [],
+      "source": {
+        "url": "https://api.ximilar.com/collectibles/v2/sport_id",
+        "provider": "ximilar",
+        "title": "Ximilar · Anthony Hill Jr. 2025 #BCA-AHJ Topps Bowman University Chrome Autograph Variation",
+        "origin": "recognition_api"
+      },
+      "grounded": true,
+      "source_tier": "recognition_api",
+      "entry_quote": "{\"name\":\"Anthony Hill Jr.\",\"set\":\"Bowman University Chrome\",\"number\":\"BCA-AHJ\",\"year\":\"2025\"}",
+      "provider_rank": 0,
+      "provider_distance": 0.3683067
+    },
+    {
+      "subject": "Anthony Hill Jr.",
+      "family": "Bowman Chrome",
+      "number": "AHJ",
+      "year": "2025",
+      "brand": "Topps",
+      "language": "",
+      "subset": "Green Refractor",
+      "subset_known": true,
+      "price_statistics": [],
+      "rarity": "",
+      "variants": [],
+      "source": {
+        "url": "https://api.ximilar.com/collectibles/v2/sport_id",
+        "provider": "ximilar",
+        "title": "Ximilar · Anthony Hill Jr. 2025 #AHJ Topps Bowman Chrome Green Refractor",
+        "origin": "recognition_api"
+      },
+      "grounded": true,
+      "source_tier": "recognition_api",
+      "entry_quote": "{\"name\":\"Anthony Hill Jr.\",\"set\":\"Bowman Chrome\",\"number\":\"AHJ\",\"year\":\"2025\"}",
+      "provider_rank": 1,
+      "provider_distance": 0.41671526
+    },
+    {
+      "subject": "Anthony Hill Jr.",
+      "family": "Bowman Chrome",
+      "number": "BCA-AHJ",
+      "year": "2025",
+      "brand": "Topps",
+      "language": "",
+      "subset": "Black & Gold Stealth",
+      "subset_known": true,
+      "price_statistics": [],
+      "rarity": "",
+      "variants": [],
+      "source": {
+        "url": "https://api.ximilar.com/collectibles/v2/sport_id",
+        "provider": "ximilar",
+        "title": "Ximilar · Anthony Hill Jr. 2025 #BCA-AHJ Topps Bowman Chrome Black & Gold Stealth",
+        "origin": "recognition_api"
+      },
+      "grounded": true,
+      "source_tier": "recognition_api",
+      "entry_quote": "{\"name\":\"Anthony Hill Jr.\",\"set\":\"Bowman Chrome\",\"number\":\"BCA-AHJ\",\"year\":\"2025\"}",
+      "provider_rank": 2,
+      "provider_distance": 0.4222915
+    },
+    {
+      "subject": "John Mateer",
+      "family": "Bowman Chrome",
+      "number": "BCA-JM",
+      "year": "2025",
+      "brand": "Topps",
+      "language": "",
+      "subset": "Refractor",
+      "subset_known": true,
+      "price_statistics": [],
+      "rarity": "",
+      "variants": [],
+      "source": {
+        "url": "https://api.ximilar.com/collectibles/v2/sport_id",
+        "provider": "ximilar",
+        "title": "Ximilar · John Mateer 2025 #BCA-JM Topps Bowman Chrome Refractor",
+        "origin": "recognition_api"
+      },
+      "grounded": true,
+      "source_tier": "recognition_api",
+      "entry_quote": "{\"name\":\"John Mateer\",\"set\":\"Bowman Chrome\",\"number\":\"BCA-JM\",\"year\":\"2025\"}",
+      "provider_rank": 3,
+      "provider_distance": 0.47883296
+    },
+    {
+      "subject": "Vinny Anthony II",
+      "family": "Bowman U Chrome",
+      "number": "VA",
+      "year": "2025",
+      "brand": "Topps",
+      "language": "",
+      "subset": "Blue Mini Diamond",
+      "subset_known": true,
+      "price_statistics": [],
+      "rarity": "",
+      "variants": [],
+      "source": {
+        "url": "https://api.ximilar.com/collectibles/v2/sport_id",
+        "provider": "ximilar",
+        "title": "Ximilar · Vinny Anthony II 2025 #VA Topps Bowman U Chrome Blue Mini Diamond",
+        "origin": "recognition_api"
+      },
+      "grounded": true,
+      "source_tier": "recognition_api",
+      "entry_quote": "{\"name\":\"Vinny Anthony II\",\"set\":\"Bowman U Chrome\",\"number\":\"VA\",\"year\":\"2025\"}",
+      "provider_rank": 4,
+      "provider_distance": 0.48007202
+    }
+  ]
+}

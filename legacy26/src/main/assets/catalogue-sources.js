@@ -59,6 +59,11 @@ function requestPlan(l){
  const brand=E.norm([l.base.brand,...k.brands,...k.products].join(' ')),p=/topps|bowman/.test(brand)?'topps':/panini/.test(brand)?'panini':/upper deck|fleer|skybox/.test(brand)?'upperdeck':/leaf/.test(brand)?'leaf':null;
  return p?[{action:'page',url:providers[p].directories[0],terms:[k.year,...k.products,l.base.family].filter(Boolean),provider:p,purpose:'checklist_directory'}]:[];
 }
+function rankBriefs237(rows,l){
+ const k=E.keyValues(l),dex=l.pick('pokedex_number')&&!l.pick('collector_number');
+ const score=c=>(!dex&&k.numbers.some(n=>E.numbersMatch(n,c.localId))?100:0)+k.setCodes.filter(code=>E.norm(c.id).startsWith(E.norm(code))).length*80+(dex&&/^(?:pmcg|promo|base|neo|gym|ecard)/i.test(c.id)?30:0);
+ return [...rows].sort((a,b)=>score(b)-score(a));
+}
 function tcgdexBriefs(body,keys){return list(body).filter(c=>c.id&&c.name&&E.subjectMatch(keys.subject,c.name)).sort((a,b)=>Number(keys.numbers.some(n=>E.numbersMatch(n,b.localId)))-Number(keys.numbers.some(n=>E.numbersMatch(n,a.localId))));}
 function tcgdexCard(card,set,lang,url){
  if(!card?.id||!card.set?.id||!card.name||!card.localId)return null;
@@ -216,5 +221,5 @@ function rankSources(pages,l){
  const k=E.keyValues(l);if(l.domain==='pokemon')k.numbers=E.pokemonNumbers203(l);return pages.filter(p=>relevantSource230(p,l)).filter(p=>!/(?:pokedex|pok[eé]dex)/i.test(p.url+' '+p.title)).map(p=>{const title=E.norm(p.title+' '+p.url),text=E.norm(pageText(p));return {p,score:(k.subject&&title.includes(E.norm(k.subject))?40:0)+(k.subject&&text.includes(E.norm(k.subject))?15:0)+(k.products.some(v=>E.familyKey(cleanFamily(p.title))===E.familyKey(v))?35:0)+(k.numbers.some(n=>title.includes(E.norm(E.numberParts(n)?.local||n)))?30:0)+(/checklist|cardlist|cards|espansione|expansion/i.test(p.url+' '+p.title)?8:0)+(k.numbers.some(n=>text.includes(E.norm(n)))?5:0)};}).sort((a,b)=>b.score-a.score).map(x=>x.p);
 }
 function directoryLinks(page,l){const k=E.keyValues(l),terms=uniq([k.year,...k.products,...str(l.base.family).split(' ').filter(t=>t.length>3)]).map(E.norm);return list(page.catalogue_links).map(a=>({...a,score:terms.reduce((n,t)=>n+Number(E.norm(a.title+' '+a.url).includes(t)),0)})).filter(a=>a.score>=Math.min(2,terms.length)&&a.score>0).sort((a,b)=>b.score-a.score).slice(0,2);}
-const api={relevantSource230,pokemonProductEntries204,pokemonLeadEntries204,pokemonSourcePolicy203,pokemonReferenceImages203,registryEntries201,usablePage200,bandaiEntries,rankSources,providers,requestPlan,tcgdexBriefs,tcgdexCard,pageText,cleanFamily,records,groundedExtraction,directoryLinks,itemAttributes,variantsFromLines};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckCatalogueSources=api;
+const api={rankBriefs237,relevantSource230,pokemonProductEntries204,pokemonLeadEntries204,pokemonSourcePolicy203,pokemonReferenceImages203,registryEntries201,usablePage200,bandaiEntries,rankSources,providers,requestPlan,tcgdexBriefs,tcgdexCard,pageText,cleanFamily,records,groundedExtraction,directoryLinks,itemAttributes,variantsFromLines};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckCatalogueSources=api;
 })(typeof window==='undefined'?globalThis:window);

@@ -20,7 +20,16 @@ async function runCardMarket236(){
  const started=Date.now();
  try{
   const response=await originalOpenai26(body);addUsage(response,body.model,countWeb(response),'Vendite carta',false,started);guard164(ctx);
-  const data=parseResponseJSON(response),sources=collectSources(response),m=FlipCheckCardMarket.evaluate(data,saved,sources);
+  let data=parseResponseJSON(response);const sources=collectSources(response),retrieval=[];
+  if(data.access==='unavailable'){
+   const urls=[...new Set(sources.map(s=>s.url))].filter(u=>{try{const x=new URL(u);return x.protocol==='https:'&&p.domains.includes(x.hostname.replace(/^www\./,''))&&x.pathname.startsWith('/game/');}catch(_){return false;}}).slice(0,2);
+   for(const url of urls){try{const page=await directCall165('page',{url,terms:[p.target.subject,p.target.number,'Sold Listings','Sale Date']},ctx,8500);retrieval.push({url,status:page.status,rows:page.market_rows?.length||0});if(page.status!==200||!page.market_rows?.length)continue;
+    const retry={model:body.model,reasoning:{effort:'low'},store:false,max_output_tokens:2400,input:FlipCheckCardMarket.prompt(p)+' Nessuna ricerca aggiuntiva. Estrai esclusivamente dalle righe recuperate sotto; se nessuna documenta una vendita non inventarla. Fonte: '+JSON.stringify({url,title:page.title,rows:page.market_rows.slice(0,40)}),...schemaFormat('flipcheck_card_market_extract',FlipCheckCardMarket.schema)};
+    if(ctx.budget.spent()+estimate164(retry)>ctx.budget.maxUsd){retrieval.push({url,state:'extraction_budget_exhausted'});break;}
+    const t=Date.now(),r=await originalOpenai26(retry);addUsage(r,retry.model,0,'Lettura vendite dalla scheda',false,t);guard164(ctx);data=parseResponseJSON(r);break;
+   }catch(error){guard164(ctx);retrieval.push({url,state:'unavailable',reason:responseReason166(error)});}}
+  }
+  const m=FlipCheckCardMarket.evaluate(data,saved,sources);m.retrieval=retrieval;m.extraction=data;m.web_actions=(response.output||[]).filter(o=>o.type==='web_search_call').map(o=>({status:o.status,action:o.action}));
   saved.card_market=m;ctx.cardMarket=m;diagnosticPhases.push({stage:'card_market',result:m,webCalls:countWeb(response),usage:response.usage||null});
   paintCardMarket236(saved);$('resultPanel').classList.add('hide');persistCompletedScan(p.query,'completed');
   status(m.stat?'Vendite selezionate. Valore e fonti sono nella scheda della carta.':m.state==='one_of_one_no_sales'?'Identità confermata · nessuna vendita comparabile trovata per questa 1/1.':'Identità conservata · '+({source_unavailable:'sito non accessibile',card_not_found:'scheda non trovata',few_comparables:'campione vendite insufficiente'}[m.state]||'dati di mercato insufficienti')+'.',m.stat?'ok':'warn');
