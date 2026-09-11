@@ -14,4 +14,4 @@ adb install -t -r legacy26/build/outputs/apk/androidTest/release/legacy26-releas
 adb shell pm grant com.flipcheck.beta.legacy26fix android.permission.POST_NOTIFICATIONS
 adb shell am instrument -w -r -e class com.flipcheck.legacy26.AndroidUiRegressionTest,com.flipcheck.legacy26.GoogleDirectRegressionTest,com.flipcheck.legacy26.BackgroundScanRegressionTest com.flipcheck.beta.legacy26fix.test/androidx.test.runner.AndroidJUnitRunner | tee artifact/android-ui-test.txt
 adb pull /sdcard/Android/data/com.flipcheck.beta.legacy26fix/files/ui159 artifact/android-ui
-grep -q 'OK (40 tests)' artifact/android-ui-test.txt
+grep -q 'OK (41 tests)' artifact/android-ui-test.txt
