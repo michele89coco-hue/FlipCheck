@@ -606,8 +606,8 @@ function decisiveRequests237(l){
   }
  }
  if(l.domain==='pokemon'&&!l.pick('set_code')){
-  const clue=l.active('set_code').find(a=>a.region);
-  if(clue)requests.push({key:'237:set-code:'+clue.image_index,field:'set_code',reason:'printed_set_code',image_index:clue.image_index,region:clue.region,readings:[{text:clue.raw,source:clue.source}]});
+  const clue=l.active('set_code').find(a=>a.region)||(/^(?:zh|ja|ko)/.test(l.pick('language')?.value||'')&&l.pick('collector_number')?.region?l.pick('collector_number'):null);
+  if(clue)requests.push({key:'237:set-code:'+clue.image_index,field:'set_code',reason:'printed_set_code',image_index:clue.image_index,region:clue.region,readings:clue.field==='set_code'?[{text:clue.raw,source:clue.source}]:[]});
  }
  return requests.filter(r=>!l.attempts.has(r.key)).slice(0,2);
 }
@@ -641,7 +641,7 @@ function applyDetails(l,details,requests){for(const d of list(details)){
   const right=d.right_transition,bottom=d.bottom_transition,allowed=['frame_background','frame_shadow_background'];
   if(!valid||!allowed.includes(right)||right!==bottom||(d.text==='present')!==(right==='frame_shadow_background')||!d.right_description||!d.bottom_description){l.record('detail_rejected',{field:'shadow',reason:'unverified_spatial_transition'});continue;}
  }
- const reported=d.text??d.value;if(['collector_number','serial'].includes(d.field)&&/^(?:assente|absent|not present|not found|nessuno)$/i.test(str(reported))){l.record('detail_rejected',{field:d.field,reason:'identifier_not_found',raw:reported,image_index:req.image_index});continue;}
+ const reported=d.text??d.value;if(['collector_number','serial','set_code'].includes(d.field)&&/^(?:assente|absent|not present|not found|nessuno)$/i.test(str(reported))){l.record('detail_rejected',{field:d.field,reason:'identifier_not_found',raw:reported,image_index:req.image_index});continue;}
  const raw=d.text??d.value,value=presenceFields.includes(d.field)?(['present','absent'].includes(raw)?raw:presenceText(d.field,raw)):d.field==='finish'?finish(raw):d.field==='language'?language(raw):d.field==='collector_number'?number(raw):raw;
  if(d.field==='collector_number'&&semanticField(l.domain,d.field,value)!==d.field){l.record('detail_rejected',{field:d.field,value,reason:'non_identifier_text'});continue;}
  if(d.field==='copyright'&&!/\b(?:19|20)\d{2}\b/.test(str(value))){l.record('detail_rejected',{field:d.field,reason:'no_printed_year'});continue;}
