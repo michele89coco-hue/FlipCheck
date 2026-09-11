@@ -100,14 +100,14 @@ public final class GoogleVisionBridge {
             .post(RequestBody.create(MediaType.parse("application/json; charset=utf-8"),body.toString())).build();
     }
     static Request ximilarRequest(JSONObject p) throws Exception {
-        String token=p.optString("token").trim(), endpoint=p.optString("endpoint"), image=p.optString("image_base64");
+        String token=p.optString("token").trim().replaceFirst("(?i)^Token[ \t]+", "").trim(), endpoint=p.optString("endpoint"), image=p.optString("image_base64");
         if(!token.matches("[A-Za-z0-9_.-]{16,256}"))throw new IOException("invalid_api_key");
         if(!endpoint.equals("tcg_id")&&!endpoint.equals("sport_id"))throw new IOException("invalid_endpoint");
         if(image.isEmpty()||image.length()>10*1024*1024||!image.matches("[A-Za-z0-9+/=]+"))throw new IOException("invalid_image");
         JSONObject body=new JSONObject().put("records",new JSONArray().put(new JSONObject().put("_base64",image)))
             .put("price_stats",false).put("slab_id",false).put("slab_grade",false).put("analyze_all",false);
         if(endpoint.equals("tcg_id"))body.put("lang",true).put("rotate",true);else body.put("magic_ai",false);
-        return new Request.Builder().url("https://api.ximilar.com/collectibles/v2/"+endpoint).header("Authorization","Token "+token)
+        return new Request.Builder().url("https://api.ximilar.com/collectibles/v2/"+endpoint).header("Accept","application/json, text/plain, */*").header("Authorization","Token "+token)
             .post(RequestBody.create(MediaType.parse("application/json; charset=utf-8"),body.toString())).build();
     }
     static JSONObject ximilarResponse(int status, byte[] data) {

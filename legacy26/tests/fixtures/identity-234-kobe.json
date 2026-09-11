@@ -1,0 +1,615 @@
+{
+  "vision": {
+    "domain": "sports",
+    "kind": "card",
+    "category": "basketball trading card",
+    "language": "en",
+    "object_unit": "single",
+    "image_views": [
+      {
+        "image_index": 1,
+        "view": "back",
+        "certainty": "clear"
+      },
+      {
+        "image_index": 2,
+        "view": "front",
+        "certainty": "clear"
+      }
+    ],
+    "object_regions": [
+      {
+        "image_index": 1,
+        "x": 0.16,
+        "y": 0.29,
+        "width": 0.67,
+        "height": 0.44,
+        "certain": true
+      },
+      {
+        "image_index": 2,
+        "x": 0.15,
+        "y": 0.29,
+        "width": 0.69,
+        "height": 0.44,
+        "certain": true
+      }
+    ],
+    "observations": [
+      {
+        "field": "subject",
+        "text": "Kobe Bryant",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.33,
+          "y": 0.335,
+          "width": 0.3,
+          "height": 0.02
+        },
+        "zone": "back",
+        "alternatives": []
+      },
+      {
+        "field": "brand",
+        "text": "Upper Deck",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.23,
+          "y": 0.665,
+          "width": 0.06,
+          "height": 0.025
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "product",
+        "text": "SP Authentic",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.72,
+          "y": 0.31,
+          "width": 0.1,
+          "height": 0.05
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "subset",
+        "text": "First Class",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.19,
+          "y": 0.685,
+          "width": 0.48,
+          "height": 0.04
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "team",
+        "text": "Los Angeles Lakers",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.28,
+          "y": 0.43,
+          "width": 0.11,
+          "height": 0.03
+        },
+        "zone": "front",
+        "alternatives": []
+      },
+      {
+        "field": "season",
+        "text": "1999-2000",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.4,
+          "y": 0.55,
+          "width": 0.25,
+          "height": 0.03
+        },
+        "zone": "back",
+        "alternatives": []
+      },
+      {
+        "field": "copyright",
+        "text": "©2001 The Upper Deck Company, LLC. All Rights Reserved. Printed in the USA ©2001 NBA Properties, Inc.",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.38,
+          "y": 0.674,
+          "width": 0.28,
+          "height": 0.035
+        },
+        "zone": "footer",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "KOBE BRYANT / GUARD",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.33,
+          "y": 0.335,
+          "width": 0.3,
+          "height": 0.02
+        },
+        "zone": "back",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "Height: 6'7\" Weight: 210 lbs",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.34,
+          "y": 0.365,
+          "width": 0.24,
+          "height": 0.02
+        },
+        "zone": "statistics",
+        "alternatives": []
+      },
+      {
+        "field": "text",
+        "text": "8",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.67,
+          "y": 0.59,
+          "width": 0.08,
+          "height": 0.06
+        },
+        "zone": "statistics",
+        "alternatives": []
+      }
+    ],
+    "features": [
+      {
+        "field": "border_color",
+        "value": "gold",
+        "description": "Gold geometric border accents",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.16,
+          "y": 0.3,
+          "width": 0.67,
+          "height": 0.42
+        },
+        "zone": "border"
+      },
+      {
+        "field": "finish",
+        "value": "reflective",
+        "description": "Strong multicolor reflective/holographic background",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.4,
+          "y": 0.31,
+          "width": 0.39,
+          "height": 0.32
+        },
+        "zone": "surface"
+      },
+      {
+        "field": "layout",
+        "value": "Portrait action photograph with geometric gold framing and Lakers logo",
+        "description": "Vertical basketball action design",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.16,
+          "y": 0.3,
+          "width": 0.67,
+          "height": 0.42
+        },
+        "zone": "artwork"
+      },
+      {
+        "field": "stamp",
+        "value": "unclear",
+        "description": "No distinct promotional stamp clearly visible",
+        "certainty": "uncertain",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.16,
+          "y": 0.3,
+          "width": 0.67,
+          "height": 0.42
+        },
+        "zone": "surface"
+      }
+    ],
+    "hypotheses": [
+      {
+        "field": "family",
+        "value": "SP Authentic basketball"
+      },
+      {
+        "field": "model",
+        "value": "First Class"
+      }
+    ],
+    "slab_reading": null,
+    "engine_version": 193,
+    "brand": "Upper Deck",
+    "family": "SP Authentic basketball",
+    "title": "Kobe Bryant",
+    "model": "",
+    "variant": "",
+    "model_confidence": 0,
+    "family_confidence": 0,
+    "market_ready": false,
+    "normalized_query": "",
+    "candidate_models": [],
+    "identifier_hints": [],
+    "evidence": [],
+    "missing_information": [],
+    "next_photo_request": null,
+    "object_region": {
+      "image_index": 1,
+      "x": 0.16,
+      "y": 0.29,
+      "width": 0.67,
+      "height": 0.44,
+      "certain": true
+    },
+    "photo_clues": [
+      {
+        "text": "Kobe Bryant",
+        "role": "subject",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.33,
+          "y": 0.335,
+          "width": 0.3,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "Upper Deck",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.23,
+          "y": 0.665,
+          "width": 0.06,
+          "height": 0.025,
+          "certain": true
+        }
+      },
+      {
+        "text": "SP Authentic",
+        "role": "model",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.72,
+          "y": 0.31,
+          "width": 0.1,
+          "height": 0.05,
+          "certain": true
+        }
+      },
+      {
+        "text": "First Class",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.19,
+          "y": 0.685,
+          "width": 0.48,
+          "height": 0.04,
+          "certain": true
+        }
+      },
+      {
+        "text": "Los Angeles Lakers",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.28,
+          "y": 0.43,
+          "width": 0.11,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "1999-2000",
+        "role": "season",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.4,
+          "y": 0.55,
+          "width": 0.25,
+          "height": 0.03,
+          "certain": true
+        }
+      },
+      {
+        "text": "©2001 The Upper Deck Company, LLC. All Rights Reserved. Printed in the USA ©2001 NBA Properties, Inc.",
+        "role": "copyright",
+        "certainty": "uncertain",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.38,
+          "y": 0.674,
+          "width": 0.28,
+          "height": 0.035,
+          "certain": true
+        }
+      },
+      {
+        "text": "KOBE BRYANT / GUARD",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.33,
+          "y": 0.335,
+          "width": 0.3,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "Height: 6'7\" Weight: 210 lbs",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 1,
+        "region": {
+          "image_index": 1,
+          "x": 0.34,
+          "y": 0.365,
+          "width": 0.24,
+          "height": 0.02,
+          "certain": true
+        }
+      },
+      {
+        "text": "8",
+        "role": "text",
+        "certainty": "clear",
+        "image_index": 2,
+        "region": {
+          "image_index": 2,
+          "x": 0.67,
+          "y": 0.59,
+          "width": 0.08,
+          "height": 0.06,
+          "certain": true
+        }
+      }
+    ],
+    "physical_observations": [
+      {
+        "feature": "color",
+        "text": "gold border",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 2
+      },
+      {
+        "feature": "finish",
+        "text": "Strong multicolor reflective/holographic background",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 2
+      },
+      {
+        "feature": "finish",
+        "text": "Vertical basketball action design",
+        "certainty": "clear",
+        "entity": "target",
+        "image_index": 2
+      },
+      {
+        "feature": "finish",
+        "text": "No distinct promotional stamp clearly visible",
+        "certainty": "uncertain",
+        "entity": "target",
+        "image_index": 2
+      }
+    ]
+  },
+  "phases": [
+    {
+      "stage": "flipcheck_evidence_detail",
+      "result": {
+        "details": [
+          {
+            "field": "collector_number",
+            "text": "FC7",
+            "certainty": "clear",
+            "evidence_found": true,
+            "image_index": 1
+          }
+        ]
+      },
+      "webCalls": 0,
+      "usage": {
+        "input_tokens": 3177,
+        "input_tokens_details": {
+          "cache_write_tokens": 3174,
+          "cached_tokens": 0
+        },
+        "output_tokens": 94,
+        "output_tokens_details": {
+          "reasoning_tokens": 51
+        },
+        "total_tokens": 3271
+      }
+    }
+  ],
+  "entries": [
+    {
+      "identifier_type": "collector",
+      "illustrator": "",
+      "subject": "Kobe Bryant",
+      "family": "SP Authentic",
+      "number": "FC2",
+      "year": "1999-00",
+      "brand": "Upper Deck",
+      "language": "en",
+      "subset": "First Class",
+      "rarity": "",
+      "hp": null,
+      "attacks": [],
+      "source_url": "https://www.tcdb.com/Checklist.cfm/sid/26327/1999-00-SP-Authentic---First-Class?PageIndex=1",
+      "entry_quote": "FC2  |  |    |  |  |  |  |  |  |  |  |  |  | Kobe Bryant",
+      "proof": {
+        "subject": "Kobe Bryant",
+        "family": "SP Authentic",
+        "number": "FC2",
+        "year": "1999-00"
+      },
+      "variants": [],
+      "aliases": [],
+      "configuration_quote": "",
+      "source": {
+        "url": "https://www.tcdb.com/Checklist.cfm/sid/26327/1999-00-SP-Authentic---First-Class?PageIndex=1",
+        "title": "1999-00 SP Authentic - First Class Basketball Checklist | Trading Card Database",
+        "provider": "www.tcdb.com",
+        "retrieved_at": null
+      },
+      "grounded": true,
+      "eligible": false,
+      "score": 45,
+      "matches": [
+        "subject",
+        "season"
+      ],
+      "reasons": [
+        "different_number"
+      ]
+    },
+    {
+      "identifier_type": "collector",
+      "illustrator": "",
+      "subject": "Jason Kidd",
+      "family": "SP Authentic",
+      "number": "FC7",
+      "year": "1999-00",
+      "brand": "Upper Deck",
+      "language": "en",
+      "subset": "First Class",
+      "rarity": "",
+      "hp": null,
+      "attacks": [],
+      "source_url": "https://www.tcdb.com/Checklist.cfm/sid/26327/1999-00-SP-Authentic---First-Class?PageIndex=1",
+      "entry_quote": "FC7  |  |    |  |  |  |  |  |  |  |  |  |  | Jason Kidd",
+      "proof": {
+        "subject": "Jason Kidd",
+        "family": "SP Authentic",
+        "number": "FC7",
+        "year": "1999-00"
+      },
+      "variants": [],
+      "aliases": [
+        "Kobe Bryant"
+      ],
+      "configuration_quote": "",
+      "source": {
+        "url": "https://www.tcdb.com/Checklist.cfm/sid/26327/1999-00-SP-Authentic---First-Class?PageIndex=1",
+        "title": "1999-00 SP Authentic - First Class Basketball Checklist | Trading Card Database",
+        "provider": "www.tcdb.com",
+        "retrieved_at": null
+      },
+      "grounded": true,
+      "eligible": true,
+      "score": 85,
+      "matches": [
+        "subject",
+        "number",
+        "season"
+      ],
+      "reasons": []
+    },
+    {
+      "identifier_type": "collector",
+      "illustrator": "",
+      "subject": "Kobe Bryant",
+      "family": "SP Authentic",
+      "number": "FC7",
+      "year": "2000-01",
+      "brand": "Upper Deck",
+      "language": "en",
+      "subset": "First Class",
+      "rarity": "",
+      "hp": null,
+      "attacks": [],
+      "source_url": "https://www.beckett.com/basketball/2000-01/sp-authentic-first-class/fc7-kobe-bryant-3227012",
+      "entry_quote": "2000-01 SP Authentic First Class #FC7 Kobe Bryant",
+      "proof": {
+        "subject": "Kobe Bryant",
+        "family": "SP Authentic",
+        "number": "FC7",
+        "year": "2000-01"
+      },
+      "variants": [],
+      "aliases": [],
+      "configuration_quote": "",
+      "source": {
+        "url": "https://www.beckett.com/basketball/2000-01/sp-authentic-first-class/fc7-kobe-bryant-3227012",
+        "title": "Beckett: Online Sports & Non Sports Cards Collectibles and Price Guide Subscription",
+        "provider": "www.beckett.com",
+        "retrieved_at": null
+      },
+      "grounded": true,
+      "eligible": false,
+      "score": 75,
+      "matches": [
+        "subject",
+        "number"
+      ],
+      "reasons": [
+        "different_product_season",
+        "different_product_season"
+      ]
+    }
+  ]
+}

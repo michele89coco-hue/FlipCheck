@@ -15,6 +15,9 @@ public final class GoogleDirectRegressionTest {
             Request request=GoogleVisionBridge.ximilarRequest(new JSONObject().put("token","test-token-1234567890").put("endpoint",endpoint).put("image_base64","aGVsbG8="));
             assertEquals("https://api.ximilar.com/collectibles/v2/"+endpoint,request.url().toString());
             assertEquals("Token test-token-1234567890",request.header("Authorization"));
+            Request pasted=GoogleVisionBridge.ximilarRequest(new JSONObject().put("token"," Token test-token-1234567890 ").put("endpoint",endpoint).put("image_base64","aGVsbG8="));
+            assertEquals(request.header("Authorization"),pasted.header("Authorization"));
+            assertEquals("application/json, text/plain, */*",request.header("Accept"));
             Buffer buffer=new Buffer();request.body().writeTo(buffer);String raw=buffer.readUtf8();JSONObject body=new JSONObject(raw);
             assertFalse(raw.contains("test-token"));assertFalse(body.getBoolean("price_stats"));assertFalse(body.getBoolean("slab_id"));assertFalse(body.getBoolean("slab_grade"));assertFalse(body.getBoolean("analyze_all"));
             assertEquals(1,body.getJSONArray("records").length());

@@ -2,7 +2,14 @@
 const UNIT_USD=.0069;
 const str=v=>typeof v==='string'||typeof v==='number'?String(v).trim().slice(0,500):'';
 function endpoint(domain){return domain==='sports'?'sport_id':['pokemon','onepiece','tcg'].includes(domain)?'tcg_id':null;}
-function state(status){return status===401?'invalid_token':status===403?'access_denied':status===402||status===429?'quota_or_rate_limit':status===200?'ok':'service_unavailable';}
+function state(status){return status===401?'authentication_failed':status===403?'access_denied':status===402||status===429?'quota_or_rate_limit':status===200?'ok':'service_unavailable';}
+function token(value){return String(value||'').trim().replace(/^Token[ \t]+/i,'').trim();}
+function errorDetails(body,secret){
+ const clean=v=>{let s=typeof v==='string'?v:'';for(const key of [secret,token(secret)].filter(Boolean))s=s.split(key).join('[redacted]');return s.replace(/(?:Token|Bearer)\s+[^\s"',}]+/gi,'[redacted]').replace(/[A-Za-z0-9_./+=-]{32,}/g,'[redacted]').slice(0,800);};
+ const detail=clean(body?.detail||body?.message||body?.error?.message||body?.error||body?.status?.text);
+ const id=body?.status?.request_id||body?.records?.[0]?._status?.request_id;
+ return {message:detail,request_id:typeof id==='string'&&/^[a-f0-9-]{36}$/i.test(id)?id:null};
+}
 function normalize(body,domain){
  const records=Array.isArray(body?.records)?body.records:[],entries=[];let successfulRecords=0;const reportedLanguages=[];
  for(const record of records.slice(0,1)){
@@ -21,5 +28,5 @@ function normalize(body,domain){
  }
  return {reportedLanguages,state:successfulRecords?(entries.length?'ok':'no_match'):state(records[0]?._status?.code||body?.status?.code||0),entries};
 }
-const api={UNIT_USD,endpoint,state,normalize};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckXimilar=api;
+const api={UNIT_USD,endpoint,state,normalize,token,errorDetails};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckXimilar=api;
 })(typeof window==='undefined'?globalThis:window);

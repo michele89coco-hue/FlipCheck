@@ -175,6 +175,12 @@ function objectEntries(p,l){
 }
 function usablePage200(p){const t=pageText(p);return !!p.url&&t.length>0&&!/^Your Trusted Marketplace for Collectible Trading Card Games - TCGplayer\s*$/i.test(t);}
 function records(pages,l){const out=[];for(const p of pages){if(/pokedex|pok[eé]dex/i.test(p.url+' '+p.title))continue;if(!p.url||!(E.sourceTrusted(p.url,l.domain)||l.domain==='generic'&&/^https:\/\//.test(p.url)))continue;for(const e of [...pokemonProductEntries204(p,l),...bandaiEntries(p,l),...tableEntries(p,l),...cardRows(p,l),...singleEntry(p,l),...objectEntries(p,l)])if(e.family)out.push(e);}return out;}
+// Exact contiguous name or surname-first spelling, never page-wide co-occurrence.
+function quotedSubject234(quote,subject){
+ const q=' '+E.norm(quote)+' ',name=E.norm(subject);if(!name)return false;
+ if(q.includes(' '+name+' '))return true;
+ const words=name.split(' ');return words.length>1&&q.includes(' '+words.slice(1).join(' ')+' '+words[0]+' ');
+}
 function groundedExtraction(reply,pages,l){
  const accepted=[],rejected=[];
  for(const original of list(reply?.entries)){
@@ -185,14 +191,14 @@ function groundedExtraction(reply,pages,l){
   // reported value, then use the independently quoted heading when it is a prefix.
   if(!reason&&proof.family&&text.includes(literal(proof.family))&&E.norm(e.family).startsWith(E.norm(proof.family)+' ')){e.reported_family=e.family;e.family=literal(proof.family);}
   if(e.subset&&!text?.includes(literal(e.subset))){e.reported_subset=e.subset;e.subset='';e.subset_known=false;}
-  for(const field of fields)if(!reason){const quote=literal(proof[field]);if(!quote||!text.includes(quote)||!(E.norm(quote).includes(E.norm(e[field]))||field==='family'&&l?.domain==='sports'&&E.productEquivalent217(quote,e[field])))reason='ungrounded_'+field;}
-  if(!reason&&!object&&(!E.norm(q).includes(E.norm(e.subject))||!new RegExp('(?:^|[^A-Z0-9])'+str(e.number).replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?:$|[^A-Z0-9])','i').test(q)))reason='number_subject_not_in_same_entry';
+  for(const field of fields)if(!reason){const quote=literal(proof[field]);if(!quote||!text.includes(quote)||!((field==='subject'?quotedSubject234(quote,e[field]):E.norm(quote).includes(E.norm(e[field])))||field==='family'&&l?.domain==='sports'&&E.productEquivalent217(quote,e[field])))reason='ungrounded_'+field;}
+  if(!reason&&!object&&(!quotedSubject234(q,e.subject)||!new RegExp('(?:^|[^A-Z0-9])'+str(e.number).replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?:$|[^A-Z0-9])','i').test(q)))reason='number_subject_not_in_same_entry';
   if(reason){rejected.push({subject:e.subject,number:e.number,reason});continue;}
   if(!reason&&!object&&!(E.norm(page.title).includes(E.norm(e.family))||l?.domain==='sports'&&E.productEquivalent217(page.title,e.family))&&!E.norm(q).includes(E.norm(e.family))&&!E.norm(text.slice(Math.max(0,text.indexOf(q)-600),text.indexOf(q))).includes(E.norm(e.family))){rejected.push({subject:e.subject,number:e.number,reason:'unlinked_family_heading'});continue;}
   const year=e.year&&proof.year&&text.includes(literal(proof.year))&&proof.year.includes(e.year)?e.year:'';
   const variants=list(e.variants).filter(v=>v.quote&&text.includes(literal(v.quote))&&E.norm(v.quote).includes(E.norm(v.name))&&(!v.print_run||new RegExp('(?:/|to|run\\s*:)\\s*'+v.print_run+'(?:\\D|$)','i').test(v.quote))&&list(v.colors).every(c=>E.tokens(v.quote,E.COLOR_WORDS).includes(c))&&list(v.patterns).every(c=>E.tokens(v.quote,E.PATTERNS).includes(c))).map(v=>({...v,source:source(page)}));
   if(l?.domain==='sports'&&e.subset)for(const v of list(e.variants)){if(v.name&&text.includes(literal(v.name))&&E.norm(e.subset).endsWith(' '+E.norm(v.name))){e.reported_subset=e.subset;e.subset=str(e.subset).slice(0,str(e.subset).length-str(v.name).length).trim();}}
-  const aliases=[];const physical=E.keyValues(l).subject;if(physical&&physical!==e.subject&&E.norm(text).includes(E.norm(physical)))aliases.push(physical);
+  const aliases=[];const physical=E.keyValues(l).subject;if(physical&&physical!==e.subject&&E.subjectMatch(physical,e.subject))aliases.push(physical);
   const attacks=list(e.attacks).filter(a=>text.includes(literal(a)));
   const configuration_quote=object&&e.subset&&text.includes(literal(e.subset))?e.subset:'';
   const identifier_type=['pokedex','unnumbered'].includes(e.identifier_type)?e.identifier_type:/CD PROMO|UNNUMBERED/i.test(e.family)?'pokedex':'collector';
