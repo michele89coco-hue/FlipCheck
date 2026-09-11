@@ -86,7 +86,7 @@ async function searchCatalogue193(l,ctx,mode,pages,identityEntry=null){
  }
  if(ctx.budget.spent()+estimate164(body)>ctx.budget.maxUsd){
   body.max_output_tokens=700;
-  body.input='Una ricerca per verificare questa identità. Query: '+query+'. Chiavi lette sulla foto: '+JSON.stringify(E193.keyValues(l))+'. Candidati Lens (ipotesi, non prove): '+JSON.stringify((ctx.lens.candidates||[]).slice(0,2).map(c=>({title:c.title,url:c.url})))+'. Restituisci una sola entry della stampa esatta. source_url deve essere recuperato, entry_quote un passaggio contiguo della fonte e proof citazioni letterali. Numero e lingua devono corrispondere alla stampa; non copiare dati Lens nella foto. Nessun prezzo; nessuna autenticità. Non inventare campi mancanti.';
+  body.input='Una ricerca per verificare questa identità. Query: '+query+'. Chiavi lette sulla foto: '+JSON.stringify(E193.keyValues(l))+'. Candidati Lens (ipotesi, non prove): '+JSON.stringify((ctx.lens?.candidates||[]).slice(0,2).map(c=>({title:c.title,url:c.url})))+'. Restituisci una sola entry della stampa esatta. source_url deve essere recuperato, entry_quote un passaggio contiguo della fonte e proof citazioni letterali. Numero e lingua devono corrispondere alla stampa; non copiare dati Lens nella foto. Nessun prezzo; nessuna autenticità. Non inventare campi mancanti.';
   l.record('compact_final_verification',{estimatedUsd:estimate164(body),availableUsd:ctx.budget.maxUsd-ctx.budget.spent()});
  }
  if(ctx.budget.spent()+estimate164(body)>ctx.budget.maxUsd){

@@ -26,6 +26,11 @@ public final class GoogleDirectRegressionTest {
         JSONObject out=GoogleVisionBridge.ximilarResponse(200,"{\"records\":[{\"_base64\":\"sensitive-photo\",\"_url\":\"private-url\",\"_objects\":[]}]}".getBytes());
         assertFalse(out.toString().contains("sensitive-photo"));assertFalse(out.toString().contains("private-url"));
     }
+    @Test public void recognitionOnlyDoesNotRequestPaidPrices() throws Exception {
+        Request request=GoogleVisionBridge.ximilarRequest(new JSONObject().put("token","test-token-1234567890").put("endpoint","sport_id").put("image_base64","aGVsbG8=").put("price_stats",false));
+        Buffer buffer=new Buffer();request.body().writeTo(buffer);
+        assertFalse(new JSONObject(buffer.readUtf8()).getBoolean("price_stats"));
+    }
     @Test public void ximilarRejectsArbitraryEndpointAndHeaderInjection() throws Exception {
         for(String endpoint:new String[]{"slab_id","https://evil.test","../sport_id"}){
             try{GoogleVisionBridge.ximilarRequest(new JSONObject().put("token","test-token-1234567890").put("endpoint",endpoint).put("image_base64","aGVsbG8="));fail(endpoint);}catch(IOException expected){}

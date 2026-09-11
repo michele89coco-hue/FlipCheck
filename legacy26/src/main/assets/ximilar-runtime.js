@@ -1,7 +1,7 @@
 /* Optional direct Ximilar adapter. Credentials stay in memory; no raw response is persisted. */
 'use strict';
 const ximilarPanel233=document.createElement('div');ximilarPanel233.className='panel';
-ximilarPanel233.innerHTML='<div class="label">Riconoscimento carte</div><label class="label" for="cardProvider233">Servizio immagini</label><select id="cardProvider233"><option value="lens">Google Lens / SearchAPI</option><option value="ximilar">Ximilar</option></select><label class="label" for="ximilarToken233">Token API Ximilar</label><input id="ximilarToken233" type="password" autocomplete="off" spellcheck="false" placeholder="Incolla il token Ximilar"><p class="note">Il token resta in memoria finché l’app rimane aperta. Per Ximilar serve accesso Collectibles attivo. Viene inviata una foto frontale: riconoscimento e statistiche prezzi, senza Magic AI o lettura slab aggiuntiva. Riserva stimata: $0,0138 per foto sul piano Business 100K; il costo effettivo dipende dal piano. OpenAI resta necessario per letture e verifiche.</p><p id="ximilarStatus233" class="note"></p>';
+ximilarPanel233.innerHTML='<div class="label">Riconoscimento carte</div><label class="label" for="cardProvider233">Servizio immagini</label><select id="cardProvider233"><option value="lens">Google Lens / SearchAPI</option><option value="ximilar">Ximilar</option></select><label class="label" for="ximilarToken233">Token API Ximilar</label><input id="ximilarToken233" type="password" autocomplete="off" spellcheck="false" placeholder="Incolla il token Ximilar"><p class="note">Il token resta in memoria finché l’app rimane aperta. Per Ximilar serve accesso Collectibles attivo. Viene inviata una foto frontale: solo riconoscimento, senza statistiche prezzi, Magic AI o lettura slab aggiuntiva. Le vendite si cercano dalla scheda identificata. Riserva stimata: $0,0069 per foto sul piano Business 100K; il costo effettivo dipende dal piano. OpenAI resta necessario per letture e verifiche.</p><p id="ximilarStatus233" class="note"></p>';
 $('settingsPage').firstElementChild.after(ximilarPanel233);
 try{$('cardProvider233').value=localStorage.getItem('flipcheck_card_provider')==='ximilar'?'ximilar':'lens';}catch(_){}
 function ximilarSelected233(){return $('cardProvider233').value==='ximilar';}
@@ -11,14 +11,14 @@ function ximilarMessage233(state){return ({ok:'Ximilar: candidati ricevuti e con
 async function recognizeXimilar233(l,ctx){
  if(!ximilarSelected233()||!FlipCheckXimilar.endpoint(l.domain))return [];
  if(ctx.ximilar)return ctx.ximilar.entries||[];
- const endpoint=FlipCheckXimilar.endpoint(l.domain),state=ctx.ximilar={provider:'ximilar',endpoint,state:'not_requested',requests:0,entries:[],estimatedUsd:0};
+ const endpoint=FlipCheckXimilar.endpoint(l.domain),state=ctx.ximilar={provider:'ximilar',endpoint,state:'not_requested',requests:0,entries:[],estimatedUsd:0,pricing_requested:false};
  const token=FlipCheckXimilar.token($('ximilarToken233').value);let reservation=null;const started=Date.now();
  try{
   if(!token){state.state='not_configured';return [];}
   const view=(l.base.image_views||[]).find(v=>v.view==='front'&&v.certainty==='clear'),index=view?.image_index||(validImageCount()===1?1:null),region=(l.base.object_regions||[]).find(r=>r.image_index===index);
   const picture=index?await visualPhoto164({object_region:region?{...region,certain:true}:{image_index:index,certain:false},object_unit:'single'}):null;guard164(ctx);if(!picture){state.state='front_required';return [];}
-  reservation=ctx.budget.reserve('ximilar',FlipCheckXimilar.UNIT_USD);state.estimatedUsd=FlipCheckXimilar.UNIT_USD;state.requests=1;state.image={image_index:picture.meta.imageIndex||1};
-  const reply=await directCall165('ximilar',{token,endpoint,image_base64:picture.data.split(',')[1]},ctx,40000);
+  reservation=ctx.budget.reserve('ximilar',FlipCheckXimilar.RECOGNITION_USD);state.estimatedUsd=FlipCheckXimilar.RECOGNITION_USD;state.requests=1;state.image={image_index:picture.meta.imageIndex||1};
+  const reply=await directCall165('ximilar',{token,endpoint,price_stats:false,image_base64:picture.data.split(',')[1]},ctx,40000);
   state.httpStatus=reply.status||0;if(reply.status!==200)state.provider_error=FlipCheckXimilar.errorDetails(reply.body,token);
   if(reply.status!==200){state.state=reply.state==='invalid_api_key'?'invalid_token':reply.state==='timeout'?'timeout':FlipCheckXimilar.state(reply.status);ctx.budget.settle(reservation,[401,402,403,429].includes(reply.status)||reply.attempted===false?0:null);state.billingUnknown=![401,402,403,429].includes(reply.status)&&reply.attempted!==false;return [];}
   const normalized=FlipCheckXimilar.normalize(reply.body,l.domain);Object.assign(state,normalized);

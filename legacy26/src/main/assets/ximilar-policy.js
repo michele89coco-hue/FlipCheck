@@ -28,5 +28,5 @@ function normalize(body,domain){
  }
  return {reportedLanguages,state:successfulRecords?(entries.length?'ok':'no_match'):state(records[0]?._status?.code||body?.status?.code||0),entries};
 }
-const api={UNIT_USD,endpoint,state,normalize,token,errorDetails};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckXimilar=api;
+const api={RECOGNITION_USD:.0069,UNIT_USD,endpoint,state,normalize,token,errorDetails};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FlipCheckXimilar=api;
 })(typeof window==='undefined'?globalThis:window);
