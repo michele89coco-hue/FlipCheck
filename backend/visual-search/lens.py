@@ -14,6 +14,7 @@ import urllib.request
 import urllib.error
 import socket
 from server import MAX_IMAGE, ServiceError, image_kind
+from market_archive import Archive, ArchiveError, plan as market_plan
 
 ENDPOINT = 'https://www.searchapi.io/api/v1/'
 
@@ -170,7 +171,7 @@ class LensService:
             cached['result']=result; cached['done'].set()
         return result
 
-def handler(service):
+def handler(service, archive=None, review_token=''):
     class Handler(BaseHTTPRequestHandler):
         def log_message(self,*args): pass
         def authorized(self): return bool(service.token) and hmac.compare_digest(self.headers.get('Authorization',''),'Bearer '+service.token)
@@ -184,8 +185,13 @@ def handler(service):
                 raw=service.images.get(self.path.removeprefix('/v1/lens-image/'))
                 return self.send(200,raw,image_kind(raw)) if raw else self.send(404,{'state':'expired_or_deleted'})
             if not self.authorized(): return self.send(401,{'state':'unauthorized'})
+            if self.path == '/v1/market/config':
+                return self.send(200, {'enabled': archive is not None, 'protocol': 1,
+                    'ttl_seconds': 604800, 'provider_calls': 0, 'cache_requires_review': True})
             return self.send(200,service.config()) if self.path=='/v1/lens/config' else self.send(404,{'state':'not_found'})
         def do_POST(self):
+            if self.path.startswith('/v1/market/'):
+                return self.market_request()
             if not self.authorized(): return self.send(401,{'state':'unauthorized'})
             if self.path!='/v1/lens/search': return self.send(404,{'state':'not_found'})
             try:
@@ -195,13 +201,47 @@ def handler(service):
                 return self.send(200,service.run(json.loads(self.rfile.read(size))))
             except ServiceError as e: return self.send(400,{'state':e.state,'providerCalls':0})
             except Exception: return self.send(400,{'state':'invalid_request','providerCalls':0})
+        def market_request(self):
+            reviewing = self.path == '/v1/market/approve'
+            allowed = bool(review_token) and hmac.compare_digest(
+                self.headers.get('Authorization', ''), 'Bearer ' + review_token) if reviewing else self.authorized()
+            if not allowed: return self.send(401, {'state': 'unauthorized'})
+            routes = ('plan', 'save', 'read', 'lookup', 'approve')
+            action = self.path.removeprefix('/v1/market/')
+            if action not in routes: return self.send(404, {'state': 'not_found'})
+            if action != 'plan' and archive is None:
+                return self.send(503, {'state': 'database_not_configured', 'saved': False})
+            try:
+                size = int(self.headers.get('Content-Length', '0'))
+                if not 0 < size <= 262144: return self.send(413, {'state': 'invalid_body_size'})
+                self.connection.settimeout(10)
+                data = json.loads(self.rfile.read(size))
+                if not isinstance(data, dict): raise ArchiveError('invalid_request')
+                if action == 'plan': result = market_plan(data)
+                elif action == 'save': result = archive.write(data)
+                elif action == 'read': result = archive.read(data.get('attempt_id', ''))
+                elif action == 'lookup': result = archive.lookup(data)
+                else: result = archive.approve(data.get('attempt_id', ''), data.get('revision'))
+                return self.send(200, result)
+            except ArchiveError as error:
+                return self.send(400, {'state': str(error), 'saved': False})
+            except (ValueError, TypeError, KeyError, AttributeError):
+                return self.send(400, {'state': 'invalid_request', 'saved': False})
+            except Exception:
+                # Never return/log database credentials or driver exception text.
+                return self.send(503, {'state': 'archive_unavailable', 'saved': False})
     return Handler
 
 if __name__=='__main__':
     price=os.getenv('SEARCHAPI_UNIT_USD','')
     service=LensService(SearchApi(os.getenv('SEARCHAPI_API_KEY','')),os.getenv('PUBLIC_ORIGIN',''),
         os.getenv('FLIPCHECK_ACCESS_TOKEN',''),float(price) if price else None)
-    httpd=ThreadingHTTPServer((os.getenv('BIND_ADDRESS','127.0.0.1'),int(os.getenv('PORT','8080'))),handler(service))
+    database_url = os.getenv('FLIPCHECK_DATABASE_URL', '')
+    archive = Archive(database_url) if database_url else None
+    review_token = os.getenv('FLIPCHECK_MARKET_REVIEW_TOKEN', '')
+    if review_token and review_token == service.token:
+        raise RuntimeError('Market review token must be separate from client access')
+    httpd=ThreadingHTTPServer((os.getenv('BIND_ADDRESS','127.0.0.1'),int(os.getenv('PORT','8080'))),handler(service, archive, review_token))
     # Operational readiness only: no credentials, image URLs, account queries or Lens calls.
     print(json.dumps({'event':'lens_startup','configured':service.available,
         'provider':'searchapi_google_lens','unitUsd':service.unit_usd,'providerCalls':0}),flush=True)

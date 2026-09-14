@@ -1,0 +1,46 @@
+name: Market archive and alias tests
+on:
+  pull_request:
+    paths:
+      - backend/visual-search/**
+      - .github/workflows/market-archive-tests.yml
+  push:
+    branches: [codex/market-alias-cache]
+    paths:
+      - backend/visual-search/**
+      - .github/workflows/market-archive-tests.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: archive_test
+          POSTGRES_PASSWORD: local_test_only
+          POSTGRES_DB: flipcheck_archive_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U archive_test -d flipcheck_archive_test"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r backend/visual-search/requirements.txt
+      - name: Local adapter and Lens compatibility
+        working-directory: backend/visual-search
+        run: python -m unittest test_market_archive test_lens
+      - name: PostgreSQL integration without external APIs
+        working-directory: backend/visual-search
+        env:
+          FLIPCHECK_TEST_DATABASE_URL: postgresql://archive_test:local_test_only@127.0.0.1:5432/flipcheck_archive_test
+        run: python -m unittest test_market_archive
