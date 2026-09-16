@@ -1,11 +1,11 @@
-name: One-call AI estimate experiment
+name: Identity-only AI estimate experiment
 on:
   push:
-    branches: [codex/ai-estimate-one-call-20260916]
+    branches: [codex/ai-identity-only-20260916]
 permissions:
   contents: read
 concurrency:
-  group: ai-estimate-one-call-20260916
+  group: ai-identity-only-20260916
   cancel-in-progress: false
 jobs:
   estimate:
