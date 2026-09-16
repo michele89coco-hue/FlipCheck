@@ -1,0 +1,20 @@
+name: One-call AI estimate experiment
+on:
+  push:
+    branches: [codex/ai-estimate-one-call-20260916]
+permissions:
+  contents: read
+concurrency:
+  group: ai-estimate-one-call-20260916
+  cancel-in-progress: false
+jobs:
+  estimate:
+    if: github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: One OpenAI request, one web call, no retries
+        env:
+          OPENAI_API_KEY: ${{ secrets.FLIPCHECK_LIVE_API_KEY }}
+        run: python3 experiments/ai-estimate/run.py
