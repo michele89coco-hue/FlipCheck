@@ -1,11 +1,11 @@
-name: One-call AI estimate experiment
+name: Messi identity-only AI estimate
 on:
   push:
-    branches: [codex/ai-estimate-one-call-20260916]
+    branches: [codex/ai-messi-identity-only-20260916]
 permissions:
   contents: read
 concurrency:
-  group: ai-estimate-one-call-20260916
+  group: ai-messi-identity-only-20260916
   cancel-in-progress: false
 jobs:
   estimate:
