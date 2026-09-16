@@ -1,7 +1,7 @@
 import os,json,time,urllib.request,urllib.error
 from pathlib import Path
-key=os.environ.get('OPENAI_API_KEY','')
-if not key.startswith('sk-'):
+key=os.environ.get('OPENAI_API_KEY','').strip()
+if not key.startswith('sk-') or any(c.isspace() for c in key):
  print('TEST_NOT_RUN: OpenAI credential unavailable in this runner. API calls: 0.');raise SystemExit(0)
 body=json.loads(Path('experiments/ai-estimate/request.json').read_text())
 class NoRedirect(urllib.request.HTTPRedirectHandler):
