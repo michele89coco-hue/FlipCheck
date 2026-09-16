@@ -12,7 +12,7 @@ start=time.monotonic()
 try:
  with opener.open(req,timeout=180) as r:answer=json.load(r)
 except urllib.error.HTTPError as e:
- print('TEST_FAILED: HTTP',e.code,'; no retries.');raise SystemExit(1)
+ print('TEST_FAILED: HTTP',e.code,e.read().decode('utf-8')[:2000].replace(key,'[REDACTED]'),'; no retries.');raise SystemExit(1)
 except Exception as e:
  print('TEST_FAILED:',type(e).__name__,'; no retries.');raise SystemExit(1)
 calls=[o for o in answer.get('output',[]) if o.get('type')=='web_search_call']
