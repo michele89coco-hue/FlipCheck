@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - '.github/workflows/retain-builds.yml'
   workflow_dispatch:
 
 permissions:
@@ -12,7 +14,7 @@ permissions:
 
 jobs:
   build:
-    name: Build and keep last 3 signed APKs
+    name: Build signed APK
     runs-on: ubuntu-latest
     env:
       FLIPCHECK_KEYSTORE_PATH: ${{ github.workspace }}/flipcheck-release.jks
@@ -73,20 +75,3 @@ jobs:
           path: artifact/*.apk
           retention-days: 30
 
-      - name: Keep only last 3 signed APK artifacts
-        shell: bash
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          API="https://api.github.com/repos/${{ github.repository }}/actions/artifacts?per_page=100"
-          TO_DELETE=$(curl -fsSL -H "Authorization: Bearer ${GH_TOKEN}" "$API" \
-            | jq -r '.artifacts
-              | map(select(.name | startswith("flipcheck-release-apk-")))
-              | sort_by(.created_at)
-              | reverse
-              | .[3:]
-              | .[].id')
-          for id in $TO_DELETE; do
-            curl -fsSL -X DELETE -H "Authorization: Bearer ${GH_TOKEN}" \
-              "https://api.github.com/repos/${{ github.repository }}/actions/artifacts/$id"
-          done
