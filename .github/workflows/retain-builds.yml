@@ -1,0 +1,67 @@
+name: Retain latest 25 builds
+on:
+  workflow_run:
+    workflows: ['Build*', 'Android*', 'FlipCheck*']
+    types: [completed]
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/retain-builds.yml']
+permissions:
+  actions: write
+  contents: read
+concurrency:
+  group: retain-latest-25-builds
+  cancel-in-progress: false
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Preserve latest builds and remove older artifacts and runs
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const repo = context.repo, limit = 25;
+            const isBuild = r => /^\.github\/workflows\/android[^/]*\.ya?ml$/.test(r.path || '');
+            const allRuns = await github.paginate(github.rest.actions.listWorkflowRunsForRepo, {...repo, per_page:100});
+            const runs = allRuns.filter(isBuild).sort((a,b) => b.created_at.localeCompare(a.created_at) || b.id-a.id);
+            const completed = runs.filter(r => r.status === 'completed');
+            const recent = new Set(completed.slice(0,limit).map(r=>r.id));
+            const allArtifacts = await github.paginate(github.rest.actions.listArtifactsForRepo, {...repo, per_page:100});
+            const apk = allArtifacts.filter(a => !a.expired && /flipcheck|apk/i.test(a.name) && a.workflow_run?.id)
+              .sort((a,b)=>b.created_at.localeCompare(a.created_at)||b.id-a.id);
+            const apkRuns = [...new Set(apk.map(a=>a.workflow_run.id))];
+            const retainedApkRuns = new Set(apkRuns.slice(0,limit));
+            const retainedArtifacts = apk.filter(a=>retainedApkRuns.has(a.workflow_run.id));
+            const active = new Set(runs.filter(r=>r.status!=='completed').map(r=>r.id));
+            const deleteArtifacts = apk.filter(a=>!retainedApkRuns.has(a.workflow_run.id) && !active.has(a.workflow_run.id));
+            // Keep recent log-only builds too: upload failures may have recovered APKs in their logs.
+            const deleteRuns = completed.filter(r=>!recent.has(r.id) && !retainedApkRuns.has(r.id));
+            core.info(JSON.stringify({retainedApkBuilds:retainedApkRuns.size, recentRunCount:recent.size, deleteArtifacts:deleteArtifacts.length, deleteRuns:deleteRuns.length}));
+            let bytes=0, removedArtifacts=0, removedRuns=0;
+            for (const a of deleteArtifacts) {
+              const {data:r}=await github.rest.actions.getWorkflowRun({...repo,run_id:a.workflow_run.id});
+              if(r.status!=='completed') continue;
+              try {
+                await github.rest.actions.deleteArtifact({...repo,artifact_id:a.id});
+                bytes+=a.size_in_bytes; removedArtifacts++;
+              } catch(e) { if(e.status!==404) throw e; }
+            }
+            for (const r of deleteRuns) {
+              const {data:current}=await github.rest.actions.getWorkflowRun({...repo,run_id:r.id});
+              if(current.status!=='completed') continue;
+              const attached=await github.paginate(github.rest.actions.listWorkflowRunArtifacts,{...repo,run_id:r.id,per_page:100});
+              if(attached.some(a=>retainedArtifacts.some(k=>k.id===a.id))) throw new Error('Protected APK run selected');
+              try {
+                await github.rest.actions.deleteWorkflowRun({...repo,run_id:r.id});
+                removedRuns++;
+              } catch(e) { if(e.status!==404) throw e; }
+            }
+            const after=await github.paginate(github.rest.actions.listArtifactsForRepo,{...repo,per_page:100});
+            for(const a of retainedArtifacts) {
+              if(!after.some(b=>b.id===a.id)) throw new Error('Protected artifact missing: '+a.id);
+            }
+            const report={retainedApkBuilds:retainedApkRuns.size,protectedRecentRuns:recent.size,removedArtifacts,removedRuns,deletedArtifactBytes:bytes};
+            core.info('RESULT '+JSON.stringify(report));
+            await core.summary.addHeading('Retention: 25 builds').addCodeBlock(JSON.stringify(report,null,2),'json').write();
