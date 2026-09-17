@@ -1,0 +1,41 @@
+name: Clean old build artifacts - keep 25
+on:
+  push:
+    branches: [maintenance/cleanup-builds-keep25-20260917]
+    paths: [.github/workflows/cleanup-builds-keep25.yml]
+permissions:
+  actions: write
+  contents: read
+concurrency:
+  group: cleanup-builds-keep25
+  cancel-in-progress: false
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const repo = context.repo;
+            const all = await github.paginate(github.rest.actions.listArtifactsForRepo, {...repo, per_page: 100});
+            core.info('INVENTORY '+JSON.stringify(all.map(a=>({id:a.id,name:a.name,expired:a.expired,size:a.size_in_bytes,run:a.workflow_run?.id}))));
+            const builds = all.filter(a => !a.expired && /flipcheck|apk/i.test(a.name) && a.workflow_run?.id);
+            builds.sort((a,b) => b.created_at.localeCompare(a.created_at) || b.id-a.id);
+            const runIds = [...new Set(builds.map(a => a.workflow_run.id))];
+            const keep = new Set(runIds.slice(0,25));
+            const remove = builds.filter(a => !keep.has(a.workflow_run.id));
+            core.info(JSON.stringify({buildsFound:runIds.length, retainedBuilds:keep.size, artifactsToDelete:remove.length, retained:builds.filter(a=>keep.has(a.workflow_run.id)).map(a=>({id:a.id,name:a.name}))}));
+            let bytes = 0;
+            for (const a of remove) {
+              const run = await github.rest.actions.getWorkflowRun({...repo,run_id:a.workflow_run.id});
+              if (run.data.status !== 'completed') { core.info('Skipping active build '+a.workflow_run.id); continue; }
+              await github.rest.actions.deleteArtifact({...repo,artifact_id:a.id});
+              bytes += a.size_in_bytes;
+              core.info('Deleted '+a.id+' '+a.name);
+            }
+            const remaining = await github.paginate(github.rest.actions.listArtifactsForRepo,{...repo,per_page:100});
+            for (const a of builds.filter(a=>keep.has(a.workflow_run.id))) {
+              if (!remaining.some(b=>b.id===a.id)) throw new Error('Retained artifact missing: '+a.id);
+            }
+            await core.summary.addHeading('Build cleanup').addRaw(JSON.stringify({retainedBuilds:keep.size,deletedBytes:bytes,remainingArtifacts:remaining.length})).write();
+            core.info('RESULT '+JSON.stringify({retainedBuilds:keep.size,deletedBytes:bytes,remainingArtifacts:remaining.length}));
