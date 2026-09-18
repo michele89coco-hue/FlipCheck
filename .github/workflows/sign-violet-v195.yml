@@ -1,0 +1,59 @@
+name: Sign FlipCheck Violet 1.95
+on:
+  push:
+    branches: [codex/sign-violet-v195]
+permissions:
+  contents: read
+jobs:
+  sign:
+    runs-on: ubuntu-latest
+    env:
+      FLIPCHECK_KEYSTORE_BASE64: ${{ secrets.FLIPCHECK_KEYSTORE_BASE64 }}
+      FLIPCHECK_KEYSTORE_PASSWORD: ${{ secrets.FLIPCHECK_KEYSTORE_PASSWORD }}
+      FLIPCHECK_KEY_ALIAS: ${{ secrets.FLIPCHECK_KEY_ALIAS }}
+      FLIPCHECK_KEY_PASSWORD: ${{ secrets.FLIPCHECK_KEY_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: michele89coco-hue/FlipCheck-Android
+          ref: codex/violet-v195-copyright-identity
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '9.1.0'
+      - name: Build and sign verified v1.95 source
+        run: |
+          set -euo pipefail
+          test -n "$FLIPCHECK_KEYSTORE_BASE64"
+          test -n "$FLIPCHECK_KEYSTORE_PASSWORD"
+          test -n "$FLIPCHECK_KEY_ALIAS"
+          test -n "$FLIPCHECK_KEY_PASSWORD"
+          printf '%s' "$FLIPCHECK_KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/flipcheck-release.jks"
+          gradle --no-daemon :app:assembleRelease
+          tool_dir=$(find "$ANDROID_HOME/build-tools" -mindepth 1 -maxdepth 1 -type d | sort -V | tail -n1)
+          mkdir -p artifacts
+          "$tool_dir/apksigner" sign --ks "$RUNNER_TEMP/flipcheck-release.jks" --ks-key-alias "$FLIPCHECK_KEY_ALIAS" --ks-pass env:FLIPCHECK_KEYSTORE_PASSWORD --key-pass env:FLIPCHECK_KEY_PASSWORD --out artifacts/FlipCheck-Violet-1.95.apk app/build/outputs/apk/release/app-release-unsigned.apk
+          "$tool_dir/apksigner" verify --verbose --print-certs artifacts/FlipCheck-Violet-1.95.apk
+          "$tool_dir/aapt" dump badging artifacts/FlipCheck-Violet-1.95.apk > artifacts/metadata.txt
+          sha256sum artifacts/FlipCheck-Violet-1.95.apk > artifacts/SHA256.txt
+          rm -f "$RUNNER_TEMP/flipcheck-release.jks"
+      - uses: actions/upload-artifact@v4
+        id: upload
+        continue-on-error: true
+        with:
+          name: FlipCheck-Violet-1.95-signed
+          path: artifacts/
+      - name: Transfer fallback
+        if: steps.upload.outcome == 'failure'
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import base64, gzip, zipfile
+          with zipfile.ZipFile('/tmp/flipcheck-signed.zip', 'w', zipfile.ZIP_STORED) as z:
+              for p in Path('artifacts').iterdir(): z.write(p, p.name)
+          s=base64.b64encode(gzip.compress(Path('/tmp/flipcheck-signed.zip').read_bytes(), compresslevel=3)).decode()
+          for i in range(0,len(s),12000): print(f'SIGNED_GZIP_CHUNK_{i//12000:04d}={s[i:i+12000]}')
+          PY
