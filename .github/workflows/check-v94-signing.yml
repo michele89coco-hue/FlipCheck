@@ -1,0 +1,24 @@
+name: Check FlipCheck release certificate
+on:
+  push:
+    branches: [codex/sign-violet-v195]
+    paths: ['.github/workflows/check-v94-signing.yml']
+permissions:
+  contents: read
+jobs:
+  certificate:
+    runs-on: ubuntu-latest
+    env:
+      FLIPCHECK_KEYSTORE_BASE64: ${{ secrets.FLIPCHECK_KEYSTORE_BASE64 }}
+      FLIPCHECK_KEYSTORE_PASSWORD: ${{ secrets.FLIPCHECK_KEYSTORE_PASSWORD }}
+      FLIPCHECK_KEY_ALIAS: ${{ secrets.FLIPCHECK_KEY_ALIAS }}
+    steps:
+      - name: Compare public release certificate
+        run: |
+          set -euo pipefail
+          test -n "$FLIPCHECK_KEYSTORE_BASE64"
+          test -n "$FLIPCHECK_KEYSTORE_PASSWORD"
+          test -n "$FLIPCHECK_KEY_ALIAS"
+          printf '%s' "$FLIPCHECK_KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/flipcheck-release.jks"
+          keytool -list -v -keystore "$RUNNER_TEMP/flipcheck-release.jks" -storepass:env FLIPCHECK_KEYSTORE_PASSWORD -alias "$FLIPCHECK_KEY_ALIAS" | grep 'SHA256:'
+          rm -f "$RUNNER_TEMP/flipcheck-release.jks"
