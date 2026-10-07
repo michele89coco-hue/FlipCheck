@@ -1,0 +1,30 @@
+name: Publish exact FlipCheck 238 APK
+on:
+  push:
+    branches: [release/fix238-20261007-no-ai]
+    paths:
+      - .github/workflows/publish238-exact.yml
+      - release-artifacts/fix238/FlipCheck238-reconstruction.zip
+      - release-artifacts/fix238/reconstruct238.py
+      - release-artifacts/fix238/publish_release238.py
+permissions:
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: release-artifacts/fix238
+      - name: Download original 237 and reconstruct exact signed 238
+        shell: bash
+        run: |
+          curl --fail --location --retry 3 --output /tmp/FlipCheck237.apk https://github.com/michele89coco-hue/FlipCheck/releases/download/original-228-20261006-install237/FlipCheck237-228-originale.apk
+          python release-artifacts/fix238/reconstruct238.py /tmp/FlipCheck237.apk release-artifacts/fix238/FlipCheck238-reconstruction.zip release-artifacts/fix238/FlipCheck238-fix-prezzi-no-AI.apk
+          cd release-artifacts/fix238
+          sha256sum --check SHA256SUMS.txt
+      - name: Upload and verify assets before publishing
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python release-artifacts/fix238/publish_release238.py

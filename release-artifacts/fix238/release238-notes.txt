@@ -1,0 +1,13 @@
+FlipCheck 238 corregge la pubblicazione del prezzo e lascia dormienti le stime AI.
+
+- Gemini riceve un solo prompt compatto; immagini e OCR conservati.
+- Pikachu conserva 180,07 EUR dalle sei offerte CardTrader italiane del log.
+- Lugia non riceve il prezzo del candidato ufficiale incompatibile; Bulbasaur conserva la quotazione verificata.
+- Prezzi soltanto da fonti di mercato compatibili; stime AI disattivate.
+
+Versione 2.31-test238, versionCode 369. APK firmato con lo stesso certificato della 237.
+105 controlli offline sul DEX finale, sul payload Gemini e sulla UI superati.
+Tempi reali e riconoscimento da verificare con nuove scansioni sul telefono.
+
+Gli asset includono APK installabile, sorgenti incrementali, verifiche e checksum SHA-256.
+La base resta la 237 con codice originale 228. I sorgenti sono una patch incrementale, non un progetto Gradle completo.
