@@ -1,0 +1,53 @@
+{
+  "format": "flipcheck-public-release-bundle-v1",
+  "bytes": 530475,
+  "sha256": "30ac0cb6924bb77a3e11b9aa3cff36cb2cf7efff51d4d94b1f9e88d0147d1f22",
+  "chunks": [
+    {
+      "path": "chunks/000.bin",
+      "bytes": 65536,
+      "sha256": "f539cbe4aba6281bdcbd9ce9708a22fe0d5e8d417b6a65c544ffd6fe99ea4bef"
+    },
+    {
+      "path": "chunks/001.bin",
+      "bytes": 65536,
+      "sha256": "196a6726759f429d9ecef236dfcef87c1bd3a754e57032cf927ac8abe4f69797"
+    },
+    {
+      "path": "chunks/002.bin",
+      "bytes": 65536,
+      "sha256": "3b68c97e69f51616cea7d5331786f121e84d344b4409e6da8add5761d15a457c"
+    },
+    {
+      "path": "chunks/003.bin",
+      "bytes": 65536,
+      "sha256": "0fd1e1bc5056558835b4fc3868932a86be2ffbbef0d9137ab366b4cf219e1f50"
+    },
+    {
+      "path": "chunks/004.bin",
+      "bytes": 65536,
+      "sha256": "850785ad8cf74714d005d837ffbe65ae6af94833e5c6b74e09bf6da3a0241429"
+    },
+    {
+      "path": "chunks/005.bin",
+      "bytes": 65536,
+      "sha256": "af09a91d2ff0f755aff6ff4dd0669776a25598db371405eeb27c47e88b5c60aa"
+    },
+    {
+      "path": "chunks/006.bin",
+      "bytes": 65536,
+      "sha256": "02d4ebd6875b710da5c36392ad7a4277f9ce320db328a22b56ee7945028da198"
+    },
+    {
+      "path": "chunks/007.bin",
+      "bytes": 65536,
+      "sha256": "24b59f3f63c8a7a67f6117e9f47febe87c5e645c6acc35c4569d728c0d4412d9"
+    },
+    {
+      "path": "chunks/008.bin",
+      "bytes": 6187,
+      "sha256": "16b9b5831f8f2e274cccda4e36f25ed50414adce7c51b0e7c890807d3ed9aa28"
+    }
+  ],
+  "apk_sha256": "24b2b827a23270cbc09e7b25ef33bb36d04c5e4e9b925e808317e55487bacd32"
+}
