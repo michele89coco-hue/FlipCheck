@@ -1,0 +1,34 @@
+name: Publish original 228 source archive
+
+on:
+  push:
+    branches: [release/original-228-install237]
+    paths:
+      - 'distribution/sources-original228-install237/**'
+      - '.github/workflows/publish-original-228-source.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-original-228-source
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout source archive
+        uses: actions/checkout@v4
+      - name: Verify and publish source archive
+        working-directory: distribution/sources-original228-install237
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          sha256sum --check source-SHA256SUMS
+          gh release upload original-228-20261006-install237 \
+            FlipCheck237-base228-sorgenti-e-verifiche.zip source-SHA256SUMS \
+            --repo "$GITHUB_REPOSITORY"
