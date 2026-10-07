@@ -1,0 +1,72 @@
+FlipCheck 238 — fix prezzi e stime AI dormienti
+
+APK: FlipCheck238-fix-prezzi-no-AI.apk
+Versione Android: 2.31-test238; versionCode 369.
+Base: APK originale 237, con il codice della 228. Questa è una patch incrementale,
+non un progetto Gradle completo.
+
+Modifiche
+1. Gemini: sostituzione del prompt in systemInstruction, rimozione della copia
+   nelle parti utente e del contratto duplicato. Immagini/OCR preservati.
+   Eliminati richiesta e schema market_estimate; thinking low e limite di output
+   conservati. Nessuna nuova chiamata Gemini.
+2. CardTrader: conservazione della quotazione compatibile nella pubblicazione
+   finale. Legame con scansione, foto originali, blueprint, espansione, numero
+   completo, variante, lingua, condizione e HTTP della scansione. Offerte vecchie,
+   di altra lingua/condizione o con legami esplicitamente errati sono rifiutate.
+   Rarità e finitura restano campi separati. Autenticità non certificata.
+3. Candidati: i rifiuti registrati dal catalogo non vengono persi; caratteristiche
+   fisiche mancanti o incompatibili impediscono la pubblicazione di un prezzo e
+   la scorciatoia di chiusura. Nessun prezzo ufficiale trasferito alla Lugia custom.
+4. Stime AI: disattivate nella richiesta iniziale, nei recuperi e nella UI.
+   Il metodo precedente resta presente per compatibilità ma restituisce vuoto.
+   La politica indipendente delle richieste AI per prezzo era già disabilitata
+   nella base e resta tale. Pubblicazione e flag has_price sono sincronizzati.
+
+La scelta tra riferimenti disponibili favorisce catalogo nella stessa lingua,
+poi eBay, poi catalogo in altra lingua. Restano i controlli precedenti su grading,
+condizioni e cambio valuta. La patch non aggiunge nuove ricerche eBay, né inventa
+un importo quando non esiste una fonte compatibile. I coefficienti linguistici
+preesistenti non sono modificati.
+
+Risultati sui tre log caricati
+- Pikachu: 180,07 EUR, media di sei offerte CardTrader italiane NM/M;
+  prezzi richiesti, spedizione/commissioni escluse, non vendite concluse.
+- Lugia: nessun prezzo compatibile nei log; eliminato il riferimento improprio
+  alla scheda ufficiale 30th Celebration. Nessuna sostituzione con stima AI.
+- Bulbasaur: quotazione verificata precedente preservata.
+
+Verifica
+Esecuzione offline della reale implementazione del DEX finale convertita in JAR,
+con org.json Android e classi della base, senza stub delle regole applicative.
+Report separati per regressione, payload Gemini ricostruito dai prompt/schema
+reali e UI con DOM simulato. Il testo del payload di test scende da 6455 a 2274
+caratteri; questa è una misura del testo, non della latenza o dei token totali.
+Non sono state eseguite nuove scansioni sul telefono o chiamate API live.
+Tempo reale di Gemini, immagini e qualità del riconoscimento da verificare su
+nuove scansioni. Firma v1/v2/v3, certificato originale, allineamento 16 KB e
+identità dei payload non modificati verificati nel report di packaging.
+
+Contenuti
+228-originale/src: sorgenti incrementali aggiornati (nomi ABI storici preservati).
+228-originale/assets/fixes280.js: interfaccia aggiornata.
+238-fix/build/patched.dex: codice compilato e verificato dell'APK consegnato.
+238-fix/fix238.patch: differenza rispetto ai sorgenti allegati.
+238-fix/*Test.java, ui238-test.js: controlli ripetibili.
+238-fix/reports: report e hash del codice e APK.
+Nessuna chiave privata, password o backup di firma inclusi nell'archivio.
+
+Ricompilazione
+Servono Java/JDK 21, Python 3 con cryptography, Node, dex-tools 2.4, smali/baksmali/
+dexlib2/util 2.5.2 con dipendenze, r8 8.3.37, android-all 14-robolectric-10818077,
+Android SDK Build Tools 35. I tool di questo lavoro sono documentati in tools.json.
+Posizionare i JAR nella directory passata a --tools, dex-tools-v2.4 e android-15
+come sottodirectory. I tre log originali sono forniti separatamente dall'utente.
+
+python 238-fix/build238.py --tools TOOLCHAIN --base-apk FlipCheck237.apk
+python 238-fix/run-tests238.py --tools TOOLCHAIN --logs CARTELLA_LOG
+python 238-fix/package238.py --tools TOOLCHAIN --base-apk FlipCheck237.apk --signing-backup BACKUP.zip --output FlipCheck238.apk
+
+Gli script non pubblicano su GitHub e non cancellano il backup di firma.
+Il materiale di firma viene usato soltanto in una directory temporanea privata,
+che viene rimossa automaticamente dopo la firma.

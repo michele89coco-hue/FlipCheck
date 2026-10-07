@@ -1,0 +1,28 @@
+{
+  "status": "PASS",
+  "package": "package: name='com.flipcheck.cards' versionCode='369' versionName='2.31-test238' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'",
+  "version_name": "2.31-test238",
+  "version_code": 369,
+  "apk": "FlipCheck238-fix-prezzi-no-AI.apk",
+  "apk_bytes": 163132225,
+  "apk_sha256": "d92594331130dd64352df47822449f0a391aca03c7c6be41f95b754378dc2b62",
+  "tested_dex_sha256": "2ad6c4fab5cb7e5218938c38aa6931e57b1db0197c187a5d49a174d65ed9ed6b",
+  "certificate_sha256": "cf7cb81d2bcb16fd34b4e8ed87691d586417a579b5723a3d8d97cfd77386f04c",
+  "same_certificate_as_237": true,
+  "signature_schemes": [
+    1,
+    2,
+    3
+  ],
+  "zipalign_16kb": true,
+  "changed_payload_entries": [
+    "AndroidManifest.xml",
+    "classes.dex",
+    "assets/fixes280.js"
+  ],
+  "all_other_payload_entries_identical": true,
+  "private_signing_material_in_package": false,
+  "new_phone_scans": 0,
+  "live_api_calls": 0,
+  "device_latency_verified": false
+}
