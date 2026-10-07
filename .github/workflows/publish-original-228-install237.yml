@@ -1,0 +1,41 @@
+name: Publish original 228 APK
+
+on:
+  push:
+    branches: [release/original-228-install237]
+    paths:
+      - 'distribution/original-228-install237/**'
+      - '.github/workflows/publish-original-228-install237.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-original-228-install237
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout archived APK
+        uses: actions/checkout@v4
+      - name: Reassemble and verify signed APK
+        run: python3 distribution/original-228-install237/assemble_apk.py
+      - name: Publish the original 228 with installation version 237
+        working-directory: distribution/original-228-install237
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          sha256sum --check SHA256SUMS
+          gh release create original-228-20261006-install237 \
+            FlipCheck237-228-originale.apk \
+            SHA256SUMS verification.json verifiche.txt \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$GITHUB_SHA" \
+            --title "FlipCheck 228 originale del 6 ottobre - installazione 237" \
+            --notes-file release-notes.txt \
+            --prerelease

@@ -1,0 +1,110 @@
+{
+  "apk": "FlipCheck237-228-originale.apk",
+  "bytes": 163128139,
+  "sha256": "1c9d53c0066820e464bceb6fb26087546b3da670a0c523b9ad428dcefadb0b92",
+  "version_name": "2.31-test237",
+  "version_code": 368,
+  "base": "FlipCheck228.apk del 6 ottobre 2026",
+  "parts": [
+    {
+      "file": "payload/part-000.bin",
+      "bytes": 8388608,
+      "sha256": "cba8208f566010f5f4ab23dacf06c1c346f291ef92cd0895a874f7356cfbee8b"
+    },
+    {
+      "file": "payload/part-001.bin",
+      "bytes": 8388608,
+      "sha256": "6081c70c03c6dec661ad392454be740758a851e5255d94ae724adff3a7a0c36b"
+    },
+    {
+      "file": "payload/part-002.bin",
+      "bytes": 8388608,
+      "sha256": "2fdab4ccdb502930178395c9ffa2413e17021f528621731a14e741680cf156bd"
+    },
+    {
+      "file": "payload/part-003.bin",
+      "bytes": 8388608,
+      "sha256": "ae2e0b987a5b058d3c58bbebcd9aaf90baac40868d607d4232dd86f8896dd9b0"
+    },
+    {
+      "file": "payload/part-004.bin",
+      "bytes": 8388608,
+      "sha256": "ab0003b3bc23ba4811924efc1123a43105d2c18e6d5ceaa5ac4bf67c34b123bc"
+    },
+    {
+      "file": "payload/part-005.bin",
+      "bytes": 8388608,
+      "sha256": "09c57cdab47b6b0c1711322de246c258e0ac4d51618565f659031961d8f92c7d"
+    },
+    {
+      "file": "payload/part-006.bin",
+      "bytes": 8388608,
+      "sha256": "9b0a3173185ea9815397909f30a7d2e0f40d166dec98983fdf62981b446f25fc"
+    },
+    {
+      "file": "payload/part-007.bin",
+      "bytes": 8388608,
+      "sha256": "0f614ac1a202bba960dda35b7ff9ce5d917f47b4e2573dc0a4668d7bdcad386a"
+    },
+    {
+      "file": "payload/part-008.bin",
+      "bytes": 8388608,
+      "sha256": "54905ef97d4e986375781e414ced4415e581968148e194479bb34a6996159091"
+    },
+    {
+      "file": "payload/part-009.bin",
+      "bytes": 8388608,
+      "sha256": "e1e5a538bce28ab48bbfe2b2d2842aaf8785c2b6a66cc64cbbb0c21c3c15f812"
+    },
+    {
+      "file": "payload/part-010.bin",
+      "bytes": 8388608,
+      "sha256": "27addad7a351c703ac68956298542951320434363c4413194ae73540c0be7d6a"
+    },
+    {
+      "file": "payload/part-011.bin",
+      "bytes": 8388608,
+      "sha256": "ea709d83540480daa4f86d7d50cc407a89a0d9247b072afd089acab8273374ad"
+    },
+    {
+      "file": "payload/part-012.bin",
+      "bytes": 8388608,
+      "sha256": "e0f54de8aa412377568c4942e35dfb0ac0dcab5223a87f064f478b2ae312f03c"
+    },
+    {
+      "file": "payload/part-013.bin",
+      "bytes": 8388608,
+      "sha256": "51e8bcdf2c5e79200aa4db3fe1101eb3f838b4b53c8541d546da9d70d75a5eef"
+    },
+    {
+      "file": "payload/part-014.bin",
+      "bytes": 8388608,
+      "sha256": "3ef45a18eb6531d95735cb6ae84f0a4cecf9994d31767e514493aadff35099fd"
+    },
+    {
+      "file": "payload/part-015.bin",
+      "bytes": 8388608,
+      "sha256": "8ce855d80f2144ff7334e283e1f7853ebcd7f052a526a8373a4638530715f8bf"
+    },
+    {
+      "file": "payload/part-016.bin",
+      "bytes": 8388608,
+      "sha256": "4a57af38eb0a602d80f027a8508a14f24154f14e14a20244ff43515d2e28197a"
+    },
+    {
+      "file": "payload/part-017.bin",
+      "bytes": 8388608,
+      "sha256": "4166ea1adae568b676031115acfc1fe4cb8e7cab1e1e20836c1111a79ad91be6"
+    },
+    {
+      "file": "payload/part-018.bin",
+      "bytes": 8388608,
+      "sha256": "eaae180e1df6294bdc05a9689304e65bba7480262cd480298b7d61de6529e36f"
+    },
+    {
+      "file": "payload/part-019.bin",
+      "bytes": 3744587,
+      "sha256": "7e553a954843e95ddde9f54ab1dbc24cce371294a41f1097154ead05dd512205"
+    }
+  ]
+}

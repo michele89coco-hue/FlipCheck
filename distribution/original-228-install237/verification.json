@@ -1,0 +1,42 @@
+{
+  "status": "PASS_INDEPENDENT_ORIGINAL228_VERSION_ONLY",
+  "assertions": 599,
+  "base_apk_sha256": "378afebddb171845f90fb55ce53e0ec13be7a0f968136966343669d9456964ad",
+  "final_apk_sha256": "1c9d53c0066820e464bceb6fb26087546b3da670a0c523b9ad428dcefadb0b92",
+  "final_apk_bytes": 163128139,
+  "changed_payload_entries": [
+    "AndroidManifest.xml"
+  ],
+  "unchanged_payload_entries": 566,
+  "manifest_changed_byte_offsets": [
+    1132,
+    1134,
+    5408
+  ],
+  "manifest_exactly_version_only": true,
+  "version_code_from_to": [
+    359,
+    368
+  ],
+  "version_name_from_to": [
+    "2.31-test228",
+    "2.31-test237"
+  ],
+  "dex_payload_hashes_identical_to_original228": {
+    "classes.dex": "4d8856a67f875780a71fac7d3a7930e7777f058d04195613a3325d398aca62f7",
+    "classes2.dex": "74494d8cd569c566db050878939531270eef3adfca4dd5908be6e36876e38b6b"
+  },
+  "all_assets_and_native_payloads_identical": true,
+  "original_internal228_labels_preserved": true,
+  "signer_certificate_sha256": "cf7cb81d2bcb16fd34b4e8ed87691d586417a579b5723a3d8d97cfd77386f04c",
+  "same_original_certificate": true,
+  "apk_signature_schemes": [
+    1,
+    2,
+    3
+  ],
+  "zipalign_16kb": true,
+  "aapt_package": "package: name='com.flipcheck.cards' versionCode='368' versionName='2.31-test237' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'",
+  "new_phone_scans": 0,
+  "live_api_calls": 0
+}

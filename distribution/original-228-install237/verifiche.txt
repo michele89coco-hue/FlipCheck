@@ -1,0 +1,8 @@
+FlipCheck 228 originale del 6 ottobre 2026, ripubblicata con versione Android 2.31-test237 (versionCode 368).
+
+Cambia esclusivamente la versione Android per consentire l’aggiornamento sopra le build fino alla 236 (versionCode 367). Tutti i 566 elementi del contenuto restano identici alla 228 originale: codice, Gemini, prompt, cataloghi, prezzi, risorse e interfaccia. Le etichette interne e i log possono continuare a indicare 228.
+
+Firma APK v1/v2/v3 verificata con il certificato originale; allineamento 16 KB verificato. Controllo completo del contenuto: 599 verifiche superate. L’installazione sul telefono non è stata eseguita in questa verifica.
+
+SHA-256 APK: 1c9d53c0066820e464bceb6fb26087546b3da670a0c523b9ad428dcefadb0b92
+Certificato SHA-256: cf7cb81d2bcb16fd34b4e8ed87691d586417a579b5723a3d8d97cfd77386f04c
