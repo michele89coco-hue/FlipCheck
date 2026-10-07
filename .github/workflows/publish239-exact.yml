@@ -1,0 +1,44 @@
+name: Publish exact FlipCheck 239 APK
+on:
+  push:
+    branches: [release/fix239-20261007-no-ai]
+    paths:
+      - .github/workflows/publish239-exact.yml
+      - release-artifacts/fix239/**
+permissions:
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: release-artifacts/fix239
+      - name: Restore verified public release bundle
+        shell: bash
+        run: |
+          python - <<'PYCODE'
+          from pathlib import Path
+          import json,hashlib,zipfile
+          root=Path('release-artifacts/fix239');m=json.loads((root/'bundle239.json').read_text());assert m['format']=='flipcheck-public-release-bundle-v1'
+          parts=[]
+          for c in m['chunks']:
+            b=(root/c['path']).read_bytes();assert len(b)==c['bytes'] and hashlib.sha256(b).hexdigest()==c['sha256'];parts.append(b)
+          data=b''.join(parts);assert len(data)==m['bytes'] and hashlib.sha256(data).hexdigest()==m['sha256']
+          path=root/'publish239-bundle.zip';path.write_bytes(data)
+          with zipfile.ZipFile(path) as z:
+            assert z.testzip() is None and all('/' not in n and '\\' not in n for n in z.namelist())
+            z.extractall(root)
+          PYCODE
+      - name: Download original 237 and reconstruct exact signed 239
+        shell: bash
+        run: |
+          curl --fail --location --retry 3 --connect-timeout 20 --max-time 180 --output /tmp/FlipCheck237.apk https://github.com/michele89coco-hue/FlipCheck/releases/download/original-228-20261006-install237/FlipCheck237-228-originale.apk
+          python release-artifacts/fix239/reconstruct239.py /tmp/FlipCheck237.apk release-artifacts/fix239/FlipCheck239-reconstruction.zip release-artifacts/fix239/FlipCheck239-dettagli-discriminanti-no-AI.apk
+          cd release-artifacts/fix239
+          sha256sum --check SHA256SUMS-239.txt
+      - name: Upload and verify assets before publishing
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python release-artifacts/fix239/publish_release239.py
