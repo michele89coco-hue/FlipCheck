@@ -1,0 +1,38 @@
+name: RAROK live355 service prerequisites
+on:
+  push:
+    branches: [codex/rarok-live-readiness]
+    paths:
+      - .github/workflows/rarok-live355.yml
+      - live355/**
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  live-services:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Load encrypted live configuration into this temporary runner only
+        env:
+          FLIPCHECK_KEYSTORE_BASE64: ${{ secrets.FLIPCHECK_KEYSTORE_BASE64 }}
+          FLIPCHECK_KEYSTORE_PASSWORD: ${{ secrets.FLIPCHECK_KEYSTORE_PASSWORD }}
+          FLIPCHECK_KEY_ALIAS: ${{ secrets.FLIPCHECK_KEY_ALIAS }}
+          FLIPCHECK_KEY_PASSWORD: ${{ secrets.FLIPCHECK_KEY_PASSWORD }}
+        run: java live355/EnvelopeDecrypt.java live355/config.envelope "$RUNNER_TEMP/rarok-live-config.json"
+      - name: Verify service authorization with live provider requests
+        env:
+          RAROK_LIVE_CONFIG: ${{ runner.temp }}/rarok-live-config.json
+        run: python3 live355/live_services_check.py
+      - name: Remove the temporary decrypted configuration
+        if: always()
+        run: rm -f "$RUNNER_TEMP/rarok-live-config.json"
+      - name: Retain sanitized readiness evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: RAROK-live355-prerequisites-${{ github.run_id }}
+          path: live355/evidence/
+          if-no-files-found: warn
+          retention-days: 3
