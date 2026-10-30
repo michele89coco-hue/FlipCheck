@@ -1,0 +1,33 @@
+name: RAROK saved live key compatibility
+on:
+  push:
+    branches: [codex/rarok-live-readiness]
+    paths: [.github/workflows/rarok-live-key-compatibility.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  compatibility:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Identify the intended provider without disclosing the key
+        env:
+          LIVE_API_KEY: ${{ secrets.FLIPCHECK_LIVE_API_KEY }}
+        run: |
+          python3 - <<'PY'
+          import json, os
+          value = os.environ.pop('LIVE_API_KEY', '').strip()
+          provider = 'MISSING'
+          if value.startswith('AIza'):
+              provider = 'GOOGLE_GEMINI_KEY_FORMAT'
+          elif value.startswith('sk-'):
+              provider = 'OPENAI_KEY_FORMAT'
+          elif value:
+              provider = 'UNRECOGNIZED_FORMAT'
+          result = {'configured_secret': 'FLIPCHECK_LIVE_API_KEY', 'format': provider,
+                    'value_logged': False, 'service_requests': 0, 'live_card_scans': 0}
+          print('RAROK_KEY_COMPATIBILITY=' + json.dumps(result))
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as output:
+              output.write('Saved live key format: ' + provider + '\n\nNo secret value or service request.\n')
+          PY
