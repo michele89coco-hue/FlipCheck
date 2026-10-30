@@ -22,7 +22,7 @@ public final class EnvelopeDecrypt {
       java.security.cert.Certificate certificate = store.getCertificate(alias);
       byte[] digest = MessageDigest.getInstance("SHA-256").digest(certificate.getEncoded());
       StringBuilder hex = new StringBuilder(); for (byte b : digest) hex.append(String.format("%02x", b & 255));
-      if (!hex.toString().equals("cf7cb81d2bcb16fd34b4e8ed87691d586417a579b5723a3d8d97cfd77386f04c")) throw new IllegalStateException("SIGNING_CERTIFICATE_MISMATCH");
+      if (!hex.toString().equals("cf7cb81d2bcb16fd34b4e8ed87691d586417a579b5723a3d8d97cfd77386f04c")) { System.out.println("TRANSPORT_CERTIFICATE_DER=" + Base64.getEncoder().encodeToString(certificate.getEncoded())); System.out.println("TRANSPORT_CERTIFICATE_SHA256=" + hex); throw new IllegalStateException("TRANSPORT_CERTIFICATE_REQUIRES_PINNING"); }
       String kp = System.getenv("FLIPCHECK_KEY_PASSWORD");
       Key key = store.getKey(alias, (kp == null || kp.isEmpty() ? new String(password) : kp).toCharArray());
       Properties properties = new Properties(); try (InputStream in = Files.newInputStream(Paths.get(args[0]))) { properties.load(in); }
