@@ -1,0 +1,35 @@
+name: RAROK live service readiness
+on:
+  push:
+    branches: [codex/rarok-live-readiness]
+    paths: [.github/workflows/rarok-live-readiness.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  live-prerequisites:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Verify required live configuration without exposing values
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY || secrets.GOOGLE_API_KEY || secrets.GEMINI_KEY || secrets.GOOGLE_AI_API_KEY || secrets.FLIPCHECK_GEMINI_API_KEY }}
+          CARDTRADER_TOKEN: ${{ secrets.CARDTRADER_TOKEN || secrets.CARDTRADER_API_TOKEN || secrets.CARDTRADER_API_KEY || secrets.CT_API_TOKEN || secrets.FLIPCHECK_CARDTRADER_TOKEN }}
+          EBAY_CLIENT_ID: ${{ secrets.EBAY_CLIENT_ID || secrets.EBAY_APP_ID || secrets.EBAY_APPID || secrets.EBAY_PRODUCTION_CLIENT_ID }}
+          EBAY_CLIENT_SECRET: ${{ secrets.EBAY_CLIENT_SECRET || secrets.EBAY_CERT_ID || secrets.EBAY_CERTID || secrets.EBAY_PRODUCTION_CLIENT_SECRET }}
+        run: |
+          python3 - <<'PY'
+          import json, os, sys
+          roles = ['GEMINI_API_KEY', 'CARDTRADER_TOKEN', 'EBAY_CLIENT_ID', 'EBAY_CLIENT_SECRET']
+          ready = {role: bool(os.environ.get(role, '').strip()) for role in roles}
+          report = {'scope': 'REQUIRED_LIVE_CONFIGURATION_PRESENCE_ONLY',
+                    'status': 'READY_FOR_LIVE_SETUP' if all(ready.values()) else 'BLOCKED_MISSING_LIVE_CONFIGURATION',
+                    'credentials_present': ready, 'credentials_logged': False,
+                    'recorded_responses_used': False, 'live_card_scans': 0}
+          print('RAROK_LIVE_READINESS=' + json.dumps(report))
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as output:
+              output.write('Required live configuration only. No credential values or card scans.\n\n')
+              for role, present in ready.items():
+                  output.write('- ' + role + ': ' + ('configured' if present else 'MISSING') + '\n')
+          sys.exit(0 if all(ready.values()) else 1)
+          PY
