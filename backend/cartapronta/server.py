@@ -9,7 +9,7 @@ from cryptography.fernet import Fernet, InvalidToken
 API = 'https://api.ebay.com'
 MARKET = 'EBAY_IT'
 SCOPES = ' '.join('https://api.ebay.com/oauth/api_scope' + x for x in ('', '/sell.inventory', '/sell.account'))
-VERSION = '1.0.7'
+VERSION = '1.0.7.1'
 CACHE = {}
 LOCKS = [threading.Lock() for _ in range(64)]
 
@@ -245,7 +245,8 @@ def parse_shipping_options(root):
     services=[]
     for x in root.findall('{*}ShippingServiceDetails'):
         code=x.findtext('{*}ShippingService','')
-        types=[v.text for v in x.findall('{*}ShippingType')]
+        # GeteBayDetails exposes repeatable ServiceType, not ShippingType.
+        types=[v.text for v in x.findall('{*}ServiceType')]
         if x.findtext('{*}ValidForSellingFlow')!='true' or x.findtext('{*}InternationalService')=='true' or 'Flat' not in types:continue
         if code and code!='Pickup':services.append({'code':code,'name':x.findtext('{*}Description') or code})
     handling=[]
@@ -264,7 +265,8 @@ def shipping_options(tok):
     except (OSError,ET.ParseError):raise Error('Impossibile caricare i servizi di spedizione eBay. Riprova.',502)
     if root.findtext('{*}Ack') not in ('Success','Warning'):raise Error('eBay non ha restituito i servizi di spedizione. Riprova o usa le impostazioni eBay.',422)
     result=parse_shipping_options(root)
-    if not result['services'] or not result['handling']:raise Error('Nessuna opzione di spedizione italiana disponibile da eBay.',422)
+    if not result['services']:raise Error('eBay non ha restituito servizi nazionali compatibili. Riprova o usa le impostazioni eBay.',422)
+    if not result['handling']:raise Error('eBay non ha restituito i tempi di preparazione. Riprova.',422)
     CACHE['shipping-options-IT']=(time.time()+3600,result);return result
 
 def return_options(category):

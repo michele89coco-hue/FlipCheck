@@ -108,9 +108,9 @@ class Tests(unittest.TestCase):
    with self.assertRaises(s.Error):s.create_policy(d,{'user':'Alice'},'token')
    self.assertEqual(api.call_count,1)
  def test_shipping_xml_filters_domestic_flat_active(self):
-  def service(code,extra=''):return '<ShippingServiceDetails><ShippingService>'+code+'</ShippingService><Description>'+code+'</Description><ValidForSellingFlow>true</ValidForSellingFlow><ShippingType>Flat</ShippingType>'+extra+'</ShippingServiceDetails>'
-  xml='<GeteBayDetailsResponse xmlns="urn:ebay:apis:eBLBaseComponents">'+service('IT_Test')+service('International','<InternationalService>true</InternationalService>')+service('Pickup')+'<ShippingServiceDetails><ShippingService>Inactive</ShippingService><ShippingType>Flat</ShippingType></ShippingServiceDetails><DispatchTimeMaxDetails><DispatchTimeMax>3</DispatchTimeMax><Description>3 giorni</Description></DispatchTimeMaxDetails></GeteBayDetailsResponse>'
-  r=s.parse_shipping_options(s.ET.fromstring(xml));self.assertEqual([x['code'] for x in r['services']],['IT_Test']);self.assertEqual(r['handling'][0]['value'],3)
+  def service(code,extra=''):return '<ShippingServiceDetails><ShippingService>'+code+'</ShippingService><Description>'+code+'</Description><ValidForSellingFlow>true</ValidForSellingFlow><ServiceType>Flat</ServiceType>'+extra+'</ShippingServiceDetails>'
+  xml='<GeteBayDetailsResponse xmlns="urn:ebay:apis:eBLBaseComponents">'+service('IT_Test')+service('International','<InternationalService>true</InternationalService>')+service('Pickup')+service('CalculatedOnly').replace('<ServiceType>Flat</ServiceType>','<ServiceType>Calculated</ServiceType>')+service('Mixed','<ServiceType>Calculated</ServiceType>')+'<ShippingServiceDetails><ShippingService>Inactive</ShippingService><ServiceType>Flat</ServiceType></ShippingServiceDetails><DispatchTimeMaxDetails><DispatchTimeMax>3</DispatchTimeMax><Description>3 giorni</Description></DispatchTimeMaxDetails></GeteBayDetailsResponse>'
+  r=s.parse_shipping_options(s.ET.fromstring(xml));self.assertEqual([x['code'] for x in r['services']],['IT_Test','Mixed']);self.assertEqual(r['handling'][0]['value'],3)
  def test_shipping_payload_and_validation(self):
   options={'services':[{'code':'IT_Test'}],'handling':[{'value':3}]};d={'kind':'fulfillment','shippingServiceCode':'IT_Test','handlingDays':3,'shippingCost':'4,50'}
   with patch.object(s,'shipping_options',return_value=options):
