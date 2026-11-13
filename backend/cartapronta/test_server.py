@@ -61,4 +61,32 @@ class Tests(unittest.TestCase):
    self.assertTrue(s.prepare(DATA,{'user':'Alice'},'token')['published']);api.assert_not_called()
  def test_unknown_route_needs_auth(self):
   with self.assertRaises(s.Error):s.route('/v1/prepare',DATA,'')
+ def test_account_not_enrolled_is_read_only(self):
+  with patch.object(s,'api',return_value={'programs':[]}) as api:
+   r=s.seller_account({'user':'NotEnrolled'},'token');self.assertEqual(r['policyStatus'],'opt_in_required');self.assertEqual(api.call_count,1);self.assertEqual(len(api.call_args.args),2)
+ def test_enable_requires_confirmation(self):
+  with patch.object(s,'api') as api:
+   with self.assertRaises(s.Error) as e:s.enable_policies({}, {'user':'Alice'},'token')
+   self.assertEqual(e.exception.code,'CONFIRM_REQUIRED');api.assert_not_called()
+ def test_enable_pending_and_no_duplicate(self):
+  calls=[];user={'user':'PendingTest'};s.CACHE.pop('policy-opt-in:PendingTest',None)
+  def fake(path,tok,method='GET',body=None):
+   calls.append((path,method,body));return {'programs':[]} if method=='GET' else {}
+  try:
+   with patch.object(s,'api',side_effect=fake):
+    self.assertEqual(s.enable_policies({'confirm':True},user,'token')['policyStatus'],'pending')
+    self.assertEqual(s.enable_policies({'confirm':True},user,'token')['policyStatus'],'pending')
+   writes=[x for x in calls if x[1]=='POST'];self.assertEqual(len(writes),1);self.assertEqual(writes[0],('/sell/account/v1/program/opt_in','POST',{'programType':'SELLING_POLICY_MANAGEMENT'}))
+  finally:s.CACHE.pop('policy-opt-in:PendingTest',None)
+ def test_enabled_account_needs_no_activation(self):
+  def fake(path,tok,method='GET',body=None):
+   self.assertEqual(method,'GET');return {'programs':[{'programType':'SELLING_POLICY_MANAGEMENT'}]} if 'program/' in path else {}
+  with patch.object(s,'api',side_effect=fake):self.assertEqual(s.enable_policies({'confirm':True},{'user':'EnrolledTest'},'token')['policyStatus'],'ready')
+ def test_policy_ineligibility_is_actionable(self):
+  with patch.object(s,'policy_program_enabled',return_value=True),patch.object(s,'api',side_effect=s.Error('eBay: User is not eligible for Business Policy.')):
+   self.assertEqual(s.seller_account({'user':'Alice'},'token')['policyStatus'],'unavailable')
+ def test_policy_auth_error_not_hidden(self):
+  with patch.object(s,'policy_program_enabled',return_value=True),patch.object(s,'api',side_effect=s.Error('Expired',401,'EBAY_401')):
+   with self.assertRaises(s.Error) as e:s.seller_account({'user':'Alice'},'token')
+   self.assertEqual(e.exception.status,401)
 if __name__=='__main__':unittest.main()

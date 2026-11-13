@@ -9,7 +9,7 @@ from cryptography.fernet import Fernet, InvalidToken
 API = 'https://api.ebay.com'
 MARKET = 'EBAY_IT'
 SCOPES = ' '.join('https://api.ebay.com/oauth/api_scope' + x for x in ('', '/sell.inventory', '/sell.account'))
-VERSION = '1.0.4'
+VERSION = '1.0.6'
 CACHE = {}
 LOCKS = [threading.Lock() for _ in range(64)]
 
@@ -210,15 +210,43 @@ def upload_image(data,tok):
     if not r.get('imageUrl'):raise Error('eBay non ha restituito l’indirizzo della foto.',502)
     return {'url':r['imageUrl']}
 
+def policy_program_enabled(tok):
+    programs=api('/sell/account/v1/program/get_opted_in_programs',tok).get('programs',[])
+    return any(p.get('programType')=='SELLING_POLICY_MANAGEMENT' for p in programs)
+
+def seller_account(user,tok):
+    result={'user':user['user'],'fulfillmentPolicies':[],'paymentPolicies':[],'returnPolicies':[],'locations':[]}
+    if not policy_program_enabled(tok):
+        pending=CACHE.get('policy-opt-in:'+user['user'],0)>time.time()-86400
+        result.update(policyStatus='pending' if pending else 'opt_in_required',policyMessage='Richiesta inviata a eBay. L’attivazione può richiedere fino a 24 ore. Premi Aggiorna più tardi.' if pending else 'Per pubblicare da CartaPronta devi abilitare le regole di spedizione, resi e pagamento sul tuo account eBay.')
+        return result
+    try:
+        for kind in ('fulfillment','payment','return'):result[kind+'Policies']=api('/sell/account/v1/'+kind+'_policy?marketplace_id=EBAY_IT',tok).get(kind+'Policies',[])
+    except Error as e:
+        if 'not eligible for business polic' not in e.message.lower():raise
+        result.update(policyStatus='unavailable',policyMessage='eBay non consente ancora a questo account di usare le regole di vendita. Verifica l’abilitazione nelle impostazioni eBay; se l’hai appena richiesta, attendi fino a 24 ore e aggiorna.')
+        return result
+    result['policyStatus']='ready'
+    result['locations']=api('/sell/inventory/v1/location?limit=100',tok).get('locations',[])
+    return result
+
+def enable_policies(data,user,tok):
+    if data.get('confirm') is not True:raise Error('Conferma l’attivazione delle regole di vendita eBay.',400,'CONFIRM_REQUIRED')
+    with LOCKS[int(challenge(user['user'])[:8],16)%len(LOCKS)]:
+        if not policy_program_enabled(tok) and CACHE.get('policy-opt-in:'+user['user'],0)<=time.time()-86400:
+            try:api('/sell/account/v1/program/opt_in',tok,'POST',{'programType':'SELLING_POLICY_MANAGEMENT'})
+            except Error as e:
+                if 'not eligible for business polic' not in e.message.lower():raise
+                return {'user':user['user'],'policyStatus':'unavailable','policyMessage':'eBay non ha autorizzato l’attivazione. Verifica le impostazioni del tuo account venditore su eBay.','fulfillmentPolicies':[],'paymentPolicies':[],'returnPolicies':[],'locations':[]}
+            CACHE['policy-opt-in:'+user['user']]=time.time()
+    return seller_account(user,tok)
+
 def route(path,data,session):
     if path=='/v1/oauth/start':return oauth_start(data)
     if path=='/v1/oauth/complete':return oauth_complete(data)
     user,tok=access(session)
-    if path=='/v1/account':
-        result={'user':user['user']}
-        for kind in ('fulfillment','payment','return'):result[kind+'Policies']=api('/sell/account/v1/'+kind+'_policy?marketplace_id=EBAY_IT',tok).get(kind+'Policies',[])
-        result['locations']=api('/sell/inventory/v1/location?limit=100',tok).get('locations',[])
-        return result
+    if path=='/v1/account':return seller_account(user,tok)
+    if path=='/v1/policies/enable':return enable_policies(data,user,tok)
     if path=='/v1/schema':return schema(data.get('categoryId','183454'))
     if path=='/v1/location':
         city=str(data.get('city','')).strip();postal=str(data.get('postalCode','')).strip()
@@ -240,7 +268,9 @@ class Handler(BaseHTTPRequestHandler):
         u=urllib.parse.urlsplit(self.path)
         try:
             if u.path=='/health':return self.output(200,{'ok':True,'version':VERSION})
-            if u.path=='/v1/config':return self.output(200,{'version':VERSION,'ready':all(os.environ.get(x) for x in ('SESSION_KEY','EBAY_CLIENT_ID','EBAY_CLIENT_SECRET','EBAY_RUNAME')),'message':'La configurazione del collegamento eBay deve essere completata dal gestore di CartaPronta.'})
+            if u.path=='/v1/config':
+                ready=all(os.environ.get(x) for x in ('SESSION_KEY','EBAY_CLIENT_ID','EBAY_CLIENT_SECRET','EBAY_RUNAME'))
+                return self.output(200,{'version':VERSION,'ready':ready,'message':'Servizio disponibile.' if ready else 'La configurazione del collegamento eBay deve essere completata dal gestore di CartaPronta.'})
             if u.path=='/oauth/callback':
                 url=oauth_callback(dict(urllib.parse.parse_qsl(u.query)))
                 return self.output(200,'<!doctype html><meta name="viewport" content="width=device-width"><title>CartaPronta</title><h1>Autorizzazione eBay ricevuta</h1><p><a href="'+html.escape(url,quote=True)+'">Torna a CartaPronta</a></p><p>Se non si apre, torna all’app e ripeti il collegamento.</p>','text/html')
