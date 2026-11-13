@@ -51,6 +51,11 @@ class Tests(unittest.TestCase):
    calls.append((path,method));return {'offerId':'123'} if path.endswith('/offer') else {'offers':[]}
   with patch.object(s,'schema',return_value=META),patch.object(s,'get_offers',return_value=[]),patch.object(s,'api',side_effect=fake),patch.object(s,'snapshot',return_value={'snapshot':'test'}):
    r=s.prepare(DATA,{'user':'Alice'},'token');self.assertFalse(r['published']);self.assertTrue(r['approval']);self.assertFalse(any(p.endswith('/publish') for p,m in calls))
+ def test_update_excludes_creation_keys(self):
+  with patch.object(s,'schema',return_value=META),patch.object(s,'get_offers',return_value=[{'offerId':'123','status':'UNPUBLISHED'}]),patch.object(s,'api',return_value={}) as api,patch.object(s,'snapshot',return_value={}):
+   s.prepare(DATA,{'user':'Alice'},'token')
+   update=next(c for c in api.call_args_list if c.args[0]=='/sell/inventory/v1/offer/123')
+   self.assertFalse(set(update.args[3])&{'sku','format','marketplaceId'})
  def test_prepare_existing_skips_mutations(self):
   with patch.object(s,'schema',return_value=META),patch.object(s,'get_offers',return_value=[{'status':'PUBLISHED','listing':{'listingId':'123456789012'}}]),patch.object(s,'api') as api:
    self.assertTrue(s.prepare(DATA,{'user':'Alice'},'token')['published']);api.assert_not_called()

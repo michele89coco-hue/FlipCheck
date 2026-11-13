@@ -181,7 +181,7 @@ def prepare(data,user,tok):
         if len(offers)>1:raise Error('Più offerte presenti per questa bozza. Controlla il tuo account eBay.')
         api('/sell/inventory/v1/inventory_item/'+sku,tok,'PUT',item)
         if offers:
-            oid=offers[0]['offerId'];api('/sell/inventory/v1/offer/'+ident(oid),tok,'PUT',offer)
+            oid=offers[0]['offerId'];update={k:v for k,v in offer.items() if k not in ('sku','format','marketplaceId')};api('/sell/inventory/v1/offer/'+ident(oid),tok,'PUT',update)
         else:oid=api('/sell/inventory/v1/offer',tok,'POST',offer)['offerId']
         fees=api('/sell/inventory/v1/offer/get_listing_fees',tok,'POST',{'offers':[{'offerId':oid}]})
         snap=snapshot(tok,sku,oid)
