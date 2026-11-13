@@ -10,7 +10,7 @@ API = 'https://api.ebay.com'
 MEDIA_API = 'https://apim.ebay.com/commerce/media/v1_beta'
 MARKET = 'EBAY_IT'
 SCOPES = ' '.join('https://api.ebay.com/oauth/api_scope' + x for x in ('', '/sell.inventory', '/sell.account'))
-VERSION = '1.0.7.2'
+VERSION = '1.0.7.3'
 CACHE = {}
 LOCKS = [threading.Lock() for _ in range(64)]
 
@@ -49,7 +49,7 @@ def http(url, method='GET', data=None, headers=None):
         'autorizzazione' if path.endswith('/oauth2/token') else
         'campi richiesti' if '/taxonomy/' in path or '/metadata/' in path else
         'controllo tariffe' if path.endswith('/get_listing_fees') else
-        'dati annuncio' if '/inventory_item/' in path else
+        ('salvataggio dati carta' if method=='PUT' else 'lettura dati carta') if '/inventory_item/' in path else
         'pubblicazione' if path.endswith('/publish') else
         'offerta' if '/offer' in path else 'impostazioni account')
     req=urllib.request.Request(url,data=data,method=method,headers=headers or {})
@@ -60,7 +60,7 @@ def http(url, method='GET', data=None, headers=None):
     except urllib.error.HTTPError as e:
         try:
             body=json.loads(e.read(100000)); errors=body.get('errors',[])
-            msg='; '.join(str(x.get('longMessage') or x.get('message','')) for x in errors) or body.get('error_description') or body.get('error')
+            msg='; '.join(('['+str(x['errorId'])+'] ' if str(x.get('errorId','')).isdigit() else '')+str(x.get('longMessage') or x.get('message','')) for x in errors) or body.get('error_description') or body.get('error')
         except Exception: msg=''
         raise Error('eBay, '+operation+' (HTTP '+str(e.code)+'): '+str(msg or 'risposta senza dettagli; riprova e comunica questo messaggio se persiste')[:1500], 401 if e.code==401 else 422, 'EBAY_'+str(e.code))
     except (OSError,TimeoutError): raise Error('eBay non ha risposto in tempo. Verifica lo stato prima di riprovare la pubblicazione.',504,'REMOTE_TIMEOUT')
@@ -175,8 +175,21 @@ def published(offer):
     if offer.get('status')=='PUBLISHED' and lid:return {'published':True,'listingId':str(lid),'url':'https://www.ebay.it/itm/'+ident(lid)}
     return None
 
+def inventory_item_request(tok,sku,item=None):
+    # Repeating this PUT uses the same SKU and identical data. Never retry
+    # offer creation or publication here: those POSTs can have side effects.
+    path='/sell/inventory/v1/inventory_item/'+ident(sku)
+    for attempt in range(3):
+        try:
+            return api(path,tok) if item is None else api(path,tok,'PUT',item)
+        except Error as e:
+            if e.code not in ('EBAY_500','EBAY_502','EBAY_503','EBAY_504'):raise
+            if attempt==2:
+                raise Error('Inventario eBay non disponibile dopo 3 tentativi. Riprova tra qualche minuto mantenendo questa bozza. '+e.message,503,e.code) from e
+            time.sleep(attempt+1)
+
 def snapshot(tok,sku,offer_id):
-    i=api('/sell/inventory/v1/inventory_item/'+ident(sku),tok);o=api('/sell/inventory/v1/offer/'+ident(offer_id),tok)
+    i=inventory_item_request(tok,sku);o=api('/sell/inventory/v1/offer/'+ident(offer_id),tok)
     # Ignore counters/creation dates; bind user approval to all editable listing data.
     return {'item':{k:i.get(k) for k in ('product','condition','conditionDescriptors','availability')},'offer':{k:o.get(k) for k in ('sku','marketplaceId','format','availableQuantity','categoryId','merchantLocationKey','listingDescription','listingDuration','listingPolicies','pricingSummary')}}
 
@@ -188,7 +201,7 @@ def prepare(data,user,tok):
             p=published(o)
             if p:return p
         if len(offers)>1:raise Error('Più offerte presenti per questa bozza. Controlla il tuo account eBay.')
-        api('/sell/inventory/v1/inventory_item/'+sku,tok,'PUT',item)
+        inventory_item_request(tok,sku,item)
         if offers:
             oid=offers[0]['offerId'];update={k:v for k,v in offer.items() if k not in ('sku','format','marketplaceId')};api('/sell/inventory/v1/offer/'+ident(oid),tok,'PUT',update)
         else:oid=api('/sell/inventory/v1/offer',tok,'POST',offer)['offerId']

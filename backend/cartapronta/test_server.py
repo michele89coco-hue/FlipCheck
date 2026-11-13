@@ -6,6 +6,46 @@ os.environ['SESSION_KEY']=Fernet.generate_key().decode();os.environ['EBAY_CLIENT
 META={'aspects':[{'localizedAspectName':'Gioco','aspectConstraint':{'aspectRequired':True}}],'conditions':[{'conditionId':'4000','conditionDescriptors':[{'conditionDescriptorId':'40001','conditionDescriptorConstraint':{'usage':'REQUIRED'},'conditionDescriptorValues':[{'conditionDescriptorValueId':'400010'}]}]}]}
 DATA={'draftId':'11111111-2222-3333-4444-555555555555','title':'Morpeko 135/128 ITA','description':'Foto <originale>\nSeconda riga','price':'12.50','categoryId':'183454','imageUrls':['https://i.ebayimg.com/card.jpg'],'aspects':{'Gioco':['Pokémon']},'conditionId':'4000','conditionDescriptors':[{'name':'40001','values':['400010']}],'fulfillmentPolicyId':'shipping','paymentPolicyId':'pay','returnPolicyId':'returns','merchantLocationKey':'warehouse'}
 class Tests(unittest.TestCase):
+ def test_inventory_retry_preserves_sku_payload_and_stops_on_success(self):
+  item={'condition':'USED_VERY_GOOD','conditionDescriptors':[{'name':'40001','values':['400010']}]}
+  with patch.object(s,'api',side_effect=[s.Error('internal',422,'EBAY_500'),{}]) as api,patch.object(s.time,'sleep') as wait:
+   self.assertEqual(s.inventory_item_request('token','CP-test',item),{})
+   self.assertEqual(api.call_count,2);self.assertEqual(api.call_args_list[0],api.call_args_list[1])
+   self.assertEqual(api.call_args.args,('/sell/inventory/v1/inventory_item/CP-test','token','PUT',item));wait.assert_called_once_with(1)
+ def test_inventory_retry_is_bounded_and_prepare_stops_before_offer_creation(self):
+  calls=[]
+  def fake(path,tok,method='GET',body=None):
+   calls.append((path,method))
+   if method=='PUT':raise s.Error('core inventory',422,'EBAY_500')
+   return {}
+  with patch.object(s,'api',side_effect=fake),patch.object(s,'schema',return_value=META),patch.object(s,'get_offers',return_value=[]),patch.object(s.time,'sleep') as wait:
+   with self.assertRaises(s.Error) as e:s.prepare(DATA,{'user':'Alice'},'token')
+   self.assertEqual(e.exception.status,503);self.assertIn('3 tentativi',e.exception.message)
+   self.assertEqual(len(calls),3);self.assertTrue(all(method=='PUT' for _,method in calls));self.assertEqual(wait.call_count,2)
+ def test_inventory_does_not_retry_validation_auth_or_unknown_timeout(self):
+  for code in ['EBAY_400','EBAY_401','EBAY_403','EBAY_404','EBAY_429','REMOTE_TIMEOUT']:
+   with self.subTest(code=code),patch.object(s,'api',side_effect=s.Error('failure',422,code)) as api,patch.object(s.time,'sleep') as wait:
+    with self.assertRaises(s.Error):s.inventory_item_request('token','CP-test',{})
+    self.assertEqual(api.call_count,1);wait.assert_not_called()
+ def test_inventory_get_retry_has_no_writes(self):
+  with patch.object(s,'api',side_effect=[s.Error('internal',422,'EBAY_503'),{'condition':'USED_VERY_GOOD'}]) as api,patch.object(s.time,'sleep'):
+   self.assertEqual(s.inventory_item_request('token','CP-test')['condition'],'USED_VERY_GOOD')
+   self.assertTrue(all(len(c.args)==2 for c in api.call_args_list))
+ def test_offer_creation_is_not_retried_on_server_error(self):
+  calls=[]
+  def fake(path,tok,method='GET',body=None):
+   calls.append((path,method))
+   if path.endswith('/offer') and method=='POST':raise s.Error('internal',422,'EBAY_500')
+   return {}
+  with patch.object(s,'api',side_effect=fake),patch.object(s,'schema',return_value=META),patch.object(s,'get_offers',return_value=[]),patch.object(s.time,'sleep') as wait:
+   with self.assertRaises(s.Error):s.prepare(DATA,{'user':'Alice'},'token')
+   self.assertEqual(sum(method=='POST' for _,method in calls),1);wait.assert_not_called()
+ def test_error_retains_ebay_error_id_and_inventory_operation(self):
+  url=s.API+'/sell/inventory/v1/inventory_item/CP-test'
+  failure=s.urllib.error.HTTPError(url,500,'Internal',{},io.BytesIO(b'{"errors":[{"errorId":25001,"message":"Core inventory service error"}]}'))
+  with patch.object(s.urllib.request,'urlopen',side_effect=failure):
+   with self.assertRaises(s.Error) as e:s.http(url,'PUT',b'{}')
+  self.assertIn('salvataggio dati carta',e.exception.message);self.assertIn('[25001]',e.exception.message)
  def test_image_upload_uses_media_host_and_multipart(self):
   photo=b'\xff\xd8\xff'+b'x'*200
   with patch.object(s.urllib.request,'urlopen') as remote:
