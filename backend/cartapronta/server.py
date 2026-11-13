@@ -10,7 +10,7 @@ API = 'https://api.ebay.com'
 MEDIA_API = 'https://apim.ebay.com/commerce/media/v1_beta'
 MARKET = 'EBAY_IT'
 SCOPES = ' '.join('https://api.ebay.com/oauth/api_scope' + x for x in ('', '/sell.inventory', '/sell.account'))
-VERSION = '1.0.7.3'
+VERSION = '1.0.8'
 CACHE = {}
 LOCKS = [threading.Lock() for _ in range(64)]
 
@@ -127,9 +127,21 @@ def schema(category):
     result={'aspects':aspects,'conditions':conditions,'categoryId':category}
     CACHE[key]=(time.time()+3600,result);return result
 
+def auction_durations(category):
+    category=ident(category);key='auction-durations:'+category;c=CACHE.get(key)
+    if c and c[0]>time.time():return c[1]
+    data=api('/sell/metadata/v1/marketplace/EBAY_IT/get_listing_type_policies?filter='+urllib.parse.quote('categoryIds:{'+category+'}'),app_token())
+    row=next((x for x in data.get('listingTypePolicies',[]) if str(x.get('categoryId'))==category),{})
+    durations=next((x.get('durationValues',[]) for x in row.get('listingDurations',[]) if x.get('listingType')=='AUCTION'),[])
+    CACHE[key]=(time.time()+3600,durations);return durations
+
 CONDITIONS={'1000':'NEW','1500':'NEW_OTHER','1750':'NEW_WITH_DEFECTS','2000':'MANUFACTURER_REFURBISHED','2010':'CERTIFIED_REFURBISHED','2020':'EXCELLENT_REFURBISHED','2030':'VERY_GOOD_REFURBISHED','2500':'SELLER_REFURBISHED','2750':'LIKE_NEW','3000':'USED_EXCELLENT','4000':'USED_VERY_GOOD','5000':'USED_GOOD','6000':'USED_ACCEPTABLE','7000':'FOR_PARTS_OR_NOT_WORKING'}
 
 def build_payload(data, meta):
+    sale_format=data.get('format','FIXED_PRICE')
+    if sale_format not in ('FIXED_PRICE','AUCTION'):raise Error('Scegli Compralo subito oppure Asta.')
+    duration=data.get('listingDuration','DAYS_7') if sale_format=='AUCTION' else 'GTC'
+    if sale_format=='AUCTION' and duration not in ('DAYS_3','DAYS_5','DAYS_7','DAYS_10'):raise Error('Scegli una durata di 3, 5, 7 o 10 giorni per l’asta.')
     title=str(data.get('title','')).strip();description=str(data.get('description','')).strip()
     if not 1<=len(title)<=80 or not 1<=len(description)<=15000:raise Error('Completa titolo (massimo 80 caratteri) e descrizione.')
     try:
@@ -161,18 +173,18 @@ def build_payload(data, meta):
     item={'availability':{'shipToLocationAvailability':{'quantity':1}},'condition':CONDITIONS[cid],'product':{'title':title,'description':html.escape(description).replace('\n','<br>'),'aspects':aspects,'imageUrls':photos}}
     if descriptors:item['conditionDescriptors']=descriptors
     policies={k:ident(data.get(k,'')) for k in ('fulfillmentPolicyId','paymentPolicyId','returnPolicyId')}
-    offer={'sku':'CP-'+ident(data.get('draftId','')),'marketplaceId':MARKET,'format':'FIXED_PRICE','availableQuantity':1,'categoryId':ident(data.get('categoryId','')),'merchantLocationKey':ident(data.get('merchantLocationKey','')),'listingDescription':item['product']['description'],'listingDuration':'GTC','listingPolicies':policies,'pricingSummary':{'price':{'currency':'EUR','value':format(price,'.2f')}}}
+    offer={'sku':'CP-'+ident(data.get('draftId','')),'marketplaceId':MARKET,'format':sale_format,'availableQuantity':1,'categoryId':ident(data.get('categoryId','')),'merchantLocationKey':ident(data.get('merchantLocationKey','')),'listingDescription':item['product']['description'],'listingDuration':duration,'listingPolicies':policies,'pricingSummary':{'auctionStartPrice' if sale_format=='AUCTION' else 'price':{'currency':'EUR','value':format(price,'.2f')}}}
     return item,offer
 
 def get_offers(tok,sku):
-    try:return api('/sell/inventory/v1/offer?sku='+urllib.parse.quote(sku)+'&marketplace_id=EBAY_IT&format=FIXED_PRICE',tok).get('offers',[])
+    try:return api('/sell/inventory/v1/offer?sku='+urllib.parse.quote(sku)+'&marketplace_id=EBAY_IT',tok).get('offers',[])
     except Error as e:
         if e.code=='EBAY_404':return []
         raise
 
 def published(offer):
     lid=offer.get('listing',{}).get('listingId')
-    if offer.get('status')=='PUBLISHED' and lid:return {'published':True,'listingId':str(lid),'url':'https://www.ebay.it/itm/'+ident(lid)}
+    if offer.get('status')=='PUBLISHED' and lid:return {'published':True,'listingId':str(lid),'url':'https://www.ebay.it/itm/'+ident(lid),'format':offer.get('format','FIXED_PRICE'),'listingDuration':offer.get('listingDuration','GTC')}
     return None
 
 def inventory_item_request(tok,sku,item=None):
@@ -195,12 +207,17 @@ def snapshot(tok,sku,offer_id):
 
 def prepare(data,user,tok):
     category=str(data.get('categoryId',''));item,offer=build_payload(data,schema(category));sku=offer['sku']
+    if offer['format']=='AUCTION' and offer['listingDuration'] not in auction_durations(category):raise Error('Questa durata d’asta non è disponibile per la categoria su eBay Italia.')
     with LOCKS[int(challenge(user['user']+sku),16)%len(LOCKS)]:
         offers=get_offers(tok,sku)
         for o in offers:
             p=published(o)
             if p:return p
         if len(offers)>1:raise Error('Più offerte presenti per questa bozza. Controlla il tuo account eBay.')
+        if offers and offers[0].get('format','FIXED_PRICE')!=offer['format']:
+            if offers[0].get('status')!='UNPUBLISHED':raise Error('Il formato dell’offerta esistente non può essere cambiato. Controlla l’inserzione su eBay.')
+            api('/sell/inventory/v1/offer/'+ident(offers[0]['offerId']),tok,'DELETE')
+            offers=[]
         inventory_item_request(tok,sku,item)
         if offers:
             oid=offers[0]['offerId'];update={k:v for k,v in offer.items() if k not in ('sku','format','marketplaceId')};api('/sell/inventory/v1/offer/'+ident(oid),tok,'PUT',update)
@@ -208,7 +225,7 @@ def prepare(data,user,tok):
         fees=api('/sell/inventory/v1/offer/get_listing_fees',tok,'POST',{'offers':[{'offerId':oid}]})
         snap=snapshot(tok,sku,oid)
         approval=seal('approval',{'user':user['user'],'sku':sku,'offerId':oid,'digest':digest(snap)},900)
-        return {'approval':approval,'offerId':oid,'fees':fees,'title':data['title'],'price':offer['pricingSummary']['price'],'published':False}
+        return {'approval':approval,'offerId':oid,'fees':fees,'title':data['title'],'price':next(iter(offer['pricingSummary'].values())),'format':offer['format'],'listingDuration':offer['listingDuration'],'published':False}
 
 def publish(data,user,tok):
     if data.get('confirm') is not True:raise Error('Conferma prima la pubblicazione.')
@@ -220,7 +237,7 @@ def publish(data,user,tok):
         if p:return p
         if not hmac.compare_digest(digest(snapshot(tok,a['sku'],a['offerId'])),a['digest']):raise Error('La bozza eBay è cambiata. Ripeti il controllo prima di pubblicare.',409)
         r=api('/sell/inventory/v1/offer/'+ident(a['offerId'])+'/publish',tok,'POST',{})
-        lid=ident(r['listingId']);return {'published':True,'listingId':lid,'url':'https://www.ebay.it/itm/'+lid}
+        lid=ident(r['listingId']);return {'published':True,'listingId':lid,'url':'https://www.ebay.it/itm/'+lid,'format':o.get('format','FIXED_PRICE'),'listingDuration':o.get('listingDuration','GTC')}
 
 def upload_image(data,tok):
     try:b=base64.b64decode(data.get('image',''),validate=True)
@@ -364,11 +381,37 @@ def create_policy(data,user,tok):
         if not policy.get(field):raise Error('Regola eBay priva di identificativo.',502)
     return {'user':user['user'],'kind':kind,'policy':policy,'draftId':data.get('draftId','')}
 
+def parse_listing_status(root,listing_id,user):
+    if root.findtext('{*}Ack') not in ('Success','Warning'):raise Error('eBay non ha restituito lo stato di questa inserzione.',422)
+    item=root.find('{*}Item')
+    if item is None or item.findtext('{*}ItemID')!=listing_id:raise Error('Risposta eBay non corrispondente all’inserzione.',502)
+    if item.findtext('{*}Seller/{*}UserID','').casefold()!=user.casefold():raise Error('Questa inserzione appartiene a un altro account.',403)
+    status=item.findtext('{*}SellingStatus/{*}ListingStatus','')
+    sold=int(item.findtext('{*}SellingStatus/{*}QuantitySold','0'));quantity=int(item.findtext('{*}Quantity','0'))
+    state='SOLD' if sold>0 and (status in ('Completed','Ended') or sold>=quantity>0) else 'ACTIVE' if status=='Active' else 'ENDED' if status in ('Completed','Ended') else 'UNKNOWN'
+    price=item.find('{*}SellingStatus/{*}CurrentPrice')
+    return {'listingId':listing_id,'remoteStatus':state,'quantitySold':sold,'quantity':quantity,'bidCount':int(item.findtext('{*}SellingStatus/{*}BidCount','0')),'format':'AUCTION' if item.findtext('{*}ListingType')=='Chinese' else 'FIXED_PRICE','currentPrice':{'value':price.text,'currency':price.get('currencyID','EUR')} if price is not None else None,'endTime':item.findtext('{*}ListingDetails/{*}EndTime',''),'checkedAt':int(time.time()*1000)}
+
+def listing_status(data,user,tok):
+    ids=data.get('listingIds')
+    if not isinstance(ids,list) or not 1<=len(ids)<=5 or any(not isinstance(x,str) or not re.fullmatch(r'[0-9]{9,15}',x) for x in ids):raise Error('Scegli da 1 a 5 inserzioni eBay da aggiornare.')
+    rows=[]
+    for listing_id in dict.fromkeys(ids):
+        try:
+            body=('<GetItemRequest xmlns="urn:ebay:apis:eBLBaseComponents"><ItemID>'+listing_id+'</ItemID></GetItemRequest>').encode()
+            req=urllib.request.Request(API+'/ws/api.dll',data=body,headers={'X-EBAY-API-CALL-NAME':'GetItem','X-EBAY-API-SITEID':'101','X-EBAY-API-COMPATIBILITY-LEVEL':'1423','X-EBAY-API-IAF-TOKEN':tok,'Content-Type':'text/xml'})
+            with urllib.request.urlopen(req,timeout=15) as r:root=ET.fromstring(r.read(4000000))
+            rows.append(parse_listing_status(root,listing_id,user['user']))
+        except (OSError,ET.ParseError,ValueError):rows.append({'listingId':listing_id,'error':'Stato non aggiornato. Riprova.'})
+        except Error as e:rows.append({'listingId':listing_id,'error':e.message})
+    return {'user':user['user'],'listings':rows}
+
 def route(path,data,session):
     if path=='/v1/oauth/start':return oauth_start(data)
     if path=='/v1/oauth/complete':return oauth_complete(data)
     user,tok=access(session)
     if path=='/v1/account':return seller_account(user,tok)
+    if path=='/v1/listings/status':return listing_status(data,user,tok)
     if path=='/v1/policies/options':return policy_options(data,tok)
     if path=='/v1/policies/create':return create_policy(data,user,tok)
     if path=='/v1/policies/enable':return enable_policies(data,user,tok)

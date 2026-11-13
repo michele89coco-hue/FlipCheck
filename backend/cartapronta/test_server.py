@@ -6,6 +6,54 @@ os.environ['SESSION_KEY']=Fernet.generate_key().decode();os.environ['EBAY_CLIENT
 META={'aspects':[{'localizedAspectName':'Gioco','aspectConstraint':{'aspectRequired':True}}],'conditions':[{'conditionId':'4000','conditionDescriptors':[{'conditionDescriptorId':'40001','conditionDescriptorConstraint':{'usage':'REQUIRED'},'conditionDescriptorValues':[{'conditionDescriptorValueId':'400010'}]}]}]}
 DATA={'draftId':'11111111-2222-3333-4444-555555555555','title':'Morpeko 135/128 ITA','description':'Foto <originale>\nSeconda riga','price':'12.50','categoryId':'183454','imageUrls':['https://i.ebayimg.com/card.jpg'],'aspects':{'Gioco':['Pokémon']},'conditionId':'4000','conditionDescriptors':[{'name':'40001','values':['400010']}],'fulfillmentPolicyId':'shipping','paymentPolicyId':'pay','returnPolicyId':'returns','merchantLocationKey':'warehouse'}
 class Tests(unittest.TestCase):
+ def test_auction_payload_is_not_a_fixed_price_offer(self):
+  d=dict(DATA,format='AUCTION',listingDuration='DAYS_7',price='2.50')
+  item,offer=s.build_payload(d,META)
+  self.assertEqual(offer['format'],'AUCTION');self.assertEqual(offer['listingDuration'],'DAYS_7')
+  self.assertEqual(offer['pricingSummary'],{'auctionStartPrice':{'currency':'EUR','value':'2.50'}})
+  self.assertEqual(offer['availableQuantity'],1);self.assertEqual(item['conditionDescriptors'],DATA['conditionDescriptors'])
+  for duration in ['DAYS_3','DAYS_5','DAYS_7','DAYS_10']:
+   self.assertEqual(s.build_payload(dict(d,listingDuration=duration),META)[1]['listingDuration'],duration)
+  for value in ['GTC','DAYS_1','DAYS_30',None]:
+   with self.assertRaises(s.Error):s.build_payload(dict(d,listingDuration=value),META)
+  with self.assertRaises(s.Error):s.build_payload(dict(d,format='WRONG'),META)
+ def test_existing_fixed_price_draft_remains_compatible(self):
+  _,offer=s.build_payload(DATA,META)
+  self.assertEqual(offer['format'],'FIXED_PRICE');self.assertEqual(offer['listingDuration'],'GTC')
+  self.assertEqual(offer['pricingSummary'],{'price':{'currency':'EUR','value':'12.50'}})
+ def test_auction_uses_live_category_durations_before_writes(self):
+  with patch.object(s,'schema',return_value=META),patch.object(s,'auction_durations',return_value=[]),patch.object(s,'api') as api:
+   with self.assertRaises(s.Error):s.prepare(dict(DATA,format='AUCTION',listingDuration='DAYS_7'),{'user':'Alice'},'token')
+   api.assert_not_called()
+ def test_format_switch_replaces_only_unpublished_offer(self):
+  calls=[]
+  def fake(path,tok,method='GET',body=None):
+   calls.append((path,method,body));return {'offerId':'NEW'} if path.endswith('/offer') and method=='POST' else {}
+  with patch.object(s,'schema',return_value=META),patch.object(s,'auction_durations',return_value=['DAYS_7']),patch.object(s,'get_offers',return_value=[{'offerId':'OLD','format':'FIXED_PRICE','status':'UNPUBLISHED'}]),patch.object(s,'api',side_effect=fake),patch.object(s,'snapshot',return_value={}):
+   r=s.prepare(dict(DATA,format='AUCTION',listingDuration='DAYS_7'),{'user':'Alice'},'token')
+  self.assertEqual(calls[0],('/sell/inventory/v1/offer/OLD','DELETE',None))
+  created=next(body for path,method,body in calls if path.endswith('/offer') and method=='POST')
+  self.assertEqual(created['format'],'AUCTION');self.assertEqual(r['format'],'AUCTION');self.assertEqual(r['price']['value'],'12.50')
+  self.assertFalse(any(path.endswith('/publish') for path,_,_ in calls))
+ def test_format_switch_does_not_delete_published_offer(self):
+  with patch.object(s,'schema',return_value=META),patch.object(s,'auction_durations',return_value=['DAYS_7']),patch.object(s,'get_offers',return_value=[{'offerId':'OLD','format':'FIXED_PRICE','status':'PUBLISHED','listing':{'listingId':'123456789012'}}]),patch.object(s,'api') as api:
+   r=s.prepare(dict(DATA,format='AUCTION',listingDuration='DAYS_7'),{'user':'Alice'},'token')
+   self.assertTrue(r['published']);self.assertEqual(r['format'],'FIXED_PRICE');api.assert_not_called()
+ def test_get_offers_covers_both_formats(self):
+  with patch.object(s,'api',return_value={'offers':[]}) as api:s.get_offers('token','CP-test')
+  self.assertNotIn('format=',api.call_args.args[0])
+ def test_listing_status_and_owner_are_checked(self):
+  def root(status,sold=0,seller='Alice'):
+   return s.ET.fromstring('<GetItemResponse xmlns="urn:ebay:apis:eBLBaseComponents"><Ack>Success</Ack><Item><ItemID>123456789012</ItemID><Seller><UserID>'+seller+'</UserID></Seller><ListingType>Chinese</ListingType><Quantity>1</Quantity><SellingStatus><ListingStatus>'+status+'</ListingStatus><QuantitySold>'+str(sold)+'</QuantitySold><BidCount>2</BidCount><CurrentPrice currencyID="EUR">5.50</CurrentPrice></SellingStatus></Item></GetItemResponse>')
+  for status,sold,expected in [('Active',0,'ACTIVE'),('Completed',1,'SOLD'),('Ended',0,'ENDED'),('Unknown',0,'UNKNOWN')]:
+   r=s.parse_listing_status(root(status,sold),'123456789012','alice');self.assertEqual(r['remoteStatus'],expected);self.assertEqual(r['format'],'AUCTION');self.assertEqual(r['currentPrice']['value'],'5.50')
+  with self.assertRaises(s.Error):s.parse_listing_status(root('Active',seller='Bob'),'123456789012','Alice')
+  with self.assertRaises(s.Error):s.parse_listing_status(root('Active'),'999999999999','Alice')
+ def test_listing_status_input_rejects_injected_or_unbounded_ids(self):
+  with patch.object(s.urllib.request,'urlopen') as remote:
+   for ids in [[],['<bad>'],['123456789012']*6,'123456789012']:
+    with self.assertRaises(s.Error):s.listing_status({'listingIds':ids},{'user':'Alice'},'token')
+   remote.assert_not_called()
  def test_inventory_retry_preserves_sku_payload_and_stops_on_success(self):
   item={'condition':'USED_VERY_GOOD','conditionDescriptors':[{'name':'40001','values':['400010']}]}
   with patch.object(s,'api',side_effect=[s.Error('internal',422,'EBAY_500'),{}]) as api,patch.object(s.time,'sleep') as wait:
