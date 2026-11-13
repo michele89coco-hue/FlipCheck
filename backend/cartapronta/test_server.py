@@ -89,4 +89,50 @@ class Tests(unittest.TestCase):
   with patch.object(s,'policy_program_enabled',return_value=True),patch.object(s,'api',side_effect=s.Error('Expired',401,'EBAY_401')):
    with self.assertRaises(s.Error) as e:s.seller_account({'user':'Alice'},'token')
    self.assertEqual(e.exception.status,401)
+ def test_policy_create_requires_confirm_before_remote(self):
+  with patch.object(s,'api') as api:
+   with self.assertRaises(s.Error):s.create_policy({'kind':'payment'}, {'user':'Alice'},'token')
+   api.assert_not_called()
+ def test_policy_payment_uses_managed_payments(self):
+  d={'kind':'payment','immediatePay':True,'confirm':True,'draftId':'draft'}
+  with patch.object(s,'api',side_effect=[{'paymentPolicies':[]},{'paymentPolicyId':'123'}]) as api:
+   r=s.create_policy(d,{'user':'Alice'},'token');body=api.call_args.args[3]
+   self.assertTrue(body['immediatePay']);self.assertNotIn('paymentMethods',body);self.assertEqual(r['policy']['paymentPolicyId'],'123');self.assertEqual(r['draftId'],'draft')
+ def test_policy_retry_reuses_unchanged(self):
+  d={'kind':'payment','immediatePay':False,'confirm':True};_,body=s.policy_payload(d,'token');existing=dict(body,paymentPolicyId='123');existing.pop('immediatePay')
+  with patch.object(s,'api',return_value={'paymentPolicies':[existing]}) as api:
+   self.assertEqual(s.create_policy(d,{'user':'Alice'},'token')['policy']['paymentPolicyId'],'123');self.assertEqual(api.call_count,1)
+ def test_policy_retry_rejects_changed_rule(self):
+  d={'kind':'payment','immediatePay':False,'confirm':True};_,body=s.policy_payload(d,'token');existing=dict(body,paymentPolicyId='123',immediatePay=True)
+  with patch.object(s,'api',return_value={'paymentPolicies':[existing]}) as api:
+   with self.assertRaises(s.Error):s.create_policy(d,{'user':'Alice'},'token')
+   self.assertEqual(api.call_count,1)
+ def test_shipping_xml_filters_domestic_flat_active(self):
+  def service(code,extra=''):return '<ShippingServiceDetails><ShippingService>'+code+'</ShippingService><Description>'+code+'</Description><ValidForSellingFlow>true</ValidForSellingFlow><ShippingType>Flat</ShippingType>'+extra+'</ShippingServiceDetails>'
+  xml='<GeteBayDetailsResponse xmlns="urn:ebay:apis:eBLBaseComponents">'+service('IT_Test')+service('International','<InternationalService>true</InternationalService>')+service('Pickup')+'<ShippingServiceDetails><ShippingService>Inactive</ShippingService><ShippingType>Flat</ShippingType></ShippingServiceDetails><DispatchTimeMaxDetails><DispatchTimeMax>3</DispatchTimeMax><Description>3 giorni</Description></DispatchTimeMaxDetails></GeteBayDetailsResponse>'
+  r=s.parse_shipping_options(s.ET.fromstring(xml));self.assertEqual([x['code'] for x in r['services']],['IT_Test']);self.assertEqual(r['handling'][0]['value'],3)
+ def test_shipping_payload_and_validation(self):
+  options={'services':[{'code':'IT_Test'}],'handling':[{'value':3}]};d={'kind':'fulfillment','shippingServiceCode':'IT_Test','handlingDays':3,'shippingCost':'4,50'}
+  with patch.object(s,'shipping_options',return_value=options):
+   _,b=s.policy_payload(d,'token');self.assertEqual(b['shippingOptions'][0]['costType'],'FLAT_RATE');self.assertEqual(b['shippingOptions'][0]['shippingServices'][0]['shippingCost']['value'],'4.50')
+   for key,value in [('shippingCost',''),('shippingCost','NaN'),('shippingCost','-1'),('shippingServiceCode','INVENTED'),('handlingDays',True)]:
+    with self.subTest(key=key):
+     with self.assertRaises(s.Error):s.policy_payload(dict(d,**{key:value}),'token')
+ def test_return_policy_uses_category_metadata(self):
+  options={'returnPeriods':[{'unit':'DAY','value':30}],'returnShippingCostPayers':['BUYER']};d={'kind':'return','returnsAccepted':True,'returnDays':30,'returnShippingCostPayer':'BUYER','categoryId':'183454'}
+  with patch.object(s,'return_options',return_value=options):
+   _,b=s.policy_payload(d,'token');self.assertEqual(b['returnPeriod']['value'],30)
+   with self.assertRaises(s.Error):s.policy_payload(dict(d,returnDays=14),'token')
+  with patch.object(s,'return_options') as read:
+   _,b=s.policy_payload({'kind':'return','returnsAccepted':False},'token');self.assertFalse(b['returnsAccepted']);self.assertNotIn('returnPeriod',b);read.assert_not_called()
+ def test_policy_semantic_match_ignores_extra_defaults(self):
+  self.assertTrue(s.policy_matches({'shippingCost':{'currency':'EUR','value':'4.50'},'freeShipping':False},{'shippingCost':{'currency':'EUR','value':'4.5'},'sortOrder':1}))
+  self.assertFalse(s.policy_matches({'shippingCost':{'currency':'EUR','value':'4.50'}},{'shippingCost':{'currency':'EUR','value':'5.50'}}))
+ def test_actual_metadata_calendar_day_normalized(self):
+  s.CACHE.pop('return-options:183454',None)
+  data={'returnPolicies':[{'categoryId':'183454','domestic':{'returnPeriods':[{'value':14,'unit':'CALENDAR_DAY'},{'value':30,'unit':'CALENDAR_DAY'}],'returnShippingCostPayers':['SELLER','BUYER']}}]}
+  try:
+   with patch.object(s,'app_token',return_value='token'),patch.object(s,'api',return_value=data):
+    self.assertEqual(s.return_options('183454')['returnPeriods'],[{'unit':'DAY','value':14},{'unit':'DAY','value':30}])
+  finally:s.CACHE.pop('return-options:183454',None)
 if __name__=='__main__':unittest.main()

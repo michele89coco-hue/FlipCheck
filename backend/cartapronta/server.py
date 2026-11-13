@@ -9,7 +9,7 @@ from cryptography.fernet import Fernet, InvalidToken
 API = 'https://api.ebay.com'
 MARKET = 'EBAY_IT'
 SCOPES = ' '.join('https://api.ebay.com/oauth/api_scope' + x for x in ('', '/sell.inventory', '/sell.account'))
-VERSION = '1.0.6'
+VERSION = '1.0.7'
 CACHE = {}
 LOCKS = [threading.Lock() for _ in range(64)]
 
@@ -241,11 +241,112 @@ def enable_policies(data,user,tok):
             CACHE['policy-opt-in:'+user['user']]=time.time()
     return seller_account(user,tok)
 
+def parse_shipping_options(root):
+    services=[]
+    for x in root.findall('{*}ShippingServiceDetails'):
+        code=x.findtext('{*}ShippingService','')
+        types=[v.text for v in x.findall('{*}ShippingType')]
+        if x.findtext('{*}ValidForSellingFlow')!='true' or x.findtext('{*}InternationalService')=='true' or 'Flat' not in types:continue
+        if code and code!='Pickup':services.append({'code':code,'name':x.findtext('{*}Description') or code})
+    handling=[]
+    for x in root.findall('{*}DispatchTimeMaxDetails'):
+        value=x.findtext('{*}DispatchTimeMax','')
+        if value.isdigit():handling.append({'value':int(value),'name':x.findtext('{*}Description') or value+' giorni'})
+    return {'services':services,'handling':handling}
+
+def shipping_options(tok):
+    cached=CACHE.get('shipping-options-IT')
+    if cached and cached[0]>time.time():return cached[1]
+    body=b'<?xml version="1.0" encoding="utf-8"?><GeteBayDetailsRequest xmlns="urn:ebay:apis:eBLBaseComponents"><DetailName>ShippingServiceDetails</DetailName><DetailName>DispatchTimeMaxDetails</DetailName></GeteBayDetailsRequest>'
+    req=urllib.request.Request(API+'/ws/api.dll',data=body,headers={'X-EBAY-API-CALL-NAME':'GeteBayDetails','X-EBAY-API-SITEID':'101','X-EBAY-API-COMPATIBILITY-LEVEL':'1423','X-EBAY-API-IAF-TOKEN':tok,'Content-Type':'text/xml'})
+    try:
+        with urllib.request.urlopen(req,timeout=35) as r:root=ET.fromstring(r.read(4000000))
+    except (OSError,ET.ParseError):raise Error('Impossibile caricare i servizi di spedizione eBay. Riprova.',502)
+    if root.findtext('{*}Ack') not in ('Success','Warning'):raise Error('eBay non ha restituito i servizi di spedizione. Riprova o usa le impostazioni eBay.',422)
+    result=parse_shipping_options(root)
+    if not result['services'] or not result['handling']:raise Error('Nessuna opzione di spedizione italiana disponibile da eBay.',422)
+    CACHE['shipping-options-IT']=(time.time()+3600,result);return result
+
+def return_options(category):
+    category=ident(category);key='return-options:'+category;cached=CACHE.get(key)
+    if cached and cached[0]>time.time():return cached[1]
+    data=api('/sell/metadata/v1/marketplace/EBAY_IT/get_return_policies?filter='+urllib.parse.quote('categoryIds:{'+category+'}'),app_token())
+    row=next((x for x in data.get('returnPolicies',[]) if str(x.get('categoryId'))==category),None)
+    if row is None:raise Error('eBay non ha restituito le opzioni di reso per questa categoria.',422)
+    result=dict(row.get('domestic',{}))
+    # Metadata uses CALENDAR_DAY; Account API returnPeriod requires DAY.
+    result['returnPeriods']=[{'unit':'DAY','value':x['value']} for x in result.get('returnPeriods',[]) if x.get('unit') in ('DAY','CALENDAR_DAY') and type(x.get('value')) is int]
+    CACHE[key]=(time.time()+3600,result);return result
+
+def policy_options(data,tok):
+    kind=data.get('kind')
+    if kind=='fulfillment':return shipping_options(tok)
+    if kind=='return':return return_options(data.get('categoryId','183454'))
+    if kind=='payment':return {}
+    raise Error('Tipo di regola non valido.')
+
+def policy_payload(data,tok):
+    kind=data.get('kind');body={'marketplaceId':MARKET,'categoryTypes':[{'name':'ALL_EXCLUDING_MOTORS_VEHICLES'}]}
+    if kind=='fulfillment':
+        options=shipping_options(tok);code=data.get('shippingServiceCode');days=data.get('handlingDays')
+        if code not in [x['code'] for x in options['services']] or type(days) is not int or days not in [x['value'] for x in options['handling']]:raise Error('Scegli servizio e tempi di preparazione tra quelli restituiti da eBay.')
+        try:
+            amount=Decimal(str(data.get('shippingCost','')).replace(',','.'))
+            if not amount.is_finite() or amount<0 or amount>9999 or amount!=amount.quantize(Decimal('.01')):raise ValueError()
+        except (InvalidOperation,ValueError):raise Error('Inserisci il costo di spedizione in euro, anche 0 per la spedizione gratuita.')
+        body.update(handlingTime={'unit':'DAY','value':days},shippingOptions=[{'optionType':'DOMESTIC','costType':'FLAT_RATE','shippingServices':[{'shippingServiceCode':code,'shippingCost':{'currency':'EUR','value':format(amount,'.2f')},'freeShipping':amount==0,'sortOrder':1}]}])
+        label='Spedizione '+format(amount,'.2f')+' EUR'
+    elif kind=='return':
+        accepted=data.get('returnsAccepted')
+        if type(accepted) is not bool:raise Error('Scegli se accettare i resi.')
+        body['returnsAccepted']=accepted;label='Resi non accettati'
+        if accepted:
+            options=return_options(data.get('categoryId','183454'));days=data.get('returnDays');payer=data.get('returnShippingCostPayer')
+            valid=[x.get('value') for x in options.get('returnPeriods',[]) if x.get('unit')=='DAY']
+            if type(days) is not int or days not in valid or payer not in options.get('returnShippingCostPayers',[]):raise Error('Scegli periodo e spese di reso tra le opzioni eBay.')
+            body.update(returnPeriod={'unit':'DAY','value':days},returnShippingCostPayer=payer);label='Resi '+str(days)+' giorni '+('venditore' if payer=='SELLER' else 'acquirente')
+    elif kind=='payment':
+        immediate=data.get('immediatePay')
+        if type(immediate) is not bool:raise Error('Scegli se richiedere il pagamento immediato.')
+        body['immediatePay']=immediate;label='Pagamento immediato' if immediate else 'Pagamento eBay'
+    else:raise Error('Tipo di regola non valido.')
+    body['name']='CP '+label+' '+digest(body)[:10]
+    return kind,body
+
+def policy_matches(expected,actual):
+    if isinstance(expected,dict):
+        if not isinstance(actual,dict):return False
+        if set(expected)=={'currency','value'}:
+            try:return expected['currency']==actual.get('currency') and Decimal(str(expected['value']))==Decimal(str(actual.get('value')))
+            except InvalidOperation:return False
+        return all(policy_matches(v,actual.get(k,False if v is False else None)) for k,v in expected.items())
+    if isinstance(expected,list):return isinstance(actual,list) and len(expected)==len(actual) and all(policy_matches(x,y) for x,y in zip(expected,actual))
+    return expected==actual
+
+def create_policy(data,user,tok):
+    if data.get('confirm') is not True:raise Error('Conferma la creazione della regola eBay.',400,'CONFIRM_REQUIRED')
+    kind,body=policy_payload(data,tok);field=kind+'PolicyId'
+    with LOCKS[int(challenge(user['user'])[:8],16)%len(LOCKS)]:
+        existing=api('/sell/account/v1/'+kind+'_policy?marketplace_id=EBAY_IT',tok).get(kind+'Policies',[])
+        policy=next((x for x in existing if x.get('name')==body['name']),None)
+        # Reuse only an unchanged rule: a name alone is not proof of its settings.
+        if policy:
+            keys=['immediatePay'] if kind=='payment' else ['returnsAccepted','returnPeriod','returnShippingCostPayer'] if kind=='return' else ['handlingTime','shippingOptions']
+            if any(not policy_matches(body.get(k),policy.get(k,False if body.get(k) is False else None)) for k in keys):raise Error('Una regola con lo stesso nome è stata modificata su eBay. Selezionala e controllala nelle impostazioni eBay.',409)
+        else:
+            created=api('/sell/account/v1/'+kind+'_policy',tok,'POST',body)
+            if not created.get(field):raise Error('eBay non ha confermato l’identificativo della regola. Aggiorna prima di riprovare.',502)
+            policy=dict(body,**{field:created[field]})
+        if not policy.get(field):raise Error('Regola eBay priva di identificativo.',502)
+    return {'user':user['user'],'kind':kind,'policy':policy,'draftId':data.get('draftId','')}
+
 def route(path,data,session):
     if path=='/v1/oauth/start':return oauth_start(data)
     if path=='/v1/oauth/complete':return oauth_complete(data)
     user,tok=access(session)
     if path=='/v1/account':return seller_account(user,tok)
+    if path=='/v1/policies/options':return policy_options(data,tok)
+    if path=='/v1/policies/create':return create_policy(data,user,tok)
     if path=='/v1/policies/enable':return enable_policies(data,user,tok)
     if path=='/v1/schema':return schema(data.get('categoryId','183454'))
     if path=='/v1/location':
