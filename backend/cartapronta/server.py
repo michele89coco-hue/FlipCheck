@@ -7,9 +7,10 @@ from xml.etree import ElementTree as ET
 from cryptography.fernet import Fernet, InvalidToken
 
 API = 'https://api.ebay.com'
+MEDIA_API = 'https://apim.ebay.com/commerce/media/v1_beta'
 MARKET = 'EBAY_IT'
 SCOPES = ' '.join('https://api.ebay.com/oauth/api_scope' + x for x in ('', '/sell.inventory', '/sell.account'))
-VERSION = '1.0.7.1'
+VERSION = '1.0.7.2'
 CACHE = {}
 LOCKS = [threading.Lock() for _ in range(64)]
 
@@ -42,7 +43,15 @@ def ident(v):
     return v
 
 def http(url, method='GET', data=None, headers=None):
-    if not url.startswith(API+'/'): raise Error('Destinazione non consentita.')
+    if not (url.startswith(API+'/') or url.startswith(MEDIA_API+'/')): raise Error('Destinazione non consentita.')
+    path=urllib.parse.urlsplit(url).path
+    operation=('caricamento foto' if path.endswith('/create_image_from_file') else
+        'autorizzazione' if path.endswith('/oauth2/token') else
+        'campi richiesti' if '/taxonomy/' in path or '/metadata/' in path else
+        'controllo tariffe' if path.endswith('/get_listing_fees') else
+        'dati annuncio' if '/inventory_item/' in path else
+        'pubblicazione' if path.endswith('/publish') else
+        'offerta' if '/offer' in path else 'impostazioni account')
     req=urllib.request.Request(url,data=data,method=method,headers=headers or {})
     try:
         with urllib.request.urlopen(req,timeout=35) as r:
@@ -53,7 +62,7 @@ def http(url, method='GET', data=None, headers=None):
             body=json.loads(e.read(100000)); errors=body.get('errors',[])
             msg='; '.join(str(x.get('longMessage') or x.get('message','')) for x in errors) or body.get('error_description') or body.get('error')
         except Exception: msg=''
-        raise Error('eBay: '+str(msg or 'richiesta non riuscita')[:1500], 401 if e.code==401 else 422, 'EBAY_'+str(e.code))
+        raise Error('eBay, '+operation+' (HTTP '+str(e.code)+'): '+str(msg or 'risposta senza dettagli; riprova e comunica questo messaggio se persiste')[:1500], 401 if e.code==401 else 422, 'EBAY_'+str(e.code))
     except (OSError,TimeoutError): raise Error('eBay non ha risposto in tempo. Verifica lo stato prima di riprovare la pubblicazione.',504,'REMOTE_TIMEOUT')
 
 def token(fields):
@@ -206,7 +215,7 @@ def upload_image(data,tok):
     if not 100<len(b)<=6000000 or not b.startswith(b'\xff\xd8\xff'):raise Error('La foto deve essere JPEG e inferiore a 6 MB.')
     boundary='cp'+secrets.token_hex(16)
     body=('--'+boundary+'\r\nContent-Disposition: form-data; name="image"; filename="card.jpg"\r\nContent-Type: image/jpeg\r\n\r\n').encode()+b+('\r\n--'+boundary+'--\r\n').encode()
-    r=http(API+'/commerce/media/v1_beta/image/create_image_from_file','POST',body,{'Authorization':'Bearer '+tok,'Content-Type':'multipart/form-data; boundary='+boundary})
+    r=http(MEDIA_API+'/image/create_image_from_file','POST',body,{'Authorization':'Bearer '+tok,'Content-Type':'multipart/form-data; boundary='+boundary})
     if not r.get('imageUrl'):raise Error('eBay non ha restituito l’indirizzo della foto.',502)
     return {'url':r['imageUrl']}
 

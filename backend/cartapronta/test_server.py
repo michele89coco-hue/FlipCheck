@@ -1,4 +1,4 @@
-import copy,json,os,unittest
+import copy,io,json,os,unittest
 from unittest.mock import patch
 from cryptography.fernet import Fernet
 import server as s
@@ -6,6 +6,37 @@ os.environ['SESSION_KEY']=Fernet.generate_key().decode();os.environ['EBAY_CLIENT
 META={'aspects':[{'localizedAspectName':'Gioco','aspectConstraint':{'aspectRequired':True}}],'conditions':[{'conditionId':'4000','conditionDescriptors':[{'conditionDescriptorId':'40001','conditionDescriptorConstraint':{'usage':'REQUIRED'},'conditionDescriptorValues':[{'conditionDescriptorValueId':'400010'}]}]}]}
 DATA={'draftId':'11111111-2222-3333-4444-555555555555','title':'Morpeko 135/128 ITA','description':'Foto <originale>\nSeconda riga','price':'12.50','categoryId':'183454','imageUrls':['https://i.ebayimg.com/card.jpg'],'aspects':{'Gioco':['Pokémon']},'conditionId':'4000','conditionDescriptors':[{'name':'40001','values':['400010']}],'fulfillmentPolicyId':'shipping','paymentPolicyId':'pay','returnPolicyId':'returns','merchantLocationKey':'warehouse'}
 class Tests(unittest.TestCase):
+ def test_image_upload_uses_media_host_and_multipart(self):
+  photo=b'\xff\xd8\xff'+b'x'*200
+  with patch.object(s.urllib.request,'urlopen') as remote:
+   remote.return_value.__enter__.return_value.read.return_value=b'{"imageUrl":"https://i.ebayimg.com/card.jpg"}'
+   result=s.upload_image({'image':s.base64.b64encode(photo).decode()},'test-user-token')
+   request=remote.call_args.args[0]
+   self.assertEqual(request.full_url,'https://apim.ebay.com/commerce/media/v1_beta/image/create_image_from_file')
+   self.assertEqual(request.method,'POST');self.assertEqual(request.get_header('Authorization'),'Bearer test-user-token')
+   self.assertIn(b'name="image"; filename="card.jpg"',request.data);self.assertIn(photo,request.data)
+   boundary=request.get_header('Content-type').split('boundary=')[1]
+   self.assertTrue(request.data.endswith(('--'+boundary+'--\r\n').encode()))
+   self.assertEqual(result,{'url':'https://i.ebayimg.com/card.jpg'})
+ def test_empty_remote_error_identifies_operation_and_status(self):
+  url='https://apim.ebay.com/commerce/media/v1_beta/image/create_image_from_file'
+  failure=s.urllib.error.HTTPError(url,404,'Not Found',{},io.BytesIO(b''))
+  with patch.object(s.urllib.request,'urlopen',side_effect=failure):
+   with self.assertRaises(s.Error) as e:s.http(url,'POST',b'',{'Authorization':'Bearer secret-test'})
+  self.assertIn('caricamento foto (HTTP 404)',e.exception.message)
+  self.assertEqual(e.exception.code,'EBAY_404');self.assertNotIn('secret-test',e.exception.message)
+ def test_remote_error_keeps_ebay_explanation(self):
+  url=s.API+'/sell/inventory/v1/offer/get_listing_fees'
+  failure=s.urllib.error.HTTPError(url,400,'Bad Request',{},io.BytesIO(b'{"errors":[{"message":"Specifics missing"}]}'))
+  with patch.object(s.urllib.request,'urlopen',side_effect=failure):
+   with self.assertRaises(s.Error) as e:s.http(url)
+  self.assertIn('controllo tariffe (HTTP 400)',e.exception.message);self.assertIn('Specifics missing',e.exception.message)
+ def test_http_destination_stays_restricted(self):
+  with patch.object(s.urllib.request,'urlopen') as remote:
+   for url in ['https://apim.ebay.com.evil.test/commerce/media/v1_beta/image','https://apim.ebay.com/other','https://evil.test/','http://apim.ebay.com/commerce/media/v1_beta/image']:
+    with self.subTest(url=url):
+     with self.assertRaises(s.Error):s.http(url)
+   remote.assert_not_called()
  def test_valid(self):
   i,o=s.build_payload(DATA,META);self.assertEqual(o['pricingSummary']['price']['value'],'12.50');self.assertEqual(i['condition'],'USED_VERY_GOOD');self.assertIn('&lt;originale&gt;',i['product']['description']);self.assertNotIn('<originale>',i['product']['description'])
  def test_invalid_payloads(self):
