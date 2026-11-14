@@ -36,4 +36,14 @@ class Handler(BaseHTTPRequestHandler):
         self.send_response(200); self.send_header("Content-Type", "application/json")
         self.send_header("Content-Length", str(len(raw))); self.end_headers(); self.wfile.write(raw)
 if __name__ == "__main__":
-    ThreadingHTTPServer(("0.0.0.0", int(os.getenv("PORT", "10000"))), Handler).serve_forever()
+    import threading
+    port = int(os.getenv("PORT", "10000"))
+    def startup_probe():
+        time.sleep(2)
+        try:
+            with urllib.request.urlopen("http://127.0.0.1:" + str(port) + "/probe", timeout=35) as response:
+                print("SOLD_PROBE_RESULT " + response.read().decode(), flush=True)
+        except Exception as exc:
+            print("SOLD_PROBE_ERROR " + repr(exc), flush=True)
+    threading.Thread(target=startup_probe, daemon=True).start()
+    ThreadingHTTPServer(("0.0.0.0", port), Handler).serve_forever()
